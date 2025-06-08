@@ -1,0 +1,28 @@
+{
+  "us": [
+    {
+      "id": "amro",
+      "name": "American Robin",
+      "scientificName": "Turdus migratorius",
+      "audioUrl": "https://xeno-canto.org//sounds/uploaded/MLFEJSNPJS/XC803375-American-Robin.mp3"
+    },
+    {
+      "id": "noca",
+      "name": "Northern Cardinal",
+      "scientificName": "Cardinalis cardinalis",
+      "audioUrl": "https://xeno-canto.org/sounds/uploaded/FHQVLXJQKW/XC1000327-Northern-Cardinal-3.mp3"
+    },
+    {
+      "id": "amgo",
+      "name": "American Goldfinch",
+      "scientificName": "Spinus tristis",
+      "audioUrl": "https://xeno-canto.org/sounds/uploaded/MGVGHKBMIZ/XC635390-Goldfinch14.mp3"
+    },
+    {
+      "id": "howr",
+      "name": "House Wren",
+      "scientificName": "Troglodytes aedon",
+      "audioUrl": "https://xeno-canto.org/sounds/uploaded/VFMLXNQVNW/XC545291-200128_0468_HouseWren_song_HotelEverlast_Zamora_20200128_0604.mp3"
+    }
+  ]
+}

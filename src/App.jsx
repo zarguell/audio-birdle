@@ -1,22 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Play, Pause, Settings, Share2, Volume2, MapPin, RefreshCw, Info } from 'lucide-react';
+import CountdownToMidnight from './CountdownToMidnight';
 
-// Mock data for demonstration - in production, this would come from APIs
-const MOCK_REGIONS = [
-  { id: 'us-ca', name: 'California, USA', country: 'US' },
-  { id: 'us-ny', name: 'New York, USA', country: 'US' },
-  { id: 'uk-england', name: 'England, UK', country: 'UK' },
-  { id: 'ca-on', name: 'Ontario, Canada', country: 'CA' }
-];
+// Fetch Regions
+const resource1 = await fetch('/data/regions.json');
+const MOCK_REGIONS = await resource1.json(); // Array of region objects
 
-const MOCK_BIRDS = {
-  'us-ca': [
-    { id: 'amro', name: 'American Robin', scientificName: 'Turdus migratorius', audioUrl: 'https://xeno-canto.org//sounds/uploaded/MLFEJSNPJS/XC803375-American-Robin.mp3' },
-    { id: 'noca', name: 'Northern Cardinal', scientificName: 'Cardinalis cardinalis', audioUrl: 'https://xeno-canto.org/sounds/uploaded/FHQVLXJQKW/XC1000327-Northern-Cardinal-3.mp3' },
-    { id: 'amgo', name: 'American Goldfinch', scientificName: 'Spinus tristis', audioUrl: 'https://xeno-canto.org/sounds/uploaded/MGVGHKBMIZ/XC635390-Goldfinch14.mp3' },
-    { id: 'howr', name: 'House Wren', scientificName: 'Troglodytes aedon', audioUrl: 'https://xeno-canto.org/sounds/uploaded/VFMLXNQVNW/XC545291-200128_0468_HouseWren_song_HotelEverlast_Zamora_20200128_0604.mp3' }
-  ]
-};
+// Fetch Birds data
+const resource2 = await fetch('/data/birds.json');
+const birds = await resource2.json(); // Object with region IDs as keys
 
 // Utility functions
 const getTodayString = () => {
@@ -100,12 +92,12 @@ export default function AudioBirdle() {
   const audioRef = useRef(null);
 
   // Get today's bird and options
-  const todaysBird = selectedRegion && MOCK_BIRDS[selectedRegion] 
-    ? getDailyBird(selectedRegion, MOCK_BIRDS[selectedRegion], gameState.date)
+  const todaysBird = selectedRegion && birds[selectedRegion] 
+    ? getDailyBird(selectedRegion, birds[selectedRegion], gameState.date)
     : null;
 
   const answerOptions = todaysBird ? shuffleArray(
-    MOCK_BIRDS[selectedRegion], 
+    birds[selectedRegion], 
     hashString(`${selectedRegion}-${gameState.date}-options`)
   ).slice(0, 4) : [];
 
@@ -177,8 +169,9 @@ export default function AudioBirdle() {
     
     const padding = '⬛'.repeat(gameState.maxGuesses - gameState.guesses.length);
     const result = gameState.won ? `${gameState.guesses.length}/${gameState.maxGuesses}` : 'X/4';
-    
-    return `🐦 Audio-Birdle ${gameState.date}\n${result}\n\n${emojiGrid}${padding}`;
+    const currentUrl = window.location.href;
+
+    return `🐦 Audio-Birdle ${gameState.date}\n${result}\n\n${emojiGrid}${padding}\n\n${currentUrl}`;
   };
 
   const shareResult = async () => {
@@ -212,7 +205,7 @@ export default function AudioBirdle() {
   // Auto-detect location (mock implementation)
   const autoDetectLocation = () => {
     // In a real app, this would use geolocation API
-    setSelectedRegion('us-ca');
+    setSelectedRegion('us');
   };
 
   // Render components
@@ -230,13 +223,13 @@ export default function AudioBirdle() {
             Select Your Region
           </h2>
           
-          <button
+          {/* <button
             onClick={autoDetectLocation}
             className="w-full bg-blue-500 text-white py-3 px-4 rounded-lg mb-4 flex items-center justify-center gap-2 hover:bg-blue-600 transition-colors"
           >
             <MapPin className="w-4 h-4" />
             Auto-detect Location
-          </button>
+          </button> */}
 
           <div className="space-y-2">
             {MOCK_REGIONS.map(region => (
@@ -437,7 +430,7 @@ export default function AudioBirdle() {
 
         {/* Progress Indicator */}
         <div className="text-center text-sm text-gray-500">
-          Next bird in: {new Date(Date.now() + (24 * 60 * 60 * 1000) - (Date.now() % (24 * 60 * 60 * 1000))).toLocaleTimeString()}
+          Next bird in: <CountdownToMidnight />
         </div>
       </div>
     </div>
