@@ -1,9 +1,25 @@
 // Game logic utilities
 import { hashString, shuffleArray } from './HashUtils';
+import { getTodaysBirdFromDaily } from './DailyBirdUtils';
 
 export const getDailyBird = (region, birds, date) => {
   const seed = hashString(`${region}-${date}`);
   return birds[seed % birds.length];
+};
+
+export const getDailyBirdWithFallback = async (region, birds, date) => {
+  try {
+    // Try to get bird from daily.json first
+    const dailyBird = await getTodaysBirdFromDaily(region, birds, date);
+    if (dailyBird) {
+      return dailyBird;
+    }
+  } catch (error) {
+    console.warn('Failed to load from daily.json, using fallback method:', error);
+  }
+  
+  // Fallback to old deterministic method
+  return getDailyBird(region, birds, date);
 };
 
 export const generateAnswerOptions = (selectedRegion, birds, gameDate, correctBird, optionsCount = 4) => {

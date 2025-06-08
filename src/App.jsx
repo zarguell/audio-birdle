@@ -8,6 +8,7 @@ import { getTodayString, formatDateForDisplay } from './utils/DateUtils';
 import { getStoredData, setStoredData } from './utils/StorageUtils';
 import { 
   getDailyBird, 
+  getDailyBirdWithFallback,
   generateAnswerOptions, 
   createInitialGameState, 
   processGuess 
@@ -45,11 +46,30 @@ export default function AudioBirdle() {
       .catch(console.error);
   }, []);
 
-  // Get today's bird and options
-  const todaysBird = selectedRegion && birds[selectedRegion] 
-    ? getDailyBird(selectedRegion, birds[selectedRegion], gameState.date)
-    : null;
+  // State for today's bird
+  const [todaysBird, setTodaysBird] = useState(null);
+  const [loadingBird, setLoadingBird] = useState(false);
 
+  // Load today's bird when region or game state changes
+  useEffect(() => {
+    if (selectedRegion && birds[selectedRegion] && gameState.date) {
+      setLoadingBird(true);
+      getDailyBirdWithFallback(selectedRegion, birds[selectedRegion], gameState.date)
+        .then(bird => {
+          setTodaysBird(bird);
+          setLoadingBird(false);
+        })
+        .catch(error => {
+          console.error('Failed to load today\'s bird:', error);
+          // Fallback to synchronous method
+          const fallbackBird = getDailyBird(selectedRegion, birds[selectedRegion], gameState.date);
+          setTodaysBird(fallbackBird);
+          setLoadingBird(false);
+        });
+    }
+  }, [selectedRegion, birds, gameState.date]);
+
+  // Get answer options
   const answerOptions = generateAnswerOptions(
     selectedRegion, 
     birds, 
@@ -113,6 +133,12 @@ export default function AudioBirdle() {
   const resetGame = () => {
     const newGameState = createInitialGameState(getTodayString());
     setGameState(newGameState);
+  };
+
+  // Auto-detect location (mock implementation)
+  const autoDetectLocation = () => {
+    // In a real app, this would use geolocation API
+    setSelectedRegion('us');
   };
 
   // Render components
@@ -230,11 +256,17 @@ export default function AudioBirdle() {
 
               <button
                 onClick={toggleAudio}
-                disabled={!todaysBird || audioError}
+                disabled={!todaysBird || audioError || loadingBird}
                 className="bg-blue-500 text-white px-6 py-3 rounded-lg flex items-center gap-2 mx-auto hover:bg-blue-600 transition-colors disabled:bg-gray-300"
               >
-                {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
-                {isPlaying ? 'Pause' : 'Play'} Bird Call
+                {loadingBird ? (
+                  <>Loading...</>
+                ) : (
+                  <>
+                    {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
+                    {isPlaying ? 'Pause' : 'Play'} Bird Call
+                  </>
+                )}
               </button>
 
               {audioError && (
