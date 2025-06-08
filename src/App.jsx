@@ -11,10 +11,10 @@ const MOCK_REGIONS = [
 
 const MOCK_BIRDS = {
   'us-ca': [
-    { id: 'amro', name: 'American Robin', scientificName: 'Turdus migratorius', audioUrl: 'https://www.xeno-canto.org/sounds/uploaded/ZNCDXTUOFL/XC621777-Turdus_migratorius2.mp3' },
-    { id: 'noca', name: 'Northern Cardinal', scientificName: 'Cardinalis cardinalis', audioUrl: 'https://www.xeno-canto.org/sounds/uploaded/BLMSIUHTPZ/XC602049-Northern_Cardinal_24.mp3' },
-    { id: 'amgo', name: 'American Goldfinch', scientificName: 'Spinus tristis', audioUrl: 'https://www.xeno-canto.org/sounds/uploaded/HZBYIUECVO/XC602617-American_Goldfinch_71.mp3' },
-    { id: 'howr', name: 'House Wren', scientificName: 'Troglodytes aedon', audioUrl: 'https://www.xeno-canto.org/sounds/uploaded/GYWNKTYKTM/XC503094-House_Wren_56.mp3' }
+    { id: 'amro', name: 'American Robin', scientificName: 'Turdus migratorius', audioUrl: 'https://xeno-canto.org//sounds/uploaded/MLFEJSNPJS/XC803375-American-Robin.mp3' },
+    { id: 'noca', name: 'Northern Cardinal', scientificName: 'Cardinalis cardinalis', audioUrl: 'https://xeno-canto.org/sounds/uploaded/FHQVLXJQKW/XC1000327-Northern-Cardinal-3.mp3' },
+    { id: 'amgo', name: 'American Goldfinch', scientificName: 'Spinus tristis', audioUrl: 'https://xeno-canto.org/sounds/uploaded/MGVGHKBMIZ/XC635390-Goldfinch14.mp3' },
+    { id: 'howr', name: 'House Wren', scientificName: 'Troglodytes aedon', audioUrl: 'https://xeno-canto.org/sounds/uploaded/VFMLXNQVNW/XC545291-200128_0468_HouseWren_song_HotelEverlast_Zamora_20200128_0604.mp3' }
   ]
 };
 
