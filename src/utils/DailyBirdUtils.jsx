@@ -41,7 +41,7 @@ export const findBirdByHash = (birds, answerHash) => {
  */
 export const loadDailyBirdData = async () => {
   try {
-    const response = await fetch('/daily.json');
+    const response = await fetch('/data/daily.json');
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
