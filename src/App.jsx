@@ -1,14 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Play, Pause, Settings, Share2, Volume2, MapPin, RefreshCw, Info } from 'lucide-react';
-import CountdownToMidnight from './CountdownToMidnight';
-
-// Fetch Regions
-const resource1 = await fetch('/data/regions.json');
-const MOCK_REGIONS = await resource1.json(); // Array of region objects
-
-// Fetch Birds data
-const resource2 = await fetch('/data/birds.json');
-const birds = await resource2.json(); // Object with region IDs as keys
+import CountdownToMidnight from './utils/CountdownToMidnight';
+import { loadGameData } from './utils/LoadGameData';
 
 // Utility functions
 const getTodayString = () => {
@@ -66,6 +59,18 @@ const setStoredData = (key, value) => {
 
 // Main App Component
 export default function AudioBirdle() {
+  const [regions, setRegions] = useState([]);
+  const [birds, setBirds] = useState({});
+
+  useEffect(() => {
+    loadGameData()
+      .then(({ regions, birds }) => {
+        setRegions(regions);
+        setBirds(birds);
+      })
+      .catch(console.error);
+  }, []);
+
   const [currentView, setCurrentView] = useState('game');
   const [selectedRegion, setSelectedRegion] = useState(() => 
     getStoredData('audio-birdle-region', null)
@@ -232,7 +237,7 @@ export default function AudioBirdle() {
           </button> */}
 
           <div className="space-y-2">
-            {MOCK_REGIONS.map(region => (
+            {regions.map(region => (
               <button
                 key={region.id}
                 onClick={() => setSelectedRegion(region.id)}
@@ -266,7 +271,7 @@ export default function AudioBirdle() {
               Current Region
             </label>
             <div className="p-3 bg-gray-50 rounded-lg">
-              {MOCK_REGIONS.find(r => r.id === selectedRegion)?.name || 'None selected'}
+              {regions.find(r => r.id === selectedRegion)?.name || 'None selected'}
             </div>
           </div>
 
@@ -307,7 +312,7 @@ export default function AudioBirdle() {
         <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
           <div className="text-center mb-6">
             <p className="text-gray-600 mb-2">
-              {MOCK_REGIONS.find(r => r.id === selectedRegion)?.name}
+              {regions.find(r => r.id === selectedRegion)?.name}
             </p>
             <p className="text-sm text-gray-500">
               Daily Bird Challenge • {new Date().toLocaleDateString()}
