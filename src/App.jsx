@@ -1,67 +1,41 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Play, Pause, Settings, Share2, Volume2, MapPin, RefreshCw, Info } from 'lucide-react';
+
+// Utility imports
 import CountdownToMidnight from './utils/CountdownToMidnight';
 import { loadGameData } from './utils/LoadGameData';
-
-// Utility functions
-const getTodayString = () => {
-  const today = new Date();
-  return today.toISOString().split('T')[0];
-};
-
-const hashString = (str) => {
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) {
-    const char = str.charCodeAt(i);
-    hash = ((hash << 5) - hash) + char;
-    hash = hash & hash;
-  }
-  return Math.abs(hash);
-};
-
-const getDailyBird = (region, birds, date) => {
-  const seed = hashString(`${region}-${date}`);
-  return birds[seed % birds.length];
-};
-
-const shuffleArray = (array, seed) => {
-  const shuffled = [...array];
-  let currentIndex = shuffled.length;
-  let randomIndex;
-
-  while (currentIndex !== 0) {
-    randomIndex = Math.floor((seed % currentIndex));
-    currentIndex--;
-    [shuffled[currentIndex], shuffled[randomIndex]] = [shuffled[randomIndex], shuffled[currentIndex]];
-    seed = Math.floor(seed / 2);
-  }
-
-  return shuffled;
-};
-
-// Storage utilities
-const getStoredData = (key, defaultValue) => {
-  try {
-    const stored = localStorage.getItem(key);
-    return stored ? JSON.parse(stored) : defaultValue;
-  } catch {
-    return defaultValue;
-  }
-};
-
-const setStoredData = (key, value) => {
-  try {
-    localStorage.setItem(key, JSON.stringify(value));
-  } catch (error) {
-    console.warn('Failed to save to localStorage:', error);
-  }
-};
+import { getTodayString, formatDateForDisplay } from './utils/DateUtils';
+import { getStoredData, setStoredData } from './utils/StorageUtils';
+import { 
+  getDailyBird, 
+  generateAnswerOptions, 
+  createInitialGameState, 
+  processGuess 
+} from './utils/GameLogic';
+import { generateShareText, shareResult } from './utils/ShareUtils';
+import { createAudioControls } from './utils/AudioUtils';
+import { STORAGE_KEYS, GAME_CONFIG, VIEWS } from './utils/Constants';
 
 // Main App Component
 export default function AudioBirdle() {
+  // State management
   const [regions, setRegions] = useState([]);
   const [birds, setBirds] = useState({});
+  const [currentView, setCurrentView] = useState(VIEWS.GAME);
+  const [selectedRegion, setSelectedRegion] = useState(() => 
+    getStoredData(STORAGE_KEYS.REGION, null)
+  );
+  const [gameState, setGameState] = useState(() => {
+    const today = getTodayString();
+    const stored = getStoredData(STORAGE_KEYS.GAME_STATE, {});
+    
+    return stored.date === today ? stored : createInitialGameState(today);
+  });
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [audioError, setAudioError] = useState(false);
+  const audioRef = useRef(null);
 
+  // Load game data on mount
   useEffect(() => {
     loadGameData()
       .then(({ regions, birds }) => {
@@ -71,72 +45,46 @@ export default function AudioBirdle() {
       .catch(console.error);
   }, []);
 
-  const [currentView, setCurrentView] = useState('game');
-  const [selectedRegion, setSelectedRegion] = useState(() => 
-    getStoredData('audio-birdle-region', null)
-  );
-  const [gameState, setGameState] = useState(() => {
-    const today = getTodayString();
-    const stored = getStoredData('audio-birdle-game-state', {});
-    
-    if (stored.date === today) {
-      return stored;
-    }
-    
-    return {
-      date: today,
-      guesses: [],
-      completed: false,
-      won: false,
-      maxGuesses: 4
-    };
-  });
-  
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [audioError, setAudioError] = useState(false);
-  const audioRef = useRef(null);
-
   // Get today's bird and options
   const todaysBird = selectedRegion && birds[selectedRegion] 
     ? getDailyBird(selectedRegion, birds[selectedRegion], gameState.date)
     : null;
 
-  const answerOptions = todaysBird ? shuffleArray(
-    birds[selectedRegion], 
-    hashString(`${selectedRegion}-${gameState.date}-options`)
-  ).slice(0, 4) : [];
-
-  // Ensure correct answer is in options
-  if (todaysBird && !answerOptions.find(bird => bird.id === todaysBird.id)) {
-    answerOptions[0] = todaysBird;
-  }
+  const answerOptions = generateAnswerOptions(
+    selectedRegion, 
+    birds, 
+    gameState.date, 
+    todaysBird, 
+    GAME_CONFIG.ANSWER_OPTIONS_COUNT
+  );
 
   // Save game state when it changes
   useEffect(() => {
-    setStoredData('audio-birdle-game-state', gameState);
+    setStoredData(STORAGE_KEYS.GAME_STATE, gameState);
   }, [gameState]);
 
   // Save selected region
   useEffect(() => {
     if (selectedRegion) {
-      setStoredData('audio-birdle-region', selectedRegion);
+      setStoredData(STORAGE_KEYS.REGION, selectedRegion);
     }
   }, [selectedRegion]);
 
   // Audio controls
-  const toggleAudio = () => {
-    if (!audioRef.current) return;
+  const audioControls = createAudioControls(audioRef);
 
+  const toggleAudio = async () => {
     if (isPlaying) {
-      audioRef.current.pause();
+      audioControls.pauseAudio();
       setIsPlaying(false);
     } else {
-      audioRef.current.play()
-        .then(() => setIsPlaying(true))
-        .catch(() => {
-          setAudioError(true);
-          setIsPlaying(false);
-        });
+      const success = await audioControls.playAudio();
+      if (success) {
+        setIsPlaying(true);
+      } else {
+        setAudioError(true);
+        setIsPlaying(false);
+      }
     }
   };
 
@@ -151,66 +99,20 @@ export default function AudioBirdle() {
 
   // Game logic
   const makeGuess = (birdId) => {
-    if (gameState.completed || gameState.guesses.length >= gameState.maxGuesses) return;
-
-    const isCorrect = birdId === todaysBird.id;
-    const newGuesses = [...gameState.guesses, { birdId, correct: isCorrect }];
-    
-    const newGameState = {
-      ...gameState,
-      guesses: newGuesses,
-      completed: isCorrect || newGuesses.length >= gameState.maxGuesses,
-      won: isCorrect
-    };
-
+    const newGameState = processGuess(gameState, birdId, todaysBird?.id);
     setGameState(newGameState);
   };
 
-  // Generate shareable result
-  const generateShareText = () => {
-    const emojiGrid = gameState.guesses.map(guess => 
-      guess.correct ? '🟩' : '🟥'
-    ).join('');
-    
-    const padding = '⬛'.repeat(gameState.maxGuesses - gameState.guesses.length);
-    const result = gameState.won ? `${gameState.guesses.length}/${gameState.maxGuesses}` : 'X/4';
-    const currentUrl = window.location.href;
-
-    return `🐦 Audio-Birdle ${gameState.date}\n${result}\n\n${emojiGrid}${padding}\n\n${currentUrl}`;
-  };
-
-  const shareResult = async () => {
-    const shareText = generateShareText();
-    
-    if (navigator.share) {
-      try {
-        await navigator.share({ text: shareText });
-      } catch (error) {
-        // Fallback to clipboard
-        navigator.clipboard?.writeText(shareText);
-      }
-    } else {
-      navigator.clipboard?.writeText(shareText);
-    }
+  // Share functionality
+  const handleShareResult = async () => {
+    const shareText = generateShareText(gameState, window.location.href);
+    await shareResult(shareText);
   };
 
   // Reset game (for testing)
   const resetGame = () => {
-    const today = getTodayString();
-    const newGameState = {
-      date: today,
-      guesses: [],
-      completed: false,
-      won: false,
-      maxGuesses: 4
-    };
+    const newGameState = createInitialGameState(getTodayString());
     setGameState(newGameState);
-  };
-
-  // Auto-detect location (mock implementation)
-  const autoDetectLocation = () => {
-    // In a real app, this would use geolocation API
-    setSelectedRegion('us');
   };
 
   // Render components
@@ -227,14 +129,6 @@ export default function AudioBirdle() {
             <MapPin className="w-5 h-5" />
             Select Your Region
           </h2>
-          
-          {/* <button
-            onClick={autoDetectLocation}
-            className="w-full bg-blue-500 text-white py-3 px-4 rounded-lg mb-4 flex items-center justify-center gap-2 hover:bg-blue-600 transition-colors"
-          >
-            <MapPin className="w-4 h-4" />
-            Auto-detect Location
-          </button> */}
 
           <div className="space-y-2">
             {regions.map(region => (
@@ -257,7 +151,7 @@ export default function AudioBirdle() {
       <div className="max-w-md mx-auto pt-8">
         <div className="flex items-center gap-2 mb-6">
           <button 
-            onClick={() => setCurrentView('game')}
+            onClick={() => setCurrentView(VIEWS.GAME)}
             className="text-blue-500 hover:text-blue-600"
           >
             ← Back
@@ -301,7 +195,7 @@ export default function AudioBirdle() {
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-bold text-gray-800">🐦 Audio-Birdle</h1>
           <button
-            onClick={() => setCurrentView('settings')}
+            onClick={() => setCurrentView(VIEWS.SETTINGS)}
             className="p-2 text-gray-600 hover:text-gray-800 transition-colors"
           >
             <Settings className="w-5 h-5" />
@@ -315,7 +209,7 @@ export default function AudioBirdle() {
               {regions.find(r => r.id === selectedRegion)?.name}
             </p>
             <p className="text-sm text-gray-500">
-              Daily Bird Challenge • {new Date().toLocaleDateString()}
+              Daily Bird Challenge • {formatDateForDisplay(gameState.date)}
             </p>
           </div>
 
@@ -414,7 +308,7 @@ export default function AudioBirdle() {
 
               <div className="flex gap-2">
                 <button
-                  onClick={shareResult}
+                  onClick={handleShareResult}
                   className="flex-1 bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition-colors flex items-center justify-center gap-2"
                 >
                   <Share2 className="w-4 h-4" />
@@ -446,7 +340,7 @@ export default function AudioBirdle() {
     return renderRegionSelector();
   }
 
-  if (currentView === 'settings') {
+  if (currentView === VIEWS.SETTINGS) {
     return renderSettings();
   }
 
