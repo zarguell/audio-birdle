@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Play, Pause, Settings, Share2, Volume2, MapPin, RefreshCw, Info } from 'lucide-react';
+import { Play, Pause, Settings, Share2, Volume2, MapPin, RefreshCw, Info, BarChart3 } from 'lucide-react';
 
 // Utility imports
 import CountdownToMidnight from './utils/CountdownToMidnight';
@@ -10,8 +10,11 @@ import {
   getDailyBird, 
   getDailyBirdWithFallback,
   generateAnswerOptions, 
-  createInitialGameState, 
-  processGuess 
+  createInitialGameState,
+  getDailyGameState,
+  processGuess,
+  hasPlayedRegionDate,
+  getUserPerformanceSummary
 } from './utils/GameLogic';
 import { generateShareText, shareResult } from './utils/ShareUtils';
 import { createAudioControls } from './utils/AudioUtils';
@@ -26,15 +29,24 @@ export default function AudioBirdle() {
   const [selectedRegion, setSelectedRegion] = useState(() => 
     getStoredData(STORAGE_KEYS.REGION, null)
   );
+  
+  // Updated game state structure
   const [gameState, setGameState] = useState(() => {
-    const today = getTodayString();
-    const stored = getStoredData(STORAGE_KEYS.GAME_STATE, {});
-    
-    return stored.date === today ? stored : createInitialGameState(today);
+    const stored = getStoredData(STORAGE_KEYS.GAME_STATE, null);
+    return stored || createInitialGameState();
   });
+  
   const [isPlaying, setIsPlaying] = useState(false);
   const [audioError, setAudioError] = useState(false);
   const audioRef = useRef(null);
+
+  // Get current date
+  const today = getTodayString();
+  
+  // console.log(`Today's date: ${today}`);
+
+  // Get current daily game state
+  const currentDailyGame = selectedRegion ? getDailyGameState(gameState, selectedRegion, today) : null;
 
   // Load game data on mount
   useEffect(() => {
@@ -50,11 +62,11 @@ export default function AudioBirdle() {
   const [todaysBird, setTodaysBird] = useState(null);
   const [loadingBird, setLoadingBird] = useState(false);
 
-  // Load today's bird when region or game state changes
+  // Load today's bird when region changes or on first load
   useEffect(() => {
-    if (selectedRegion && birds[selectedRegion] && gameState.date) {
+    if (selectedRegion && birds[selectedRegion]) {
       setLoadingBird(true);
-      getDailyBirdWithFallback(selectedRegion, birds[selectedRegion], gameState.date)
+      getDailyBirdWithFallback(selectedRegion, birds[selectedRegion], today)
         .then(bird => {
           setTodaysBird(bird);
           setLoadingBird(false);
@@ -62,18 +74,18 @@ export default function AudioBirdle() {
         .catch(error => {
           console.error('Failed to load today\'s bird:', error);
           // Fallback to synchronous method
-          const fallbackBird = getDailyBird(selectedRegion, birds[selectedRegion], gameState.date);
+          const fallbackBird = getDailyBird(selectedRegion, birds[selectedRegion], today);
           setTodaysBird(fallbackBird);
           setLoadingBird(false);
         });
     }
-  }, [selectedRegion, birds, gameState.date]);
+  }, [selectedRegion, birds, today]);
 
   // Get answer options
   const answerOptions = generateAnswerOptions(
     selectedRegion, 
     birds, 
-    gameState.date, 
+    today, 
     todaysBird, 
     GAME_CONFIG.ANSWER_OPTIONS_COUNT
   );
@@ -117,21 +129,35 @@ export default function AudioBirdle() {
     setIsPlaying(false);
   };
 
-  // Game logic
+  // Game logic - updated to use new structure
   const makeGuess = (birdId) => {
-    const newGameState = processGuess(gameState, birdId, todaysBird?.id);
+    if (!todaysBird || !selectedRegion) return;
+    
+    const newGameState = processGuess(gameState, selectedRegion, today, birdId, todaysBird.id);
     setGameState(newGameState);
   };
 
   // Share functionality
   const handleShareResult = async () => {
-    const shareText = generateShareText(gameState, window.location.href);
+    if (!currentDailyGame) return;
+    
+    const shareText = generateShareText(currentDailyGame, window.location.href);
     await shareResult(shareText);
   };
 
-  // Reset game (for testing)
-  const resetGame = () => {
-    const newGameState = createInitialGameState(getTodayString());
+  // Reset current day's game (for testing)
+  const resetTodaysGame = () => {
+    if (!selectedRegion) return;
+    
+    const newGameState = { ...gameState };
+    const key = `${selectedRegion}-${today}`;
+    delete newGameState.dailyGames[key];
+    setGameState(newGameState);
+  };
+
+  // Reset all game data
+  const resetAllData = () => {
+    const newGameState = createInitialGameState();
     setGameState(newGameState);
   };
 
@@ -157,20 +183,107 @@ export default function AudioBirdle() {
           </h2>
 
           <div className="space-y-2">
-            {regions.map(region => (
-              <button
-                key={region.id}
-                onClick={() => setSelectedRegion(region.id)}
-                className="w-full text-left p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors"
-              >
-                {region.name}
-              </button>
-            ))}
+            {regions.map(region => {
+              const hasPlayedToday = hasPlayedRegionDate(gameState, region.id, today);
+              return (
+                <button
+                  key={region.id}
+                  onClick={() => setSelectedRegion(region.id)}
+                  className="w-full text-left p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors relative"
+                >
+                  <div className="flex justify-between items-center">
+                    <span>{region.name}</span>
+                    {hasPlayedToday && (
+                      <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">
+                        Played Today
+                      </span>
+                    )}
+                  </div>
+                </button>
+              );
+            })}
           </div>
         </div>
       </div>
     </div>
   );
+
+  const renderStats = () => {
+    const stats = getUserPerformanceSummary(gameState);
+    
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 p-4">
+        <div className="max-w-md mx-auto pt-8">
+          <div className="flex items-center gap-2 mb-6">
+            <button 
+              onClick={() => setCurrentView(VIEWS.SETTINGS)}
+              className="text-blue-500 hover:text-blue-600"
+            >
+              ← Back
+            </button>
+            <h1 className="text-2xl font-bold text-gray-800">Your Stats</h1>
+          </div>
+
+          <div className="bg-white rounded-xl shadow-lg p-6 space-y-6">
+            {/* Overall Stats */}
+            <div>
+              <h3 className="font-semibold text-lg mb-3">Overall Performance</h3>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="text-center p-3 bg-gray-50 rounded-lg">
+                  <div className="text-2xl font-bold text-blue-600">{stats.totalGames}</div>
+                  <div className="text-sm text-gray-600">Games Played</div>
+                </div>
+                <div className="text-center p-3 bg-gray-50 rounded-lg">
+                  <div className="text-2xl font-bold text-green-600">{stats.winRate}%</div>
+                  <div className="text-sm text-gray-600">Win Rate</div>
+                </div>
+                <div className="text-center p-3 bg-gray-50 rounded-lg">
+                  <div className="text-2xl font-bold text-purple-600">{stats.averageGuesses}</div>
+                  <div className="text-sm text-gray-600">Avg Guesses</div>
+                </div>
+                <div className="text-center p-3 bg-gray-50 rounded-lg">
+                  <div className="text-2xl font-bold text-orange-600">{stats.maxStreak}</div>
+                  <div className="text-sm text-gray-600">Best Streak</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Region Breakdown */}
+            {stats.regionBreakdown.length > 0 && (
+              <div>
+                <h3 className="font-semibold text-lg mb-3">By Region</h3>
+                <div className="space-y-2">
+                  {stats.regionBreakdown.map(regionStat => {
+                    const regionName = regions.find(r => r.id === regionStat.region)?.name || regionStat.region;
+                    return (
+                      <div key={regionStat.region} className="p-3 bg-gray-50 rounded-lg">
+                        <div className="flex justify-between items-center mb-2">
+                          <span className="font-medium">{regionName}</span>
+                          <span className="text-sm text-gray-600">{regionStat.games} games</span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span>Win Rate: {regionStat.winRate}%</span>
+                          <span>Avg: {regionStat.avgGuesses} guesses</span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {stats.totalGames === 0 && (
+              <div className="text-center py-8 text-gray-500">
+                <BarChart3 className="w-12 h-12 mx-auto mb-2 opacity-50" />
+                <p>No games played yet!</p>
+                <p className="text-sm">Start playing to see your stats here.</p>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   const renderSettings = () => (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 p-4">
@@ -203,11 +316,27 @@ export default function AudioBirdle() {
           </button>
 
           <button
-            onClick={resetGame}
-            className="w-full bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition-colors flex items-center justify-center gap-2"
+            onClick={() => setCurrentView('stats')}
+            className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors flex items-center justify-center gap-2"
+          >
+            <BarChart3 className="w-4 h-4" />
+            View Stats
+          </button>
+
+          <button
+            onClick={resetTodaysGame}
+            className="w-full bg-orange-500 text-white py-2 px-4 rounded-lg hover:bg-orange-600 transition-colors flex items-center justify-center gap-2"
           >
             <RefreshCw className="w-4 h-4" />
             Reset Today's Game
+          </button>
+
+          <button
+            onClick={resetAllData}
+            className="w-full bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition-colors flex items-center justify-center gap-2"
+          >
+            <RefreshCw className="w-4 h-4" />
+            Reset All Data
           </button>
         </div>
       </div>
@@ -235,7 +364,7 @@ export default function AudioBirdle() {
               {regions.find(r => r.id === selectedRegion)?.name}
             </p>
             <p className="text-sm text-gray-500">
-              Daily Bird Challenge • {formatDateForDisplay(gameState.date)}
+              Daily Bird Challenge • {formatDateForDisplay(today)}
             </p>
           </div>
 
@@ -278,11 +407,11 @@ export default function AudioBirdle() {
           </div>
 
           {/* Guess History */}
-          {gameState.guesses.length > 0 && (
+          {currentDailyGame && currentDailyGame.guesses.length > 0 && (
             <div className="mb-4">
               <h3 className="font-semibold mb-2">Your Guesses:</h3>
               <div className="space-y-2">
-                {gameState.guesses.map((guess, index) => {
+                {currentDailyGame.guesses.map((guess, index) => {
                   const guessedBird = answerOptions.find(bird => bird.id === guess.birdId);
                   return (
                     <div
@@ -307,10 +436,10 @@ export default function AudioBirdle() {
           )}
 
           {/* Answer Options */}
-          {!gameState.completed && (
+          {currentDailyGame && !currentDailyGame.completed && (
             <div className="space-y-2">
               <h3 className="font-semibold mb-2">
-                Choose the bird ({gameState.guesses.length + 1}/{gameState.maxGuesses}):
+                Choose the bird ({currentDailyGame.guesses.length + 1}/{currentDailyGame.maxGuesses}):
               </h3>
               {answerOptions.map(bird => (
                 <button
@@ -326,10 +455,10 @@ export default function AudioBirdle() {
           )}
 
           {/* Game Results */}
-          {gameState.completed && (
+          {currentDailyGame && currentDailyGame.completed && (
             <div className="text-center">
-              <div className={`text-2xl font-bold mb-2 ${gameState.won ? 'text-green-600' : 'text-red-600'}`}>
-                {gameState.won ? '🎉 Well done!' : '😔 Better luck tomorrow!'}
+              <div className={`text-2xl font-bold mb-2 ${currentDailyGame.won ? 'text-green-600' : 'text-red-600'}`}>
+                {currentDailyGame.won ? '🎉 Well done!' : '😔 Better luck tomorrow!'}
               </div>
               
               <div className="bg-gray-50 rounded-lg p-4 mb-4">
@@ -374,6 +503,10 @@ export default function AudioBirdle() {
 
   if (currentView === VIEWS.SETTINGS) {
     return renderSettings();
+  }
+
+  if (currentView === 'stats') {
+    return renderStats();
   }
 
   return renderGame();
