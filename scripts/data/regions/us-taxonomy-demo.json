@@ -1,0 +1,42 @@
+[
+  {
+    "sciName": "Turdus migratorius",
+    "comName": "American Robin",
+    "speciesCode": "amerob",
+    "category": "species",
+    "taxonOrder": 28313.0,
+    "bandingCodes": [
+      "AMRO"
+    ],
+    "comNameCodes": [
+      "ALRO"
+    ],
+    "sciNameCodes": [
+      "TUMI"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "turdid1",
+    "familyComName": "Thrushes and Allies",
+    "familySciName": "Turdidae"
+  },
+  {
+    "sciName": "Turdus rufopalliatus",
+    "comName": "Rufous-backed Robin",
+    "speciesCode": "rubrob",
+    "category": "species",
+    "taxonOrder": 28323.0,
+    "bandingCodes": [
+      "RBRO"
+    ],
+    "comNameCodes": [
+      "RBTH"
+    ],
+    "sciNameCodes": [
+      "TURU"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "turdid1",
+    "familyComName": "Thrushes and Allies",
+    "familySciName": "Turdidae"
+  }
+]
