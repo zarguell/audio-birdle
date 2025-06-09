@@ -92,7 +92,7 @@ export const getTodaysBirdFromDaily = async (region, birds, date) => {
       console.warn(`No bird found matching hash ${todaysEntry.answerHash} for ${region} on ${date}`);
       return null;
     } else {
-      console.log(`Today's bird for ${region} on ${date}: ${bird.name} (${bird.id})`);
+      // console.log(`Today's bird for ${region} on ${date}: ${bird.name} (${bird.id})`);
     }
     
     return bird;
