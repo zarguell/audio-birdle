@@ -50,7 +50,7 @@ console.log('Generating daily entries...\n');
 
 const startDate = '2025-06-08';
 const numDays = 7;
-const regions = ['us', 'uk'];
+const regions = ['us'];
 
 const dailyEntries = generateDailyEntries(startDate, numDays, regions);
 

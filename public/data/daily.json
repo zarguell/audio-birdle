@@ -1,5 +1,12 @@
-{
-  "date": "2025-06-08",
-  "region": "us",
-  "answerHash": "84a91b3f"
-}
+[
+  {
+    "date": "2025-06-09",
+    "region": "us",
+    "answerHash": "84a91b3f"
+  },
+  {
+    "date": "2025-06-09",
+    "region": "europe",
+    "answerHash": "def67890"
+  }
+]
