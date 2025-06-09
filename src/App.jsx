@@ -400,7 +400,7 @@ export default function AudioBirdle() {
 
               {audioError && (
                 <p className="text-red-500 text-sm mt-2">
-                  Audio unavailable - continuing with mock gameplay
+                  Audio did not load - please try reloading the page
                 </p>
               )}
             </div>
