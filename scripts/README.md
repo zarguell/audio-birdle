@@ -64,6 +64,7 @@ The script now limits the number of URLs collected per species both during the p
 
 ```
 // Copy your hash function and dependencies directly
+// Fixed hash function that prevents negative values
 const hashString = (str) => {
   let hash = 0;
   if (str.length === 0) return hash;
@@ -72,7 +73,8 @@ const hashString = (str) => {
     hash = ((hash << 5) - hash) + char;
     hash = hash & hash; // Convert to 32-bit integer
   }
-  return hash;
+  // Convert to unsigned 32-bit integer to prevent negative values
+  return hash >>> 0;
 };
 
 const SECRET_SALT = "birdle-salt-2025";
@@ -83,6 +85,42 @@ const hashBirdId = (birdId) => {
   return fullHash.substring(0, 8);
 };
 
-// Now you can use it:
-hashBirdId("amro")
+// Test the fixed version
+console.log('Fixed hash for "bkfg":', hashBirdId("bkfg"));
+
+// Compare with original (problematic) version
+const hashStringOriginal = (str) => {
+  let hash = 0;
+  if (str.length === 0) return hash;
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash;
+  }
+  return hash; // This can be negative!
+};
+
+const hashBirdIdOriginal = (birdId) => {
+  const combined = `${birdId}-${SECRET_SALT}`;
+  const fullHash = hashStringOriginal(combined).toString(16);
+  return fullHash.substring(0, 8);
+};
+
+console.log('Original (broken) hash for "bkfg":', hashBirdIdOriginal("bkfg"));
+console.log('Difference: Original can produce negative hashes with minus signs');
+```
+
+
+# Adding more birds to birds.json game data
+
+```
+python ./scripts/game-data-generator.py --region US --taxonomy ./scripts/data/regions/us-taxonomy.json --urls ./scripts/data/regions/us-taxonomy-urls.json --output ./public/data/birds.json
+Loading taxonomy data from './scripts/data/regions/us-taxonomy.json'...
+Loading URLs data from './scripts/data/regions/us-taxonomy-urls.json'...
+Checking for existing output file './public/data/birds.json'...
+Processing URL data...
+Processing taxonomy data and matching with audio URLs...
+Found 704 birds with audio URLs for region 'US'
+Successfully saved data to './public/data/birds.json'
+Processing complete!
 ```
