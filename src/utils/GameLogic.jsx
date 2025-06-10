@@ -1,4 +1,4 @@
-// Updated GameLogic.js with proper region-day tracking and backward compatibility
+// Updated GameLogic.js with deterministic answer generation
 
 import { getTodaysBirdFromDaily, findBirdByHash } from './DailyBirdUtils';
 import { hashString } from './HashUtils';
@@ -333,7 +333,40 @@ export const getDailyBirdWithFallback = async (region, birds, date) => {
 };
 
 /**
- * Generate answer options for the daily game
+ * Deterministic random number generator using a seed
+ * @param {number} seed - Seed value for deterministic randomness
+ * @returns {function} - Function that returns deterministic "random" numbers between 0 and 1
+ */
+const createSeededRandom = (seed) => {
+  let state = seed;
+  return () => {
+    // Linear congruential generator - simple but effective for our needs
+    state = (state * 1664525 + 1013904223) >>> 0; // Keep it 32-bit
+    return (state % 2147483647) / 2147483647; // Normalize to 0-1
+  };
+};
+
+/**
+ * Shuffle array deterministically using seeded random
+ * @param {Array} array - Array to shuffle
+ * @param {number} seed - Seed for deterministic shuffling
+ * @returns {Array} - New shuffled array
+ */
+const deterministicShuffle = (array, seed) => {
+  const shuffled = [...array];
+  const random = createSeededRandom(seed);
+  
+  // Fisher-Yates shuffle with seeded random
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  
+  return shuffled;
+};
+
+/**
+ * Generate deterministic answer options for the daily game
  * @param {string} region - Region identifier
  * @param {Object} birds - Birds data object
  * @param {string} date - Date string
@@ -345,24 +378,32 @@ export const generateAnswerOptions = (region, birds, date, correctBird, optionCo
   if (!birds[region] || !correctBird) return [];
   
   const regionBirds = birds[region];
-  const options = [correctBird];
   
-  // Add random incorrect options
+  // Create a seed based on region, date, and correct bird ID for deterministic selection
+  const seed = hashString(`${region}-${date}-${correctBird.id}-options`);
+  const random = createSeededRandom(seed);
+  
+  // Get birds that aren't the correct answer
   const availableBirds = regionBirds.filter(bird => bird.id !== correctBird.id);
   
-  while (options.length < optionCount && availableBirds.length > 0) {
-    const randomIndex = Math.floor(Math.random() * availableBirds.length);
-    const randomBird = availableBirds.splice(randomIndex, 1)[0];
-    options.push(randomBird);
+  // Deterministically select wrong answers
+  const selectedWrongBirds = [];
+  const shuffledAvailable = deterministicShuffle(availableBirds, seed);
+  
+  // Take the first (optionCount - 1) birds from the shuffled list
+  for (let i = 0; i < Math.min(optionCount - 1, shuffledAvailable.length); i++) {
+    selectedWrongBirds.push(shuffledAvailable[i]);
   }
   
-  // Shuffle the options so correct answer isn't always first
-  for (let i = options.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [options[i], options[j]] = [options[j], options[i]];
-  }
+  // Combine correct answer with wrong answers
+  const allOptions = [correctBird, ...selectedWrongBirds];
   
-  return options;
+  // Shuffle all options deterministically so correct answer position is consistent
+  // Use a different seed component for final shuffle to avoid patterns
+  const finalSeed = hashString(`${region}-${date}-${correctBird.id}-final`);
+  const finalOptions = deterministicShuffle(allOptions, finalSeed);
+  
+  return finalOptions;
 };
 
 /**

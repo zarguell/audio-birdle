@@ -27,6 +27,7 @@ export const findBirdByHash = (birds, answerHash) => {
   
   for (const bird of birds) {
     const birdHash = hashBirdId(bird.id);
+    // console.log(`Checking bird: ${bird.name} (${bird.id}) -> Hash: ${birdHash}, Against: ${answerHash}`);
     if (birdHash === answerHash.toLowerCase()) {
       return bird;
     }

@@ -2,12 +2,14 @@
 
 export const hashString = (str) => {
   let hash = 0;
+  if (str.length === 0) return hash;
   for (let i = 0; i < str.length; i++) {
     const char = str.charCodeAt(i);
     hash = ((hash << 5) - hash) + char;
-    hash = hash & hash;
+    hash = hash & hash; // Convert to 32-bit integer
   }
-  return Math.abs(hash);
+  // Convert to unsigned 32-bit integer to prevent negative values
+  return hash >>> 0;
 };
 
 export const shuffleArray = (array, seed) => {

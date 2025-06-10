@@ -40,6 +40,9 @@ export default function AudioBirdle() {
   const [audioError, setAudioError] = useState(false);
   const audioRef = useRef(null);
 
+  // State for audio selection
+  const [selectedAudioIndex, setSelectedAudioIndex] = useState(0);
+
   // Get current date
   const today = getTodayString();
   
@@ -61,6 +64,10 @@ export default function AudioBirdle() {
   // State for today's bird
   const [todaysBird, setTodaysBird] = useState(null);
   const [loadingBird, setLoadingBird] = useState(false);
+
+  useEffect(() => {
+    setSelectedAudioIndex(0);
+  }, [todaysBird]);
 
   // Load today's bird when region changes or on first load
   useEffect(() => {
@@ -373,16 +380,48 @@ export default function AudioBirdle() {
             <div className="bg-gray-50 rounded-lg p-6 text-center">
               <Volume2 className="w-12 h-12 mx-auto mb-4 text-gray-400" />
               
+              {/* Audio Selection Dropdown */}
+              {todaysBird && Array.isArray(todaysBird.audioUrl) && todaysBird.audioUrl.length > 1 && (
+                <div className="mb-4">
+                  <select
+                    value={selectedAudioIndex}
+                    onChange={(e) => {
+                      const newIndex = parseInt(e.target.value);
+                      setSelectedAudioIndex(newIndex);
+                      // Force audio element to reload with new source
+                      if (audioRef.current) {
+                        audioRef.current.load();
+                      }
+                    }}
+                    className="bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  >
+                    {todaysBird.audioUrl.map((_, index) => (
+                      <option key={index} value={index}>
+                        Recording {index + 1}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
+              
               {todaysBird && (
                 <audio
                   ref={audioRef}
-                  src={todaysBird.audioUrl}
+                  src={Array.isArray(todaysBird.audioUrl) 
+                    ? todaysBird.audioUrl[selectedAudioIndex] 
+                    : todaysBird.audioUrl
+                  }
                   onEnded={handleAudioEnded}
                   onError={handleAudioError}
-                  preload="metadata"
+                  onLoadStart={() => {
+                    // Clear any previous audio errors when starting to load new source
+                    setAudioError(false);
+                  }}
+                  preload="none"
+                  key={`${todaysBird.id || 'bird'}-${selectedAudioIndex}`}
                 />
               )}
-
+              
               <button
                 onClick={toggleAudio}
                 disabled={!todaysBird || audioError || loadingBird}
@@ -397,7 +436,7 @@ export default function AudioBirdle() {
                   </>
                 )}
               </button>
-
+              
               {audioError && (
                 <p className="text-red-500 text-sm mt-2">
                   Audio did not load - please try reloading the page
