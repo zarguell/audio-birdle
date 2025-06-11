@@ -1,0 +1,14 @@
+{
+  "output": {
+    "style": "markdown",
+    "filePath": "repomix-output.md",
+    "compress": false,
+    "removeComments": true,
+    "showLineNumbers": false,
+    "topFilesLength": 20
+  },
+  "include": ["src/App.jsx", "src/utils/PracticeGame.jsx", "src/utils/Constants.jsx", "demo-data/**"],
+  "ignore": {
+    "customPatterns": ["**/*.svg"]
+  }
+}

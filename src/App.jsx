@@ -1,15 +1,16 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Play, Pause, Settings, Share2, Volume2, MapPin, RefreshCw, Info, BarChart3 } from 'lucide-react';
 
-// Utility imports
+import React, { useState, useEffect, useRef } from 'react';
+import { Play, Pause, Settings, Share2, Volume2, MapPin, RefreshCw, Info, BarChart3, Target } from 'lucide-react';
+
+import PracticeGame from './utils/PracticeGame';
 import CountdownToMidnight from './utils/CountdownToMidnight';
 import { loadGameData } from './utils/LoadGameData';
 import { getTodayString, formatDateForDisplay } from './utils/DateUtils';
 import { getStoredData, setStoredData } from './utils/StorageUtils';
-import { 
-  getDailyBird, 
+import {
+  getDailyBird,
   getDailyBirdWithFallback,
-  generateAnswerOptions, 
+  generateAnswerOptions,
   createInitialGameState,
   getDailyGameState,
   processGuess,
@@ -20,38 +21,34 @@ import { generateShareText, shareResult } from './utils/ShareUtils';
 import { createAudioControls } from './utils/AudioUtils';
 import { STORAGE_KEYS, GAME_CONFIG, VIEWS } from './utils/Constants';
 
-// Main App Component
 export default function AudioBirdle() {
-  // State management
+  // Data state
   const [regions, setRegions] = useState([]);
   const [birds, setBirds] = useState({});
   const [currentView, setCurrentView] = useState(VIEWS.GAME);
-  const [selectedRegion, setSelectedRegion] = useState(() => 
+  const [selectedRegion, setSelectedRegion] = useState(() =>
     getStoredData(STORAGE_KEYS.REGION, null)
   );
-  
-  // Updated game state structure
+
+  // Game state
   const [gameState, setGameState] = useState(() => {
     const stored = getStoredData(STORAGE_KEYS.GAME_STATE, null);
     return stored || createInitialGameState();
   });
-  
+
   const [isPlaying, setIsPlaying] = useState(false);
   const [audioError, setAudioError] = useState(false);
   const audioRef = useRef(null);
 
-  // State for audio selection
+  // Audio selector state
   const [selectedAudioIndex, setSelectedAudioIndex] = useState(0);
 
-  // Get current date
   const today = getTodayString();
-  
-  // console.log(`Today's date: ${today}`);
 
-  // Get current daily game state
+  // Current daily game state
   const currentDailyGame = selectedRegion ? getDailyGameState(gameState, selectedRegion, today) : null;
 
-  // Load game data on mount
+  // Load initial data
   useEffect(() => {
     loadGameData()
       .then(({ regions, birds }) => {
@@ -61,7 +58,7 @@ export default function AudioBirdle() {
       .catch(console.error);
   }, []);
 
-  // State for today's bird
+  // Bird loading state
   const [todaysBird, setTodaysBird] = useState(null);
   const [loadingBird, setLoadingBird] = useState(false);
 
@@ -69,7 +66,7 @@ export default function AudioBirdle() {
     setSelectedAudioIndex(0);
   }, [todaysBird]);
 
-  // Load today's bird when region changes or on first load
+  // Load today's bird when region changes
   useEffect(() => {
     if (selectedRegion && birds[selectedRegion]) {
       setLoadingBird(true);
@@ -80,7 +77,7 @@ export default function AudioBirdle() {
         })
         .catch(error => {
           console.error('Failed to load today\'s bird:', error);
-          // Fallback to synchronous method
+          // Fallback to deterministic bird selection
           const fallbackBird = getDailyBird(selectedRegion, birds[selectedRegion], today);
           setTodaysBird(fallbackBird);
           setLoadingBird(false);
@@ -88,21 +85,21 @@ export default function AudioBirdle() {
     }
   }, [selectedRegion, birds, today]);
 
-  // Get answer options
+  // Generate answer options
   const answerOptions = generateAnswerOptions(
-    selectedRegion, 
-    birds, 
-    today, 
-    todaysBird, 
+    selectedRegion,
+    birds,
+    today,
+    todaysBird,
     GAME_CONFIG.ANSWER_OPTIONS_COUNT
   );
 
-  // Save game state when it changes
+  // Persist game state
   useEffect(() => {
     setStoredData(STORAGE_KEYS.GAME_STATE, gameState);
   }, [gameState]);
 
-  // Save selected region
+  // Persist selected region
   useEffect(() => {
     if (selectedRegion) {
       setStoredData(STORAGE_KEYS.REGION, selectedRegion);
@@ -136,10 +133,10 @@ export default function AudioBirdle() {
     setIsPlaying(false);
   };
 
-  // Game logic - updated to use new structure
+  // Game actions
   const makeGuess = (birdId) => {
     if (!todaysBird || !selectedRegion) return;
-    
+
     const newGameState = processGuess(gameState, selectedRegion, today, birdId, todaysBird.id);
     setGameState(newGameState);
   };
@@ -147,34 +144,33 @@ export default function AudioBirdle() {
   // Share functionality
   const handleShareResult = async () => {
     if (!currentDailyGame) return;
-    
+
     const shareText = generateShareText(currentDailyGame, window.location.href);
     await shareResult(shareText);
   };
 
-  // Reset current day's game (for testing)
+  // Reset functions
   const resetTodaysGame = () => {
     if (!selectedRegion) return;
-    
+
     const newGameState = { ...gameState };
     const key = `${selectedRegion}-${today}`;
     delete newGameState.dailyGames[key];
     setGameState(newGameState);
   };
 
-  // Reset all game data
   const resetAllData = () => {
     const newGameState = createInitialGameState();
     setGameState(newGameState);
   };
 
-  // Auto-detect location (mock implementation)
+  // Auto-detect location (placeholder)
   const autoDetectLocation = () => {
-    // In a real app, this would use geolocation API
+    // For now, default to US
     setSelectedRegion('us');
   };
 
-  // Render components
+  // Region selector view
   const renderRegionSelector = () => (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 p-4">
       <div className="max-w-md mx-auto pt-16">
@@ -217,12 +213,12 @@ export default function AudioBirdle() {
 
   const renderStats = () => {
     const stats = getUserPerformanceSummary(gameState);
-    
+
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 p-4">
         <div className="max-w-md mx-auto pt-8">
           <div className="flex items-center gap-2 mb-6">
-            <button 
+            <button
               onClick={() => setCurrentView(VIEWS.SETTINGS)}
               className="text-blue-500 hover:text-blue-600"
             >
@@ -232,7 +228,7 @@ export default function AudioBirdle() {
           </div>
 
           <div className="bg-white rounded-xl shadow-lg p-6 space-y-6">
-            {/* Overall Stats */}
+            {/* Overall stats */}
             <div>
               <h3 className="font-semibold text-lg mb-3">Overall Performance</h3>
               <div className="grid grid-cols-2 gap-4">
@@ -255,7 +251,7 @@ export default function AudioBirdle() {
               </div>
             </div>
 
-            {/* Region Breakdown */}
+            {/* Regional breakdown */}
             {stats.regionBreakdown.length > 0 && (
               <div>
                 <h3 className="font-semibold text-lg mb-3">By Region</h3>
@@ -296,7 +292,7 @@ export default function AudioBirdle() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 p-4">
       <div className="max-w-md mx-auto pt-8">
         <div className="flex items-center gap-2 mb-6">
-          <button 
+          <button
             onClick={() => setCurrentView(VIEWS.GAME)}
             className="text-blue-500 hover:text-blue-600"
           >
@@ -353,18 +349,27 @@ export default function AudioBirdle() {
   const renderGame = () => (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 p-4">
       <div className="max-w-md mx-auto pt-8">
-        {/* Header */}
+        {/* Header with mode toggle */}
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-bold text-gray-800">🐦 Audio-Birdle</h1>
-          <button
-            onClick={() => setCurrentView(VIEWS.SETTINGS)}
-            className="p-2 text-gray-600 hover:text-gray-800 transition-colors"
-          >
-            <Settings className="w-5 h-5" />
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setCurrentView(VIEWS.PRACTICE)}
+              className="bg-purple-500 text-white px-3 py-2 rounded-lg hover:bg-purple-600 transition-colors flex items-center gap-2 text-sm"
+            >
+              <Target className="w-4 h-4" />
+              Practice
+            </button>
+            <button
+              onClick={() => setCurrentView(VIEWS.SETTINGS)}
+              className="p-2 text-gray-600 hover:text-gray-800 transition-colors"
+            >
+              <Settings className="w-5 h-5" />
+            </button>
+          </div>
         </div>
 
-        {/* Game Card */}
+        {/* Game content */}
         <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
           <div className="text-center mb-6">
             <p className="text-gray-600 mb-2">
@@ -375,12 +380,12 @@ export default function AudioBirdle() {
             </p>
           </div>
 
-          {/* Audio Player */}
+          {/* Audio player section */}
           <div className="mb-6">
             <div className="bg-gray-50 rounded-lg p-6 text-center">
               <Volume2 className="w-12 h-12 mx-auto mb-4 text-gray-400" />
-              
-              {/* Audio Selection Dropdown */}
+
+              {/* Audio selector for multiple recordings */}
               {todaysBird && Array.isArray(todaysBird.audioUrl) && todaysBird.audioUrl.length > 1 && (
                 <div className="mb-4">
                   <select
@@ -388,7 +393,7 @@ export default function AudioBirdle() {
                     onChange={(e) => {
                       const newIndex = parseInt(e.target.value);
                       setSelectedAudioIndex(newIndex);
-                      // Force audio element to reload with new source
+                      // Force audio reload
                       if (audioRef.current) {
                         audioRef.current.load();
                       }
@@ -403,25 +408,25 @@ export default function AudioBirdle() {
                   </select>
                 </div>
               )}
-              
+
               {todaysBird && (
                 <audio
                   ref={audioRef}
-                  src={Array.isArray(todaysBird.audioUrl) 
-                    ? todaysBird.audioUrl[selectedAudioIndex] 
+                  src={Array.isArray(todaysBird.audioUrl)
+                    ? todaysBird.audioUrl[selectedAudioIndex]
                     : todaysBird.audioUrl
                   }
                   onEnded={handleAudioEnded}
                   onError={handleAudioError}
                   onLoadStart={() => {
-                    // Clear any previous audio errors when starting to load new source
+                    // Reset error state when starting to load
                     setAudioError(false);
                   }}
                   preload="none"
                   key={`${todaysBird.id || 'bird'}-${selectedAudioIndex}`}
                 />
               )}
-              
+
               <button
                 onClick={toggleAudio}
                 disabled={!todaysBird || audioError || loadingBird}
@@ -436,7 +441,7 @@ export default function AudioBirdle() {
                   </>
                 )}
               </button>
-              
+
               {audioError && (
                 <p className="text-red-500 text-sm mt-2">
                   Audio did not load - please try reloading the page
@@ -445,7 +450,7 @@ export default function AudioBirdle() {
             </div>
           </div>
 
-          {/* Guess History */}
+          {/* Previous guesses */}
           {currentDailyGame && currentDailyGame.guesses.length > 0 && (
             <div className="mb-4">
               <h3 className="font-semibold mb-2">Your Guesses:</h3>
@@ -474,7 +479,7 @@ export default function AudioBirdle() {
             </div>
           )}
 
-          {/* Answer Options */}
+          {/* Answer choices */}
           {currentDailyGame && !currentDailyGame.completed && (
             <div className="space-y-2">
               <h3 className="font-semibold mb-2">
@@ -493,13 +498,13 @@ export default function AudioBirdle() {
             </div>
           )}
 
-          {/* Game Results */}
+          {/* Game completed state */}
           {currentDailyGame && currentDailyGame.completed && (
             <div className="text-center">
               <div className={`text-2xl font-bold mb-2 ${currentDailyGame.won ? 'text-green-600' : 'text-red-600'}`}>
                 {currentDailyGame.won ? '🎉 Well done!' : '😔 Better luck tomorrow!'}
               </div>
-              
+
               <div className="bg-gray-50 rounded-lg p-4 mb-4">
                 <h3 className="font-semibold mb-2">Today's Bird:</h3>
                 <div className="text-lg font-medium">{todaysBird?.name}</div>
@@ -514,7 +519,7 @@ export default function AudioBirdle() {
                   <Share2 className="w-4 h-4" />
                   Share Result
                 </button>
-                
+
                 <button
                   onClick={() => alert('More info about this bird would appear here!')}
                   className="flex-1 bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors flex items-center justify-center gap-2"
@@ -527,7 +532,7 @@ export default function AudioBirdle() {
           )}
         </div>
 
-        {/* Progress Indicator */}
+        {/* Countdown to next bird */}
         <div className="text-center text-sm text-gray-500">
           Next bird in: <CountdownToMidnight />
         </div>
@@ -538,6 +543,17 @@ export default function AudioBirdle() {
   // Main render logic
   if (!selectedRegion) {
     return renderRegionSelector();
+  }
+
+  if (currentView === VIEWS.PRACTICE) {
+    return (
+      <PracticeGame
+        region={selectedRegion}
+        birds={birds}
+        regions={regions}
+        onBack={() => setCurrentView(VIEWS.GAME)}
+      />
+    );
   }
 
   if (currentView === VIEWS.SETTINGS) {
