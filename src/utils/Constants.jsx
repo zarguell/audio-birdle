@@ -1,5 +1,3 @@
-// Game constants
-
 export const STORAGE_KEYS = {
   REGION: 'audio-birdle-region',
   GAME_STATE: 'audio-birdle-game-state'
@@ -12,6 +10,7 @@ export const GAME_CONFIG = {
 
 export const VIEWS = {
   GAME: 'game',
+  PRACTICE: 'practice',
   SETTINGS: 'settings',
   REGION_SELECTOR: 'region-selector'
 };
