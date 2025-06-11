@@ -1,6 +1,6 @@
 # 🎧🐦 Audio Birdle
 
-[Play Audio Birdle](https://audio-birdle.sechostlabs.com) | [View on GitHub](https://github.com/zarguell/audio-birdle)
+[Play Audio Birdle](https://audio-birdle.sechostlab.com) | [View on GitHub](https://github.com/zarguell/audio-birdle)
 
 **Audio Birdle** is a daily audio-based bird guessing game inspired by Wordle — but with birds! Listen to the daily mystery bird call and choose the correct species from four options. Built as a fully static, client-side app using React, Vite, and TailwindCSS, Audio Birdle brings the world of birdsong to your browser.
 
