@@ -33,6 +33,7 @@ Here are some planned features and improvements:
 * 🧪 Add linters, unit tests, and integration tests to ensure code quality.
 * 🌍 Support internationalization/localization (multi-language support).
 * 🖼️ Add optional image clues or fun bird facts.
+* 📊 Additional statistics and scoring metrics, including historic view of challenges.
 * 🛠️ General dev tooling and codebase improvements.
 
 ---
