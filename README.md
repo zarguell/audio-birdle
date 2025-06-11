@@ -6,6 +6,8 @@
 
 > **Alpha Notice:** This project is currently in alpha. While we strive to keep the core experience stable, expect things to evolve as development progresses!
 
+I created this game with inspiration from Mitch's amazing project [Birdle](https://github.com/mitchbeebe/new-birdle). As a birder, I also wanted to practice my skills at sound ID in an audio-based game (and maybe one day be less dependent on Merlin Sound ID 😅), so I set out to develop this game. If you haven't checked out Birdle, please give it a look here! https://www.play-birdle.com
+
 ---
 
 ## 🚀 Features
