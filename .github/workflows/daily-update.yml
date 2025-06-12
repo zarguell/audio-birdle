@@ -25,6 +25,13 @@ jobs:
       - name: Install dependencies
         run: pip install -r scripts/requirements.txt
 
+      - name: Set up .env from secrets
+        run: |
+          printf "EBIRD_API_KEY=%s\n" "${EBIRD_API_KEY}" > .env
+        env:
+          EBIRD_API_KEY: ${{ secrets.EBIRD_API_KEY }}
+
+
       - name: Run daily script to find birds in every subregion available
         run: |
           for file in ./scripts/data/regions/*-subregions.json; do
