@@ -68,6 +68,10 @@ def process_taxonomy_data(taxonomy_data: List[Dict[str, Any]],
         species_code = bird.get('speciesCode', '')
         com_name = bird.get('comName', '')
         sci_name = bird.get('sciName', '')
+        order = bird.get('order', '')
+        family_com_name = bird.get('familyComName', '')
+        family_sci_name = bird.get('familySciName', '')
+        family = family_sci_name + ' (' + family_com_name + ')' if family_com_name else family_sci_name
         
         # Skip if essential data is missing
         if not all([species_code, com_name, sci_name]):
@@ -82,6 +86,8 @@ def process_taxonomy_data(taxonomy_data: List[Dict[str, Any]],
                 "id": create_bird_id(species_code),
                 "name": com_name,
                 "scientificName": sci_name,
+                "order": order,
+                "family": family,
                 "audioUrl": audio_urls
             }
             birds.append(bird_entry)
