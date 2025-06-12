@@ -386,13 +386,30 @@ export const generateAnswerOptions = (region, birds, date, correctBird, optionCo
   // Get birds that aren't the correct answer
   const availableBirds = regionBirds.filter(bird => bird.id !== correctBird.id);
   
-  // Deterministically select wrong answers
-  const selectedWrongBirds = [];
-  const shuffledAvailable = deterministicShuffle(availableBirds, seed);
+  // First, try to get birds from the same family as the correct bird
+  const sameFamilyBirds = availableBirds.filter(bird => bird.family === correctBird.family);
   
-  // Take the first (optionCount - 1) birds from the shuffled list
-  for (let i = 0; i < Math.min(optionCount - 1, shuffledAvailable.length); i++) {
-    selectedWrongBirds.push(shuffledAvailable[i]);
+  let selectedWrongBirds = [];
+  
+  if (sameFamilyBirds.length >= optionCount - 1) {
+    // We have enough birds from the same family
+    const shuffledSameFamily = deterministicShuffle(sameFamilyBirds, seed);
+    selectedWrongBirds = shuffledSameFamily.slice(0, optionCount - 1);
+  } else {
+    // Not enough birds from same family, use all available same-family birds
+    // and fill the rest from the entire available list
+    const shuffledSameFamily = deterministicShuffle(sameFamilyBirds, seed);
+    selectedWrongBirds = [...shuffledSameFamily];
+    
+    // Get remaining birds (excluding same family birds and correct bird)
+    const remainingBirds = availableBirds.filter(bird => bird.family !== correctBird.family);
+    const shuffledRemaining = deterministicShuffle(remainingBirds, seed);
+    
+    // Add birds from other families to reach the desired count
+    const stillNeeded = optionCount - 1 - selectedWrongBirds.length;
+    for (let i = 0; i < Math.min(stillNeeded, shuffledRemaining.length); i++) {
+      selectedWrongBirds.push(shuffledRemaining[i]);
+    }
   }
   
   // Combine correct answer with wrong answers

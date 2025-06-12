@@ -65,21 +65,40 @@ export const getPracticeBird = (region, birds, practiceIndex) => {
  */
 export const generatePracticeAnswerOptions = (region, birds, practiceIndex, correctBird, optionCount = 4) => {
   if (!birds[region] || !correctBird) return [];
-
+  
   const regionBirds = birds[region];
   const seed = hashString(`practice-options-${region}-${practiceIndex}-${correctBird.id}`);
   const random = createSeededRandom(seed);
-
-  // Get wrong birds excluding the correct one
+  
+  // Get birds that aren't the correct answer
   const availableBirds = regionBirds.filter(bird => bird.id !== correctBird.id);
-  const selectedWrongBirds = [];
-  const shuffledAvailable = deterministicShuffle(availableBirds, seed);
-
-  // Select wrong options
-  for (let i = 0; i < Math.min(optionCount - 1, shuffledAvailable.length); i++) {
-    selectedWrongBirds.push(shuffledAvailable[i]);
+  
+  // First, try to get birds from the same family as the correct bird
+  const sameFamilyBirds = availableBirds.filter(bird => bird.family === correctBird.family);
+  
+  let selectedWrongBirds = [];
+  
+  if (sameFamilyBirds.length >= optionCount - 1) {
+    // We have enough birds from the same family
+    const shuffledSameFamily = deterministicShuffle(sameFamilyBirds, seed);
+    selectedWrongBirds = shuffledSameFamily.slice(0, optionCount - 1);
+  } else {
+    // Not enough birds from same family, use all available same-family birds
+    // and fill the rest from the entire available list
+    const shuffledSameFamily = deterministicShuffle(sameFamilyBirds, seed);
+    selectedWrongBirds = [...shuffledSameFamily];
+    
+    // Get remaining birds (excluding same family birds and correct bird)
+    const remainingBirds = availableBirds.filter(bird => bird.family !== correctBird.family);
+    const shuffledRemaining = deterministicShuffle(remainingBirds, seed);
+    
+    // Add birds from other families to reach the desired count
+    const stillNeeded = optionCount - 1 - selectedWrongBirds.length;
+    for (let i = 0; i < Math.min(stillNeeded, shuffledRemaining.length); i++) {
+      selectedWrongBirds.push(shuffledRemaining[i]);
+    }
   }
-
+  
   // Combine and shuffle all options
   const allOptions = [correctBird, ...selectedWrongBirds];
   const finalSeed = hashString(`practice-final-${region}-${practiceIndex}-${correctBird.id}`);
