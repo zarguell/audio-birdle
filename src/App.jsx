@@ -20,7 +20,7 @@ import {
 import { generateShareText, shareResult } from './utils/ShareUtils';
 import { createAudioControls } from './utils/AudioUtils';
 import { STORAGE_KEYS, GAME_CONFIG, VIEWS } from './utils/Constants';
-import { SubregionDisplay } from './utils/subregionUtils';
+import { SubregionDisplay } from './utils/SubregionUtils';
 
 export default function AudioBirdle() {
   // Data state
