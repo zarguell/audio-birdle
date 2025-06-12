@@ -40,11 +40,6 @@ def load_existing_output(filepath: str) -> Dict[str, Any]:
     return {}
 
 
-def create_bird_id(species_code: str) -> str:
-    """Create a bird ID from species code (first 4 characters)."""
-    return species_code[:4] if len(species_code) >= 4 else species_code
-
-
 def group_urls_by_code(urls_data: List[Dict[str, Any]]) -> Dict[str, List[str]]:
     """Group audio URLs by species code."""
     url_groups = defaultdict(list)
@@ -83,7 +78,7 @@ def process_taxonomy_data(taxonomy_data: List[Dict[str, Any]],
         # Only include birds that have audio URLs
         if audio_urls:
             bird_entry = {
-                "id": create_bird_id(species_code),
+                "id": species_code,
                 "name": com_name,
                 "scientificName": sci_name,
                 "order": order,
