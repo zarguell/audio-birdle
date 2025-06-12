@@ -1,7 +1,7 @@
 {
   "us": [
     {
-      "id": "bbwd",
+      "id": "bbwduc",
       "name": "Black-bellied Whistling-Duck",
       "scientificName": "Dendrocygna autumnalis",
       "order": "Anseriformes",
@@ -20,7 +20,7 @@
       ]
     },
     {
-      "id": "snog",
+      "id": "snogoo",
       "name": "Snow Goose",
       "scientificName": "Anser caerulescens",
       "order": "Anseriformes",
@@ -32,7 +32,7 @@
       ]
     },
     {
-      "id": "bran",
+      "id": "brant",
       "name": "Brant",
       "scientificName": "Branta bernicla",
       "order": "Anseriformes",
@@ -43,7 +43,7 @@
       ]
     },
     {
-      "id": "cacg",
+      "id": "cacgoo1",
       "name": "Cackling Goose",
       "scientificName": "Branta hutchinsii",
       "order": "Anseriformes",
@@ -58,7 +58,7 @@
       ]
     },
     {
-      "id": "cang",
+      "id": "cangoo",
       "name": "Canada Goose",
       "scientificName": "Branta canadensis",
       "order": "Anseriformes",
@@ -77,7 +77,7 @@
       ]
     },
     {
-      "id": "muts",
+      "id": "mutswa",
       "name": "Mute Swan",
       "scientificName": "Cygnus olor",
       "order": "Anseriformes",
@@ -89,7 +89,7 @@
       ]
     },
     {
-      "id": "trus",
+      "id": "truswa",
       "name": "Trumpeter Swan",
       "scientificName": "Cygnus buccinator",
       "order": "Anseriformes",
@@ -108,7 +108,7 @@
       ]
     },
     {
-      "id": "tuns",
+      "id": "tunswa",
       "name": "Tundra Swan",
       "scientificName": "Cygnus columbianus",
       "order": "Anseriformes",
@@ -127,7 +127,7 @@
       ]
     },
     {
-      "id": "wood",
+      "id": "wooduc",
       "name": "Wood Duck",
       "scientificName": "Aix sponsa",
       "order": "Anseriformes",
@@ -146,7 +146,7 @@
       ]
     },
     {
-      "id": "buwt",
+      "id": "buwtea",
       "name": "Blue-winged Teal",
       "scientificName": "Spatula discors",
       "order": "Anseriformes",
@@ -161,7 +161,7 @@
       ]
     },
     {
-      "id": "cint",
+      "id": "cintea",
       "name": "Cinnamon Teal",
       "scientificName": "Spatula cyanoptera",
       "order": "Anseriformes",
@@ -175,7 +175,7 @@
       ]
     },
     {
-      "id": "nors",
+      "id": "norsho",
       "name": "Northern Shoveler",
       "scientificName": "Spatula clypeata",
       "order": "Anseriformes",
@@ -188,7 +188,7 @@
       ]
     },
     {
-      "id": "gadw",
+      "id": "gadwal",
       "name": "Gadwall",
       "scientificName": "Mareca strepera",
       "order": "Anseriformes",
@@ -207,7 +207,7 @@
       ]
     },
     {
-      "id": "amew",
+      "id": "amewig",
       "name": "American Wigeon",
       "scientificName": "Mareca americana",
       "order": "Anseriformes",
@@ -226,7 +226,7 @@
       ]
     },
     {
-      "id": "mall",
+      "id": "mallar3",
       "name": "Mallard",
       "scientificName": "Anas platyrhynchos",
       "order": "Anseriformes",
@@ -245,7 +245,7 @@
       ]
     },
     {
-      "id": "ambd",
+      "id": "ambduc",
       "name": "American Black Duck",
       "scientificName": "Anas rubripes",
       "order": "Anseriformes",
@@ -256,7 +256,7 @@
       ]
     },
     {
-      "id": "norp",
+      "id": "norpin",
       "name": "Northern Pintail",
       "scientificName": "Anas acuta",
       "order": "Anseriformes",
@@ -275,7 +275,7 @@
       ]
     },
     {
-      "id": "gnwt",
+      "id": "gnwtea",
       "name": "Green-winged Teal",
       "scientificName": "Anas crecca",
       "order": "Anseriformes",
@@ -294,7 +294,7 @@
       ]
     },
     {
-      "id": "canv",
+      "id": "canvas",
       "name": "Canvasback",
       "scientificName": "Aythya valisineria",
       "order": "Anseriformes",
@@ -308,7 +308,7 @@
       ]
     },
     {
-      "id": "redh",
+      "id": "redhea",
       "name": "Redhead",
       "scientificName": "Aythya americana",
       "order": "Anseriformes",
@@ -327,7 +327,7 @@
       ]
     },
     {
-      "id": "rind",
+      "id": "rinduc",
       "name": "Ring-necked Duck",
       "scientificName": "Aythya collaris",
       "order": "Anseriformes",
@@ -346,7 +346,7 @@
       ]
     },
     {
-      "id": "gres",
+      "id": "gresca",
       "name": "Greater Scaup",
       "scientificName": "Aythya marila",
       "order": "Anseriformes",
@@ -356,7 +356,7 @@
       ]
     },
     {
-      "id": "less",
+      "id": "lessca",
       "name": "Lesser Scaup",
       "scientificName": "Aythya affinis",
       "order": "Anseriformes",
@@ -366,7 +366,7 @@
       ]
     },
     {
-      "id": "stee",
+      "id": "steeid",
       "name": "Steller's Eider",
       "scientificName": "Polysticta stelleri",
       "order": "Anseriformes",
@@ -376,7 +376,7 @@
       ]
     },
     {
-      "id": "kine",
+      "id": "kineid",
       "name": "King Eider",
       "scientificName": "Somateria spectabilis",
       "order": "Anseriformes",
@@ -391,7 +391,7 @@
       ]
     },
     {
-      "id": "come",
+      "id": "comeid",
       "name": "Common Eider",
       "scientificName": "Somateria mollissima",
       "order": "Anseriformes",
@@ -407,7 +407,7 @@
       ]
     },
     {
-      "id": "hard",
+      "id": "harduc",
       "name": "Harlequin Duck",
       "scientificName": "Histrionicus histrionicus",
       "order": "Anseriformes",
@@ -418,7 +418,7 @@
       ]
     },
     {
-      "id": "blks",
+      "id": "blksco2",
       "name": "Black Scoter",
       "scientificName": "Melanitta americana",
       "order": "Anseriformes",
@@ -437,7 +437,7 @@
       ]
     },
     {
-      "id": "lotd",
+      "id": "lotduc",
       "name": "Long-tailed Duck",
       "scientificName": "Clangula hyemalis",
       "order": "Anseriformes",
@@ -456,7 +456,7 @@
       ]
     },
     {
-      "id": "buff",
+      "id": "buffle",
       "name": "Bufflehead",
       "scientificName": "Bucephala albeola",
       "order": "Anseriformes",
@@ -470,7 +470,7 @@
       ]
     },
     {
-      "id": "comg",
+      "id": "comgol",
       "name": "Common Goldeneye",
       "scientificName": "Bucephala clangula",
       "order": "Anseriformes",
@@ -489,7 +489,7 @@
       ]
     },
     {
-      "id": "barg",
+      "id": "bargol",
       "name": "Barrow's Goldeneye",
       "scientificName": "Bucephala islandica",
       "order": "Anseriformes",
@@ -499,7 +499,7 @@
       ]
     },
     {
-      "id": "hoom",
+      "id": "hoomer",
       "name": "Hooded Merganser",
       "scientificName": "Lophodytes cucullatus",
       "order": "Anseriformes",
@@ -518,7 +518,7 @@
       ]
     },
     {
-      "id": "comm",
+      "id": "commer",
       "name": "Common Merganser",
       "scientificName": "Mergus merganser",
       "order": "Anseriformes",
@@ -537,7 +537,7 @@
       ]
     },
     {
-      "id": "rebm",
+      "id": "rebmer",
       "name": "Red-breasted Merganser",
       "scientificName": "Mergus serrator",
       "order": "Anseriformes",
@@ -553,7 +553,7 @@
       ]
     },
     {
-      "id": "rudd",
+      "id": "rudduc",
       "name": "Ruddy Duck",
       "scientificName": "Oxyura jamaicensis",
       "order": "Anseriformes",
@@ -572,7 +572,7 @@
       ]
     },
     {
-      "id": "plac",
+      "id": "placha",
       "name": "Plain Chachalaca",
       "scientificName": "Ortalis vetula",
       "order": "Galliformes",
@@ -590,7 +590,7 @@
       ]
     },
     {
-      "id": "mouq",
+      "id": "mouqua",
       "name": "Mountain Quail",
       "scientificName": "Oreortyx pictus",
       "order": "Galliformes",
@@ -609,7 +609,7 @@
       ]
     },
     {
-      "id": "norb",
+      "id": "norbob",
       "name": "Northern Bobwhite",
       "scientificName": "Colinus virginianus",
       "order": "Galliformes",
@@ -628,7 +628,7 @@
       ]
     },
     {
-      "id": "scaq",
+      "id": "scaqua",
       "name": "Scaled Quail",
       "scientificName": "Callipepla squamata",
       "order": "Galliformes",
@@ -647,7 +647,7 @@
       ]
     },
     {
-      "id": "calq",
+      "id": "calqua",
       "name": "California Quail",
       "scientificName": "Callipepla californica",
       "order": "Galliformes",
@@ -666,7 +666,7 @@
       ]
     },
     {
-      "id": "gamq",
+      "id": "gamqua",
       "name": "Gambel's Quail",
       "scientificName": "Callipepla gambelii",
       "order": "Galliformes",
@@ -685,7 +685,7 @@
       ]
     },
     {
-      "id": "monq",
+      "id": "monqua",
       "name": "Montezuma Quail",
       "scientificName": "Cyrtonyx montezumae",
       "order": "Galliformes",
@@ -704,7 +704,7 @@
       ]
     },
     {
-      "id": "wilt",
+      "id": "wiltur",
       "name": "Wild Turkey",
       "scientificName": "Meleagris gallopavo",
       "order": "Galliformes",
@@ -723,7 +723,7 @@
       ]
     },
     {
-      "id": "rufg",
+      "id": "rufgro",
       "name": "Ruffed Grouse",
       "scientificName": "Bonasa umbellus",
       "order": "Galliformes",
@@ -735,7 +735,7 @@
       ]
     },
     {
-      "id": "sagg",
+      "id": "saggro",
       "name": "Greater Sage-Grouse",
       "scientificName": "Centrocercus urophasianus",
       "order": "Galliformes",
@@ -754,7 +754,7 @@
       ]
     },
     {
-      "id": "gusg",
+      "id": "gusgro",
       "name": "Gunnison Sage-Grouse",
       "scientificName": "Centrocercus minimus",
       "order": "Galliformes",
@@ -765,7 +765,7 @@
       ]
     },
     {
-      "id": "dusg",
+      "id": "dusgro",
       "name": "Dusky Grouse",
       "scientificName": "Dendragapus obscurus",
       "order": "Galliformes",
@@ -784,7 +784,7 @@
       ]
     },
     {
-      "id": "soog",
+      "id": "soogro1",
       "name": "Sooty Grouse",
       "scientificName": "Dendragapus fuliginosus",
       "order": "Galliformes",
@@ -803,7 +803,7 @@
       ]
     },
     {
-      "id": "shtg",
+      "id": "shtgro",
       "name": "Sharp-tailed Grouse",
       "scientificName": "Tympanuchus phasianellus",
       "order": "Galliformes",
@@ -822,7 +822,7 @@
       ]
     },
     {
-      "id": "grpc",
+      "id": "grpchi",
       "name": "Greater Prairie-Chicken",
       "scientificName": "Tympanuchus cupido",
       "order": "Galliformes",
@@ -841,7 +841,7 @@
       ]
     },
     {
-      "id": "lepc",
+      "id": "lepchi",
       "name": "Lesser Prairie-Chicken",
       "scientificName": "Tympanuchus pallidicinctus",
       "order": "Galliformes",
@@ -860,7 +860,7 @@
       ]
     },
     {
-      "id": "whtp",
+      "id": "whtpta1",
       "name": "White-tailed Ptarmigan",
       "scientificName": "Lagopus leucura",
       "order": "Galliformes",
@@ -877,7 +877,7 @@
       ]
     },
     {
-      "id": "wilp",
+      "id": "wilpta",
       "name": "Willow Ptarmigan",
       "scientificName": "Lagopus lagopus",
       "order": "Galliformes",
@@ -896,7 +896,7 @@
       ]
     },
     {
-      "id": "sprg",
+      "id": "sprgro",
       "name": "Spruce Grouse",
       "scientificName": "Canachites canadensis",
       "order": "Galliformes",
@@ -907,7 +907,7 @@
       ]
     },
     {
-      "id": "rinp",
+      "id": "rinphe1",
       "name": "Ring-necked Pheasant",
       "scientificName": "Phasianus colchicus",
       "order": "Galliformes",
@@ -926,7 +926,7 @@
       ]
     },
     {
-      "id": "rinp",
+      "id": "rinphe2",
       "name": "Green Pheasant",
       "scientificName": "Phasianus versicolor",
       "order": "Galliformes",
@@ -936,7 +936,7 @@
       ]
     },
     {
-      "id": "comp",
+      "id": "compea",
       "name": "Indian Peafowl",
       "scientificName": "Pavo cristatus",
       "order": "Galliformes",
@@ -955,7 +955,7 @@
       ]
     },
     {
-      "id": "redj",
+      "id": "redjun",
       "name": "Red Junglefowl",
       "scientificName": "Gallus gallus",
       "order": "Galliformes",
@@ -974,7 +974,7 @@
       ]
     },
     {
-      "id": "gryf",
+      "id": "gryfra",
       "name": "Gray Francolin",
       "scientificName": "Ortygornis pondicerianus",
       "order": "Galliformes",
@@ -990,7 +990,7 @@
       ]
     },
     {
-      "id": "blkf",
+      "id": "blkfra",
       "name": "Black Francolin",
       "scientificName": "Francolinus francolinus",
       "order": "Galliformes",
@@ -1009,7 +1009,7 @@
       ]
     },
     {
-      "id": "hims",
+      "id": "himsno",
       "name": "Himalayan Snowcock",
       "scientificName": "Tetraogallus himalayensis",
       "order": "Galliformes",
@@ -1021,7 +1021,7 @@
       ]
     },
     {
-      "id": "comq",
+      "id": "comqua1",
       "name": "Common Quail",
       "scientificName": "Coturnix coturnix",
       "order": "Galliformes",
@@ -1031,7 +1031,7 @@
       ]
     },
     {
-      "id": "chuk",
+      "id": "chukar",
       "name": "Chukar",
       "scientificName": "Alectoris chukar",
       "order": "Galliformes",
@@ -1050,7 +1050,7 @@
       ]
     },
     {
-      "id": "ercf",
+      "id": "ercfra",
       "name": "Erckel's Spurfowl",
       "scientificName": "Pternistis erckelii",
       "order": "Galliformes",
@@ -1062,7 +1062,7 @@
       ]
     },
     {
-      "id": "rocp",
+      "id": "rocpig",
       "name": "Rock Pigeon",
       "scientificName": "Columba livia",
       "order": "Columbiformes",
@@ -1081,7 +1081,7 @@
       ]
     },
     {
-      "id": "whcp",
+      "id": "whcpig2",
       "name": "White-crowned Pigeon",
       "scientificName": "Patagioenas leucocephala",
       "order": "Columbiformes",
@@ -1099,7 +1099,7 @@
       ]
     },
     {
-      "id": "rebp",
+      "id": "rebpig1",
       "name": "Red-billed Pigeon",
       "scientificName": "Patagioenas flavirostris",
       "order": "Columbiformes",
@@ -1117,7 +1117,7 @@
       ]
     },
     {
-      "id": "batp",
+      "id": "batpig1",
       "name": "Band-tailed Pigeon",
       "scientificName": "Patagioenas fasciata",
       "order": "Columbiformes",
@@ -1136,7 +1136,7 @@
       ]
     },
     {
-      "id": "eucd",
+      "id": "eucdov",
       "name": "Eurasian Collared-Dove",
       "scientificName": "Streptopelia decaocto",
       "order": "Columbiformes",
@@ -1155,7 +1155,7 @@
       ]
     },
     {
-      "id": "afcd",
+      "id": "afcdov1",
       "name": "African Collared-Dove",
       "scientificName": "Streptopelia roseogrisea",
       "order": "Columbiformes",
@@ -1172,7 +1172,7 @@
       ]
     },
     {
-      "id": "spod",
+      "id": "spodov",
       "name": "Spotted Dove",
       "scientificName": "Spilopelia chinensis",
       "order": "Columbiformes",
@@ -1191,7 +1191,7 @@
       ]
     },
     {
-      "id": "zebd",
+      "id": "zebdov",
       "name": "Zebra Dove",
       "scientificName": "Geopelia striata",
       "order": "Columbiformes",
@@ -1210,7 +1210,7 @@
       ]
     },
     {
-      "id": "incd",
+      "id": "incdov",
       "name": "Inca Dove",
       "scientificName": "Columbina inca",
       "order": "Columbiformes",
@@ -1229,7 +1229,7 @@
       ]
     },
     {
-      "id": "cogd",
+      "id": "cogdov",
       "name": "Common Ground Dove",
       "scientificName": "Columbina passerina",
       "order": "Columbiformes",
@@ -1248,7 +1248,7 @@
       ]
     },
     {
-      "id": "rugd",
+      "id": "rugdov",
       "name": "Ruddy Ground Dove",
       "scientificName": "Columbina talpacoti",
       "order": "Columbiformes",
@@ -1267,7 +1267,7 @@
       ]
     },
     {
-      "id": "whtd",
+      "id": "whtdov",
       "name": "White-tipped Dove",
       "scientificName": "Leptotila verreauxi",
       "order": "Columbiformes",
@@ -1286,7 +1286,7 @@
       ]
     },
     {
-      "id": "whwd",
+      "id": "whwdov",
       "name": "White-winged Dove",
       "scientificName": "Zenaida asiatica",
       "order": "Columbiformes",
@@ -1305,7 +1305,7 @@
       ]
     },
     {
-      "id": "zend",
+      "id": "zendov",
       "name": "Zenaida Dove",
       "scientificName": "Zenaida aurita",
       "order": "Columbiformes",
@@ -1315,7 +1315,7 @@
       ]
     },
     {
-      "id": "moud",
+      "id": "moudov",
       "name": "Mourning Dove",
       "scientificName": "Zenaida macroura",
       "order": "Columbiformes",
@@ -1334,7 +1334,7 @@
       ]
     },
     {
-      "id": "smba",
+      "id": "smbani",
       "name": "Smooth-billed Ani",
       "scientificName": "Crotophaga ani",
       "order": "Cuculiformes",
@@ -1347,7 +1347,7 @@
       ]
     },
     {
-      "id": "grba",
+      "id": "grbani",
       "name": "Groove-billed Ani",
       "scientificName": "Crotophaga sulcirostris",
       "order": "Cuculiformes",
@@ -1363,7 +1363,7 @@
       ]
     },
     {
-      "id": "grer",
+      "id": "greroa",
       "name": "Greater Roadrunner",
       "scientificName": "Geococcyx californianus",
       "order": "Cuculiformes",
@@ -1382,7 +1382,7 @@
       ]
     },
     {
-      "id": "yebc",
+      "id": "yebcuc",
       "name": "Yellow-billed Cuckoo",
       "scientificName": "Coccyzus americanus",
       "order": "Cuculiformes",
@@ -1401,7 +1401,7 @@
       ]
     },
     {
-      "id": "manc",
+      "id": "mancuc",
       "name": "Mangrove Cuckoo",
       "scientificName": "Coccyzus minor",
       "order": "Cuculiformes",
@@ -1420,7 +1420,7 @@
       ]
     },
     {
-      "id": "bkbc",
+      "id": "bkbcuc",
       "name": "Black-billed Cuckoo",
       "scientificName": "Coccyzus erythropthalmus",
       "order": "Cuculiformes",
@@ -1439,7 +1439,7 @@
       ]
     },
     {
-      "id": "comc",
+      "id": "comcuc",
       "name": "Common Cuckoo",
       "scientificName": "Cuculus canorus",
       "order": "Cuculiformes",
@@ -1453,7 +1453,7 @@
       ]
     },
     {
-      "id": "lesn",
+      "id": "lesnig",
       "name": "Lesser Nighthawk",
       "scientificName": "Chordeiles acutipennis",
       "order": "Caprimulgiformes",
@@ -1472,7 +1472,7 @@
       ]
     },
     {
-      "id": "comn",
+      "id": "comnig",
       "name": "Common Nighthawk",
       "scientificName": "Chordeiles minor",
       "order": "Caprimulgiformes",
@@ -1491,7 +1491,7 @@
       ]
     },
     {
-      "id": "antn",
+      "id": "antnig",
       "name": "Antillean Nighthawk",
       "scientificName": "Chordeiles gundlachii",
       "order": "Caprimulgiformes",
@@ -1510,7 +1510,7 @@
       ]
     },
     {
-      "id": "comp",
+      "id": "compau",
       "name": "Common Pauraque",
       "scientificName": "Nyctidromus albicollis",
       "order": "Caprimulgiformes",
@@ -1529,7 +1529,7 @@
       ]
     },
     {
-      "id": "comp",
+      "id": "compoo",
       "name": "Common Poorwill",
       "scientificName": "Phalaenoptilus nuttallii",
       "order": "Caprimulgiformes",
@@ -1548,7 +1548,7 @@
       ]
     },
     {
-      "id": "chww",
+      "id": "chwwid",
       "name": "Chuck-will's-widow",
       "scientificName": "Antrostomus carolinensis",
       "order": "Caprimulgiformes",
@@ -1567,7 +1567,7 @@
       ]
     },
     {
-      "id": "bucn",
+      "id": "bucnig",
       "name": "Buff-collared Nightjar",
       "scientificName": "Antrostomus ridgwayi",
       "order": "Caprimulgiformes",
@@ -1586,7 +1586,7 @@
       ]
     },
     {
-      "id": "easw",
+      "id": "easwpw1",
       "name": "Eastern Whip-poor-will",
       "scientificName": "Antrostomus vociferus",
       "order": "Caprimulgiformes",
@@ -1605,7 +1605,7 @@
       ]
     },
     {
-      "id": "souw",
+      "id": "souwpw1",
       "name": "Mexican Whip-poor-will",
       "scientificName": "Antrostomus arizonae",
       "order": "Caprimulgiformes",
@@ -1624,7 +1624,7 @@
       ]
     },
     {
-      "id": "chis",
+      "id": "chiswi",
       "name": "Chimney Swift",
       "scientificName": "Chaetura pelagica",
       "order": "Apodiformes",
@@ -1643,7 +1643,7 @@
       ]
     },
     {
-      "id": "vaus",
+      "id": "vauswi",
       "name": "Vaux's Swift",
       "scientificName": "Chaetura vauxi",
       "order": "Apodiformes",
@@ -1656,7 +1656,7 @@
       ]
     },
     {
-      "id": "whts",
+      "id": "whtswi",
       "name": "White-throated Swift",
       "scientificName": "Aeronautes saxatalis",
       "order": "Apodiformes",
@@ -1674,7 +1674,7 @@
       ]
     },
     {
-      "id": "magh",
+      "id": "maghum1",
       "name": "Rivoli's Hummingbird",
       "scientificName": "Eugenes fulgens",
       "order": "Apodiformes",
@@ -1689,7 +1689,7 @@
       ]
     },
     {
-      "id": "buth",
+      "id": "buthum",
       "name": "Blue-throated Mountain-gem",
       "scientificName": "Lampornis clemenciae",
       "order": "Apodiformes",
@@ -1707,7 +1707,7 @@
       ]
     },
     {
-      "id": "luch",
+      "id": "luchum",
       "name": "Lucifer Hummingbird",
       "scientificName": "Calothorax lucifer",
       "order": "Apodiformes",
@@ -1725,7 +1725,7 @@
       ]
     },
     {
-      "id": "rthh",
+      "id": "rthhum",
       "name": "Ruby-throated Hummingbird",
       "scientificName": "Archilochus colubris",
       "order": "Apodiformes",
@@ -1744,7 +1744,7 @@
       ]
     },
     {
-      "id": "bkch",
+      "id": "bkchum",
       "name": "Black-chinned Hummingbird",
       "scientificName": "Archilochus alexandri",
       "order": "Apodiformes",
@@ -1763,7 +1763,7 @@
       ]
     },
     {
-      "id": "annh",
+      "id": "annhum",
       "name": "Anna's Hummingbird",
       "scientificName": "Calypte anna",
       "order": "Apodiformes",
@@ -1782,7 +1782,7 @@
       ]
     },
     {
-      "id": "cosh",
+      "id": "coshum",
       "name": "Costa's Hummingbird",
       "scientificName": "Calypte costae",
       "order": "Apodiformes",
@@ -1800,7 +1800,7 @@
       ]
     },
     {
-      "id": "calh",
+      "id": "calhum",
       "name": "Calliope Hummingbird",
       "scientificName": "Selasphorus calliope",
       "order": "Apodiformes",
@@ -1819,7 +1819,7 @@
       ]
     },
     {
-      "id": "rufh",
+      "id": "rufhum",
       "name": "Rufous Hummingbird",
       "scientificName": "Selasphorus rufus",
       "order": "Apodiformes",
@@ -1835,7 +1835,7 @@
       ]
     },
     {
-      "id": "allh",
+      "id": "allhum",
       "name": "Allen's Hummingbird",
       "scientificName": "Selasphorus sasin",
       "order": "Apodiformes",
@@ -1854,7 +1854,7 @@
       ]
     },
     {
-      "id": "brth",
+      "id": "brthum",
       "name": "Broad-tailed Hummingbird",
       "scientificName": "Selasphorus platycercus",
       "order": "Apodiformes",
@@ -1873,7 +1873,7 @@
       ]
     },
     {
-      "id": "brbh",
+      "id": "brbhum",
       "name": "Broad-billed Hummingbird",
       "scientificName": "Cynanthus latirostris",
       "order": "Apodiformes",
@@ -1892,7 +1892,7 @@
       ]
     },
     {
-      "id": "wheh",
+      "id": "whehum",
       "name": "White-eared Hummingbird",
       "scientificName": "Basilinna leucotis",
       "order": "Apodiformes",
@@ -1907,7 +1907,7 @@
       ]
     },
     {
-      "id": "vich",
+      "id": "vichum",
       "name": "Violet-crowned Hummingbird",
       "scientificName": "Ramosomyia violiceps",
       "order": "Apodiformes",
@@ -1926,7 +1926,7 @@
       ]
     },
     {
-      "id": "bubh",
+      "id": "bubhum",
       "name": "Buff-bellied Hummingbird",
       "scientificName": "Amazilia yucatanensis",
       "order": "Apodiformes",
@@ -1939,7 +1939,7 @@
       ]
     },
     {
-      "id": "ridr",
+      "id": "ridrai1",
       "name": "Ridgway's Rail",
       "scientificName": "Rallus obsoletus",
       "order": "Gruiformes",
@@ -1958,7 +1958,7 @@
       ]
     },
     {
-      "id": "kinr",
+      "id": "kinrai4",
       "name": "King Rail",
       "scientificName": "Rallus elegans",
       "order": "Gruiformes",
@@ -1977,7 +1977,7 @@
       ]
     },
     {
-      "id": "clar",
+      "id": "clarai11",
       "name": "Clapper Rail",
       "scientificName": "Rallus crepitans",
       "order": "Gruiformes",
@@ -1996,7 +1996,7 @@
       ]
     },
     {
-      "id": "virr",
+      "id": "virrai",
       "name": "Virginia Rail",
       "scientificName": "Rallus limicola",
       "order": "Gruiformes",
@@ -2034,7 +2034,7 @@
       ]
     },
     {
-      "id": "comg",
+      "id": "comgal1",
       "name": "Common Gallinule",
       "scientificName": "Gallinula galeata",
       "order": "Gruiformes",
@@ -2053,7 +2053,7 @@
       ]
     },
     {
-      "id": "y004",
+      "id": "y00475",
       "name": "American Coot",
       "scientificName": "Fulica americana",
       "order": "Gruiformes",
@@ -2072,7 +2072,7 @@
       ]
     },
     {
-      "id": "purg",
+      "id": "purgal2",
       "name": "Purple Gallinule",
       "scientificName": "Porphyrio martinica",
       "order": "Gruiformes",
@@ -2082,7 +2082,7 @@
       ]
     },
     {
-      "id": "purs",
+      "id": "purswa3",
       "name": "Gray-headed Swamphen",
       "scientificName": "Porphyrio poliocephalus",
       "order": "Gruiformes",
@@ -2093,7 +2093,7 @@
       ]
     },
     {
-      "id": "yelr",
+      "id": "yelrai",
       "name": "Yellow Rail",
       "scientificName": "Coturnicops noveboracensis",
       "order": "Gruiformes",
@@ -2112,7 +2112,7 @@
       ]
     },
     {
-      "id": "blkr",
+      "id": "blkrai",
       "name": "Black Rail",
       "scientificName": "Laterallus jamaicensis",
       "order": "Gruiformes",
@@ -2131,7 +2131,7 @@
       ]
     },
     {
-      "id": "limp",
+      "id": "limpki",
       "name": "Limpkin",
       "scientificName": "Aramus guarauna",
       "order": "Gruiformes",
@@ -2149,7 +2149,7 @@
       ]
     },
     {
-      "id": "sanc",
+      "id": "sancra",
       "name": "Sandhill Crane",
       "scientificName": "Antigone canadensis",
       "order": "Gruiformes",
@@ -2168,7 +2168,7 @@
       ]
     },
     {
-      "id": "whoc",
+      "id": "whocra",
       "name": "Whooping Crane",
       "scientificName": "Grus americana",
       "order": "Gruiformes",
@@ -2178,7 +2178,7 @@
       ]
     },
     {
-      "id": "bkns",
+      "id": "bknsti",
       "name": "Black-necked Stilt",
       "scientificName": "Himantopus mexicanus",
       "order": "Charadriiformes",
@@ -2192,7 +2192,7 @@
       ]
     },
     {
-      "id": "amea",
+      "id": "ameavo",
       "name": "American Avocet",
       "scientificName": "Recurvirostra americana",
       "order": "Charadriiformes",
@@ -2204,7 +2204,7 @@
       ]
     },
     {
-      "id": "ameo",
+      "id": "ameoys",
       "name": "American Oystercatcher",
       "scientificName": "Haematopus palliatus",
       "order": "Charadriiformes",
@@ -2223,7 +2223,7 @@
       ]
     },
     {
-      "id": "blko",
+      "id": "blkoys",
       "name": "Black Oystercatcher",
       "scientificName": "Haematopus bachmani",
       "order": "Charadriiformes",
@@ -2241,7 +2241,7 @@
       ]
     },
     {
-      "id": "bkbp",
+      "id": "bkbplo",
       "name": "Black-bellied Plover",
       "scientificName": "Pluvialis squatarola",
       "order": "Charadriiformes",
@@ -2254,7 +2254,7 @@
       ]
     },
     {
-      "id": "amgp",
+      "id": "amgplo",
       "name": "American Golden-Plover",
       "scientificName": "Pluvialis dominica",
       "order": "Charadriiformes",
@@ -2272,7 +2272,7 @@
       ]
     },
     {
-      "id": "pagp",
+      "id": "pagplo",
       "name": "Pacific Golden-Plover",
       "scientificName": "Pluvialis fulva",
       "order": "Charadriiformes",
@@ -2289,7 +2289,7 @@
       ]
     },
     {
-      "id": "kill",
+      "id": "killde",
       "name": "Killdeer",
       "scientificName": "Charadrius vociferus",
       "order": "Charadriiformes",
@@ -2308,7 +2308,7 @@
       ]
     },
     {
-      "id": "corp",
+      "id": "corplo",
       "name": "Common Ringed Plover",
       "scientificName": "Charadrius hiaticula",
       "order": "Charadriiformes",
@@ -2318,7 +2318,7 @@
       ]
     },
     {
-      "id": "semp",
+      "id": "semplo",
       "name": "Semipalmated Plover",
       "scientificName": "Charadrius semipalmatus",
       "order": "Charadriiformes",
@@ -2337,7 +2337,7 @@
       ]
     },
     {
-      "id": "pipp",
+      "id": "pipplo",
       "name": "Piping Plover",
       "scientificName": "Charadrius melodus",
       "order": "Charadriiformes",
@@ -2356,7 +2356,7 @@
       ]
     },
     {
-      "id": "soul",
+      "id": "soulap1",
       "name": "Southern Lapwing",
       "scientificName": "Vanellus chilensis",
       "order": "Charadriiformes",
@@ -2366,7 +2366,7 @@
       ]
     },
     {
-      "id": "wilp",
+      "id": "wilplo",
       "name": "Wilson's Plover",
       "scientificName": "Anarhynchus wilsonia",
       "order": "Charadriiformes",
@@ -2385,7 +2385,7 @@
       ]
     },
     {
-      "id": "moup",
+      "id": "mouplo",
       "name": "Mountain Plover",
       "scientificName": "Anarhynchus montanus",
       "order": "Charadriiformes",
@@ -2397,7 +2397,7 @@
       ]
     },
     {
-      "id": "snop",
+      "id": "snoplo5",
       "name": "Snowy Plover",
       "scientificName": "Anarhynchus nivosus",
       "order": "Charadriiformes",
@@ -2410,7 +2410,7 @@
       ]
     },
     {
-      "id": "upls",
+      "id": "uplsan",
       "name": "Upland Sandpiper",
       "scientificName": "Bartramia longicauda",
       "order": "Charadriiformes",
@@ -2429,7 +2429,7 @@
       ]
     },
     {
-      "id": "brtc",
+      "id": "brtcur",
       "name": "Bristle-thighed Curlew",
       "scientificName": "Numenius tahitiensis",
       "order": "Charadriiformes",
@@ -2448,7 +2448,7 @@
       ]
     },
     {
-      "id": "whim",
+      "id": "whimbr",
       "name": "Whimbrel",
       "scientificName": "Numenius phaeopus",
       "order": "Charadriiformes",
@@ -2467,7 +2467,7 @@
       ]
     },
     {
-      "id": "lobc",
+      "id": "lobcur",
       "name": "Long-billed Curlew",
       "scientificName": "Numenius americanus",
       "order": "Charadriiformes",
@@ -2486,7 +2486,7 @@
       ]
     },
     {
-      "id": "batg",
+      "id": "batgod",
       "name": "Bar-tailed Godwit",
       "scientificName": "Limosa lapponica",
       "order": "Charadriiformes",
@@ -2497,7 +2497,7 @@
       ]
     },
     {
-      "id": "marg",
+      "id": "margod",
       "name": "Marbled Godwit",
       "scientificName": "Limosa fedoa",
       "order": "Charadriiformes",
@@ -2515,7 +2515,7 @@
       ]
     },
     {
-      "id": "shbd",
+      "id": "shbdow",
       "name": "Short-billed Dowitcher",
       "scientificName": "Limnodromus griseus",
       "order": "Charadriiformes",
@@ -2532,7 +2532,7 @@
       ]
     },
     {
-      "id": "lobd",
+      "id": "lobdow",
       "name": "Long-billed Dowitcher",
       "scientificName": "Limnodromus scolopaceus",
       "order": "Charadriiformes",
@@ -2551,7 +2551,7 @@
       ]
     },
     {
-      "id": "amew",
+      "id": "amewoo",
       "name": "American Woodcock",
       "scientificName": "Scolopax minor",
       "order": "Charadriiformes",
@@ -2570,7 +2570,7 @@
       ]
     },
     {
-      "id": "coms",
+      "id": "comsni",
       "name": "Common Snipe",
       "scientificName": "Gallinago gallinago",
       "order": "Charadriiformes",
@@ -2580,7 +2580,7 @@
       ]
     },
     {
-      "id": "wils",
+      "id": "wilsni1",
       "name": "Wilson's Snipe",
       "scientificName": "Gallinago delicata",
       "order": "Charadriiformes",
@@ -2599,7 +2599,7 @@
       ]
     },
     {
-      "id": "spos",
+      "id": "sposan",
       "name": "Spotted Sandpiper",
       "scientificName": "Actitis macularius",
       "order": "Charadriiformes",
@@ -2618,7 +2618,7 @@
       ]
     },
     {
-      "id": "sols",
+      "id": "solsan",
       "name": "Solitary Sandpiper",
       "scientificName": "Tringa solitaria",
       "order": "Charadriiformes",
@@ -2637,7 +2637,7 @@
       ]
     },
     {
-      "id": "want",
+      "id": "wantat1",
       "name": "Wandering Tattler",
       "scientificName": "Tringa incana",
       "order": "Charadriiformes",
@@ -2653,7 +2653,7 @@
       ]
     },
     {
-      "id": "woos",
+      "id": "woosan",
       "name": "Wood Sandpiper",
       "scientificName": "Tringa glareola",
       "order": "Charadriiformes",
@@ -2663,7 +2663,7 @@
       ]
     },
     {
-      "id": "lesy",
+      "id": "lesyel",
       "name": "Lesser Yellowlegs",
       "scientificName": "Tringa flavipes",
       "order": "Charadriiformes",
@@ -2682,7 +2682,7 @@
       ]
     },
     {
-      "id": "will",
+      "id": "willet1",
       "name": "Willet",
       "scientificName": "Tringa semipalmata",
       "order": "Charadriiformes",
@@ -2701,7 +2701,7 @@
       ]
     },
     {
-      "id": "grey",
+      "id": "greyel",
       "name": "Greater Yellowlegs",
       "scientificName": "Tringa melanoleuca",
       "order": "Charadriiformes",
@@ -2720,7 +2720,7 @@
       ]
     },
     {
-      "id": "rudt",
+      "id": "rudtur",
       "name": "Ruddy Turnstone",
       "scientificName": "Arenaria interpres",
       "order": "Charadriiformes",
@@ -2730,7 +2730,7 @@
       ]
     },
     {
-      "id": "blkt",
+      "id": "blktur",
       "name": "Black Turnstone",
       "scientificName": "Arenaria melanocephala",
       "order": "Charadriiformes",
@@ -2743,7 +2743,7 @@
       ]
     },
     {
-      "id": "redk",
+      "id": "redkno",
       "name": "Red Knot",
       "scientificName": "Calidris canutus",
       "order": "Charadriiformes",
@@ -2762,7 +2762,7 @@
       ]
     },
     {
-      "id": "surf",
+      "id": "surfbi",
       "name": "Surfbird",
       "scientificName": "Calidris virgata",
       "order": "Charadriiformes",
@@ -2775,7 +2775,7 @@
       ]
     },
     {
-      "id": "stis",
+      "id": "stisan",
       "name": "Stilt Sandpiper",
       "scientificName": "Calidris himantopus",
       "order": "Charadriiformes",
@@ -2793,7 +2793,7 @@
       ]
     },
     {
-      "id": "rens",
+      "id": "rensti",
       "name": "Red-necked Stint",
       "scientificName": "Calidris ruficollis",
       "order": "Charadriiformes",
@@ -2803,7 +2803,7 @@
       ]
     },
     {
-      "id": "dunl",
+      "id": "dunlin",
       "name": "Dunlin",
       "scientificName": "Calidris alpina",
       "order": "Charadriiformes",
@@ -2822,7 +2822,7 @@
       ]
     },
     {
-      "id": "purs",
+      "id": "pursan",
       "name": "Purple Sandpiper",
       "scientificName": "Calidris maritima",
       "order": "Charadriiformes",
@@ -2834,7 +2834,7 @@
       ]
     },
     {
-      "id": "rocs",
+      "id": "rocsan",
       "name": "Rock Sandpiper",
       "scientificName": "Calidris ptilocnemis",
       "order": "Charadriiformes",
@@ -2853,7 +2853,7 @@
       ]
     },
     {
-      "id": "whrs",
+      "id": "whrsan",
       "name": "White-rumped Sandpiper",
       "scientificName": "Calidris fuscicollis",
       "order": "Charadriiformes",
@@ -2863,7 +2863,7 @@
       ]
     },
     {
-      "id": "leas",
+      "id": "leasan",
       "name": "Least Sandpiper",
       "scientificName": "Calidris minutilla",
       "order": "Charadriiformes",
@@ -2878,7 +2878,7 @@
       ]
     },
     {
-      "id": "pecs",
+      "id": "pecsan",
       "name": "Pectoral Sandpiper",
       "scientificName": "Calidris melanotos",
       "order": "Charadriiformes",
@@ -2895,7 +2895,7 @@
       ]
     },
     {
-      "id": "wess",
+      "id": "wessan",
       "name": "Western Sandpiper",
       "scientificName": "Calidris mauri",
       "order": "Charadriiformes",
@@ -2909,7 +2909,7 @@
       ]
     },
     {
-      "id": "sems",
+      "id": "semsan",
       "name": "Semipalmated Sandpiper",
       "scientificName": "Calidris pusilla",
       "order": "Charadriiformes",
@@ -2927,7 +2927,7 @@
       ]
     },
     {
-      "id": "lotj",
+      "id": "lotjae",
       "name": "Long-tailed Jaeger",
       "scientificName": "Stercorarius longicaudus",
       "order": "Charadriiformes",
@@ -2937,7 +2937,7 @@
       ]
     },
     {
-      "id": "horp",
+      "id": "horpuf",
       "name": "Horned Puffin",
       "scientificName": "Fratercula corniculata",
       "order": "Charadriiformes",
@@ -2947,7 +2947,7 @@
       ]
     },
     {
-      "id": "casa",
+      "id": "casauk",
       "name": "Cassin's Auklet",
       "scientificName": "Ptychoramphus aleuticus",
       "order": "Charadriiformes",
@@ -2965,7 +2965,7 @@
       ]
     },
     {
-      "id": "leaa",
+      "id": "leaauk",
       "name": "Least Auklet",
       "scientificName": "Aethia pusilla",
       "order": "Charadriiformes",
@@ -2975,7 +2975,7 @@
       ]
     },
     {
-      "id": "whia",
+      "id": "whiauk",
       "name": "Whiskered Auklet",
       "scientificName": "Aethia pygmaea",
       "order": "Charadriiformes",
@@ -2986,7 +2986,7 @@
       ]
     },
     {
-      "id": "crea",
+      "id": "creauk",
       "name": "Crested Auklet",
       "scientificName": "Aethia cristatella",
       "order": "Charadriiformes",
@@ -2996,7 +2996,7 @@
       ]
     },
     {
-      "id": "para",
+      "id": "parauk",
       "name": "Parakeet Auklet",
       "scientificName": "Aethia psittacula",
       "order": "Charadriiformes",
@@ -3006,7 +3006,7 @@
       ]
     },
     {
-      "id": "blkg",
+      "id": "blkgui",
       "name": "Black Guillemot",
       "scientificName": "Cepphus grylle",
       "order": "Charadriiformes",
@@ -3016,7 +3016,7 @@
       ]
     },
     {
-      "id": "pigg",
+      "id": "piggui",
       "name": "Pigeon Guillemot",
       "scientificName": "Cepphus columba",
       "order": "Charadriiformes",
@@ -3035,7 +3035,7 @@
       ]
     },
     {
-      "id": "xanm",
+      "id": "xanmur2",
       "name": "Scripps's Murrelet",
       "scientificName": "Synthliboramphus scrippsi",
       "order": "Charadriiformes",
@@ -3046,7 +3046,7 @@
       ]
     },
     {
-      "id": "bklk",
+      "id": "bklkit",
       "name": "Black-legged Kittiwake",
       "scientificName": "Rissa tridactyla",
       "order": "Charadriiformes",
@@ -3058,7 +3058,7 @@
       ]
     },
     {
-      "id": "sabg",
+      "id": "sabgul",
       "name": "Sabine's Gull",
       "scientificName": "Xema sabini",
       "order": "Charadriiformes",
@@ -3069,7 +3069,7 @@
       ]
     },
     {
-      "id": "laug",
+      "id": "laugul",
       "name": "Laughing Gull",
       "scientificName": "Leucophaeus atricilla",
       "order": "Charadriiformes",
@@ -3088,7 +3088,7 @@
       ]
     },
     {
-      "id": "frag",
+      "id": "fragul",
       "name": "Franklin's Gull",
       "scientificName": "Leucophaeus pipixcan",
       "order": "Charadriiformes",
@@ -3101,7 +3101,7 @@
       ]
     },
     {
-      "id": "heeg",
+      "id": "heegul",
       "name": "Heermann's Gull",
       "scientificName": "Larus heermanni",
       "order": "Charadriiformes",
@@ -3111,7 +3111,7 @@
       ]
     },
     {
-      "id": "mewg",
+      "id": "mewgul2",
       "name": "Short-billed Gull",
       "scientificName": "Larus brachyrhynchus",
       "order": "Charadriiformes",
@@ -3121,7 +3121,7 @@
       ]
     },
     {
-      "id": "ribg",
+      "id": "ribgul",
       "name": "Ring-billed Gull",
       "scientificName": "Larus delawarensis",
       "order": "Charadriiformes",
@@ -3140,7 +3140,7 @@
       ]
     },
     {
-      "id": "wesg",
+      "id": "wesgul",
       "name": "Western Gull",
       "scientificName": "Larus occidentalis",
       "order": "Charadriiformes",
@@ -3154,7 +3154,7 @@
       ]
     },
     {
-      "id": "amhg",
+      "id": "amhgul1",
       "name": "American Herring Gull",
       "scientificName": "Larus smithsonianus",
       "order": "Charadriiformes",
@@ -3172,7 +3172,7 @@
       ]
     },
     {
-      "id": "gbbg",
+      "id": "gbbgul",
       "name": "Great Black-backed Gull",
       "scientificName": "Larus marinus",
       "order": "Charadriiformes",
@@ -3183,7 +3183,7 @@
       ]
     },
     {
-      "id": "glag",
+      "id": "glagul",
       "name": "Glaucous Gull",
       "scientificName": "Larus hyperboreus",
       "order": "Charadriiformes",
@@ -3193,7 +3193,7 @@
       ]
     },
     {
-      "id": "calg",
+      "id": "calgul",
       "name": "California Gull",
       "scientificName": "Larus californicus",
       "order": "Charadriiformes",
@@ -3203,7 +3203,7 @@
       ]
     },
     {
-      "id": "glwg",
+      "id": "glwgul",
       "name": "Glaucous-winged Gull",
       "scientificName": "Larus glaucescens",
       "order": "Charadriiformes",
@@ -3218,7 +3218,7 @@
       ]
     },
     {
-      "id": "blks",
+      "id": "blkski",
       "name": "Black Skimmer",
       "scientificName": "Rynchops niger",
       "order": "Charadriiformes",
@@ -3230,7 +3230,7 @@
       ]
     },
     {
-      "id": "brnn",
+      "id": "brnnod",
       "name": "Brown Noddy",
       "scientificName": "Anous stolidus",
       "order": "Charadriiformes",
@@ -3240,7 +3240,7 @@
       ]
     },
     {
-      "id": "leat",
+      "id": "leater1",
       "name": "Least Tern",
       "scientificName": "Sternula antillarum",
       "order": "Charadriiformes",
@@ -3258,7 +3258,7 @@
       ]
     },
     {
-      "id": "cast",
+      "id": "caster1",
       "name": "Caspian Tern",
       "scientificName": "Hydroprogne caspia",
       "order": "Charadriiformes",
@@ -3268,7 +3268,7 @@
       ]
     },
     {
-      "id": "blkt",
+      "id": "blkter",
       "name": "Black Tern",
       "scientificName": "Chlidonias niger",
       "order": "Charadriiformes",
@@ -3278,7 +3278,7 @@
       ]
     },
     {
-      "id": "fort",
+      "id": "forter",
       "name": "Forster's Tern",
       "scientificName": "Sterna forsteri",
       "order": "Charadriiformes",
@@ -3289,7 +3289,7 @@
       ]
     },
     {
-      "id": "arct",
+      "id": "arcter",
       "name": "Arctic Tern",
       "scientificName": "Sterna paradisaea",
       "order": "Charadriiformes",
@@ -3299,7 +3299,7 @@
       ]
     },
     {
-      "id": "comt",
+      "id": "comter",
       "name": "Common Tern",
       "scientificName": "Sterna hirundo",
       "order": "Charadriiformes",
@@ -3314,7 +3314,7 @@
       ]
     },
     {
-      "id": "sant",
+      "id": "santer1",
       "name": "Sandwich Tern",
       "scientificName": "Thalasseus sandvicensis",
       "order": "Charadriiformes",
@@ -3325,7 +3325,7 @@
       ]
     },
     {
-      "id": "royt",
+      "id": "royter1",
       "name": "Royal Tern",
       "scientificName": "Thalasseus maximus",
       "order": "Charadriiformes",
@@ -3336,7 +3336,7 @@
       ]
     },
     {
-      "id": "leag",
+      "id": "leagre",
       "name": "Least Grebe",
       "scientificName": "Tachybaptus dominicus",
       "order": "Podicipediformes",
@@ -3350,7 +3350,7 @@
       ]
     },
     {
-      "id": "pibg",
+      "id": "pibgre",
       "name": "Pied-billed Grebe",
       "scientificName": "Podilymbus podiceps",
       "order": "Podicipediformes",
@@ -3369,7 +3369,7 @@
       ]
     },
     {
-      "id": "horg",
+      "id": "horgre",
       "name": "Horned Grebe",
       "scientificName": "Podiceps auritus",
       "order": "Podicipediformes",
@@ -3382,7 +3382,7 @@
       ]
     },
     {
-      "id": "reng",
+      "id": "rengre",
       "name": "Red-necked Grebe",
       "scientificName": "Podiceps grisegena",
       "order": "Podicipediformes",
@@ -3401,7 +3401,7 @@
       ]
     },
     {
-      "id": "earg",
+      "id": "eargre",
       "name": "Eared Grebe",
       "scientificName": "Podiceps nigricollis",
       "order": "Podicipediformes",
@@ -3420,7 +3420,7 @@
       ]
     },
     {
-      "id": "wesg",
+      "id": "wesgre",
       "name": "Western Grebe",
       "scientificName": "Aechmophorus occidentalis",
       "order": "Podicipediformes",
@@ -3439,7 +3439,7 @@
       ]
     },
     {
-      "id": "clag",
+      "id": "clagre",
       "name": "Clark's Grebe",
       "scientificName": "Aechmophorus clarkii",
       "order": "Podicipediformes",
@@ -3458,7 +3458,7 @@
       ]
     },
     {
-      "id": "retl",
+      "id": "retloo",
       "name": "Red-throated Loon",
       "scientificName": "Gavia stellata",
       "order": "Gaviiformes",
@@ -3472,7 +3472,7 @@
       ]
     },
     {
-      "id": "arcl",
+      "id": "arcloo",
       "name": "Arctic Loon",
       "scientificName": "Gavia arctica",
       "order": "Gaviiformes",
@@ -3482,7 +3482,7 @@
       ]
     },
     {
-      "id": "pacl",
+      "id": "pacloo",
       "name": "Pacific Loon",
       "scientificName": "Gavia pacifica",
       "order": "Gaviiformes",
@@ -3494,7 +3494,7 @@
       ]
     },
     {
-      "id": "coml",
+      "id": "comloo",
       "name": "Common Loon",
       "scientificName": "Gavia immer",
       "order": "Gaviiformes",
@@ -3512,7 +3512,7 @@
       ]
     },
     {
-      "id": "yebl",
+      "id": "yebloo",
       "name": "Yellow-billed Loon",
       "scientificName": "Gavia adamsii",
       "order": "Gaviiformes",
@@ -3526,7 +3526,7 @@
       ]
     },
     {
-      "id": "laya",
+      "id": "layalb",
       "name": "Laysan Albatross",
       "scientificName": "Phoebastria immutabilis",
       "order": "Procellariiformes",
@@ -3536,7 +3536,7 @@
       ]
     },
     {
-      "id": "ftsp",
+      "id": "ftspet",
       "name": "Fork-tailed Storm-Petrel",
       "scientificName": "Hydrobates furcatus",
       "order": "Procellariiformes",
@@ -3546,7 +3546,7 @@
       ]
     },
     {
-      "id": "lcsp",
+      "id": "lcspet",
       "name": "Leach's Storm-Petrel",
       "scientificName": "Hydrobates leucorhous",
       "order": "Procellariiformes",
@@ -3561,7 +3561,7 @@
       ]
     },
     {
-      "id": "hawp",
+      "id": "hawpet1",
       "name": "Hawaiian Petrel",
       "scientificName": "Pterodroma sandwichensis",
       "order": "Procellariiformes",
@@ -3574,7 +3574,7 @@
       ]
     },
     {
-      "id": "wets",
+      "id": "wetshe",
       "name": "Wedge-tailed Shearwater",
       "scientificName": "Ardenna pacifica",
       "order": "Procellariiformes",
@@ -3588,7 +3588,7 @@
       ]
     },
     {
-      "id": "anhi",
+      "id": "anhing",
       "name": "Anhinga",
       "scientificName": "Anhinga anhinga",
       "order": "Suliformes",
@@ -3598,7 +3598,7 @@
       ]
     },
     {
-      "id": "docc",
+      "id": "doccor",
       "name": "Double-crested Cormorant",
       "scientificName": "Nannopterum auritum",
       "order": "Suliformes",
@@ -3614,7 +3614,7 @@
       ]
     },
     {
-      "id": "btth",
+      "id": "btther1",
       "name": "Bare-throated Tiger-Heron",
       "scientificName": "Tigrisoma mexicanum",
       "order": "Pelecaniformes",
@@ -3625,7 +3625,7 @@
       ]
     },
     {
-      "id": "ameb",
+      "id": "amebit",
       "name": "American Bittern",
       "scientificName": "Botaurus lentiginosus",
       "order": "Pelecaniformes",
@@ -3644,7 +3644,7 @@
       ]
     },
     {
-      "id": "leab",
+      "id": "leabit",
       "name": "Least Bittern",
       "scientificName": "Botaurus exilis",
       "order": "Pelecaniformes",
@@ -3663,7 +3663,7 @@
       ]
     },
     {
-      "id": "bcnh",
+      "id": "bcnher",
       "name": "Black-crowned Night Heron",
       "scientificName": "Nycticorax nycticorax",
       "order": "Pelecaniformes",
@@ -3673,7 +3673,7 @@
       ]
     },
     {
-      "id": "libh",
+      "id": "libher",
       "name": "Little Blue Heron",
       "scientificName": "Egretta caerulea",
       "order": "Pelecaniformes",
@@ -3683,7 +3683,7 @@
       ]
     },
     {
-      "id": "snoe",
+      "id": "snoegr",
       "name": "Snowy Egret",
       "scientificName": "Egretta thula",
       "order": "Pelecaniformes",
@@ -3694,7 +3694,7 @@
       ]
     },
     {
-      "id": "grnh",
+      "id": "grnher",
       "name": "Green Heron",
       "scientificName": "Butorides virescens",
       "order": "Pelecaniformes",
@@ -3713,7 +3713,7 @@
       ]
     },
     {
-      "id": "cate",
+      "id": "categr1",
       "name": "Western Cattle-Egret",
       "scientificName": "Ardea ibis",
       "order": "Pelecaniformes",
@@ -3723,7 +3723,7 @@
       ]
     },
     {
-      "id": "grbh",
+      "id": "grbher3",
       "name": "Great Blue Heron",
       "scientificName": "Ardea herodias",
       "order": "Pelecaniformes",
@@ -3738,7 +3738,7 @@
       ]
     },
     {
-      "id": "blkv",
+      "id": "blkvul",
       "name": "Black Vulture",
       "scientificName": "Coragyps atratus",
       "order": "Cathartiformes",
@@ -3748,7 +3748,7 @@
       ]
     },
     {
-      "id": "ospr",
+      "id": "osprey",
       "name": "Osprey",
       "scientificName": "Pandion haliaetus",
       "order": "Accipitriformes",
@@ -3767,7 +3767,7 @@
       ]
     },
     {
-      "id": "whtk",
+      "id": "whtkit",
       "name": "White-tailed Kite",
       "scientificName": "Elanus leucurus",
       "order": "Accipitriformes",
@@ -3777,7 +3777,7 @@
       ]
     },
     {
-      "id": "gole",
+      "id": "goleag",
       "name": "Golden Eagle",
       "scientificName": "Aquila chrysaetos",
       "order": "Accipitriformes",
@@ -3787,7 +3787,7 @@
       ]
     },
     {
-      "id": "shsh",
+      "id": "shshaw",
       "name": "Sharp-shinned Hawk",
       "scientificName": "Accipiter striatus",
       "order": "Accipitriformes",
@@ -3798,7 +3798,7 @@
       ]
     },
     {
-      "id": "cooh",
+      "id": "coohaw",
       "name": "Cooper's Hawk",
       "scientificName": "Astur cooperii",
       "order": "Accipitriformes",
@@ -3817,7 +3817,7 @@
       ]
     },
     {
-      "id": "norg",
+      "id": "norgos",
       "name": "American Goshawk",
       "scientificName": "Astur atricapillus",
       "order": "Accipitriformes",
@@ -3832,7 +3832,7 @@
       ]
     },
     {
-      "id": "norh",
+      "id": "norhar2",
       "name": "Northern Harrier",
       "scientificName": "Circus hudsonius",
       "order": "Accipitriformes",
@@ -3845,7 +3845,7 @@
       ]
     },
     {
-      "id": "bale",
+      "id": "baleag",
       "name": "Bald Eagle",
       "scientificName": "Haliaeetus leucocephalus",
       "order": "Accipitriformes",
@@ -3864,7 +3864,7 @@
       ]
     },
     {
-      "id": "misk",
+      "id": "miskit",
       "name": "Mississippi Kite",
       "scientificName": "Ictinia mississippiensis",
       "order": "Accipitriformes",
@@ -3882,7 +3882,7 @@
       ]
     },
     {
-      "id": "snak",
+      "id": "snakit",
       "name": "Snail Kite",
       "scientificName": "Rostrhamus sociabilis",
       "order": "Accipitriformes",
@@ -3896,7 +3896,7 @@
       ]
     },
     {
-      "id": "comb",
+      "id": "comblh1",
       "name": "Common Black Hawk",
       "scientificName": "Buteogallus anthracinus",
       "order": "Accipitriformes",
@@ -3908,7 +3908,7 @@
       ]
     },
     {
-      "id": "hrsh",
+      "id": "hrshaw",
       "name": "Harris's Hawk",
       "scientificName": "Parabuteo unicinctus",
       "order": "Accipitriformes",
@@ -3919,7 +3919,7 @@
       ]
     },
     {
-      "id": "gryh",
+      "id": "gryhaw2",
       "name": "Gray Hawk",
       "scientificName": "Buteo plagiatus",
       "order": "Accipitriformes",
@@ -3937,7 +3937,7 @@
       ]
     },
     {
-      "id": "brwh",
+      "id": "brwhaw",
       "name": "Broad-winged Hawk",
       "scientificName": "Buteo platypterus",
       "order": "Accipitriformes",
@@ -3956,7 +3956,7 @@
       ]
     },
     {
-      "id": "resh",
+      "id": "reshaw",
       "name": "Red-shouldered Hawk",
       "scientificName": "Buteo lineatus",
       "order": "Accipitriformes",
@@ -3975,7 +3975,7 @@
       ]
     },
     {
-      "id": "zoth",
+      "id": "zothaw",
       "name": "Zone-tailed Hawk",
       "scientificName": "Buteo albonotatus",
       "order": "Accipitriformes",
@@ -3986,7 +3986,7 @@
       ]
     },
     {
-      "id": "hawh",
+      "id": "hawhaw",
       "name": "Hawaiian Hawk",
       "scientificName": "Buteo solitarius",
       "order": "Accipitriformes",
@@ -3997,7 +3997,7 @@
       ]
     },
     {
-      "id": "swah",
+      "id": "swahaw",
       "name": "Swainson's Hawk",
       "scientificName": "Buteo swainsoni",
       "order": "Accipitriformes",
@@ -4008,7 +4008,7 @@
       ]
     },
     {
-      "id": "reth",
+      "id": "rethaw",
       "name": "Red-tailed Hawk",
       "scientificName": "Buteo jamaicensis",
       "order": "Accipitriformes",
@@ -4027,7 +4027,7 @@
       ]
     },
     {
-      "id": "rolh",
+      "id": "rolhaw",
       "name": "Rough-legged Hawk",
       "scientificName": "Buteo lagopus",
       "order": "Accipitriformes",
@@ -4037,7 +4037,7 @@
       ]
     },
     {
-      "id": "brno",
+      "id": "brnowl",
       "name": "American Barn Owl",
       "scientificName": "Tyto furcata",
       "order": "Strigiformes",
@@ -4050,7 +4050,7 @@
       ]
     },
     {
-      "id": "flao",
+      "id": "flaowl",
       "name": "Flammulated Owl",
       "scientificName": "Psiloscops flammeolus",
       "order": "Strigiformes",
@@ -4069,7 +4069,7 @@
       ]
     },
     {
-      "id": "whso",
+      "id": "whsowl1",
       "name": "Whiskered Screech-Owl",
       "scientificName": "Megascops trichopsis",
       "order": "Strigiformes",
@@ -4088,7 +4088,7 @@
       ]
     },
     {
-      "id": "weso",
+      "id": "wesowl1",
       "name": "Western Screech-Owl",
       "scientificName": "Megascops kennicottii",
       "order": "Strigiformes",
@@ -4107,7 +4107,7 @@
       ]
     },
     {
-      "id": "easo",
+      "id": "easowl1",
       "name": "Eastern Screech-Owl",
       "scientificName": "Megascops asio",
       "order": "Strigiformes",
@@ -4126,7 +4126,7 @@
       ]
     },
     {
-      "id": "snoo",
+      "id": "snoowl1",
       "name": "Snowy Owl",
       "scientificName": "Bubo scandiacus",
       "order": "Strigiformes",
@@ -4137,7 +4137,7 @@
       ]
     },
     {
-      "id": "grho",
+      "id": "grhowl",
       "name": "Great Horned Owl",
       "scientificName": "Bubo virginianus",
       "order": "Strigiformes",
@@ -4156,7 +4156,7 @@
       ]
     },
     {
-      "id": "noho",
+      "id": "nohowl",
       "name": "Northern Hawk Owl",
       "scientificName": "Surnia ulula",
       "order": "Strigiformes",
@@ -4170,7 +4170,7 @@
       ]
     },
     {
-      "id": "nopo",
+      "id": "nopowl",
       "name": "Northern Pygmy-Owl",
       "scientificName": "Glaucidium gnoma",
       "order": "Strigiformes",
@@ -4189,7 +4189,7 @@
       ]
     },
     {
-      "id": "fepo",
+      "id": "fepowl",
       "name": "Ferruginous Pygmy-Owl",
       "scientificName": "Glaucidium brasilianum",
       "order": "Strigiformes",
@@ -4208,7 +4208,7 @@
       ]
     },
     {
-      "id": "elfo",
+      "id": "elfowl",
       "name": "Elf Owl",
       "scientificName": "Micrathene whitneyi",
       "order": "Strigiformes",
@@ -4227,7 +4227,7 @@
       ]
     },
     {
-      "id": "buro",
+      "id": "burowl",
       "name": "Burrowing Owl",
       "scientificName": "Athene cunicularia",
       "order": "Strigiformes",
@@ -4246,7 +4246,7 @@
       ]
     },
     {
-      "id": "moto",
+      "id": "motowl",
       "name": "Mottled Owl",
       "scientificName": "Strix virgata",
       "order": "Strigiformes",
@@ -4265,7 +4265,7 @@
       ]
     },
     {
-      "id": "spoo",
+      "id": "spoowl",
       "name": "Spotted Owl",
       "scientificName": "Strix occidentalis",
       "order": "Strigiformes",
@@ -4284,7 +4284,7 @@
       ]
     },
     {
-      "id": "brdo",
+      "id": "brdowl",
       "name": "Barred Owl",
       "scientificName": "Strix varia",
       "order": "Strigiformes",
@@ -4303,7 +4303,7 @@
       ]
     },
     {
-      "id": "grgo",
+      "id": "grgowl",
       "name": "Great Gray Owl",
       "scientificName": "Strix nebulosa",
       "order": "Strigiformes",
@@ -4320,7 +4320,7 @@
       ]
     },
     {
-      "id": "loeo",
+      "id": "loeowl",
       "name": "Long-eared Owl",
       "scientificName": "Asio otus",
       "order": "Strigiformes",
@@ -4339,7 +4339,7 @@
       ]
     },
     {
-      "id": "sheo",
+      "id": "sheowl",
       "name": "Short-eared Owl",
       "scientificName": "Asio flammeus",
       "order": "Strigiformes",
@@ -4353,7 +4353,7 @@
       ]
     },
     {
-      "id": "boro",
+      "id": "borowl",
       "name": "Boreal Owl",
       "scientificName": "Aegolius funereus",
       "order": "Strigiformes",
@@ -4372,7 +4372,7 @@
       ]
     },
     {
-      "id": "nswo",
+      "id": "nswowl",
       "name": "Northern Saw-whet Owl",
       "scientificName": "Aegolius acadicus",
       "order": "Strigiformes",
@@ -4391,7 +4391,7 @@
       ]
     },
     {
-      "id": "earq",
+      "id": "earque",
       "name": "Eared Quetzal",
       "scientificName": "Euptilotis neoxenus",
       "order": "Trogoniformes",
@@ -4410,7 +4410,7 @@
       ]
     },
     {
-      "id": "elet",
+      "id": "eletro",
       "name": "Elegant Trogon",
       "scientificName": "Trogon elegans",
       "order": "Trogoniformes",
@@ -4429,7 +4429,7 @@
       ]
     },
     {
-      "id": "belk",
+      "id": "belkin1",
       "name": "Belted Kingfisher",
       "scientificName": "Megaceryle alcyon",
       "order": "Coraciiformes",
@@ -4448,7 +4448,7 @@
       ]
     },
     {
-      "id": "grnk",
+      "id": "grnkin",
       "name": "Green Kingfisher",
       "scientificName": "Chloroceryle americana",
       "order": "Coraciiformes",
@@ -4460,7 +4460,7 @@
       ]
     },
     {
-      "id": "wils",
+      "id": "wilsap",
       "name": "Williamson's Sapsucker",
       "scientificName": "Sphyrapicus thyroideus",
       "order": "Piciformes",
@@ -4471,7 +4471,7 @@
       ]
     },
     {
-      "id": "yebs",
+      "id": "yebsap",
       "name": "Yellow-bellied Sapsucker",
       "scientificName": "Sphyrapicus varius",
       "order": "Piciformes",
@@ -4490,7 +4490,7 @@
       ]
     },
     {
-      "id": "rens",
+      "id": "rensap",
       "name": "Red-naped Sapsucker",
       "scientificName": "Sphyrapicus nuchalis",
       "order": "Piciformes",
@@ -4504,7 +4504,7 @@
       ]
     },
     {
-      "id": "rebs",
+      "id": "rebsap",
       "name": "Red-breasted Sapsucker",
       "scientificName": "Sphyrapicus ruber",
       "order": "Piciformes",
@@ -4521,7 +4521,7 @@
       ]
     },
     {
-      "id": "leww",
+      "id": "lewwoo",
       "name": "Lewis's Woodpecker",
       "scientificName": "Melanerpes lewis",
       "order": "Piciformes",
@@ -4533,7 +4533,7 @@
       ]
     },
     {
-      "id": "rehw",
+      "id": "rehwoo",
       "name": "Red-headed Woodpecker",
       "scientificName": "Melanerpes erythrocephalus",
       "order": "Piciformes",
@@ -4552,7 +4552,7 @@
       ]
     },
     {
-      "id": "acow",
+      "id": "acowoo",
       "name": "Acorn Woodpecker",
       "scientificName": "Melanerpes formicivorus",
       "order": "Piciformes",
@@ -4571,7 +4571,7 @@
       ]
     },
     {
-      "id": "gilw",
+      "id": "gilwoo",
       "name": "Gila Woodpecker",
       "scientificName": "Melanerpes uropygialis",
       "order": "Piciformes",
@@ -4590,7 +4590,7 @@
       ]
     },
     {
-      "id": "gofw",
+      "id": "gofwoo",
       "name": "Golden-fronted Woodpecker",
       "scientificName": "Melanerpes aurifrons",
       "order": "Piciformes",
@@ -4609,7 +4609,7 @@
       ]
     },
     {
-      "id": "rebw",
+      "id": "rebwoo",
       "name": "Red-bellied Woodpecker",
       "scientificName": "Melanerpes carolinus",
       "order": "Piciformes",
@@ -4628,7 +4628,7 @@
       ]
     },
     {
-      "id": "attw",
+      "id": "attwoo1",
       "name": "American Three-toed Woodpecker",
       "scientificName": "Picoides dorsalis",
       "order": "Piciformes",
@@ -4643,7 +4643,7 @@
       ]
     },
     {
-      "id": "bkbw",
+      "id": "bkbwoo",
       "name": "Black-backed Woodpecker",
       "scientificName": "Picoides arcticus",
       "order": "Piciformes",
@@ -4658,7 +4658,7 @@
       ]
     },
     {
-      "id": "doww",
+      "id": "dowwoo",
       "name": "Downy Woodpecker",
       "scientificName": "Dryobates pubescens",
       "order": "Piciformes",
@@ -4677,7 +4677,7 @@
       ]
     },
     {
-      "id": "nutw",
+      "id": "nutwoo",
       "name": "Nuttall's Woodpecker",
       "scientificName": "Dryobates nuttallii",
       "order": "Piciformes",
@@ -4696,7 +4696,7 @@
       ]
     },
     {
-      "id": "labw",
+      "id": "labwoo",
       "name": "Ladder-backed Woodpecker",
       "scientificName": "Dryobates scalaris",
       "order": "Piciformes",
@@ -4714,7 +4714,7 @@
       ]
     },
     {
-      "id": "recw",
+      "id": "recwoo",
       "name": "Red-cockaded Woodpecker",
       "scientificName": "Dryobates borealis",
       "order": "Piciformes",
@@ -4728,7 +4728,7 @@
       ]
     },
     {
-      "id": "haiw",
+      "id": "haiwoo",
       "name": "Hairy Woodpecker",
       "scientificName": "Dryobates villosus",
       "order": "Piciformes",
@@ -4747,7 +4747,7 @@
       ]
     },
     {
-      "id": "whhw",
+      "id": "whhwoo",
       "name": "White-headed Woodpecker",
       "scientificName": "Dryobates albolarvatus",
       "order": "Piciformes",
@@ -4758,7 +4758,7 @@
       ]
     },
     {
-      "id": "ariw",
+      "id": "ariwoo",
       "name": "Arizona Woodpecker",
       "scientificName": "Dryobates arizonae",
       "order": "Piciformes",
@@ -4769,7 +4769,7 @@
       ]
     },
     {
-      "id": "pilw",
+      "id": "pilwoo",
       "name": "Pileated Woodpecker",
       "scientificName": "Dryocopus pileatus",
       "order": "Piciformes",
@@ -4786,7 +4786,7 @@
       ]
     },
     {
-      "id": "norf",
+      "id": "norfli",
       "name": "Northern Flicker",
       "scientificName": "Colaptes auratus",
       "order": "Piciformes",
@@ -4805,7 +4805,7 @@
       ]
     },
     {
-      "id": "gilf",
+      "id": "gilfli",
       "name": "Gilded Flicker",
       "scientificName": "Colaptes chrysoides",
       "order": "Piciformes",
@@ -4824,7 +4824,7 @@
       ]
     },
     {
-      "id": "amek",
+      "id": "amekes",
       "name": "American Kestrel",
       "scientificName": "Falco sparverius",
       "order": "Falconiformes",
@@ -4843,7 +4843,7 @@
       ]
     },
     {
-      "id": "merl",
+      "id": "merlin",
       "name": "Merlin",
       "scientificName": "Falco columbarius",
       "order": "Falconiformes",
@@ -4857,7 +4857,7 @@
       ]
     },
     {
-      "id": "perf",
+      "id": "perfal",
       "name": "Peregrine Falcon",
       "scientificName": "Falco peregrinus",
       "order": "Falconiformes",
@@ -4867,7 +4867,7 @@
       ]
     },
     {
-      "id": "praf",
+      "id": "prafal",
       "name": "Prairie Falcon",
       "scientificName": "Falco mexicanus",
       "order": "Falconiformes",
@@ -4877,7 +4877,7 @@
       ]
     },
     {
-      "id": "sacc",
+      "id": "saccoc",
       "name": "Salmon-crested Cockatoo",
       "scientificName": "Cacatua moluccensis",
       "order": "Psittaciformes",
@@ -4888,7 +4888,7 @@
       ]
     },
     {
-      "id": "rorp",
+      "id": "rorpar",
       "name": "Rose-ringed Parakeet",
       "scientificName": "Psittacula krameri",
       "order": "Psittaciformes",
@@ -4899,7 +4899,7 @@
       ]
     },
     {
-      "id": "budg",
+      "id": "budger",
       "name": "Budgerigar",
       "scientificName": "Melopsittacus undulatus",
       "order": "Psittaciformes",
@@ -4909,7 +4909,7 @@
       ]
     },
     {
-      "id": "pefl",
+      "id": "peflov",
       "name": "Rosy-faced Lovebird",
       "scientificName": "Agapornis roseicollis",
       "order": "Psittaciformes",
@@ -4923,7 +4923,7 @@
       ]
     },
     {
-      "id": "monp",
+      "id": "monpar",
       "name": "Monk Parakeet",
       "scientificName": "Myiopsitta monachus",
       "order": "Psittaciformes",
@@ -4936,7 +4936,7 @@
       ]
     },
     {
-      "id": "whwp",
+      "id": "whwpar",
       "name": "White-winged Parakeet",
       "scientificName": "Brotogeris versicolurus",
       "order": "Psittaciformes",
@@ -4946,7 +4946,7 @@
       ]
     },
     {
-      "id": "yecp",
+      "id": "yecpar",
       "name": "Yellow-chevroned Parakeet",
       "scientificName": "Brotogeris chiriri",
       "order": "Psittaciformes",
@@ -4956,7 +4956,7 @@
       ]
     },
     {
-      "id": "recp",
+      "id": "recpar",
       "name": "Red-crowned Amazon",
       "scientificName": "Amazona viridigenalis",
       "order": "Psittaciformes",
@@ -4971,7 +4971,7 @@
       ]
     },
     {
-      "id": "licp",
+      "id": "licpar",
       "name": "Lilac-crowned Amazon",
       "scientificName": "Amazona finschi",
       "order": "Psittaciformes",
@@ -4982,7 +4982,7 @@
       ]
     },
     {
-      "id": "yehp",
+      "id": "yehpar",
       "name": "Yellow-headed Amazon",
       "scientificName": "Amazona oratrix",
       "order": "Psittaciformes",
@@ -4994,7 +4994,7 @@
       ]
     },
     {
-      "id": "bucp",
+      "id": "bucpar",
       "name": "Blue-crowned Parakeet",
       "scientificName": "Thectocercus acuticaudatus",
       "order": "Psittaciformes",
@@ -5004,7 +5004,7 @@
       ]
     },
     {
-      "id": "grnp",
+      "id": "grnpar",
       "name": "Green Parakeet",
       "scientificName": "Psittacara holochlorus",
       "order": "Psittaciformes",
@@ -5014,7 +5014,7 @@
       ]
     },
     {
-      "id": "mitp",
+      "id": "mitpar",
       "name": "Mitred Parakeet",
       "scientificName": "Psittacara mitratus",
       "order": "Psittaciformes",
@@ -5024,7 +5024,7 @@
       ]
     },
     {
-      "id": "rotb",
+      "id": "rotbec",
       "name": "Rose-throated Becard",
       "scientificName": "Pachyramphus aglaiae",
       "order": "Passeriformes",
@@ -5037,7 +5037,7 @@
       ]
     },
     {
-      "id": "nobt",
+      "id": "nobtyr",
       "name": "Northern Beardless-Tyrannulet",
       "scientificName": "Camptostoma imberbe",
       "order": "Passeriformes",
@@ -5056,7 +5056,7 @@
       ]
     },
     {
-      "id": "tuff",
+      "id": "tuffly",
       "name": "Tufted Flycatcher",
       "scientificName": "Mitrephanes phaeocercus",
       "order": "Passeriformes",
@@ -5075,7 +5075,7 @@
       ]
     },
     {
-      "id": "olsf",
+      "id": "olsfly",
       "name": "Olive-sided Flycatcher",
       "scientificName": "Contopus cooperi",
       "order": "Passeriformes",
@@ -5094,7 +5094,7 @@
       ]
     },
     {
-      "id": "grep",
+      "id": "grepew",
       "name": "Greater Pewee",
       "scientificName": "Contopus pertinax",
       "order": "Passeriformes",
@@ -5113,7 +5113,7 @@
       ]
     },
     {
-      "id": "wewp",
+      "id": "wewpew",
       "name": "Western Wood-Pewee",
       "scientificName": "Contopus sordidulus",
       "order": "Passeriformes",
@@ -5132,7 +5132,7 @@
       ]
     },
     {
-      "id": "eawp",
+      "id": "eawpew",
       "name": "Eastern Wood-Pewee",
       "scientificName": "Contopus virens",
       "order": "Passeriformes",
@@ -5151,7 +5151,7 @@
       ]
     },
     {
-      "id": "cubp",
+      "id": "cubpew1",
       "name": "Cuban Pewee",
       "scientificName": "Contopus caribaeus",
       "order": "Passeriformes",
@@ -5161,7 +5161,7 @@
       ]
     },
     {
-      "id": "yebf",
+      "id": "yebfly",
       "name": "Yellow-bellied Flycatcher",
       "scientificName": "Empidonax flaviventris",
       "order": "Passeriformes",
@@ -5180,7 +5180,7 @@
       ]
     },
     {
-      "id": "acaf",
+      "id": "acafly",
       "name": "Acadian Flycatcher",
       "scientificName": "Empidonax virescens",
       "order": "Passeriformes",
@@ -5199,7 +5199,7 @@
       ]
     },
     {
-      "id": "aldf",
+      "id": "aldfly",
       "name": "Alder Flycatcher",
       "scientificName": "Empidonax alnorum",
       "order": "Passeriformes",
@@ -5218,7 +5218,7 @@
       ]
     },
     {
-      "id": "wilf",
+      "id": "wilfly",
       "name": "Willow Flycatcher",
       "scientificName": "Empidonax traillii",
       "order": "Passeriformes",
@@ -5237,7 +5237,7 @@
       ]
     },
     {
-      "id": "leaf",
+      "id": "leafly",
       "name": "Least Flycatcher",
       "scientificName": "Empidonax minimus",
       "order": "Passeriformes",
@@ -5256,7 +5256,7 @@
       ]
     },
     {
-      "id": "hamf",
+      "id": "hamfly",
       "name": "Hammond's Flycatcher",
       "scientificName": "Empidonax hammondii",
       "order": "Passeriformes",
@@ -5275,7 +5275,7 @@
       ]
     },
     {
-      "id": "gryf",
+      "id": "gryfly",
       "name": "Gray Flycatcher",
       "scientificName": "Empidonax wrightii",
       "order": "Passeriformes",
@@ -5294,7 +5294,7 @@
       ]
     },
     {
-      "id": "dusf",
+      "id": "dusfly",
       "name": "Dusky Flycatcher",
       "scientificName": "Empidonax oberholseri",
       "order": "Passeriformes",
@@ -5313,7 +5313,7 @@
       ]
     },
     {
-      "id": "pinf",
+      "id": "pinfly1",
       "name": "Pine Flycatcher",
       "scientificName": "Empidonax affinis",
       "order": "Passeriformes",
@@ -5331,7 +5331,7 @@
       ]
     },
     {
-      "id": "wesf",
+      "id": "wesfly",
       "name": "Western Flycatcher",
       "scientificName": "Empidonax difficilis",
       "order": "Passeriformes",
@@ -5350,7 +5350,7 @@
       ]
     },
     {
-      "id": "bubf",
+      "id": "bubfly",
       "name": "Buff-breasted Flycatcher",
       "scientificName": "Empidonax fulvifrons",
       "order": "Passeriformes",
@@ -5369,7 +5369,7 @@
       ]
     },
     {
-      "id": "blkp",
+      "id": "blkpho",
       "name": "Black Phoebe",
       "scientificName": "Sayornis nigricans",
       "order": "Passeriformes",
@@ -5388,7 +5388,7 @@
       ]
     },
     {
-      "id": "easp",
+      "id": "easpho",
       "name": "Eastern Phoebe",
       "scientificName": "Sayornis phoebe",
       "order": "Passeriformes",
@@ -5407,7 +5407,7 @@
       ]
     },
     {
-      "id": "sayp",
+      "id": "saypho",
       "name": "Say's Phoebe",
       "scientificName": "Sayornis saya",
       "order": "Passeriformes",
@@ -5426,7 +5426,7 @@
       ]
     },
     {
-      "id": "verf",
+      "id": "verfly",
       "name": "Vermilion Flycatcher",
       "scientificName": "Pyrocephalus rubinus",
       "order": "Passeriformes",
@@ -5445,7 +5445,7 @@
       ]
     },
     {
-      "id": "ducf",
+      "id": "ducfly",
       "name": "Dusky-capped Flycatcher",
       "scientificName": "Myiarchus tuberculifer",
       "order": "Passeriformes",
@@ -5464,7 +5464,7 @@
       ]
     },
     {
-      "id": "astf",
+      "id": "astfly",
       "name": "Ash-throated Flycatcher",
       "scientificName": "Myiarchus cinerascens",
       "order": "Passeriformes",
@@ -5483,7 +5483,7 @@
       ]
     },
     {
-      "id": "nutf",
+      "id": "nutfly",
       "name": "Nutting's Flycatcher",
       "scientificName": "Myiarchus nuttingi",
       "order": "Passeriformes",
@@ -5498,7 +5498,7 @@
       ]
     },
     {
-      "id": "grcf",
+      "id": "grcfly",
       "name": "Great Crested Flycatcher",
       "scientificName": "Myiarchus crinitus",
       "order": "Passeriformes",
@@ -5517,7 +5517,7 @@
       ]
     },
     {
-      "id": "bncf",
+      "id": "bncfly",
       "name": "Brown-crested Flycatcher",
       "scientificName": "Myiarchus tyrannulus",
       "order": "Passeriformes",
@@ -5536,7 +5536,7 @@
       ]
     },
     {
-      "id": "grek",
+      "id": "grekis",
       "name": "Great Kiskadee",
       "scientificName": "Pitangus sulphuratus",
       "order": "Passeriformes",
@@ -5555,7 +5555,7 @@
       ]
     },
     {
-      "id": "socf",
+      "id": "socfly1",
       "name": "Social Flycatcher",
       "scientificName": "Myiozetetes similis",
       "order": "Passeriformes",
@@ -5566,7 +5566,7 @@
       ]
     },
     {
-      "id": "subf",
+      "id": "subfly",
       "name": "Sulphur-bellied Flycatcher",
       "scientificName": "Myiodynastes luteiventris",
       "order": "Passeriformes",
@@ -5585,7 +5585,7 @@
       ]
     },
     {
-      "id": "trok",
+      "id": "trokin",
       "name": "Tropical Kingbird",
       "scientificName": "Tyrannus melancholicus",
       "order": "Passeriformes",
@@ -5604,7 +5604,7 @@
       ]
     },
     {
-      "id": "couk",
+      "id": "coukin",
       "name": "Couch's Kingbird",
       "scientificName": "Tyrannus couchii",
       "order": "Passeriformes",
@@ -5622,7 +5622,7 @@
       ]
     },
     {
-      "id": "cask",
+      "id": "caskin",
       "name": "Cassin's Kingbird",
       "scientificName": "Tyrannus vociferans",
       "order": "Passeriformes",
@@ -5641,7 +5641,7 @@
       ]
     },
     {
-      "id": "thbk",
+      "id": "thbkin",
       "name": "Thick-billed Kingbird",
       "scientificName": "Tyrannus crassirostris",
       "order": "Passeriformes",
@@ -5660,7 +5660,7 @@
       ]
     },
     {
-      "id": "wesk",
+      "id": "weskin",
       "name": "Western Kingbird",
       "scientificName": "Tyrannus verticalis",
       "order": "Passeriformes",
@@ -5678,7 +5678,7 @@
       ]
     },
     {
-      "id": "eask",
+      "id": "easkin",
       "name": "Eastern Kingbird",
       "scientificName": "Tyrannus tyrannus",
       "order": "Passeriformes",
@@ -5697,7 +5697,7 @@
       ]
     },
     {
-      "id": "gryk",
+      "id": "grykin",
       "name": "Gray Kingbird",
       "scientificName": "Tyrannus dominicensis",
       "order": "Passeriformes",
@@ -5716,7 +5716,7 @@
       ]
     },
     {
-      "id": "sctf",
+      "id": "sctfly",
       "name": "Scissor-tailed Flycatcher",
       "scientificName": "Tyrannus forficatus",
       "order": "Passeriformes",
@@ -5735,7 +5735,7 @@
       ]
     },
     {
-      "id": "bkcv",
+      "id": "bkcvir1",
       "name": "Black-capped Vireo",
       "scientificName": "Vireo atricapilla",
       "order": "Passeriformes",
@@ -5754,7 +5754,7 @@
       ]
     },
     {
-      "id": "whev",
+      "id": "whevir",
       "name": "White-eyed Vireo",
       "scientificName": "Vireo griseus",
       "order": "Passeriformes",
@@ -5773,7 +5773,7 @@
       ]
     },
     {
-      "id": "thbv",
+      "id": "thbvir",
       "name": "Thick-billed Vireo",
       "scientificName": "Vireo crassirostris",
       "order": "Passeriformes",
@@ -5792,7 +5792,7 @@
       ]
     },
     {
-      "id": "cubv",
+      "id": "cubvir1",
       "name": "Cuban Vireo",
       "scientificName": "Vireo gundlachii",
       "order": "Passeriformes",
@@ -5807,7 +5807,7 @@
       ]
     },
     {
-      "id": "belv",
+      "id": "belvir",
       "name": "Bell's Vireo",
       "scientificName": "Vireo bellii",
       "order": "Passeriformes",
@@ -5826,7 +5826,7 @@
       ]
     },
     {
-      "id": "gryv",
+      "id": "gryvir",
       "name": "Gray Vireo",
       "scientificName": "Vireo vicinior",
       "order": "Passeriformes",
@@ -5845,7 +5845,7 @@
       ]
     },
     {
-      "id": "hutv",
+      "id": "hutvir",
       "name": "Hutton's Vireo",
       "scientificName": "Vireo huttoni",
       "order": "Passeriformes",
@@ -5864,7 +5864,7 @@
       ]
     },
     {
-      "id": "yetv",
+      "id": "yetvir",
       "name": "Yellow-throated Vireo",
       "scientificName": "Vireo flavifrons",
       "order": "Passeriformes",
@@ -5883,7 +5883,7 @@
       ]
     },
     {
-      "id": "casv",
+      "id": "casvir",
       "name": "Cassin's Vireo",
       "scientificName": "Vireo cassinii",
       "order": "Passeriformes",
@@ -5902,7 +5902,7 @@
       ]
     },
     {
-      "id": "buhv",
+      "id": "buhvir",
       "name": "Blue-headed Vireo",
       "scientificName": "Vireo solitarius",
       "order": "Passeriformes",
@@ -5921,7 +5921,7 @@
       ]
     },
     {
-      "id": "plsv",
+      "id": "plsvir",
       "name": "Plumbeous Vireo",
       "scientificName": "Vireo plumbeus",
       "order": "Passeriformes",
@@ -5940,7 +5940,7 @@
       ]
     },
     {
-      "id": "phiv",
+      "id": "phivir",
       "name": "Philadelphia Vireo",
       "scientificName": "Vireo philadelphicus",
       "order": "Passeriformes",
@@ -5959,7 +5959,7 @@
       ]
     },
     {
-      "id": "warv",
+      "id": "warvir",
       "name": "Warbling Vireo",
       "scientificName": "Vireo gilvus",
       "order": "Passeriformes",
@@ -5978,7 +5978,7 @@
       ]
     },
     {
-      "id": "reev",
+      "id": "reevir1",
       "name": "Red-eyed Vireo",
       "scientificName": "Vireo olivaceus",
       "order": "Passeriformes",
@@ -5997,7 +5997,7 @@
       ]
     },
     {
-      "id": "yegv",
+      "id": "yegvir",
       "name": "Yellow-green Vireo",
       "scientificName": "Vireo flavoviridis",
       "order": "Passeriformes",
@@ -6016,7 +6016,7 @@
       ]
     },
     {
-      "id": "bkwv",
+      "id": "bkwvir",
       "name": "Black-whiskered Vireo",
       "scientificName": "Vireo altiloquus",
       "order": "Passeriformes",
@@ -6035,7 +6035,7 @@
       ]
     },
     {
-      "id": "elep",
+      "id": "elepai",
       "name": "Hawaii Elepaio",
       "scientificName": "Chasiempis sandwichensis",
       "order": "Passeriformes",
@@ -6054,7 +6054,7 @@
       ]
     },
     {
-      "id": "elep",
+      "id": "elepai5",
       "name": "Kauai Elepaio",
       "scientificName": "Chasiempis sclateri",
       "order": "Passeriformes",
@@ -6073,7 +6073,7 @@
       ]
     },
     {
-      "id": "elep",
+      "id": "elepai4",
       "name": "Oahu Elepaio",
       "scientificName": "Chasiempis ibidis",
       "order": "Passeriformes",
@@ -6087,7 +6087,7 @@
       ]
     },
     {
-      "id": "brns",
+      "id": "brnshr",
       "name": "Brown Shrike",
       "scientificName": "Lanius cristatus",
       "order": "Passeriformes",
@@ -6097,7 +6097,7 @@
       ]
     },
     {
-      "id": "logs",
+      "id": "logshr",
       "name": "Loggerhead Shrike",
       "scientificName": "Lanius ludovicianus",
       "order": "Passeriformes",
@@ -6115,7 +6115,7 @@
       ]
     },
     {
-      "id": "nors",
+      "id": "norshr4",
       "name": "Northern Shrike",
       "scientificName": "Lanius borealis",
       "order": "Passeriformes",
@@ -6134,7 +6134,7 @@
       ]
     },
     {
-      "id": "gryj",
+      "id": "gryjay",
       "name": "Canada Jay",
       "scientificName": "Perisoreus canadensis",
       "order": "Passeriformes",
@@ -6150,7 +6150,7 @@
       ]
     },
     {
-      "id": "grnj",
+      "id": "grnjay",
       "name": "Green Jay",
       "scientificName": "Cyanocorax yncas",
       "order": "Passeriformes",
@@ -6161,7 +6161,7 @@
       ]
     },
     {
-      "id": "pinj",
+      "id": "pinjay",
       "name": "Pinyon Jay",
       "scientificName": "Gymnorhinus cyanocephalus",
       "order": "Passeriformes",
@@ -6180,7 +6180,7 @@
       ]
     },
     {
-      "id": "stej",
+      "id": "stejay",
       "name": "Steller's Jay",
       "scientificName": "Cyanocitta stelleri",
       "order": "Passeriformes",
@@ -6199,7 +6199,7 @@
       ]
     },
     {
-      "id": "bluj",
+      "id": "blujay",
       "name": "Blue Jay",
       "scientificName": "Cyanocitta cristata",
       "order": "Passeriformes",
@@ -6218,7 +6218,7 @@
       ]
     },
     {
-      "id": "flsj",
+      "id": "flsjay",
       "name": "Florida Scrub-Jay",
       "scientificName": "Aphelocoma coerulescens",
       "order": "Passeriformes",
@@ -6229,7 +6229,7 @@
       ]
     },
     {
-      "id": "issj",
+      "id": "issjay",
       "name": "Island Scrub-Jay",
       "scientificName": "Aphelocoma insularis",
       "order": "Passeriformes",
@@ -6239,7 +6239,7 @@
       ]
     },
     {
-      "id": "cows",
+      "id": "cowscj1",
       "name": "California Scrub-Jay",
       "scientificName": "Aphelocoma californica",
       "order": "Passeriformes",
@@ -6258,7 +6258,7 @@
       ]
     },
     {
-      "id": "woos",
+      "id": "wooscj2",
       "name": "Woodhouse's Scrub-Jay",
       "scientificName": "Aphelocoma woodhouseii",
       "order": "Passeriformes",
@@ -6277,7 +6277,7 @@
       ]
     },
     {
-      "id": "mexj",
+      "id": "mexjay4",
       "name": "Mexican Jay",
       "scientificName": "Aphelocoma wollweberi",
       "order": "Passeriformes",
@@ -6287,7 +6287,7 @@
       ]
     },
     {
-      "id": "bkbm",
+      "id": "bkbmag1",
       "name": "Black-billed Magpie",
       "scientificName": "Pica hudsonia",
       "order": "Passeriformes",
@@ -6306,7 +6306,7 @@
       ]
     },
     {
-      "id": "yebm",
+      "id": "yebmag",
       "name": "Yellow-billed Magpie",
       "scientificName": "Pica nuttalli",
       "order": "Passeriformes",
@@ -6317,7 +6317,7 @@
       ]
     },
     {
-      "id": "clan",
+      "id": "clanut",
       "name": "Clark's Nutcracker",
       "scientificName": "Nucifraga columbiana",
       "order": "Passeriformes",
@@ -6336,7 +6336,7 @@
       ]
     },
     {
-      "id": "amec",
+      "id": "amecro",
       "name": "American Crow",
       "scientificName": "Corvus brachyrhynchos",
       "order": "Passeriformes",
@@ -6355,7 +6355,7 @@
       ]
     },
     {
-      "id": "fisc",
+      "id": "fiscro",
       "name": "Fish Crow",
       "scientificName": "Corvus ossifragus",
       "order": "Passeriformes",
@@ -6374,7 +6374,7 @@
       ]
     },
     {
-      "id": "chir",
+      "id": "chirav",
       "name": "Chihuahuan Raven",
       "scientificName": "Corvus cryptoleucus",
       "order": "Passeriformes",
@@ -6385,7 +6385,7 @@
       ]
     },
     {
-      "id": "comr",
+      "id": "comrav",
       "name": "Common Raven",
       "scientificName": "Corvus corax",
       "order": "Passeriformes",
@@ -6404,7 +6404,7 @@
       ]
     },
     {
-      "id": "carc",
+      "id": "carchi",
       "name": "Carolina Chickadee",
       "scientificName": "Poecile carolinensis",
       "order": "Passeriformes",
@@ -6423,7 +6423,7 @@
       ]
     },
     {
-      "id": "bkcc",
+      "id": "bkcchi",
       "name": "Black-capped Chickadee",
       "scientificName": "Poecile atricapillus",
       "order": "Passeriformes",
@@ -6442,7 +6442,7 @@
       ]
     },
     {
-      "id": "mouc",
+      "id": "mouchi",
       "name": "Mountain Chickadee",
       "scientificName": "Poecile gambeli",
       "order": "Passeriformes",
@@ -6461,7 +6461,7 @@
       ]
     },
     {
-      "id": "mexc",
+      "id": "mexchi",
       "name": "Mexican Chickadee",
       "scientificName": "Poecile sclateri",
       "order": "Passeriformes",
@@ -6480,7 +6480,7 @@
       ]
     },
     {
-      "id": "chbc",
+      "id": "chbchi",
       "name": "Chestnut-backed Chickadee",
       "scientificName": "Poecile rufescens",
       "order": "Passeriformes",
@@ -6499,7 +6499,7 @@
       ]
     },
     {
-      "id": "borc",
+      "id": "borchi2",
       "name": "Boreal Chickadee",
       "scientificName": "Poecile hudsonicus",
       "order": "Passeriformes",
@@ -6518,7 +6518,7 @@
       ]
     },
     {
-      "id": "brit",
+      "id": "britit",
       "name": "Bridled Titmouse",
       "scientificName": "Baeolophus wollweberi",
       "order": "Passeriformes",
@@ -6536,7 +6536,7 @@
       ]
     },
     {
-      "id": "oakt",
+      "id": "oaktit",
       "name": "Oak Titmouse",
       "scientificName": "Baeolophus inornatus",
       "order": "Passeriformes",
@@ -6555,7 +6555,7 @@
       ]
     },
     {
-      "id": "junt",
+      "id": "juntit1",
       "name": "Juniper Titmouse",
       "scientificName": "Baeolophus ridgwayi",
       "order": "Passeriformes",
@@ -6574,7 +6574,7 @@
       ]
     },
     {
-      "id": "tuft",
+      "id": "tuftit",
       "name": "Tufted Titmouse",
       "scientificName": "Baeolophus bicolor",
       "order": "Passeriformes",
@@ -6593,7 +6593,7 @@
       ]
     },
     {
-      "id": "blct",
+      "id": "blctit4",
       "name": "Black-crested Titmouse",
       "scientificName": "Baeolophus atricristatus",
       "order": "Passeriformes",
@@ -6612,7 +6612,7 @@
       ]
     },
     {
-      "id": "gret",
+      "id": "gretit1",
       "name": "Great Tit",
       "scientificName": "Parus major",
       "order": "Passeriformes",
@@ -6622,7 +6622,7 @@
       ]
     },
     {
-      "id": "verd",
+      "id": "verdin",
       "name": "Verdin",
       "scientificName": "Auriparus flaviceps",
       "order": "Passeriformes",
@@ -6641,7 +6641,7 @@
       ]
     },
     {
-      "id": "skyl",
+      "id": "skylar",
       "name": "Eurasian Skylark",
       "scientificName": "Alauda arvensis",
       "order": "Passeriformes",
@@ -6660,7 +6660,7 @@
       ]
     },
     {
-      "id": "horl",
+      "id": "horlar",
       "name": "Horned Lark",
       "scientificName": "Eremophila alpestris",
       "order": "Passeriformes",
@@ -6679,7 +6679,7 @@
       ]
     },
     {
-      "id": "mill",
+      "id": "miller",
       "name": "Millerbird",
       "scientificName": "Acrocephalus familiaris",
       "order": "Passeriformes",
@@ -6690,7 +6690,7 @@
       ]
     },
     {
-      "id": "bans",
+      "id": "banswa",
       "name": "Bank Swallow",
       "scientificName": "Riparia riparia",
       "order": "Passeriformes",
@@ -6709,7 +6709,7 @@
       ]
     },
     {
-      "id": "tres",
+      "id": "treswa",
       "name": "Tree Swallow",
       "scientificName": "Tachycineta bicolor",
       "order": "Passeriformes",
@@ -6728,7 +6728,7 @@
       ]
     },
     {
-      "id": "vigs",
+      "id": "vigswa",
       "name": "Violet-green Swallow",
       "scientificName": "Tachycineta thalassina",
       "order": "Passeriformes",
@@ -6747,7 +6747,7 @@
       ]
     },
     {
-      "id": "purm",
+      "id": "purmar",
       "name": "Purple Martin",
       "scientificName": "Progne subis",
       "order": "Passeriformes",
@@ -6766,7 +6766,7 @@
       ]
     },
     {
-      "id": "nrws",
+      "id": "nrwswa",
       "name": "Northern Rough-winged Swallow",
       "scientificName": "Stelgidopteryx serripennis",
       "order": "Passeriformes",
@@ -6785,7 +6785,7 @@
       ]
     },
     {
-      "id": "bars",
+      "id": "barswa",
       "name": "Barn Swallow",
       "scientificName": "Hirundo rustica",
       "order": "Passeriformes",
@@ -6804,7 +6804,7 @@
       ]
     },
     {
-      "id": "clis",
+      "id": "cliswa",
       "name": "Cliff Swallow",
       "scientificName": "Petrochelidon pyrrhonota",
       "order": "Passeriformes",
@@ -6823,7 +6823,7 @@
       ]
     },
     {
-      "id": "cavs",
+      "id": "cavswa",
       "name": "Cave Swallow",
       "scientificName": "Petrochelidon fulva",
       "order": "Passeriformes",
@@ -6842,7 +6842,7 @@
       ]
     },
     {
-      "id": "rewb",
+      "id": "rewbul",
       "name": "Red-whiskered Bulbul",
       "scientificName": "Pycnonotus jocosus",
       "order": "Passeriformes",
@@ -6861,7 +6861,7 @@
       ]
     },
     {
-      "id": "revb",
+      "id": "revbul",
       "name": "Red-vented Bulbul",
       "scientificName": "Pycnonotus cafer",
       "order": "Passeriformes",
@@ -6880,7 +6880,7 @@
       ]
     },
     {
-      "id": "arcw",
+      "id": "arcwar1",
       "name": "Arctic Warbler",
       "scientificName": "Phylloscopus borealis",
       "order": "Passeriformes",
@@ -6899,7 +6899,7 @@
       ]
     },
     {
-      "id": "jabw",
+      "id": "jabwar",
       "name": "Japanese Bush Warbler",
       "scientificName": "Horornis diphone",
       "order": "Passeriformes",
@@ -6918,7 +6918,7 @@
       ]
     },
     {
-      "id": "bush",
+      "id": "bushti",
       "name": "Bushtit",
       "scientificName": "Psaltriparus minimus",
       "order": "Passeriformes",
@@ -6937,7 +6937,7 @@
       ]
     },
     {
-      "id": "wren",
+      "id": "wrenti",
       "name": "Wrentit",
       "scientificName": "Chamaea fasciata",
       "order": "Passeriformes",
@@ -6956,7 +6956,7 @@
       ]
     },
     {
-      "id": "swiw",
+      "id": "swiwhe1",
       "name": "Swinhoe's White-eye",
       "scientificName": "Zosterops simplex",
       "order": "Passeriformes",
@@ -6975,7 +6975,7 @@
       ]
     },
     {
-      "id": "warw",
+      "id": "warwhe1",
       "name": "Warbling White-eye",
       "scientificName": "Zosterops japonicus",
       "order": "Passeriformes",
@@ -6994,7 +6994,7 @@
       ]
     },
     {
-      "id": "rebl",
+      "id": "reblei",
       "name": "Red-billed Leiothrix",
       "scientificName": "Leiothrix lutea",
       "order": "Passeriformes",
@@ -7013,7 +7013,7 @@
       ]
     },
     {
-      "id": "melt",
+      "id": "melthr",
       "name": "Chinese Hwamei",
       "scientificName": "Garrulax canorus",
       "order": "Passeriformes",
@@ -7032,7 +7032,7 @@
       ]
     },
     {
-      "id": "gnlt",
+      "id": "gnlthr",
       "name": "Greater Necklaced Laughingthrush",
       "scientificName": "Pterorhinus pectoralis",
       "order": "Passeriformes",
@@ -7044,7 +7044,7 @@
       ]
     },
     {
-      "id": "ruck",
+      "id": "ruckin",
       "name": "Ruby-crowned Kinglet",
       "scientificName": "Corthylio calendula",
       "order": "Passeriformes",
@@ -7063,7 +7063,7 @@
       ]
     },
     {
-      "id": "gock",
+      "id": "gockin",
       "name": "Golden-crowned Kinglet",
       "scientificName": "Regulus satrapa",
       "order": "Passeriformes",
@@ -7082,7 +7082,7 @@
       ]
     },
     {
-      "id": "whbn",
+      "id": "whbnut",
       "name": "White-breasted Nuthatch",
       "scientificName": "Sitta carolinensis",
       "order": "Passeriformes",
@@ -7101,7 +7101,7 @@
       ]
     },
     {
-      "id": "pygn",
+      "id": "pygnut",
       "name": "Pygmy Nuthatch",
       "scientificName": "Sitta pygmaea",
       "order": "Passeriformes",
@@ -7120,7 +7120,7 @@
       ]
     },
     {
-      "id": "bnhn",
+      "id": "bnhnut",
       "name": "Brown-headed Nuthatch",
       "scientificName": "Sitta pusilla",
       "order": "Passeriformes",
@@ -7139,7 +7139,7 @@
       ]
     },
     {
-      "id": "rebn",
+      "id": "rebnut",
       "name": "Red-breasted Nuthatch",
       "scientificName": "Sitta canadensis",
       "order": "Passeriformes",
@@ -7158,7 +7158,7 @@
       ]
     },
     {
-      "id": "brnc",
+      "id": "brncre",
       "name": "Brown Creeper",
       "scientificName": "Certhia americana",
       "order": "Passeriformes",
@@ -7176,7 +7176,7 @@
       ]
     },
     {
-      "id": "bugg",
+      "id": "buggna",
       "name": "Blue-gray Gnatcatcher",
       "scientificName": "Polioptila caerulea",
       "order": "Passeriformes",
@@ -7195,7 +7195,7 @@
       ]
     },
     {
-      "id": "bktg",
+      "id": "bktgna",
       "name": "Black-tailed Gnatcatcher",
       "scientificName": "Polioptila melanura",
       "order": "Passeriformes",
@@ -7214,7 +7214,7 @@
       ]
     },
     {
-      "id": "calg",
+      "id": "calgna",
       "name": "California Gnatcatcher",
       "scientificName": "Polioptila californica",
       "order": "Passeriformes",
@@ -7233,7 +7233,7 @@
       ]
     },
     {
-      "id": "bkcg",
+      "id": "bkcgna",
       "name": "Black-capped Gnatcatcher",
       "scientificName": "Polioptila nigriceps",
       "order": "Passeriformes",
@@ -7245,7 +7245,7 @@
       ]
     },
     {
-      "id": "rocw",
+      "id": "rocwre",
       "name": "Rock Wren",
       "scientificName": "Salpinctes obsoletus",
       "order": "Passeriformes",
@@ -7264,7 +7264,7 @@
       ]
     },
     {
-      "id": "canw",
+      "id": "canwre",
       "name": "Canyon Wren",
       "scientificName": "Catherpes mexicanus",
       "order": "Passeriformes",
@@ -7283,7 +7283,7 @@
       ]
     },
     {
-      "id": "houw",
+      "id": "houwre",
       "name": "Northern House Wren",
       "scientificName": "Troglodytes aedon",
       "order": "Passeriformes",
@@ -7302,7 +7302,7 @@
       ]
     },
     {
-      "id": "pacw",
+      "id": "pacwre1",
       "name": "Pacific Wren",
       "scientificName": "Troglodytes pacificus",
       "order": "Passeriformes",
@@ -7321,7 +7321,7 @@
       ]
     },
     {
-      "id": "winw",
+      "id": "winwre3",
       "name": "Winter Wren",
       "scientificName": "Troglodytes hiemalis",
       "order": "Passeriformes",
@@ -7339,7 +7339,7 @@
       ]
     },
     {
-      "id": "sedw",
+      "id": "sedwre1",
       "name": "Sedge Wren",
       "scientificName": "Cistothorus stellaris",
       "order": "Passeriformes",
@@ -7358,7 +7358,7 @@
       ]
     },
     {
-      "id": "marw",
+      "id": "marwre",
       "name": "Marsh Wren",
       "scientificName": "Cistothorus palustris",
       "order": "Passeriformes",
@@ -7377,7 +7377,7 @@
       ]
     },
     {
-      "id": "carw",
+      "id": "carwre",
       "name": "Carolina Wren",
       "scientificName": "Thryothorus ludovicianus",
       "order": "Passeriformes",
@@ -7396,7 +7396,7 @@
       ]
     },
     {
-      "id": "beww",
+      "id": "bewwre",
       "name": "Bewick's Wren",
       "scientificName": "Thryomanes bewickii",
       "order": "Passeriformes",
@@ -7415,7 +7415,7 @@
       ]
     },
     {
-      "id": "cacw",
+      "id": "cacwre",
       "name": "Cactus Wren",
       "scientificName": "Campylorhynchus brunneicapillus",
       "order": "Passeriformes",
@@ -7434,7 +7434,7 @@
       ]
     },
     {
-      "id": "sinw",
+      "id": "sinwre1",
       "name": "Sinaloa Wren",
       "scientificName": "Thryophilus sinaloa",
       "order": "Passeriformes",
@@ -7447,7 +7447,7 @@
       ]
     },
     {
-      "id": "amed",
+      "id": "amedip",
       "name": "American Dipper",
       "scientificName": "Cinclus mexicanus",
       "order": "Passeriformes",
@@ -7466,7 +7466,7 @@
       ]
     },
     {
-      "id": "eurs",
+      "id": "eursta",
       "name": "European Starling",
       "scientificName": "Sturnus vulgaris",
       "order": "Passeriformes",
@@ -7485,7 +7485,7 @@
       ]
     },
     {
-      "id": "comm",
+      "id": "commyn",
       "name": "Common Myna",
       "scientificName": "Acridotheres tristis",
       "order": "Passeriformes",
@@ -7504,7 +7504,7 @@
       ]
     },
     {
-      "id": "blum",
+      "id": "blumoc",
       "name": "Blue Mockingbird",
       "scientificName": "Melanotis caerulescens",
       "order": "Passeriformes",
@@ -7521,7 +7521,7 @@
       ]
     },
     {
-      "id": "gryc",
+      "id": "grycat",
       "name": "Gray Catbird",
       "scientificName": "Dumetella carolinensis",
       "order": "Passeriformes",
@@ -7540,7 +7540,7 @@
       ]
     },
     {
-      "id": "cubt",
+      "id": "cubthr",
       "name": "Curve-billed Thrasher",
       "scientificName": "Toxostoma curvirostre",
       "order": "Passeriformes",
@@ -7559,7 +7559,7 @@
       ]
     },
     {
-      "id": "brnt",
+      "id": "brnthr",
       "name": "Brown Thrasher",
       "scientificName": "Toxostoma rufum",
       "order": "Passeriformes",
@@ -7578,7 +7578,7 @@
       ]
     },
     {
-      "id": "lobt",
+      "id": "lobthr",
       "name": "Long-billed Thrasher",
       "scientificName": "Toxostoma longirostre",
       "order": "Passeriformes",
@@ -7596,7 +7596,7 @@
       ]
     },
     {
-      "id": "bent",
+      "id": "benthr",
       "name": "Bendire's Thrasher",
       "scientificName": "Toxostoma bendirei",
       "order": "Passeriformes",
@@ -7615,7 +7615,7 @@
       ]
     },
     {
-      "id": "calt",
+      "id": "calthr",
       "name": "California Thrasher",
       "scientificName": "Toxostoma redivivum",
       "order": "Passeriformes",
@@ -7634,7 +7634,7 @@
       ]
     },
     {
-      "id": "lect",
+      "id": "lecthr",
       "name": "LeConte's Thrasher",
       "scientificName": "Toxostoma lecontei",
       "order": "Passeriformes",
@@ -7653,7 +7653,7 @@
       ]
     },
     {
-      "id": "crit",
+      "id": "crithr",
       "name": "Crissal Thrasher",
       "scientificName": "Toxostoma crissale",
       "order": "Passeriformes",
@@ -7672,7 +7672,7 @@
       ]
     },
     {
-      "id": "sagt",
+      "id": "sagthr",
       "name": "Sage Thrasher",
       "scientificName": "Oreoscoptes montanus",
       "order": "Passeriformes",
@@ -7691,7 +7691,7 @@
       ]
     },
     {
-      "id": "bahm",
+      "id": "bahmoc",
       "name": "Bahama Mockingbird",
       "scientificName": "Mimus gundlachii",
       "order": "Passeriformes",
@@ -7710,7 +7710,7 @@
       ]
     },
     {
-      "id": "norm",
+      "id": "normoc",
       "name": "Northern Mockingbird",
       "scientificName": "Mimus polyglottos",
       "order": "Passeriformes",
@@ -7729,7 +7729,7 @@
       ]
     },
     {
-      "id": "easb",
+      "id": "easblu",
       "name": "Eastern Bluebird",
       "scientificName": "Sialia sialis",
       "order": "Passeriformes",
@@ -7748,7 +7748,7 @@
       ]
     },
     {
-      "id": "wesb",
+      "id": "wesblu",
       "name": "Western Bluebird",
       "scientificName": "Sialia mexicana",
       "order": "Passeriformes",
@@ -7767,7 +7767,7 @@
       ]
     },
     {
-      "id": "moub",
+      "id": "moublu",
       "name": "Mountain Bluebird",
       "scientificName": "Sialia currucoides",
       "order": "Passeriformes",
@@ -7786,7 +7786,7 @@
       ]
     },
     {
-      "id": "tows",
+      "id": "towsol",
       "name": "Townsend's Solitaire",
       "scientificName": "Myadestes townsendi",
       "order": "Passeriformes",
@@ -7805,7 +7805,7 @@
       ]
     },
     {
-      "id": "kama",
+      "id": "kamao",
       "name": "Kamao",
       "scientificName": "Myadestes myadestinus",
       "order": "Passeriformes",
@@ -7842,7 +7842,7 @@
       ]
     },
     {
-      "id": "puai",
+      "id": "puaioh",
       "name": "Puaiohi",
       "scientificName": "Myadestes palmeri",
       "order": "Passeriformes",
@@ -7859,7 +7859,7 @@
       ]
     },
     {
-      "id": "vart",
+      "id": "varthr",
       "name": "Varied Thrush",
       "scientificName": "Ixoreus naevius",
       "order": "Passeriformes",
@@ -7878,7 +7878,7 @@
       ]
     },
     {
-      "id": "obnt",
+      "id": "obnthr1",
       "name": "Orange-billed Nightingale-Thrush",
       "scientificName": "Catharus aurantiirostris",
       "order": "Passeriformes",
@@ -7888,7 +7888,7 @@
       ]
     },
     {
-      "id": "veer",
+      "id": "veery",
       "name": "Veery",
       "scientificName": "Catharus fuscescens",
       "order": "Passeriformes",
@@ -7907,7 +7907,7 @@
       ]
     },
     {
-      "id": "gyct",
+      "id": "gycthr",
       "name": "Gray-cheeked Thrush",
       "scientificName": "Catharus minimus",
       "order": "Passeriformes",
@@ -7926,7 +7926,7 @@
       ]
     },
     {
-      "id": "bict",
+      "id": "bicthr",
       "name": "Bicknell's Thrush",
       "scientificName": "Catharus bicknelli",
       "order": "Passeriformes",
@@ -7945,7 +7945,7 @@
       ]
     },
     {
-      "id": "swat",
+      "id": "swathr",
       "name": "Swainson's Thrush",
       "scientificName": "Catharus ustulatus",
       "order": "Passeriformes",
@@ -7964,7 +7964,7 @@
       ]
     },
     {
-      "id": "hert",
+      "id": "herthr",
       "name": "Hermit Thrush",
       "scientificName": "Catharus guttatus",
       "order": "Passeriformes",
@@ -7982,7 +7982,7 @@
       ]
     },
     {
-      "id": "woot",
+      "id": "woothr",
       "name": "Wood Thrush",
       "scientificName": "Hylocichla mustelina",
       "order": "Passeriformes",
@@ -8001,7 +8001,7 @@
       ]
     },
     {
-      "id": "redw",
+      "id": "redwin",
       "name": "Redwing",
       "scientificName": "Turdus iliacus",
       "order": "Passeriformes",
@@ -8013,7 +8013,7 @@
       ]
     },
     {
-      "id": "clcr",
+      "id": "clcrob",
       "name": "Clay-colored Thrush",
       "scientificName": "Turdus grayi",
       "order": "Passeriformes",
@@ -8032,7 +8032,7 @@
       ]
     },
     {
-      "id": "amer",
+      "id": "amerob",
       "name": "American Robin",
       "scientificName": "Turdus migratorius",
       "order": "Passeriformes",
@@ -8051,7 +8051,7 @@
       ]
     },
     {
-      "id": "rubr",
+      "id": "rubrob",
       "name": "Rufous-backed Robin",
       "scientificName": "Turdus rufopalliatus",
       "order": "Passeriformes",
@@ -8061,7 +8061,7 @@
       ]
     },
     {
-      "id": "relt",
+      "id": "relthr1",
       "name": "Red-legged Thrush",
       "scientificName": "Turdus plumbeus",
       "order": "Passeriformes",
@@ -8073,7 +8073,7 @@
       ]
     },
     {
-      "id": "whrs",
+      "id": "whrsha",
       "name": "White-rumped Shama",
       "scientificName": "Copsychus malabaricus",
       "order": "Passeriformes",
@@ -8092,7 +8092,7 @@
       ]
     },
     {
-      "id": "blue",
+      "id": "blueth",
       "name": "Bluethroat",
       "scientificName": "Luscinia svecica",
       "order": "Passeriformes",
@@ -8111,7 +8111,7 @@
       ]
     },
     {
-      "id": "sibr",
+      "id": "sibrub",
       "name": "Siberian Rubythroat",
       "scientificName": "Calliope calliope",
       "order": "Passeriformes",
@@ -8121,7 +8121,7 @@
       ]
     },
     {
-      "id": "norw",
+      "id": "norwhe",
       "name": "Northern Wheatear",
       "scientificName": "Oenanthe oenanthe",
       "order": "Passeriformes",
@@ -8140,7 +8140,7 @@
       ]
     },
     {
-      "id": "bohw",
+      "id": "bohwax",
       "name": "Bohemian Waxwing",
       "scientificName": "Bombycilla garrulus",
       "order": "Passeriformes",
@@ -8158,7 +8158,7 @@
       ]
     },
     {
-      "id": "cedw",
+      "id": "cedwax",
       "name": "Cedar Waxwing",
       "scientificName": "Bombycilla cedrorum",
       "order": "Passeriformes",
@@ -8177,7 +8177,7 @@
       ]
     },
     {
-      "id": "kauo",
+      "id": "kauoo",
       "name": "Kauai Oo",
       "scientificName": "Moho braccatus",
       "order": "Passeriformes",
@@ -8195,7 +8195,7 @@
       ]
     },
     {
-      "id": "phai",
+      "id": "phaino",
       "name": "Phainopepla",
       "scientificName": "Phainopepla nitens",
       "order": "Passeriformes",
@@ -8214,7 +8214,7 @@
       ]
     },
     {
-      "id": "oliw",
+      "id": "oliwar",
       "name": "Olive Warbler",
       "scientificName": "Peucedramus taeniatus",
       "order": "Passeriformes",
@@ -8233,7 +8233,7 @@
       ]
     },
     {
-      "id": "orab",
+      "id": "orabis1",
       "name": "Northern Red Bishop",
       "scientificName": "Euplectes franciscanus",
       "order": "Passeriformes",
@@ -8244,7 +8244,7 @@
       ]
     },
     {
-      "id": "inds",
+      "id": "indsil",
       "name": "Indian Silverbill",
       "scientificName": "Euodice malabarica",
       "order": "Passeriformes",
@@ -8255,7 +8255,7 @@
       ]
     },
     {
-      "id": "nutm",
+      "id": "nutman",
       "name": "Scaly-breasted Munia",
       "scientificName": "Lonchura punctulata",
       "order": "Passeriformes",
@@ -8270,7 +8270,7 @@
       ]
     },
     {
-      "id": "reda",
+      "id": "redava",
       "name": "Red Avadavat",
       "scientificName": "Amandava amandava",
       "order": "Passeriformes",
@@ -8280,7 +8280,7 @@
       ]
     },
     {
-      "id": "pitw",
+      "id": "pitwhy",
       "name": "Pin-tailed Whydah",
       "scientificName": "Vidua macroura",
       "order": "Passeriformes",
@@ -8299,7 +8299,7 @@
       ]
     },
     {
-      "id": "vili",
+      "id": "vilind",
       "name": "Village Indigobird",
       "scientificName": "Vidua chalybeata",
       "order": "Passeriformes",
@@ -8309,7 +8309,7 @@
       ]
     },
     {
-      "id": "hous",
+      "id": "houspa",
       "name": "House Sparrow",
       "scientificName": "Passer domesticus",
       "order": "Passeriformes",
@@ -8328,7 +8328,7 @@
       ]
     },
     {
-      "id": "euts",
+      "id": "eutspa",
       "name": "Eurasian Tree Sparrow",
       "scientificName": "Passer montanus",
       "order": "Passeriformes",
@@ -8346,7 +8346,7 @@
       ]
     },
     {
-      "id": "eayw",
+      "id": "eaywag",
       "name": "Eastern Yellow Wagtail",
       "scientificName": "Motacilla tschutschensis",
       "order": "Passeriformes",
@@ -8362,7 +8362,7 @@
       ]
     },
     {
-      "id": "whiw",
+      "id": "whiwag",
       "name": "White Wagtail",
       "scientificName": "Motacilla alba",
       "order": "Passeriformes",
@@ -8376,7 +8376,7 @@
       ]
     },
     {
-      "id": "olbp",
+      "id": "olbpip",
       "name": "Olive-backed Pipit",
       "scientificName": "Anthus hodgsoni",
       "order": "Passeriformes",
@@ -8386,7 +8386,7 @@
       ]
     },
     {
-      "id": "retp",
+      "id": "retpip",
       "name": "Red-throated Pipit",
       "scientificName": "Anthus cervinus",
       "order": "Passeriformes",
@@ -8397,7 +8397,7 @@
       ]
     },
     {
-      "id": "amep",
+      "id": "amepip",
       "name": "American Pipit",
       "scientificName": "Anthus rubescens",
       "order": "Passeriformes",
@@ -8416,7 +8416,7 @@
       ]
     },
     {
-      "id": "sprp",
+      "id": "sprpip",
       "name": "Sprague's Pipit",
       "scientificName": "Anthus spragueii",
       "order": "Passeriformes",
@@ -8435,7 +8435,7 @@
       ]
     },
     {
-      "id": "bram",
+      "id": "brambl",
       "name": "Brambling",
       "scientificName": "Fringilla montifringilla",
       "order": "Passeriformes",
@@ -8446,7 +8446,7 @@
       ]
     },
     {
-      "id": "eveg",
+      "id": "evegro",
       "name": "Evening Grosbeak",
       "scientificName": "Coccothraustes vespertinus",
       "order": "Passeriformes",
@@ -8465,7 +8465,7 @@
       ]
     },
     {
-      "id": "akik",
+      "id": "akikik",
       "name": "Akikiki",
       "scientificName": "Oreomystis bairdi",
       "order": "Passeriformes",
@@ -8479,7 +8479,7 @@
       ]
     },
     {
-      "id": "maua",
+      "id": "mauala",
       "name": "Maui Alauahio",
       "scientificName": "Paroreomyza montana",
       "order": "Passeriformes",
@@ -8496,7 +8496,7 @@
       ]
     },
     {
-      "id": "pali",
+      "id": "palila",
       "name": "Palila",
       "scientificName": "Loxioides bailleui",
       "order": "Passeriformes",
@@ -8515,7 +8515,7 @@
       ]
     },
     {
-      "id": "layf",
+      "id": "layfin",
       "name": "Laysan Finch",
       "scientificName": "Telespiza cantans",
       "order": "Passeriformes",
@@ -8525,7 +8525,7 @@
       ]
     },
     {
-      "id": "nihf",
+      "id": "nihfin",
       "name": "Nihoa Finch",
       "scientificName": "Telespiza ultima",
       "order": "Passeriformes",
@@ -8535,7 +8535,7 @@
       ]
     },
     {
-      "id": "creh",
+      "id": "crehon",
       "name": "Akohekohe",
       "scientificName": "Palmeria dolei",
       "order": "Passeriformes",
@@ -8554,7 +8554,7 @@
       ]
     },
     {
-      "id": "apap",
+      "id": "apapan",
       "name": "Apapane",
       "scientificName": "Himatione sanguinea",
       "order": "Passeriformes",
@@ -8603,7 +8603,7 @@
       ]
     },
     {
-      "id": "maup",
+      "id": "maupar",
       "name": "Maui Parrotbill",
       "scientificName": "Pseudonestor xanthophrys",
       "order": "Passeriformes",
@@ -8619,7 +8619,7 @@
       ]
     },
     {
-      "id": "akia",
+      "id": "akiapo",
       "name": "Akiapolaau",
       "scientificName": "Hemignathus wilsoni",
       "order": "Passeriformes",
@@ -8638,7 +8638,7 @@
       ]
     },
     {
-      "id": "ania",
+      "id": "aniani",
       "name": "Anianiau",
       "scientificName": "Magumma parva",
       "order": "Passeriformes",
@@ -8657,7 +8657,7 @@
       ]
     },
     {
-      "id": "hawa",
+      "id": "hawama",
       "name": "Hawaii Amakihi",
       "scientificName": "Chlorodrepanis virens",
       "order": "Passeriformes",
@@ -8676,7 +8676,7 @@
       ]
     },
     {
-      "id": "oaha",
+      "id": "oahama",
       "name": "Oahu Amakihi",
       "scientificName": "Chlorodrepanis flava",
       "order": "Passeriformes",
@@ -8695,7 +8695,7 @@
       ]
     },
     {
-      "id": "kaua",
+      "id": "kauama",
       "name": "Kauai Amakihi",
       "scientificName": "Chlorodrepanis stejnegeri",
       "order": "Passeriformes",
@@ -8714,7 +8714,7 @@
       ]
     },
     {
-      "id": "hawc",
+      "id": "hawcre",
       "name": "Hawaii Creeper",
       "scientificName": "Loxops mana",
       "order": "Passeriformes",
@@ -8733,7 +8733,7 @@
       ]
     },
     {
-      "id": "akek",
+      "id": "akekee",
       "name": "Akekee",
       "scientificName": "Loxops caeruleirostris",
       "order": "Passeriformes",
@@ -8752,7 +8752,7 @@
       ]
     },
     {
-      "id": "akep",
+      "id": "akepa1",
       "name": "Hawaii Akepa",
       "scientificName": "Loxops coccineus",
       "order": "Passeriformes",
@@ -8771,7 +8771,7 @@
       ]
     },
     {
-      "id": "ping",
+      "id": "pingro",
       "name": "Pine Grosbeak",
       "scientificName": "Pinicola enucleator",
       "order": "Passeriformes",
@@ -8790,7 +8790,7 @@
       ]
     },
     {
-      "id": "gcrf",
+      "id": "gcrfin",
       "name": "Gray-crowned Rosy-Finch",
       "scientificName": "Leucosticte tephrocotis",
       "order": "Passeriformes",
@@ -8804,7 +8804,7 @@
       ]
     },
     {
-      "id": "bkrf",
+      "id": "bkrfin",
       "name": "Black Rosy-Finch",
       "scientificName": "Leucosticte atrata",
       "order": "Passeriformes",
@@ -8814,7 +8814,7 @@
       ]
     },
     {
-      "id": "bcrf",
+      "id": "bcrfin",
       "name": "Brown-capped Rosy-Finch",
       "scientificName": "Leucosticte australis",
       "order": "Passeriformes",
@@ -8831,7 +8831,7 @@
       ]
     },
     {
-      "id": "houf",
+      "id": "houfin",
       "name": "House Finch",
       "scientificName": "Haemorhous mexicanus",
       "order": "Passeriformes",
@@ -8850,7 +8850,7 @@
       ]
     },
     {
-      "id": "purf",
+      "id": "purfin",
       "name": "Purple Finch",
       "scientificName": "Haemorhous purpureus",
       "order": "Passeriformes",
@@ -8869,7 +8869,7 @@
       ]
     },
     {
-      "id": "casf",
+      "id": "casfin",
       "name": "Cassin's Finch",
       "scientificName": "Haemorhous cassinii",
       "order": "Passeriformes",
@@ -8888,7 +8888,7 @@
       ]
     },
     {
-      "id": "yefc",
+      "id": "yefcan",
       "name": "Yellow-fronted Canary",
       "scientificName": "Crithagra mozambica",
       "order": "Passeriformes",
@@ -8907,7 +8907,7 @@
       ]
     },
     {
-      "id": "redp",
+      "id": "redpol1",
       "name": "Redpoll",
       "scientificName": "Acanthis flammea",
       "order": "Passeriformes",
@@ -8926,7 +8926,7 @@
       ]
     },
     {
-      "id": "redc",
+      "id": "redcro",
       "name": "Red Crossbill",
       "scientificName": "Loxia curvirostra",
       "order": "Passeriformes",
@@ -8945,7 +8945,7 @@
       ]
     },
     {
-      "id": "redc",
+      "id": "redcro9",
       "name": "Cassia Crossbill",
       "scientificName": "Loxia sinesciuris",
       "order": "Passeriformes",
@@ -8964,7 +8964,7 @@
       ]
     },
     {
-      "id": "whwc",
+      "id": "whwcro",
       "name": "White-winged Crossbill",
       "scientificName": "Loxia leucoptera",
       "order": "Passeriformes",
@@ -8983,7 +8983,7 @@
       ]
     },
     {
-      "id": "eurg",
+      "id": "eurgol",
       "name": "European Goldfinch",
       "scientificName": "Carduelis carduelis",
       "order": "Passeriformes",
@@ -9002,7 +9002,7 @@
       ]
     },
     {
-      "id": "comc",
+      "id": "comcan",
       "name": "Island Canary",
       "scientificName": "Serinus canaria",
       "order": "Passeriformes",
@@ -9012,7 +9012,7 @@
       ]
     },
     {
-      "id": "pins",
+      "id": "pinsis",
       "name": "Pine Siskin",
       "scientificName": "Spinus pinus",
       "order": "Passeriformes",
@@ -9031,7 +9031,7 @@
       ]
     },
     {
-      "id": "lesg",
+      "id": "lesgol",
       "name": "Lesser Goldfinch",
       "scientificName": "Spinus psaltria",
       "order": "Passeriformes",
@@ -9050,7 +9050,7 @@
       ]
     },
     {
-      "id": "lawg",
+      "id": "lawgol",
       "name": "Lawrence's Goldfinch",
       "scientificName": "Spinus lawrencei",
       "order": "Passeriformes",
@@ -9069,7 +9069,7 @@
       ]
     },
     {
-      "id": "ameg",
+      "id": "amegfi",
       "name": "American Goldfinch",
       "scientificName": "Spinus tristis",
       "order": "Passeriformes",
@@ -9088,7 +9088,7 @@
       ]
     },
     {
-      "id": "lapl",
+      "id": "laplon",
       "name": "Lapland Longspur",
       "scientificName": "Calcarius lapponicus",
       "order": "Passeriformes",
@@ -9107,7 +9107,7 @@
       ]
     },
     {
-      "id": "chcl",
+      "id": "chclon",
       "name": "Chestnut-collared Longspur",
       "scientificName": "Calcarius ornatus",
       "order": "Passeriformes",
@@ -9126,7 +9126,7 @@
       ]
     },
     {
-      "id": "smil",
+      "id": "smilon",
       "name": "Smith's Longspur",
       "scientificName": "Calcarius pictus",
       "order": "Passeriformes",
@@ -9145,7 +9145,7 @@
       ]
     },
     {
-      "id": "mccl",
+      "id": "mcclon",
       "name": "Thick-billed Longspur",
       "scientificName": "Rhynchophanes mccownii",
       "order": "Passeriformes",
@@ -9164,7 +9164,7 @@
       ]
     },
     {
-      "id": "snob",
+      "id": "snobun",
       "name": "Snow Bunting",
       "scientificName": "Plectrophenax nivalis",
       "order": "Passeriformes",
@@ -9183,7 +9183,7 @@
       ]
     },
     {
-      "id": "mckb",
+      "id": "mckbun",
       "name": "McKay's Bunting",
       "scientificName": "Plectrophenax hyperboreus",
       "order": "Passeriformes",
@@ -9202,7 +9202,7 @@
       ]
     },
     {
-      "id": "ruws",
+      "id": "ruwspa",
       "name": "Rufous-winged Sparrow",
       "scientificName": "Peucaea carpalis",
       "order": "Passeriformes",
@@ -9221,7 +9221,7 @@
       ]
     },
     {
-      "id": "bots",
+      "id": "botspa",
       "name": "Botteri's Sparrow",
       "scientificName": "Peucaea botterii",
       "order": "Passeriformes",
@@ -9240,7 +9240,7 @@
       ]
     },
     {
-      "id": "cass",
+      "id": "casspa",
       "name": "Cassin's Sparrow",
       "scientificName": "Peucaea cassinii",
       "order": "Passeriformes",
@@ -9259,7 +9259,7 @@
       ]
     },
     {
-      "id": "bacs",
+      "id": "bacspa",
       "name": "Bachman's Sparrow",
       "scientificName": "Peucaea aestivalis",
       "order": "Passeriformes",
@@ -9277,7 +9277,7 @@
       ]
     },
     {
-      "id": "gras",
+      "id": "graspa",
       "name": "Grasshopper Sparrow",
       "scientificName": "Ammodramus savannarum",
       "order": "Passeriformes",
@@ -9296,7 +9296,7 @@
       ]
     },
     {
-      "id": "olis",
+      "id": "olispa",
       "name": "Olive Sparrow",
       "scientificName": "Arremonops rufivirgatus",
       "order": "Passeriformes",
@@ -9315,7 +9315,7 @@
       ]
     },
     {
-      "id": "chis",
+      "id": "chispa",
       "name": "Chipping Sparrow",
       "scientificName": "Spizella passerina",
       "order": "Passeriformes",
@@ -9334,7 +9334,7 @@
       ]
     },
     {
-      "id": "clcs",
+      "id": "clcspa",
       "name": "Clay-colored Sparrow",
       "scientificName": "Spizella pallida",
       "order": "Passeriformes",
@@ -9353,7 +9353,7 @@
       ]
     },
     {
-      "id": "bkcs",
+      "id": "bkcspa",
       "name": "Black-chinned Sparrow",
       "scientificName": "Spizella atrogularis",
       "order": "Passeriformes",
@@ -9372,7 +9372,7 @@
       ]
     },
     {
-      "id": "fies",
+      "id": "fiespa",
       "name": "Field Sparrow",
       "scientificName": "Spizella pusilla",
       "order": "Passeriformes",
@@ -9391,7 +9391,7 @@
       ]
     },
     {
-      "id": "bres",
+      "id": "brespa",
       "name": "Brewer's Sparrow",
       "scientificName": "Spizella breweri",
       "order": "Passeriformes",
@@ -9410,7 +9410,7 @@
       ]
     },
     {
-      "id": "fiss",
+      "id": "fisspa",
       "name": "Five-striped Sparrow",
       "scientificName": "Amphispizopsis quinquestriata",
       "order": "Passeriformes",
@@ -9429,7 +9429,7 @@
       ]
     },
     {
-      "id": "bkts",
+      "id": "bktspa",
       "name": "Black-throated Sparrow",
       "scientificName": "Amphispiza bilineata",
       "order": "Passeriformes",
@@ -9448,7 +9448,7 @@
       ]
     },
     {
-      "id": "lars",
+      "id": "larspa",
       "name": "Lark Sparrow",
       "scientificName": "Chondestes grammacus",
       "order": "Passeriformes",
@@ -9467,7 +9467,7 @@
       ]
     },
     {
-      "id": "larb",
+      "id": "larbun",
       "name": "Lark Bunting",
       "scientificName": "Calamospiza melanocorys",
       "order": "Passeriformes",
@@ -9486,7 +9486,7 @@
       ]
     },
     {
-      "id": "amts",
+      "id": "amtspa",
       "name": "American Tree Sparrow",
       "scientificName": "Spizelloides arborea",
       "order": "Passeriformes",
@@ -9505,7 +9505,7 @@
       ]
     },
     {
-      "id": "foxs",
+      "id": "foxspa",
       "name": "Fox Sparrow",
       "scientificName": "Passerella iliaca",
       "order": "Passeriformes",
@@ -9524,7 +9524,7 @@
       ]
     },
     {
-      "id": "daej",
+      "id": "daejun",
       "name": "Dark-eyed Junco",
       "scientificName": "Junco hyemalis",
       "order": "Passeriformes",
@@ -9543,7 +9543,7 @@
       ]
     },
     {
-      "id": "yeej",
+      "id": "yeejun",
       "name": "Yellow-eyed Junco",
       "scientificName": "Junco phaeonotus",
       "order": "Passeriformes",
@@ -9562,7 +9562,7 @@
       ]
     },
     {
-      "id": "whcs",
+      "id": "whcspa",
       "name": "White-crowned Sparrow",
       "scientificName": "Zonotrichia leucophrys",
       "order": "Passeriformes",
@@ -9581,7 +9581,7 @@
       ]
     },
     {
-      "id": "gocs",
+      "id": "gocspa",
       "name": "Golden-crowned Sparrow",
       "scientificName": "Zonotrichia atricapilla",
       "order": "Passeriformes",
@@ -9600,7 +9600,7 @@
       ]
     },
     {
-      "id": "hars",
+      "id": "harspa",
       "name": "Harris's Sparrow",
       "scientificName": "Zonotrichia querula",
       "order": "Passeriformes",
@@ -9619,7 +9619,7 @@
       ]
     },
     {
-      "id": "whts",
+      "id": "whtspa",
       "name": "White-throated Sparrow",
       "scientificName": "Zonotrichia albicollis",
       "order": "Passeriformes",
@@ -9638,7 +9638,7 @@
       ]
     },
     {
-      "id": "sags",
+      "id": "sagspa1",
       "name": "Sagebrush Sparrow",
       "scientificName": "Artemisiospiza nevadensis",
       "order": "Passeriformes",
@@ -9657,7 +9657,7 @@
       ]
     },
     {
-      "id": "bels",
+      "id": "belspa2",
       "name": "Bell's Sparrow",
       "scientificName": "Artemisiospiza belli",
       "order": "Passeriformes",
@@ -9676,7 +9676,7 @@
       ]
     },
     {
-      "id": "vess",
+      "id": "vesspa",
       "name": "Vesper Sparrow",
       "scientificName": "Pooecetes gramineus",
       "order": "Passeriformes",
@@ -9695,7 +9695,7 @@
       ]
     },
     {
-      "id": "lecs",
+      "id": "lecspa",
       "name": "LeConte's Sparrow",
       "scientificName": "Ammospiza leconteii",
       "order": "Passeriformes",
@@ -9714,7 +9714,7 @@
       ]
     },
     {
-      "id": "seas",
+      "id": "seaspa",
       "name": "Seaside Sparrow",
       "scientificName": "Ammospiza maritima",
       "order": "Passeriformes",
@@ -9733,7 +9733,7 @@
       ]
     },
     {
-      "id": "nsts",
+      "id": "nstspa",
       "name": "Nelson's Sparrow",
       "scientificName": "Ammospiza nelsoni",
       "order": "Passeriformes",
@@ -9751,7 +9751,7 @@
       ]
     },
     {
-      "id": "ssts",
+      "id": "sstspa",
       "name": "Saltmarsh Sparrow",
       "scientificName": "Ammospiza caudacuta",
       "order": "Passeriformes",
@@ -9770,7 +9770,7 @@
       ]
     },
     {
-      "id": "savs",
+      "id": "savspa",
       "name": "Savannah Sparrow",
       "scientificName": "Passerculus sandwichensis",
       "order": "Passeriformes",
@@ -9789,7 +9789,7 @@
       ]
     },
     {
-      "id": "bais",
+      "id": "baispa",
       "name": "Baird's Sparrow",
       "scientificName": "Centronyx bairdii",
       "order": "Passeriformes",
@@ -9808,7 +9808,7 @@
       ]
     },
     {
-      "id": "hens",
+      "id": "henspa",
       "name": "Henslow's Sparrow",
       "scientificName": "Centronyx henslowii",
       "order": "Passeriformes",
@@ -9827,7 +9827,7 @@
       ]
     },
     {
-      "id": "sons",
+      "id": "sonspa",
       "name": "Song Sparrow",
       "scientificName": "Melospiza melodia",
       "order": "Passeriformes",
@@ -9846,7 +9846,7 @@
       ]
     },
     {
-      "id": "lins",
+      "id": "linspa",
       "name": "Lincoln's Sparrow",
       "scientificName": "Melospiza lincolnii",
       "order": "Passeriformes",
@@ -9865,7 +9865,7 @@
       ]
     },
     {
-      "id": "swas",
+      "id": "swaspa",
       "name": "Swamp Sparrow",
       "scientificName": "Melospiza georgiana",
       "order": "Passeriformes",
@@ -9884,7 +9884,7 @@
       ]
     },
     {
-      "id": "cant",
+      "id": "cantow",
       "name": "Canyon Towhee",
       "scientificName": "Melozone fusca",
       "order": "Passeriformes",
@@ -9903,7 +9903,7 @@
       ]
     },
     {
-      "id": "abet",
+      "id": "abetow",
       "name": "Abert's Towhee",
       "scientificName": "Melozone aberti",
       "order": "Passeriformes",
@@ -9922,7 +9922,7 @@
       ]
     },
     {
-      "id": "calt",
+      "id": "caltow",
       "name": "California Towhee",
       "scientificName": "Melozone crissalis",
       "order": "Passeriformes",
@@ -9941,7 +9941,7 @@
       ]
     },
     {
-      "id": "rucs",
+      "id": "rucspa",
       "name": "Rufous-crowned Sparrow",
       "scientificName": "Aimophila ruficeps",
       "order": "Passeriformes",
@@ -9960,7 +9960,7 @@
       ]
     },
     {
-      "id": "gntt",
+      "id": "gnttow",
       "name": "Green-tailed Towhee",
       "scientificName": "Pipilo chlorurus",
       "order": "Passeriformes",
@@ -9979,7 +9979,7 @@
       ]
     },
     {
-      "id": "spot",
+      "id": "spotow",
       "name": "Spotted Towhee",
       "scientificName": "Pipilo maculatus",
       "order": "Passeriformes",
@@ -9998,7 +9998,7 @@
       ]
     },
     {
-      "id": "east",
+      "id": "eastow",
       "name": "Eastern Towhee",
       "scientificName": "Pipilo erythrophthalmus",
       "order": "Passeriformes",
@@ -10017,7 +10017,7 @@
       ]
     },
     {
-      "id": "wess",
+      "id": "wesspi",
       "name": "Western Spindalis",
       "scientificName": "Spindalis zena",
       "order": "Passeriformes",
@@ -10029,7 +10029,7 @@
       ]
     },
     {
-      "id": "yebc",
+      "id": "yebcha",
       "name": "Yellow-breasted Chat",
       "scientificName": "Icteria virens",
       "order": "Passeriformes",
@@ -10048,7 +10048,7 @@
       ]
     },
     {
-      "id": "yehb",
+      "id": "yehbla",
       "name": "Yellow-headed Blackbird",
       "scientificName": "Xanthocephalus xanthocephalus",
       "order": "Passeriformes",
@@ -10067,7 +10067,7 @@
       ]
     },
     {
-      "id": "bobo",
+      "id": "boboli",
       "name": "Bobolink",
       "scientificName": "Dolichonyx oryzivorus",
       "order": "Passeriformes",
@@ -10086,7 +10086,7 @@
       ]
     },
     {
-      "id": "wesm",
+      "id": "wesmea",
       "name": "Western Meadowlark",
       "scientificName": "Sturnella neglecta",
       "order": "Passeriformes",
@@ -10105,7 +10105,7 @@
       ]
     },
     {
-      "id": "easm",
+      "id": "easmea",
       "name": "Eastern Meadowlark",
       "scientificName": "Sturnella magna",
       "order": "Passeriformes",
@@ -10124,7 +10124,7 @@
       ]
     },
     {
-      "id": "lilm",
+      "id": "lilmea2",
       "name": "Chihuahuan Meadowlark",
       "scientificName": "Sturnella lilianae",
       "order": "Passeriformes",
@@ -10143,7 +10143,7 @@
       ]
     },
     {
-      "id": "orco",
+      "id": "orcori",
       "name": "Orchard Oriole",
       "scientificName": "Icterus spurius",
       "order": "Passeriformes",
@@ -10162,7 +10162,7 @@
       ]
     },
     {
-      "id": "hooo",
+      "id": "hooori",
       "name": "Hooded Oriole",
       "scientificName": "Icterus cucullatus",
       "order": "Passeriformes",
@@ -10181,7 +10181,7 @@
       ]
     },
     {
-      "id": "bulo",
+      "id": "bulori",
       "name": "Bullock's Oriole",
       "scientificName": "Icterus bullockii",
       "order": "Passeriformes",
@@ -10200,7 +10200,7 @@
       ]
     },
     {
-      "id": "spbo",
+      "id": "spbori",
       "name": "Spot-breasted Oriole",
       "scientificName": "Icterus pectoralis",
       "order": "Passeriformes",
@@ -10219,7 +10219,7 @@
       ]
     },
     {
-      "id": "alto",
+      "id": "altori",
       "name": "Altamira Oriole",
       "scientificName": "Icterus gularis",
       "order": "Passeriformes",
@@ -10238,7 +10238,7 @@
       ]
     },
     {
-      "id": "audo",
+      "id": "audori",
       "name": "Audubon's Oriole",
       "scientificName": "Icterus graduacauda",
       "order": "Passeriformes",
@@ -10257,7 +10257,7 @@
       ]
     },
     {
-      "id": "balo",
+      "id": "balori",
       "name": "Baltimore Oriole",
       "scientificName": "Icterus galbula",
       "order": "Passeriformes",
@@ -10276,7 +10276,7 @@
       ]
     },
     {
-      "id": "scoo",
+      "id": "scoori",
       "name": "Scott's Oriole",
       "scientificName": "Icterus parisorum",
       "order": "Passeriformes",
@@ -10295,7 +10295,7 @@
       ]
     },
     {
-      "id": "rewb",
+      "id": "rewbla",
       "name": "Red-winged Blackbird",
       "scientificName": "Agelaius phoeniceus",
       "order": "Passeriformes",
@@ -10314,7 +10314,7 @@
       ]
     },
     {
-      "id": "trib",
+      "id": "tribla",
       "name": "Tricolored Blackbird",
       "scientificName": "Agelaius tricolor",
       "order": "Passeriformes",
@@ -10333,7 +10333,7 @@
       ]
     },
     {
-      "id": "shic",
+      "id": "shicow",
       "name": "Shiny Cowbird",
       "scientificName": "Molothrus bonariensis",
       "order": "Passeriformes",
@@ -10352,7 +10352,7 @@
       ]
     },
     {
-      "id": "broc",
+      "id": "brocow",
       "name": "Bronzed Cowbird",
       "scientificName": "Molothrus aeneus",
       "order": "Passeriformes",
@@ -10371,7 +10371,7 @@
       ]
     },
     {
-      "id": "bnhc",
+      "id": "bnhcow",
       "name": "Brown-headed Cowbird",
       "scientificName": "Molothrus ater",
       "order": "Passeriformes",
@@ -10390,7 +10390,7 @@
       ]
     },
     {
-      "id": "rusb",
+      "id": "rusbla",
       "name": "Rusty Blackbird",
       "scientificName": "Euphagus carolinus",
       "order": "Passeriformes",
@@ -10409,7 +10409,7 @@
       ]
     },
     {
-      "id": "breb",
+      "id": "brebla",
       "name": "Brewer's Blackbird",
       "scientificName": "Euphagus cyanocephalus",
       "order": "Passeriformes",
@@ -10428,7 +10428,7 @@
       ]
     },
     {
-      "id": "comg",
+      "id": "comgra",
       "name": "Common Grackle",
       "scientificName": "Quiscalus quiscula",
       "order": "Passeriformes",
@@ -10446,7 +10446,7 @@
       ]
     },
     {
-      "id": "botg",
+      "id": "botgra",
       "name": "Boat-tailed Grackle",
       "scientificName": "Quiscalus major",
       "order": "Passeriformes",
@@ -10465,7 +10465,7 @@
       ]
     },
     {
-      "id": "grtg",
+      "id": "grtgra",
       "name": "Great-tailed Grackle",
       "scientificName": "Quiscalus mexicanus",
       "order": "Passeriformes",
@@ -10484,7 +10484,7 @@
       ]
     },
     {
-      "id": "oven",
+      "id": "ovenbi1",
       "name": "Ovenbird",
       "scientificName": "Seiurus aurocapilla",
       "order": "Passeriformes",
@@ -10503,7 +10503,7 @@
       ]
     },
     {
-      "id": "woew",
+      "id": "woewar1",
       "name": "Worm-eating Warbler",
       "scientificName": "Helmitheros vermivorum",
       "order": "Passeriformes",
@@ -10522,7 +10522,7 @@
       ]
     },
     {
-      "id": "louw",
+      "id": "louwat",
       "name": "Louisiana Waterthrush",
       "scientificName": "Parkesia motacilla",
       "order": "Passeriformes",
@@ -10541,7 +10541,7 @@
       ]
     },
     {
-      "id": "norw",
+      "id": "norwat",
       "name": "Northern Waterthrush",
       "scientificName": "Parkesia noveboracensis",
       "order": "Passeriformes",
@@ -10560,7 +10560,7 @@
       ]
     },
     {
-      "id": "bacw",
+      "id": "bacwar",
       "name": "Bachman's Warbler",
       "scientificName": "Vermivora bachmanii",
       "order": "Passeriformes",
@@ -10572,7 +10572,7 @@
       ]
     },
     {
-      "id": "goww",
+      "id": "gowwar",
       "name": "Golden-winged Warbler",
       "scientificName": "Vermivora chrysoptera",
       "order": "Passeriformes",
@@ -10591,7 +10591,7 @@
       ]
     },
     {
-      "id": "buww",
+      "id": "buwwar",
       "name": "Blue-winged Warbler",
       "scientificName": "Vermivora cyanoptera",
       "order": "Passeriformes",
@@ -10610,7 +10610,7 @@
       ]
     },
     {
-      "id": "baww",
+      "id": "bawwar",
       "name": "Black-and-white Warbler",
       "scientificName": "Mniotilta varia",
       "order": "Passeriformes",
@@ -10629,7 +10629,7 @@
       ]
     },
     {
-      "id": "prow",
+      "id": "prowar",
       "name": "Prothonotary Warbler",
       "scientificName": "Protonotaria citrea",
       "order": "Passeriformes",
@@ -10648,7 +10648,7 @@
       ]
     },
     {
-      "id": "swaw",
+      "id": "swawar",
       "name": "Swainson's Warbler",
       "scientificName": "Limnothlypis swainsonii",
       "order": "Passeriformes",
@@ -10667,7 +10667,7 @@
       ]
     },
     {
-      "id": "crcw",
+      "id": "crcwar",
       "name": "Crescent-chested Warbler",
       "scientificName": "Oreothlypis superciliosa",
       "order": "Passeriformes",
@@ -10686,7 +10686,7 @@
       ]
     },
     {
-      "id": "tenw",
+      "id": "tenwar",
       "name": "Tennessee Warbler",
       "scientificName": "Leiothlypis peregrina",
       "order": "Passeriformes",
@@ -10705,7 +10705,7 @@
       ]
     },
     {
-      "id": "orcw",
+      "id": "orcwar",
       "name": "Orange-crowned Warbler",
       "scientificName": "Leiothlypis celata",
       "order": "Passeriformes",
@@ -10724,7 +10724,7 @@
       ]
     },
     {
-      "id": "colw",
+      "id": "colwar",
       "name": "Colima Warbler",
       "scientificName": "Leiothlypis crissalis",
       "order": "Passeriformes",
@@ -10743,7 +10743,7 @@
       ]
     },
     {
-      "id": "lucw",
+      "id": "lucwar",
       "name": "Lucy's Warbler",
       "scientificName": "Leiothlypis luciae",
       "order": "Passeriformes",
@@ -10762,7 +10762,7 @@
       ]
     },
     {
-      "id": "nasw",
+      "id": "naswar",
       "name": "Nashville Warbler",
       "scientificName": "Leiothlypis ruficapilla",
       "order": "Passeriformes",
@@ -10781,7 +10781,7 @@
       ]
     },
     {
-      "id": "virw",
+      "id": "virwar",
       "name": "Virginia's Warbler",
       "scientificName": "Leiothlypis virginiae",
       "order": "Passeriformes",
@@ -10800,7 +10800,7 @@
       ]
     },
     {
-      "id": "conw",
+      "id": "conwar",
       "name": "Connecticut Warbler",
       "scientificName": "Oporornis agilis",
       "order": "Passeriformes",
@@ -10819,7 +10819,7 @@
       ]
     },
     {
-      "id": "gycy",
+      "id": "gycyel",
       "name": "Gray-crowned Yellowthroat",
       "scientificName": "Geothlypis poliocephala",
       "order": "Passeriformes",
@@ -10831,7 +10831,7 @@
       ]
     },
     {
-      "id": "macw",
+      "id": "macwar",
       "name": "MacGillivray's Warbler",
       "scientificName": "Geothlypis tolmiei",
       "order": "Passeriformes",
@@ -10850,7 +10850,7 @@
       ]
     },
     {
-      "id": "mouw",
+      "id": "mouwar",
       "name": "Mourning Warbler",
       "scientificName": "Geothlypis philadelphia",
       "order": "Passeriformes",
@@ -10869,7 +10869,7 @@
       ]
     },
     {
-      "id": "kenw",
+      "id": "kenwar",
       "name": "Kentucky Warbler",
       "scientificName": "Geothlypis formosa",
       "order": "Passeriformes",
@@ -10888,7 +10888,7 @@
       ]
     },
     {
-      "id": "comy",
+      "id": "comyel",
       "name": "Common Yellowthroat",
       "scientificName": "Geothlypis trichas",
       "order": "Passeriformes",
@@ -10907,7 +10907,7 @@
       ]
     },
     {
-      "id": "hoow",
+      "id": "hoowar",
       "name": "Hooded Warbler",
       "scientificName": "Setophaga citrina",
       "order": "Passeriformes",
@@ -10926,7 +10926,7 @@
       ]
     },
     {
-      "id": "amer",
+      "id": "amered",
       "name": "American Redstart",
       "scientificName": "Setophaga ruticilla",
       "order": "Passeriformes",
@@ -10945,7 +10945,7 @@
       ]
     },
     {
-      "id": "kirw",
+      "id": "kirwar",
       "name": "Kirtland's Warbler",
       "scientificName": "Setophaga kirtlandii",
       "order": "Passeriformes",
@@ -10964,7 +10964,7 @@
       ]
     },
     {
-      "id": "camw",
+      "id": "camwar",
       "name": "Cape May Warbler",
       "scientificName": "Setophaga tigrina",
       "order": "Passeriformes",
@@ -10983,7 +10983,7 @@
       ]
     },
     {
-      "id": "cerw",
+      "id": "cerwar",
       "name": "Cerulean Warbler",
       "scientificName": "Setophaga cerulea",
       "order": "Passeriformes",
@@ -11002,7 +11002,7 @@
       ]
     },
     {
-      "id": "norp",
+      "id": "norpar",
       "name": "Northern Parula",
       "scientificName": "Setophaga americana",
       "order": "Passeriformes",
@@ -11021,7 +11021,7 @@
       ]
     },
     {
-      "id": "trop",
+      "id": "tropar",
       "name": "Tropical Parula",
       "scientificName": "Setophaga pitiayumi",
       "order": "Passeriformes",
@@ -11040,7 +11040,7 @@
       ]
     },
     {
-      "id": "magw",
+      "id": "magwar",
       "name": "Magnolia Warbler",
       "scientificName": "Setophaga magnolia",
       "order": "Passeriformes",
@@ -11059,7 +11059,7 @@
       ]
     },
     {
-      "id": "babw",
+      "id": "babwar",
       "name": "Bay-breasted Warbler",
       "scientificName": "Setophaga castanea",
       "order": "Passeriformes",
@@ -11078,7 +11078,7 @@
       ]
     },
     {
-      "id": "bkbw",
+      "id": "bkbwar",
       "name": "Blackburnian Warbler",
       "scientificName": "Setophaga fusca",
       "order": "Passeriformes",
@@ -11097,7 +11097,7 @@
       ]
     },
     {
-      "id": "yelw",
+      "id": "yelwar",
       "name": "Yellow Warbler",
       "scientificName": "Setophaga petechia",
       "order": "Passeriformes",
@@ -11116,7 +11116,7 @@
       ]
     },
     {
-      "id": "chsw",
+      "id": "chswar",
       "name": "Chestnut-sided Warbler",
       "scientificName": "Setophaga pensylvanica",
       "order": "Passeriformes",
@@ -11135,7 +11135,7 @@
       ]
     },
     {
-      "id": "bkpw",
+      "id": "bkpwar",
       "name": "Blackpoll Warbler",
       "scientificName": "Setophaga striata",
       "order": "Passeriformes",
@@ -11154,7 +11154,7 @@
       ]
     },
     {
-      "id": "btbw",
+      "id": "btbwar",
       "name": "Black-throated Blue Warbler",
       "scientificName": "Setophaga caerulescens",
       "order": "Passeriformes",
@@ -11173,7 +11173,7 @@
       ]
     },
     {
-      "id": "palw",
+      "id": "palwar",
       "name": "Palm Warbler",
       "scientificName": "Setophaga palmarum",
       "order": "Passeriformes",
@@ -11192,7 +11192,7 @@
       ]
     },
     {
-      "id": "pinw",
+      "id": "pinwar",
       "name": "Pine Warbler",
       "scientificName": "Setophaga pinus",
       "order": "Passeriformes",
@@ -11211,7 +11211,7 @@
       ]
     },
     {
-      "id": "yerw",
+      "id": "yerwar",
       "name": "Yellow-rumped Warbler",
       "scientificName": "Setophaga coronata",
       "order": "Passeriformes",
@@ -11230,7 +11230,7 @@
       ]
     },
     {
-      "id": "yetw",
+      "id": "yetwar",
       "name": "Yellow-throated Warbler",
       "scientificName": "Setophaga dominica",
       "order": "Passeriformes",
@@ -11249,7 +11249,7 @@
       ]
     },
     {
-      "id": "praw",
+      "id": "prawar",
       "name": "Prairie Warbler",
       "scientificName": "Setophaga discolor",
       "order": "Passeriformes",
@@ -11268,7 +11268,7 @@
       ]
     },
     {
-      "id": "graw",
+      "id": "grawar",
       "name": "Grace's Warbler",
       "scientificName": "Setophaga graciae",
       "order": "Passeriformes",
@@ -11287,7 +11287,7 @@
       ]
     },
     {
-      "id": "btyw",
+      "id": "btywar",
       "name": "Black-throated Gray Warbler",
       "scientificName": "Setophaga nigrescens",
       "order": "Passeriformes",
@@ -11306,7 +11306,7 @@
       ]
     },
     {
-      "id": "toww",
+      "id": "towwar",
       "name": "Townsend's Warbler",
       "scientificName": "Setophaga townsendi",
       "order": "Passeriformes",
@@ -11325,7 +11325,7 @@
       ]
     },
     {
-      "id": "herw",
+      "id": "herwar",
       "name": "Hermit Warbler",
       "scientificName": "Setophaga occidentalis",
       "order": "Passeriformes",
@@ -11344,7 +11344,7 @@
       ]
     },
     {
-      "id": "gchw",
+      "id": "gchwar",
       "name": "Golden-cheeked Warbler",
       "scientificName": "Setophaga chrysoparia",
       "order": "Passeriformes",
@@ -11363,7 +11363,7 @@
       ]
     },
     {
-      "id": "btnw",
+      "id": "btnwar",
       "name": "Black-throated Green Warbler",
       "scientificName": "Setophaga virens",
       "order": "Passeriformes",
@@ -11382,7 +11382,7 @@
       ]
     },
     {
-      "id": "fatw",
+      "id": "fatwar",
       "name": "Fan-tailed Warbler",
       "scientificName": "Basileuterus lachrymosus",
       "order": "Passeriformes",
@@ -11396,7 +11396,7 @@
       ]
     },
     {
-      "id": "rucw",
+      "id": "rucwar",
       "name": "Rufous-capped Warbler",
       "scientificName": "Basileuterus rufifrons",
       "order": "Passeriformes",
@@ -11415,7 +11415,7 @@
       ]
     },
     {
-      "id": "canw",
+      "id": "canwar",
       "name": "Canada Warbler",
       "scientificName": "Cardellina canadensis",
       "order": "Passeriformes",
@@ -11434,7 +11434,7 @@
       ]
     },
     {
-      "id": "wlsw",
+      "id": "wlswar",
       "name": "Wilson's Warbler",
       "scientificName": "Cardellina pusilla",
       "order": "Passeriformes",
@@ -11453,7 +11453,7 @@
       ]
     },
     {
-      "id": "refw",
+      "id": "refwar",
       "name": "Red-faced Warbler",
       "scientificName": "Cardellina rubrifrons",
       "order": "Passeriformes",
@@ -11472,7 +11472,7 @@
       ]
     },
     {
-      "id": "pair",
+      "id": "paired",
       "name": "Painted Redstart",
       "scientificName": "Myioborus pictus",
       "order": "Passeriformes",
@@ -11491,7 +11491,7 @@
       ]
     },
     {
-      "id": "sltr",
+      "id": "sltred",
       "name": "Slate-throated Redstart",
       "scientificName": "Myioborus miniatus",
       "order": "Passeriformes",
@@ -11510,7 +11510,7 @@
       ]
     },
     {
-      "id": "hept",
+      "id": "heptan",
       "name": "Hepatic Tanager",
       "scientificName": "Piranga flava",
       "order": "Passeriformes",
@@ -11529,7 +11529,7 @@
       ]
     },
     {
-      "id": "sumt",
+      "id": "sumtan",
       "name": "Summer Tanager",
       "scientificName": "Piranga rubra",
       "order": "Passeriformes",
@@ -11548,7 +11548,7 @@
       ]
     },
     {
-      "id": "scat",
+      "id": "scatan",
       "name": "Scarlet Tanager",
       "scientificName": "Piranga olivacea",
       "order": "Passeriformes",
@@ -11567,7 +11567,7 @@
       ]
     },
     {
-      "id": "west",
+      "id": "westan",
       "name": "Western Tanager",
       "scientificName": "Piranga ludoviciana",
       "order": "Passeriformes",
@@ -11586,7 +11586,7 @@
       ]
     },
     {
-      "id": "flct",
+      "id": "flctan",
       "name": "Flame-colored Tanager",
       "scientificName": "Piranga bidentata",
       "order": "Passeriformes",
@@ -11605,7 +11605,7 @@
       ]
     },
     {
-      "id": "norc",
+      "id": "norcar",
       "name": "Northern Cardinal",
       "scientificName": "Cardinalis cardinalis",
       "order": "Passeriformes",
@@ -11623,7 +11623,7 @@
       ]
     },
     {
-      "id": "pyrr",
+      "id": "pyrrhu",
       "name": "Pyrrhuloxia",
       "scientificName": "Cardinalis sinuatus",
       "order": "Passeriformes",
@@ -11642,7 +11642,7 @@
       ]
     },
     {
-      "id": "yelg",
+      "id": "yelgro",
       "name": "Yellow Grosbeak",
       "scientificName": "Pheucticus chrysopeplus",
       "order": "Passeriformes",
@@ -11652,7 +11652,7 @@
       ]
     },
     {
-      "id": "robg",
+      "id": "robgro",
       "name": "Rose-breasted Grosbeak",
       "scientificName": "Pheucticus ludovicianus",
       "order": "Passeriformes",
@@ -11671,7 +11671,7 @@
       ]
     },
     {
-      "id": "bkhg",
+      "id": "bkhgro",
       "name": "Black-headed Grosbeak",
       "scientificName": "Pheucticus melanocephalus",
       "order": "Passeriformes",
@@ -11689,7 +11689,7 @@
       ]
     },
     {
-      "id": "blug",
+      "id": "blugrb1",
       "name": "Blue Grosbeak",
       "scientificName": "Passerina caerulea",
       "order": "Passeriformes",
@@ -11708,7 +11708,7 @@
       ]
     },
     {
-      "id": "lazb",
+      "id": "lazbun",
       "name": "Lazuli Bunting",
       "scientificName": "Passerina amoena",
       "order": "Passeriformes",
@@ -11727,7 +11727,7 @@
       ]
     },
     {
-      "id": "indb",
+      "id": "indbun",
       "name": "Indigo Bunting",
       "scientificName": "Passerina cyanea",
       "order": "Passeriformes",
@@ -11746,7 +11746,7 @@
       ]
     },
     {
-      "id": "varb",
+      "id": "varbun",
       "name": "Varied Bunting",
       "scientificName": "Passerina versicolor",
       "order": "Passeriformes",
@@ -11765,7 +11765,7 @@
       ]
     },
     {
-      "id": "paib",
+      "id": "paibun",
       "name": "Painted Bunting",
       "scientificName": "Passerina ciris",
       "order": "Passeriformes",
@@ -11784,7 +11784,7 @@
       ]
     },
     {
-      "id": "dick",
+      "id": "dickci",
       "name": "Dickcissel",
       "scientificName": "Spiza americana",
       "order": "Passeriformes",
@@ -11803,7 +11803,7 @@
       ]
     },
     {
-      "id": "recc",
+      "id": "reccar",
       "name": "Red-crested Cardinal",
       "scientificName": "Paroaria coronata",
       "order": "Passeriformes",
@@ -11822,7 +11822,7 @@
       ]
     },
     {
-      "id": "yebc",
+      "id": "yebcar",
       "name": "Yellow-billed Cardinal",
       "scientificName": "Paroaria capitata",
       "order": "Passeriformes",
@@ -11832,7 +11832,7 @@
       ]
     },
     {
-      "id": "bugt",
+      "id": "bugtan",
       "name": "Blue-gray Tanager",
       "scientificName": "Thraupis episcopus",
       "order": "Passeriformes",
@@ -11844,7 +11844,7 @@
       ]
     },
     {
-      "id": "saff",
+      "id": "saffin",
       "name": "Saffron Finch",
       "scientificName": "Sicalis flaveola",
       "order": "Passeriformes",
@@ -11856,7 +11856,7 @@
       ]
     },
     {
-      "id": "whcs",
+      "id": "whcsee1",
       "name": "Morelet's Seedeater",
       "scientificName": "Sporophila morelleti",
       "order": "Passeriformes",
@@ -11875,7 +11875,7 @@
       ]
     },
     {
-      "id": "whcs",
+      "id": "whcsee2",
       "name": "Cinnamon-rumped Seedeater",
       "scientificName": "Sporophila torqueola",
       "order": "Passeriformes",
@@ -11888,7 +11888,7 @@
       ]
     },
     {
-      "id": "bana",
+      "id": "banana",
       "name": "Bananaquit",
       "scientificName": "Coereba flaveola",
       "order": "Passeriformes",
@@ -11898,7 +11898,7 @@
       ]
     },
     {
-      "id": "bkfg",
+      "id": "bkfgra",
       "name": "Black-faced Grassquit",
       "scientificName": "Melanospiza bicolor",
       "order": "Passeriformes",

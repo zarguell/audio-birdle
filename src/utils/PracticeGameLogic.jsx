@@ -46,6 +46,18 @@ const deterministicShuffle = (array, seed) => {
 };
 
 /**
+ * Truly random shuffle using Fisher-Yates algorithm with Math.random()
+ */
+const randomShuffle = (array) => {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+};
+
+/**
  * Gets a practice bird based on region and practice index
  */
 export const getPracticeBird = (region, birds, practiceIndex) => {
@@ -53,7 +65,7 @@ export const getPracticeBird = (region, birds, practiceIndex) => {
 
   const regionBirds = birds[region];
   const seed = hashString(`practice-${region}-${practiceIndex}`);
-  const shuffledBirds = deterministicShuffle(regionBirds, seed);
+  const shuffledBirds = randomShuffle(regionBirds);
   
   // Use modulo to cycle through birds infinitely
   const index = practiceIndex % shuffledBirds.length;
