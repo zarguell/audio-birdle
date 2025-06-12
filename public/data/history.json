@@ -11,10 +11,19 @@
       "name": "Spotted Sandpiper"
     },
     {
+      "date": "2025-06-11",
+      "id": "purf",
+      "name": "Purple Finch"
+    },
+    {
+      "date": "2025-06-11",
+      "id": "arcw",
+      "name": "Arctic Warbler"
+    },
+    {
       "date": "2025-06-12",
-      "id": "yetvir",
-      "name": "Yellow-throated Vireo",
-      "subregion": "Minnesota"
+      "id": "pyrr",
+      "name": "Pyrrhuloxia"
     }
   ]
 }

@@ -1,12 +1,63 @@
-# React + Vite
+# 🎧🐦 Audio Birdle
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[Play Audio Birdle](https://audio-birdle.sechostlab.com) | [View on GitHub](https://github.com/zarguell/audio-birdle)
 
-Currently, two official plugins are available:
+**Audio Birdle** is a daily audio-based bird guessing game inspired by Wordle — but with birds! Listen to the daily mystery bird call and choose the correct species from four options. Built as a fully static, client-side app using React, Vite, and TailwindCSS, Audio Birdle brings the world of birdsong to your browser.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+> **Alpha Notice:** This project is currently in alpha. While we strive to keep the core experience stable, expect things to evolve as development progresses!
 
-## Expanding the ESLint configuration
+I created this game with inspiration from Mitch's amazing project [Birdle](https://github.com/mitchbeebe/new-birdle). As a birder, I also wanted to practice my skills at sound ID in an audio-based game (and maybe one day be less dependent on Merlin Sound ID 😅), so I set out to develop this game. If you haven't checked out Birdle, please give it a look here! https://www.play-birdle.com
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 🚀 Features
+
+* 🔁 **Daily Challenge:** A new "Bird of the Day" every day, based on audio from the [eBird Macaulay Library](https://www.macaulaylibrary.org/).
+* 🎧 **Audio-Based Gameplay:** Guess the bird based on its call from 4 multiple choice options.
+* 🌎 **Regional Focus:** Currently limited to the United States, with plans for expansion.
+* 🧠 **Practice Mode:** Free-play guessing mode using the full bird list for your region.
+* 💾 **Local Storage:** Progress and stats saved locally in your browser — no login required.
+* ⚙️ **Automated Deployment:** Daily challenge generation and deployment handled by GitHub Actions.
+* 🔍 **Multiple Audio Samples:** Up to 10 audio clips per bird are scraped to improve variety and challenge.
+
+---
+
+## 🛣️ Roadmap
+
+Here are some planned features and improvements:
+
+* 🧮 Explore advanced scoring systems (e.g., genus/family/species, streaks, guess order).
+* 📝 Add free-text guess input (hard mode) alongside the current multiple-choice mode.
+* 🏋️ Enhance practice mode with targeted bird selection and curation tools.
+* 🌐 Add support for more regions and broader bird species data.
+* 🔊 Improve audio metadata parsing (e.g., sound quality, crediting, species overlap).
+* 📱 Implement PWA support for mobile app-like experience.
+* 🧪 Add linters, unit tests, and integration tests to ensure code quality.
+* 🌍 Support internationalization/localization (multi-language support).
+* 🖼️ Add optional image clues or fun bird facts.
+* 📊 Additional statistics and scoring metrics, including historic view of challenges.
+* 🛠️ General dev tooling and codebase improvements.
+
+---
+
+## 🤝 Contributing
+
+Contributions, ideas, and feedback are very welcome!
+
+* Found a bug? Have a feature request? Want to suggest a new birding region or game mechanic?
+  → [Open an issue on GitHub](https://github.com/zarguell/audio-birdle/issues)
+
+* Want to contribute code? Please fork the repo, create a feature branch, and submit a pull request. Be sure to follow best practices (we’re working on linters and test infrastructure soon!).
+
+---
+
+## 🔐 Security
+
+If you discover a security vulnerability in Audio Birdle or its deployment, please **do not** open a public issue.
+Instead, report it responsibly by [creating a private GitHub security advisory](https://github.com/zarguell/audio-birdle/security/advisories).
+
+---
+
+## 📜 License
+
+This project is open source and available under the [MIT License](LICENSE).
