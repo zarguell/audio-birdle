@@ -1,7 +1,7 @@
 {
   "us": [
     {
-      "id": "bbwd",
+      "id": "bbwduc",
       "name": "Black-bellied Whistling-Duck",
       "scientificName": "Dendrocygna autumnalis",
       "order": "Anseriformes",
@@ -20,7 +20,7 @@
       ]
     },
     {
-      "id": "snog",
+      "id": "snogoo",
       "name": "Snow Goose",
       "scientificName": "Anser caerulescens",
       "order": "Anseriformes",
@@ -32,7 +32,7 @@
       ]
     },
     {
-      "id": "bran",
+      "id": "brant",
       "name": "Brant",
       "scientificName": "Branta bernicla",
       "order": "Anseriformes",
@@ -43,7 +43,7 @@
       ]
     },
     {
-      "id": "cacg",
+      "id": "cacgoo1",
       "name": "Cackling Goose",
       "scientificName": "Branta hutchinsii",
       "order": "Anseriformes",
@@ -55,6 +55,25 @@
         "https://cdn.download.ams.birds.cornell.edu/api/v2/asset/135482/mp3",
         "https://cdn.download.ams.birds.cornell.edu/api/v2/asset/109286/mp3",
         "https://cdn.download.ams.birds.cornell.edu/api/v2/asset/109285/mp3"
+      ]
+    },
+    {
+      "id": "cangoo",
+      "name": "Canada Goose",
+      "scientificName": "Branta canadensis",
+      "order": "Anseriformes",
+      "family": "Anatidae (Ducks, Geese, and Waterfowl)",
+      "audioUrl": [
+        "https://cdn.download.ams.birds.cornell.edu/api/v2/asset/626476295/mp3",
+        "https://cdn.download.ams.birds.cornell.edu/api/v2/asset/625544622/mp3",
+        "https://cdn.download.ams.birds.cornell.edu/api/v2/asset/624739008/mp3",
+        "https://cdn.download.ams.birds.cornell.edu/api/v2/asset/622134686/mp4/1280",
+        "https://cdn.download.ams.birds.cornell.edu/api/v2/asset/613248246/mp3",
+        "https://cdn.download.ams.birds.cornell.edu/api/v2/asset/566992861/mp3",
+        "https://cdn.download.ams.birds.cornell.edu/api/v2/asset/529425171/mp3",
+        "https://cdn.download.ams.birds.cornell.edu/api/v2/asset/512364121/mp3",
+        "https://cdn.download.ams.birds.cornell.edu/api/v2/asset/450344051/mp3",
+        "https://cdn.download.ams.birds.cornell.edu/api/v2/asset/445329441/mp3"
       ]
     }
   ]

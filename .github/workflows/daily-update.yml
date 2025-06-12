@@ -25,10 +25,18 @@ jobs:
       - name: Install dependencies
         run: pip install -r scripts/requirements.txt
 
-      - name: Run daily challenge script
+      - name: Run daily script to find birds in every subregion available
+        run: |
+          for file in ./scripts/data/regions/*-subregions.json; do
+            filename=$(basename "$file" -subregions.json)
+            output="./public/data/daily-subregion-birds.json"
+            python ./scripts/generate-daily-region-data.py "$file" "$output"
+          done
+
+      - name: Run daily challenge script to generate the bird(s) of the day
         run: |
           current_date=$(date -u +%F)
-          python ./scripts/generate-daily-birds.py --days 60 --date "$current_date"
+          python ./scripts/generate-daily-birds.py --days 60 --date "$current_date" --subregions public/data/daily-subregion-birds.json
 
       - name: Commit and push if it changed
         run: |

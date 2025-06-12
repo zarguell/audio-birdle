@@ -124,3 +124,20 @@ Found 704 birds with audio URLs for region 'US'
 Successfully saved data to './public/data/birds.json'
 Processing complete!
 ```
+
+# Generating subregions (states)
+
+```
+python ./scripts/ebird-generate-subregions.py --region US --output ./scripts/data/regions/us-subregions.json   
+Data saved to ./scripts/data/regions/us-subregions.json
+```
+
+
+# Generating region / state specific corpus for daily challenges
+
+```
+python ./scripts/generate-daily-region-data.py ./scripts/data/regions/us-subregions.json ./public/data/daily-subreg
+ion-birds.json
+Selected subregion: Minnesota (US-MN)
+Output written to ./public/data/daily-subregion-birds.json
+```

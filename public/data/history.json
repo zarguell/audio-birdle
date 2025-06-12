@@ -9,6 +9,12 @@
       "date": "2025-06-10",
       "id": "spos",
       "name": "Spotted Sandpiper"
+    },
+    {
+      "date": "2025-06-12",
+      "id": "yetvir",
+      "name": "Yellow-throated Vireo",
+      "subregion": "Minnesota"
     }
   ]
 }
