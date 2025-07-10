@@ -192,6 +192,12 @@
       "id": "redpol1",
       "name": "Redpoll",
       "subregion": "Alaska"
+    },
+    {
+      "date": "2025-07-10",
+      "id": "comter",
+      "name": "Common Tern",
+      "subregion": "Mississippi"
     }
   ]
 }
