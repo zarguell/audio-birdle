@@ -228,6 +228,12 @@
       "id": "perfal",
       "name": "Peregrine Falcon",
       "subregion": "Minnesota"
+    },
+    {
+      "date": "2025-07-16",
+      "id": "lcspet",
+      "name": "Leach's Storm-Petrel",
+      "subregion": "Florida"
     }
   ]
 }
