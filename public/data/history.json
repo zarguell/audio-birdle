@@ -270,6 +270,12 @@
       "id": "monpar",
       "name": "Monk Parakeet",
       "subregion": "Florida"
+    },
+    {
+      "date": "2025-07-23",
+      "id": "henspa",
+      "name": "Henslow's Sparrow",
+      "subregion": "New York"
     }
   ]
 }
