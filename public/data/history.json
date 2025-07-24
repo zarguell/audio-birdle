@@ -276,6 +276,12 @@
       "id": "henspa",
       "name": "Henslow's Sparrow",
       "subregion": "New York"
+    },
+    {
+      "date": "2025-07-24",
+      "id": "amerob",
+      "name": "American Robin",
+      "subregion": "Illinois"
     }
   ]
 }
