@@ -426,6 +426,12 @@
       "id": "virrai",
       "name": "Virginia Rail",
       "subregion": "Washington"
+    },
+    {
+      "date": "2025-08-18",
+      "id": "coohaw",
+      "name": "Cooper's Hawk",
+      "subregion": "Oklahoma"
     }
   ]
 }
