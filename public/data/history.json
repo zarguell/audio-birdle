@@ -588,6 +588,12 @@
       "id": "royter1",
       "name": "Royal Tern",
       "subregion": "North Carolina"
+    },
+    {
+      "date": "2025-09-14",
+      "id": "amekes",
+      "name": "American Kestrel",
+      "subregion": "Alaska"
     }
   ]
 }
