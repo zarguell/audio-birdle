@@ -696,6 +696,12 @@
       "id": "commer",
       "name": "Common Merganser",
       "subregion": "Ohio"
+    },
+    {
+      "date": "2025-10-02",
+      "id": "rensap",
+      "name": "Red-naped Sapsucker",
+      "subregion": "Montana"
     }
   ]
 }
