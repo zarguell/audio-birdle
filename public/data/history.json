@@ -1,11 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-06-09",
-      "id": "amer",
-      "name": "American Robin"
-    },
-    {
       "date": "2025-06-10",
       "id": "spos",
       "name": "Spotted Sandpiper"
@@ -726,6 +721,12 @@
       "id": "horlar",
       "name": "Horned Lark",
       "subregion": "Washington"
+    },
+    {
+      "date": "2025-10-07",
+      "id": "norfli",
+      "name": "Northern Flicker",
+      "subregion": "Vermont"
     }
   ]
 }
