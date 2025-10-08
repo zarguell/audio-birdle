@@ -1,11 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-06-10",
-      "id": "spos",
-      "name": "Spotted Sandpiper"
-    },
-    {
       "date": "2025-06-11",
       "id": "purf",
       "name": "Purple Finch"
@@ -727,6 +722,12 @@
       "id": "norfli",
       "name": "Northern Flicker",
       "subregion": "Vermont"
+    },
+    {
+      "date": "2025-10-08",
+      "id": "amecro",
+      "name": "American Crow",
+      "subregion": "Kentucky"
     }
   ]
 }
