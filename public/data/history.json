@@ -1,16 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-06-11",
-      "id": "purf",
-      "name": "Purple Finch"
-    },
-    {
-      "date": "2025-06-11",
-      "id": "arcw",
-      "name": "Arctic Warbler"
-    },
-    {
       "date": "2025-06-12",
       "id": "pyrr",
       "name": "Pyrrhuloxia"
@@ -728,6 +718,12 @@
       "id": "amecro",
       "name": "American Crow",
       "subregion": "Kentucky"
+    },
+    {
+      "date": "2025-10-09",
+      "id": "weskin",
+      "name": "Western Kingbird",
+      "subregion": "California"
     }
   ]
 }
