@@ -1,17 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-06-12",
-      "id": "pyrr",
-      "name": "Pyrrhuloxia"
-    },
-    {
-      "date": "2025-06-12",
-      "id": "dickci",
-      "name": "Dickcissel",
-      "subregion": "Iowa"
-    },
-    {
       "date": "2025-06-13",
       "id": "larspa",
       "name": "Lark Sparrow",
@@ -724,6 +713,12 @@
       "id": "weskin",
       "name": "Western Kingbird",
       "subregion": "California"
+    },
+    {
+      "date": "2025-10-10",
+      "id": "clanut",
+      "name": "Clark's Nutcracker",
+      "subregion": "Wyoming"
     }
   ]
 }
