@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-06-13",
-      "id": "larspa",
-      "name": "Lark Sparrow",
-      "subregion": "South Dakota"
-    },
-    {
       "date": "2025-06-14",
       "id": "truswa",
       "name": "Trumpeter Swan",
@@ -719,6 +713,12 @@
       "id": "clanut",
       "name": "Clark's Nutcracker",
       "subregion": "Wyoming"
+    },
+    {
+      "date": "2025-10-11",
+      "id": "reshaw",
+      "name": "Red-shouldered Hawk",
+      "subregion": "Florida"
     }
   ]
 }
