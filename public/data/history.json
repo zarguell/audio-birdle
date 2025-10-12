@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-06-14",
-      "id": "truswa",
-      "name": "Trumpeter Swan",
-      "subregion": "Idaho"
-    },
-    {
       "date": "2025-06-15",
       "id": "grycat",
       "name": "Gray Catbird",
@@ -719,6 +713,12 @@
       "id": "reshaw",
       "name": "Red-shouldered Hawk",
       "subregion": "Florida"
+    },
+    {
+      "date": "2025-10-12",
+      "id": "amerob",
+      "name": "American Robin",
+      "subregion": "Maryland"
     }
   ]
 }
