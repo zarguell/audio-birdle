@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-06-15",
-      "id": "grycat",
-      "name": "Gray Catbird",
-      "subregion": "Illinois"
-    },
-    {
       "date": "2025-06-16",
       "id": "blksco2",
       "name": "Black Scoter",
@@ -719,6 +713,12 @@
       "id": "amerob",
       "name": "American Robin",
       "subregion": "Maryland"
+    },
+    {
+      "date": "2025-10-13",
+      "id": "yebsap",
+      "name": "Yellow-bellied Sapsucker",
+      "subregion": "New Jersey"
     }
   ]
 }
