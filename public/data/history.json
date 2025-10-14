@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-06-16",
-      "id": "blksco2",
-      "name": "Black Scoter",
-      "subregion": "Delaware"
-    },
-    {
       "date": "2025-06-17",
       "id": "reshaw",
       "name": "Red-shouldered Hawk",
@@ -719,6 +713,12 @@
       "id": "yebsap",
       "name": "Yellow-bellied Sapsucker",
       "subregion": "New Jersey"
+    },
+    {
+      "date": "2025-10-14",
+      "id": "eargre",
+      "name": "Eared Grebe",
+      "subregion": "Michigan"
     }
   ]
 }
