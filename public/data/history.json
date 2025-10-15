@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-06-17",
-      "id": "reshaw",
-      "name": "Red-shouldered Hawk",
-      "subregion": "South Carolina"
-    },
-    {
       "date": "2025-06-18",
       "id": "houspa",
       "name": "House Sparrow",
@@ -719,6 +713,12 @@
       "id": "eargre",
       "name": "Eared Grebe",
       "subregion": "Michigan"
+    },
+    {
+      "date": "2025-10-15",
+      "id": "cliswa",
+      "name": "Cliff Swallow",
+      "subregion": "Nebraska"
     }
   ]
 }
