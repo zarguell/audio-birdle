@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-06-18",
-      "id": "houspa",
-      "name": "House Sparrow",
-      "subregion": "Iowa"
-    },
-    {
       "date": "2025-06-19",
       "id": "mouwar",
       "name": "Mourning Warbler",
@@ -719,6 +713,12 @@
       "id": "cliswa",
       "name": "Cliff Swallow",
       "subregion": "Nebraska"
+    },
+    {
+      "date": "2025-10-16",
+      "id": "herthr",
+      "name": "Hermit Thrush",
+      "subregion": "Delaware"
     }
   ]
 }
