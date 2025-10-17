@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-06-19",
-      "id": "mouwar",
-      "name": "Mourning Warbler",
-      "subregion": "Minnesota"
-    },
-    {
       "date": "2025-06-20",
       "id": "easblu",
       "name": "Eastern Bluebird",
@@ -719,6 +713,12 @@
       "id": "herthr",
       "name": "Hermit Thrush",
       "subregion": "Delaware"
+    },
+    {
+      "date": "2025-10-17",
+      "id": "clcspa",
+      "name": "Clay-colored Sparrow",
+      "subregion": "Georgia"
     }
   ]
 }
