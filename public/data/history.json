@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-06-20",
-      "id": "easblu",
-      "name": "Eastern Bluebird",
-      "subregion": "New York"
-    },
-    {
       "date": "2025-06-21",
       "id": "bkcchi",
       "name": "Black-capped Chickadee",
@@ -719,6 +713,12 @@
       "id": "clcspa",
       "name": "Clay-colored Sparrow",
       "subregion": "Georgia"
+    },
+    {
+      "date": "2025-10-18",
+      "id": "daejun",
+      "name": "Dark-eyed Junco",
+      "subregion": "South Carolina"
     }
   ]
 }
