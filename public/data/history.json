@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-06-22",
-      "id": "yebsap",
-      "name": "Yellow-bellied Sapsucker",
-      "subregion": "Virginia"
-    },
-    {
       "date": "2025-06-23",
       "id": "snoplo5",
       "name": "Snowy Plover",
@@ -719,6 +713,12 @@
       "id": "rinphe1",
       "name": "Ring-necked Pheasant",
       "subregion": "Montana"
+    },
+    {
+      "date": "2025-10-20",
+      "id": "linspa",
+      "name": "Lincoln's Sparrow",
+      "subregion": "New Mexico"
     }
   ]
 }
