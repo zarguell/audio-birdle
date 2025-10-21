@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-06-23",
-      "id": "snoplo5",
-      "name": "Snowy Plover",
-      "subregion": "New Mexico"
-    },
-    {
       "date": "2025-06-24",
       "id": "ribgul",
       "name": "Ring-billed Gull",
@@ -719,6 +713,12 @@
       "id": "linspa",
       "name": "Lincoln's Sparrow",
       "subregion": "New Mexico"
+    },
+    {
+      "date": "2025-10-21",
+      "id": "pipplo",
+      "name": "Piping Plover",
+      "subregion": "Mississippi"
     }
   ]
 }
