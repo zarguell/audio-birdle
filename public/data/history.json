@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-06-24",
-      "id": "ribgul",
-      "name": "Ring-billed Gull",
-      "subregion": "Mississippi"
-    },
-    {
       "date": "2025-06-25",
       "id": "blugrb1",
       "name": "Blue Grosbeak",
@@ -719,6 +713,12 @@
       "id": "pipplo",
       "name": "Piping Plover",
       "subregion": "Mississippi"
+    },
+    {
+      "date": "2025-10-22",
+      "id": "amgplo",
+      "name": "American Golden-Plover",
+      "subregion": "Massachusetts"
     }
   ]
 }
