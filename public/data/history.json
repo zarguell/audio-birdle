@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-06-25",
-      "id": "blugrb1",
-      "name": "Blue Grosbeak",
-      "subregion": "Alabama"
-    },
-    {
       "date": "2025-06-26",
       "id": "clagre",
       "name": "Clark's Grebe",
@@ -719,6 +713,12 @@
       "id": "amgplo",
       "name": "American Golden-Plover",
       "subregion": "Massachusetts"
+    },
+    {
+      "date": "2025-10-23",
+      "id": "wooduc",
+      "name": "Wood Duck",
+      "subregion": "Indiana"
     }
   ]
 }
