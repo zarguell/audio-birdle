@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-06-26",
-      "id": "clagre",
-      "name": "Clark's Grebe",
-      "subregion": "Oregon"
-    },
-    {
       "date": "2025-06-27",
       "id": "dusfly",
       "name": "Dusky Flycatcher",
@@ -719,6 +713,12 @@
       "id": "wooduc",
       "name": "Wood Duck",
       "subregion": "Indiana"
+    },
+    {
+      "date": "2025-10-24",
+      "id": "haiwoo",
+      "name": "Hairy Woodpecker",
+      "subregion": "California"
     }
   ]
 }
