@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-06-28",
-      "id": "snogoo",
-      "name": "Snow Goose",
-      "subregion": "New York"
-    },
-    {
       "date": "2025-06-29",
       "id": "virwar",
       "name": "Virginia's Warbler",
@@ -719,6 +713,12 @@
       "id": "cangoo",
       "name": "Canada Goose",
       "subregion": "Delaware"
+    },
+    {
+      "date": "2025-10-26",
+      "id": "blugrb1",
+      "name": "Blue Grosbeak",
+      "subregion": "Massachusetts"
     }
   ]
 }
