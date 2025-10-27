@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-06-29",
-      "id": "virwar",
-      "name": "Virginia's Warbler",
-      "subregion": "New Mexico"
-    },
-    {
       "date": "2025-06-30",
       "id": "yelwar",
       "name": "Yellow Warbler",
@@ -719,6 +713,12 @@
       "id": "blugrb1",
       "name": "Blue Grosbeak",
       "subregion": "Massachusetts"
+    },
+    {
+      "date": "2025-10-27",
+      "id": "kenwar",
+      "name": "Kentucky Warbler",
+      "subregion": "Florida"
     }
   ]
 }
