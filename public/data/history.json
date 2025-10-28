@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-06-30",
-      "id": "yelwar",
-      "name": "Yellow Warbler",
-      "subregion": "Arkansas"
-    },
-    {
       "date": "2025-07-01",
       "id": "yetvir",
       "name": "Yellow-throated Vireo",
@@ -719,6 +713,12 @@
       "id": "kenwar",
       "name": "Kentucky Warbler",
       "subregion": "Florida"
+    },
+    {
+      "date": "2025-10-28",
+      "id": "marwre",
+      "name": "Marsh Wren",
+      "subregion": "Georgia"
     }
   ]
 }
