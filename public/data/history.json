@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-07-01",
-      "id": "yetvir",
-      "name": "Yellow-throated Vireo",
-      "subregion": "Wisconsin"
-    },
-    {
       "date": "2025-07-02",
       "id": "easkin",
       "name": "Eastern Kingbird",
@@ -719,6 +713,12 @@
       "id": "marwre",
       "name": "Marsh Wren",
       "subregion": "Georgia"
+    },
+    {
+      "date": "2025-10-29",
+      "id": "santer1",
+      "name": "Sandwich Tern",
+      "subregion": "Virginia"
     }
   ]
 }
