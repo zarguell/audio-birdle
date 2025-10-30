@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-07-02",
-      "id": "easkin",
-      "name": "Eastern Kingbird",
-      "subregion": "Rhode Island"
-    },
-    {
       "date": "2025-07-03",
       "id": "brtcur",
       "name": "Bristle-thighed Curlew",
@@ -719,6 +713,12 @@
       "id": "santer1",
       "name": "Sandwich Tern",
       "subregion": "Virginia"
+    },
+    {
+      "date": "2025-10-30",
+      "id": "gnttow",
+      "name": "Green-tailed Towhee",
+      "subregion": "Utah"
     }
   ]
 }
