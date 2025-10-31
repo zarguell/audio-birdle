@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-07-03",
-      "id": "brtcur",
-      "name": "Bristle-thighed Curlew",
-      "subregion": "Hawaii"
-    },
-    {
       "date": "2025-07-04",
       "id": "acafly",
       "name": "Acadian Flycatcher",
@@ -719,6 +713,12 @@
       "id": "gnttow",
       "name": "Green-tailed Towhee",
       "subregion": "Utah"
+    },
+    {
+      "date": "2025-10-31",
+      "id": "wlswar",
+      "name": "Wilson's Warbler",
+      "subregion": "Alabama"
     }
   ]
 }
