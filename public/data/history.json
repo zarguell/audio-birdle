@@ -1,30 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-07-04",
-      "id": "acafly",
-      "name": "Acadian Flycatcher",
-      "subregion": "Missouri"
-    },
-    {
-      "date": "2025-07-05",
-      "id": "sonspa",
-      "name": "Song Sparrow",
-      "subregion": "New Jersey"
-    },
-    {
-      "date": "2025-07-06",
-      "id": "nopowl",
-      "name": "Northern Pygmy-Owl",
-      "subregion": "Montana"
-    },
-    {
-      "date": "2025-07-07",
-      "id": "rehwoo",
-      "name": "Red-headed Woodpecker",
-      "subregion": "Ohio"
-    },
-    {
       "date": "2025-07-08",
       "id": "comrav",
       "name": "Common Raven",
@@ -719,6 +695,12 @@
       "id": "wlswar",
       "name": "Wilson's Warbler",
       "subregion": "Alabama"
+    },
+    {
+      "date": "2025-11-04",
+      "id": "spotow",
+      "name": "Spotted Towhee",
+      "subregion": "Idaho"
     }
   ]
 }
