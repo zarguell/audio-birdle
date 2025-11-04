@@ -1,4 +1,6 @@
 # 🎧🐦 Audio Birdle
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fzarguell%2Faudio-birdle.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fzarguell%2Faudio-birdle?ref=badge_shield)
+
 
 [Play Audio Birdle](https://audio-birdle.sechostlab.com) | [View on GitHub](https://github.com/zarguell/audio-birdle)
 
@@ -61,3 +63,6 @@ Instead, report it responsibly by [creating a private GitHub security advisory](
 ## 📜 License
 
 This project is open source and available under the [MIT License](LICENSE).
+
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fzarguell%2Faudio-birdle.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fzarguell%2Faudio-birdle?ref=badge_large)
