@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-07-08",
-      "id": "comrav",
-      "name": "Common Raven",
-      "subregion": "South Dakota"
-    },
-    {
       "date": "2025-07-09",
       "id": "redpol1",
       "name": "Redpoll",
@@ -701,6 +695,12 @@
       "id": "spotow",
       "name": "Spotted Towhee",
       "subregion": "Idaho"
+    },
+    {
+      "date": "2025-11-05",
+      "id": "rinduc",
+      "name": "Ring-necked Duck",
+      "subregion": "Illinois"
     }
   ]
 }
