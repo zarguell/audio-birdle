@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-07-10",
-      "id": "comter",
-      "name": "Common Tern",
-      "subregion": "Mississippi"
-    },
-    {
       "date": "2025-07-11",
       "id": "rthhum",
       "name": "Ruby-throated Hummingbird",
@@ -701,6 +695,12 @@
       "id": "eucdov",
       "name": "Eurasian Collared-Dove",
       "subregion": "Pennsylvania"
+    },
+    {
+      "date": "2025-11-07",
+      "id": "bkbplo",
+      "name": "Black-bellied Plover",
+      "subregion": "Washington"
     }
   ]
 }
