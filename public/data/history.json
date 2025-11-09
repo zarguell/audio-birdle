@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-07-12",
-      "id": "recwoo",
-      "name": "Red-cockaded Woodpecker",
-      "subregion": "Arkansas"
-    },
-    {
       "date": "2025-07-13",
       "id": "bkbwar",
       "name": "Blackburnian Warbler",
@@ -701,6 +695,12 @@
       "id": "retloo",
       "name": "Red-throated Loon",
       "subregion": "Maryland"
+    },
+    {
+      "date": "2025-11-09",
+      "id": "merlin",
+      "name": "Merlin",
+      "subregion": "Georgia"
     }
   ]
 }
