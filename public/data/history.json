@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-07-13",
-      "id": "bkbwar",
-      "name": "Blackburnian Warbler",
-      "subregion": "New Hampshire"
-    },
-    {
       "date": "2025-07-14",
       "id": "bawwar",
       "name": "Black-and-white Warbler",
@@ -701,6 +695,12 @@
       "id": "merlin",
       "name": "Merlin",
       "subregion": "Georgia"
+    },
+    {
+      "date": "2025-11-10",
+      "id": "bkbmag1",
+      "name": "Black-billed Magpie",
+      "subregion": "South Dakota"
     }
   ]
 }
