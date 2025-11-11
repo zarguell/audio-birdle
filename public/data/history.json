@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-07-14",
-      "id": "bawwar",
-      "name": "Black-and-white Warbler",
-      "subregion": "Massachusetts"
-    },
-    {
       "date": "2025-07-15",
       "id": "perfal",
       "name": "Peregrine Falcon",
@@ -701,6 +695,12 @@
       "id": "bkbmag1",
       "name": "Black-billed Magpie",
       "subregion": "South Dakota"
+    },
+    {
+      "date": "2025-11-11",
+      "id": "grtgra",
+      "name": "Great-tailed Grackle",
+      "subregion": "Oklahoma"
     }
   ]
 }
