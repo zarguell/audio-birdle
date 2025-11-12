@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-07-15",
-      "id": "perfal",
-      "name": "Peregrine Falcon",
-      "subregion": "Minnesota"
-    },
-    {
       "date": "2025-07-16",
       "id": "lcspet",
       "name": "Leach's Storm-Petrel",
@@ -701,6 +695,12 @@
       "id": "grtgra",
       "name": "Great-tailed Grackle",
       "subregion": "Oklahoma"
+    },
+    {
+      "date": "2025-11-12",
+      "id": "moudov",
+      "name": "Mourning Dove",
+      "subregion": "Indiana"
     }
   ]
 }
