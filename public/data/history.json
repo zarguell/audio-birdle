@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-07-16",
-      "id": "lcspet",
-      "name": "Leach's Storm-Petrel",
-      "subregion": "Florida"
-    },
-    {
       "date": "2025-07-17",
       "id": "whrsha",
       "name": "White-rumped Shama",
@@ -701,6 +695,12 @@
       "id": "moudov",
       "name": "Mourning Dove",
       "subregion": "Indiana"
+    },
+    {
+      "date": "2025-11-13",
+      "id": "perfal",
+      "name": "Peregrine Falcon",
+      "subregion": "Kansas"
     }
   ]
 }
