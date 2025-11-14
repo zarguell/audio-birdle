@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-07-17",
-      "id": "whrsha",
-      "name": "White-rumped Shama",
-      "subregion": "Hawaii"
-    },
-    {
       "date": "2025-07-18",
       "id": "orcori",
       "name": "Orchard Oriole",
@@ -701,6 +695,12 @@
       "id": "perfal",
       "name": "Peregrine Falcon",
       "subregion": "Kansas"
+    },
+    {
+      "date": "2025-11-14",
+      "id": "yehpar",
+      "name": "Yellow-headed Amazon",
+      "subregion": "California"
     }
   ]
 }
