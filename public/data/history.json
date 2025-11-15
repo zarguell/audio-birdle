@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-07-18",
-      "id": "orcori",
-      "name": "Orchard Oriole",
-      "subregion": "Maine"
-    },
-    {
       "date": "2025-07-19",
       "id": "norhar2",
       "name": "Northern Harrier",
@@ -701,6 +695,12 @@
       "id": "yehpar",
       "name": "Yellow-headed Amazon",
       "subregion": "California"
+    },
+    {
+      "date": "2025-11-15",
+      "id": "lewwoo",
+      "name": "Lewis's Woodpecker",
+      "subregion": "Montana"
     }
   ]
 }
