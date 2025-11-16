@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-07-19",
-      "id": "norhar2",
-      "name": "Northern Harrier",
-      "subregion": "Massachusetts"
-    },
-    {
       "date": "2025-07-20",
       "id": "sposan",
       "name": "Spotted Sandpiper",
@@ -701,6 +695,12 @@
       "id": "lewwoo",
       "name": "Lewis's Woodpecker",
       "subregion": "Montana"
+    },
+    {
+      "date": "2025-11-16",
+      "id": "houfin",
+      "name": "House Finch",
+      "subregion": "Hawaii"
     }
   ]
 }
