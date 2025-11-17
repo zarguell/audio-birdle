@@ -1,146 +1,239 @@
 {
   "us": {
-    "Hawaii": [
+    "Oklahoma": [
       {
-        "id": "afrsil1"
+        "id": "ameavo"
       },
       {
-        "id": "akepa1"
+        "id": "amebit"
       },
       {
-        "id": "akiapo"
+        "id": "amecro"
+      },
+      {
+        "id": "amegfi"
+      },
+      {
+        "id": "amekes"
+      },
+      {
+        "id": "amepip"
+      },
+      {
+        "id": "amerob"
       },
       {
         "id": "amewig"
       },
       {
-        "id": "aniani"
+        "id": "amewoo"
       },
       {
-        "id": "apapan"
+        "id": "amhgul1"
       },
       {
-        "id": "barpet"
+        "id": "amtspa"
+      },
+      {
+        "id": "amwpel"
+      },
+      {
+        "id": "baleag"
       },
       {
         "id": "bcnher"
       },
       {
-        "id": "bkbplo"
+        "id": "belkin1"
       },
       {
-        "id": "bkfalb"
+        "id": "bewwre"
       },
       {
-        "id": "bknsti"
+        "id": "blctit4"
       },
       {
-        "id": "bkwpet"
+        "id": "blksco2"
       },
       {
-        "id": "blkfra"
+        "id": "blkvul"
       },
       {
-        "id": "blknod"
+        "id": "blujay"
       },
       {
-        "id": "blkter"
+        "id": "bnhcow"
       },
       {
-        "id": "bonpet"
+        "id": "bongul"
       },
       {
-        "id": "brant"
+        "id": "brdowl"
       },
       {
-        "id": "brnboo"
+        "id": "brebla"
       },
       {
-        "id": "brnnod"
+        "id": "brncre"
       },
       {
         "id": "brnowl"
       },
       {
-        "id": "brtcur"
+        "id": "brnthr"
       },
       {
         "id": "buffle"
       },
       {
-        "id": "burpar"
+        "id": "buhvir"
+      },
+      {
+        "id": "burowl"
+      },
+      {
+        "id": "bushti"
       },
       {
         "id": "buwtea"
       },
       {
-        "id": "calqua"
+        "id": "cacgoo1"
+      },
+      {
+        "id": "cangoo"
+      },
+      {
+        "id": "cantow"
+      },
+      {
+        "id": "canvas"
+      },
+      {
+        "id": "canwre"
+      },
+      {
+        "id": "carchi"
+      },
+      {
+        "id": "carwre"
       },
       {
         "id": "categr1"
       },
       {
-        "id": "chbsan"
+        "id": "cedwax"
       },
       {
-        "id": "chemun"
+        "id": "chirav"
       },
       {
-        "id": "chrshe"
-      },
-      {
-        "id": "chukar"
-      },
-      {
-        "id": "cocboo1"
+        "id": "chispa"
       },
       {
         "id": "comgal1"
       },
       {
-        "id": "commyn"
+        "id": "comgol"
       },
       {
-        "id": "compea"
+        "id": "comgra"
       },
       {
-        "id": "comter"
+        "id": "comloo"
       },
       {
-        "id": "comwax"
+        "id": "commer"
+      },
+      {
+        "id": "comrav"
+      },
+      {
+        "id": "comyel"
+      },
+      {
+        "id": "coohaw"
+      },
+      {
+        "id": "daejun"
+      },
+      {
+        "id": "doccor"
+      },
+      {
+        "id": "dowwoo"
       },
       {
         "id": "dunlin"
       },
       {
-        "id": "elepai"
+        "id": "eargre"
       },
       {
-        "id": "elepai4"
+        "id": "easblu"
       },
       {
-        "id": "elepai5"
+        "id": "easmea"
       },
       {
-        "id": "ercfra"
+        "id": "easowl1"
       },
       {
-        "id": "eurwig"
+        "id": "easpho"
+      },
+      {
+        "id": "eastow"
+      },
+      {
+        "id": "eucdov"
+      },
+      {
+        "id": "eursta"
+      },
+      {
+        "id": "ferhaw"
+      },
+      {
+        "id": "fiespa"
+      },
+      {
+        "id": "fiscro"
+      },
+      {
+        "id": "forter"
+      },
+      {
+        "id": "foxspa"
+      },
+      {
+        "id": "fragul"
       },
       {
         "id": "gadwal"
       },
       {
-        "id": "gargan"
-      },
-      {
         "id": "gnwtea"
       },
       {
-        "id": "gragoo"
+        "id": "gockin"
       },
       {
-        "id": "grefri"
+        "id": "gofwoo"
+      },
+      {
+        "id": "goleag"
+      },
+      {
+        "id": "graspa"
+      },
+      {
+        "id": "grbher3"
+      },
+      {
+        "id": "greegr"
+      },
+      {
+        "id": "greroa"
       },
       {
         "id": "gresca"
@@ -149,28 +242,34 @@
         "id": "greyel"
       },
       {
-        "id": "gryfra"
+        "id": "grhowl"
       },
       {
-        "id": "hawama"
+        "id": "grtgra"
       },
       {
-        "id": "hawcoo"
+        "id": "grycat"
       },
       {
-        "id": "hawcre"
+        "id": "gwfgoo"
       },
       {
-        "id": "hawduc"
+        "id": "haiwoo"
       },
       {
-        "id": "hawgoo"
+        "id": "harspa"
       },
       {
-        "id": "hawhaw"
+        "id": "herthr"
       },
       {
-        "id": "hawpet1"
+        "id": "hoomer"
+      },
+      {
+        "id": "horgre"
+      },
+      {
+        "id": "horlar"
       },
       {
         "id": "houfin"
@@ -179,58 +278,58 @@
         "id": "houspa"
       },
       {
-        "id": "iiwi"
+        "id": "houwre"
       },
       {
-        "id": "jabwar"
+        "id": "incdov"
       },
       {
-        "id": "javspa"
+        "id": "juntit1"
       },
       {
-        "id": "kalphe"
+        "id": "killde"
       },
       {
-        "id": "kauama"
+        "id": "labwoo"
       },
       {
-        "id": "laugul"
+        "id": "laplon"
       },
       {
-        "id": "lavwax"
+        "id": "lbbgul"
       },
       {
-        "id": "layalb"
+        "id": "leasan"
       },
       {
-        "id": "layduc"
-      },
-      {
-        "id": "lcspet"
-      },
-      {
-        "id": "leater1"
+        "id": "lecspa"
       },
       {
         "id": "lessca"
       },
       {
-        "id": "lesyel"
+        "id": "linspa"
       },
       {
         "id": "lobdow"
       },
       {
+        "id": "logshr"
+      },
+      {
         "id": "mallar3"
       },
       {
-        "id": "masboo"
+        "id": "marwre"
       },
       {
-        "id": "mauala"
+        "id": "mcclon"
       },
       {
-        "id": "melthr"
+        "id": "merlin"
+      },
+      {
+        "id": "moublu"
       },
       {
         "id": "moudov"
@@ -239,10 +338,19 @@
         "id": "musduc"
       },
       {
-        "id": "nazboo1"
+        "id": "neocor"
+      },
+      {
+        "id": "norbob"
       },
       {
         "id": "norcar"
+      },
+      {
+        "id": "norfli"
+      },
+      {
+        "id": "norhar2"
       },
       {
         "id": "normoc"
@@ -254,64 +362,58 @@
         "id": "norsho"
       },
       {
-        "id": "nutman"
-      },
-      {
-        "id": "oahama"
-      },
-      {
-        "id": "omao"
-      },
-      {
-        "id": "orcwax"
+        "id": "orcwar"
       },
       {
         "id": "osprey"
       },
       {
-        "id": "pagplo"
-      },
-      {
-        "id": "palila"
-      },
-      {
         "id": "pecsan"
       },
       {
-        "id": "peflov"
+        "id": "pibgre"
       },
       {
-        "id": "reblei"
+        "id": "pilwoo"
       },
       {
-        "id": "reccar"
+        "id": "pinsis"
       },
       {
-        "id": "recpar"
+        "id": "pinwar"
       },
       {
-        "id": "redava"
+        "id": "prafal"
+      },
+      {
+        "id": "purfin"
+      },
+      {
+        "id": "rebmer"
+      },
+      {
+        "id": "rebnut"
+      },
+      {
+        "id": "rebwoo"
       },
       {
         "id": "redhea"
       },
       {
-        "id": "redjun"
+        "id": "rehwoo"
       },
       {
-        "id": "refboo"
+        "id": "reshaw"
       },
       {
-        "id": "rempar"
+        "id": "rethaw"
       },
       {
-        "id": "rettro"
+        "id": "rewbla"
       },
       {
-        "id": "revbul"
-      },
-      {
-        "id": "rewbul"
+        "id": "ribgul"
       },
       {
         "id": "rinduc"
@@ -323,85 +425,118 @@
         "id": "rocpig"
       },
       {
-        "id": "rorpar"
+        "id": "rocwre"
       },
       {
-        "id": "rudtur"
+        "id": "rolhaw"
       },
       {
-        "id": "ruff"
+        "id": "rosgoo"
       },
       {
-        "id": "saffin"
+        "id": "ruckin"
       },
       {
-        "id": "sander"
+        "id": "rucspa"
       },
       {
-        "id": "semplo"
+        "id": "rudduc"
+      },
+      {
+        "id": "rusbla"
+      },
+      {
+        "id": "sagthr"
+      },
+      {
+        "id": "sancra"
+      },
+      {
+        "id": "savspa"
+      },
+      {
+        "id": "scaqua"
+      },
+      {
+        "id": "sctfly"
+      },
+      {
+        "id": "sedwre1"
       },
       {
         "id": "sheowl"
       },
       {
-        "id": "shtalb"
+        "id": "shshaw"
       },
       {
-        "id": "shtsan"
-      },
-      {
-        "id": "shtshe"
-      },
-      {
-        "id": "skylar"
+        "id": "snoegr"
       },
       {
         "id": "snogoo"
       },
       {
-        "id": "sooshe"
+        "id": "solsan"
       },
       {
-        "id": "sooter1"
+        "id": "sonspa"
       },
       {
-        "id": "spodov"
+        "id": "sora"
       },
       {
         "id": "sposan"
       },
       {
-        "id": "tancoc1"
+        "id": "spotow"
       },
       {
-        "id": "towshe2"
+        "id": "sursco"
       },
       {
-        "id": "tufduc"
+        "id": "swagoo1"
       },
       {
-        "id": "wantat1"
+        "id": "swaspa"
       },
       {
-        "id": "warwhe1"
+        "id": "towsol"
+      },
+      {
+        "id": "tuftit"
+      },
+      {
+        "id": "turvul"
+      },
+      {
+        "id": "vesspa"
+      },
+      {
+        "id": "virrai"
+      },
+      {
+        "id": "wesgre"
       },
       {
         "id": "wesmea"
       },
       {
-        "id": "wetshe"
+        "id": "whbnut"
+      },
+      {
+        "id": "whcspa"
       },
       {
         "id": "whfibi"
       },
       {
-        "id": "whiter4"
+        "id": "whocra"
       },
       {
-        "id": "whrsha"
+        "id": "whtspa"
       },
       {
-        "id": "whttro"
+        "id": "whwdov"
       },
       {
         "id": "wilsni1"
@@ -410,22 +545,25 @@
         "id": "wiltur"
       },
       {
-        "id": "x00423"
+        "id": "winwre3"
       },
       {
-        "id": "x00776"
+        "id": "wooduc"
       },
       {
-        "id": "yebcar"
+        "id": "wooscj2"
       },
       {
-        "id": "yefcan"
+        "id": "y00475"
       },
       {
-        "id": "yefgra1"
+        "id": "y00678"
       },
       {
-        "id": "zebdov"
+        "id": "yebsap"
+      },
+      {
+        "id": "yerwar"
       }
     ]
   }
