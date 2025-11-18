@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-07-21",
-      "id": "rebwoo",
-      "name": "Red-bellied Woodpecker",
-      "subregion": "Alabama"
-    },
-    {
       "date": "2025-07-22",
       "id": "monpar",
       "name": "Monk Parakeet",
@@ -701,6 +695,12 @@
       "id": "carwre",
       "name": "Carolina Wren",
       "subregion": "Oklahoma"
+    },
+    {
+      "date": "2025-11-18",
+      "id": "eursta",
+      "name": "European Starling",
+      "subregion": "Minnesota"
     }
   ]
 }
