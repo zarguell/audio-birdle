@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-07-22",
-      "id": "monpar",
-      "name": "Monk Parakeet",
-      "subregion": "Florida"
-    },
-    {
       "date": "2025-07-23",
       "id": "henspa",
       "name": "Henslow's Sparrow",
@@ -701,6 +695,12 @@
       "id": "eursta",
       "name": "European Starling",
       "subregion": "Minnesota"
+    },
+    {
+      "date": "2025-11-19",
+      "id": "comgol",
+      "name": "Common Goldeneye",
+      "subregion": "Louisiana"
     }
   ]
 }
