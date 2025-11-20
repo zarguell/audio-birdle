@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-07-23",
-      "id": "henspa",
-      "name": "Henslow's Sparrow",
-      "subregion": "New York"
-    },
-    {
       "date": "2025-07-24",
       "id": "amerob",
       "name": "American Robin",
@@ -701,6 +695,12 @@
       "id": "comgol",
       "name": "Common Goldeneye",
       "subregion": "Louisiana"
+    },
+    {
+      "date": "2025-11-20",
+      "id": "norhar2",
+      "name": "Northern Harrier",
+      "subregion": "Wyoming"
     }
   ]
 }
