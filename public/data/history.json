@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-07-24",
-      "id": "amerob",
-      "name": "American Robin",
-      "subregion": "Illinois"
-    },
-    {
       "date": "2025-07-25",
       "id": "pecsan",
       "name": "Pectoral Sandpiper",
@@ -701,6 +695,12 @@
       "id": "norhar2",
       "name": "Northern Harrier",
       "subregion": "Wyoming"
+    },
+    {
+      "date": "2025-11-21",
+      "id": "wilsni1",
+      "name": "Wilson's Snipe",
+      "subregion": "Oklahoma"
     }
   ]
 }
