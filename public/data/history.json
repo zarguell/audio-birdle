@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-07-25",
-      "id": "pecsan",
-      "name": "Pectoral Sandpiper",
-      "subregion": "Alaska"
-    },
-    {
       "date": "2025-07-26",
       "id": "bktgna",
       "name": "Black-tailed Gnatcatcher",
@@ -701,6 +695,12 @@
       "id": "wilsni1",
       "name": "Wilson's Snipe",
       "subregion": "Oklahoma"
+    },
+    {
+      "date": "2025-11-22",
+      "id": "nswowl",
+      "name": "Northern Saw-whet Owl",
+      "subregion": "Maryland"
     }
   ]
 }
