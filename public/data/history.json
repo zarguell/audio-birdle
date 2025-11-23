@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-07-26",
-      "id": "bktgna",
-      "name": "Black-tailed Gnatcatcher",
-      "subregion": "Arizona"
-    },
-    {
       "date": "2025-07-27",
       "id": "lucwar",
       "name": "Lucy's Warbler",
@@ -701,6 +695,12 @@
       "id": "nswowl",
       "name": "Northern Saw-whet Owl",
       "subregion": "Maryland"
+    },
+    {
+      "date": "2025-11-23",
+      "id": "dowwoo",
+      "name": "Downy Woodpecker",
+      "subregion": "Idaho"
     }
   ]
 }
