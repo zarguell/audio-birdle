@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-07-28",
-      "id": "baleag",
-      "name": "Bald Eagle",
-      "subregion": "Colorado"
-    },
-    {
       "date": "2025-07-29",
       "id": "hamfly",
       "name": "Hammond's Flycatcher",
@@ -701,6 +695,12 @@
       "id": "whcspa",
       "name": "White-crowned Sparrow",
       "subregion": "Maine"
+    },
+    {
+      "date": "2025-11-25",
+      "id": "amered",
+      "name": "American Redstart",
+      "subregion": "Ohio"
     }
   ]
 }
