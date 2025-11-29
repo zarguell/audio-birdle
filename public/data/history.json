@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-08-01",
-      "id": "comeid",
-      "name": "Common Eider",
-      "subregion": "New Hampshire"
-    },
-    {
       "date": "2025-08-02",
       "id": "ameavo",
       "name": "American Avocet",
@@ -701,6 +695,12 @@
       "id": "balori",
       "name": "Baltimore Oriole",
       "subregion": "New Jersey"
+    },
+    {
+      "date": "2025-11-29",
+      "id": "pinwar",
+      "name": "Pine Warbler",
+      "subregion": "Maine"
     }
   ]
 }
