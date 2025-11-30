@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-08-02",
-      "id": "ameavo",
-      "name": "American Avocet",
-      "subregion": "Delaware"
-    },
-    {
       "date": "2025-08-03",
       "id": "weskin",
       "name": "Western Kingbird",
@@ -701,6 +695,12 @@
       "id": "pinwar",
       "name": "Pine Warbler",
       "subregion": "Maine"
+    },
+    {
+      "date": "2025-11-30",
+      "id": "amhgul1",
+      "name": "American Herring Gull",
+      "subregion": "New Mexico"
     }
   ]
 }
