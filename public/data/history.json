@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-08-03",
-      "id": "weskin",
-      "name": "Western Kingbird",
-      "subregion": "Oklahoma"
-    },
-    {
       "date": "2025-08-04",
       "id": "amepip",
       "name": "American Pipit",
@@ -701,6 +695,12 @@
       "id": "amhgul1",
       "name": "American Herring Gull",
       "subregion": "New Mexico"
+    },
+    {
+      "date": "2025-12-01",
+      "id": "rebmer",
+      "name": "Red-breasted Merganser",
+      "subregion": "Ohio"
     }
   ]
 }
