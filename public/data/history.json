@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-08-04",
-      "id": "amepip",
-      "name": "American Pipit",
-      "subregion": "Nevada"
-    },
-    {
       "date": "2025-08-05",
       "id": "rocpig",
       "name": "Rock Pigeon",
@@ -701,6 +695,12 @@
       "id": "rebmer",
       "name": "Red-breasted Merganser",
       "subregion": "Ohio"
+    },
+    {
+      "date": "2025-12-02",
+      "id": "sora",
+      "name": "Sora",
+      "subregion": "Tennessee"
     }
   ]
 }
