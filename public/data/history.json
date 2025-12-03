@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-08-05",
-      "id": "rocpig",
-      "name": "Rock Pigeon",
-      "subregion": "Illinois"
-    },
-    {
       "date": "2025-08-06",
       "id": "purfin",
       "name": "Purple Finch",
@@ -701,6 +695,12 @@
       "id": "sora",
       "name": "Sora",
       "subregion": "Tennessee"
+    },
+    {
+      "date": "2025-12-03",
+      "id": "rebwoo",
+      "name": "Red-bellied Woodpecker",
+      "subregion": "District of Columbia"
     }
   ]
 }
