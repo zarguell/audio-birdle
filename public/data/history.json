@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-08-06",
-      "id": "purfin",
-      "name": "Purple Finch",
-      "subregion": "West Virginia"
-    },
-    {
       "date": "2025-08-07",
       "id": "sora",
       "name": "Sora",
@@ -701,6 +695,12 @@
       "id": "rebwoo",
       "name": "Red-bellied Woodpecker",
       "subregion": "District of Columbia"
+    },
+    {
+      "date": "2025-12-04",
+      "id": "yerwar",
+      "name": "Yellow-rumped Warbler",
+      "subregion": "Idaho"
     }
   ]
 }
