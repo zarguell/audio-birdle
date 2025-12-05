@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-08-07",
-      "id": "sora",
-      "name": "Sora",
-      "subregion": "Oregon"
-    },
-    {
       "date": "2025-08-08",
       "id": "easpho",
       "name": "Eastern Phoebe",
@@ -701,6 +695,12 @@
       "id": "yerwar",
       "name": "Yellow-rumped Warbler",
       "subregion": "Idaho"
+    },
+    {
+      "date": "2025-12-05",
+      "id": "brnowl",
+      "name": "American Barn Owl",
+      "subregion": "Arizona"
     }
   ]
 }
