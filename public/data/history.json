@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-08-10",
-      "id": "leasan",
-      "name": "Least Sandpiper",
-      "subregion": "Connecticut"
-    },
-    {
       "date": "2025-08-11",
       "id": "rudtur",
       "name": "Ruddy Turnstone",
@@ -701,6 +695,12 @@
       "id": "winwre3",
       "name": "Winter Wren",
       "subregion": "Vermont"
+    },
+    {
+      "date": "2025-12-08",
+      "id": "btnwar",
+      "name": "Black-throated Green Warbler",
+      "subregion": "Ohio"
     }
   ]
 }
