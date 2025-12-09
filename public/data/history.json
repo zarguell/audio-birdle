@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-08-11",
-      "id": "rudtur",
-      "name": "Ruddy Turnstone",
-      "subregion": "New Hampshire"
-    },
-    {
       "date": "2025-08-12",
       "id": "tuftit",
       "name": "Tufted Titmouse",
@@ -701,6 +695,12 @@
       "id": "btnwar",
       "name": "Black-throated Green Warbler",
       "subregion": "Ohio"
+    },
+    {
+      "date": "2025-12-09",
+      "id": "purfin",
+      "name": "Purple Finch",
+      "subregion": "Indiana"
     }
   ]
 }
