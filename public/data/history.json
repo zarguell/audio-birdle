@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-08-12",
-      "id": "tuftit",
-      "name": "Tufted Titmouse",
-      "subregion": "Delaware"
-    },
-    {
       "date": "2025-08-13",
       "id": "reevir1",
       "name": "Red-eyed Vireo",
@@ -701,6 +695,12 @@
       "id": "purfin",
       "name": "Purple Finch",
       "subregion": "Indiana"
+    },
+    {
+      "date": "2025-12-10",
+      "id": "rethaw",
+      "name": "Red-tailed Hawk",
+      "subregion": "Arizona"
     }
   ]
 }
