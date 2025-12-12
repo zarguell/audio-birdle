@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-08-14",
-      "id": "calgul",
-      "name": "California Gull",
-      "subregion": "Nebraska"
-    },
-    {
       "date": "2025-08-15",
       "id": "yebcha",
       "name": "Yellow-breasted Chat",
@@ -701,6 +695,12 @@
       "id": "sonspa",
       "name": "Song Sparrow",
       "subregion": "North Carolina"
+    },
+    {
+      "date": "2025-12-12",
+      "id": "doccor",
+      "name": "Double-crested Cormorant",
+      "subregion": "Oklahoma"
     }
   ]
 }
