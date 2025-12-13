@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-08-15",
-      "id": "yebcha",
-      "name": "Yellow-breasted Chat",
-      "subregion": "New York"
-    },
-    {
       "date": "2025-08-16",
       "id": "lotduc",
       "name": "Long-tailed Duck",
@@ -701,6 +695,12 @@
       "id": "doccor",
       "name": "Double-crested Cormorant",
       "subregion": "Oklahoma"
+    },
+    {
+      "date": "2025-12-13",
+      "id": "chukar",
+      "name": "Chukar",
+      "subregion": "Hawaii"
     }
   ]
 }
