@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-08-18",
-      "id": "coohaw",
-      "name": "Cooper's Hawk",
-      "subregion": "Oklahoma"
-    },
-    {
       "date": "2025-08-19",
       "id": "eucdov",
       "name": "Eurasian Collared-Dove",
@@ -701,6 +695,12 @@
       "id": "houwre",
       "name": "Northern House Wren",
       "subregion": "New York"
+    },
+    {
+      "date": "2025-12-16",
+      "id": "norpar",
+      "name": "Northern Parula",
+      "subregion": "Tennessee"
     }
   ]
 }
