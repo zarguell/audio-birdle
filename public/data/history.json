@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-08-20",
-      "id": "bkcchi",
-      "name": "Black-capped Chickadee",
-      "subregion": "New Hampshire"
-    },
-    {
       "date": "2025-08-21",
       "id": "buffle",
       "name": "Bufflehead",
@@ -701,6 +695,12 @@
       "id": "cacgoo1",
       "name": "Cackling Goose",
       "subregion": "New Mexico"
+    },
+    {
+      "date": "2025-12-18",
+      "id": "swaspa",
+      "name": "Swamp Sparrow",
+      "subregion": "Delaware"
     }
   ]
 }
