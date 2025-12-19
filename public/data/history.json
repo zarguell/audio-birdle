@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-08-21",
-      "id": "buffle",
-      "name": "Bufflehead",
-      "subregion": "Oregon"
-    },
-    {
       "date": "2025-08-22",
       "id": "leabit",
       "name": "Least Bittern",
@@ -701,6 +695,12 @@
       "id": "swaspa",
       "name": "Swamp Sparrow",
       "subregion": "Delaware"
+    },
+    {
+      "date": "2025-12-19",
+      "id": "foxspa",
+      "name": "Fox Sparrow",
+      "subregion": "Iowa"
     }
   ]
 }
