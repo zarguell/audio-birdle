@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-08-22",
-      "id": "leabit",
-      "name": "Least Bittern",
-      "subregion": "Rhode Island"
-    },
-    {
       "date": "2025-08-23",
       "id": "y00475",
       "name": "American Coot",
@@ -701,6 +695,12 @@
       "id": "foxspa",
       "name": "Fox Sparrow",
       "subregion": "Iowa"
+    },
+    {
+      "date": "2025-12-20",
+      "id": "lilmea2",
+      "name": "Chihuahuan Meadowlark",
+      "subregion": "Arizona"
     }
   ]
 }
