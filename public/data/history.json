@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-08-26",
-      "id": "yehbla",
-      "name": "Yellow-headed Blackbird",
-      "subregion": "Montana"
-    },
-    {
       "date": "2025-08-27",
       "id": "norwat",
       "name": "Northern Waterthrush",
@@ -701,6 +695,12 @@
       "id": "redhea",
       "name": "Redhead",
       "subregion": "North Dakota"
+    },
+    {
+      "date": "2025-12-24",
+      "id": "amepip",
+      "name": "American Pipit",
+      "subregion": "Indiana"
     }
   ]
 }
