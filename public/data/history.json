@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-08-27",
-      "id": "norwat",
-      "name": "Northern Waterthrush",
-      "subregion": "North Dakota"
-    },
-    {
       "date": "2025-08-28",
       "id": "laugul",
       "name": "Laughing Gull",
@@ -701,6 +695,12 @@
       "id": "amepip",
       "name": "American Pipit",
       "subregion": "Indiana"
+    },
+    {
+      "date": "2025-12-25",
+      "id": "horgre",
+      "name": "Horned Grebe",
+      "subregion": "Kansas"
     }
   ]
 }
