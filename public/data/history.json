@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-08-28",
-      "id": "laugul",
-      "name": "Laughing Gull",
-      "subregion": "New Hampshire"
-    },
-    {
       "date": "2025-08-29",
       "id": "moudov",
       "name": "Mourning Dove",
@@ -701,6 +695,12 @@
       "id": "horgre",
       "name": "Horned Grebe",
       "subregion": "Kansas"
+    },
+    {
+      "date": "2025-12-26",
+      "id": "horlar",
+      "name": "Horned Lark",
+      "subregion": "District of Columbia"
     }
   ]
 }
