@@ -27,3 +27,22 @@ dist-ssr
 venv/
 
 repomix-output.*
+
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Test coverage and artifacts
+coverage/
+.nyc_output/
+htmlcov/
+*.lcov
+coverage.xml
+coverage.json
+.pytest_cache/
+.vitest/
+
+# Test results
+test-results/
+test-results/
