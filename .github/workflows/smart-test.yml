@@ -22,7 +22,7 @@ jobs:
       test-category: ${{ steps.analyze-commit.outputs.test-category }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
@@ -76,7 +76,7 @@ jobs:
     if: needs.detect-changes.outputs.js-changed == 'true' || needs.detect-changes.outputs.python-changed == 'true'
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Node.js
         if: needs.detect-changes.outputs.js-changed == 'true'
@@ -115,7 +115,7 @@ jobs:
     if: needs.detect-changes.outputs.commit-type == 'dependency'
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -147,7 +147,7 @@ jobs:
         shard: [1, 2, 3]
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -170,7 +170,7 @@ jobs:
     if: needs.detect-changes.outputs.python-changed == 'true'
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Python
         uses: actions/setup-python@v4
@@ -196,7 +196,7 @@ jobs:
       needs.detect-changes.outputs.test-category == 'full'
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -219,7 +219,7 @@ jobs:
     if: needs.detect-changes.outputs.commit-type == 'daily'
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -256,7 +256,7 @@ jobs:
       needs.detect-changes.outputs.test-category == 'standard'
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
