@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-08-29",
-      "id": "moudov",
-      "name": "Mourning Dove",
-      "subregion": "Oklahoma"
-    },
-    {
       "date": "2025-08-30",
       "id": "palwar",
       "name": "Palm Warbler",
@@ -701,6 +695,12 @@
       "id": "horlar",
       "name": "Horned Lark",
       "subregion": "District of Columbia"
+    },
+    {
+      "date": "2025-12-27",
+      "id": "haiwoo",
+      "name": "Hairy Woodpecker",
+      "subregion": "Kentucky"
     }
   ]
 }
