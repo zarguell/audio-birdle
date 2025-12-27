@@ -40,6 +40,7 @@ htmlcov/
 *.lcov
 coverage.xml
 coverage.json
+.coverage
 .pytest_cache/
 .vitest/
 
