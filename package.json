@@ -40,7 +40,7 @@
     "postcss": "^8.5.4",
     "pytest": "^1.0.0",
     "pytest-cov": "^0.0.1",
-    "tailwindcss": "^3.4.17",
+    "tailwindcss": "^4.1.18",
     "vite": "^7.3.0",
     "vitest": "^4.0.16"
   }
