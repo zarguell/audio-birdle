@@ -16,8 +16,9 @@ I created this game with inspiration from Mitch's amazing project [Birdle](https
 
 * 🔁 **Daily Challenge:** A new "Bird of the Day" every day, based on audio from the [eBird Macaulay Library](https://www.macaulaylibrary.org/).
 * 🎧 **Audio-Based Gameplay:** Guess the bird based on its call from 4 multiple choice options.
-* 🌎 **Regional Focus:** Currently limited to the United States, with plans for expansion.
+* 🔥 **Hard Mode:** Free-text input with autocomplete! Test your taxonomic knowledge with 6 guesses, progressive hints (Order → Family → Genus), and immediate feedback on taxonomic closeness.
 * 🧠 **Practice Mode:** Free-play guessing mode using the full bird list for your region.
+* 🌎 **Regional Focus:** Currently limited to the United States, with plans for expansion.
 * 💾 **Local Storage:** Progress and stats saved locally in your browser — no login required.
 * ⚙️ **Automated Deployment:** Daily challenge generation and deployment handled by GitHub Actions.
 * 🔍 **Multiple Audio Samples:** Up to 10 audio clips per bird are scraped to improve variety and challenge.
@@ -28,8 +29,6 @@ I created this game with inspiration from Mitch's amazing project [Birdle](https
 
 Here are some planned features and improvements:
 
-* 🧮 Explore advanced scoring systems (e.g., genus/family/species, streaks, guess order).
-* 📝 Add free-text guess input (hard mode) alongside the current multiple-choice mode.
 * 🏋️ Enhance practice mode with targeted bird selection and curation tools.
 * 🌐 Add support for more regions and broader bird species data.
 * 🔊 Improve audio metadata parsing (e.g., sound quality, crediting, species overlap).

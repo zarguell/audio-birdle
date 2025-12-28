@@ -3,6 +3,7 @@
 import { getTodaysBirdFromDaily } from './DailyBirdUtils';
 import { hashString } from './HashUtils';
 import { GAME_CONFIG } from './Constants';
+import { compareTaxonomy, calculateMatchScore } from './TaxonomyUtils';
 
 /**
  * Create a unique key for a region-date combination
@@ -422,6 +423,228 @@ export const generateAnswerOptions = (region, birds, date, correctBird, optionCo
   return finalOptions;
 };
 
+// ============================================================================
+// HARD MODE FUNCTIONS
+// ============================================================================
+
+/**
+ * Create initial hard mode game state
+ * @param {string} region - Region identifier
+ * @param {string} date - Date string (YYYY-MM-DD)
+ * @returns {Object} - Initial hard mode game state
+ */
+export const createInitialHardModeGameState = (region, date) => {
+  return {
+    region,
+    date,
+    mode: 'hard',
+    guesses: [],
+    completed: false,
+    won: false,
+    maxGuesses: GAME_CONFIG.HARD_MODE_MAX_GUESSES,
+    startTime: new Date().toISOString(),
+    endTime: null,
+    birdId: null
+  };
+};
+
+/**
+ * Get hard mode game state for a specific region-date
+ * @param {Object} gameState - Main game state object
+ * @param {string} region - Region identifier
+ * @param {string} date - Date string (YYYY-MM-DD)
+ * @returns {Object} - Hard mode game state for this region-date
+ */
+export const getHardModeGameState = (gameState, region, date) => {
+  const validGameState = ensureGameStateFormat(gameState);
+
+  if (!validGameState.hardModeGames) {
+    validGameState.hardModeGames = {};
+  }
+
+  const key = createRegionDateKey(region, date);
+  if (!validGameState.hardModeGames[key]) {
+    validGameState.hardModeGames[key] = createInitialHardModeGameState(region, date);
+  }
+
+  return validGameState.hardModeGames[key];
+};
+
+/**
+ * Process a hard mode guess with free-text input
+ * @param {Object} gameState - Main game state object
+ * @param {string} region - Region identifier
+ * @param {string} date - Date string (YYYY-MM-DD)
+ * @param {string} textInput - User's text input
+ * @param {Array} regionBirds - All birds for the region
+ * @param {Object} correctBird - The correct bird
+ * @returns {Object} - Updated game state
+ */
+export const processHardModeGuess = (
+  gameState,
+  region,
+  date,
+  textInput,
+  regionBirds,
+  correctBird
+) => {
+  const validGameState = ensureGameStateFormat(gameState);
+  const newGameState = { ...validGameState };
+
+  if (!newGameState.hardModeGames) {
+    newGameState.hardModeGames = {};
+  }
+
+  const key = createRegionDateKey(region, date);
+  if (!newGameState.hardModeGames[key]) {
+    newGameState.hardModeGames[key] = createInitialHardModeGameState(region, date);
+  }
+
+  const hardGame = newGameState.hardModeGames[key];
+
+  if (hardGame.completed) {
+    return newGameState;
+  }
+
+  // Find best matching bird using fuzzy search
+  const matchedBird = findBestMatchingBird(textInput, regionBirds);
+
+  if (!matchedBird) {
+    // No match found - still count as a guess
+    const guess = {
+      birdId: null,
+      textInput,
+      correct: false,
+      timestamp: new Date().toISOString(),
+      taxonomicScore: { order: false, family: false, genus: false, species: false }
+    };
+    hardGame.guesses.push(guess);
+  } else {
+    // Compare taxonomy and create guess
+    const taxonomicScore = compareTaxonomy(matchedBird, correctBird);
+    const isCorrect = matchedBird.id === correctBird.id;
+
+    const guess = {
+      birdId: matchedBird.id,
+      textInput,
+      correct: isCorrect,
+      timestamp: new Date().toISOString(),
+      taxonomicScore
+    };
+
+    hardGame.guesses.push(guess);
+    hardGame.birdId = correctBird.id;
+
+    // Check win condition
+    if (isCorrect || hardGame.guesses.length >= hardGame.maxGuesses) {
+      hardGame.completed = true;
+      hardGame.won = isCorrect;
+      hardGame.endTime = new Date().toISOString();
+      updateHardModeStats(newGameState, region, hardGame);
+    }
+  }
+
+  newGameState.lastPlayed = { region, date, mode: 'hard' };
+  return newGameState;
+};
+
+/**
+ * Find best matching bird from text input using fuzzy matching
+ * @param {string} textInput - User's input text
+ * @param {Array} birds - Array of bird objects
+ * @returns {Object|null} - Best matching bird or null
+ */
+const findBestMatchingBird = (textInput, birds) => {
+  const inputLower = textInput.toLowerCase().trim();
+
+  if (inputLower.length < 2) return null;
+
+  const THRESHOLD = 30;
+
+  const scored = birds
+    .map(bird => ({
+      bird,
+      score: calculateMatchScore(bird, inputLower)
+    }))
+    .filter(item => item.score >= THRESHOLD)
+    .sort((a, b) => b.score - a.score);
+
+  return scored.length > 0 ? scored[0].bird : null;
+};
+
+/**
+ * Update hard mode statistics after completing a hard mode game
+ * @param {Object} gameState - Main game state object
+ * @param {string} region - Region identifier
+ * @param {Object} hardModeGame - Completed hard mode game state
+ */
+const updateHardModeStats = (gameState, region, hardModeGame) => {
+  if (!gameState.stats.hardModeStats) {
+    gameState.stats.hardModeStats = {
+      totalGamesPlayed: 0,
+      totalGamesWon: 0,
+      averageGuesses: 0,
+      currentStreak: 0,
+      maxStreak: 0,
+      regionStats: {}
+    };
+  }
+
+  const stats = gameState.stats.hardModeStats;
+
+  stats.totalGamesPlayed++;
+  if (hardModeGame.won) {
+    stats.totalGamesWon++;
+  }
+
+  // Calculate average guesses
+  const totalGuesses = Object.values(gameState.hardModeGames)
+    .filter(game => game.completed)
+    .reduce((sum, game) => sum + game.guesses.length, 0);
+  stats.averageGuesses = totalGuesses / stats.totalGamesPlayed;
+
+  // Update streaks
+  if (hardModeGame.won) {
+    stats.currentStreak++;
+    stats.maxStreak = Math.max(stats.maxStreak, stats.currentStreak);
+  } else {
+    stats.currentStreak = 0;
+  }
+
+  // Update region-specific stats
+  if (!stats.regionStats[region]) {
+    stats.regionStats[region] = {
+      gamesPlayed: 0,
+      gamesWon: 0,
+      averageGuesses: 0
+    };
+  }
+
+  const regionStats = stats.regionStats[region];
+  regionStats.gamesPlayed++;
+  if (hardModeGame.won) {
+    regionStats.gamesWon++;
+  }
+
+  const regionTotalGuesses = Object.values(gameState.hardModeGames)
+    .filter(game => game.completed && game.region === region)
+    .reduce((sum, game) => sum + game.guesses.length, 0);
+  regionStats.averageGuesses = regionTotalGuesses / regionStats.gamesPlayed;
+};
+
+/**
+ * Check if hard mode has been played for a specific region-date
+ * @param {Object} gameState - Main game state object
+ * @param {string} region - Region identifier
+ * @param {string} date - Date string (YYYY-MM-DD)
+ * @returns {boolean} - True if user has played hard mode for this combination
+ */
+export const hasPlayedHardModeRegionDate = (gameState, region, date) => {
+  const validGameState = ensureGameStateFormat(gameState);
+  const key = createRegionDateKey(region, date);
+  return validGameState.hardModeGames?.[key]?.guesses.length > 0;
+};
+
 /**
  * Get user's performance summary
  * @param {Object} gameState - Main game state object
@@ -430,7 +653,7 @@ export const generateAnswerOptions = (region, birds, date, correctBird, optionCo
 export const getUserPerformanceSummary = (gameState) => {
   const validGameState = ensureGameStateFormat(gameState);
   const stats = validGameState.stats;
-  
+
   return {
     totalGames: stats.totalGamesPlayed,
     winRate: stats.totalGamesPlayed > 0 ? (stats.totalGamesWon / stats.totalGamesPlayed * 100).toFixed(1) : 0,

@@ -3,6 +3,7 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import { Play, Pause, Settings, Share2, Volume2, MapPin, RefreshCw, Info, BarChart3, Target } from 'lucide-react';
 
 import PracticeGame from './utils/PracticeGame';
+import HardModeGame from './utils/HardModeGame';
 import CountdownToMidnight from './utils/CountdownToMidnight';
 import { loadGameData } from './utils/LoadGameData';
 import { getTodayString, formatDateForDisplay } from './utils/DateUtils';
@@ -14,6 +15,7 @@ import {
   createInitialGameState,
   getDailyGameState,
   processGuess,
+  processHardModeGuess,
   hasPlayedRegionDate,
   getUserPerformanceSummary
 } from './utils/GameLogic';
@@ -140,6 +142,20 @@ export default function AudioBirdle() {
     if (!todaysBird || !selectedRegion) return;
 
     const newGameState = processGuess(gameState, selectedRegion, today, birdId, todaysBird.id);
+    setGameState(newGameState);
+  };
+
+  const makeHardModeGuess = (bird) => {
+    if (!todaysBird || !selectedRegion) return;
+
+    const newGameState = processHardModeGuess(
+      gameState,
+      selectedRegion,
+      today,
+      bird.name,
+      birds[selectedRegion],
+      todaysBird
+    );
     setGameState(newGameState);
   };
 
@@ -350,6 +366,13 @@ export default function AudioBirdle() {
           <h1 className="text-2xl font-bold text-gray-800">🐦 Audio-Birdle</h1>
           <div className="flex items-center gap-2">
             <button
+              onClick={() => setCurrentView(VIEWS.HARD_MODE)}
+              className="bg-red-600 text-white px-3 py-2 rounded-lg hover:bg-red-700 transition-colors flex items-center gap-2 text-sm"
+            >
+              <Target className="w-4 h-4" />
+              Hard Mode
+            </button>
+            <button
               onClick={() => setCurrentView(VIEWS.PRACTICE)}
               className="bg-purple-500 text-white px-3 py-2 rounded-lg hover:bg-purple-600 transition-colors flex items-center gap-2 text-sm"
             >
@@ -558,6 +581,20 @@ export default function AudioBirdle() {
         birds={birds}
         regions={regions}
         onBack={() => setCurrentView(VIEWS.GAME)}
+      />
+    );
+  }
+
+  if (currentView === VIEWS.HARD_MODE) {
+    return (
+      <HardModeGame
+        region={selectedRegion}
+        birds={birds}
+        todaysBird={todaysBird}
+        gameState={gameState}
+        onBack={() => setCurrentView(VIEWS.GAME)}
+        onGuess={makeHardModeGuess}
+        onShare={handleShareResult}
       />
     );
   }
