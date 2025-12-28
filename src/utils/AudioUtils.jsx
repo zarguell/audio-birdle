@@ -3,12 +3,12 @@
 export const createAudioControls = (audioRef) => {
   const playAudio = async () => {
     if (!audioRef.current) return false;
-    
+
     try {
       await audioRef.current.play();
       return true;
     } catch (error) {
-      console.error('Audio play failed:', error);
+      console.error("Audio play failed:", error);
       return false;
     }
   };
@@ -27,6 +27,6 @@ export const createAudioControls = (audioRef) => {
   return {
     playAudio,
     pauseAudio,
-    stopAudio
+    stopAudio,
   };
 };

@@ -3,17 +3,17 @@
  * Provides fuzzy search and suggestion selection for bird names
  */
 
-import { useState, useEffect, useRef } from 'react';
-import { Search, X } from 'lucide-react';
-import { filterBirdsByQuery } from './TaxonomyUtils';
+import { useState, useEffect, useRef } from "react";
+import { Search, X } from "lucide-react";
+import { filterBirdsByQuery } from "./TaxonomyUtils";
 
 export default function HardModeInput({
   birds,
   onGuess,
   disabled = false,
-  placeholder = "Type bird name..."
+  placeholder = "Type bird name...",
 }) {
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const inputRef = useRef(null);
@@ -38,29 +38,33 @@ export default function HardModeInput({
   // Close suggestions when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (suggestionsRef.current && !suggestionsRef.current.contains(event.target) &&
-          inputRef.current && !inputRef.current.contains(event.target)) {
+      if (
+        suggestionsRef.current &&
+        !suggestionsRef.current.contains(event.target) &&
+        inputRef.current &&
+        !inputRef.current.contains(event.target)
+      ) {
         setShowSuggestions(false);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const handleSubmit = (bird) => {
     if (bird) {
       onGuess(bird);
-      setInputValue('');
+      setInputValue("");
       setSuggestions([]);
       setShowSuggestions(false);
     }
   };
 
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter' && suggestions.length > 0) {
+    if (e.key === "Enter" && suggestions.length > 0) {
       handleSubmit(suggestions[0]);
-    } else if (e.key === 'Escape') {
+    } else if (e.key === "Escape") {
       setShowSuggestions(false);
     }
   };
@@ -83,7 +87,7 @@ export default function HardModeInput({
         {inputValue && (
           <button
             onClick={() => {
-              setInputValue('');
+              setInputValue("");
               setSuggestions([]);
               setShowSuggestions(false);
             }}
@@ -109,18 +113,22 @@ export default function HardModeInput({
               type="button"
             >
               <div className="font-medium text-gray-900">{bird.name}</div>
-              <div className="text-sm text-gray-500 italic">{bird.scientificName}</div>
+              <div className="text-sm text-gray-500 italic">
+                {bird.scientificName}
+              </div>
             </button>
           ))}
         </div>
       )}
 
       {/* No results message */}
-      {showSuggestions && inputValue.length >= 2 && suggestions.length === 0 && (
-        <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg px-4 py-3 text-gray-500">
-          No birds found matching "{inputValue}"
-        </div>
-      )}
+      {showSuggestions &&
+        inputValue.length >= 2 &&
+        suggestions.length === 0 && (
+          <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg px-4 py-3 text-gray-500">
+            No birds found matching "{inputValue}"
+          </div>
+        )}
     </div>
   );
 }

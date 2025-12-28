@@ -1,9 +1,9 @@
 // Updated GameLogic.js with deterministic answer generation
 
-import { getTodaysBirdFromDaily } from './DailyBirdUtils';
-import { hashString } from './HashUtils';
-import { GAME_CONFIG } from './Constants';
-import { compareTaxonomy } from './TaxonomyUtils';
+import { getTodaysBirdFromDaily } from "./DailyBirdUtils";
+import { hashString } from "./HashUtils";
+import { GAME_CONFIG } from "./Constants";
+import { compareTaxonomy } from "./TaxonomyUtils";
 
 /**
  * Create a unique key for a region-date combination
@@ -30,15 +30,15 @@ export const createInitialGameState = () => {
       averageGuesses: 0,
       currentStreak: 0,
       maxStreak: 0,
-      regionStats: {} // Stats broken down by region
+      regionStats: {}, // Stats broken down by region
     },
     // Last played info for quick reference
     lastPlayed: {
       region: null,
-      date: null
+      date: null,
     },
     // Version for future migrations
-    version: 2
+    version: 2,
   };
 };
 
@@ -50,13 +50,13 @@ export const createInitialGameState = () => {
 const needsMigration = (gameState) => {
   // If no version field, it's definitely old
   if (!gameState.version) return true;
-  
+
   // If version is less than current, needs migration
   if (gameState.version < 2) return true;
-  
+
   // If dailyGames doesn't exist, it's old format
   if (!gameState.dailyGames) return true;
-  
+
   return false;
 };
 
@@ -66,58 +66,59 @@ const needsMigration = (gameState) => {
  * @returns {Object} - Migrated game state
  */
 const migrateGameState = (oldGameState) => {
-  console.log('Migrating old game state format to new format');
-  
+  console.log("Migrating old game state format to new format");
+
   const newGameState = createInitialGameState();
-  
+
   // If old state exists and has some structure, try to preserve what we can
-  if (oldGameState && typeof oldGameState === 'object') {
+  if (oldGameState && typeof oldGameState === "object") {
     // Preserve existing stats if they exist
     if (oldGameState.stats) {
       newGameState.stats = {
         ...newGameState.stats,
-        ...oldGameState.stats
+        ...oldGameState.stats,
       };
-      
+
       // Ensure regionStats exists
       if (!newGameState.stats.regionStats) {
         newGameState.stats.regionStats = {};
       }
     }
-    
+
     // Try to migrate old daily game data if it exists
     // This handles various old formats that might exist
     if (oldGameState.guesses || oldGameState.completed !== undefined) {
       // Old format had game data at root level
-      const today = new Date().toISOString().split('T')[0];
-      const defaultRegion = 'us'; // Assume US region for old games
-      
+      const today = new Date().toISOString().split("T")[0];
+      const defaultRegion = "us"; // Assume US region for old games
+
       const migratedGame = createInitialDailyGameState(defaultRegion, today);
       migratedGame.guesses = oldGameState.guesses || [];
       migratedGame.completed = oldGameState.completed || false;
       migratedGame.won = oldGameState.won || false;
-      migratedGame.startTime = oldGameState.startTime || new Date().toISOString();
+      migratedGame.startTime =
+        oldGameState.startTime || new Date().toISOString();
       migratedGame.endTime = oldGameState.endTime || null;
       migratedGame.birdId = oldGameState.birdId || null;
-      
+
       const key = createRegionDateKey(defaultRegion, today);
       newGameState.dailyGames[key] = migratedGame;
-      
+
       newGameState.lastPlayed = {
         region: defaultRegion,
-        date: today
+        date: today,
       };
     }
-    
+
     // Preserve any other fields that might be useful
     if (oldGameState.lastPlayed) {
       newGameState.lastPlayed = {
         ...newGameState.lastPlayed,
-        ...oldGameState.lastPlayed
+        ...oldGameState.lastPlayed,
       };
     }
   }
-  
+
   return newGameState;
 };
 
@@ -131,12 +132,12 @@ export const ensureGameStateFormat = (gameState) => {
   if (!gameState) {
     return createInitialGameState();
   }
-  
+
   // If needs migration, migrate it
   if (needsMigration(gameState)) {
     return migrateGameState(gameState);
   }
-  
+
   // State is current format, return as-is
   return gameState;
 };
@@ -157,7 +158,7 @@ export const createInitialDailyGameState = (region, date) => {
     maxGuesses: GAME_CONFIG.MAX_GUESSES,
     startTime: new Date().toISOString(),
     endTime: null,
-    birdId: null // Will be set when the daily bird is determined
+    birdId: null, // Will be set when the daily bird is determined
   };
 };
 
@@ -171,13 +172,13 @@ export const createInitialDailyGameState = (region, date) => {
 export const getDailyGameState = (gameState, region, date) => {
   // Ensure game state is in correct format before proceeding
   const validGameState = ensureGameStateFormat(gameState);
-  
+
   const key = createRegionDateKey(region, date);
-  
+
   if (!validGameState.dailyGames[key]) {
     validGameState.dailyGames[key] = createInitialDailyGameState(region, date);
   }
-  
+
   return validGameState.dailyGames[key];
 };
 
@@ -191,7 +192,10 @@ export const getDailyGameState = (gameState, region, date) => {
 export const hasPlayedRegionDate = (gameState, region, date) => {
   const validGameState = ensureGameStateFormat(gameState);
   const key = createRegionDateKey(region, date);
-  return validGameState.dailyGames[key] && validGameState.dailyGames[key].guesses.length > 0;
+  return (
+    validGameState.dailyGames[key] &&
+    validGameState.dailyGames[key].guesses.length > 0
+  );
 };
 
 /**
@@ -203,42 +207,48 @@ export const hasPlayedRegionDate = (gameState, region, date) => {
  * @param {string} correctBirdId - ID of the correct bird
  * @returns {Object} - Updated game state
  */
-export const processGuess = (gameState, region, date, guessedBirdId, correctBirdId) => {
+export const processGuess = (
+  gameState,
+  region,
+  date,
+  guessedBirdId,
+  correctBirdId,
+) => {
   // Ensure game state is in correct format
   const validGameState = ensureGameStateFormat(gameState);
   const newGameState = { ...validGameState };
   const dailyGame = getDailyGameState(newGameState, region, date);
-  
+
   // Don't allow guesses if game is already completed
   if (dailyGame.completed) {
     return newGameState;
   }
-  
+
   const isCorrect = guessedBirdId === correctBirdId;
-  
+
   // Add the guess
   const guess = {
     birdId: guessedBirdId,
     correct: isCorrect,
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   };
-  
+
   dailyGame.guesses.push(guess);
   dailyGame.birdId = correctBirdId; // Store the correct answer
-  
+
   // Check if game is completed
   if (isCorrect || dailyGame.guesses.length >= dailyGame.maxGuesses) {
     dailyGame.completed = true;
     dailyGame.won = isCorrect;
     dailyGame.endTime = new Date().toISOString();
-    
+
     // Update overall stats
     updateUserStats(newGameState, region, dailyGame);
   }
-  
+
   // Update last played info
   newGameState.lastPlayed = { region, date };
-  
+
   return newGameState;
 };
 
@@ -250,19 +260,19 @@ export const processGuess = (gameState, region, date, guessedBirdId, correctBird
  */
 const updateUserStats = (gameState, region, dailyGame) => {
   const stats = gameState.stats;
-  
+
   // Update overall stats
   stats.totalGamesPlayed++;
   if (dailyGame.won) {
     stats.totalGamesWon++;
   }
-  
+
   // Update average guesses
   const totalGuesses = Object.values(gameState.dailyGames)
-    .filter(game => game.completed)
+    .filter((game) => game.completed)
     .reduce((sum, game) => sum + game.guesses.length, 0);
   stats.averageGuesses = totalGuesses / stats.totalGamesPlayed;
-  
+
   // Update streaks (simplified - you might want more complex logic)
   if (dailyGame.won) {
     stats.currentStreak++;
@@ -270,25 +280,25 @@ const updateUserStats = (gameState, region, dailyGame) => {
   } else {
     stats.currentStreak = 0;
   }
-  
+
   // Update region-specific stats
   if (!stats.regionStats[region]) {
     stats.regionStats[region] = {
       gamesPlayed: 0,
       gamesWon: 0,
-      averageGuesses: 0
+      averageGuesses: 0,
     };
   }
-  
+
   const regionStats = stats.regionStats[region];
   regionStats.gamesPlayed++;
   if (dailyGame.won) {
     regionStats.gamesWon++;
   }
-  
+
   // Calculate region-specific average
   const regionTotalGuesses = Object.values(gameState.dailyGames)
-    .filter(game => game.completed && game.region === region)
+    .filter((game) => game.completed && game.region === region)
     .reduce((sum, game) => sum + game.guesses.length, 0);
   regionStats.averageGuesses = regionTotalGuesses / regionStats.gamesPlayed;
 };
@@ -304,7 +314,7 @@ export const getDailyBird = (region, birds, date) => {
   // This is a fallback synchronous method if the async version fails
   // You might want to implement a hash-based selection here as fallback
   if (!birds || birds.length === 0) return null;
-  
+
   // Simple hash-based selection as fallback
   const seed = hashString(`${region}-${date}`);
   const index = Math.abs(seed) % birds.length;
@@ -323,12 +333,14 @@ export const getDailyBirdWithFallback = async (region, birds, date) => {
     // First try to get from daily.json
     const bird = await getTodaysBirdFromDaily(region, birds, date);
     if (bird) return bird;
-    
+
     // Fallback to hash-based selection
-    console.log(`Falling back to hash-based selection for ${region} on ${date}`);
+    console.log(
+      `Falling back to hash-based selection for ${region} on ${date}`,
+    );
     return getDailyBird(region, birds, date);
   } catch (error) {
-    console.error('Error in getDailyBirdWithFallback:', error);
+    console.error("Error in getDailyBirdWithFallback:", error);
     return getDailyBird(region, birds, date);
   }
 };
@@ -356,13 +368,13 @@ const createSeededRandom = (seed) => {
 const deterministicShuffle = (array, seed) => {
   const shuffled = [...array];
   const random = createSeededRandom(seed);
-  
+
   // Fisher-Yates shuffle with seeded random
   for (let i = shuffled.length - 1; i > 0; i--) {
     const j = Math.floor(random() * (i + 1));
     [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
   }
-  
+
   return shuffled;
 };
 
@@ -375,22 +387,32 @@ const deterministicShuffle = (array, seed) => {
  * @param {number} optionCount - Number of options to generate
  * @returns {Array} - Array of bird options including the correct answer
  */
-export const generateAnswerOptions = (region, birds, date, correctBird, optionCount = 4) => {
+export const generateAnswerOptions = (
+  region,
+  birds,
+  date,
+  correctBird,
+  optionCount = 4,
+) => {
   if (!birds[region] || !correctBird) return [];
-  
+
   const regionBirds = birds[region];
 
   // Create a seed based on region, date, and correct bird ID for deterministic selection
   const seed = hashString(`${region}-${date}-${correctBird.id}-options`);
 
   // Get birds that aren't the correct answer
-  const availableBirds = regionBirds.filter(bird => bird.id !== correctBird.id);
-  
+  const availableBirds = regionBirds.filter(
+    (bird) => bird.id !== correctBird.id,
+  );
+
   // First, try to get birds from the same family as the correct bird
-  const sameFamilyBirds = availableBirds.filter(bird => bird.family === correctBird.family);
-  
+  const sameFamilyBirds = availableBirds.filter(
+    (bird) => bird.family === correctBird.family,
+  );
+
   let selectedWrongBirds = [];
-  
+
   if (sameFamilyBirds.length >= optionCount - 1) {
     // We have enough birds from the same family
     const shuffledSameFamily = deterministicShuffle(sameFamilyBirds, seed);
@@ -400,26 +422,28 @@ export const generateAnswerOptions = (region, birds, date, correctBird, optionCo
     // and fill the rest from the entire available list
     const shuffledSameFamily = deterministicShuffle(sameFamilyBirds, seed);
     selectedWrongBirds = [...shuffledSameFamily];
-    
+
     // Get remaining birds (excluding same family birds and correct bird)
-    const remainingBirds = availableBirds.filter(bird => bird.family !== correctBird.family);
+    const remainingBirds = availableBirds.filter(
+      (bird) => bird.family !== correctBird.family,
+    );
     const shuffledRemaining = deterministicShuffle(remainingBirds, seed);
-    
+
     // Add birds from other families to reach the desired count
     const stillNeeded = optionCount - 1 - selectedWrongBirds.length;
     for (let i = 0; i < Math.min(stillNeeded, shuffledRemaining.length); i++) {
       selectedWrongBirds.push(shuffledRemaining[i]);
     }
   }
-  
+
   // Combine correct answer with wrong answers
   const allOptions = [correctBird, ...selectedWrongBirds];
-  
+
   // Shuffle all options deterministically so correct answer position is consistent
   // Use a different seed component for final shuffle to avoid patterns
   const finalSeed = hashString(`${region}-${date}-${correctBird.id}-final`);
   const finalOptions = deterministicShuffle(allOptions, finalSeed);
-  
+
   return finalOptions;
 };
 
@@ -437,14 +461,14 @@ export const createInitialHardModeGameState = (region, date) => {
   return {
     region,
     date,
-    mode: 'hard',
+    mode: "hard",
     guesses: [],
     completed: false,
     won: false,
     maxGuesses: GAME_CONFIG.HARD_MODE_MAX_GUESSES,
     startTime: new Date().toISOString(),
     endTime: null,
-    birdId: null
+    birdId: null,
   };
 };
 
@@ -464,7 +488,10 @@ export const getHardModeGameState = (gameState, region, date) => {
 
   const key = createRegionDateKey(region, date);
   if (!validGameState.hardModeGames[key]) {
-    validGameState.hardModeGames[key] = createInitialHardModeGameState(region, date);
+    validGameState.hardModeGames[key] = createInitialHardModeGameState(
+      region,
+      date,
+    );
   }
 
   return validGameState.hardModeGames[key];
@@ -486,7 +513,7 @@ export const processHardModeGuess = (
   date,
   guessedBird,
   textInput,
-  correctBird
+  correctBird,
 ) => {
   const validGameState = ensureGameStateFormat(gameState);
   const newGameState = { ...validGameState };
@@ -497,7 +524,10 @@ export const processHardModeGuess = (
 
   const key = createRegionDateKey(region, date);
   if (!newGameState.hardModeGames[key]) {
-    newGameState.hardModeGames[key] = createInitialHardModeGameState(region, date);
+    newGameState.hardModeGames[key] = createInitialHardModeGameState(
+      region,
+      date,
+    );
   }
 
   const hardGame = newGameState.hardModeGames[key];
@@ -515,7 +545,7 @@ export const processHardModeGuess = (
     textInput,
     correct: isCorrect,
     timestamp: new Date().toISOString(),
-    taxonomicScore
+    taxonomicScore,
   };
 
   hardGame.guesses.push(guess);
@@ -529,7 +559,7 @@ export const processHardModeGuess = (
     updateHardModeStats(newGameState, region, hardGame);
   }
 
-  newGameState.lastPlayed = { region, date, mode: 'hard' };
+  newGameState.lastPlayed = { region, date, mode: "hard" };
   return newGameState;
 };
 
@@ -547,7 +577,7 @@ const updateHardModeStats = (gameState, region, hardModeGame) => {
       averageGuesses: 0,
       currentStreak: 0,
       maxStreak: 0,
-      regionStats: {}
+      regionStats: {},
     };
   }
 
@@ -560,7 +590,7 @@ const updateHardModeStats = (gameState, region, hardModeGame) => {
 
   // Calculate average guesses
   const totalGuesses = Object.values(gameState.hardModeGames)
-    .filter(game => game.completed)
+    .filter((game) => game.completed)
     .reduce((sum, game) => sum + game.guesses.length, 0);
   stats.averageGuesses = totalGuesses / stats.totalGamesPlayed;
 
@@ -577,7 +607,7 @@ const updateHardModeStats = (gameState, region, hardModeGame) => {
     stats.regionStats[region] = {
       gamesPlayed: 0,
       gamesWon: 0,
-      averageGuesses: 0
+      averageGuesses: 0,
     };
   }
 
@@ -588,7 +618,7 @@ const updateHardModeStats = (gameState, region, hardModeGame) => {
   }
 
   const regionTotalGuesses = Object.values(gameState.hardModeGames)
-    .filter(game => game.completed && game.region === region)
+    .filter((game) => game.completed && game.region === region)
     .reduce((sum, game) => sum + game.guesses.length, 0);
   regionStats.averageGuesses = regionTotalGuesses / regionStats.gamesPlayed;
 };
@@ -643,15 +673,25 @@ export const getUserPerformanceSummary = (gameState) => {
 
   return {
     totalGames: stats.totalGamesPlayed,
-    winRate: stats.totalGamesPlayed > 0 ? (stats.totalGamesWon / stats.totalGamesPlayed * 100).toFixed(1) : 0,
+    winRate:
+      stats.totalGamesPlayed > 0
+        ? ((stats.totalGamesWon / stats.totalGamesPlayed) * 100).toFixed(1)
+        : 0,
     averageGuesses: stats.averageGuesses.toFixed(1),
     currentStreak: stats.currentStreak,
     maxStreak: stats.maxStreak,
-    regionBreakdown: Object.entries(stats.regionStats).map(([region, regionStats]) => ({
-      region,
-      games: regionStats.gamesPlayed,
-      winRate: regionStats.gamesPlayed > 0 ? (regionStats.gamesWon / regionStats.gamesPlayed * 100).toFixed(1) : 0,
-      avgGuesses: regionStats.averageGuesses.toFixed(1)
-    }))
+    regionBreakdown: Object.entries(stats.regionStats).map(
+      ([region, regionStats]) => ({
+        region,
+        games: regionStats.gamesPlayed,
+        winRate:
+          regionStats.gamesPlayed > 0
+            ? ((regionStats.gamesWon / regionStats.gamesPlayed) * 100).toFixed(
+                1,
+              )
+            : 0,
+        avgGuesses: regionStats.averageGuesses.toFixed(1),
+      }),
+    ),
   };
 };

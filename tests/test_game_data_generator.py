@@ -1,4 +1,5 @@
 """Tests for game-data-generator.py script"""
+
 import pytest
 import json
 import os
@@ -9,13 +10,13 @@ from unittest.mock import patch, mock_open
 import tempfile
 
 # Import the module
-scripts_dir = os.path.join(os.path.dirname(__file__), '..', 'scripts')
+scripts_dir = os.path.join(os.path.dirname(__file__), "..", "scripts")
 sys.path.insert(0, scripts_dir)
 
 import importlib.util
+
 spec = importlib.util.spec_from_file_location(
-    "game_data_generator",
-    os.path.join(scripts_dir, "game-data-generator.py")
+    "game_data_generator", os.path.join(scripts_dir, "game-data-generator.py")
 )
 game_data_generator = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(game_data_generator)
@@ -65,7 +66,7 @@ class TestGroupUrlsByCode:
         data = [
             {"code": "amerob", "audio Url": "http://example.com/robin1.mp3"},
             {"code": "amerob", "audio Url": "http://example.com/robin2.mp3"},
-            {"code": "barswa", "audio Url": "http://example.com/swallow1.mp3"}
+            {"code": "barswa", "audio Url": "http://example.com/swallow1.mp3"},
         ]
 
         result = game_data_generator.group_urls_by_code(data)
@@ -80,7 +81,7 @@ class TestGroupUrlsByCode:
         """Test handling entries with empty codes"""
         data = [
             {"code": "", "audio Url": "http://example.com/test.mp3"},
-            {"code": "amerob", "audio Url": "http://example.com/robin.mp3"}
+            {"code": "amerob", "audio Url": "http://example.com/robin.mp3"},
         ]
 
         result = game_data_generator.group_urls_by_code(data)
@@ -93,7 +94,7 @@ class TestGroupUrlsByCode:
         """Test handling entries with empty URLs"""
         data = [
             {"code": "testbird", "audio Url": ""},
-            {"code": "amerob", "audio Url": "http://example.com/robin.mp3"}
+            {"code": "amerob", "audio Url": "http://example.com/robin.mp3"},
         ]
 
         result = game_data_generator.group_urls_by_code(data)
@@ -106,7 +107,7 @@ class TestGroupUrlsByCode:
         data = [
             {"code": "bird1"},  # Missing URL
             {"audio Url": "http://example.com/bird2.mp3"},  # Missing code
-            {"code": "bird3", "audio Url": "http://example.com/bird3.mp3"}
+            {"code": "bird3", "audio Url": "http://example.com/bird3.mp3"},
         ]
 
         result = game_data_generator.group_urls_by_code(data)
@@ -126,7 +127,7 @@ class TestGroupUrlsByCode:
         data = [
             {"code": "bird1", "audio Url": "url1"},
             {"code": "bird1", "audio Url": "url2"},
-            {"code": "bird1", "audio Url": "url3"}
+            {"code": "bird1", "audio Url": "url3"},
         ]
 
         result = game_data_generator.group_urls_by_code(data)
@@ -146,7 +147,7 @@ class TestProcessTaxonomyData:
                 "sciName": "Turdus migratorius",
                 "order": "Passeriformes",
                 "familyComName": "Turdidae",
-                "familySciName": "Turdidae"
+                "familySciName": "Turdidae",
             },
             {
                 "speciesCode": "nobird",
@@ -154,20 +155,18 @@ class TestProcessTaxonomyData:
                 "sciName": "No Audio",
                 "order": "Passeriformes",
                 "familyComName": "Test",
-                "familySciName": "Test"
-            }
+                "familySciName": "Test",
+            },
         ]
 
-        url_groups = {
-            "amerob": ["http://example.com/robin.mp3"]
-        }
+        url_groups = {"amerob": ["http://example.com/robin.mp3"]}
 
         birds = game_data_generator.process_taxonomy_data(taxonomy_data, url_groups)
 
         assert len(birds) == 1
-        assert birds[0]['id'] == 'amerob'
-        assert birds[0]['name'] == 'American Robin'
-        assert len(birds[0]['audioUrl']) == 1
+        assert birds[0]["id"] == "amerob"
+        assert birds[0]["name"] == "American Robin"
+        assert len(birds[0]["audioUrl"]) == 1
 
     def test_filter_birds_without_audio(self):
         """Test that birds without audio are filtered out"""
@@ -178,7 +177,7 @@ class TestProcessTaxonomyData:
                 "sciName": "Bird 1",
                 "order": "Passeriformes",
                 "familyComName": "Test",
-                "familySciName": "Test"
+                "familySciName": "Test",
             }
         ]
 
@@ -193,7 +192,7 @@ class TestProcessTaxonomyData:
         incomplete_data = [
             {"speciesCode": "", "comName": "Test", "sciName": "Test test"},
             {"speciesCode": "test", "comName": "", "sciName": "Test test"},
-            {"speciesCode": "test", "comName": "Test", "sciName": ""}
+            {"speciesCode": "test", "comName": "Test", "sciName": ""},
         ]
 
         url_groups = {"test": ["http://example.com/test.mp3"]}
@@ -211,7 +210,7 @@ class TestProcessTaxonomyData:
                 "sciName": "Test bird",
                 "order": "Passeriformes",
                 "familyComName": "Turdidae",
-                "familySciName": "Turdidae"
+                "familySciName": "Turdidae",
             }
         ]
 
@@ -219,7 +218,7 @@ class TestProcessTaxonomyData:
 
         birds = game_data_generator.process_taxonomy_data(taxonomy_data, url_groups)
 
-        assert birds[0]['family'] == "Turdidae (Turdidae)"
+        assert birds[0]["family"] == "Turdidae (Turdidae)"
 
     def test_family_scientific_only(self):
         """Test family formatting when only scientific name exists"""
@@ -230,7 +229,7 @@ class TestProcessTaxonomyData:
                 "sciName": "Test bird",
                 "order": "Passeriformes",
                 "familyComName": "",
-                "familySciName": "Turdidae"
+                "familySciName": "Turdidae",
             }
         ]
 
@@ -238,7 +237,7 @@ class TestProcessTaxonomyData:
 
         birds = game_data_generator.process_taxonomy_data(taxonomy_data, url_groups)
 
-        assert birds[0]['family'] == "Turdidae"
+        assert birds[0]["family"] == "Turdidae"
 
     def test_multiple_audio_urls(self):
         """Test handling multiple audio URLs for one bird"""
@@ -249,18 +248,16 @@ class TestProcessTaxonomyData:
                 "sciName": "Test bird",
                 "order": "Passeriformes",
                 "familyComName": "Test",
-                "familySciName": "Test"
+                "familySciName": "Test",
             }
         ]
 
-        url_groups = {
-            "bird1": ["url1", "url2", "url3"]
-        }
+        url_groups = {"bird1": ["url1", "url2", "url3"]}
 
         birds = game_data_generator.process_taxonomy_data(taxonomy_data, url_groups)
 
-        assert len(birds[0]['audioUrl']) == 3
-        assert birds[0]['audioUrl'] == ["url1", "url2", "url3"]
+        assert len(birds[0]["audioUrl"]) == 3
+        assert birds[0]["audioUrl"] == ["url1", "url2", "url3"]
 
 
 class TestLoadExistingOutput:
@@ -278,7 +275,9 @@ class TestLoadExistingOutput:
 
     def test_load_nonexistent_file(self, tmp_path, capsys):
         """Test handling when file doesn't exist"""
-        result = game_data_generator.load_existing_output(str(tmp_path / "nonexistent.json"))
+        result = game_data_generator.load_existing_output(
+            str(tmp_path / "nonexistent.json")
+        )
 
         assert result == {}
 
@@ -312,7 +311,7 @@ class TestSaveJsonFile:
         output_file = tmp_path / "output.json"
 
         # Check if save function exists in the module
-        if hasattr(game_data_generator, 'save_json_file'):
+        if hasattr(game_data_generator, "save_json_file"):
             game_data_generator.save_json_file(test_data, str(output_file))
 
             assert output_file.exists()
@@ -327,11 +326,11 @@ class TestSaveJsonFile:
         test_data = {"key": "value"}
         output_file = tmp_path / "output.json"
 
-        if hasattr(game_data_generator, 'save_json_file'):
+        if hasattr(game_data_generator, "save_json_file"):
             game_data_generator.save_json_file(test_data, str(output_file))
 
             with open(output_file) as f:
                 content = f.read()
 
             # Check for indentation (should have newlines and spaces)
-            assert '\n' in content or '  ' in content
+            assert "\n" in content or "  " in content
