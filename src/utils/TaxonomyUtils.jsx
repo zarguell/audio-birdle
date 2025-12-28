@@ -3,7 +3,7 @@
  * Used for hard mode to determine how close a guess is to the correct answer
  */
 
-import { GAME_CONFIG } from './Constants';
+import { GAME_CONFIG } from "./Constants";
 
 /**
  * Extract genus from scientific name
@@ -12,7 +12,7 @@ import { GAME_CONFIG } from './Constants';
  */
 export const extractGenus = (scientificName) => {
   if (!scientificName) return null;
-  const parts = scientificName.split(' ');
+  const parts = scientificName.split(" ");
   return parts[0] || null;
 };
 
@@ -30,7 +30,7 @@ export const compareTaxonomy = (guessedBird, correctBird) => {
     order: guessedBird.order === correctBird.order,
     family: guessedBird.family === correctBird.family,
     genus: guessedGenus === correctGenus,
-    species: guessedBird.id === correctBird.id
+    species: guessedBird.id === correctBird.id,
   };
 };
 
@@ -62,32 +62,29 @@ export const calculateMatchScore = (bird, queryLower) => {
   let score = 0;
   const nameLower = bird.name.toLowerCase();
   const scientificLower = bird.scientificName.toLowerCase();
-  const genusLower = extractGenus(bird.scientificName)?.toLowerCase() || '';
+  const genusLower = extractGenus(bird.scientificName)?.toLowerCase() || "";
 
   // Exact match on common name (highest priority)
   if (nameLower === queryLower) return 100;
 
   // Starts with common name
   if (nameLower.startsWith(queryLower)) score += 80;
-
   // Contains common name
   else if (nameLower.includes(queryLower)) score += 60;
 
   // Starts with genus (scientific name genus)
   if (genusLower.startsWith(queryLower)) score += 70;
-
   // Contains genus
   else if (genusLower.includes(queryLower)) score += 50;
 
   // Starts with scientific name
   if (scientificLower.startsWith(queryLower)) score += 50;
-
   // Contains scientific name
   else if (scientificLower.includes(queryLower)) score += 40;
 
   // Word boundary matching in common name
   const words = nameLower.split(/[\s-]+/);
-  if (words.some(word => word.startsWith(queryLower))) score += 30;
+  if (words.some((word) => word.startsWith(queryLower))) score += 30;
 
   return score;
 };
@@ -104,11 +101,14 @@ export const filterBirdsByQuery = (birds, query) => {
   if (queryLower.length < 2) return [];
 
   return birds
-    .map(bird => ({
+    .map((bird) => ({
       bird,
-      score: calculateMatchScore(bird, queryLower)
+      score: calculateMatchScore(bird, queryLower),
     }))
-    .filter(item => item.score > 0 && item.score >= GAME_CONFIG.FUZZY_MATCH_THRESHOLD)
+    .filter(
+      (item) =>
+        item.score > 0 && item.score >= GAME_CONFIG.FUZZY_MATCH_THRESHOLD,
+    )
     .sort((a, b) => b.score - a.score)
-    .map(item => item.bird);
+    .map((item) => item.bird);
 };

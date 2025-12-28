@@ -23,11 +23,11 @@ python ebird-filter-region.py ./data/regions/us.json ./data/ebird-taxonomy.json 
 # Getting calls and songs
 
 Urls:
+
 ```
 https://media.ebird.org/catalog?tag=song&regionCode=US&taxonCode=amerob
 https://media.ebird.org/catalog?tag=call&regionCode=US&taxonCode=amerob
 ```
-
 
 Perfect! I’ve updated your script with all the requested features:
 
@@ -60,6 +60,7 @@ python3 ebird-songdownload.py ./data/regions/us-taxonomy-demo.json --max-urls 20
 ```
 
 The script now limits the number of URLs collected per species both during the page loading process (stops clicking “more results” once limit is reached) and when parsing the results (slices the list to the maximum). The output is also saved as a more structured JSON file rather than CSV.​​​​​​​​​​​​​​​​
+
 # Generating and Checking Bird Hash for Answer of the Day
 
 ```
@@ -110,7 +111,6 @@ console.log('Original (broken) hash for "bkfg":', hashBirdIdOriginal("bkfg"));
 console.log('Difference: Original can produce negative hashes with minus signs');
 ```
 
-
 # Adding more birds to birds.json game data
 
 ```
@@ -128,10 +128,9 @@ Processing complete!
 # Generating subregions (states)
 
 ```
-python ./scripts/ebird-generate-subregions.py --region US --output ./scripts/data/regions/us-subregions.json   
+python ./scripts/ebird-generate-subregions.py --region US --output ./scripts/data/regions/us-subregions.json
 Data saved to ./scripts/data/regions/us-subregions.json
 ```
-
 
 # Generating region / state specific corpus for daily challenges
 

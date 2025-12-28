@@ -13,7 +13,7 @@ export const setStoredData = (key, value) => {
   try {
     localStorage.setItem(key, JSON.stringify(value));
   } catch (error) {
-    console.warn('Failed to save to localStorage:', error);
+    console.warn("Failed to save to localStorage:", error);
   }
 };
 
@@ -21,6 +21,6 @@ export const removeStoredData = (key) => {
   try {
     localStorage.removeItem(key);
   } catch (error) {
-    console.warn('Failed to remove from localStorage:', error);
+    console.warn("Failed to remove from localStorage:", error);
   }
 };

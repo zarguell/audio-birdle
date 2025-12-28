@@ -1,4 +1,5 @@
 """Tests for generate-daily-birds.py script"""
+
 import pytest
 import json
 import os
@@ -9,14 +10,14 @@ from unittest.mock import patch, mock_open
 import tempfile
 
 # Add scripts directory to path
-scripts_dir = os.path.join(os.path.dirname(__file__), '..', 'scripts')
+scripts_dir = os.path.join(os.path.dirname(__file__), "..", "scripts")
 sys.path.insert(0, scripts_dir)
 
 # Import the module
 import importlib.util
+
 spec = importlib.util.spec_from_file_location(
-    "generate_daily_birds",
-    os.path.join(scripts_dir, "generate-daily-birds.py")
+    "generate_daily_birds", os.path.join(scripts_dir, "generate-daily-birds.py")
 )
 generate_daily_birds = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(generate_daily_birds)
@@ -31,7 +32,7 @@ class TestHashBirdId:
 
         assert isinstance(hash_result, str)
         assert len(hash_result) == 8
-        assert all(c in '0123456789abcdef' for c in hash_result)
+        assert all(c in "0123456789abcdef" for c in hash_result)
 
     def test_hash_consistency(self):
         """Test that hashing is consistent"""
@@ -106,7 +107,9 @@ class TestGetRecentAnswers:
         """Test with empty history"""
         history = {}
         current_date = datetime(2025, 12, 27).date()
-        recent = generate_daily_birds.get_recent_answers(history, "us", 30, current_date)
+        recent = generate_daily_birds.get_recent_answers(
+            history, "us", 30, current_date
+        )
 
         assert recent == set()
 
@@ -114,19 +117,21 @@ class TestGetRecentAnswers:
         """Test getting answers within the time window"""
         history = {"us": sample_history_data}
         current_date = datetime(2025, 12, 27).date()
-        recent = generate_daily_birds.get_recent_answers(history, "us", 10, current_date)
+        recent = generate_daily_birds.get_recent_answers(
+            history, "us", 10, current_date
+        )
 
         # "amerob" was on 2025-12-25 (2 days ago) - should be included
         assert "amerob" in recent
 
     def test_get_recent_answers_outside_window(self, sample_history_data):
         """Test that old answers are excluded"""
-        old_history = [
-            {"date": "2025-11-01", "id": "oldbird", "subregion": "New York"}
-        ]
+        old_history = [{"date": "2025-11-01", "id": "oldbird", "subregion": "New York"}]
         history = {"us": old_history}
         current_date = datetime(2025, 12, 27).date()
-        recent = generate_daily_birds.get_recent_answers(history, "us", 30, current_date)
+        recent = generate_daily_birds.get_recent_answers(
+            history, "us", 30, current_date
+        )
 
         assert "oldbird" not in recent
 
@@ -134,7 +139,9 @@ class TestGetRecentAnswers:
         """Test with non-existent region"""
         history = {"eu": [{"date": "2025-12-26", "id": "eurbird"}]}
         current_date = datetime(2025, 12, 27).date()
-        recent = generate_daily_birds.get_recent_answers(history, "us", 30, current_date)
+        recent = generate_daily_birds.get_recent_answers(
+            history, "us", 30, current_date
+        )
 
         assert recent == set()
 
@@ -144,14 +151,18 @@ class TestGetSubregionForDate:
 
     def test_get_subregion_no_subregions_data(self):
         """Test with no subregions data"""
-        result = generate_daily_birds.get_subregion_for_date({}, "us", datetime(2025, 12, 27).date())
+        result = generate_daily_birds.get_subregion_for_date(
+            {}, "us", datetime(2025, 12, 27).date()
+        )
 
         assert result == (None, [])
 
     def test_get_subregion_empty_region(self):
         """Test with empty region data"""
         data = {"us": {}}
-        result = generate_daily_birds.get_subregion_for_date(data, "us", datetime(2025, 12, 27).date())
+        result = generate_daily_birds.get_subregion_for_date(
+            data, "us", datetime(2025, 12, 27).date()
+        )
 
         assert result == (None, [])
 
@@ -160,7 +171,7 @@ class TestGetSubregionForDate:
         data = {
             "us": {
                 "California": [{"id": "bird1"}, {"id": "bird2"}],
-                "New York": [{"id": "bird3"}]
+                "New York": [{"id": "bird3"}],
             }
         }
         subregion, bird_ids = generate_daily_birds.get_subregion_for_date(
@@ -173,16 +184,15 @@ class TestGetSubregionForDate:
 
     def test_get_subregion_deterministic(self):
         """Test that same date/region produces same subregion"""
-        data = {
-            "us": {
-                "California": [{"id": "bird1"}],
-                "New York": [{"id": "bird2"}]
-            }
-        }
+        data = {"us": {"California": [{"id": "bird1"}], "New York": [{"id": "bird2"}]}}
         target_date = datetime(2025, 12, 27).date()
 
-        subregion1, _ = generate_daily_birds.get_subregion_for_date(data, "us", target_date)
-        subregion2, _ = generate_daily_birds.get_subregion_for_date(data, "us", target_date)
+        subregion1, _ = generate_daily_birds.get_subregion_for_date(
+            data, "us", target_date
+        )
+        subregion2, _ = generate_daily_birds.get_subregion_for_date(
+            data, "us", target_date
+        )
 
         assert subregion1 == subregion2
 
@@ -195,14 +205,14 @@ class TestFilterBirdsBySubregion:
         birds = [
             {"id": "bird1", "name": "Bird 1"},
             {"id": "bird2", "name": "Bird 2"},
-            {"id": "bird3", "name": "Bird 3"}
+            {"id": "bird3", "name": "Bird 3"},
         ]
         subregion_ids = {"bird1", "bird3"}
 
         filtered = generate_daily_birds.filter_birds_by_subregion(birds, subregion_ids)
 
         assert len(filtered) == 2
-        assert all(b['id'] in subregion_ids for b in filtered)
+        assert all(b["id"] in subregion_ids for b in filtered)
 
     def test_filter_empty_birds_list(self):
         """Test filtering empty birds list"""
@@ -241,9 +251,7 @@ class TestSaveJsonFile:
     def test_save_json_with_complex_data(self, tmp_path):
         """Test saving complex nested data"""
         test_data = {
-            "us": [
-                {"date": "2025-12-27", "region": "us", "answerHash": "abc123"}
-            ]
+            "us": [{"date": "2025-12-27", "region": "us", "answerHash": "abc123"}]
         }
         output_file = tmp_path / "output.json"
 
@@ -260,5 +268,5 @@ def sample_history_data():
     return [
         {"date": "2025-12-26", "id": "barswa", "subregion": "California"},
         {"date": "2025-12-25", "id": "amerob", "subregion": "New York"},
-        {"date": "2025-11-01", "id": "oldbird", "subregion": "Texas"}
+        {"date": "2025-11-01", "id": "oldbird", "subregion": "Texas"},
     ]

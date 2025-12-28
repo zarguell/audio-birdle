@@ -17,6 +17,7 @@ import os
 # Add scripts directory to path to import from generate_daily_birds
 sys.path.insert(0, os.path.join(os.path.dirname(__file__)))
 
+
 def generate_test_hashes():
     """Generate hashes for common bird IDs to verify consistency."""
     try:
@@ -28,28 +29,28 @@ def generate_test_hashes():
 
     # Common bird IDs to test
     test_bird_ids = [
-        'amerob',    # American Robin
-        'mallar3',   # Mallard
-        'horlar',    # Hairy Woodpecker
-        'barswa',    # Barn Swallow
-        'commer',    # Common Yellowthroat
-        'nobsho',    # Northern Bobwhite
-        'rebsap',    # Red-bellied Sap... (example)
-        'songpa',    # Song Sparrow
-        'amespa',    # American Sparrow (example)
-        'whcspa',    # White-crowned Sparrow
+        "amerob",  # American Robin
+        "mallar3",  # Mallard
+        "horlar",  # Hairy Woodpecker
+        "barswa",  # Barn Swallow
+        "commer",  # Common Yellowthroat
+        "nobsho",  # Northern Bobwhite
+        "rebsap",  # Red-bellied Sap... (example)
+        "songpa",  # Song Sparrow
+        "amespa",  # American Sparrow (example)
+        "whcspa",  # White-crowned Sparrow
     ]
 
     # Edge cases
     edge_cases = [
-        '',
-        'a',
-        'abc123',
-        'bird-with-multiple-dashes',
-        'UPPERCASE',
-        'lowercase',
-        '1234567890',
-        'bird-with-!@#-special',
+        "",
+        "a",
+        "abc123",
+        "bird-with-multiple-dashes",
+        "UPPERCASE",
+        "lowercase",
+        "1234567890",
+        "bird-with-!@#-special",
     ]
 
     print("=" * 60)
@@ -82,5 +83,6 @@ def generate_test_hashes():
 
     return test_bird_ids, edge_cases
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     generate_test_hashes()

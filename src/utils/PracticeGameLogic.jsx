@@ -1,6 +1,6 @@
-import { hashString } from './HashUtils';
-import { GAME_CONFIG } from './Constants';
-import { compareTaxonomy } from './TaxonomyUtils';
+import { hashString } from "./HashUtils";
+import { GAME_CONFIG } from "./Constants";
+import { compareTaxonomy } from "./TaxonomyUtils";
 
 /**
  * Creates initial state for a practice game session
@@ -13,11 +13,13 @@ export const createInitialPracticeState = (region, isHardMode = false) => {
     guesses: [],
     completed: false,
     won: false,
-    maxGuesses: isHardMode ? GAME_CONFIG.HARD_MODE_MAX_GUESSES : GAME_CONFIG.MAX_GUESSES,
+    maxGuesses: isHardMode
+      ? GAME_CONFIG.HARD_MODE_MAX_GUESSES
+      : GAME_CONFIG.MAX_GUESSES,
     practiceIndex: 0,
     startTime: new Date().toISOString(),
     endTime: null,
-    isHardMode
+    isHardMode,
   };
 };
 
@@ -67,7 +69,7 @@ export const getPracticeBird = (region, birds, practiceIndex) => {
 
   const regionBirds = birds[region];
   const shuffledBirds = randomShuffle(regionBirds);
-  
+
   // Use modulo to cycle through birds infinitely
   const index = practiceIndex % shuffledBirds.length;
   return shuffledBirds[index];
@@ -76,46 +78,72 @@ export const getPracticeBird = (region, birds, practiceIndex) => {
 /**
  * Generates answer options for practice mode
  */
-export const generatePracticeAnswerOptions = (region, birds, practiceIndex, correctBird, optionCount = 4) => {
+export const generatePracticeAnswerOptions = (
+  region,
+  birds,
+  practiceIndex,
+  correctBird,
+  optionCount = 4,
+) => {
   if (!birds[region] || !correctBird) return [];
-  
+
   const regionBirds = birds[region];
 
   // Get birds that aren't the correct answer
-  const availableBirds = regionBirds.filter(bird => bird.id !== correctBird.id);
+  const availableBirds = regionBirds.filter(
+    (bird) => bird.id !== correctBird.id,
+  );
 
   // First, try to get birds from the same family as the correct bird
-  const sameFamilyBirds = availableBirds.filter(bird => bird.family === correctBird.family);
+  const sameFamilyBirds = availableBirds.filter(
+    (bird) => bird.family === correctBird.family,
+  );
 
   let selectedWrongBirds = [];
 
   if (sameFamilyBirds.length >= optionCount - 1) {
     // We have enough birds from the same family
-    const seed = hashString(`practice-options-${region}-${practiceIndex}-${correctBird.id}-same-family`);
+    const seed = hashString(
+      `practice-options-${region}-${practiceIndex}-${correctBird.id}-same-family`,
+    );
     const shuffledSameFamily = deterministicShuffle(sameFamilyBirds, seed);
     selectedWrongBirds = shuffledSameFamily.slice(0, optionCount - 1);
   } else {
     // Not enough birds from same family, use all available same-family birds
     // and fill the rest from the entire available list
-    const seedSameFamily = hashString(`practice-options-${region}-${practiceIndex}-${correctBird.id}-same-family`);
-    const shuffledSameFamily = deterministicShuffle(sameFamilyBirds, seedSameFamily);
+    const seedSameFamily = hashString(
+      `practice-options-${region}-${practiceIndex}-${correctBird.id}-same-family`,
+    );
+    const shuffledSameFamily = deterministicShuffle(
+      sameFamilyBirds,
+      seedSameFamily,
+    );
     selectedWrongBirds = [...shuffledSameFamily];
 
     // Get remaining birds (excluding same family birds and correct bird)
-    const remainingBirds = availableBirds.filter(bird => bird.family !== correctBird.family);
-    const seedRemaining = hashString(`practice-options-${region}-${practiceIndex}-${correctBird.id}-remaining`);
-    const shuffledRemaining = deterministicShuffle(remainingBirds, seedRemaining);
-    
+    const remainingBirds = availableBirds.filter(
+      (bird) => bird.family !== correctBird.family,
+    );
+    const seedRemaining = hashString(
+      `practice-options-${region}-${practiceIndex}-${correctBird.id}-remaining`,
+    );
+    const shuffledRemaining = deterministicShuffle(
+      remainingBirds,
+      seedRemaining,
+    );
+
     // Add birds from other families to reach the desired count
     const stillNeeded = optionCount - 1 - selectedWrongBirds.length;
     for (let i = 0; i < Math.min(stillNeeded, shuffledRemaining.length); i++) {
       selectedWrongBirds.push(shuffledRemaining[i]);
     }
   }
-  
+
   // Combine and shuffle all options
   const allOptions = [correctBird, ...selectedWrongBirds];
-  const finalSeed = hashString(`practice-final-${region}-${practiceIndex}-${correctBird.id}`);
+  const finalSeed = hashString(
+    `practice-final-${region}-${practiceIndex}-${correctBird.id}`,
+  );
   return deterministicShuffle(allOptions, finalSeed);
 };
 
@@ -132,12 +160,12 @@ export const processPracticeGuess = (practiceState, guessedBirdId) => {
   const guess = {
     birdId: guessedBirdId,
     correct: isCorrect,
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   };
 
   const newState = {
     ...practiceState,
-    guesses: [...practiceState.guesses, guess]
+    guesses: [...practiceState.guesses, guess],
   };
 
   // Check if game is complete
@@ -159,12 +187,15 @@ export const processHardPracticeGuess = (practiceState, textInput, birds) => {
   }
 
   // Find the bird that matches the text input
-  const guessedBird = birds.find(bird =>
-    bird.name.toLowerCase() === textInput.toLowerCase() ||
-    bird.scientificName.toLowerCase() === textInput.toLowerCase()
+  const guessedBird = birds.find(
+    (bird) =>
+      bird.name.toLowerCase() === textInput.toLowerCase() ||
+      bird.scientificName.toLowerCase() === textInput.toLowerCase(),
   );
 
-  const isCorrect = Boolean(guessedBird && guessedBird.id === practiceState.currentBird.id);
+  const isCorrect = Boolean(
+    guessedBird && guessedBird.id === practiceState.currentBird.id,
+  );
 
   // Calculate taxonomic score using compareTaxonomy for detailed breakdown
   const taxonomicScore = guessedBird
@@ -176,12 +207,12 @@ export const processHardPracticeGuess = (practiceState, textInput, birds) => {
     textInput,
     correct: isCorrect,
     taxonomicScore,
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   };
 
   const newState = {
     ...practiceState,
-    guesses: [...practiceState.guesses, guess]
+    guesses: [...practiceState.guesses, guess],
   };
 
   // Check if game is complete
@@ -199,7 +230,11 @@ export const processHardPracticeGuess = (practiceState, textInput, birds) => {
  */
 export const startNewPracticeRound = (currentState, birds) => {
   const nextPracticeIndex = currentState.practiceIndex + 1;
-  const nextBird = getPracticeBird(currentState.region, birds, nextPracticeIndex);
+  const nextBird = getPracticeBird(
+    currentState.region,
+    birds,
+    nextPracticeIndex,
+  );
 
   if (!nextBird) return currentState;
 
@@ -212,7 +247,7 @@ export const startNewPracticeRound = (currentState, birds) => {
       birds,
       nextPracticeIndex,
       nextBird,
-      GAME_CONFIG.ANSWER_OPTIONS_COUNT
+      GAME_CONFIG.ANSWER_OPTIONS_COUNT,
     );
   }
 
@@ -225,6 +260,6 @@ export const startNewPracticeRound = (currentState, birds) => {
     won: false,
     practiceIndex: nextPracticeIndex,
     startTime: new Date().toISOString(),
-    endTime: null
+    endTime: null,
   };
 };
