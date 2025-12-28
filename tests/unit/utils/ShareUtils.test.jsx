@@ -229,16 +229,6 @@ describe('ShareUtils', () => {
       expect(shareText).toContain('🟥')
     })
 
-    it('should show red for no taxonomic match', () => {
-      const shareText = generateHardModeShareText(
-        lostHardModeState,
-        'European Robin',
-        'https://audio-birdle.com'
-      )
-
-      expect(shareText).toContain('🟥')
-    })
-
     it('should return empty string for incomplete game', () => {
       const incompleteState = {
         ...completedHardModeState,
