@@ -13,6 +13,7 @@ import { extractGenus } from './TaxonomyUtils';
 import { getTodayString } from './DateUtils';
 import { generateHardModeShareText, shareResult } from './ShareUtils';
 import { SubregionDisplay } from './SubregionUtils';
+import { hasCompletedNormalMode } from './GameLogic';
 
 export default function HardModeGame({
   region,
@@ -30,6 +31,7 @@ export default function HardModeGame({
 
   const today = getTodayString();
   const hardModeGame = gameState?.hardModeGames?.[`${region}-${today}`];
+  const normalModeCompleted = hasCompletedNormalMode(gameState, region, today);
 
   // Reset audio index when bird changes
   useEffect(() => {
@@ -113,6 +115,15 @@ export default function HardModeGame({
         </div>
 
         <div className="bg-white rounded-xl shadow-lg p-6">
+
+          {/* Warning if normal mode already completed */}
+          {normalModeCompleted && (
+            <div className="bg-yellow-50 border border-yellow-300 rounded-lg p-4 mb-4">
+              <p className="text-sm text-yellow-800 text-center">
+                ⚠️ You've already completed Normal Mode today. You can't play Hard Mode on the same day.
+              </p>
+            </div>
+          )}
 
           {/* Audio Player */}
           <div className="flex flex-col items-center mb-6">
@@ -231,7 +242,7 @@ export default function HardModeGame({
           )}
 
           {/* Input for Active Game */}
-          {!hardModeGame?.completed && (
+          {!hardModeGame?.completed && !normalModeCompleted && (
             <HardModeInput
               birds={birds[region]}
               onGuess={handleGuess}

@@ -646,6 +646,32 @@ export const hasPlayedHardModeRegionDate = (gameState, region, date) => {
 };
 
 /**
+ * Check if normal mode has been completed for a specific region-date
+ * @param {Object} gameState - Main game state object
+ * @param {string} region - Region identifier
+ * @param {string} date - Date string (YYYY-MM-DD)
+ * @returns {boolean} - True if normal mode is completed for this combination
+ */
+export const hasCompletedNormalMode = (gameState, region, date) => {
+  const validGameState = ensureGameStateFormat(gameState);
+  const key = createRegionDateKey(region, date);
+  return validGameState.dailyGames?.[key]?.completed === true;
+};
+
+/**
+ * Check if hard mode has been completed for a specific region-date
+ * @param {Object} gameState - Main game state object
+ * @param {string} region - Region identifier
+ * @param {string} date - Date string (YYYY-MM-DD)
+ * @returns {boolean} - True if hard mode is completed for this combination
+ */
+export const hasCompletedHardMode = (gameState, region, date) => {
+  const validGameState = ensureGameStateFormat(gameState);
+  const key = createRegionDateKey(region, date);
+  return validGameState.hardModeGames?.[key]?.completed === true;
+};
+
+/**
  * Get user's performance summary
  * @param {Object} gameState - Main game state object
  * @returns {Object} - Performance summary
