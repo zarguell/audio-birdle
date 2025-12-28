@@ -1,6 +1,7 @@
 # 🎧🐦 Audio Birdle
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fzarguell%2Faudio-birdle.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fzarguell%2Faudio-birdle?ref=badge_shield)
 
+![Static Badge](https://img.shields.io/badge/built%20with%20ai-8A2BE2)
 
 [Play Audio Birdle](https://audio-birdle.sechostlab.com) | [View on GitHub](https://github.com/zarguell/audio-birdle)
 
@@ -29,10 +30,8 @@ I created this game with inspiration from Mitch's amazing project [Birdle](https
 
 Here are some planned features and improvements:
 
-* 🏋️ Enhance practice mode with targeted bird selection and curation tools.
 * 🌐 Add support for more regions and broader bird species data.
 * 🔊 Improve audio metadata parsing (e.g., sound quality, crediting, species overlap).
-* 📱 Implement PWA support for mobile app-like experience.
 * 🌍 Support internationalization/localization (multi-language support).
 * 🖼️ Add optional image clues or fun bird facts.
 * 📊 Additional statistics and scoring metrics, including historic view of challenges.
