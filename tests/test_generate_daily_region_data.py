@@ -66,7 +66,10 @@ class TestMainFunctionality:
             str(output_file),
         ]
 
-        with patch.dict(os.environ, {"EBIRD_API_KEY": "test-key"}), patch("sys.argv", test_args):
+        with (
+            patch.dict(os.environ, {"EBIRD_API_KEY": "test-key"}),
+            patch("sys.argv", test_args),
+        ):
             with pytest.raises(ValueError) as exc_info:
                 generate_daily_region_data.main()
 
@@ -99,7 +102,10 @@ class TestMainFunctionality:
             str(output_file),
         ]
 
-        with patch("sys.argv", test_args), patch("random.choice", return_value=subregions_data[0]):
+        with (
+            patch("sys.argv", test_args),
+            patch("random.choice", return_value=subregions_data[0]),
+        ):
             generate_daily_region_data.main()
 
         # Verify output file was created
@@ -134,7 +140,10 @@ class TestMainFunctionality:
             str(output_file),
         ]
 
-        with patch("sys.argv", test_args), patch("random.choice", return_value=subregions_data[0]):
+        with (
+            patch("sys.argv", test_args),
+            patch("random.choice", return_value=subregions_data[0]),
+        ):
             with pytest.raises(RuntimeError) as exc_info:
                 generate_daily_region_data.main()
 
@@ -167,7 +176,10 @@ class TestMainFunctionality:
             str(output_file),
         ]
 
-        with patch("sys.argv", test_args), patch("random.choice", return_value=subregions_data[0]):
+        with (
+            patch("sys.argv", test_args),
+            patch("random.choice", return_value=subregions_data[0]),
+        ):
             generate_daily_region_data.main()
 
         with open(output_file) as f:
@@ -232,7 +244,10 @@ class TestOutputStructure:
             str(output_file),
         ]
 
-        with patch("sys.argv", test_args), patch("random.choice", return_value=subregions_data[0]):
+        with (
+            patch("sys.argv", test_args),
+            patch("random.choice", return_value=subregions_data[0]),
+        ):
             generate_daily_region_data.main()
 
         with open(output_file) as f:
