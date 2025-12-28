@@ -50,9 +50,9 @@ export const generateHardModeShareText = (hardModeGameState, birdName, gameUrl) 
     if (guess.correct) return '🟩';
     // Show partial credit based on taxonomic score
     const score = Object.values(guess.taxonomicScore || {}).filter(Boolean).length;
-    if (score >= 3) return '🟨'; // Got family or closer
-    if (score >= 2) return '🟧'; // Got order
-    return '🟥'; // No taxonomic match
+    if (score >= 3) return '🟨'; // Got genus or closer (3+ matches)
+    if (score >= 2) return '🟧'; // Got family (2 matches)
+    return '🟥'; // No taxonomic match (0-1 matches)
   }).join('');
 
   const emoji = won ? '🔥' : '😔';
