@@ -4,10 +4,7 @@ import pytest
 import json
 import os
 import sys
-from datetime import datetime, timedelta
-from pathlib import Path
-from unittest.mock import patch, mock_open
-import tempfile
+from datetime import datetime
 
 # Add scripts directory to path
 scripts_dir = os.path.join(os.path.dirname(__file__), "..", "scripts")
