@@ -175,32 +175,31 @@ describe('ShareUtils', () => {
     it('should generate share text for won hard mode game', () => {
       const shareText = generateHardModeShareText(
         completedHardModeState,
-        'American Robin',
         'https://audio-birdle.com'
       )
 
       expect(shareText).toContain('🔥 Audio-Birdle Hard Mode 2025-12-27')
       expect(shareText).toContain('Region: US')
-      expect(shareText).toContain('3/6 - American Robin')
+      expect(shareText).toContain('3/6')
+      expect(shareText).not.toContain('American Robin')
       expect(shareText).toContain('https://audio-birdle.com')
     })
 
     it('should generate share text for lost hard mode game', () => {
       const shareText = generateHardModeShareText(
         lostHardModeState,
-        'European Robin',
         'https://audio-birdle.com'
       )
 
       expect(shareText).toContain('😔 Audio-Birdle Hard Mode 2025-12-27')
       expect(shareText).toContain('Region: EU')
-      expect(shareText).toContain('2/6 - European Robin')
+      expect(shareText).toContain('X/6')
+      expect(shareText).not.toContain('European Robin')
     })
 
     it('should show green for correct guess', () => {
       const shareText = generateHardModeShareText(
         completedHardModeState,
-        'American Robin',
         'https://audio-birdle.com'
       )
 
@@ -210,7 +209,6 @@ describe('ShareUtils', () => {
     it('should show orange for order matches (2 taxonomic matches)', () => {
       const shareText = generateHardModeShareText(
         completedHardModeState,
-        'American Robin',
         'https://audio-birdle.com'
       )
 
@@ -221,7 +219,6 @@ describe('ShareUtils', () => {
     it('should show red for no taxonomic match', () => {
       const shareText = generateHardModeShareText(
         completedHardModeState,
-        'American Robin',
         'https://audio-birdle.com'
       )
 
@@ -237,7 +234,6 @@ describe('ShareUtils', () => {
 
       const shareText = generateHardModeShareText(
         incompleteState,
-        'American Robin',
         'https://audio-birdle.com'
       )
 
@@ -247,7 +243,6 @@ describe('ShareUtils', () => {
     it('should return empty string for null game state', () => {
       const shareText = generateHardModeShareText(
         null,
-        'American Robin',
         'https://audio-birdle.com'
       )
 
@@ -272,18 +267,17 @@ describe('ShareUtils', () => {
 
       const shareText = generateHardModeShareText(
         singleGuessState,
-        'American Robin',
         'https://audio-birdle.com'
       )
 
-      expect(shareText).toContain('1/6 - American Robin')
+      expect(shareText).toContain('1/6')
+      expect(shareText).not.toContain('American Robin')
       expect(shareText).toContain('🟩')
     })
 
     it('should handle non-matching bird guesses', () => {
       const shareText = generateHardModeShareText(
         lostHardModeState,
-        'European Robin',
         'https://audio-birdle.com'
       )
 

@@ -33,11 +33,10 @@ export const generateShareText = (dailyGameState, gameUrl) => {
 /**
  * Generate share text for a completed hard mode game
  * @param {Object} hardModeGameState - The completed hard mode game state
- * @param {string} birdName - Name of the correct bird
  * @param {string} gameUrl - URL of the game
  * @returns {string} - Formatted share text
  */
-export const generateHardModeShareText = (hardModeGameState, birdName, gameUrl) => {
+export const generateHardModeShareText = (hardModeGameState, gameUrl) => {
   if (!hardModeGameState || !hardModeGameState.completed) {
     return '';
   }
@@ -60,7 +59,7 @@ export const generateHardModeShareText = (hardModeGameState, birdName, gameUrl) 
   const shareText = [
     `${emoji} Audio-Birdle Hard Mode ${date}`,
     `Region: ${region.toUpperCase()}`,
-    `${guessCount}/${maxGuesses} - ${birdName}`,
+    `${won ? `${guessCount}/${maxGuesses}` : `X/${maxGuesses}`}`,
     '',
     resultGrid,
     '',

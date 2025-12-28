@@ -76,7 +76,6 @@ export default function HardModeGame({
 
     const shareText = generateHardModeShareText(
       hardModeGame,
-      todaysBird.name,
       window.location.href
     );
 
