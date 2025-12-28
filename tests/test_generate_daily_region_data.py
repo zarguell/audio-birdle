@@ -66,12 +66,14 @@ class TestMainFunctionality:
             str(output_file),
         ]
 
-        with patch.dict(os.environ, {"EBIRD_API_KEY": "test-key"}):
-            with patch("sys.argv", test_args):
-                with pytest.raises(ValueError) as exc_info:
-                    generate_daily_region_data.main()
+        with (
+            patch.dict(os.environ, {"EBIRD_API_KEY": "test-key"}),
+            patch("sys.argv", test_args),
+        ):
+            with pytest.raises(ValueError) as exc_info:
+                generate_daily_region_data.main()
 
-                assert "empty" in str(exc_info.value).lower()
+            assert "empty" in str(exc_info.value).lower()
 
     @patch("requests.get")
     @patch.dict(os.environ, {"EBIRD_API_KEY": "test-key"})
@@ -100,9 +102,11 @@ class TestMainFunctionality:
             str(output_file),
         ]
 
-        with patch("sys.argv", test_args):
-            with patch("random.choice", return_value=subregions_data[0]):
-                generate_daily_region_data.main()
+        with (
+            patch("sys.argv", test_args),
+            patch("random.choice", return_value=subregions_data[0]),
+        ):
+            generate_daily_region_data.main()
 
         # Verify output file was created
         assert output_file.exists()
@@ -136,12 +140,14 @@ class TestMainFunctionality:
             str(output_file),
         ]
 
-        with patch("sys.argv", test_args):
-            with patch("random.choice", return_value=subregions_data[0]):
-                with pytest.raises(RuntimeError) as exc_info:
-                    generate_daily_region_data.main()
+        with (
+            patch("sys.argv", test_args),
+            patch("random.choice", return_value=subregions_data[0]),
+        ):
+            with pytest.raises(RuntimeError) as exc_info:
+                generate_daily_region_data.main()
 
-                assert "Failed to fetch" in str(exc_info.value)
+            assert "Failed to fetch" in str(exc_info.value)
 
     @patch("requests.get")
     @patch.dict(os.environ, {"EBIRD_API_KEY": "test-key"})
@@ -170,9 +176,11 @@ class TestMainFunctionality:
             str(output_file),
         ]
 
-        with patch("sys.argv", test_args):
-            with patch("random.choice", return_value=subregions_data[0]):
-                generate_daily_region_data.main()
+        with (
+            patch("sys.argv", test_args),
+            patch("random.choice", return_value=subregions_data[0]),
+        ):
+            generate_daily_region_data.main()
 
         with open(output_file) as f:
             output_data = json.load(f)
@@ -236,9 +244,11 @@ class TestOutputStructure:
             str(output_file),
         ]
 
-        with patch("sys.argv", test_args):
-            with patch("random.choice", return_value=subregions_data[0]):
-                generate_daily_region_data.main()
+        with (
+            patch("sys.argv", test_args),
+            patch("random.choice", return_value=subregions_data[0]),
+        ):
+            generate_daily_region_data.main()
 
         with open(output_file) as f:
             output_data = json.load(f)
