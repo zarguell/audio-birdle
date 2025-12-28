@@ -1,6 +1,6 @@
 import { hashString } from './HashUtils';
 import { GAME_CONFIG } from './Constants';
-import { calculateTaxonomicScore } from './TaxonomyUtils';
+import { compareTaxonomy } from './TaxonomyUtils';
 
 /**
  * Creates initial state for a practice game session
@@ -63,7 +63,7 @@ const randomShuffle = (array) => {
  * Gets a practice bird based on region and practice index
  */
 export const getPracticeBird = (region, birds, practiceIndex) => {
-  if (!birds[region] || birds[region].length === 0) return null;
+  if (!birds || !birds[region] || birds[region].length === 0) return null;
 
   const regionBirds = birds[region];
   const shuffledBirds = randomShuffle(regionBirds);
@@ -164,11 +164,11 @@ export const processHardPracticeGuess = (practiceState, textInput, birds) => {
     bird.scientificName.toLowerCase() === textInput.toLowerCase()
   );
 
-  const isCorrect = guessedBird && guessedBird.id === practiceState.currentBird.id;
+  const isCorrect = Boolean(guessedBird && guessedBird.id === practiceState.currentBird.id);
 
-  // Calculate taxonomic score
+  // Calculate taxonomic score using compareTaxonomy for detailed breakdown
   const taxonomicScore = guessedBird
-    ? calculateTaxonomicScore(practiceState.currentBird, guessedBird)
+    ? compareTaxonomy(practiceState.currentBird, guessedBird)
     : { order: false, family: false, genus: false, species: false };
 
   const guess = {

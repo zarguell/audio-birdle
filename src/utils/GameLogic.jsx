@@ -519,6 +519,14 @@ export const processHardModeGuess = (
       taxonomicScore: { order: false, family: false, genus: false, species: false }
     };
     hardGame.guesses.push(guess);
+
+    // Check if game should complete after this guess
+    if (hardGame.guesses.length >= hardGame.maxGuesses) {
+      hardGame.completed = true;
+      hardGame.won = false;
+      hardGame.endTime = new Date().toISOString();
+      updateHardModeStats(newGameState, region, hardGame);
+    }
   } else {
     // Compare taxonomy and create guess
     const taxonomicScore = compareTaxonomy(matchedBird, correctBird);
