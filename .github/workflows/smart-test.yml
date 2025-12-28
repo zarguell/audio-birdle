@@ -228,8 +228,21 @@ jobs:
           npm ci
           npm install -D vitest @vitest/ui @vitest/coverage-v8 @testing-library/react @testing-library/jest-dom jsdom
 
-      - name: Run integration tests
+      - name: Run JS integration tests
         run: npx vitest run --config=vitest.config.js tests/integration
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.x'
+          cache: 'pip'
+
+      - name: Install Python dependencies
+        run: |
+          pip install pytest pytest-cov
+
+      - name: Run Python integration tests
+        run: pytest tests/integration/test_data_pipeline_integration.py -v --no-cov
 
   game-logic-tests:
     name: Game Logic Tests

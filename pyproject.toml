@@ -29,7 +29,8 @@ source = ["scripts"]
 omit = [
     "*/test_*.py",
     "*/__pycache__/*",
-    "*/tests/*",
+    "*/tests/unit/*",
+    "*/tests/integration/*",
 ]
 
 [tool.coverage.report]
