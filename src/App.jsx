@@ -153,8 +153,8 @@ export default function AudioBirdle() {
       gameState,
       selectedRegion,
       today,
+      bird,
       bird.name,
-      birds[selectedRegion],
       todaysBird
     );
     setGameState(newGameState);

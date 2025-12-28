@@ -460,9 +460,9 @@ describe('GameLogic', () => {
         gameState,
         'us',
         '2025-12-27',
+        sampleBirds.us[0],  // American Robin bird object
         'American Robin',
-        sampleBirds.us,
-        sampleBirds.us[0]  // American Robin
+        sampleBirds.us[0]  // Correct is American Robin
       )
 
       const key = createRegionDateKey('us', '2025-12-27')
@@ -483,8 +483,8 @@ describe('GameLogic', () => {
         gameState,
         'us',
         '2025-12-27',
+        sampleBirds.us[1],  // Barn Swallow bird object
         'Barn Swallow',
-        sampleBirds.us,
         sampleBirds.us[0]  // Correct is American Robin
       )
 
@@ -499,31 +499,6 @@ describe('GameLogic', () => {
       expect(hardGame.guesses[0].taxonomicScore).toBeDefined()
     })
 
-    it('should handle non-matching input gracefully', () => {
-      const newState = processHardModeGuess(
-        gameState,
-        'us',
-        '2025-12-27',
-        'Nonexistent Bird Name',
-        sampleBirds.us,
-        sampleBirds.us[0]
-      )
-
-      const key = createRegionDateKey('us', '2025-12-27')
-      const hardGame = newState.hardModeGames[key]
-
-      expect(hardGame.guesses).toHaveLength(1)
-      expect(hardGame.guesses[0].birdId).toBeNull()
-      expect(hardGame.guesses[0].correct).toBe(false)
-      expect(hardGame.guesses[0].textInput).toBe('Nonexistent Bird Name')
-      expect(hardGame.guesses[0].taxonomicScore).toEqual({
-        order: false,
-        family: false,
-        genus: false,
-        species: false
-      })
-    })
-
     it('should complete game after max hard mode guesses (6)', () => {
       let state = gameState
       for (let i = 0; i < 6; i++) {
@@ -531,9 +506,9 @@ describe('GameLogic', () => {
           state,
           'us',
           '2025-12-27',
+          sampleBirds.us[1],  // Barn Swallow (wrong bird)
           `Wrong Bird ${i}`,
-          sampleBirds.us,
-          sampleBirds.us[0]
+          sampleBirds.us[0]  // Correct is American Robin
         )
       }
 
@@ -550,8 +525,8 @@ describe('GameLogic', () => {
         gameState,
         'us',
         '2025-12-27',
+        sampleBirds.us[0],  // American Robin
         'American Robin',
-        sampleBirds.us,
         sampleBirds.us[0]
       )
 
@@ -561,8 +536,8 @@ describe('GameLogic', () => {
         state,
         'us',
         '2025-12-27',
+        sampleBirds.us[1],  // Barn Swallow
         'Another Guess',
-        sampleBirds.us,
         sampleBirds.us[0]
       )
 
@@ -575,8 +550,8 @@ describe('GameLogic', () => {
         gameState,
         'us',
         '2025-12-27',
+        sampleBirds.us[0],  // American Robin
         'American Robin',
-        sampleBirds.us,
         sampleBirds.us[0]
       )
 
@@ -592,8 +567,8 @@ describe('GameLogic', () => {
         gameState,
         'us',
         '2025-12-27',
+        sampleBirds.us[0],  // American Robin
         'American Robin',
-        sampleBirds.us,
         sampleBirds.us[0]
       )
 
@@ -604,14 +579,14 @@ describe('GameLogic', () => {
 
     it('should reset hard mode streak on loss', () => {
       let state = gameState
-      // Use actual bird names so they match and count as guesses
+      // Use actual bird objects
       for (let i = 0; i < 6; i++) {
         state = processHardModeGuess(
           state,
           'us',
           '2025-12-27',
-          'Barn Swallow',  // Wrong bird, but valid
-          sampleBirds.us,
+          sampleBirds.us[1],  // Barn Swallow (wrong bird)
+          `Barn Swallow ${i}`,
           sampleBirds.us[0]  // Correct is American Robin
         )
       }
@@ -624,8 +599,8 @@ describe('GameLogic', () => {
         gameState,
         'us',
         '2025-12-27',
+        sampleBirds.us[0],  // American Robin
         'American Robin',
-        sampleBirds.us,
         sampleBirds.us[0]
       )
 
@@ -642,8 +617,8 @@ describe('GameLogic', () => {
         gameState,
         'us',
         '2025-12-27',
+        sampleBirds.us[1],  // Barn Swallow
         'Barn Swallow',
-        sampleBirds.us,
         sampleBirds.us[0]  // American Robin
       )
 
@@ -672,8 +647,8 @@ describe('GameLogic', () => {
         gameState,
         'us',
         '2025-12-27',
+        sampleBirds.us[0],  // American Robin
         'American Robin',
-        sampleBirds.us,
         sampleBirds.us[0]
       )
 
@@ -711,8 +686,8 @@ describe('GameLogic', () => {
         gameState,
         'us',
         '2025-12-27',
-        'Barn Swallow',  // Wrong guess
-        sampleBirds.us,
+        sampleBirds.us[1],  // Barn Swallow (wrong guess)
+        'Barn Swallow',
         sampleBirds.us[0]
       )
 
@@ -727,8 +702,8 @@ describe('GameLogic', () => {
         gameState,
         'us',
         '2025-12-27',
+        sampleBirds.us[0],  // American Robin
         'American Robin',
-        sampleBirds.us,
         sampleBirds.us[0]
       )
 

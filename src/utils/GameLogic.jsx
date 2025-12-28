@@ -3,7 +3,7 @@
 import { getTodaysBirdFromDaily } from './DailyBirdUtils';
 import { hashString } from './HashUtils';
 import { GAME_CONFIG } from './Constants';
-import { compareTaxonomy, calculateMatchScore } from './TaxonomyUtils';
+import { compareTaxonomy } from './TaxonomyUtils';
 
 /**
  * Create a unique key for a region-date combination
@@ -475,8 +475,8 @@ export const getHardModeGameState = (gameState, region, date) => {
  * @param {Object} gameState - Main game state object
  * @param {string} region - Region identifier
  * @param {string} date - Date string (YYYY-MM-DD)
- * @param {string} textInput - User's text input
- * @param {Array} regionBirds - All birds for the region
+ * @param {Object} guessedBird - The bird object guessed (from autocomplete)
+ * @param {string} textInput - Original user's text input for display
  * @param {Object} correctBird - The correct bird
  * @returns {Object} - Updated game state
  */
@@ -484,8 +484,8 @@ export const processHardModeGuess = (
   gameState,
   region,
   date,
+  guessedBird,
   textInput,
-  regionBirds,
   correctBird
 ) => {
   const validGameState = ensureGameStateFormat(gameState);
@@ -506,78 +506,31 @@ export const processHardModeGuess = (
     return newGameState;
   }
 
-  // Find best matching bird using fuzzy search
-  const matchedBird = findBestMatchingBird(textInput, regionBirds);
+  // Compare taxonomy and create guess (bird object is passed directly)
+  const taxonomicScore = compareTaxonomy(guessedBird, correctBird);
+  const isCorrect = guessedBird.id === correctBird.id;
 
-  if (!matchedBird) {
-    // No match found - still count as a guess
-    const guess = {
-      birdId: null,
-      textInput,
-      correct: false,
-      timestamp: new Date().toISOString(),
-      taxonomicScore: { order: false, family: false, genus: false, species: false }
-    };
-    hardGame.guesses.push(guess);
+  const guess = {
+    birdId: guessedBird.id,
+    textInput,
+    correct: isCorrect,
+    timestamp: new Date().toISOString(),
+    taxonomicScore
+  };
 
-    // Check if game should complete after this guess
-    if (hardGame.guesses.length >= hardGame.maxGuesses) {
-      hardGame.completed = true;
-      hardGame.won = false;
-      hardGame.endTime = new Date().toISOString();
-      updateHardModeStats(newGameState, region, hardGame);
-    }
-  } else {
-    // Compare taxonomy and create guess
-    const taxonomicScore = compareTaxonomy(matchedBird, correctBird);
-    const isCorrect = matchedBird.id === correctBird.id;
+  hardGame.guesses.push(guess);
+  hardGame.birdId = correctBird.id;
 
-    const guess = {
-      birdId: matchedBird.id,
-      textInput,
-      correct: isCorrect,
-      timestamp: new Date().toISOString(),
-      taxonomicScore
-    };
-
-    hardGame.guesses.push(guess);
-    hardGame.birdId = correctBird.id;
-
-    // Check win condition
-    if (isCorrect || hardGame.guesses.length >= hardGame.maxGuesses) {
-      hardGame.completed = true;
-      hardGame.won = isCorrect;
-      hardGame.endTime = new Date().toISOString();
-      updateHardModeStats(newGameState, region, hardGame);
-    }
+  // Check win condition
+  if (isCorrect || hardGame.guesses.length >= hardGame.maxGuesses) {
+    hardGame.completed = true;
+    hardGame.won = isCorrect;
+    hardGame.endTime = new Date().toISOString();
+    updateHardModeStats(newGameState, region, hardGame);
   }
 
   newGameState.lastPlayed = { region, date, mode: 'hard' };
   return newGameState;
-};
-
-/**
- * Find best matching bird from text input using fuzzy matching
- * @param {string} textInput - User's input text
- * @param {Array} birds - Array of bird objects
- * @returns {Object|null} - Best matching bird or null
- */
-const findBestMatchingBird = (textInput, birds) => {
-  const inputLower = textInput.toLowerCase().trim();
-
-  if (inputLower.length < 2) return null;
-
-  const THRESHOLD = 30;
-
-  const scored = birds
-    .map(bird => ({
-      bird,
-      score: calculateMatchScore(bird, inputLower)
-    }))
-    .filter(item => item.score >= THRESHOLD)
-    .sort((a, b) => b.score - a.score);
-
-  return scored.length > 0 ? scored[0].bird : null;
 };
 
 /**
