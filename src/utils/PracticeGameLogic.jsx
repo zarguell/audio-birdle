@@ -64,7 +64,6 @@ export const getPracticeBird = (region, birds, practiceIndex) => {
   if (!birds[region] || birds[region].length === 0) return null;
 
   const regionBirds = birds[region];
-  const seed = hashString(`practice-${region}-${practiceIndex}`);
   const shuffledBirds = randomShuffle(regionBirds);
   
   // Use modulo to cycle through birds infinitely
@@ -79,30 +78,31 @@ export const generatePracticeAnswerOptions = (region, birds, practiceIndex, corr
   if (!birds[region] || !correctBird) return [];
   
   const regionBirds = birds[region];
-  const seed = hashString(`practice-options-${region}-${practiceIndex}-${correctBird.id}`);
-  const random = createSeededRandom(seed);
-  
+
   // Get birds that aren't the correct answer
   const availableBirds = regionBirds.filter(bird => bird.id !== correctBird.id);
-  
+
   // First, try to get birds from the same family as the correct bird
   const sameFamilyBirds = availableBirds.filter(bird => bird.family === correctBird.family);
-  
+
   let selectedWrongBirds = [];
-  
+
   if (sameFamilyBirds.length >= optionCount - 1) {
     // We have enough birds from the same family
+    const seed = hashString(`practice-options-${region}-${practiceIndex}-${correctBird.id}-same-family`);
     const shuffledSameFamily = deterministicShuffle(sameFamilyBirds, seed);
     selectedWrongBirds = shuffledSameFamily.slice(0, optionCount - 1);
   } else {
     // Not enough birds from same family, use all available same-family birds
     // and fill the rest from the entire available list
-    const shuffledSameFamily = deterministicShuffle(sameFamilyBirds, seed);
+    const seedSameFamily = hashString(`practice-options-${region}-${practiceIndex}-${correctBird.id}-same-family`);
+    const shuffledSameFamily = deterministicShuffle(sameFamilyBirds, seedSameFamily);
     selectedWrongBirds = [...shuffledSameFamily];
-    
+
     // Get remaining birds (excluding same family birds and correct bird)
     const remainingBirds = availableBirds.filter(bird => bird.family !== correctBird.family);
-    const shuffledRemaining = deterministicShuffle(remainingBirds, seed);
+    const seedRemaining = hashString(`practice-options-${region}-${practiceIndex}-${correctBird.id}-remaining`);
+    const shuffledRemaining = deterministicShuffle(remainingBirds, seedRemaining);
     
     // Add birds from other families to reach the desired count
     const stillNeeded = optionCount - 1 - selectedWrongBirds.length;

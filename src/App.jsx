@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { Play, Pause, Settings, Share2, Volume2, MapPin, RefreshCw, Info, BarChart3, Target } from 'lucide-react';
 
 import PracticeGame from './utils/PracticeGame';
@@ -108,7 +108,8 @@ export default function AudioBirdle() {
   }, [selectedRegion]);
 
   // Audio controls
-  const audioControls = createAudioControls(audioRef);
+  // eslint-disable-next-line react-hooks/refs
+  const audioControls = useMemo(() => createAudioControls(audioRef), []);
 
   const toggleAudio = async () => {
     if (isPlaying) {
@@ -163,12 +164,6 @@ export default function AudioBirdle() {
   const resetAllData = () => {
     const newGameState = createInitialGameState();
     setGameState(newGameState);
-  };
-
-  // Auto-detect location (placeholder)
-  const autoDetectLocation = () => {
-    // For now, default to US
-    setSelectedRegion('us');
   };
 
   // Region selector view

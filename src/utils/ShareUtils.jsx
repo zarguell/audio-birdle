@@ -79,9 +79,8 @@ export const shareResult = async (shareText) => {
     
   } catch (error) {
     console.error('Error sharing result:', error);
-    
+
     // Show the text in a dialog as final fallback
-    const message = `Copy your result:\n\n${shareText}`;
     prompt('Share your result:', shareText);
     return false;
   }

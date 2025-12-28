@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { Play, Pause, Volume2, RotateCcw, ArrowRight } from 'lucide-react';
 import { createAudioControls } from './AudioUtils';
 import {
@@ -40,7 +40,9 @@ export default function PracticeGame({ region, birds, regions, onBack }) {
     setAudioError(false);
   }, [practiceState?.currentBird]);
 
-  const audioControls = createAudioControls(audioRef);
+  // Audio controls
+  // eslint-disable-next-line react-hooks/refs
+  const audioControls = useMemo(() => createAudioControls(audioRef), []);
 
   const toggleAudio = async () => {
     if (isPlaying) {

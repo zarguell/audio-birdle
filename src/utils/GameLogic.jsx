@@ -1,6 +1,6 @@
 // Updated GameLogic.js with deterministic answer generation
 
-import { getTodaysBirdFromDaily, findBirdByHash } from './DailyBirdUtils';
+import { getTodaysBirdFromDaily } from './DailyBirdUtils';
 import { hashString } from './HashUtils';
 import { GAME_CONFIG } from './Constants';
 
@@ -378,11 +378,10 @@ export const generateAnswerOptions = (region, birds, date, correctBird, optionCo
   if (!birds[region] || !correctBird) return [];
   
   const regionBirds = birds[region];
-  
+
   // Create a seed based on region, date, and correct bird ID for deterministic selection
   const seed = hashString(`${region}-${date}-${correctBird.id}-options`);
-  const random = createSeededRandom(seed);
-  
+
   // Get birds that aren't the correct answer
   const availableBirds = regionBirds.filter(bird => bird.id !== correctBird.id);
   
