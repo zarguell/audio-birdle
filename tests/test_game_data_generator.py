@@ -4,10 +4,6 @@ import pytest
 import json
 import os
 import sys
-from pathlib import Path
-from collections import defaultdict
-from unittest.mock import patch, mock_open
-import tempfile
 
 # Import the module
 scripts_dir = os.path.join(os.path.dirname(__file__), "..", "scripts")

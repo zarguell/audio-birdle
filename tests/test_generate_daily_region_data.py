@@ -5,7 +5,6 @@ import json
 import os
 import sys
 from unittest.mock import patch, MagicMock
-import tempfile
 
 # Import the module
 scripts_dir = os.path.join(os.path.dirname(__file__), "..", "scripts")
