@@ -9,7 +9,13 @@ import {
   generateAnswerOptions,
   getUserPerformanceSummary,
   ensureGameStateFormat,
-  createRegionDateKey
+  createRegionDateKey,
+  createInitialHardModeGameState,
+  getHardModeGameState,
+  processHardModeGuess,
+  hasPlayedHardModeRegionDate,
+  hasCompletedNormalMode,
+  hasCompletedHardMode
 } from '@/utils/GameLogic'
 import { sampleBirds } from '../fixtures/sampleBirds'
 
@@ -373,6 +379,337 @@ describe('GameLogic', () => {
       // Just verify both are valid birds
       expect(sampleBirds.us).toContain(bird1)
       expect(sampleBirds.us).toContain(bird2)
+    })
+  })
+
+  // HARD MODE TESTS
+  // ============================================================================
+
+  describe('createInitialHardModeGameState', () => {
+    it('should create initial hard mode game state', () => {
+      const state = createInitialHardModeGameState('us', '2025-12-27')
+
+      expect(state.region).toBe('us')
+      expect(state.date).toBe('2025-12-27')
+      expect(state.mode).toBe('hard')
+      expect(state.guesses).toEqual([])
+      expect(state.completed).toBe(false)
+      expect(state.won).toBe(false)
+      expect(state.maxGuesses).toBe(6)  // HARD_MODE_MAX_GUESSES
+      expect(state.startTime).toBeDefined()
+      expect(state.endTime).toBeNull()
+      expect(state.birdId).toBeNull()
+    })
+
+    it('should have different max guesses than normal mode', () => {
+      const hardMode = createInitialHardModeGameState('us', '2025-12-27')
+      const normalMode = createInitialDailyGameState('us', '2025-12-27')
+
+      expect(hardMode.maxGuesses).toBe(6)
+      expect(normalMode.maxGuesses).toBe(4)
+    })
+  })
+
+  describe('getHardModeGameState', () => {
+    it('should return existing hard mode game state', () => {
+      const gameState = createInitialGameState()
+      const key = createRegionDateKey('us', '2025-12-27')
+      gameState.hardModeGames = {
+        [key]: createInitialHardModeGameState('us', '2025-12-27')
+      }
+
+      const hardState = getHardModeGameState(gameState, 'us', '2025-12-27')
+
+      expect(hardState).toBeDefined()
+      expect(hardState.region).toBe('us')
+      expect(hardState.date).toBe('2025-12-27')
+      expect(hardState.mode).toBe('hard')
+    })
+
+    it('should create new hard mode game state if not exists', () => {
+      const gameState = createInitialGameState()
+
+      const hardState = getHardModeGameState(gameState, 'us', '2025-12-27')
+
+      expect(hardState).toBeDefined()
+      expect(hardState.region).toBe('us')
+      expect(hardState.date).toBe('2025-12-27')
+      expect(hardState.mode).toBe('hard')
+      expect(hardState.guesses).toEqual([])
+    })
+
+    it('should initialize hardModeGames object if missing', () => {
+      const gameState = createInitialGameState()
+      delete gameState.hardModeGames
+
+      const hardState = getHardModeGameState(gameState, 'us', '2025-12-27')
+
+      expect(hardState).toBeDefined()
+      expect(gameState.hardModeGames).toBeDefined()
+    })
+  })
+
+  describe('processHardModeGuess', () => {
+    let gameState
+    beforeEach(() => {
+      gameState = createInitialGameState()
+    })
+
+    it('should process correct guess in hard mode', () => {
+      const newState = processHardModeGuess(
+        gameState,
+        'us',
+        '2025-12-27',
+        sampleBirds.us[0],  // American Robin bird object
+        'American Robin',
+        sampleBirds.us[0]  // Correct is American Robin
+      )
+
+      const key = createRegionDateKey('us', '2025-12-27')
+      const hardGame = newState.hardModeGames[key]
+
+      expect(hardGame.guesses).toHaveLength(1)
+      expect(hardGame.guesses[0].birdId).toBe('amerob')
+      expect(hardGame.guesses[0].correct).toBe(true)
+      expect(hardGame.guesses[0].textInput).toBe('American Robin')
+      expect(hardGame.guesses[0].taxonomicScore).toBeDefined()
+      expect(hardGame.completed).toBe(true)
+      expect(hardGame.won).toBe(true)
+      expect(hardGame.endTime).toBeDefined()
+    })
+
+    it('should process incorrect guess in hard mode', () => {
+      const newState = processHardModeGuess(
+        gameState,
+        'us',
+        '2025-12-27',
+        sampleBirds.us[1],  // Barn Swallow bird object
+        'Barn Swallow',
+        sampleBirds.us[0]  // Correct is American Robin
+      )
+
+      const key = createRegionDateKey('us', '2025-12-27')
+      const hardGame = newState.hardModeGames[key]
+
+      expect(hardGame.guesses).toHaveLength(1)
+      expect(hardGame.guesses[0].birdId).toBe('barswa')
+      expect(hardGame.guesses[0].correct).toBe(false)
+      expect(hardGame.completed).toBe(false)
+      expect(hardGame.won).toBe(false)
+      expect(hardGame.guesses[0].taxonomicScore).toBeDefined()
+    })
+
+    it('should complete game after max hard mode guesses (6)', () => {
+      let state = gameState
+      for (let i = 0; i < 6; i++) {
+        state = processHardModeGuess(
+          state,
+          'us',
+          '2025-12-27',
+          sampleBirds.us[1],  // Barn Swallow (wrong bird)
+          `Wrong Bird ${i}`,
+          sampleBirds.us[0]  // Correct is American Robin
+        )
+      }
+
+      const key = createRegionDateKey('us', '2025-12-27')
+      const hardGame = state.hardModeGames[key]
+
+      expect(hardGame.completed).toBe(true)
+      expect(hardGame.won).toBe(false)
+      expect(hardGame.guesses).toHaveLength(6)
+    })
+
+    it('should not allow guesses after hard mode completion', () => {
+      let state = processHardModeGuess(
+        gameState,
+        'us',
+        '2025-12-27',
+        sampleBirds.us[0],  // American Robin
+        'American Robin',
+        sampleBirds.us[0]
+      )
+
+      const beforeLength = state.hardModeGames['us-2025-12-27'].guesses.length
+
+      state = processHardModeGuess(
+        state,
+        'us',
+        '2025-12-27',
+        sampleBirds.us[1],  // Barn Swallow
+        'Another Guess',
+        sampleBirds.us[0]
+      )
+
+      const afterLength = state.hardModeGames['us-2025-12-27'].guesses.length
+      expect(afterLength).toBe(beforeLength)
+    })
+
+    it('should update hard mode stats after completion', () => {
+      const newState = processHardModeGuess(
+        gameState,
+        'us',
+        '2025-12-27',
+        sampleBirds.us[0],  // American Robin
+        'American Robin',
+        sampleBirds.us[0]
+      )
+
+      expect(newState.stats.hardModeStats).toBeDefined()
+      expect(newState.stats.hardModeStats.totalGamesPlayed).toBe(1)
+      expect(newState.stats.hardModeStats.totalGamesWon).toBe(1)
+      expect(newState.stats.hardModeStats.currentStreak).toBe(1)
+      expect(newState.stats.hardModeStats.maxStreak).toBe(1)
+    })
+
+    it('should update region-specific hard mode stats', () => {
+      const newState = processHardModeGuess(
+        gameState,
+        'us',
+        '2025-12-27',
+        sampleBirds.us[0],  // American Robin
+        'American Robin',
+        sampleBirds.us[0]
+      )
+
+      expect(newState.stats.hardModeStats.regionStats['us']).toBeDefined()
+      expect(newState.stats.hardModeStats.regionStats['us'].gamesPlayed).toBe(1)
+      expect(newState.stats.hardModeStats.regionStats['us'].gamesWon).toBe(1)
+    })
+
+    it('should reset hard mode streak on loss', () => {
+      let state = gameState
+      // Use actual bird objects
+      for (let i = 0; i < 6; i++) {
+        state = processHardModeGuess(
+          state,
+          'us',
+          '2025-12-27',
+          sampleBirds.us[1],  // Barn Swallow (wrong bird)
+          `Barn Swallow ${i}`,
+          sampleBirds.us[0]  // Correct is American Robin
+        )
+      }
+
+      expect(state.stats.hardModeStats.currentStreak).toBe(0)
+    })
+
+    it('should set lastPlayed with mode: hard', () => {
+      const newState = processHardModeGuess(
+        gameState,
+        'us',
+        '2025-12-27',
+        sampleBirds.us[0],  // American Robin
+        'American Robin',
+        sampleBirds.us[0]
+      )
+
+      expect(newState.lastPlayed).toEqual({
+        region: 'us',
+        date: '2025-12-27',
+        mode: 'hard'
+      })
+    })
+
+    it('should calculate taxonomic score correctly', () => {
+      // American Robin vs Barn Swallow (same order: Passeriformes)
+      const newState = processHardModeGuess(
+        gameState,
+        'us',
+        '2025-12-27',
+        sampleBirds.us[1],  // Barn Swallow
+        'Barn Swallow',
+        sampleBirds.us[0]  // American Robin
+      )
+
+      const key = createRegionDateKey('us', '2025-12-27')
+      const guess = newState.hardModeGames[key].guesses[0]
+
+      expect(guess.taxonomicScore.order).toBe(true)  // Both Passeriformes
+      expect(guess.taxonomicScore.family).toBe(false)  // Different families
+      expect(guess.taxonomicScore.genus).toBe(false)
+      expect(guess.taxonomicScore.species).toBe(false)
+    })
+  })
+
+  describe('hasPlayedHardModeRegionDate', () => {
+    it('should return false for unplayed hard mode game', () => {
+      const gameState = createInitialGameState()
+
+      const hasPlayed = hasPlayedHardModeRegionDate(gameState, 'us', '2025-12-27')
+
+      expect(hasPlayed).toBe(false)
+    })
+
+    it('should return true for played hard mode game', () => {
+      const gameState = createInitialGameState()
+      let state = processHardModeGuess(
+        gameState,
+        'us',
+        '2025-12-27',
+        sampleBirds.us[0],  // American Robin
+        'American Robin',
+        sampleBirds.us[0]
+      )
+
+      const hasPlayed = hasPlayedHardModeRegionDate(state, 'us', '2025-12-27')
+
+      expect(hasPlayed).toBe(true)
+    })
+  })
+
+  describe('hasCompletedNormalMode', () => {
+    it('should return false for incomplete normal mode game', () => {
+      const gameState = createInitialGameState()
+      const key = createRegionDateKey('us', '2025-12-27')
+      gameState.dailyGames[key] = createInitialDailyGameState('us', '2025-12-27')
+
+      const hasCompleted = hasCompletedNormalMode(gameState, 'us', '2025-12-27')
+
+      expect(hasCompleted).toBe(false)
+    })
+
+    it('should return true for completed normal mode game', () => {
+      const gameState = createInitialGameState()
+      let state = processGuess(gameState, 'us', '2025-12-27', 'amerob', 'amerob')
+
+      const hasCompleted = hasCompletedNormalMode(state, 'us', '2025-12-27')
+
+      expect(hasCompleted).toBe(true)
+    })
+  })
+
+  describe('hasCompletedHardMode', () => {
+    it('should return false for incomplete hard mode game', () => {
+      const gameState = createInitialGameState()
+      let state = processHardModeGuess(
+        gameState,
+        'us',
+        '2025-12-27',
+        sampleBirds.us[1],  // Barn Swallow (wrong guess)
+        'Barn Swallow',
+        sampleBirds.us[0]
+      )
+
+      const hasCompleted = hasCompletedHardMode(state, 'us', '2025-12-27')
+
+      expect(hasCompleted).toBe(false)
+    })
+
+    it('should return true for completed hard mode game', () => {
+      const gameState = createInitialGameState()
+      let state = processHardModeGuess(
+        gameState,
+        'us',
+        '2025-12-27',
+        sampleBirds.us[0],  // American Robin
+        'American Robin',
+        sampleBirds.us[0]
+      )
+
+      const hasCompleted = hasCompletedHardMode(state, 'us', '2025-12-27')
+
+      expect(hasCompleted).toBe(true)
     })
   })
 })

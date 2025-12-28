@@ -3,6 +3,7 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import { Play, Pause, Settings, Share2, Volume2, MapPin, RefreshCw, Info, BarChart3, Target } from 'lucide-react';
 
 import PracticeGame from './utils/PracticeGame';
+import HardModeGame from './utils/HardModeGame';
 import CountdownToMidnight from './utils/CountdownToMidnight';
 import { loadGameData } from './utils/LoadGameData';
 import { getTodayString, formatDateForDisplay } from './utils/DateUtils';
@@ -14,7 +15,9 @@ import {
   createInitialGameState,
   getDailyGameState,
   processGuess,
+  processHardModeGuess,
   hasPlayedRegionDate,
+  hasCompletedHardMode,
   getUserPerformanceSummary
 } from './utils/GameLogic';
 import { generateShareText, shareResult } from './utils/ShareUtils';
@@ -140,6 +143,20 @@ export default function AudioBirdle() {
     if (!todaysBird || !selectedRegion) return;
 
     const newGameState = processGuess(gameState, selectedRegion, today, birdId, todaysBird.id);
+    setGameState(newGameState);
+  };
+
+  const makeHardModeGuess = (bird) => {
+    if (!todaysBird || !selectedRegion) return;
+
+    const newGameState = processHardModeGuess(
+      gameState,
+      selectedRegion,
+      today,
+      bird,
+      bird.name,
+      todaysBird
+    );
     setGameState(newGameState);
   };
 
@@ -342,31 +359,55 @@ export default function AudioBirdle() {
     </div>
   );
 
-  const renderGame = () => (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 p-4">
-      <div className="max-w-md mx-auto pt-8">
-        {/* Header with mode toggle */}
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold text-gray-800">🐦 Audio-Birdle</h1>
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => setCurrentView(VIEWS.PRACTICE)}
-              className="bg-purple-500 text-white px-3 py-2 rounded-lg hover:bg-purple-600 transition-colors flex items-center gap-2 text-sm"
-            >
-              <Target className="w-4 h-4" />
-              Practice
-            </button>
-            <button
-              onClick={() => setCurrentView(VIEWS.SETTINGS)}
-              className="p-2 text-gray-600 hover:text-gray-800 transition-colors"
-            >
-              <Settings className="w-5 h-5" />
-            </button>
+  const renderGame = () => {
+    const hardModeCompleted = hasCompletedHardMode(gameState, selectedRegion, today);
+
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 p-4">
+        <div className="max-w-md mx-auto pt-8">
+          {/* Header with mode toggle */}
+          <div className="flex justify-between items-center mb-6">
+            <h1 className="text-2xl font-bold text-gray-800">🐦 Audio-Birdle</h1>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setCurrentView(VIEWS.HARD_MODE)}
+                disabled={currentDailyGame?.completed}
+                className={`${
+                  currentDailyGame?.completed
+                    ? 'bg-gray-400 cursor-not-allowed'
+                    : 'bg-red-600 hover:bg-red-700'
+                } text-white px-3 py-2 rounded-lg transition-colors flex items-center gap-2 text-sm`}
+              >
+                <Target className="w-4 h-4" />
+                Hard Mode
+              </button>
+              <button
+                onClick={() => setCurrentView(VIEWS.PRACTICE)}
+                className="bg-purple-500 text-white px-3 py-2 rounded-lg hover:bg-purple-600 transition-colors flex items-center gap-2 text-sm"
+              >
+                <Target className="w-4 h-4" />
+                Practice
+              </button>
+              <button
+                onClick={() => setCurrentView(VIEWS.SETTINGS)}
+                className="p-2 text-gray-600 hover:text-gray-800 transition-colors"
+              >
+                <Settings className="w-5 h-5" />
+              </button>
+            </div>
           </div>
-        </div>
 
         {/* Game content */}
         <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
+          {/* Warning if hard mode already completed */}
+          {hardModeCompleted && (
+            <div className="bg-yellow-50 border border-yellow-300 rounded-lg p-4 mb-4">
+              <p className="text-sm text-yellow-800 text-center">
+                ⚠️ You've already completed Hard Mode today. You can't play Normal Mode on the same day.
+              </p>
+            </div>
+          )}
+
           <div className="text-center mb-6">
             <p className="text-gray-600 mb-2">
               {regions.find(r => r.id === selectedRegion)?.name}
@@ -486,7 +527,7 @@ export default function AudioBirdle() {
           <br></br>
 
           {/* Answer choices */}
-          {currentDailyGame && !currentDailyGame.completed && (
+          {currentDailyGame && !currentDailyGame.completed && !hardModeCompleted && (
             <div className="space-y-2">
               <h3 className="font-semibold mb-2">
                 Choose the bird ({currentDailyGame.guesses.length + 1}/{currentDailyGame.maxGuesses}):
@@ -544,7 +585,8 @@ export default function AudioBirdle() {
         </div>
       </div>
     </div>
-  );
+    );
+  };
 
   // Main render logic
   if (!selectedRegion) {
@@ -558,6 +600,20 @@ export default function AudioBirdle() {
         birds={birds}
         regions={regions}
         onBack={() => setCurrentView(VIEWS.GAME)}
+      />
+    );
+  }
+
+  if (currentView === VIEWS.HARD_MODE) {
+    return (
+      <HardModeGame
+        region={selectedRegion}
+        birds={birds}
+        todaysBird={todaysBird}
+        gameState={gameState}
+        onBack={() => setCurrentView(VIEWS.GAME)}
+        onGuess={makeHardModeGuess}
+        onShare={handleShareResult}
       />
     );
   }

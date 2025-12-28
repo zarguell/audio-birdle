@@ -31,6 +31,46 @@ export const generateShareText = (dailyGameState, gameUrl) => {
 };
 
 /**
+ * Generate share text for a completed hard mode game
+ * @param {Object} hardModeGameState - The completed hard mode game state
+ * @param {string} birdName - Name of the correct bird
+ * @param {string} gameUrl - URL of the game
+ * @returns {string} - Formatted share text
+ */
+export const generateHardModeShareText = (hardModeGameState, birdName, gameUrl) => {
+  if (!hardModeGameState || !hardModeGameState.completed) {
+    return '';
+  }
+
+  const { date, region, guesses, won, maxGuesses } = hardModeGameState;
+  const guessCount = guesses.length;
+
+  // Create guess result grid with taxonomic scoring
+  const resultGrid = guesses.map(guess => {
+    if (guess.correct) return '🟩';
+    // Show partial credit based on taxonomic score
+    const score = Object.values(guess.taxonomicScore || {}).filter(Boolean).length;
+    if (score >= 3) return '🟨'; // Got genus or closer (3+ matches)
+    if (score >= 2) return '🟧'; // Got family (2 matches)
+    return '🟥'; // No taxonomic match (0-1 matches)
+  }).join('');
+
+  const emoji = won ? '🔥' : '😔';
+
+  const shareText = [
+    `${emoji} Audio-Birdle Hard Mode ${date}`,
+    `Region: ${region.toUpperCase()}`,
+    `${guessCount}/${maxGuesses} - ${birdName}`,
+    '',
+    resultGrid,
+    '',
+    gameUrl
+  ].join('\n');
+
+  return shareText;
+};
+
+/**
  * Share the game result using Web Share API or clipboard
  * @param {string} shareText - Text to share
  * @returns {Promise<boolean>} - Success status

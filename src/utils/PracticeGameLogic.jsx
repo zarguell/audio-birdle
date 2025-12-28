@@ -1,10 +1,11 @@
 import { hashString } from './HashUtils';
 import { GAME_CONFIG } from './Constants';
+import { compareTaxonomy } from './TaxonomyUtils';
 
 /**
  * Creates initial state for a practice game session
  */
-export const createInitialPracticeState = (region) => {
+export const createInitialPracticeState = (region, isHardMode = false) => {
   return {
     region,
     currentBird: null,
@@ -12,10 +13,11 @@ export const createInitialPracticeState = (region) => {
     guesses: [],
     completed: false,
     won: false,
-    maxGuesses: GAME_CONFIG.MAX_GUESSES,
+    maxGuesses: isHardMode ? GAME_CONFIG.HARD_MODE_MAX_GUESSES : GAME_CONFIG.MAX_GUESSES,
     practiceIndex: 0,
     startTime: new Date().toISOString(),
-    endTime: null
+    endTime: null,
+    isHardMode
   };
 };
 
@@ -61,7 +63,7 @@ const randomShuffle = (array) => {
  * Gets a practice bird based on region and practice index
  */
 export const getPracticeBird = (region, birds, practiceIndex) => {
-  if (!birds[region] || birds[region].length === 0) return null;
+  if (!birds || !birds[region] || birds[region].length === 0) return null;
 
   const regionBirds = birds[region];
   const shuffledBirds = randomShuffle(regionBirds);
@@ -118,7 +120,7 @@ export const generatePracticeAnswerOptions = (region, birds, practiceIndex, corr
 };
 
 /**
- * Processes a guess in practice mode
+ * Processes a guess in practice mode (normal)
  */
 export const processPracticeGuess = (practiceState, guessedBirdId) => {
   if (!practiceState.currentBird || practiceState.completed) {
@@ -126,10 +128,54 @@ export const processPracticeGuess = (practiceState, guessedBirdId) => {
   }
 
   const isCorrect = guessedBirdId === practiceState.currentBird.id;
-  
+
   const guess = {
     birdId: guessedBirdId,
     correct: isCorrect,
+    timestamp: new Date().toISOString()
+  };
+
+  const newState = {
+    ...practiceState,
+    guesses: [...practiceState.guesses, guess]
+  };
+
+  // Check if game is complete
+  if (isCorrect || newState.guesses.length >= newState.maxGuesses) {
+    newState.completed = true;
+    newState.won = isCorrect;
+    newState.endTime = new Date().toISOString();
+  }
+
+  return newState;
+};
+
+/**
+ * Processes a guess in hard practice mode
+ */
+export const processHardPracticeGuess = (practiceState, textInput, birds) => {
+  if (!practiceState.currentBird || practiceState.completed) {
+    return practiceState;
+  }
+
+  // Find the bird that matches the text input
+  const guessedBird = birds.find(bird =>
+    bird.name.toLowerCase() === textInput.toLowerCase() ||
+    bird.scientificName.toLowerCase() === textInput.toLowerCase()
+  );
+
+  const isCorrect = Boolean(guessedBird && guessedBird.id === practiceState.currentBird.id);
+
+  // Calculate taxonomic score using compareTaxonomy for detailed breakdown
+  const taxonomicScore = guessedBird
+    ? compareTaxonomy(practiceState.currentBird, guessedBird)
+    : { order: false, family: false, genus: false, species: false };
+
+  const guess = {
+    birdId: guessedBird ? guessedBird.id : null,
+    textInput,
+    correct: isCorrect,
+    taxonomicScore,
     timestamp: new Date().toISOString()
   };
 
@@ -154,16 +200,21 @@ export const processPracticeGuess = (practiceState, guessedBirdId) => {
 export const startNewPracticeRound = (currentState, birds) => {
   const nextPracticeIndex = currentState.practiceIndex + 1;
   const nextBird = getPracticeBird(currentState.region, birds, nextPracticeIndex);
-  
+
   if (!nextBird) return currentState;
 
-  const answerOptions = generatePracticeAnswerOptions(
-    currentState.region,
-    birds,
-    nextPracticeIndex,
-    nextBird,
-    GAME_CONFIG.ANSWER_OPTIONS_COUNT
-  );
+  let answerOptions = [];
+
+  // Only generate answer options for normal mode
+  if (!currentState.isHardMode) {
+    answerOptions = generatePracticeAnswerOptions(
+      currentState.region,
+      birds,
+      nextPracticeIndex,
+      nextBird,
+      GAME_CONFIG.ANSWER_OPTIONS_COUNT
+    );
+  }
 
   return {
     ...currentState,
