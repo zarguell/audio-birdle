@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-08-30",
-      "id": "palwar",
-      "name": "Palm Warbler",
-      "subregion": "New Jersey"
-    },
-    {
       "date": "2025-08-31",
       "id": "redcro",
       "name": "Red Crossbill",
@@ -701,6 +695,12 @@
       "id": "haiwoo",
       "name": "Hairy Woodpecker",
       "subregion": "Kentucky"
+    },
+    {
+      "date": "2025-12-28",
+      "id": "borchi2",
+      "name": "Boreal Chickadee",
+      "subregion": "Maine"
     }
   ]
 }
