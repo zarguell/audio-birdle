@@ -3,6 +3,8 @@
  * Used for hard mode to determine how close a guess is to the correct answer
  */
 
+import { GAME_CONFIG } from './Constants';
+
 /**
  * Extract genus from scientific name
  * @param {string} scientificName - Scientific name in binomial format (e.g., "Turdus migratorius")
@@ -101,14 +103,12 @@ export const filterBirdsByQuery = (birds, query) => {
 
   if (queryLower.length < 2) return [];
 
-  const THRESHOLD = 30;
-
   return birds
     .map(bird => ({
       bird,
       score: calculateMatchScore(bird, queryLower)
     }))
-    .filter(item => item.score > 0 && item.score >= THRESHOLD)
+    .filter(item => item.score > 0 && item.score >= GAME_CONFIG.FUZZY_MATCH_THRESHOLD)
     .sort((a, b) => b.score - a.score)
     .map(item => item.bird);
 };
