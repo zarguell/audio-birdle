@@ -12,6 +12,7 @@ import { GAME_CONFIG } from './Constants';
 import { extractGenus } from './TaxonomyUtils';
 import { getTodayString } from './DateUtils';
 import { generateHardModeShareText, shareResult } from './ShareUtils';
+import { SubregionDisplay } from './SubregionUtils';
 
 export default function HardModeGame({
   region,
@@ -142,6 +143,16 @@ export default function HardModeGame({
               onEnded={handleAudioEnded}
               onError={handleAudioError}
             />
+          </div>
+
+          {/* Location Hint */}
+          <div className="bg-blue-50 rounded-lg p-3 mb-4 border border-blue-200">
+            <p className="text-sm text-gray-700">
+              💡 This bird was observed in the last 14 days on eBird in{' '}
+              <span className="font-semibold text-blue-700">
+                <SubregionDisplay selectedRegion={region} today={today} />
+              </span>
+            </p>
           </div>
 
           {/* Game Status */}
