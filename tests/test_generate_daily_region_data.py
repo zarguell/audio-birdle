@@ -22,11 +22,13 @@ spec.loader.exec_module(generate_daily_region_data)
 class TestModuleStructure:
     """Test basic module structure and imports"""
 
-    def test_module_has_main_function(self):
+    @staticmethod
+    def test_module_has_main_function():
         """Test that the module has a main function"""
         assert hasattr(generate_daily_region_data, 'main')
 
-    def test_module_imports_required_libraries(self):
+    @staticmethod
+    def test_module_imports_required_libraries():
         """Test that required libraries are imported"""
         # Check if common libraries are accessible
         assert 'json' in sys.modules
@@ -36,7 +38,8 @@ class TestModuleStructure:
 class TestMainFunctionality:
     """Test main function with mocked dependencies"""
 
-    def test_main_requires_api_key(self, tmp_path, capsys):
+    @staticmethod
+    def test_main_requires_api_key(tmp_path, capsys):
         """Test that main fails without API key"""
         subregions_file = tmp_path / "test-subregions.json"
         output_file = tmp_path / "output.json"
@@ -49,7 +52,8 @@ class TestMainFunctionality:
 
             assert "EBIRD_API_KEY" in str(exc_info.value)
 
-    def test_main_fails_with_empty_subregions(self, tmp_path):
+    @staticmethod
+    def test_main_fails_with_empty_subregions(tmp_path):
         """Test that main fails with empty subregions list"""
         subregions_file = tmp_path / "test-subregions.json"
         output_file = tmp_path / "output.json"
@@ -182,7 +186,8 @@ class TestMainFunctionality:
 class TestRegionInference:
     """Test region code inference from filename"""
 
-    def test_infers_region_from_filename(self, tmp_path):
+    @staticmethod
+    def test_infers_region_from_filename(tmp_path):
         """Test that region is inferred from subregions filename"""
         # Create test subregions file
         subregions_data = [{"code": "TEST-01", "name": "Test Region"}]
@@ -194,7 +199,8 @@ class TestRegionInference:
 
         assert region_prefix == "us"
 
-    def test_handles_different_region_formats(self, tmp_path):
+    @staticmethod
+    def test_handles_different_region_formats(tmp_path):
         """Test handling various filename formats"""
         test_cases = [
             ("us-subregions.json", "us"),

@@ -24,7 +24,8 @@ spec.loader.exec_module(game_data_generator)
 class TestLoadJsonFile:
     """Test JSON file loading functionality"""
 
-    def test_load_valid_json(self, tmp_path):
+    @staticmethod
+    def test_load_valid_json(tmp_path):
         """Test loading a valid JSON file"""
         test_data = [{"key": "value"}]
         test_file = tmp_path / "test.json"
@@ -35,7 +36,8 @@ class TestLoadJsonFile:
         assert data == test_data
         assert isinstance(data, list)
 
-    def test_load_file_not_found(self, tmp_path, capsys):
+    @staticmethod
+    def test_load_file_not_found(tmp_path, capsys):
         """Test handling of non-existent file"""
         with pytest.raises(SystemExit):
             game_data_generator.load_json_file(str(tmp_path / "nonexistent.json"))
@@ -44,7 +46,8 @@ class TestLoadJsonFile:
         assert "Error:" in captured.out
         assert "not found" in captured.out
 
-    def test_load_invalid_json(self, tmp_path, capsys):
+    @staticmethod
+    def test_load_invalid_json(tmp_path, capsys):
         """Test handling of invalid JSON"""
         invalid_file = tmp_path / "invalid.json"
         invalid_file.write_text("{ invalid json }")
@@ -60,7 +63,8 @@ class TestLoadJsonFile:
 class TestGroupUrlsByCode:
     """Test URL grouping functionality"""
 
-    def test_group_urls_by_code(self):
+    @staticmethod
+    def test_group_urls_by_code():
         """Test grouping URLs by species code"""
         data = [
             {"code": "amerob", "audio Url": "http://example.com/robin1.mp3"},
@@ -76,7 +80,8 @@ class TestGroupUrlsByCode:
         assert len(result["barswa"]) == 1
         assert result["amerob"][0] == "http://example.com/robin1.mp3"
 
-    def test_group_urls_empty_code(self):
+    @staticmethod
+    def test_group_urls_empty_code():
         """Test handling entries with empty codes"""
         data = [
             {"code": "", "audio Url": "http://example.com/test.mp3"},
@@ -89,7 +94,8 @@ class TestGroupUrlsByCode:
         assert "amerob" in result
         assert len(result) == 1
 
-    def test_group_urls_empty_url(self):
+    @staticmethod
+    def test_group_urls_empty_url():
         """Test handling entries with empty URLs"""
         data = [
             {"code": "testbird", "audio Url": ""},
@@ -101,7 +107,8 @@ class TestGroupUrlsByCode:
         assert "testbird" not in result
         assert "amerob" in result
 
-    def test_group_urls_missing_fields(self):
+    @staticmethod
+    def test_group_urls_missing_fields():
         """Test handling entries with missing fields"""
         data = [
             {"code": "bird1"},  # Missing URL
@@ -115,13 +122,15 @@ class TestGroupUrlsByCode:
         assert len(result) == 1
         assert "bird3" in result
 
-    def test_group_urls_empty_list(self):
+    @staticmethod
+    def test_group_urls_empty_list():
         """Test with empty input list"""
         result = game_data_generator.group_urls_by_code([])
 
         assert result == {}
 
-    def test_group_urls_preserves_order(self):
+    @staticmethod
+    def test_group_urls_preserves_order():
         """Test that URL order is preserved"""
         data = [
             {"code": "bird1", "audio Url": "url1"},
@@ -137,7 +146,8 @@ class TestGroupUrlsByCode:
 class TestProcessTaxonomyData:
     """Test taxonomy data processing"""
 
-    def test_process_taxonomy_data(self):
+    @staticmethod
+    def test_process_taxonomy_data():
         """Test processing taxonomy with URL matching"""
         taxonomy_data = [
             {
@@ -169,7 +179,8 @@ class TestProcessTaxonomyData:
         assert birds[0]['name'] == 'American Robin'
         assert len(birds[0]['audioUrl']) == 1
 
-    def test_filter_birds_without_audio(self):
+    @staticmethod
+    def test_filter_birds_without_audio():
         """Test that birds without audio are filtered out"""
         taxonomy_data = [
             {
@@ -188,7 +199,8 @@ class TestProcessTaxonomyData:
 
         assert len(birds) == 0
 
-    def test_skip_incomplete_taxonomy_entries(self):
+    @staticmethod
+    def test_skip_incomplete_taxonomy_entries():
         """Test skipping entries with missing required fields"""
         incomplete_data = [
             {"speciesCode": "", "comName": "Test", "sciName": "Test test"},
@@ -202,7 +214,8 @@ class TestProcessTaxonomyData:
 
         assert len(birds) == 0
 
-    def test_family_formatting(self):
+    @staticmethod
+    def test_family_formatting():
         """Test correct family name formatting"""
         taxonomy_data = [
             {
@@ -221,7 +234,8 @@ class TestProcessTaxonomyData:
 
         assert birds[0]['family'] == "Turdidae (Turdidae)"
 
-    def test_family_scientific_only(self):
+    @staticmethod
+    def test_family_scientific_only():
         """Test family formatting when only scientific name exists"""
         taxonomy_data = [
             {
@@ -240,7 +254,8 @@ class TestProcessTaxonomyData:
 
         assert birds[0]['family'] == "Turdidae"
 
-    def test_multiple_audio_urls(self):
+    @staticmethod
+    def test_multiple_audio_urls():
         """Test handling multiple audio URLs for one bird"""
         taxonomy_data = [
             {
@@ -266,7 +281,8 @@ class TestProcessTaxonomyData:
 class TestLoadExistingOutput:
     """Test loading existing output files"""
 
-    def test_load_existing_file(self, tmp_path):
+    @staticmethod
+    def test_load_existing_file(tmp_path):
         """Test loading existing output file"""
         output_file = tmp_path / "output.json"
         test_data = {"us": [{"id": "bird1"}]}
@@ -276,13 +292,15 @@ class TestLoadExistingOutput:
 
         assert result == test_data
 
-    def test_load_nonexistent_file(self, tmp_path, capsys):
+    @staticmethod
+    def test_load_nonexistent_file(tmp_path, capsys):
         """Test handling when file doesn't exist"""
         result = game_data_generator.load_existing_output(str(tmp_path / "nonexistent.json"))
 
         assert result == {}
 
-    def test_load_invalid_json(self, tmp_path, capsys):
+    @staticmethod
+    def test_load_invalid_json(tmp_path, capsys):
         """Test handling invalid JSON in existing file"""
         output_file = tmp_path / "output.json"
         output_file.write_text("{ invalid json }")
@@ -293,7 +311,8 @@ class TestLoadExistingOutput:
         captured = capsys.readouterr()
         assert "Warning:" in captured.out
 
-    def test_load_empty_file(self, tmp_path):
+    @staticmethod
+    def test_load_empty_file(tmp_path):
         """Test loading empty JSON file"""
         output_file = tmp_path / "output.json"
         output_file.write_text("{}")
@@ -306,7 +325,8 @@ class TestLoadExistingOutput:
 class TestSaveJsonFile:
     """Test JSON file saving (if function exists)"""
 
-    def test_save_json_file(self, tmp_path):
+    @staticmethod
+    def test_save_json_file(tmp_path):
         """Test saving data to JSON file"""
         test_data = {"key": "value"}
         output_file = tmp_path / "output.json"
@@ -322,7 +342,8 @@ class TestSaveJsonFile:
         else:
             pytest.skip("save_json_file function not found in module")
 
-    def test_save_with_indent(self, tmp_path):
+    @staticmethod
+    def test_save_with_indent(tmp_path):
         """Test that JSON is saved with proper indentation"""
         test_data = {"key": "value"}
         output_file = tmp_path / "output.json"

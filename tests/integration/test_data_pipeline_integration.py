@@ -51,7 +51,8 @@ class TestDataPipelineIntegration:
         with open(path, 'r', encoding='utf-8') as f:
             return json.load(f)
 
-    def test_birds_json_schema(self, birds_json):
+    @staticmethod
+    def test_birds_json_schema(birds_json):
         """Test that birds.json has correct structure."""
         assert isinstance(birds_json, dict), "birds.json should be a dictionary"
 
@@ -72,7 +73,8 @@ class TestDataPipelineIntegration:
                 assert isinstance(bird['audioUrl'], list)
                 assert len(bird['audioUrl']) > 0, "Bird should have at least one audio URL"
 
-    def test_regions_json_schema(self, regions_json):
+    @staticmethod
+    def test_regions_json_schema(regions_json):
         """Test that regions.json has correct structure."""
         assert isinstance(regions_json, list), "regions.json should be a list"
 
@@ -86,7 +88,8 @@ class TestDataPipelineIntegration:
             assert isinstance(region['id'], str)
             assert isinstance(region['name'], str)
 
-    def test_daily_json_schema(self, daily_json):
+    @staticmethod
+    def test_daily_json_schema(daily_json):
         """Test that daily.json has correct structure."""
         assert isinstance(daily_json, list), "daily.json should be a list"
 
@@ -105,7 +108,8 @@ class TestDataPipelineIntegration:
             # Check date format (YYYY-MM-DD)
             assert '-' in entry['date'], "Date should be in YYYY-MM-DD format"
 
-    def test_history_json_schema(self, history_json):
+    @staticmethod
+    def test_history_json_schema(history_json):
         """Test that history.json has correct structure."""
         assert isinstance(history_json, dict), "history.json should be a dictionary"
 
@@ -121,7 +125,8 @@ class TestDataPipelineIntegration:
                 # At minimum, should have some identifying fields
                 assert len(entry) > 0
 
-    def test_cross_reference_birds_in_daily(self, birds_json, daily_json):
+    @staticmethod
+    def test_cross_reference_birds_in_daily(birds_json, daily_json):
         """Test that daily.json bird hashes can be found in birds.json."""
         # Get all bird IDs for a region
         region = daily_json[0]['region'] if daily_json else 'us'
@@ -137,7 +142,8 @@ class TestDataPipelineIntegration:
         # but we can verify the region exists and has birds
         assert region in birds_json, f"Region {region} from daily.json should exist in birds.json"
 
-    def test_regions_match_birds_regions(self, regions_json, birds_json):
+    @staticmethod
+    def test_regions_match_birds_regions(regions_json, birds_json):
         """Test that all regions in birds.json are defined in regions.json."""
         region_ids = {r['id'] for r in regions_json}
         birds_regions = set(birds_json.keys())
@@ -148,7 +154,8 @@ class TestDataPipelineIntegration:
         if undefined_regions:
             pytest.fail(f"Regions in birds.json not defined in regions.json: {undefined_regions}")
 
-    def test_no_duplicate_daily_entries(self, daily_json):
+    @staticmethod
+    def test_no_duplicate_daily_entries(daily_json):
         """Test that daily.json has no duplicate region-date combinations."""
         seen = set()
         duplicates = []
@@ -162,7 +169,8 @@ class TestDataPipelineIntegration:
         if duplicates:
             pytest.fail(f"Found duplicate entries in daily.json: {duplicates}")
 
-    def test_bird_audio_urls_valid(self, birds_json):
+    @staticmethod
+    def test_bird_audio_urls_valid(birds_json):
         """Test that audio URLs are properly formatted."""
         for region, birds in birds_json.items():
             for bird in birds:
@@ -170,7 +178,8 @@ class TestDataPipelineIntegration:
                     assert isinstance(url, str), f"Audio URL should be string, got {type(url)}"
                     assert url.startswith('http'), f"Audio URL should start with http/https: {url}"
 
-    def test_daily_subregion_references(self, birds_json, daily_json):
+    @staticmethod
+    def test_daily_subregion_references(birds_json, daily_json):
         """Test that subregion references in daily.json are valid."""
         for entry in daily_json:
             if 'subregion' in entry and entry['subregion']:
@@ -185,7 +194,8 @@ class TestDataPipelineIntegration:
                 assert isinstance(subregion, str), "Subregion should be a string"
                 assert len(subregion) > 0, f"Subregion should not be empty, got: {subregion}"
 
-    def test_json_files_are_valid_json(self, data_dir):
+    @staticmethod
+    def test_json_files_are_valid_json(data_dir):
         """Test that all JSON files in data/ are valid JSON."""
         json_files = [
             'birds.json',
@@ -202,7 +212,8 @@ class TestDataPipelineIntegration:
             with open(path, 'r', encoding='utf-8') as f:
                 json.load(f)
 
-    def test_bird_data_completeness(self, birds_json):
+    @staticmethod
+    def test_bird_data_completeness(birds_json):
         """Test that birds have all required data fields."""
         required_fields = {
             'id': str,
@@ -221,7 +232,8 @@ class TestDataPipelineIntegration:
                     assert isinstance(bird[field], expected_type), \
                         f"Bird {i} in region {region}: field '{field}' should be {expected_type}, got {type(bird[field])}"
 
-    def test_no_empty_bird_lists(self, birds_json):
+    @staticmethod
+    def test_no_empty_bird_lists(birds_json):
         """Test that all regions have at least one bird."""
         empty_regions = [
             region for region, birds in birds_json.items()
