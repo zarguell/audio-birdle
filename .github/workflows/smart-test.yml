@@ -42,32 +42,51 @@ jobs:
       - name: Analyze commit message
         id: analyze-commit
         run: |
-          # Get the commit message
-          commit_msg="${{ github.event.head_commit.message }}"
+          # Get the commit message safely using git
+          # Using git log ensures we get the actual commit message from the repository
+          # rather than relying on potentially untrusted GitHub context variables
+          commit_msg=$(git log -1 --pretty=%B HEAD)
 
-          # Determine commit type using patterns
-          if echo "$commit_msg" | grep -q "^Update challenge:"; then
-            echo "type=daily" >> $GITHUB_OUTPUT
-            echo "test-category=game-logic" >> $GITHUB_OUTPUT
-          elif echo "$commit_msg" | grep -q "^chore(deps):"; then
-            echo "type=dependency" >> $GITHUB_OUTPUT
-            echo "test-category=linting-build" >> $GITHUB_OUTPUT
-          elif echo "$commit_msg" | grep -q "^fix:"; then
-            echo "type=fix" >> $GITHUB_OUTPUT
-            echo "test-category=affected" >> $GITHUB_OUTPUT
-          elif echo "$commit_msg" | grep -q "^feat:"; then
-            echo "type=feature" >> $GITHUB_OUTPUT
-            echo "test-category=full" >> $GITHUB_OUTPUT
-          elif echo "$commit_msg" | grep -q "^chore:"; then
-            echo "type=chore" >> $GITHUB_OUTPUT
-            echo "test-category=minimal" >> $GITHUB_OUTPUT
-          else
+          # Validate that commit_msg is not empty
+          if [ -z "$commit_msg" ]; then
             echo "type=other" >> $GITHUB_OUTPUT
             echo "test-category=standard" >> $GITHUB_OUTPUT
+            exit 0
           fi
 
-          echo "Commit type: ${{ steps.analyze-commit.outputs.type }}"
-          echo "Test category: ${{ steps.analyze-commit.outputs.test-category }}"
+          # Determine commit type using patterns
+          # Using printf and case statement instead of echo/grep for safer handling
+          commit_type="other"
+          test_category="standard"
+
+          case "$commit_msg" in
+            "Update challenge:"*)
+              commit_type="daily"
+              test_category="game-logic"
+              ;;
+            "chore(deps):"*)
+              commit_type="dependency"
+              test_category="linting-build"
+              ;;
+            "fix:"*)
+              commit_type="fix"
+              test_category="affected"
+              ;;
+            "feat:"*)
+              commit_type="feature"
+              test_category="full"
+              ;;
+            "chore:"*)
+              commit_type="chore"
+              test_category="minimal"
+              ;;
+          esac
+
+          echo "type=$commit_type" >> $GITHUB_OUTPUT
+          echo "test-category=$test_category" >> $GITHUB_OUTPUT
+
+          echo "Commit type: $commit_type"
+          echo "Test category: $test_category"
 
   lint:
     name: Linting
