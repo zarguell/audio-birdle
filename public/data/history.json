@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-09-04",
-      "id": "mallar3",
-      "name": "Mallard",
-      "subregion": "West Virginia"
-    },
-    {
       "date": "2025-09-05",
       "id": "bkbplo",
       "name": "Black-bellied Plover",
@@ -701,6 +695,12 @@
       "id": "norbob",
       "name": "Northern Bobwhite",
       "subregion": "North Carolina"
+    },
+    {
+      "date": "2026-01-02",
+      "id": "shshaw",
+      "name": "Sharp-shinned Hawk",
+      "subregion": "Maine"
     }
   ]
 }
