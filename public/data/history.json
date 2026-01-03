@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-09-05",
-      "id": "bkbplo",
-      "name": "Black-bellied Plover",
-      "subregion": "Virginia"
-    },
-    {
       "date": "2025-09-06",
       "id": "easblu",
       "name": "Eastern Bluebird",
@@ -701,6 +695,12 @@
       "id": "shshaw",
       "name": "Sharp-shinned Hawk",
       "subregion": "Maine"
+    },
+    {
+      "date": "2026-01-03",
+      "id": "whrsha",
+      "name": "White-rumped Shama",
+      "subregion": "Hawaii"
     }
   ]
 }
