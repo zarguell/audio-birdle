@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-09-06",
-      "id": "easblu",
-      "name": "Eastern Bluebird",
-      "subregion": "Delaware"
-    },
-    {
       "date": "2025-09-07",
       "id": "bushti",
       "name": "Bushtit",
@@ -701,6 +695,12 @@
       "id": "whrsha",
       "name": "White-rumped Shama",
       "subregion": "Hawaii"
+    },
+    {
+      "date": "2026-01-04",
+      "id": "calqua",
+      "name": "California Quail",
+      "subregion": "Idaho"
     }
   ]
 }
