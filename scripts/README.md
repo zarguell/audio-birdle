@@ -69,39 +69,41 @@ python3 generate-daily-birds.py --days 7 \
 
 ### Data Fetching (API-based, fast)
 
-| Script | Purpose | Time |
-|--------|---------|------|
-| [ebird-taxonomy.py](./ebird-taxonomy.py) | Fetch global taxonomy | 30s |
-| [ebird-region.py](./ebird-region.py) | Get region species list | 5s |
-| [ebird-generate-subregions.py](./ebird-generate-subregions.py) | Get subregions | 5s |
+| Script                                                         | Purpose                 | Time |
+| -------------------------------------------------------------- | ----------------------- | ---- |
+| [ebird-taxonomy.py](./ebird-taxonomy.py)                       | Fetch global taxonomy   | 30s  |
+| [ebird-region.py](./ebird-region.py)                           | Get region species list | 5s   |
+| [ebird-generate-subregions.py](./ebird-generate-subregions.py) | Get subregions          | 5s   |
 
 ### Data Processing
 
-| Script | Purpose | Time |
-|--------|---------|------|
-| [ebird-filter-region.py](./ebird-filter-region.py) | Filter taxonomy | 10s |
-| [game-data-generator.py](./game-data-generator.py) | Merge game data | 30s |
-| [generate-daily-region-data.py](./generate-daily-region-data.py) | Subregion birds | 10s |
-| [generate-daily-birds.py](./generate-daily-birds.py) | Daily challenges | 30s |
+| Script                                                           | Purpose          | Time |
+| ---------------------------------------------------------------- | ---------------- | ---- |
+| [ebird-filter-region.py](./ebird-filter-region.py)               | Filter taxonomy  | 10s  |
+| [game-data-generator.py](./game-data-generator.py)               | Merge game data  | 30s  |
+| [generate-daily-region-data.py](./generate-daily-region-data.py) | Subregion birds  | 10s  |
+| [generate-daily-birds.py](./generate-daily-birds.py)             | Daily challenges | 30s  |
 
 ### Audio Scraping ⚠️ (Manual bottleneck)
 
-| Script | Purpose | Time |
-|--------|---------|------|
+| Script                                           | Purpose           | Time          |
+| ------------------------------------------------ | ----------------- | ------------- |
 | [ebird-songdownload.py](./ebird-songdownload.py) | Scrape audio URLs | **2-4 hours** |
 
 ### Utilities
 
-| Script | Purpose |
-|--------|---------|
+| Script                                                     | Purpose               |
+| ---------------------------------------------------------- | --------------------- |
 | [verify_hash_consistency.py](./verify_hash_consistency.py) | Test hash consistency |
 
 ## ⚠️ Important Notes
 
 ### Manual Bottleneck
+
 Audio URL scraping requires browser automation and takes 2-4 hours per region. This is the primary limitation preventing easy expansion to new regions.
 
 ### Current Status
+
 - ✅ **Supported Regions**: US, US-Lower48 (virtual region)
 - ⚠️ **Scaling**: Audio scraping must be done manually for each new region
 - 🔄 **Daily Updates**: Automated via GitHub Actions (4 AM UTC)
@@ -109,15 +111,18 @@ Audio URL scraping requires browser automation and takes 2-4 hours per region. T
 ## 🎯 Common Tasks
 
 ### Add a New Region
+
 See [WORKFLOW_GUIDE.md](./WORKFLOW_GUIDE.md#complete-workflow-adding-a-new-region) for complete step-by-step instructions.
 
 ### Update Daily Challenges
+
 ```bash
 python3 generate-daily-birds.py --days 7 \
   --subregions ../public/data/daily-subregion-birds.json
 ```
 
 ### Verify Hash Consistency
+
 ```bash
 python3 verify_hash_consistency.py
 npm test -- hash-consistency
@@ -128,6 +133,7 @@ npm test -- hash-consistency
 See [WORKFLOW_GUIDE.md](./WORKFLOW_GUIDE.md#troubleshooting) for detailed troubleshooting guide.
 
 Quick fixes:
+
 - **ChromeDriver error**: `brew install chromedriver` (macOS) or `sudo apt-get install chromium-chromedriver` (Linux)
 - **API rate limiting**: Add delays between requests
 - **Hash mismatch**: Run `verify_hash_consistency.py` and check salt value
@@ -138,11 +144,13 @@ Quick fixes:
 See [WORKFLOW_GUIDE.md](./WORKFLOW_GUIDE.md#roadmap-for-improvements) for detailed improvement roadmap.
 
 **High Priority**:
+
 - Replace Selenium scraping with API-based approach
 - Implement parallel processing for faster scraping
 - Build community-sourced audio database
 
 **Medium Priority**:
+
 - Automated region onboarding script
 - Data validation and quality checks
 - Incremental updates (don't re-scrape everything)

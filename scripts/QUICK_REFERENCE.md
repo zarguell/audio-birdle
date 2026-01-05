@@ -67,20 +67,20 @@
 
 ### API-Based Scripts (Fast, Automated)
 
-| Script | Purpose | Input | Output | Time |
-|--------|---------|-------|--------|------|
-| `ebird-taxonomy.py` | Get global taxonomy | - | ebird-taxonomy.json | 30s |
-| `ebird-region.py` | Get region species list | region code | us.json | 5s |
-| `ebird-generate-subregions.py` | Get subregions | region code | us-subregions.json | 5s |
-| `ebird-filter-region.py` | Filter taxonomy | us.json + taxonomy | us-taxonomy.json | 10s |
-| `game-data-generator.py` | Merge game data | taxonomy + URLs | birds.json | 30s |
-| `generate-daily-region-data.py` | Get subregion birds | subregions | daily-subregion-birds.json | 10s |
-| `generate-daily-birds.py` | Daily challenges | birds + history | daily.json | 30s |
+| Script                          | Purpose                 | Input              | Output                     | Time |
+| ------------------------------- | ----------------------- | ------------------ | -------------------------- | ---- |
+| `ebird-taxonomy.py`             | Get global taxonomy     | -                  | ebird-taxonomy.json        | 30s  |
+| `ebird-region.py`               | Get region species list | region code        | us.json                    | 5s   |
+| `ebird-generate-subregions.py`  | Get subregions          | region code        | us-subregions.json         | 5s   |
+| `ebird-filter-region.py`        | Filter taxonomy         | us.json + taxonomy | us-taxonomy.json           | 10s  |
+| `game-data-generator.py`        | Merge game data         | taxonomy + URLs    | birds.json                 | 30s  |
+| `generate-daily-region-data.py` | Get subregion birds     | subregions         | daily-subregion-birds.json | 10s  |
+| `generate-daily-birds.py`       | Daily challenges        | birds + history    | daily.json                 | 30s  |
 
 ### Manual Script (Slow, Bottleneck)
 
-| Script | Purpose | Input | Output | Time |
-|--------|---------|-------|--------|------|
+| Script                     | Purpose           | Input    | Output             | Time          |
+| -------------------------- | ----------------- | -------- | ------------------ | ------------- |
 | `ebird-songdownload.py` ⚠️ | Scrape audio URLs | taxonomy | taxonomy-urls.json | **2-4 hours** |
 
 ---
@@ -126,6 +126,7 @@ git push
 ## Common Commands
 
 ### Setup
+
 ```bash
 python3 -m venv venv
 source venv/bin/activate
@@ -134,6 +135,7 @@ echo "EBIRD_API_KEY=your_key" > .env
 ```
 
 ### Daily Operations (Automated)
+
 ```bash
 # Generate daily challenges
 python3 generate-daily-birds.py --days 7 \
@@ -144,6 +146,7 @@ python3 verify_hash_consistency.py
 ```
 
 ### Testing
+
 ```bash
 # Validate data (if script exists)
 python3 validate-data.py --region US
@@ -157,6 +160,7 @@ python3 ebird-songdownload.py data/regions/us-taxonomy-demo.json --max-urls 5
 ## Troubleshooting Quick Fixes
 
 ### ChromeDriver Issues
+
 ```bash
 # macOS
 brew install chromedriver
@@ -168,13 +172,16 @@ sudo apt-get install chromium-chromedriver
 ```
 
 ### API Rate Limiting
+
 Add delays in scripts:
+
 ```python
 import time
 time.sleep(1)  # Between requests
 ```
 
 ### Hash Mismatch
+
 ```bash
 python3 verify_hash_consistency.py
 npm test -- hash-consistency
@@ -182,6 +189,7 @@ npm test -- hash-consistency
 ```
 
 ### Region Not Showing
+
 1. Check `public/data/regions.json` has region
 2. Check `public/data/birds.json` has region key
 3. Restart dev server
@@ -191,21 +199,22 @@ npm test -- hash-consistency
 
 ## Key Files
 
-| File | Purpose | Size |
-|------|---------|------|
-| `data/ebird-taxonomy.json` | All world species | 8.8 MB |
-| `data/regions/us.json` | US species codes | 16 KB |
-| `data/regions/us-taxonomy.json` | US taxonomy | 585 KB |
-| `data/regions/us-taxonomy-urls.json` | US audio URLs | 1.8 MB |
-| `public/data/birds.json` | Game data | varies |
-| `public/data/daily.json` | Daily answers | small |
-| `public/data/history.json` | Selection history | grows |
+| File                                 | Purpose           | Size   |
+| ------------------------------------ | ----------------- | ------ |
+| `data/ebird-taxonomy.json`           | All world species | 8.8 MB |
+| `data/regions/us.json`               | US species codes  | 16 KB  |
+| `data/regions/us-taxonomy.json`      | US taxonomy       | 585 KB |
+| `data/regions/us-taxonomy-urls.json` | US audio URLs     | 1.8 MB |
+| `public/data/birds.json`             | Game data         | varies |
+| `public/data/daily.json`             | Daily answers     | small  |
+| `public/data/history.json`           | Selection history | grows  |
 
 ---
 
 ## Environment Variables
 
 **Required in `.env`**:
+
 ```bash
 EBIRD_API_KEY=your_api_key_here
 ```
@@ -226,16 +235,19 @@ EBIRD_API_KEY=your_api_key_here
 ## Roadmap Highlights
 
 ### High Priority
+
 - ⚠️ **Replace Selenium scraping** with API-based approach
 - 🔧 **Parallel processing** for faster scraping
 - 🌐 **Community-sourced audio database**
 
 ### Medium Priority
+
 - 🚀 **Automated region onboarding** script
 - ✔️ **Data validation** checks
 - 🔄 **Incremental updates** (don't re-scrape everything)
 
 ### Low Priority
+
 - 📊 **Web dashboard** for data management
 - 🔊 **Audio quality filtering**
 - 🌍 **Multi-language support**
@@ -245,6 +257,7 @@ EBIRD_API_KEY=your_api_key_here
 ## Full Documentation
 
 See [WORKFLOW_GUIDE.md](./WORKFLOW_GUIDE.md) for:
+
 - Detailed architecture explanation
 - Complete script reference
 - Troubleshooting guide
@@ -265,15 +278,18 @@ See [WORKFLOW_GUIDE.md](./WORKFLOW_GUIDE.md) for:
 ## Current Status
 
 ✅ **Supported Regions**:
+
 - US (United States)
 - US-Lower48 (virtual region)
 
 ⚠️ **Scaling Limitation**:
+
 - Audio scraping requires manual browser automation
 - 2-4 hours per region per audio type
 - Blocks easy expansion to new regions
 
 🔄 **Automated**:
+
 - Daily challenge generation (GitHub Actions, 4 AM UTC)
 - All data fetching via eBird API
 - Game data generation
@@ -283,17 +299,20 @@ See [WORKFLOW_GUIDE.md](./WORKFLOW_GUIDE.md) for:
 ## Summary
 
 **The Good**:
+
 - ✅ Clean API-based automation for most steps
 - ✅ Fast data processing (seconds to minutes)
 - ✅ Reliable daily challenge generation
 - ✅ Hash-based consistency between frontend/backend
 
 **The Challenge**:
+
 - ⚠️ Audio URL scraping is manual bottleneck
 - ⚠️ 2-4 hours of browser automation per region
 - ⚠️ Blocks easy expansion to new regions
 
 **The Solution**:
+
 - 🔜 Research alternative audio sources
 - 🔜 Implement parallel processing
 - 🔜 Build community-sourced database
