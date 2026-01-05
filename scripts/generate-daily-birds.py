@@ -227,7 +227,9 @@ def main():
 
     # Print detected virtual regions
     for region_id, region_info in virtual_regions.items():
-        print(f"Detected virtual region: {region_id} -> parent: {region_info['parent']}")
+        print(
+            f"Detected virtual region: {region_id} -> parent: {region_info['parent']}"
+        )
 
     # Update history with yesterday's data (if we can determine the bird IDs)
     # Note: This is simplified - in practice you might want to store bird IDs in daily.json
