@@ -18,7 +18,7 @@ export async function loadGameData(forceRefresh = false) {
   let birds = await birdsRes.json();
 
   // Handle virtual regions - fallback to parent region's bird data
-  regions.forEach(region => {
+  regions.forEach((region) => {
     if (region.parentRegion && !birds[region.id]) {
       birds[region.id] = birds[region.parentRegion];
     }

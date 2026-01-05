@@ -9,9 +9,7 @@ describe("LoadGameData", () => {
 
   describe("Virtual Region Support", () => {
     it("should load regions and birds data successfully", async () => {
-      const mockRegions = [
-        { id: "us", name: "United States", country: "US" },
-      ];
+      const mockRegions = [{ id: "us", name: "United States", country: "US" }];
       const mockBirds = {
         us: [{ id: "amerob", name: "American Robin" }],
       };
@@ -252,7 +250,7 @@ describe("LoadGameData", () => {
             "Cache-Control": "no-cache",
             Pragma: "no-cache",
           }),
-        })
+        }),
       );
     });
 
@@ -276,7 +274,7 @@ describe("LoadGameData", () => {
         "/data/regions.json",
         expect.not.objectContaining({
           cache: "no-store",
-        })
+        }),
       );
     });
   });

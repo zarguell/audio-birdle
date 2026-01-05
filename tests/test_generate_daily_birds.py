@@ -310,10 +310,7 @@ class TestVirtualRegions:
 
         # Mock virtual regions config
         virtual_regions = {
-            "us-lower48": {
-                "parent": "us",
-                "excludedSubregions": ["Alaska", "Hawaii"]
-            }
+            "us-lower48": {"parent": "us", "excludedSubregions": ["Alaska", "Hawaii"]}
         }
 
         # Filter out excluded subregions
@@ -336,7 +333,7 @@ class TestVirtualRegions:
         """Test that virtual regions fall back to parent region's birds"""
         birds_data = {
             "us": [{"id": "bird1", "name": "Bird 1"}],
-            "us-lower48": []  # Empty for virtual region
+            "us-lower48": [],  # Empty for virtual region
         }
 
         virtual_regions = {
@@ -353,4 +350,3 @@ class TestVirtualRegions:
         # Should have gotten parent region's birds
         assert len(region_birds) == 1
         assert region_birds[0]["id"] == "bird1"
-
