@@ -213,9 +213,27 @@ public/data/
   "order": "Passeriformes",
   "family": "Turdidae (Turdidae)",
   "audioUrl": [
-    "https://cdn.download.earth.ebird.org/...",
-    "https://cdn.download.earth.ebird.org/..."
-  ]
+    {
+      "url": "https://cdn.download.earth.ebird.org/...",
+      "attribution": {
+        "recordist": "John Doe",
+        "location": "New York, NY",
+        "date": "2024-03-15"
+      }
+    }
+  ],
+  "images": [
+    {
+      "url": "https://example.com/images/robin.jpg",
+      "attribution": {
+        "photographer": "Jane Smith",
+        "source": "Macaulay Library",
+        "license": "CC BY-NC 4.0"
+      }
+    }
+  ],
+  "facts": "The American Robin is a familiar songbird known for its orange-red breast and cheerful morning song.",
+  "learnMoreUrl": "https://birdsoftheworld.org/species/american-robin"
 }
 ```
 
@@ -375,7 +393,28 @@ python3 game-data-generator.py \
       "scientificName": "Hirundo rustica",
       "order": "Passeriformes",
       "family": "Hirundinidae (Hirundinidae)",
-      "audioUrl": ["url1", "url2", ...]
+      "audioUrl": [
+        {
+          "url": "https://cdn.download.earth.ebird.org/...",
+          "attribution": {
+            "recordist": "Recordist Name",
+            "location": "Location",
+            "date": "YYYY-MM-DD"
+          }
+        }
+      ],
+      "images": [
+        {
+          "url": "https://example.com/image.jpg",
+          "attribution": {
+            "photographer": "Photographer Name",
+            "source": "Source Name",
+            "license": "CC BY-NC 4.0"
+          }
+        }
+      ],
+      "facts": "Short educational fact about the bird...",
+      "learnMoreUrl": "https://external-source.org/species/..."
     }
   ]
 }
@@ -925,11 +964,14 @@ python3 add-region.py --region EU --audio-types song,call
 
 **Checks**:
 
-- All birds have required fields (id, name, audioUrl)
+- All birds have required fields (id, name, scientificName, order, family, audioUrl)
 - Audio URLs are accessible (HTTP HEAD requests)
+- Image URLs are accessible (if provided)
 - No duplicate species codes within region
 - Hash consistency between Python and JavaScript
 - Region coverage (e.g., "Europe should have 500+ species")
+- Attribution fields are properly formatted
+- Facts and learnMoreUrl fields are valid (if provided)
 
 **Usage**:
 

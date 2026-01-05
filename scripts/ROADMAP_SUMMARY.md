@@ -341,7 +341,118 @@ python3 validate-data.py --region EU
 
 ### 🟢 Low Priority: Nice-to-Have Features
 
-#### 8. Web Dashboard for Data Management
+#### 8. Image Scraping and Display
+
+**Status**: ✅ **COMPLETED** - UI support added, awaiting data scraping
+
+**Implementation**:
+
+- Added `images` field to bird data schema
+- Created `BirdCompletionCard` component with image navigation
+- Supports multiple images per bird with attribution
+- Displays images on game completion (normal/hard/practice modes)
+
+**Next Steps**:
+
+- Scrape bird images from sources (Macaulay Library, Wikimedia Commons, etc.)
+- Populate `images` array with URLs and attribution data
+- Current placeholder: `images: []`
+
+**Fields**:
+
+```json
+"images": [
+  {
+    "url": "https://example.com/image.jpg",
+    "attribution": {
+      "photographer": "Photographer Name",
+      "source": "Macaulay Library",
+      "license": "CC BY-NC 4.0"
+    }
+  }
+]
+```
+
+---
+
+#### 9. Educational Facts
+
+**Status**: ✅ **COMPLETED** - UI support added, awaiting data scraping
+
+**Implementation**:
+
+- Added `facts` field to bird data schema
+- Displays educational facts on game completion
+- Shows in a styled "Fun Fact" section with bird icon
+
+**Next Steps**:
+
+- Scrape or generate short facts about each species
+- Sources: All About Birds, Wikipedia, bird guides
+- Current placeholder: `facts: ""`
+
+**Fields**:
+
+```json
+"facts": "The American Robin is a familiar songbird known for its orange-red breast..."
+```
+
+---
+
+#### 10. Attribution Support
+
+**Status**: ✅ **COMPLETED** - UI support added, awaiting data scraping
+
+**Implementation**:
+
+- Added `attribution` objects to `audioUrl` array
+- Added `attribution` objects to `images` array
+- Displays attribution footer on game completion
+- Supports multiple audio recordings with individual credits
+- Supports multiple images with individual credits
+
+**Next Steps**:
+
+- Extract attribution data from eBird API responses
+- Scrape photographer/recordist information
+- Populate attribution fields with proper credits
+
+**Fields**:
+
+```json
+"audioUrl": [
+  {
+    "url": "https://cdn.download.ams.birds.cornell.edu/...mp3",
+    "attribution": {
+      "recordist": "John Doe",
+      "location": "New York, NY",
+      "date": "2024-03-15"
+    }
+  }
+]
+```
+
+---
+
+#### 11. Learn More Links
+
+**Status**: ✅ **COMPLETED** - UI support added, awaiting data scraping
+
+**Implementation**:
+
+- Added `learnMoreUrl` field to bird data schema
+- "Learn More" button appears on game completion when URL is present
+- Opens external link in new tab
+
+**Next Steps**:
+
+- Add links to external sources (Birds of the World, All About Birds, etc.)
+- Could be generated rule-based (e.g., `https://birdsoftheworld.org/species/{speciesCode}`)
+- Current placeholder: `learnMoreUrl: ""`
+
+---
+
+#### 12. Web Dashboard for Data Management
 
 - View region data status
 - Trigger scrape jobs
@@ -354,7 +465,7 @@ python3 validate-data.py --region EU
 
 ---
 
-#### 9. Audio Quality Filtering
+#### 13. Audio Quality Filtering
 
 - Minimum duration (e.g., 10+ seconds)
 - Rating/quality scores from eBird
@@ -366,7 +477,7 @@ python3 validate-data.py --region EU
 
 ---
 
-#### 10. Multi-Language Support
+#### 14. Multi-Language Support
 
 - Fetch common names in multiple languages
 - Add language selection to game
@@ -377,7 +488,7 @@ python3 validate-data.py --region EU
 
 ---
 
-#### 11. Historic Daily Challenges
+#### 15. Historic Daily Challenges
 
 - Generate past daily challenges for testing
 - Backfill daily.json for previous dates
@@ -388,7 +499,7 @@ python3 validate-data.py --region EU
 
 ---
 
-#### 12. Automated Testing Pipeline
+#### 16. Automated Testing Pipeline
 
 - Validate new data before merging to main
 - Test hash consistency
