@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useMemo, StrictMode } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import {
   Play,
   Pause,
