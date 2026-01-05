@@ -21,8 +21,7 @@ export default function HardModeGame({
   todaysBird,
   gameState,
   onBack,
-  onGuess,
-  onShare
+  onGuess
 }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [audioError, setAudioError] = useState(false);
@@ -80,7 +79,6 @@ export default function HardModeGame({
     );
 
     await shareResult(shareText);
-    onShare();
   };
 
   const remainingGuesses = GAME_CONFIG.HARD_MODE_MAX_GUESSES - (hardModeGame?.guesses.length || 0);

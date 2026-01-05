@@ -1,6 +1,7 @@
 export const STORAGE_KEYS = {
   REGION: 'audio-birdle-region',
-  GAME_STATE: 'audio-birdle-game-state'
+  GAME_STATE: 'audio-birdle-game-state',
+  LAST_PLAYED_MODE: 'audio-birdle-last-mode'
 };
 
 export const GAME_CONFIG = {
@@ -22,5 +23,6 @@ export const VIEWS = {
   PRACTICE: 'practice',
   HARD_MODE: 'hard-mode',
   SETTINGS: 'settings',
-  REGION_SELECTOR: 'region-selector'
+  REGION_SELECTOR: 'region-selector',
+  MODE_SELECTOR: 'mode-selector'
 };

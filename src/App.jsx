@@ -23,16 +23,22 @@ import {
 import { generateShareText, shareResult } from './utils/ShareUtils';
 import { createAudioControls } from './utils/AudioUtils';
 import { STORAGE_KEYS, GAME_CONFIG, VIEWS } from './utils/Constants';
+import { checkForUpdates, refreshGameData, clearServiceWorkerCache } from './utils/CacheUtils';
 import { SubregionDisplay } from './utils/SubregionUtils';
 
 export default function AudioBirdle() {
   // Data state
   const [regions, setRegions] = useState([]);
   const [birds, setBirds] = useState({});
-  const [currentView, setCurrentView] = useState(VIEWS.GAME);
+  const [currentView, setCurrentView] = useState(VIEWS.MODE_SELECTOR);
   const [selectedRegion, setSelectedRegion] = useState(() =>
     getStoredData(STORAGE_KEYS.REGION, null)
   );
+  const [lastPlayedMode, setLastPlayedMode] = useState(() =>
+    getStoredData(STORAGE_KEYS.LAST_PLAYED_MODE, 'normal')
+  );
+  const [hasUpdate, setHasUpdate] = useState(false);
+  const [refreshingData, setRefreshingData] = useState(false);
 
   // Game state
   const [gameState, setGameState] = useState(() => {
@@ -89,6 +95,15 @@ export default function AudioBirdle() {
     }
   }, [selectedRegion, birds, today]);
 
+  // Check for data updates on load
+  useEffect(() => {
+    if (selectedRegion) {
+      checkForUpdates().then(({ hasUpdate }) => {
+        setHasUpdate(hasUpdate);
+      });
+    }
+  }, [selectedRegion]);
+
   // Generate answer options
   const answerOptions = generateAnswerOptions(
     selectedRegion,
@@ -109,6 +124,13 @@ export default function AudioBirdle() {
       setStoredData(STORAGE_KEYS.REGION, selectedRegion);
     }
   }, [selectedRegion]);
+
+  // Persist last played mode
+  useEffect(() => {
+    if (lastPlayedMode) {
+      setStoredData(STORAGE_KEYS.LAST_PLAYED_MODE, lastPlayedMode);
+    }
+  }, [lastPlayedMode]);
 
   // Audio controls
   // eslint-disable-next-line react-hooks/refs
@@ -183,6 +205,42 @@ export default function AudioBirdle() {
     setGameState(newGameState);
   };
 
+  // Refresh game data
+  const handleRefreshData = async () => {
+    if (!navigator.onLine) {
+      alert('Cannot refresh data while offline. Please connect to the internet and try again.');
+      return;
+    }
+
+    setRefreshingData(true);
+
+    try {
+      await clearServiceWorkerCache();
+
+      const { regions: newRegions, birds: newBirds } = await refreshGameData();
+
+      setRegions(newRegions);
+      setBirds(newBirds);
+
+      if (selectedRegion && newBirds[selectedRegion]) {
+        setLoadingBird(true);
+        getDailyBirdWithFallback(selectedRegion, newBirds[selectedRegion], today)
+          .then(bird => {
+            setTodaysBird(bird);
+            setLoadingBird(false);
+          });
+      }
+
+      setHasUpdate(false);
+      alert('Data refreshed successfully!');
+    } catch (error) {
+      console.error('Failed to refresh data:', error);
+      alert('Failed to refresh data. Please try again or check your internet connection.');
+    } finally {
+      setRefreshingData(false);
+    }
+  };
+
   // Region selector view
   const renderRegionSelector = () => (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 p-4">
@@ -223,6 +281,110 @@ export default function AudioBirdle() {
       </div>
     </div>
   );
+
+  // Mode selector view
+  const renderModeSelector = () => {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 p-4">
+        <div className="max-w-md mx-auto pt-16">
+          <div className="text-center mb-8">
+            <h1 className="text-3xl font-bold text-gray-800 mb-2">🐦 Audio-Birdle</h1>
+            <p className="text-gray-600">Learn birds through their calls</p>
+          </div>
+
+          <div className="bg-white rounded-xl shadow-lg p-6 space-y-4">
+            <h2 className="text-xl font-semibold mb-4">Select Game Mode</h2>
+
+            {/* Normal Mode */}
+            <button
+              onClick={() => {
+                setCurrentView(VIEWS.GAME);
+                setLastPlayedMode('normal');
+              }}
+              className="w-full text-left p-4 rounded-lg border-2 border-blue-200 hover:bg-blue-50 hover:border-blue-400 transition-all"
+            >
+              <div className="flex items-center gap-3">
+                <div className="text-2xl">🎯</div>
+                <div className="flex-1">
+                  <div className="font-semibold text-blue-800">Normal Mode</div>
+                  <div className="text-sm text-gray-600">
+                    Daily challenge • 4 guesses • Multiple choice
+                  </div>
+                </div>
+                {lastPlayedMode === 'normal' && (
+                  <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
+                    Last played
+                  </span>
+                )}
+              </div>
+            </button>
+
+            {/* Hard Mode */}
+            <button
+              onClick={() => {
+                setCurrentView(VIEWS.HARD_MODE);
+                setLastPlayedMode('hard');
+              }}
+              className="w-full text-left p-4 rounded-lg border-2 border-red-200 hover:bg-red-50 hover:border-red-400 transition-all"
+            >
+              <div className="flex items-center gap-3">
+                <div className="text-2xl">🔥</div>
+                <div className="flex-1">
+                  <div className="font-semibold text-red-800">Hard Mode</div>
+                  <div className="text-sm text-gray-600">
+                    Daily challenge • 6 guesses • Free text • Taxonomic hints
+                  </div>
+                </div>
+                {lastPlayedMode === 'hard' && (
+                  <span className="text-xs bg-red-100 text-red-800 px-2 py-1 rounded">
+                    Last played
+                  </span>
+                )}
+              </div>
+            </button>
+
+            {/* Practice Mode */}
+            <button
+              onClick={() => {
+                setCurrentView(VIEWS.PRACTICE);
+                setLastPlayedMode('practice');
+              }}
+              className="w-full text-left p-4 rounded-lg border-2 border-purple-200 hover:bg-purple-50 hover:border-purple-400 transition-all"
+            >
+              <div className="flex items-center gap-3">
+                <div className="text-2xl">🎮</div>
+                <div className="flex-1">
+                  <div className="font-semibold text-purple-800">Practice Mode</div>
+                  <div className="text-sm text-gray-600">
+                    Unlimited play • No daily limit
+                  </div>
+                </div>
+                {lastPlayedMode === 'practice' && (
+                  <span className="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded">
+                    Last played
+                  </span>
+                )}
+              </div>
+            </button>
+
+            {/* Settings Button */}
+            <button
+              onClick={() => setCurrentView(VIEWS.SETTINGS)}
+              className="w-full text-left p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors flex items-center gap-2"
+            >
+              <Settings className="w-5 h-5" />
+              <span>Settings</span>
+            </button>
+          </div>
+
+          {/* Region Display */}
+          <div className="mt-4 text-center text-sm text-gray-600">
+            Current region: {regions.find(r => r.id === selectedRegion)?.name || 'None selected'}
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   const renderStats = () => {
     const stats = getUserPerformanceSummary(gameState);
@@ -306,7 +468,7 @@ export default function AudioBirdle() {
       <div className="max-w-md mx-auto pt-8">
         <div className="flex items-center gap-2 mb-6">
           <button
-            onClick={() => setCurrentView(VIEWS.GAME)}
+            onClick={() => setCurrentView(VIEWS.MODE_SELECTOR)}
             className="text-blue-500 hover:text-blue-600"
           >
             ← Back
@@ -354,6 +516,23 @@ export default function AudioBirdle() {
             <RefreshCw className="w-4 h-4" />
             Reset All Data
           </button>
+
+          {hasUpdate && (
+            <div className="bg-yellow-50 border border-yellow-300 rounded-lg p-3 mb-4">
+              <p className="text-sm text-yellow-800">
+                🔄 New data available! Click the button below to refresh.
+              </p>
+            </div>
+          )}
+
+          <button
+            onClick={handleRefreshData}
+            disabled={refreshingData}
+            className="w-full bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition-colors flex items-center justify-center gap-2 disabled:bg-gray-400"
+          >
+            <RefreshCw className={`w-4 h-4 ${refreshingData ? 'animate-spin' : ''}`} />
+            {refreshingData ? 'Refreshing Data...' : 'Refresh Game Data'}
+          </button>
         </div>
       </div>
     </div>
@@ -367,7 +546,14 @@ export default function AudioBirdle() {
         <div className="max-w-md mx-auto pt-8">
           {/* Header with mode toggle */}
           <div className="flex justify-between items-center mb-6">
-            <h1 className="text-2xl font-bold text-gray-800">🐦 Audio-Birdle</h1>
+            <div className="flex items-center gap-3">
+              <h1 className="text-2xl font-bold text-gray-800">🐦 Audio-Birdle</h1>
+              {hasUpdate && (
+                <div className="bg-yellow-400 text-yellow-900 px-3 py-1 rounded-full text-xs font-semibold animate-pulse">
+                  Update Available
+                </div>
+              )}
+            </div>
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setCurrentView(VIEWS.HARD_MODE)}
@@ -387,6 +573,12 @@ export default function AudioBirdle() {
               >
                 <Target className="w-4 h-4" />
                 Practice
+              </button>
+              <button
+                onClick={() => setCurrentView(VIEWS.MODE_SELECTOR)}
+                className="bg-gray-500 text-white px-3 py-2 rounded-lg hover:bg-gray-600 transition-colors flex items-center gap-2 text-sm"
+              >
+                Change Mode
               </button>
               <button
                 onClick={() => setCurrentView(VIEWS.SETTINGS)}
@@ -593,13 +785,17 @@ export default function AudioBirdle() {
     return renderRegionSelector();
   }
 
+  if (currentView === VIEWS.MODE_SELECTOR) {
+    return renderModeSelector();
+  }
+
   if (currentView === VIEWS.PRACTICE) {
     return (
       <PracticeGame
         region={selectedRegion}
         birds={birds}
         regions={regions}
-        onBack={() => setCurrentView(VIEWS.GAME)}
+        onBack={() => setCurrentView(VIEWS.MODE_SELECTOR)}
       />
     );
   }
@@ -611,9 +807,8 @@ export default function AudioBirdle() {
         birds={birds}
         todaysBird={todaysBird}
         gameState={gameState}
-        onBack={() => setCurrentView(VIEWS.GAME)}
+        onBack={() => setCurrentView(VIEWS.MODE_SELECTOR)}
         onGuess={makeHardModeGuess}
-        onShare={handleShareResult}
       />
     );
   }
