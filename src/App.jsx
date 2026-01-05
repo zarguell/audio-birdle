@@ -33,7 +33,7 @@ import {
   getUserPerformanceSummary,
 } from "./utils/GameLogic";
 import { generateShareText, shareResult } from "./utils/ShareUtils";
-import { createAudioControls } from "./utils/AudioUtils";
+import { createAudioControls, getAudioSrc } from "./utils/AudioUtils";
 import { STORAGE_KEYS, GAME_CONFIG, VIEWS } from "./utils/Constants";
 import {
   checkForUpdates,
@@ -727,14 +727,7 @@ export default function AudioBirdle() {
                 {todaysBird && (
                   <audio
                     ref={audioRef}
-                    src={
-                      Array.isArray(todaysBird.audioUrl)
-                        ? typeof todaysBird.audioUrl[selectedAudioIndex] ===
-                          "object"
-                          ? todaysBird.audioUrl[selectedAudioIndex]?.url
-                          : todaysBird.audioUrl[selectedAudioIndex]
-                        : todaysBird.audioUrl
-                    }
+                    src={getAudioSrc(todaysBird.audioUrl, selectedAudioIndex)}
                     onEnded={handleAudioEnded}
                     onError={handleAudioError}
                     onLoadStart={() => {

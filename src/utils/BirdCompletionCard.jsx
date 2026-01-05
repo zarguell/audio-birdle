@@ -17,6 +17,10 @@ export default function BirdCompletionCard({
   onShare,
   variant = "normal", // 'normal', 'hard', 'practice'
 }) {
+  if (!bird) {
+    return null;
+  }
+
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
   // Normalize audioUrl - handle both old format (array of strings) and new format (array of objects)

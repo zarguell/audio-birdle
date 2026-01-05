@@ -7,7 +7,7 @@ import {
   ArrowRight,
   Target,
 } from "lucide-react";
-import { createAudioControls } from "./AudioUtils";
+import { createAudioControls, getAudioSrc } from "./AudioUtils";
 import {
   createInitialPracticeState,
   getPracticeBird,
@@ -249,14 +249,7 @@ export default function PracticeGame({ region, birds, regions, onBack }) {
 
               <audio
                 ref={audioRef}
-                src={
-                  Array.isArray(currentBird.audioUrl)
-                    ? typeof currentBird.audioUrl[selectedAudioIndex] ===
-                      "object"
-                      ? currentBird.audioUrl[selectedAudioIndex]?.url
-                      : currentBird.audioUrl[selectedAudioIndex]
-                    : currentBird.audioUrl
-                }
+                src={getAudioSrc(currentBird.audioUrl, selectedAudioIndex)}
                 onEnded={handleAudioEnded}
                 onError={handleAudioError}
                 onLoadStart={() => setAudioError(false)}

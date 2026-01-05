@@ -8,7 +8,7 @@ import { ArrowLeft, Share2, Volume2 } from "lucide-react";
 import HardModeInput from "./HardModeInput";
 import TaxonomicBadge from "./TaxonomicBadge";
 import BirdCompletionCard from "./BirdCompletionCard";
-import { createAudioControls } from "./AudioUtils";
+import { createAudioControls, getAudioSrc } from "./AudioUtils";
 import { GAME_CONFIG } from "./Constants";
 import { extractGenus } from "./TaxonomyUtils";
 import { getTodayString } from "./DateUtils";
@@ -160,13 +160,7 @@ export default function HardModeGame({
             )}
             <audio
               ref={audioRef}
-              src={
-                Array.isArray(todaysBird.audioUrl)
-                  ? typeof todaysBird.audioUrl[selectedAudioIndex] === "object"
-                    ? todaysBird.audioUrl[selectedAudioIndex]?.url
-                    : todaysBird.audioUrl[selectedAudioIndex]
-                  : todaysBird.audioUrl
-              }
+              src={getAudioSrc(todaysBird.audioUrl, selectedAudioIndex)}
               onEnded={handleAudioEnded}
               onError={handleAudioError}
             />
