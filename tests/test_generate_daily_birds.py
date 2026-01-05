@@ -297,7 +297,6 @@ class TestVirtualRegions:
     @staticmethod
     def test_virtual_region_subregion_filtering():
         """Test that virtual regions exclude specified subregions"""
-        from datetime import date
 
         data = {
             "us-lower48": {
