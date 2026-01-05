@@ -296,10 +296,11 @@ class TestVirtualRegions:
 
     @staticmethod
     def test_virtual_region_subregion_filtering():
-        """Test that virtual regions exclude specified subregions"""
+        """Test that virtual regions inherit and exclude subregions from parent"""
 
-        data = {
-            "us-lower48": {
+        # Subregions data structure from subregions.json (parent region key)
+        subregions_data = {
+            "us": {
                 "California": [{"id": "bird1"}],
                 "Texas": [{"id": "bird2"}],
                 "Alaska": [{"id": "bird3"}],  # Should be excluded
@@ -312,10 +313,13 @@ class TestVirtualRegions:
             "us-lower48": {"parent": "us", "excludedSubregions": ["Alaska", "Hawaii"]}
         }
 
-        # Filter out excluded subregions
-        region_subregions = data.get("us-lower48", {}).copy()
-        excluded = virtual_regions["us-lower48"]["excludedSubregions"]
+        # Simulate the actual logic from main()
+        region_id = "us-lower48"
+        parent_id = virtual_regions[region_id]["parent"]
+        region_subregions = subregions_data.get(parent_id, {}).copy()
+        excluded = virtual_regions[region_id]["excludedSubregions"]
 
+        # Remove excluded subregions from the selection pool
         for excluded_sub in excluded:
             if excluded_sub in region_subregions:
                 del region_subregions[excluded_sub]
@@ -339,7 +343,7 @@ class TestVirtualRegions:
             "us-lower48": {"parent": "us", "excludedSubregions": ["Alaska"]}
         }
 
-        # Simulate the lookup logic
+        # Simulate the lookup logic from main()
         region_id = "us-lower48"
         region_birds = birds_data.get(region_id, [])
         if not region_birds and region_id in virtual_regions:
@@ -349,3 +353,57 @@ class TestVirtualRegions:
         # Should have gotten parent region's birds
         assert len(region_birds) == 1
         assert region_birds[0]["id"] == "bird1"
+
+    @staticmethod
+    def test_virtual_region_empty_after_exclusions():
+        """Test handling when all subregions are excluded"""
+        subregions_data = {
+            "us": {
+                "Alaska": [{"id": "bird1"}],
+                "Hawaii": [{"id": "bird2"}],
+            }
+        }
+
+        virtual_regions = {
+            "us-lower48": {"parent": "us", "excludedSubregions": ["Alaska", "Hawaii"]}
+        }
+
+        # Simulate the logic
+        region_id = "us-lower48"
+        parent_id = virtual_regions[region_id]["parent"]
+        region_subregions = subregions_data.get(parent_id, {}).copy()
+        excluded = virtual_regions[region_id]["excludedSubregions"]
+
+        for excluded_sub in excluded:
+            if excluded_sub in region_subregions:
+                del region_subregions[excluded_sub]
+
+        # Should have no valid subregions remaining
+        assert len(region_subregions) == 0
+
+    @staticmethod
+    def test_virtual_region_no_exclusions():
+        """Test virtual region with no excluded subregions"""
+        subregions_data = {
+            "us": {
+                "California": [{"id": "bird1"}],
+                "Texas": [{"id": "bird2"}],
+            }
+        }
+
+        virtual_regions = {"us-lower48": {"parent": "us", "excludedSubregions": []}}
+
+        # Simulate the logic
+        region_id = "us-lower48"
+        parent_id = virtual_regions[region_id]["parent"]
+        region_subregions = subregions_data.get(parent_id, {}).copy()
+        excluded = virtual_regions[region_id]["excludedSubregions"]
+
+        for excluded_sub in excluded:
+            if excluded_sub in region_subregions:
+                del region_subregions[excluded_sub]
+
+        # All parent subregions should be present
+        assert "California" in region_subregions
+        assert "Texas" in region_subregions
+        assert len(region_subregions) == 2

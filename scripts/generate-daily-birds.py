@@ -216,16 +216,18 @@ def main():
     current_daily = load_json_file(daily_path)
 
     # Detect virtual regions (regions with parentRegion field)
-    virtual_regions = {}
-    for region in regions:
-        if "parentRegion" in region:
-            virtual_regions[region["id"]] = {
-                "parent": region["parentRegion"],
-                "excludedSubregions": region.get("excludedSubregions", []),
-            }
-            print(
-                f"Detected virtual region: {region['id']} -> parent: {region['parentRegion']}"
-            )
+    virtual_regions = {
+        region["id"]: {
+            "parent": region["parentRegion"],
+            "excludedSubregions": region.get("excludedSubregions", []),
+        }
+        for region in regions
+        if "parentRegion" in region
+    }
+
+    # Print detected virtual regions
+    for region_id, region_info in virtual_regions.items():
+        print(f"Detected virtual region: {region_id} -> parent: {region_info['parent']}")
 
     # Update history with yesterday's data (if we can determine the bird IDs)
     # Note: This is simplified - in practice you might want to store bird IDs in daily.json
@@ -264,7 +266,9 @@ def main():
             # For virtual regions, filter out excluded subregions from available list
             modified_subregions_data = subregions_data
             if region_id in virtual_regions:
-                region_subregions = subregions_data.get(region_id, {}).copy()
+                # Get subregions from parent region, not from virtual region itself
+                parent_id = virtual_regions[region_id]["parent"]
+                region_subregions = subregions_data.get(parent_id, {}).copy()
                 excluded = virtual_regions[region_id]["excludedSubregions"]
 
                 # Remove excluded subregions from the selection pool
@@ -366,7 +370,7 @@ def main():
     save_json_file(history_path, history)
 
     print(f"\n✓ Generated daily.json with {len(new_daily)} entries")
-    print(f"✓ Updated history.json")
+    print("✓ Updated history.json")
     print(f"✓ Files saved to {base_path}")
 
     # Display summary
