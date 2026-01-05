@@ -224,11 +224,9 @@ export default function AudioBirdle() {
 
       if (selectedRegion && newBirds[selectedRegion]) {
         setLoadingBird(true);
-        getDailyBirdWithFallback(selectedRegion, newBirds[selectedRegion], today)
-          .then(bird => {
-            setTodaysBird(bird);
-            setLoadingBird(false);
-          });
+        const bird = await getDailyBirdWithFallback(selectedRegion, newBirds[selectedRegion], today);
+        setTodaysBird(bird);
+        setLoadingBird(false);
       }
 
       setHasUpdate(false);
@@ -284,6 +282,57 @@ export default function AudioBirdle() {
 
   // Mode selector view
   const renderModeSelector = () => {
+    const gameModes = [
+      {
+        name: 'Normal Mode',
+        description: 'Daily challenge • 4 guesses • Multiple choice',
+        icon: '🎯',
+        mode: 'normal',
+        view: VIEWS.GAME,
+        color: 'blue'
+      },
+      {
+        name: 'Hard Mode',
+        description: 'Daily challenge • 6 guesses • Free text • Taxonomic hints',
+        icon: '🔥',
+        mode: 'hard',
+        view: VIEWS.HARD_MODE,
+        color: 'red'
+      },
+      {
+        name: 'Practice Mode',
+        description: 'Unlimited play • No daily limit',
+        icon: '🎮',
+        mode: 'practice',
+        view: VIEWS.PRACTICE,
+        color: 'purple'
+      }
+    ];
+
+    const colorClasses = {
+      blue: {
+        border: 'border-blue-200',
+        hoverBg: 'hover:bg-blue-50',
+        hoverBorder: 'hover:border-blue-400',
+        title: 'text-blue-800',
+        badge: 'bg-blue-100 text-blue-800'
+      },
+      red: {
+        border: 'border-red-200',
+        hoverBg: 'hover:bg-red-50',
+        hoverBorder: 'hover:border-red-400',
+        title: 'text-red-800',
+        badge: 'bg-red-100 text-red-800'
+      },
+      purple: {
+        border: 'border-purple-200',
+        hoverBg: 'hover:bg-purple-50',
+        hoverBorder: 'hover:border-purple-400',
+        title: 'text-purple-800',
+        badge: 'bg-purple-100 text-purple-800'
+      }
+    };
+
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 p-4">
         <div className="max-w-md mx-auto pt-16">
@@ -295,77 +344,34 @@ export default function AudioBirdle() {
           <div className="bg-white rounded-xl shadow-lg p-6 space-y-4">
             <h2 className="text-xl font-semibold mb-4">Select Game Mode</h2>
 
-            {/* Normal Mode */}
-            <button
-              onClick={() => {
-                setCurrentView(VIEWS.GAME);
-                setLastPlayedMode('normal');
-              }}
-              className="w-full text-left p-4 rounded-lg border-2 border-blue-200 hover:bg-blue-50 hover:border-blue-400 transition-all"
-            >
-              <div className="flex items-center gap-3">
-                <div className="text-2xl">🎯</div>
-                <div className="flex-1">
-                  <div className="font-semibold text-blue-800">Normal Mode</div>
-                  <div className="text-sm text-gray-600">
-                    Daily challenge • 4 guesses • Multiple choice
+            {gameModes.map(mode => {
+              const colors = colorClasses[mode.color];
+              return (
+                <button
+                  key={mode.mode}
+                  onClick={() => {
+                    setCurrentView(mode.view);
+                    setLastPlayedMode(mode.mode);
+                  }}
+                  className={`w-full text-left p-4 rounded-lg border-2 ${colors.border} ${colors.hoverBg} ${colors.hoverBorder} transition-all`}
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="text-2xl">{mode.icon}</div>
+                    <div className="flex-1">
+                      <div className={`font-semibold ${colors.title}`}>{mode.name}</div>
+                      <div className="text-sm text-gray-600">
+                        {mode.description}
+                      </div>
+                    </div>
+                    {lastPlayedMode === mode.mode && (
+                      <span className={`text-xs ${colors.badge} px-2 py-1 rounded`}>
+                        Last played
+                      </span>
+                    )}
                   </div>
-                </div>
-                {lastPlayedMode === 'normal' && (
-                  <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
-                    Last played
-                  </span>
-                )}
-              </div>
-            </button>
-
-            {/* Hard Mode */}
-            <button
-              onClick={() => {
-                setCurrentView(VIEWS.HARD_MODE);
-                setLastPlayedMode('hard');
-              }}
-              className="w-full text-left p-4 rounded-lg border-2 border-red-200 hover:bg-red-50 hover:border-red-400 transition-all"
-            >
-              <div className="flex items-center gap-3">
-                <div className="text-2xl">🔥</div>
-                <div className="flex-1">
-                  <div className="font-semibold text-red-800">Hard Mode</div>
-                  <div className="text-sm text-gray-600">
-                    Daily challenge • 6 guesses • Free text • Taxonomic hints
-                  </div>
-                </div>
-                {lastPlayedMode === 'hard' && (
-                  <span className="text-xs bg-red-100 text-red-800 px-2 py-1 rounded">
-                    Last played
-                  </span>
-                )}
-              </div>
-            </button>
-
-            {/* Practice Mode */}
-            <button
-              onClick={() => {
-                setCurrentView(VIEWS.PRACTICE);
-                setLastPlayedMode('practice');
-              }}
-              className="w-full text-left p-4 rounded-lg border-2 border-purple-200 hover:bg-purple-50 hover:border-purple-400 transition-all"
-            >
-              <div className="flex items-center gap-3">
-                <div className="text-2xl">🎮</div>
-                <div className="flex-1">
-                  <div className="font-semibold text-purple-800">Practice Mode</div>
-                  <div className="text-sm text-gray-600">
-                    Unlimited play • No daily limit
-                  </div>
-                </div>
-                {lastPlayedMode === 'practice' && (
-                  <span className="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded">
-                    Last played
-                  </span>
-                )}
-              </div>
-            </button>
+                </button>
+              );
+            })}
 
             {/* Settings Button */}
             <button
@@ -494,7 +500,7 @@ export default function AudioBirdle() {
           </button>
 
           <button
-            onClick={() => setCurrentView('stats')}
+            onClick={() => setCurrentView(VIEWS.STATS)}
             className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors flex items-center justify-center gap-2"
           >
             <BarChart3 className="w-4 h-4" />
@@ -817,7 +823,7 @@ export default function AudioBirdle() {
     return renderSettings();
   }
 
-  if (currentView === 'stats') {
+  if (currentView === VIEWS.STATS) {
     return renderStats();
   }
 

@@ -2,12 +2,11 @@
  * Cache management utilities for PWA data refresh
  */
 
+import { STORAGE_KEYS } from './Constants';
+
 const DATA_FILES = [
   '/data/regions.json',
-  '/data/birds.json',
-  '/data/daily.json',
-  '/data/history.json',
-  '/data/daily-subregion-birds.json'
+  '/data/birds.json'
 ];
 
 /**
@@ -22,7 +21,8 @@ export const getServiceWorker = async () => {
   try {
     const registration = await navigator.serviceWorker.getRegistration();
     return registration;
-  } catch {
+  } catch (error) {
+    console.error('Failed to get service worker registration:', error);
     return null;
   }
 };
@@ -34,8 +34,9 @@ export const getServiceWorker = async () => {
  */
 export const checkForUpdates = async () => {
   try {
-    // Try to fetch daily.json with HEAD request to check version
-    const response = await fetch('/data/daily.json', {
+    // Try to fetch regions.json with HEAD request to check version
+    // This matches the file we use in loadGameData for version tracking
+    const response = await fetch('/data/regions.json', {
       method: 'HEAD',
       cache: 'no-store'
     });
@@ -44,8 +45,8 @@ export const checkForUpdates = async () => {
     const serverETag = response.headers.get('ETag');
 
     // Get cached version info from localStorage
-    const cachedLastModified = localStorage.getItem('audio-birdle-last-modified');
-    const cachedETag = localStorage.getItem('audio-birdle-etag');
+    const cachedLastModified = localStorage.getItem(STORAGE_KEYS.CACHE_LAST_MODIFIED);
+    const cachedETag = localStorage.getItem(STORAGE_KEYS.CACHE_ETAG);
 
     const hasUpdate =
       (serverLastModified && serverLastModified !== cachedLastModified) ||
@@ -72,10 +73,10 @@ export const storeVersionInfo = async (response) => {
     const etag = response.headers.get('ETag');
 
     if (lastModified) {
-      localStorage.setItem('audio-birdle-last-modified', lastModified);
+      localStorage.setItem(STORAGE_KEYS.CACHE_LAST_MODIFIED, lastModified);
     }
     if (etag) {
-      localStorage.setItem('audio-birdle-etag', etag);
+      localStorage.setItem(STORAGE_KEYS.CACHE_ETAG, etag);
     }
   } catch (error) {
     console.warn('Failed to store version info:', error);
