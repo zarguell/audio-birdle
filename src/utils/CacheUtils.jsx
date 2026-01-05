@@ -5,8 +5,11 @@
 import { STORAGE_KEYS } from './Constants';
 
 const DATA_FILES = [
-  '/data/regions.json',
-  '/data/birds.json'
+  "/data/regions.json",
+  "/data/birds.json",
+  "/data/daily.json",
+  "/data/history.json",
+  "/data/daily-subregion-birds.json",
 ];
 
 /**
@@ -14,7 +17,7 @@ const DATA_FILES = [
  * @returns {Promise<ServiceWorkerRegistration|null>}
  */
 export const getServiceWorker = async () => {
-  if (!('serviceWorker' in navigator)) {
+  if (!("serviceWorker" in navigator)) {
     return null;
   }
 
@@ -41,8 +44,8 @@ export const checkForUpdates = async () => {
       cache: 'no-store'
     });
 
-    const serverLastModified = response.headers.get('Last-Modified');
-    const serverETag = response.headers.get('ETag');
+    const serverLastModified = response.headers.get("Last-Modified");
+    const serverETag = response.headers.get("ETag");
 
     // Get cached version info from localStorage
     const cachedLastModified = localStorage.getItem(STORAGE_KEYS.CACHE_LAST_MODIFIED);
@@ -55,10 +58,10 @@ export const checkForUpdates = async () => {
     return {
       hasUpdate,
       serverVersion: serverLastModified || serverETag,
-      cachedVersion: cachedLastModified || cachedETag
+      cachedVersion: cachedLastModified || cachedETag,
     };
   } catch (error) {
-    console.warn('Failed to check for updates:', error);
+    console.warn("Failed to check for updates:", error);
     return { hasUpdate: false };
   }
 };
@@ -69,8 +72,8 @@ export const checkForUpdates = async () => {
  */
 export const storeVersionInfo = async (response) => {
   try {
-    const lastModified = response.headers.get('Last-Modified');
-    const etag = response.headers.get('ETag');
+    const lastModified = response.headers.get("Last-Modified");
+    const etag = response.headers.get("ETag");
 
     if (lastModified) {
       localStorage.setItem(STORAGE_KEYS.CACHE_LAST_MODIFIED, lastModified);
@@ -79,7 +82,7 @@ export const storeVersionInfo = async (response) => {
       localStorage.setItem(STORAGE_KEYS.CACHE_ETAG, etag);
     }
   } catch (error) {
-    console.warn('Failed to store version info:', error);
+    console.warn("Failed to store version info:", error);
   }
 };
 
@@ -91,13 +94,11 @@ export const clearServiceWorkerCache = async () => {
   try {
     // Also manually delete caches
     const cacheNames = await caches.keys();
-    await Promise.all(
-      cacheNames.map(cacheName => caches.delete(cacheName))
-    );
+    await Promise.all(cacheNames.map((cacheName) => caches.delete(cacheName)));
 
     return true;
   } catch (error) {
-    console.error('Failed to clear service worker cache:', error);
+    console.error("Failed to clear service worker cache:", error);
     return false;
   }
 };
@@ -120,11 +121,11 @@ export const refreshGameData = async (onProgress) => {
 
     try {
       const response = await fetch(file, {
-        cache: 'no-store',
+        cache: "no-store",
         headers: {
-          'Cache-Control': 'no-cache',
-          'Pragma': 'no-cache'
-        }
+          "Cache-Control": "no-cache",
+          Pragma: "no-cache",
+        },
       });
 
       if (!response.ok) {
@@ -134,9 +135,9 @@ export const refreshGameData = async (onProgress) => {
       const data = await response.json();
 
       // Store in appropriate result key
-      if (file.includes('regions.json')) {
+      if (file.includes("regions.json")) {
         results.regions = data;
-      } else if (file.includes('birds.json')) {
+      } else if (file.includes("birds.json")) {
         results.birds = data;
       }
 

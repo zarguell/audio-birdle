@@ -12,12 +12,12 @@ export const GAME_CONFIG = {
   // Hard mode configuration
   HARD_MODE_MAX_GUESSES: 6,
   HARD_MODE_HINT_TIMING: {
-    ORDER: 1,    // Show order hint after guess 1
-    FAMILY: 3,   // Show family hint after guess 3
-    GENUS: 5     // Show genus hint after guess 5
+    ORDER: 1, // Show order hint after guess 1
+    FAMILY: 3, // Show family hint after guess 3
+    GENUS: 5, // Show genus hint after guess 5
   },
   // Autocomplete matching threshold for fuzzy search
-  FUZZY_MATCH_THRESHOLD: 30
+  FUZZY_MATCH_THRESHOLD: 30,
 };
 
 export const VIEWS = {

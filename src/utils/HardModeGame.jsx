@@ -3,17 +3,17 @@
  * Red/orange theme to distinguish from normal mode (blue/green) and practice (purple)
  */
 
-import { useState, useRef, useMemo, useEffect } from 'react';
-import { ArrowLeft, Share2, Volume2 } from 'lucide-react';
-import HardModeInput from './HardModeInput';
-import TaxonomicBadge from './TaxonomicBadge';
-import { createAudioControls } from './AudioUtils';
-import { GAME_CONFIG } from './Constants';
-import { extractGenus } from './TaxonomyUtils';
-import { getTodayString } from './DateUtils';
-import { generateHardModeShareText, shareResult } from './ShareUtils';
-import { SubregionDisplay } from './SubregionUtils';
-import { hasCompletedNormalMode } from './GameLogic';
+import { useState, useRef, useMemo, useEffect } from "react";
+import { ArrowLeft, Share2, Volume2 } from "lucide-react";
+import HardModeInput from "./HardModeInput";
+import TaxonomicBadge from "./TaxonomicBadge";
+import { createAudioControls } from "./AudioUtils";
+import { GAME_CONFIG } from "./Constants";
+import { extractGenus } from "./TaxonomyUtils";
+import { getTodayString } from "./DateUtils";
+import { generateHardModeShareText, shareResult } from "./ShareUtils";
+import { SubregionDisplay } from "./SubregionUtils";
+import { hasCompletedNormalMode } from "./GameLogic";
 
 export default function HardModeGame({
   region,
@@ -21,7 +21,7 @@ export default function HardModeGame({
   todaysBird,
   gameState,
   onBack,
-  onGuess
+  onGuess,
 }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [audioError, setAudioError] = useState(false);
@@ -75,19 +75,23 @@ export default function HardModeGame({
 
     const shareText = generateHardModeShareText(
       hardModeGame,
-      window.location.href
+      window.location.href,
     );
 
     await shareResult(shareText);
   };
 
-  const remainingGuesses = GAME_CONFIG.HARD_MODE_MAX_GUESSES - (hardModeGame?.guesses.length || 0);
+  const remainingGuesses =
+    GAME_CONFIG.HARD_MODE_MAX_GUESSES - (hardModeGame?.guesses.length || 0);
 
   if (!todaysBird) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-red-50 to-orange-50">
         <div className="max-w-md mx-auto px-4 py-6">
-          <button onClick={onBack} className="text-gray-600 hover:text-gray-800 mb-4">
+          <button
+            onClick={onBack}
+            className="text-gray-600 hover:text-gray-800 mb-4"
+          >
             <ArrowLeft className="w-6 h-6" />
           </button>
           <div className="bg-white rounded-xl shadow-lg p-6 text-center">
@@ -101,10 +105,12 @@ export default function HardModeGame({
   return (
     <div className="min-h-screen bg-gradient-to-br from-red-50 to-orange-50">
       <div className="max-w-md mx-auto px-4 py-6">
-
         {/* Header */}
         <div className="flex items-center justify-between mb-4">
-          <button onClick={onBack} className="text-gray-600 hover:text-gray-800">
+          <button
+            onClick={onBack}
+            className="text-gray-600 hover:text-gray-800"
+          >
             <ArrowLeft className="w-6 h-6" />
           </button>
           <h1 className="text-2xl font-bold text-gray-800">🔥 Hard Mode</h1>
@@ -112,12 +118,12 @@ export default function HardModeGame({
         </div>
 
         <div className="bg-white rounded-xl shadow-lg p-6">
-
           {/* Warning if normal mode already completed */}
           {normalModeCompleted && (
             <div className="bg-yellow-50 border border-yellow-300 rounded-lg p-4 mb-4">
               <p className="text-sm text-yellow-800 text-center">
-                ⚠️ You've already completed Normal Mode today. You can't play Hard Mode on the same day.
+                ⚠️ You've already completed Normal Mode today. You can't play
+                Hard Mode on the same day.
               </p>
             </div>
           )}
@@ -128,11 +134,15 @@ export default function HardModeGame({
             {todaysBird.audioUrl && todaysBird.audioUrl.length > 1 && (
               <select
                 value={selectedAudioIndex}
-                onChange={(e) => setSelectedAudioIndex(parseInt(e.target.value))}
+                onChange={(e) =>
+                  setSelectedAudioIndex(parseInt(e.target.value))
+                }
                 className="mb-2 px-3 py-1 border border-gray-300 rounded-lg text-sm"
               >
                 {todaysBird.audioUrl.map((_, index) => (
-                  <option key={index} value={index}>Recording {index + 1}</option>
+                  <option key={index} value={index}>
+                    Recording {index + 1}
+                  </option>
                 ))}
               </select>
             )}
@@ -140,10 +150,12 @@ export default function HardModeGame({
               onClick={toggleAudio}
               className="bg-red-500 text-white px-6 py-3 rounded-lg hover:bg-red-600 transition-colors"
             >
-              {isPlaying ? 'Pause' : 'Play Bird Call'}
+              {isPlaying ? "Pause" : "Play Bird Call"}
             </button>
             {audioError && (
-              <p className="text-red-500 text-sm mt-2">Error playing audio. Please try again.</p>
+              <p className="text-red-500 text-sm mt-2">
+                Error playing audio. Please try again.
+              </p>
             )}
             <audio
               ref={audioRef}
@@ -156,7 +168,7 @@ export default function HardModeGame({
           {/* Location Hint */}
           <div className="bg-blue-50 rounded-lg p-3 mb-4 border border-blue-200">
             <p className="text-sm text-gray-700">
-              💡 This bird was observed in the last 14 days on eBird in{' '}
+              💡 This bird was observed in the last 14 days on eBird in{" "}
               <span className="font-semibold text-blue-700">
                 <SubregionDisplay selectedRegion={region} today={today} />
               </span>
@@ -166,22 +178,30 @@ export default function HardModeGame({
           {/* Game Status */}
           <div className="text-center mb-4 text-gray-600">
             {hardModeGame?.completed
-              ? (hardModeGame.won ? '🎉 Correct!' : '😔 Game Over')
-              : `${remainingGuesses} ${remainingGuesses === 1 ? 'guess' : 'guesses'} remaining`
-            }
+              ? hardModeGame.won
+                ? "🎉 Correct!"
+                : "😔 Game Over"
+              : `${remainingGuesses} ${remainingGuesses === 1 ? "guess" : "guesses"} remaining`}
           </div>
 
           {/* Guess History with Taxonomic Scores */}
           <div className="space-y-2 mb-4">
             {hardModeGame?.guesses.map((guess, index) => {
-              const guessedBird = guess.birdId ? birds[region].find(b => b.id === guess.birdId) : null;
+              const guessedBird = guess.birdId
+                ? birds[region].find((b) => b.id === guess.birdId)
+                : null;
               return (
-                <div key={index} className="bg-gray-50 rounded-lg p-3 border-2 border-gray-200">
+                <div
+                  key={index}
+                  className="bg-gray-50 rounded-lg p-3 border-2 border-gray-200"
+                >
                   <div className="flex justify-between items-start mb-2">
                     <div>
                       <div className="font-medium">{guess.textInput}</div>
                       {guessedBird && (
-                        <div className="text-sm text-gray-500 italic">{guessedBird.scientificName}</div>
+                        <div className="text-sm text-gray-500 italic">
+                          {guessedBird.scientificName}
+                        </div>
                       )}
                     </div>
                     {!guess.correct && <div className="text-2xl">❌</div>}
@@ -193,17 +213,23 @@ export default function HardModeGame({
                     <TaxonomicBadge
                       label="Order"
                       correct={guess.taxonomicScore.order}
-                      show={index >= GAME_CONFIG.HARD_MODE_HINT_TIMING.ORDER - 1}
+                      show={
+                        index >= GAME_CONFIG.HARD_MODE_HINT_TIMING.ORDER - 1
+                      }
                     />
                     <TaxonomicBadge
                       label="Family"
                       correct={guess.taxonomicScore.family}
-                      show={index >= GAME_CONFIG.HARD_MODE_HINT_TIMING.FAMILY - 1}
+                      show={
+                        index >= GAME_CONFIG.HARD_MODE_HINT_TIMING.FAMILY - 1
+                      }
                     />
                     <TaxonomicBadge
                       label="Genus"
                       correct={guess.taxonomicScore.genus}
-                      show={index >= GAME_CONFIG.HARD_MODE_HINT_TIMING.GENUS - 1}
+                      show={
+                        index >= GAME_CONFIG.HARD_MODE_HINT_TIMING.GENUS - 1
+                      }
                     />
                     <TaxonomicBadge
                       label="Species"
@@ -219,20 +245,27 @@ export default function HardModeGame({
           {/* Progressive Hints */}
           {!hardModeGame?.completed && hardModeGame?.guesses.length >= 1 && (
             <div className="bg-yellow-50 rounded-lg p-4 border border-yellow-200 mb-4">
-              <h4 className="font-semibold text-yellow-800 mb-2">🔍 Taxonomic Hints:</h4>
-              {hardModeGame.guesses.length >= GAME_CONFIG.HARD_MODE_HINT_TIMING.ORDER && (
+              <h4 className="font-semibold text-yellow-800 mb-2">
+                🔍 Taxonomic Hints:
+              </h4>
+              {hardModeGame.guesses.length >=
+                GAME_CONFIG.HARD_MODE_HINT_TIMING.ORDER && (
                 <div className="text-sm">
                   <span className="font-medium">Order:</span> {todaysBird.order}
                 </div>
               )}
-              {hardModeGame.guesses.length >= GAME_CONFIG.HARD_MODE_HINT_TIMING.FAMILY && (
+              {hardModeGame.guesses.length >=
+                GAME_CONFIG.HARD_MODE_HINT_TIMING.FAMILY && (
                 <div className="text-sm mt-1">
-                  <span className="font-medium">Family:</span> {todaysBird.family}
+                  <span className="font-medium">Family:</span>{" "}
+                  {todaysBird.family}
                 </div>
               )}
-              {hardModeGame.guesses.length >= GAME_CONFIG.HARD_MODE_HINT_TIMING.GENUS && (
+              {hardModeGame.guesses.length >=
+                GAME_CONFIG.HARD_MODE_HINT_TIMING.GENUS && (
                 <div className="text-sm mt-1">
-                  <span className="font-medium">Genus:</span> {extractGenus(todaysBird.scientificName)}
+                  <span className="font-medium">Genus:</span>{" "}
+                  {extractGenus(todaysBird.scientificName)}
                 </div>
               )}
             </div>
@@ -253,7 +286,9 @@ export default function HardModeGame({
               <div className="bg-gray-50 rounded-lg p-4 text-center">
                 <p className="font-medium">Correct Answer:</p>
                 <p className="text-lg font-bold">{todaysBird.name}</p>
-                <p className="text-sm italic text-gray-500">{todaysBird.scientificName}</p>
+                <p className="text-sm italic text-gray-500">
+                  {todaysBird.scientificName}
+                </p>
               </div>
               <button
                 onClick={handleShare}
