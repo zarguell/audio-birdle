@@ -15,7 +15,14 @@ export async function loadGameData(forceRefresh = false) {
   const regions = await regionsRes.json();
 
   const birdsRes = await fetch("/data/birds.json", cacheOptions);
-  const birds = await birdsRes.json();
+  let birds = await birdsRes.json();
+
+  // Handle virtual regions - fallback to parent region's bird data
+  regions.forEach((region) => {
+    if (region.parentRegion && !birds[region.id]) {
+      birds[region.id] = birds[region.parentRegion];
+    }
+  });
 
   // Store version info if not forcing refresh
   if (!forceRefresh && regionsRes.ok) {
