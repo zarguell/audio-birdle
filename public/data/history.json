@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-09-07",
-      "id": "bushti",
-      "name": "Bushtit",
-      "subregion": "Oklahoma"
-    },
-    {
       "date": "2025-09-08",
       "id": "sumtan",
       "name": "Summer Tanager",
@@ -701,6 +695,12 @@
       "id": "calqua",
       "name": "California Quail",
       "subregion": "Idaho"
+    },
+    {
+      "date": "2026-01-05",
+      "id": "steeid",
+      "name": "Steller's Eider",
+      "subregion": "Alaska"
     }
   ]
 }
