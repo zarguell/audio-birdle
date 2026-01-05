@@ -191,7 +191,17 @@ def main():
     birds_data = load_json_file(birds_path)
     history = load_json_file(history_path)
     current_daily = load_json_file(daily_path)
-    
+
+    # Detect virtual regions (regions with parentRegion field)
+    virtual_regions = {}
+    for region in regions:
+        if 'parentRegion' in region:
+            virtual_regions[region['id']] = {
+                'parent': region['parentRegion'],
+                'excludedSubregions': region.get('excludedSubregions', [])
+            }
+            print(f"Detected virtual region: {region['id']} -> parent: {region['parentRegion']}")
+
     # Update history with yesterday's data (if we can determine the bird IDs)
     # Note: This is simplified - in practice you might want to store bird IDs in daily.json
     history = update_history(history, current_daily, target_date)
@@ -204,9 +214,15 @@ def main():
         region_name = region['name']
         
         print(f"\nProcessing region: {region_name} ({region_id})")
-        
-        # Get birds for this region
+
+        # Get birds for this region (handle virtual regions)
         region_birds = birds_data.get(region_id, [])
+        if not region_birds and region_id in virtual_regions:
+            # Virtual region - use parent region's birds
+            parent_id = virtual_regions[region_id]['parent']
+            region_birds = birds_data.get(parent_id, [])
+            print(f"Using parent region '{parent_id}' birds for virtual region '{region_id}'")
+
         if not region_birds:
             print(f"Warning: No birds found for region {region_id}")
             continue
@@ -216,16 +232,34 @@ def main():
         # Get subregion filtering if available
         selected_subregion = None
         subregion_bird_ids = set()
-        
+
         if subregions_data:
+            # For virtual regions, filter out excluded subregions from available list
+            modified_subregions_data = subregions_data
+            if region_id in virtual_regions:
+                region_subregions = subregions_data.get(region_id, {}).copy()
+                excluded = virtual_regions[region_id]['excludedSubregions']
+
+                # Remove excluded subregions from the selection pool
+                for excluded_sub in excluded:
+                    if excluded_sub in region_subregions:
+                        print(f"Excluding subregion '{excluded_sub}' for virtual region '{region_id}'")
+                        del region_subregions[excluded_sub]
+
+                if region_subregions:
+                    modified_subregions_data = {region_id: region_subregions}
+                else:
+                    print(f"No valid subregions remaining after exclusions for {region_id}")
+                    modified_subregions_data = {}
+
             selected_subregion, subregion_bird_ids = get_subregion_for_date(
-                subregions_data, region_id, target_date
+                modified_subregions_data, region_id, target_date
             )
-            
+
             if selected_subregion:
                 print(f"Selected subregion: {selected_subregion}")
                 print(f"Subregion has {len(subregion_bird_ids)} bird species")
-                
+
                 # Filter region birds by subregion
                 subregion_filtered_birds = filter_birds_by_subregion(region_birds, subregion_bird_ids)
                 print(f"After subregion filtering: {len(subregion_filtered_birds)} birds available")
