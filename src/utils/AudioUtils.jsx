@@ -9,15 +9,15 @@
  * @returns {string} The audio source URL
  */
 export const getAudioSrc = (audioUrlData, index = 0) => {
-  if (!audioUrlData) return '';
+  if (!audioUrlData) return "";
   // Backward compatibility for non-array format (single string)
   if (!Array.isArray(audioUrlData)) return audioUrlData;
 
   const audioItem = audioUrlData[index];
-  if (!audioItem) return '';
+  if (!audioItem) return "";
 
   // New format: array of objects with url property
-  if (typeof audioItem === 'object' && audioItem.url) {
+  if (typeof audioItem === "object" && audioItem.url) {
     return audioItem.url;
   }
 
@@ -28,12 +28,12 @@ export const getAudioSrc = (audioUrlData, index = 0) => {
 export const createAudioControls = (audioRef) => {
   const playAudio = async () => {
     if (!audioRef.current) return false;
-    
+
     try {
       await audioRef.current.play();
       return true;
     } catch (error) {
-      console.error('Audio play failed:', error);
+      console.error("Audio play failed:", error);
       return false;
     }
   };
@@ -52,6 +52,6 @@ export const createAudioControls = (audioRef) => {
   return {
     playAudio,
     pauseAudio,
-    stopAudio
+    stopAudio,
   };
 };
