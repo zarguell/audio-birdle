@@ -6,7 +6,24 @@ export const sampleBirds = {
       scientificName: 'Turdus migratorius',
       order: 'Passeriformes',
       family: 'Turdidae (Turdidae)',
-      audioUrl: ['https://example.com/robin1.mp3', 'https://example.com/robin2.mp3']
+      audioUrl: [
+        {
+          url: 'https://example.com/robin1.mp3',
+          attribution: { recordist: 'John Doe', location: 'New York, NY', date: '2024-03-15' }
+        },
+        {
+          url: 'https://example.com/robin2.mp3',
+          attribution: { recordist: 'Jane Smith', location: 'Boston, MA', date: '2024-02-20' }
+        }
+      ],
+      images: [
+        {
+          url: 'https://example.com/images/robin1.jpg',
+          attribution: { photographer: 'Photo One', source: 'Macaulay Library', license: 'CC BY-NC 4.0' }
+        }
+      ],
+      facts: 'The American Robin is a migratory songbird known for its orange-red breast and cheerful morning song.',
+      learnMoreUrl: 'https://birdsoftheworld.org/species/american-robin'
     },
     {
       id: 'barswa',
@@ -14,7 +31,12 @@ export const sampleBirds = {
       scientificName: 'Hirundo rustica',
       order: 'Passeriformes',
       family: 'Hirundinidae (Hirundinidae)',
-      audioUrl: ['https://example.com/swallow1.mp3']
+      audioUrl: [
+        { url: 'https://example.com/swallow1.mp3', attribution: {} }
+      ],
+      images: [],
+      facts: '',
+      learnMoreUrl: ''
     },
     {
       id: 'reccro',
@@ -22,7 +44,12 @@ export const sampleBirds = {
       scientificName: 'Grus japonensis',
       order: 'Gruiformes',
       family: 'Gruidae (Gruidae)',
-      audioUrl: ['https://example.com/crane1.mp3']
+      audioUrl: [
+        { url: 'https://example.com/crane1.mp3', attribution: {} }
+      ],
+      images: [],
+      facts: '',
+      learnMoreUrl: ''
     }
   ]
 }

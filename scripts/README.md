@@ -55,6 +55,12 @@ python3 game-data-generator.py --region US \
   --urls data/regions/us-taxonomy-urls.json \
   --output ../public/data/birds.json
 
+# Output includes placeholder fields for:
+# - images: Bird photos with attribution
+# - facts: Educational information
+# - learnMoreUrl: External resource links
+# - audioUrl[].attribution: Recording credits
+
 # 7. Generate subregion bird data
 python3 generate-daily-region-data.py \
   data/regions/us-subregions.json \

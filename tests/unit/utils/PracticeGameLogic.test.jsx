@@ -17,7 +17,10 @@ const sampleBirds = {
       scientificName: 'Turdus migratorius',
       order: 'Passeriformes',
       family: 'Turdidae (Turdidae)',
-      audioUrl: ['https://example.com/robin.mp3']
+      audioUrl: [{ url: 'https://example.com/robin.mp3', attribution: {} }],
+      images: [],
+      facts: '',
+      learnMoreUrl: ''
     },
     {
       id: 'barswa',
@@ -25,7 +28,10 @@ const sampleBirds = {
       scientificName: 'Hirundo rustica',
       order: 'Passeriformes',
       family: 'Hirundinidae (Hirundinidae)',
-      audioUrl: ['https://example.com/swallow.mp3']
+      audioUrl: [{ url: 'https://example.com/swallow.mp3', attribution: {} }],
+      images: [],
+      facts: '',
+      learnMoreUrl: ''
     },
     {
       id: 'reccro',
@@ -33,7 +39,10 @@ const sampleBirds = {
       scientificName: 'Grus japonensis',
       order: 'Gruiformes',
       family: 'Gruidae (Gruidae)',
-      audioUrl: ['https://example.com/crane.mp3']
+      audioUrl: [{ url: 'https://example.com/crane.mp3', attribution: {} }],
+      images: [],
+      facts: '',
+      learnMoreUrl: ''
     },
     {
       id: 'eucdov',
@@ -41,7 +50,10 @@ const sampleBirds = {
       scientificName: 'Streptopelia decaocto',
       order: 'Columbiformes',
       family: 'Columbidae (Columbidae)',
-      audioUrl: ['https://example.com/dove.mp3']
+      audioUrl: [{ url: 'https://example.com/dove.mp3', attribution: {} }],
+      images: [],
+      facts: '',
+      learnMoreUrl: ''
     },
     {
       id: 'anotherthrush',
@@ -49,7 +61,10 @@ const sampleBirds = {
       scientificName: 'Hylocichla mustelina',
       order: 'Passeriformes',
       family: 'Turdidae (Turdidae)',
-      audioUrl: ['https://example.com/thrush.mp3']
+      audioUrl: [{ url: 'https://example.com/thrush.mp3', attribution: {} }],
+      images: [],
+      facts: '',
+      learnMoreUrl: ''
     }
   ]
 }

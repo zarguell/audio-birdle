@@ -11,6 +11,7 @@ import {
 } from './PracticeGameLogic';
 import HardModeInput from './HardModeInput';
 import TaxonomicBadge from './TaxonomicBadge';
+import BirdCompletionCard from './BirdCompletionCard';
 import { GAME_CONFIG } from './Constants';
 import { extractGenus } from './TaxonomyUtils';
 
@@ -218,9 +219,12 @@ export default function PracticeGame({ region, birds, regions, onBack }) {
 
               <audio
                 ref={audioRef}
-                src={Array.isArray(currentBird.audioUrl)
-                  ? currentBird.audioUrl[selectedAudioIndex]
-                  : currentBird.audioUrl
+                src={
+                  Array.isArray(currentBird.audioUrl)
+                    ? (typeof currentBird.audioUrl[selectedAudioIndex] === 'object'
+                        ? currentBird.audioUrl[selectedAudioIndex]?.url
+                        : currentBird.audioUrl[selectedAudioIndex])
+                    : currentBird.audioUrl
                 }
                 onEnded={handleAudioEnded}
                 onError={handleAudioError}
@@ -383,17 +387,17 @@ export default function PracticeGame({ region, birds, regions, onBack }) {
           {/* Results */}
           {practiceState.completed && (
             <div className="text-center">
-              <div className={`text-2xl font-bold mb-2 ${practiceState.won ? 'text-green-600' : 'text-red-600'}`}>
+              <div className={`text-2xl font-bold mb-4 ${practiceState.won ? 'text-green-600' : 'text-red-600'}`}>
                 {practiceState.won ? '🎉 Correct!' : '😔 Not quite!'}
               </div>
 
-              <div className={`${isHardMode ? 'bg-red-50' : 'bg-purple-50'} rounded-lg p-4 mb-4`}>
-                <h3 className="font-semibold mb-2">The Answer:</h3>
-                <div className="text-lg font-medium">{currentBird.name}</div>
-                <div className="text-sm text-gray-500 italic">{currentBird.scientificName}</div>
-              </div>
+              <BirdCompletionCard
+                bird={currentBird}
+                selectedAudioIndex={selectedAudioIndex}
+                variant={isHardMode ? 'hard' : 'practice'}
+              />
 
-              <div className="flex gap-2">
+              <div className="flex gap-2 mt-4">
                 <button
                   onClick={restartCurrentRound}
                   className="flex-1 bg-gray-500 text-white py-2 px-4 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center gap-2"

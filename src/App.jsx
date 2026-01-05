@@ -15,6 +15,7 @@ import { toast } from "sonner";
 
 import PracticeGame from "./utils/PracticeGame";
 import HardModeGame from "./utils/HardModeGame";
+import BirdCompletionCard from "./utils/BirdCompletionCard";
 import CountdownToMidnight from "./utils/CountdownToMidnight";
 import { loadGameData } from "./utils/LoadGameData";
 import { getTodayString, formatDateForDisplay } from "./utils/DateUtils";
@@ -728,7 +729,9 @@ export default function AudioBirdle() {
                     ref={audioRef}
                     src={
                       Array.isArray(todaysBird.audioUrl)
-                        ? todaysBird.audioUrl[selectedAudioIndex]
+                        ? (typeof todaysBird.audioUrl[selectedAudioIndex] === 'object'
+                            ? todaysBird.audioUrl[selectedAudioIndex]?.url
+                            : todaysBird.audioUrl[selectedAudioIndex])
                         : todaysBird.audioUrl
                     }
                     onEnded={handleAudioEnded}
@@ -837,40 +840,19 @@ export default function AudioBirdle() {
             {currentDailyGame && currentDailyGame.completed && (
               <div className="text-center">
                 <div
-                  className={`text-2xl font-bold mb-2 ${currentDailyGame.won ? "text-green-600" : "text-red-600"}`}
+                  className={`text-2xl font-bold mb-4 ${currentDailyGame.won ? "text-green-600" : "text-red-600"}`}
                 >
                   {currentDailyGame.won
                     ? "🎉 Well done!"
                     : "😔 Better luck tomorrow!"}
                 </div>
 
-                <div className="bg-gray-50 rounded-lg p-4 mb-4">
-                  <h3 className="font-semibold mb-2">Today's Bird:</h3>
-                  <div className="text-lg font-medium">{todaysBird?.name}</div>
-                  <div className="text-sm text-gray-500 italic">
-                    {todaysBird?.scientificName}
-                  </div>
-                </div>
-
-                <div className="flex gap-2">
-                  <button
-                    onClick={handleShareResult}
-                    className="flex-1 bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition-colors flex items-center justify-center gap-2"
-                  >
-                    <Share2 className="w-4 h-4" />
-                    Share Result
-                  </button>
-
-                  <button
-                    onClick={() =>
-                      toast.info("More info about this bird would appear here!")
-                    }
-                    className="flex-1 bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors flex items-center justify-center gap-2"
-                  >
-                    <Info className="w-4 h-4" />
-                    Learn More
-                  </button>
-                </div>
+                <BirdCompletionCard
+                  bird={todaysBird}
+                  selectedAudioIndex={selectedAudioIndex}
+                  onShare={handleShareResult}
+                  variant="normal"
+                />
               </div>
             )}
           </div>

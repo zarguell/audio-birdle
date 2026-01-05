@@ -5,6 +5,37 @@ Bird Data JSON Generator
 This script processes taxonomy and URL data files to create a JSON file
 with bird information organized by region.
 
+Bird Data Schema:
+{
+  "id": "species_code",
+  "name": "Common Name",
+  "scientificName": "Scientific Name",
+  "order": "Order Name",
+  "family": "Family Name (Common Name)",
+  "audioUrl": [
+    {
+      "url": "https://...",
+      "attribution": {
+        "recordist": "Name",
+        "location": "Location",
+        "date": "YYYY-MM-DD"
+      }
+    }
+  ],
+  "images": [
+    {
+      "url": "https://...",
+      "attribution": {
+        "photographer": "Name",
+        "source": "Source Name",
+        "license": "CC BY-NC 4.0"
+      }
+    }
+  ],
+  "facts": "Short educational fact about the bird",
+  "learnMoreUrl": "https://external-source.org/species/..."
+}
+
 Usage:
     python bird_json_generator.py --region US --taxonomy taxonomy.json --urls urls.json --output birds.json
 """
@@ -54,11 +85,11 @@ def group_urls_by_code(urls_data: List[Dict[str, Any]]) -> Dict[str, List[str]]:
     return dict(url_groups)
 
 
-def process_taxonomy_data(taxonomy_data: List[Dict[str, Any]], 
+def process_taxonomy_data(taxonomy_data: List[Dict[str, Any]],
                          url_groups: Dict[str, List[str]]) -> List[Dict[str, Any]]:
     """Process taxonomy data and match with audio URLs."""
     birds = []
-    
+
     for bird in taxonomy_data:
         species_code = bird.get('speciesCode', '')
         com_name = bird.get('comName', '')
@@ -67,14 +98,14 @@ def process_taxonomy_data(taxonomy_data: List[Dict[str, Any]],
         family_com_name = bird.get('familyComName', '')
         family_sci_name = bird.get('familySciName', '')
         family = family_sci_name + ' (' + family_com_name + ')' if family_com_name else family_sci_name
-        
+
         # Skip if essential data is missing
         if not all([species_code, com_name, sci_name]):
             continue
-        
+
         # Get audio URLs for this species
         audio_urls = url_groups.get(species_code, [])
-        
+
         # Only include birds that have audio URLs
         if audio_urls:
             bird_entry = {
@@ -83,10 +114,13 @@ def process_taxonomy_data(taxonomy_data: List[Dict[str, Any]],
                 "scientificName": sci_name,
                 "order": order,
                 "family": family,
-                "audioUrl": audio_urls
+                "audioUrl": [{"url": url, "attribution": {}} for url in audio_urls],
+                "images": [],
+                "facts": "",
+                "learnMoreUrl": ""
             }
             birds.append(bird_entry)
-    
+
     return birds
 
 

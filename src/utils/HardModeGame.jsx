@@ -7,6 +7,7 @@ import { useState, useRef, useMemo, useEffect } from "react";
 import { ArrowLeft, Share2, Volume2 } from "lucide-react";
 import HardModeInput from "./HardModeInput";
 import TaxonomicBadge from "./TaxonomicBadge";
+import BirdCompletionCard from "./BirdCompletionCard";
 import { createAudioControls } from "./AudioUtils";
 import { GAME_CONFIG } from "./Constants";
 import { extractGenus } from "./TaxonomyUtils";
@@ -159,7 +160,13 @@ export default function HardModeGame({
             )}
             <audio
               ref={audioRef}
-              src={todaysBird.audioUrl?.[selectedAudioIndex]}
+              src={
+                Array.isArray(todaysBird.audioUrl)
+                  ? (typeof todaysBird.audioUrl[selectedAudioIndex] === 'object'
+                      ? todaysBird.audioUrl[selectedAudioIndex]?.url
+                      : todaysBird.audioUrl[selectedAudioIndex])
+                  : todaysBird.audioUrl
+              }
               onEnded={handleAudioEnded}
               onError={handleAudioError}
             />
@@ -283,20 +290,16 @@ export default function HardModeGame({
           {/* Completed Game Actions */}
           {hardModeGame?.completed && (
             <div className="space-y-2">
-              <div className="bg-gray-50 rounded-lg p-4 text-center">
-                <p className="font-medium">Correct Answer:</p>
-                <p className="text-lg font-bold">{todaysBird.name}</p>
-                <p className="text-sm italic text-gray-500">
-                  {todaysBird.scientificName}
-                </p>
+              <div className={`text-2xl font-bold text-center mb-2 ${hardModeGame.won ? "text-green-600" : "text-red-600"}`}>
+                {hardModeGame.won ? "🎉 Correct!" : "😔 Game Over"}
               </div>
-              <button
-                onClick={handleShare}
-                className="w-full bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors flex items-center justify-center gap-2"
-              >
-                <Share2 className="w-4 h-4" />
-                Share Result
-              </button>
+
+              <BirdCompletionCard
+                bird={todaysBird}
+                selectedAudioIndex={selectedAudioIndex}
+                onShare={handleShare}
+                variant="hard"
+              />
             </div>
           )}
         </div>

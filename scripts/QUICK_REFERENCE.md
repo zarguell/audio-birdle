@@ -223,6 +223,51 @@ EBIRD_API_KEY=your_api_key_here
 
 ---
 
+## Bird Data Schema
+
+Each bird in `birds.json` has the following structure:
+
+```json
+{
+  "id": "amerob",
+  "name": "American Robin",
+  "scientificName": "Turdus migratorius",
+  "order": "Passeriformes",
+  "family": "Turdidae (Turdidae)",
+  "audioUrl": [
+    {
+      "url": "https://cdn.download.earth.ebird.org/...",
+      "attribution": {
+        "recordist": "John Doe",
+        "location": "New York, NY",
+        "date": "2024-03-15"
+      }
+    }
+  ],
+  "images": [
+    {
+      "url": "https://example.com/image.jpg",
+      "attribution": {
+        "photographer": "Jane Smith",
+        "source": "Macaulay Library",
+        "license": "CC BY-NC 4.0"
+      }
+    }
+  ],
+  "facts": "Short educational fact about the bird...",
+  "learnMoreUrl": "https://external-source.org/species/..."
+}
+```
+
+**Field Notes**:
+- `audioUrl`: Array of objects with URL and attribution (required, can be empty placeholder)
+- `images`: Array of image objects with URL and attribution (optional)
+- `facts`: Short educational text about the bird (optional)
+- `learnMoreUrl`: External link for more information (optional)
+- `attribution`: Supports multiple audio/images with individual credits
+
+---
+
 ## Performance Tips
 
 1. **Audio Scraping Bottleneck**: Biggest limitation - 2-4 hours per region
