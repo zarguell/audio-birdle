@@ -1,6 +1,7 @@
 # Audio-Birdle Scripts: Comprehensive Workflow Documentation
 
 ## Table of Contents
+
 1. [Overview](#overview)
 2. [Prerequisites & Setup](#prerequisites--setup)
 3. [Architecture & Data Flow](#architecture--data-flow)
@@ -16,12 +17,14 @@
 The scripts in this directory automate the process of fetching bird data from eBird, processing audio URLs, and generating game data for the Audio-Birdle application. The workflow transforms raw eBird API data into the structured JSON files consumed by the frontend game.
 
 ### Key Characteristics
+
 - **Manual Bottleneck**: Audio URL scraping requires browser automation (Selenium) - this is the primary reason scaling to new regions is difficult
 - **Once Audio is Scraped**: The rest of the pipeline is fully automated and API-based
 - **Hash-Based Daily Selection**: Bird answers are selected deterministically using hash functions
 - **Multi-Region Support**: Can handle multiple regions with subregion-level filtering
 
 ### Current Status
+
 - ✅ **Supported Regions**: United States (US), US Lower 48 (virtual region)
 - ⚠️ **Scaling Limitation**: Audio URL scraping must be done manually for each new region
 - 🔄 **Daily Updates**: Automated via GitHub Actions (generates daily challenges at 4 AM UTC)
@@ -66,6 +69,7 @@ echo "EBIRD_API_KEY=your_api_key_here" > .env
 ```
 
 **How to get an API key**:
+
 1. Visit https://ebird.org/api/keygen
 2. Sign in to your eBird account
 3. Request an API key
@@ -234,6 +238,7 @@ python3 ebird-region.py --region EU --output data/regions/eu.json
 ```
 
 **What this does**:
+
 - Calls eBird API: `https://api.ebird.org/v2/product/spplist/EU`
 - Returns list of all species ever observed in Europe
 - Saves as JSON array of species codes
@@ -251,6 +256,7 @@ python3 ebird-filter-region.py data/regions/eu.json data/ebird-taxonomy.json --e
 ```
 
 **What this does**:
+
 - Loads global taxonomy (8.8MB)
 - Filters to only include species codes in eu.json
 - Removes hybrid species if `--exclude-hybrids` flag is used
@@ -269,6 +275,7 @@ python3 ebird-generate-subregions.py --region EU --output data/regions/eu-subreg
 ```
 
 **What this does**:
+
 - Calls eBird API: `https://api.ebird.org/v2/ref/region/list/subnational1/EU`
 - Returns list of countries/provinces in Europe region
 - Used for subregion-specific daily challenges
@@ -297,6 +304,7 @@ python3 ebird-songdownload.py \
 ```
 
 **What this does**:
+
 1. Opens Chrome browser via Selenium
 2. For each species in eu-taxonomy.json:
    - Navigates to eBird media catalog page
@@ -309,6 +317,7 @@ python3 ebird-songdownload.py \
 4. Outputs JSON with columns: code, page Url, audio Url
 
 **⚠️ IMPORTANT NOTES**:
+
 - **VISUAL PROCESS**: Chrome window will be visible and perform actions
 - **TIME CONSUMING**: For Europe (~500 species), expect 2-4 hours
 - **RATE LIMITING**: eBird may block if too many requests too quickly
@@ -316,6 +325,7 @@ python3 ebird-songdownload.py \
 - **NETWORK DEPENDENT**: Requires stable internet connection
 
 **Sample output**:
+
 ```json
 [
   {
@@ -327,6 +337,7 @@ python3 ebird-songdownload.py \
 ```
 
 **Troubleshooting scraping**:
+
 - If Chrome crashes: Restart script, it will resume
 - If blocked: Wait 1-2 hours, add delays between requests
 - If missing URLs: Some species don't have audio recordings
@@ -345,6 +356,7 @@ python3 game-data-generator.py \
 ```
 
 **What this does**:
+
 - Loads taxonomy (species info)
 - Groups audio URLs by species code
 - Merges data together
@@ -352,6 +364,7 @@ python3 game-data-generator.py \
 - Appends to existing birds.json (supports multiple regions)
 
 **Output structure**:
+
 ```json
 {
   "us": [...],      // Existing US birds
@@ -377,7 +390,13 @@ Edit `public/data/regions.json`:
 ```json
 [
   { "id": "us", "name": "United States", "country": "US" },
-  { "id": "us-lower48", "name": "US Lower 48", "country": "US", "parentRegion": "us", "excludedSubregions": ["Alaska", "Hawaii"] },
+  {
+    "id": "us-lower48",
+    "name": "US Lower 48",
+    "country": "US",
+    "parentRegion": "us",
+    "excludedSubregions": ["Alaska", "Hawaii"]
+  },
   { "id": "eu", "name": "Europe", "country": "EU" }
 ]
 ```
@@ -392,12 +411,14 @@ python3 generate-daily-region-data.py \
 ```
 
 **What this does**:
+
 - Randomly selects a subregion (e.g., "France")
 - Fetches recent observations from eBird API
 - Extracts unique species codes
 - Adds to daily-subregion-birds.json for subregion filtering
 
 **Output structure**:
+
 ```json
 {
   "us": {
@@ -442,15 +463,18 @@ git push origin main
 ### Data Fetching Scripts
 
 #### `ebird-taxonomy.py`
+
 Fetches global eBird taxonomy (all bird species worldwide).
 
 **Usage**:
+
 ```bash
 python3 ebird-taxonomy.py --fmt json --output data/ebird-taxonomy.json
 python3 ebird-taxonomy.py --fmt csv --output data/ebird-taxonomy.csv
 ```
 
 **Options**:
+
 - `--fmt`: Output format (json or csv)
 - `--output`: Output file path
 - `--version`: Taxonomy version (optional)
@@ -460,6 +484,7 @@ python3 ebird-taxonomy.py --fmt csv --output data/ebird-taxonomy.csv
 **API Endpoint**: `https://api.ebird.org/v2/ref/taxonomy/ebird`
 
 **Output**: Full taxonomy with fields:
+
 - speciesCode, comName, sciName
 - order, familyComName, familySciName
 - category, taxonOrder
@@ -472,15 +497,18 @@ python3 ebird-taxonomy.py --fmt csv --output data/ebird-taxonomy.csv
 ---
 
 #### `ebird-region.py`
+
 Fetches list of species for a specific region.
 
 **Usage**:
+
 ```bash
 python3 ebird-region.py --region US --output data/regions/us.json
 python3 ebird-region.py --region EU --output data/regions/eu.json
 ```
 
 **Options**:
+
 - `--region`: Region code (required)
   - Examples: US, CA, MX, EU, GB, AU
   - Full list: https://ebird.org/region
@@ -489,6 +517,7 @@ python3 ebird-region.py --region EU --output data/regions/eu.json
 **API Endpoint**: `https://api.ebird.org/v2/product/spplist/{region}`
 
 **Output**: JSON array of species codes
+
 ```json
 ["amerob", "mallar3", "barswa", ...]
 ```
@@ -500,20 +529,24 @@ python3 ebird-region.py --region EU --output data/regions/eu.json
 ---
 
 #### `ebird-generate-subregions.py`
+
 Fetches subregions (states/provinces) for a country region.
 
 **Usage**:
+
 ```bash
 python3 ebird-generate-subregions.py --region US --output data/regions/us-subregions.json
 ```
 
 **Options**:
+
 - `--region`: Country region code (required)
 - `--output`: Output file path
 
 **API Endpoint**: `https://api.ebird.org/v2/ref/region/list/subnational1/{region}`
 
 **Output**: Array of subregion objects
+
 ```json
 [
   {"code": "US-AL", "name": "Alabama"},
@@ -531,9 +564,11 @@ python3 ebird-generate-subregions.py --region US --output data/regions/us-subreg
 ### Data Processing Scripts
 
 #### `ebird-filter-region.py`
+
 Filters global taxonomy to only include species from a specific region.
 
 **Usage**:
+
 ```bash
 python3 ebird-filter-region.py \
   data/regions/us.json \
@@ -542,6 +577,7 @@ python3 ebird-filter-region.py \
 ```
 
 **Options**:
+
 - `region_file`: Path to region species list JSON (required)
 - `taxonomy_file`: Path to full taxonomy JSON (required)
 - `--exclude-hybrids`: Remove hybrid species from output
@@ -555,9 +591,11 @@ python3 ebird-filter-region.py \
 ---
 
 #### `game-data-generator.py`
+
 Merges taxonomy and audio URL data into final game data format.
 
 **Usage**:
+
 ```bash
 python3 game-data-generator.py \
   --region US \
@@ -567,12 +605,14 @@ python3 game-data-generator.py \
 ```
 
 **Options**:
+
 - `--region`: Region code (required)
 - `--taxonomy`: Path to region taxonomy JSON (required)
 - `--urls`: Path to audio URLs JSON (required)
 - `--output`: Output file path (required)
 
 **Process**:
+
 1. Groups audio URLs by species code
 2. Matches with taxonomy entries
 3. Filters out birds without audio
@@ -587,9 +627,11 @@ python3 game-data-generator.py \
 ### Audio Scraping Scripts
 
 #### `ebird-songdownload.py` ⚠️ MANUAL BOTTLENECK
+
 Scrapes audio URLs from eBird website using Selenium browser automation.
 
 **Usage**:
+
 ```bash
 python3 ebird-songdownload.py \
   data/regions/us-taxonomy.json \
@@ -599,6 +641,7 @@ python3 ebird-songdownload.py \
 ```
 
 **Options**:
+
 - `taxonomy_file`: Path to region taxonomy JSON (required)
 - `--region`: Region code for media catalog (default: US)
 - `--tag`: Media tag to filter by (default: song)
@@ -606,6 +649,7 @@ python3 ebird-songdownload.py \
 - `--max-urls`: Maximum URLs per species (default: 10)
 
 **Output**: `{input-filename}-urls.json`
+
 ```json
 [
   {
@@ -617,6 +661,7 @@ python3 ebird-songdownload.py \
 ```
 
 **Process**:
+
 1. Opens Chrome browser
 2. For each species:
    - Constructs URL: `https://media.ebird.org/catalog?tag=song&regionCode=US&taxonCode=amerob`
@@ -629,12 +674,14 @@ python3 ebird-songdownload.py \
    - Saves URL
 
 **Requirements**:
+
 - Chrome browser installed
 - ChromeDriver installed and in PATH
 - Stable internet connection
 - Patience (2-4 hours for 500+ species)
 
 **⚠️ Issues & Limitations**:
+
 - **Slow**: Each page load takes 1-3 seconds
 - **Visible**: Browser window visible during scraping
 - **Fragile**: eBird HTML changes may break scraper
@@ -650,9 +697,11 @@ python3 ebird-songdownload.py \
 ### Daily Generation Scripts
 
 #### `generate-daily-region-data.py`
+
 Fetches recent bird observations for a subregion to populate daily challenge data.
 
 **Usage**:
+
 ```bash
 python3 generate-daily-region-data.py \
   data/regions/us-subregions.json \
@@ -660,10 +709,12 @@ python3 generate-daily-region-data.py \
 ```
 
 **Options**:
+
 - `subregions_file`: Path to subregions JSON (required)
 - `output_file`: Output file path (required)
 
 **Process**:
+
 1. Randomly selects one subregion from list
 2. Fetches recent observations from eBird API
 3. Extracts unique species codes
@@ -672,13 +723,11 @@ python3 generate-daily-region-data.py \
 **API Endpoint**: `https://api.ebird.org/v2/data/obs/{subregion}/recent`
 
 **Output**:
+
 ```json
 {
   "us": {
-    "Minnesota": [
-      {"id": "amerob"},
-      {"id": "barswa"}
-    ]
+    "Minnesota": [{ "id": "amerob" }, { "id": "barswa" }]
   }
 }
 ```
@@ -690,9 +739,11 @@ python3 generate-daily-region-data.py \
 ---
 
 #### `generate-daily-birds.py`
+
 Generates daily challenge answers for all regions, avoiding recent repeats.
 
 **Usage**:
+
 ```bash
 python3 generate-daily-birds.py \
   --days 7 \
@@ -706,11 +757,13 @@ python3 generate-daily-birds.py \
 ```
 
 **Options**:
+
 - `--days`: Days to avoid repeating birds (default: 7)
 - `--date`: Target date YYYY-MM-DD (default: today)
 - `--subregions`: Path to subregion birds JSON
 
 **Process**:
+
 1. Loads birds.json, history.json, regions.json
 2. For each region:
    - Detects virtual regions (e.g., US-Lower48)
@@ -722,6 +775,7 @@ python3 generate-daily-birds.py \
 3. Updates daily.json and history.json
 
 **Hash Function** (must match JavaScript):
+
 ```python
 def hash_bird_id(bird_id):
     combined = f"{bird_id}-birdle-salt-2025"
@@ -733,6 +787,7 @@ def hash_bird_id(bird_id):
 ```
 
 **Output**:
+
 - `daily.json`: Today's answers (hashed)
   ```json
   [
@@ -759,6 +814,7 @@ def hash_bird_id(bird_id):
   ```
 
 **Virtual Region Support**:
+
 - Detects regions with `parentRegion` field
 - Uses parent region's bird list
 - Excludes specified subregions
@@ -771,9 +827,11 @@ def hash_bird_id(bird_id):
 ---
 
 #### `verify_hash_consistency.py`
+
 Utility script to generate test hashes for verifying Python-JavaScript consistency.
 
 **Usage**:
+
 ```bash
 python3 verify_hash_consistency.py
 ```
@@ -795,6 +853,7 @@ python3 verify_hash_consistency.py
 **Proposed Solutions**:
 
 **Option A: Direct Audio API Access**
+
 - Research if eBird has undocumented audio API endpoints
 - Check if audio URLs follow predictable patterns
 - Investigate XHR calls made by eBird website
@@ -802,6 +861,7 @@ python3 verify_hash_consistency.py
 - **Impact**: Eliminates scraping entirely
 
 **Option B: Batch Download with Parallel Processing**
+
 - Use asyncio or multiprocessing for concurrent scraping
 - Implement smart retry logic with exponential backoff
 - Add progress checkpointing to resume after failures
@@ -809,6 +869,7 @@ python3 verify_hash_consistency.py
 - **Impact**: Reduces time from 4 hours to ~30 minutes
 
 **Option C: Community-Sourced Audio Database**
+
 - Build shared database of scraped audio URLs
 - Users can contribute their region's data
 - Import/export functionality
@@ -816,6 +877,7 @@ python3 verify_hash_consistency.py
 - **Impact**: Scales to unlimited regions through community effort
 
 **Option D: Alternative Audio Sources**
+
 - Xeno-Canto.org (has documented API)
 - Macaulay Library (Cornell)
 - Wikimedia Commons bird audio
@@ -831,6 +893,7 @@ python3 verify_hash_consistency.py
 **Create**: `add-region.sh` or `add-region.py`
 
 **Features**:
+
 - Single command to add new region
 - Automated error checking
 - Progress tracking and logging
@@ -838,11 +901,13 @@ python3 verify_hash_consistency.py
 - Rollback capability
 
 **Example Usage**:
+
 ```bash
 python3 add-region.py --region EU --audio-types song,call
 ```
 
 **Steps Automated**:
+
 1. Fetch region species list
 2. Filter taxonomy
 3. Generate subregions
@@ -859,6 +924,7 @@ python3 add-region.py --region EU --audio-types song,call
 **Add**: `validate-data.py`
 
 **Checks**:
+
 - All birds have required fields (id, name, audioUrl)
 - Audio URLs are accessible (HTTP HEAD requests)
 - No duplicate species codes within region
@@ -866,6 +932,7 @@ python3 add-region.py --region EU --audio-types song,call
 - Region coverage (e.g., "Europe should have 500+ species")
 
 **Usage**:
+
 ```bash
 python3 validate-data.py --region EU
 ```
@@ -879,6 +946,7 @@ python3 validate-data.py --region EU
 **Solution**: Implement incremental scraping
 
 **Features**:
+
 - Track last scrape date for each species
 - Only scrape new/updated recordings
 - Merge with existing data
@@ -891,6 +959,7 @@ python3 validate-data.py --region EU
 **Problem**: Large JSON files (birds.json) not ideal for git.
 
 **Solutions**:
+
 - Store data in separate Git LFS or external storage
 - Implement data migration system
 - Add rollback capability
@@ -903,6 +972,7 @@ python3 validate-data.py --region EU
 #### 6. Web Dashboard for Data Management
 
 **Build**: Simple web interface for:
+
 - Viewing region data status
 - Triggering scrape jobs
 - Monitoring progress
@@ -914,6 +984,7 @@ python3 validate-data.py --region EU
 #### 7. Audio Quality Filtering
 
 **Add**: Filter audio URLs by quality
+
 - Minimum duration (e.g., 10+ seconds)
 - Rating/quality scores from eBird
 - Number of ratings
@@ -924,6 +995,7 @@ python3 validate-data.py --region EU
 #### 8. Multi-Language Support
 
 **Add**: Support for localized bird names
+
 - Fetch common names in multiple languages
 - Add language selection to game
 - Store translations in data files
@@ -933,6 +1005,7 @@ python3 validate-data.py --region EU
 #### 9. Historic Daily Challenges
 
 **Add**: Generate past daily challenges
+
 - Backfill daily.json for previous dates
 - Useful for testing and practice mode
 - Ensure no repeats in backfilled data
@@ -942,6 +1015,7 @@ python3 validate-data.py --region EU
 #### 10. Automated Testing Pipeline
 
 **Add**: CI/CD tests for data quality
+
 - Validate new data before merging
 - Test hash consistency
 - Verify audio URLs are accessible
@@ -958,6 +1032,7 @@ python3 validate-data.py --region EU
 **Error**: `'chromedriver' executable needs to be in PATH`
 
 **Solutions**:
+
 ```bash
 # macOS
 brew install chromedriver
@@ -980,12 +1055,14 @@ sudo apt-get install chromium-chromedriver
 **Error**: `429 Too Many Requests`
 
 **Solutions**:
+
 - Add delays between requests
 - Implement exponential backoff
 - Cache API responses
 - Use API key with higher rate limit
 
 **Example fix**:
+
 ```python
 import time
 
@@ -1000,11 +1077,13 @@ time.sleep(1)  # Wait 1 second
 **Error**: `⚠️ No audio/video found for species:xxx`
 
 **Causes**:
+
 - Species has no audio recordings on eBird
 - Audio URLs are loaded via JavaScript (Selenium can't see them)
 - eBird changed their HTML structure
 
 **Solutions**:
+
 - Skip species with no audio (will be filtered out later)
 - Update XPath/CSS selectors in scraper
 - Check if eBird changed page structure
@@ -1017,6 +1096,7 @@ time.sleep(1)  # Wait 1 second
 **Error**: Daily answers don't match between frontend and backend
 
 **Solutions**:
+
 ```bash
 # Generate test hashes
 python3 verify_hash_consistency.py
@@ -1037,6 +1117,7 @@ npm test -- hash-consistency
 **Error**: `MemoryError` or slow processing with large taxonomy files
 
 **Solutions**:
+
 - Process data in chunks
 - Use streaming JSON parser
 - Filter early (don't load full taxonomy if not needed)
@@ -1049,6 +1130,7 @@ npm test -- hash-consistency
 **Error**: Added new region but it doesn't appear in dropdown
 
 **Checks**:
+
 1. Verify `public/data/regions.json` includes new region
 2. Check `public/data/birds.json` has region key (e.g., "eu")
 3. Ensure birds have audio URLs
@@ -1062,6 +1144,7 @@ npm test -- hash-consistency
 **Error**: `generate-daily-birds.py` fails or produces no output
 
 **Checks**:
+
 1. Verify all input files exist:
    - `public/data/birds.json`
    - `public/data/regions.json`
@@ -1087,6 +1170,7 @@ npm test -- hash-consistency
 ### eBird Region Codes
 
 Common region codes:
+
 - `US` - United States
 - `CA` - Canada
 - `MX` - Mexico
@@ -1108,6 +1192,7 @@ Find more: https://ebird.org/region
 ### File Sizes
 
 Typical file sizes for reference:
+
 - `ebird-taxonomy.json` - 8.8 MB (all world species)
 - `us-taxonomy.json` - 585 KB (US species only)
 - `us-taxonomy-urls.json` - 1.8 MB (US audio URLs)
@@ -1116,6 +1201,7 @@ Typical file sizes for reference:
 ### Performance Benchmarks
 
 Typical execution times:
+
 - `ebird-taxonomy.py` - 30 seconds
 - `ebird-region.py` - 5 seconds
 - `ebird-filter-region.py` - 10 seconds
@@ -1127,11 +1213,13 @@ Typical execution times:
 ### Environment Variables
 
 Required in `scripts/.env`:
+
 ```bash
 EBIRD_API_KEY=your_api_key_here
 ```
 
 Optional:
+
 ```bash
 CHROMEDRIVER_PATH=/path/to/chromedriver
 ```
@@ -1143,6 +1231,7 @@ CHROMEDRIVER_PATH=/path/to/chromedriver
 The Audio-Birdle scripts provide a pipeline for transforming eBird data into game content. The primary bottleneck is the manual audio URL scraping step, which requires browser automation and takes 2-4 hours per region. Once audio URLs are scraped, the rest of the pipeline is fast and automated.
 
 **Key Takeaways**:
+
 1. Audio scraping is the main bottleneck preventing easy region expansion
 2. API-based automation works well for all steps except audio URLs
 3. Daily challenge generation is fully automated and reliable
@@ -1150,6 +1239,7 @@ The Audio-Birdle scripts provide a pipeline for transforming eBird data into gam
 5. Virtual regions (e.g., US-Lower48) can be created without additional scraping
 
 **Recommended Next Steps**:
+
 1. **Priority 1**: Research alternative audio sources or direct API access
 2. **Priority 2**: Implement parallel processing for faster scraping
 3. **Priority 3**: Add comprehensive data validation
