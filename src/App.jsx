@@ -11,6 +11,7 @@ import {
   BarChart3,
   Target,
 } from "lucide-react";
+import { toast } from "sonner";
 
 import PracticeGame from "./utils/PracticeGame";
 import HardModeGame from "./utils/HardModeGame";
@@ -234,7 +235,7 @@ export default function AudioBirdle() {
   // Refresh game data
   const handleRefreshData = async () => {
     if (!navigator.onLine) {
-      alert(
+      toast.error(
         "Cannot refresh data while offline. Please connect to the internet and try again.",
       );
       return;
@@ -258,10 +259,10 @@ export default function AudioBirdle() {
       }
 
       setHasUpdate(false);
-      alert("Data refreshed successfully!");
+      toast.success("Data refreshed successfully!");
     } catch (error) {
       console.error("Failed to refresh data:", error);
-      alert(
+      toast.error(
         "Failed to refresh data. Please try again or check your internet connection.",
       );
     } finally {
@@ -853,7 +854,7 @@ export default function AudioBirdle() {
 
                   <button
                     onClick={() =>
-                      alert("More info about this bird would appear here!")
+                      toast.info("More info about this bird would appear here!")
                     }
                     className="flex-1 bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors flex items-center justify-center gap-2"
                   >

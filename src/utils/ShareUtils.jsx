@@ -1,5 +1,7 @@
 // Updated ShareUtils.js to work with new game state structure
 
+import { toast } from "sonner";
+
 /**
  * Generate share text for a completed daily game
  * @param {Object} dailyGameState - The completed daily game state
@@ -111,9 +113,9 @@ export const shareResult = async (shareText) => {
     textarea.select();
     document.execCommand('copy');
     document.body.removeChild(textarea);
-    
+
     // Show feedback
-    alert('Result copied to clipboard!');
+    toast.success('Result copied to clipboard!');
     return true;
     
   } catch (error) {
