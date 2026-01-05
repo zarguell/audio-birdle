@@ -1,19 +1,26 @@
-import { useState, useEffect, useRef, useMemo } from 'react';
-import { Play, Pause, Volume2, RotateCcw, ArrowRight, Target } from 'lucide-react';
-import { createAudioControls } from './AudioUtils';
+import { useState, useEffect, useRef, useMemo } from "react";
+import {
+  Play,
+  Pause,
+  Volume2,
+  RotateCcw,
+  ArrowRight,
+  Target,
+} from "lucide-react";
+import { createAudioControls } from "./AudioUtils";
 import {
   createInitialPracticeState,
   getPracticeBird,
   generatePracticeAnswerOptions,
   processPracticeGuess,
   processHardPracticeGuess,
-  startNewPracticeRound
-} from './PracticeGameLogic';
-import HardModeInput from './HardModeInput';
-import TaxonomicBadge from './TaxonomicBadge';
-import BirdCompletionCard from './BirdCompletionCard';
-import { GAME_CONFIG } from './Constants';
-import { extractGenus } from './TaxonomyUtils';
+  startNewPracticeRound,
+} from "./PracticeGameLogic";
+import HardModeInput from "./HardModeInput";
+import TaxonomicBadge from "./TaxonomicBadge";
+import BirdCompletionCard from "./BirdCompletionCard";
+import { GAME_CONFIG } from "./Constants";
+import { extractGenus } from "./TaxonomyUtils";
 
 export default function PracticeGame({ region, birds, regions, onBack }) {
   const [practiceState, setPracticeState] = useState(null);
@@ -32,13 +39,18 @@ export default function PracticeGame({ region, birds, regions, onBack }) {
       if (firstBird) {
         let answerOptions = [];
         if (!isHardMode) {
-          answerOptions = generatePracticeAnswerOptions(region, birds, 0, firstBird);
+          answerOptions = generatePracticeAnswerOptions(
+            region,
+            birds,
+            0,
+            firstBird,
+          );
         }
 
         setPracticeState({
           ...initialState,
           currentBird: firstBird,
-          answerOptions
+          answerOptions,
         });
       }
     }
@@ -91,7 +103,7 @@ export default function PracticeGame({ region, birds, regions, onBack }) {
     const newState = processHardPracticeGuess(
       practiceState,
       bird.name,
-      birds[region]
+      birds[region],
     );
     setPracticeState(newState);
   };
@@ -112,7 +124,7 @@ export default function PracticeGame({ region, birds, regions, onBack }) {
         practiceState.region,
         birds,
         practiceState.practiceIndex,
-        practiceState.currentBird
+        practiceState.currentBird,
       );
     }
 
@@ -123,12 +135,12 @@ export default function PracticeGame({ region, birds, regions, onBack }) {
       won: false,
       answerOptions,
       startTime: new Date().toISOString(),
-      endTime: null
+      endTime: null,
     });
   };
 
   const toggleMode = () => {
-    setIsHardMode(prev => !prev);
+    setIsHardMode((prev) => !prev);
   };
 
   if (!practiceState || !practiceState.currentBird) {
@@ -136,10 +148,15 @@ export default function PracticeGame({ region, birds, regions, onBack }) {
       <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50 p-4">
         <div className="max-w-md mx-auto pt-8">
           <div className="flex items-center gap-2 mb-6">
-            <button onClick={onBack} className="text-purple-500 hover:text-purple-600">
+            <button
+              onClick={onBack}
+              className="text-purple-500 hover:text-purple-600"
+            >
               ← Back
             </button>
-            <h1 className="text-2xl font-bold text-gray-800">🎯 Practice Mode</h1>
+            <h1 className="text-2xl font-bold text-gray-800">
+              🎯 Practice Mode
+            </h1>
           </div>
           <div className="bg-white rounded-xl shadow-lg p-6 text-center">
             <p>Loading practice session...</p>
@@ -149,32 +166,37 @@ export default function PracticeGame({ region, birds, regions, onBack }) {
     );
   }
 
-  const regionName = regions.find(r => r.id === region)?.name || region;
+  const regionName = regions.find((r) => r.id === region)?.name || region;
   const currentBird = practiceState.currentBird;
 
   return (
-    <div className={`min-h-screen bg-gradient-to-br ${isHardMode ? 'from-red-50 to-orange-50' : 'from-purple-50 to-pink-50'} p-4`}>
+    <div
+      className={`min-h-screen bg-gradient-to-br ${isHardMode ? "from-red-50 to-orange-50" : "from-purple-50 to-pink-50"} p-4`}
+    >
       <div className="max-w-md mx-auto pt-8">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-2">
-            <button onClick={onBack} className={`${isHardMode ? 'text-red-500 hover:text-red-600' : 'text-purple-500 hover:text-purple-600'}`}>
+            <button
+              onClick={onBack}
+              className={`${isHardMode ? "text-red-500 hover:text-red-600" : "text-purple-500 hover:text-purple-600"}`}
+            >
               ← Back
             </button>
             <h1 className="text-2xl font-bold text-gray-800">
-              {isHardMode ? '🔥 Hard Practice' : '🎯 Practice Mode'}
+              {isHardMode ? "🔥 Hard Practice" : "🎯 Practice Mode"}
             </h1>
           </div>
           <button
             onClick={toggleMode}
             className={`${
               isHardMode
-                ? 'bg-red-500 hover:bg-red-600'
-                : 'bg-purple-500 hover:bg-purple-600'
+                ? "bg-red-500 hover:bg-red-600"
+                : "bg-purple-500 hover:bg-purple-600"
             } text-white px-3 py-2 rounded-lg transition-colors flex items-center gap-2 text-sm`}
           >
             <Target className="w-4 h-4" />
-            {isHardMode ? 'Normal' : 'Hard'}
+            {isHardMode ? "Normal" : "Hard"}
           </button>
         </div>
 
@@ -189,41 +211,50 @@ export default function PracticeGame({ region, birds, regions, onBack }) {
 
           {/* Audio Player */}
           <div className="mb-6">
-            <div className={`${isHardMode ? 'bg-red-50' : 'bg-purple-50'} rounded-lg p-6 text-center`}>
-              <Volume2 className={`w-12 h-12 mx-auto mb-4 ${isHardMode ? 'text-red-400' : 'text-purple-400'}`} />
+            <div
+              className={`${isHardMode ? "bg-red-50" : "bg-purple-50"} rounded-lg p-6 text-center`}
+            >
+              <Volume2
+                className={`w-12 h-12 mx-auto mb-4 ${isHardMode ? "text-red-400" : "text-purple-400"}`}
+              />
 
               {/* Audio Selection */}
-              {currentBird && Array.isArray(currentBird.audioUrl) && currentBird.audioUrl.length > 1 && (
-                <div className="mb-4">
-                  <select
-                    value={selectedAudioIndex}
-                    onChange={(e) => {
-                      const newIndex = parseInt(e.target.value);
-                      setSelectedAudioIndex(newIndex);
-                      if (audioRef.current) {
-                        audioRef.current.load();
-                      }
-                    }}
-                    className={`bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 ${
-                      isHardMode ? 'focus:ring-red-500' : 'focus:ring-purple-500'
-                    }`}
-                  >
-                    {currentBird.audioUrl.map((_, index) => (
-                      <option key={index} value={index}>
-                        Recording {index + 1}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              )}
+              {currentBird &&
+                Array.isArray(currentBird.audioUrl) &&
+                currentBird.audioUrl.length > 1 && (
+                  <div className="mb-4">
+                    <select
+                      value={selectedAudioIndex}
+                      onChange={(e) => {
+                        const newIndex = parseInt(e.target.value);
+                        setSelectedAudioIndex(newIndex);
+                        if (audioRef.current) {
+                          audioRef.current.load();
+                        }
+                      }}
+                      className={`bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 ${
+                        isHardMode
+                          ? "focus:ring-red-500"
+                          : "focus:ring-purple-500"
+                      }`}
+                    >
+                      {currentBird.audioUrl.map((_, index) => (
+                        <option key={index} value={index}>
+                          Recording {index + 1}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
 
               <audio
                 ref={audioRef}
                 src={
                   Array.isArray(currentBird.audioUrl)
-                    ? (typeof currentBird.audioUrl[selectedAudioIndex] === 'object'
-                        ? currentBird.audioUrl[selectedAudioIndex]?.url
-                        : currentBird.audioUrl[selectedAudioIndex])
+                    ? typeof currentBird.audioUrl[selectedAudioIndex] ===
+                      "object"
+                      ? currentBird.audioUrl[selectedAudioIndex]?.url
+                      : currentBird.audioUrl[selectedAudioIndex]
                     : currentBird.audioUrl
                 }
                 onEnded={handleAudioEnded}
@@ -236,10 +267,14 @@ export default function PracticeGame({ region, birds, regions, onBack }) {
               <button
                 onClick={toggleAudio}
                 disabled={audioError}
-                className={`${isHardMode ? 'bg-red-500 hover:bg-red-600' : 'bg-purple-500 hover:bg-purple-600'} text-white px-6 py-3 rounded-lg flex items-center gap-2 mx-auto transition-colors disabled:bg-gray-300`}
+                className={`${isHardMode ? "bg-red-500 hover:bg-red-600" : "bg-purple-500 hover:bg-purple-600"} text-white px-6 py-3 rounded-lg flex items-center gap-2 mx-auto transition-colors disabled:bg-gray-300`}
               >
-                {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
-                {isPlaying ? 'Pause' : 'Play'} Bird Call
+                {isPlaying ? (
+                  <Pause className="w-5 h-5" />
+                ) : (
+                  <Play className="w-5 h-5" />
+                )}
+                {isPlaying ? "Pause" : "Play"} Bird Call
               </button>
 
               {audioError && (
@@ -258,7 +293,9 @@ export default function PracticeGame({ region, birds, regions, onBack }) {
                 {practiceState.guesses.map((guess, index) => {
                   // Hard mode guesses
                   if (practiceState.isHardMode) {
-                    const guessedBird = birds[region].find(bird => bird.id === guess.birdId);
+                    const guessedBird = birds[region].find(
+                      (bird) => bird.id === guess.birdId,
+                    );
                     return (
                       <div
                         key={index}
@@ -268,7 +305,9 @@ export default function PracticeGame({ region, birds, regions, onBack }) {
                           <div>
                             <div className="font-medium">{guess.textInput}</div>
                             {guessedBird && (
-                              <div className="text-sm text-gray-500 italic">{guessedBird.scientificName}</div>
+                              <div className="text-sm text-gray-500 italic">
+                                {guessedBird.scientificName}
+                              </div>
                             )}
                           </div>
                           {!guess.correct && <div className="text-2xl">❌</div>}
@@ -280,17 +319,26 @@ export default function PracticeGame({ region, birds, regions, onBack }) {
                           <TaxonomicBadge
                             label="Order"
                             correct={guess.taxonomicScore.order}
-                            show={index >= GAME_CONFIG.HARD_MODE_HINT_TIMING.ORDER - 1}
+                            show={
+                              index >=
+                              GAME_CONFIG.HARD_MODE_HINT_TIMING.ORDER - 1
+                            }
                           />
                           <TaxonomicBadge
                             label="Family"
                             correct={guess.taxonomicScore.family}
-                            show={index >= GAME_CONFIG.HARD_MODE_HINT_TIMING.FAMILY - 1}
+                            show={
+                              index >=
+                              GAME_CONFIG.HARD_MODE_HINT_TIMING.FAMILY - 1
+                            }
                           />
                           <TaxonomicBadge
                             label="Genus"
                             correct={guess.taxonomicScore.genus}
-                            show={index >= GAME_CONFIG.HARD_MODE_HINT_TIMING.GENUS - 1}
+                            show={
+                              index >=
+                              GAME_CONFIG.HARD_MODE_HINT_TIMING.GENUS - 1
+                            }
                           />
                           <TaxonomicBadge
                             label="Species"
@@ -303,20 +351,22 @@ export default function PracticeGame({ region, birds, regions, onBack }) {
                   }
 
                   // Normal mode guesses
-                  const guessedBird = practiceState.answerOptions.find(bird => bird.id === guess.birdId);
+                  const guessedBird = practiceState.answerOptions.find(
+                    (bird) => bird.id === guess.birdId,
+                  );
                   return (
                     <div
                       key={index}
                       className={`p-3 rounded-lg border-2 ${
                         guess.correct
-                          ? 'border-green-500 bg-green-50'
-                          : 'border-red-500 bg-red-50'
+                          ? "border-green-500 bg-green-50"
+                          : "border-red-500 bg-red-50"
                       }`}
                     >
                       <div className="flex items-center justify-between">
                         <span>{guessedBird?.name}</span>
                         <span className="text-2xl">
-                          {guess.correct ? '✅' : '❌'}
+                          {guess.correct ? "✅" : "❌"}
                         </span>
                       </div>
                     </div>
@@ -330,42 +380,55 @@ export default function PracticeGame({ region, birds, regions, onBack }) {
           {!practiceState.completed && !practiceState.isHardMode && (
             <div className="space-y-2">
               <h3 className="font-semibold mb-2">
-                Choose the bird ({practiceState.guesses.length + 1}/{practiceState.maxGuesses}):
+                Choose the bird ({practiceState.guesses.length + 1}/
+                {practiceState.maxGuesses}):
               </h3>
-              {practiceState.answerOptions.map(bird => (
+              {practiceState.answerOptions.map((bird) => (
                 <button
                   key={bird.id}
                   onClick={() => makeGuess(bird.id)}
                   className="w-full text-left p-3 rounded-lg border border-gray-200 hover:bg-purple-50 transition-colors"
                 >
                   <div className="font-medium">{bird.name}</div>
-                  <div className="text-sm text-gray-500 italic">{bird.scientificName}</div>
+                  <div className="text-sm text-gray-500 italic">
+                    {bird.scientificName}
+                  </div>
                 </button>
               ))}
             </div>
           )}
 
           {/* Progressive Hints - Hard Mode Only */}
-          {!practiceState.completed && practiceState.isHardMode && practiceState.guesses.length >= 1 && (
-            <div className="bg-yellow-50 rounded-lg p-4 border border-yellow-200 mb-4">
-              <h4 className="font-semibold text-yellow-800 mb-2">🔍 Taxonomic Hints:</h4>
-              {practiceState.guesses.length >= GAME_CONFIG.HARD_MODE_HINT_TIMING.ORDER && (
-                <div className="text-sm">
-                  <span className="font-medium">Order:</span> {currentBird.order}
-                </div>
-              )}
-              {practiceState.guesses.length >= GAME_CONFIG.HARD_MODE_HINT_TIMING.FAMILY && (
-                <div className="text-sm mt-1">
-                  <span className="font-medium">Family:</span> {currentBird.family}
-                </div>
-              )}
-              {practiceState.guesses.length >= GAME_CONFIG.HARD_MODE_HINT_TIMING.GENUS && (
-                <div className="text-sm mt-1">
-                  <span className="font-medium">Genus:</span> {extractGenus(currentBird.scientificName)}
-                </div>
-              )}
-            </div>
-          )}
+          {!practiceState.completed &&
+            practiceState.isHardMode &&
+            practiceState.guesses.length >= 1 && (
+              <div className="bg-yellow-50 rounded-lg p-4 border border-yellow-200 mb-4">
+                <h4 className="font-semibold text-yellow-800 mb-2">
+                  🔍 Taxonomic Hints:
+                </h4>
+                {practiceState.guesses.length >=
+                  GAME_CONFIG.HARD_MODE_HINT_TIMING.ORDER && (
+                  <div className="text-sm">
+                    <span className="font-medium">Order:</span>{" "}
+                    {currentBird.order}
+                  </div>
+                )}
+                {practiceState.guesses.length >=
+                  GAME_CONFIG.HARD_MODE_HINT_TIMING.FAMILY && (
+                  <div className="text-sm mt-1">
+                    <span className="font-medium">Family:</span>{" "}
+                    {currentBird.family}
+                  </div>
+                )}
+                {practiceState.guesses.length >=
+                  GAME_CONFIG.HARD_MODE_HINT_TIMING.GENUS && (
+                  <div className="text-sm mt-1">
+                    <span className="font-medium">Genus:</span>{" "}
+                    {extractGenus(currentBird.scientificName)}
+                  </div>
+                )}
+              </div>
+            )}
 
           {/* Input for Active Game - Hard Mode Only */}
           {!practiceState.completed && practiceState.isHardMode && (
@@ -379,22 +442,29 @@ export default function PracticeGame({ region, birds, regions, onBack }) {
           {/* Game Status - Hard Mode Only */}
           {practiceState.isHardMode && !practiceState.completed && (
             <div className="text-center mb-4 text-gray-600">
-              {GAME_CONFIG.HARD_MODE_MAX_GUESSES - practiceState.guesses.length}{' '}
-              {GAME_CONFIG.HARD_MODE_MAX_GUESSES - practiceState.guesses.length === 1 ? 'guess' : 'guesses'} remaining
+              {GAME_CONFIG.HARD_MODE_MAX_GUESSES - practiceState.guesses.length}{" "}
+              {GAME_CONFIG.HARD_MODE_MAX_GUESSES -
+                practiceState.guesses.length ===
+              1
+                ? "guess"
+                : "guesses"}{" "}
+              remaining
             </div>
           )}
 
           {/* Results */}
           {practiceState.completed && (
             <div className="text-center">
-              <div className={`text-2xl font-bold mb-4 ${practiceState.won ? 'text-green-600' : 'text-red-600'}`}>
-                {practiceState.won ? '🎉 Correct!' : '😔 Not quite!'}
+              <div
+                className={`text-2xl font-bold mb-4 ${practiceState.won ? "text-green-600" : "text-red-600"}`}
+              >
+                {practiceState.won ? "🎉 Correct!" : "😔 Not quite!"}
               </div>
 
               <BirdCompletionCard
                 bird={currentBird}
                 selectedAudioIndex={selectedAudioIndex}
-                variant={isHardMode ? 'hard' : 'practice'}
+                variant={isHardMode ? "hard" : "practice"}
               />
 
               <div className="flex gap-2 mt-4">
@@ -408,7 +478,7 @@ export default function PracticeGame({ region, birds, regions, onBack }) {
 
                 <button
                   onClick={startNextRound}
-                  className={`flex-1 ${isHardMode ? 'bg-red-500 hover:bg-red-600' : 'bg-purple-500 hover:bg-purple-600'} text-white py-2 px-4 rounded-lg transition-colors flex items-center justify-center gap-2`}
+                  className={`flex-1 ${isHardMode ? "bg-red-500 hover:bg-red-600" : "bg-purple-500 hover:bg-purple-600"} text-white py-2 px-4 rounded-lg transition-colors flex items-center justify-center gap-2`}
                 >
                   Next Bird
                   <ArrowRight className="w-4 h-4" />

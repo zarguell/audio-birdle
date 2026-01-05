@@ -346,17 +346,20 @@ python3 validate-data.py --region EU
 **Status**: ✅ **COMPLETED** - UI support added, awaiting data scraping
 
 **Implementation**:
+
 - Added `images` field to bird data schema
 - Created `BirdCompletionCard` component with image navigation
 - Supports multiple images per bird with attribution
 - Displays images on game completion (normal/hard/practice modes)
 
 **Next Steps**:
+
 - Scrape bird images from sources (Macaulay Library, Wikimedia Commons, etc.)
 - Populate `images` array with URLs and attribution data
 - Current placeholder: `images: []`
 
 **Fields**:
+
 ```json
 "images": [
   {
@@ -377,16 +380,19 @@ python3 validate-data.py --region EU
 **Status**: ✅ **COMPLETED** - UI support added, awaiting data scraping
 
 **Implementation**:
+
 - Added `facts` field to bird data schema
 - Displays educational facts on game completion
 - Shows in a styled "Fun Fact" section with bird icon
 
 **Next Steps**:
+
 - Scrape or generate short facts about each species
 - Sources: All About Birds, Wikipedia, bird guides
 - Current placeholder: `facts: ""`
 
 **Fields**:
+
 ```json
 "facts": "The American Robin is a familiar songbird known for its orange-red breast..."
 ```
@@ -398,6 +404,7 @@ python3 validate-data.py --region EU
 **Status**: ✅ **COMPLETED** - UI support added, awaiting data scraping
 
 **Implementation**:
+
 - Added `attribution` objects to `audioUrl` array
 - Added `attribution` objects to `images` array
 - Displays attribution footer on game completion
@@ -405,11 +412,13 @@ python3 validate-data.py --region EU
 - Supports multiple images with individual credits
 
 **Next Steps**:
+
 - Extract attribution data from eBird API responses
 - Scrape photographer/recordist information
 - Populate attribution fields with proper credits
 
 **Fields**:
+
 ```json
 "audioUrl": [
   {
@@ -430,11 +439,13 @@ python3 validate-data.py --region EU
 **Status**: ✅ **COMPLETED** - UI support added, awaiting data scraping
 
 **Implementation**:
+
 - Added `learnMoreUrl` field to bird data schema
 - "Learn More" button appears on game completion when URL is present
 - Opens external link in new tab
 
 **Next Steps**:
+
 - Add links to external sources (Birds of the World, All About Birds, etc.)
 - Could be generated rule-based (e.g., `https://birdsoftheworld.org/species/{speciesCode}`)
 - Current placeholder: `learnMoreUrl: ""`

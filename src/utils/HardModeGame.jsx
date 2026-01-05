@@ -162,9 +162,9 @@ export default function HardModeGame({
               ref={audioRef}
               src={
                 Array.isArray(todaysBird.audioUrl)
-                  ? (typeof todaysBird.audioUrl[selectedAudioIndex] === 'object'
-                      ? todaysBird.audioUrl[selectedAudioIndex]?.url
-                      : todaysBird.audioUrl[selectedAudioIndex])
+                  ? typeof todaysBird.audioUrl[selectedAudioIndex] === "object"
+                    ? todaysBird.audioUrl[selectedAudioIndex]?.url
+                    : todaysBird.audioUrl[selectedAudioIndex]
                   : todaysBird.audioUrl
               }
               onEnded={handleAudioEnded}
@@ -290,7 +290,9 @@ export default function HardModeGame({
           {/* Completed Game Actions */}
           {hardModeGame?.completed && (
             <div className="space-y-2">
-              <div className={`text-2xl font-bold text-center mb-2 ${hardModeGame.won ? "text-green-600" : "text-red-600"}`}>
+              <div
+                className={`text-2xl font-bold text-center mb-2 ${hardModeGame.won ? "text-green-600" : "text-red-600"}`}
+              >
                 {hardModeGame.won ? "🎉 Correct!" : "😔 Game Over"}
               </div>
 

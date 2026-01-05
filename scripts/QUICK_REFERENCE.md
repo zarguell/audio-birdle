@@ -260,6 +260,7 @@ Each bird in `birds.json` has the following structure:
 ```
 
 **Field Notes**:
+
 - `audioUrl`: Array of objects with URL and attribution (required, can be empty placeholder)
 - `images`: Array of image objects with URL and attribution (optional)
 - `facts`: Short educational text about the bird (optional)

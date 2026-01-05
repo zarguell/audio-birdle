@@ -8,22 +8,23 @@
  * - Attribution footer for audio and images
  */
 
-import { useState } from 'react';
-import { Share2, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useState } from "react";
+import { Share2, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function BirdCompletionCard({
   bird,
   selectedAudioIndex = 0,
   onShare,
-  variant = 'normal' // 'normal', 'hard', 'practice'
+  variant = "normal", // 'normal', 'hard', 'practice'
 }) {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
   // Normalize audioUrl - handle both old format (array of strings) and new format (array of objects)
   const audioUrl = bird.audioUrl?.[selectedAudioIndex];
-  const audioAttribution = typeof audioUrl === 'object' && audioUrl?.attribution
-    ? audioUrl.attribution
-    : {};
+  const audioAttribution =
+    typeof audioUrl === "object" && audioUrl?.attribution
+      ? audioUrl.attribution
+      : {};
 
   // Get images
   const images = bird.images || [];
@@ -43,43 +44,51 @@ export default function BirdCompletionCard({
     // Audio attribution
     if (audioAttribution.recordist) {
       let audioText = `Audio: ${audioAttribution.recordist}`;
-      if (audioAttribution.location) audioText += ` (${audioAttribution.location})`;
+      if (audioAttribution.location)
+        audioText += ` (${audioAttribution.location})`;
       parts.push(audioText);
     }
 
     // Image attribution
     if (currentImage?.attribution?.photographer) {
       let imageText = `Photo: ${currentImage.attribution.photographer}`;
-      if (currentImage.attribution.license) imageText += ` (${currentImage.attribution.license})`;
+      if (currentImage.attribution.license)
+        imageText += ` (${currentImage.attribution.license})`;
       parts.push(imageText);
     }
 
-    return parts.length > 0 ? parts.join(' • ') : null;
+    return parts.length > 0 ? parts.join(" • ") : null;
   };
 
   const attributionText = getAttributionText();
 
   // Variant colors
   const variantColors = {
-    normal: { imageBg: 'bg-green-50', border: 'border-green-200' },
-    hard: { imageBg: 'bg-red-50', border: 'border-red-200' },
-    practice: { imageBg: 'bg-purple-50', border: 'border-purple-200' }
+    normal: { imageBg: "bg-green-50", border: "border-green-200" },
+    hard: { imageBg: "bg-red-50", border: "border-red-200" },
+    practice: { imageBg: "bg-purple-50", border: "border-purple-200" },
   };
   const colors = variantColors[variant] || variantColors.normal;
 
   const handlePrevImage = () => {
-    setSelectedImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+    setSelectedImageIndex((prev) =>
+      prev === 0 ? images.length - 1 : prev - 1,
+    );
   };
 
   const handleNextImage = () => {
-    setSelectedImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+    setSelectedImageIndex((prev) =>
+      prev === images.length - 1 ? 0 : prev + 1,
+    );
   };
 
   return (
     <div className="space-y-4">
       {/* Bird Image Section */}
       {hasImage && (
-        <div className={`rounded-lg ${colors.imageBg} border ${colors.border} overflow-hidden`}>
+        <div
+          className={`rounded-lg ${colors.imageBg} border ${colors.border} overflow-hidden`}
+        >
           <div className="relative">
             <img
               src={currentImage.url}
@@ -114,10 +123,14 @@ export default function BirdCompletionCard({
       )}
 
       {/* Bird Name Section */}
-      <div className={`rounded-lg ${colors.imageBg} ${colors.border} border p-4`}>
+      <div
+        className={`rounded-lg ${colors.imageBg} ${colors.border} border p-4`}
+      >
         <h3 className="font-semibold mb-2">Today's Bird:</h3>
         <div className="text-lg font-medium">{bird.name}</div>
-        <div className="text-sm text-gray-500 italic">{bird.scientificName}</div>
+        <div className="text-sm text-gray-500 italic">
+          {bird.scientificName}
+        </div>
       </div>
 
       {/* Educational Facts Section */}

@@ -729,9 +729,10 @@ export default function AudioBirdle() {
                     ref={audioRef}
                     src={
                       Array.isArray(todaysBird.audioUrl)
-                        ? (typeof todaysBird.audioUrl[selectedAudioIndex] === 'object'
-                            ? todaysBird.audioUrl[selectedAudioIndex]?.url
-                            : todaysBird.audioUrl[selectedAudioIndex])
+                        ? typeof todaysBird.audioUrl[selectedAudioIndex] ===
+                          "object"
+                          ? todaysBird.audioUrl[selectedAudioIndex]?.url
+                          : todaysBird.audioUrl[selectedAudioIndex]
                         : todaysBird.audioUrl
                     }
                     onEnded={handleAudioEnded}
