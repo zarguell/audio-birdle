@@ -252,7 +252,11 @@ export default function AudioBirdle() {
 
       if (selectedRegion && newBirds[selectedRegion]) {
         setLoadingBird(true);
-        const bird = await getDailyBirdWithFallback(selectedRegion, newBirds[selectedRegion], today);
+        const bird = await getDailyBirdWithFallback(
+          selectedRegion,
+          newBirds[selectedRegion],
+          today,
+        );
         setTodaysBird(bird);
         setLoadingBird(false);
       }
@@ -320,53 +324,54 @@ export default function AudioBirdle() {
   const renderModeSelector = () => {
     const gameModes = [
       {
-        name: 'Normal Mode',
-        description: 'Daily challenge • 4 guesses • Multiple choice',
-        icon: '🎯',
-        mode: 'normal',
+        name: "Normal Mode",
+        description: "Daily challenge • 4 guesses • Multiple choice",
+        icon: "🎯",
+        mode: "normal",
         view: VIEWS.GAME,
-        color: 'blue'
+        color: "blue",
       },
       {
-        name: 'Hard Mode',
-        description: 'Daily challenge • 6 guesses • Free text • Taxonomic hints',
-        icon: '🔥',
-        mode: 'hard',
+        name: "Hard Mode",
+        description:
+          "Daily challenge • 6 guesses • Free text • Taxonomic hints",
+        icon: "🔥",
+        mode: "hard",
         view: VIEWS.HARD_MODE,
-        color: 'red'
+        color: "red",
       },
       {
-        name: 'Practice Mode',
-        description: 'Unlimited play • No daily limit',
-        icon: '🎮',
-        mode: 'practice',
+        name: "Practice Mode",
+        description: "Unlimited play • No daily limit",
+        icon: "🎮",
+        mode: "practice",
         view: VIEWS.PRACTICE,
-        color: 'purple'
-      }
+        color: "purple",
+      },
     ];
 
     const colorClasses = {
       blue: {
-        border: 'border-blue-200',
-        hoverBg: 'hover:bg-blue-50',
-        hoverBorder: 'hover:border-blue-400',
-        title: 'text-blue-800',
-        badge: 'bg-blue-100 text-blue-800'
+        border: "border-blue-200",
+        hoverBg: "hover:bg-blue-50",
+        hoverBorder: "hover:border-blue-400",
+        title: "text-blue-800",
+        badge: "bg-blue-100 text-blue-800",
       },
       red: {
-        border: 'border-red-200',
-        hoverBg: 'hover:bg-red-50',
-        hoverBorder: 'hover:border-red-400',
-        title: 'text-red-800',
-        badge: 'bg-red-100 text-red-800'
+        border: "border-red-200",
+        hoverBg: "hover:bg-red-50",
+        hoverBorder: "hover:border-red-400",
+        title: "text-red-800",
+        badge: "bg-red-100 text-red-800",
       },
       purple: {
-        border: 'border-purple-200',
-        hoverBg: 'hover:bg-purple-50',
-        hoverBorder: 'hover:border-purple-400',
-        title: 'text-purple-800',
-        badge: 'bg-purple-100 text-purple-800'
-      }
+        border: "border-purple-200",
+        hoverBg: "hover:bg-purple-50",
+        hoverBorder: "hover:border-purple-400",
+        title: "text-purple-800",
+        badge: "bg-purple-100 text-purple-800",
+      },
     };
 
     return (
@@ -382,7 +387,7 @@ export default function AudioBirdle() {
           <div className="bg-white rounded-xl shadow-lg p-6 space-y-4">
             <h2 className="text-xl font-semibold mb-4">Select Game Mode</h2>
 
-            {gameModes.map(mode => {
+            {gameModes.map((mode) => {
               const colors = colorClasses[mode.color];
               return (
                 <button
@@ -396,13 +401,17 @@ export default function AudioBirdle() {
                   <div className="flex items-center gap-3">
                     <div className="text-2xl">{mode.icon}</div>
                     <div className="flex-1">
-                      <div className={`font-semibold ${colors.title}`}>{mode.name}</div>
+                      <div className={`font-semibold ${colors.title}`}>
+                        {mode.name}
+                      </div>
                       <div className="text-sm text-gray-600">
                         {mode.description}
                       </div>
                     </div>
                     {lastPlayedMode === mode.mode && (
-                      <span className={`text-xs ${colors.badge} px-2 py-1 rounded`}>
+                      <span
+                        className={`text-xs ${colors.badge} px-2 py-1 rounded`}
+                      >
                         Last played
                       </span>
                     )}

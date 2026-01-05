@@ -2,7 +2,7 @@
  * Cache management utilities for PWA data refresh
  */
 
-import { STORAGE_KEYS } from './Constants';
+import { STORAGE_KEYS } from "./Constants";
 
 const DATA_FILES = [
   "/data/regions.json",
@@ -25,7 +25,7 @@ export const getServiceWorker = async () => {
     const registration = await navigator.serviceWorker.getRegistration();
     return registration;
   } catch (error) {
-    console.error('Failed to get service worker registration:', error);
+    console.error("Failed to get service worker registration:", error);
     return null;
   }
 };
@@ -39,16 +39,18 @@ export const checkForUpdates = async () => {
   try {
     // Try to fetch regions.json with HEAD request to check version
     // This matches the file we use in loadGameData for version tracking
-    const response = await fetch('/data/regions.json', {
-      method: 'HEAD',
-      cache: 'no-store'
+    const response = await fetch("/data/regions.json", {
+      method: "HEAD",
+      cache: "no-store",
     });
 
     const serverLastModified = response.headers.get("Last-Modified");
     const serverETag = response.headers.get("ETag");
 
     // Get cached version info from localStorage
-    const cachedLastModified = localStorage.getItem(STORAGE_KEYS.CACHE_LAST_MODIFIED);
+    const cachedLastModified = localStorage.getItem(
+      STORAGE_KEYS.CACHE_LAST_MODIFIED,
+    );
     const cachedETag = localStorage.getItem(STORAGE_KEYS.CACHE_ETAG);
 
     const hasUpdate =
