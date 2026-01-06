@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-09-08",
-      "id": "sumtan",
-      "name": "Summer Tanager",
-      "subregion": "Illinois"
-    },
-    {
       "date": "2025-09-09",
       "id": "houfin",
       "name": "House Finch",
@@ -701,7 +695,20 @@
       "id": "steeid",
       "name": "Steller's Eider",
       "subregion": "Alaska"
+    },
+    {
+      "date": "2026-01-06",
+      "id": "grbher3",
+      "name": "Great Blue Heron",
+      "subregion": "South Dakota"
     }
   ],
-  "us-lower48": []
+  "us-lower48": [
+    {
+      "date": "2026-01-06",
+      "id": "rewbla",
+      "name": "Red-winged Blackbird",
+      "subregion": "South Dakota"
+    }
+  ]
 }

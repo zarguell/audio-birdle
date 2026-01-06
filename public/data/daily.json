@@ -1,8 +1,14 @@
 [
   {
-    "date": "2026-01-05",
+    "date": "2026-01-06",
     "region": "us",
-    "answerHash": "e95eea0e",
-    "subregion": "Alaska"
+    "answerHash": "4f42b5b5",
+    "subregion": "South Dakota"
+  },
+  {
+    "date": "2026-01-06",
+    "region": "us-lower48",
+    "answerHash": "047ca057",
+    "subregion": "South Dakota"
   }
 ]
