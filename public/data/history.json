@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-09-09",
-      "id": "houfin",
-      "name": "House Finch",
-      "subregion": "New Jersey"
-    },
-    {
       "date": "2025-09-10",
       "id": "bnhnut",
       "name": "Brown-headed Nuthatch",
@@ -701,6 +695,12 @@
       "id": "grbher3",
       "name": "Great Blue Heron",
       "subregion": "South Dakota"
+    },
+    {
+      "date": "2026-01-07",
+      "id": "pinsis",
+      "name": "Pine Siskin",
+      "subregion": "Pennsylvania"
     }
   ],
   "us-lower48": [
@@ -709,6 +709,12 @@
       "id": "rewbla",
       "name": "Red-winged Blackbird",
       "subregion": "South Dakota"
+    },
+    {
+      "date": "2026-01-07",
+      "id": "whbnut",
+      "name": "White-breasted Nuthatch",
+      "subregion": "Pennsylvania"
     }
   ]
 }
