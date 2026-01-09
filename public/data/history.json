@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-09-11",
-      "id": "chswar",
-      "name": "Chestnut-sided Warbler",
-      "subregion": "Nebraska"
-    },
-    {
       "date": "2025-09-12",
       "id": "easowl1",
       "name": "Eastern Screech-Owl",
@@ -701,6 +695,12 @@
       "id": "gnwtea",
       "name": "Green-winged Teal",
       "subregion": "Maine"
+    },
+    {
+      "date": "2026-01-09",
+      "id": "rocwre",
+      "name": "Rock Wren",
+      "subregion": "Texas"
     }
   ],
   "us-lower48": [
@@ -721,6 +721,12 @@
       "id": "rufgro",
       "name": "Ruffed Grouse",
       "subregion": "Maine"
+    },
+    {
+      "date": "2026-01-09",
+      "id": "btywar",
+      "name": "Black-throated Gray Warbler",
+      "subregion": "Texas"
     }
   ]
 }
