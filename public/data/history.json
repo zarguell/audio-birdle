@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-09-12",
-      "id": "easowl1",
-      "name": "Eastern Screech-Owl",
-      "subregion": "Maryland"
-    },
-    {
       "date": "2025-09-13",
       "id": "royter1",
       "name": "Royal Tern",
@@ -701,6 +695,12 @@
       "id": "rocwre",
       "name": "Rock Wren",
       "subregion": "Texas"
+    },
+    {
+      "date": "2026-01-10",
+      "id": "coohaw",
+      "name": "Cooper's Hawk",
+      "subregion": "New Jersey"
     }
   ],
   "us-lower48": [
@@ -727,6 +727,12 @@
       "id": "btywar",
       "name": "Black-throated Gray Warbler",
       "subregion": "Texas"
+    },
+    {
+      "date": "2026-01-10",
+      "id": "snogoo",
+      "name": "Snow Goose",
+      "subregion": "New Jersey"
     }
   ]
 }
