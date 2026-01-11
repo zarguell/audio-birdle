@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-09-13",
-      "id": "royter1",
-      "name": "Royal Tern",
-      "subregion": "North Carolina"
-    },
-    {
       "date": "2025-09-14",
       "id": "amekes",
       "name": "American Kestrel",
@@ -701,6 +695,12 @@
       "id": "coohaw",
       "name": "Cooper's Hawk",
       "subregion": "New Jersey"
+    },
+    {
+      "date": "2026-01-11",
+      "id": "belkin1",
+      "name": "Belted Kingfisher",
+      "subregion": "West Virginia"
     }
   ],
   "us-lower48": [
@@ -733,6 +733,12 @@
       "id": "snogoo",
       "name": "Snow Goose",
       "subregion": "New Jersey"
+    },
+    {
+      "date": "2026-01-11",
+      "id": "goleag",
+      "name": "Golden Eagle",
+      "subregion": "West Virginia"
     }
   ]
 }
