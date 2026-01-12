@@ -1,5 +1,6 @@
 // Daily bird utilities for hash-based bird selection
 import { hashString } from './HashUtils';
+import { storeDailyJsonVersionInfo } from './CacheUtils';
 
 // This salt should be kept secret in a real application
 // In production, this could come from an API endpoint or be embedded differently
@@ -24,7 +25,7 @@ export const hashBirdId = (birdId) => {
  */
 export const findBirdByHash = (birds, answerHash) => {
   if (!birds || !answerHash) return null;
-  
+
   for (const bird of birds) {
     const birdHash = hashBirdId(bird.id);
     // console.log(`Checking bird: ${bird.name} (${bird.id}) -> Hash: ${birdHash}, Against: ${answerHash}`);
@@ -37,6 +38,7 @@ export const findBirdByHash = (birds, answerHash) => {
 
 /**
  * Load daily bird data from daily.json
+ * Tracks version info for cache consistency validation
  * @returns {Promise<Array>} - Promise resolving to daily bird data array
  */
 export const loadDailyBirdData = async () => {
@@ -46,13 +48,17 @@ export const loadDailyBirdData = async () => {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.json();
-    
+
     // Validate that data is an array
     if (!Array.isArray(data)) {
       console.error('Daily data is not an array:', data);
       throw new Error('Daily data must be an array of entries');
     }
-    
+
+    // Store version info for cache consistency tracking
+    // This allows us to detect when daily.json has been updated
+    await storeDailyJsonVersionInfo(response);
+
     return data;
   } catch (error) {
     console.error('Failed to load daily bird data:', error);

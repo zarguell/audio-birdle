@@ -4,6 +4,9 @@ export const STORAGE_KEYS = {
   LAST_PLAYED_MODE: "audio-birdle-last-mode",
   CACHE_LAST_MODIFIED: "audio-birdle-last-modified",
   CACHE_ETAG: "audio-birdle-etag",
+  DAILY_JSON_LAST_MODIFIED: "audio-birdle-daily-last-modified",
+  DAILY_JSON_ETAG: "audio-birdle-daily-etag",
+  LAST_VALIDATED_DATE: "audio-birdle-last-validated-date",
 };
 
 export const GAME_CONFIG = {

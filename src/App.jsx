@@ -37,6 +37,8 @@ import { createAudioControls, getAudioSrc } from "./utils/AudioUtils";
 import { STORAGE_KEYS, GAME_CONFIG, VIEWS } from "./utils/Constants";
 import {
   checkForUpdates,
+  checkDailyJsonUpdate,
+  hasDateChanged,
   refreshGameData,
   clearServiceWorkerCache,
 } from "./utils/CacheUtils";
@@ -117,14 +119,65 @@ export default function AudioBirdle() {
     }
   }, [selectedRegion, birds, today]);
 
-  // Check for data updates on load
+  // Check for data updates on load and auto-refresh if daily.json is stale
   useEffect(() => {
     if (selectedRegion) {
-      checkForUpdates().then(({ hasUpdate }) => {
+      checkForUpdates().then(({ hasUpdate, dailyJsonUpdate }) => {
         setHasUpdate(hasUpdate);
+
+        // Auto-refresh if daily.json has updates or date has changed
+        // This prevents state inconsistency from cached daily challenge data
+        if (dailyJsonUpdate || hasDateChanged()) {
+          console.log('Detected stale daily.json or new day, auto-refreshing...');
+          handleAutoRefresh();
+        }
       });
     }
   }, [selectedRegion]);
+
+  /**
+   * Automatically refresh game data when daily.json is stale
+   * Runs silently in background without user intervention
+   */
+  const handleAutoRefresh = async () => {
+    if (!navigator.onLine) {
+      console.log('Offline, skipping auto-refresh');
+      return;
+    }
+
+    try {
+      await clearServiceWorkerCache();
+      const { regions: newRegions, birds: newBirds } = await refreshGameData();
+
+      setRegions(newRegions);
+      setBirds(newBirds);
+
+      // Reload today's bird if region is selected
+      if (selectedRegion && newBirds[selectedRegion]) {
+        setLoadingBird(true);
+        getDailyBirdWithFallback(
+          selectedRegion,
+          newBirds[selectedRegion],
+          today,
+        )
+          .then((bird) => {
+            setTodaysBird(bird);
+            setLoadingBird(false);
+          })
+          .catch((error) => {
+            console.error("Failed to reload today's bird after refresh:", error);
+            setLoadingBird(false);
+          });
+      }
+
+      setHasUpdate(false);
+      console.log('Auto-refresh completed successfully');
+    } catch (error) {
+      console.error('Auto-refresh failed:', error);
+      // Don't show toast to user for auto-refresh failures
+      // User can still manually refresh if needed
+    }
+  };
 
   // Generate answer options
   const answerOptions = generateAnswerOptions(
