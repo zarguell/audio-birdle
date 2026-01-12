@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-09-14",
-      "id": "amekes",
-      "name": "American Kestrel",
-      "subregion": "Alaska"
-    },
-    {
       "date": "2025-09-15",
       "id": "comrav",
       "name": "Common Raven",
@@ -701,6 +695,12 @@
       "id": "belkin1",
       "name": "Belted Kingfisher",
       "subregion": "West Virginia"
+    },
+    {
+      "date": "2026-01-12",
+      "id": "orcwar",
+      "name": "Orange-crowned Warbler",
+      "subregion": "Kentucky"
     }
   ],
   "us-lower48": [
@@ -739,6 +739,12 @@
       "id": "goleag",
       "name": "Golden Eagle",
       "subregion": "West Virginia"
+    },
+    {
+      "date": "2026-01-12",
+      "id": "carwre",
+      "name": "Carolina Wren",
+      "subregion": "Kentucky"
     }
   ]
 }
