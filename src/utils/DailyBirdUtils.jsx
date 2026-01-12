@@ -1,6 +1,6 @@
 // Daily bird utilities for hash-based bird selection
-import { hashString } from './HashUtils';
-import { storeDailyJsonVersionInfo } from './CacheUtils';
+import { hashString } from "./HashUtils";
+import { storeDailyJsonVersionInfo } from "./CacheUtils";
 
 // This salt should be kept secret in a real application
 // In production, this could come from an API endpoint or be embedded differently
@@ -43,7 +43,7 @@ export const findBirdByHash = (birds, answerHash) => {
  */
 export const loadDailyBirdData = async () => {
   try {
-    const response = await fetch('/data/daily.json');
+    const response = await fetch("/data/daily.json");
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -51,8 +51,8 @@ export const loadDailyBirdData = async () => {
 
     // Validate that data is an array
     if (!Array.isArray(data)) {
-      console.error('Daily data is not an array:', data);
-      throw new Error('Daily data must be an array of entries');
+      console.error("Daily data is not an array:", data);
+      throw new Error("Daily data must be an array of entries");
     }
 
     // Store version info for cache consistency tracking
@@ -61,7 +61,7 @@ export const loadDailyBirdData = async () => {
 
     return data;
   } catch (error) {
-    console.error('Failed to load daily bird data:', error);
+    console.error("Failed to load daily bird data:", error);
     throw error;
   }
 };
@@ -76,35 +76,37 @@ export const loadDailyBirdData = async () => {
 export const getTodaysBirdFromDaily = async (region, birds, date) => {
   try {
     const dailyData = await loadDailyBirdData();
-    
+
     // Additional safety check
     if (!Array.isArray(dailyData)) {
-      console.error('Daily data is not an array, cannot proceed');
+      console.error("Daily data is not an array, cannot proceed");
       return null;
     }
-    
+
     // Find the entry for today's date and region
-    const todaysEntry = dailyData.find(entry =>
-      entry.date === date && entry.region === region
+    const todaysEntry = dailyData.find(
+      (entry) => entry.date === date && entry.region === region,
     );
-    
+
     if (!todaysEntry) {
       console.warn(`No daily bird entry found for ${region} on ${date}`);
       return null;
     }
-    
+
     // Find the bird that matches the hash
     const bird = findBirdByHash(birds, todaysEntry.answerHash);
     if (!bird) {
-      console.warn(`No bird found matching hash ${todaysEntry.answerHash} for ${region} on ${date}`);
+      console.warn(
+        `No bird found matching hash ${todaysEntry.answerHash} for ${region} on ${date}`,
+      );
       return null;
     } else {
       // console.log(`Today's bird for ${region} on ${date}: ${bird.name} (${bird.id})`);
     }
-    
+
     return bird;
   } catch (error) {
-    console.error('Error getting today\'s bird from daily data:', error);
+    console.error("Error getting today's bird from daily data:", error);
     return null;
   }
 };
@@ -120,6 +122,6 @@ export const generateDailyEntry = (date, region, birdId) => {
   return {
     date,
     region,
-    answerHash: hashBirdId(birdId)
+    answerHash: hashBirdId(birdId),
   };
 };
