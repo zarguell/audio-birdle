@@ -145,7 +145,7 @@ export const storeDailyJsonVersionInfo = async (response) => {
     }
 
     // Store today's date as last validated
-    const today = new Date().toISOString().split('T')[0];
+    const today = new Date().toISOString().split("T")[0];
     localStorage.setItem(STORAGE_KEYS.LAST_VALIDATED_DATE, today);
   } catch (error) {
     console.warn("Failed to store daily.json version info:", error);
@@ -159,12 +159,14 @@ export const storeDailyJsonVersionInfo = async (response) => {
  */
 export const hasDateChanged = () => {
   try {
-    const lastValidatedDate = localStorage.getItem(STORAGE_KEYS.LAST_VALIDATED_DATE);
+    const lastValidatedDate = localStorage.getItem(
+      STORAGE_KEYS.LAST_VALIDATED_DATE,
+    );
     if (!lastValidatedDate) {
       return true; // First time, treat as new day
     }
 
-    const today = new Date().toISOString().split('T')[0];
+    const today = new Date().toISOString().split("T")[0];
     return today !== lastValidatedDate;
   } catch (error) {
     console.warn("Failed to check date change:", error);

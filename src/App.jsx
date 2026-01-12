@@ -128,7 +128,9 @@ export default function AudioBirdle() {
         // Auto-refresh if daily.json has updates or date has changed
         // This prevents state inconsistency from cached daily challenge data
         if (dailyJsonUpdate || hasDateChanged()) {
-          console.log('Detected stale daily.json or new day, auto-refreshing...');
+          console.log(
+            "Detected stale daily.json or new day, auto-refreshing...",
+          );
           handleAutoRefresh();
         }
       });
@@ -141,7 +143,7 @@ export default function AudioBirdle() {
    */
   const handleAutoRefresh = async () => {
     if (!navigator.onLine) {
-      console.log('Offline, skipping auto-refresh');
+      console.log("Offline, skipping auto-refresh");
       return;
     }
 
@@ -165,15 +167,18 @@ export default function AudioBirdle() {
             setLoadingBird(false);
           })
           .catch((error) => {
-            console.error("Failed to reload today's bird after refresh:", error);
+            console.error(
+              "Failed to reload today's bird after refresh:",
+              error,
+            );
             setLoadingBird(false);
           });
       }
 
       setHasUpdate(false);
-      console.log('Auto-refresh completed successfully');
+      console.log("Auto-refresh completed successfully");
     } catch (error) {
-      console.error('Auto-refresh failed:', error);
+      console.error("Auto-refresh failed:", error);
       // Don't show toast to user for auto-refresh failures
       // User can still manually refresh if needed
     }
