@@ -1,9 +1,9 @@
 // Audio player utilities
 import { STORAGE_KEYS } from "./Constants";
 
-// Track dead audio URLs to avoid repeated requests
+// Track dead audio URLs to avoid repeated failed playback attempts
+// Only populated when actual audio playback fails (lazy validation)
 const deadAudioUrls = new Set();
-const audioUrlValidationCache = new Map();
 
 /**
  * Gets the audio source URL from various audioUrl data formats.
@@ -31,73 +31,29 @@ export const getAudioSrc = (audioUrlData, index = 0) => {
 };
 
 /**
- * Validate if an audio URL is reachable with a HEAD request
- * Caches results to avoid repeated validation
- * @param {string} url - Audio URL to validate
- * @returns {Promise<boolean>} - True if URL is reachable
+ * Check if an audio URL is known to be dead (failed playback previously)
+ * @param {string} url - Audio URL to check
+ * @returns {boolean} - True if URL is known dead
  */
-export const validateAudioUrl = async (url) => {
-  if (!url) return false;
-
-  // Check if we already know this URL is dead
-  if (deadAudioUrls.has(url)) {
-    return false;
-  }
-
-  // Check cache first
-  if (audioUrlValidationCache.has(url)) {
-    return audioUrlValidationCache.get(url);
-  }
-
-  try {
-    const response = await fetch(url, {
-      method: "HEAD",
-      cache: "no-store",
-      signal: AbortSignal.timeout(5000), // 5 second timeout
-    });
-
-    const isValid = response.ok;
-    if (!isValid) {
-      deadAudioUrls.add(url);
-    }
-
-    // Cache result for 1 hour
-    audioUrlValidationCache.set(url, isValid);
-    setTimeout(() => audioUrlValidationCache.delete(url), 60 * 60 * 1000);
-
-    return isValid;
-  } catch (error) {
-    // Network errors, timeouts, or CORS issues = treat as dead
-    console.warn(`Audio URL validation failed for ${url}:`, error.message);
-    deadAudioUrls.add(url);
-    return false;
-  }
+export const isAudioUrlDead = (url) => {
+  return deadAudioUrls.has(url);
 };
 
 /**
- * Get the first working audio URL from an array
- * Falls back through array until finding a valid URL
- * @param {string[]|Object[]} audioUrlData - Array of audio URLs or objects
- * @returns {Promise<{url: string, index: number} | null>} - First valid URL and its index, or null
+ * Mark an audio URL as dead after actual playback failure
+ * Called from audio element's onError handler
+ * @param {string} url - Audio URL that failed to play
  */
-export const getFirstWorkingAudioUrl = async (audioUrlData) => {
-  if (!Array.isArray(audioUrlData)) {
-    return { url: audioUrlData, index: 0 };
+export const markAudioUrlDead = (url) => {
+  if (url) {
+    deadAudioUrls.add(url);
+    saveDeadAudioUrlsCache();
   }
-
-  for (let i = 0; i < audioUrlData.length; i++) {
-    const url = getAudioSrc(audioUrlData, i);
-    if (url && (await validateAudioUrl(url))) {
-      return { url, index: i };
-    }
-  }
-
-  return null;
 };
 
 /**
  * Load cached dead audio URLs from localStorage
- * Persists across sessions
+ * Persists across sessions - only contains URLs that actually failed playback
  */
 export const loadDeadAudioUrlsCache = () => {
   try {
@@ -123,6 +79,19 @@ export const saveDeadAudioUrlsCache = () => {
     );
   } catch (error) {
     console.warn("Failed to save dead audio URLs cache:", error);
+  }
+};
+
+/**
+ * Clear the dead audio URLs cache
+ * Useful when birds.json is updated with new URLs
+ */
+export const clearDeadAudioUrlsCache = () => {
+  deadAudioUrls.clear();
+  try {
+    localStorage.removeItem(STORAGE_KEYS.DEAD_AUDIO_URLS || "");
+  } catch (error) {
+    console.warn("Failed to clear dead audio URLs cache:", error);
   }
 };
 

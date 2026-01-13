@@ -1,5 +1,13 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { createAudioControls } from '@/utils/AudioUtils'
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
+import {
+  createAudioControls,
+  getAudioSrc,
+  isAudioUrlDead,
+  markAudioUrlDead,
+  loadDeadAudioUrlsCache,
+  saveDeadAudioUrlsCache,
+  clearDeadAudioUrlsCache
+} from '@/utils/AudioUtils'
 
 describe('AudioUtils', () => {
   let mockAudioRef
@@ -179,6 +187,91 @@ describe('AudioUtils', () => {
       expect(result1).toBe(true)
       expect(result2).toBe(true)
       expect(mockAudioRef.current.play).toHaveBeenCalledTimes(2)
+    })
+  })
+
+  describe('getAudioSrc', () => {
+    it('should return empty string for null/undefined input', () => {
+      expect(getAudioSrc(null)).toBe('')
+      expect(getAudioSrc(undefined)).toBe('')
+    })
+
+    it('should return the string directly for non-array input', () => {
+      expect(getAudioSrc('https://example.com/audio.mp3')).toBe('https://example.com/audio.mp3')
+    })
+
+    it('should return first item from array of strings', () => {
+      const urls = ['https://example.com/a.mp3', 'https://example.com/b.mp3']
+      expect(getAudioSrc(urls, 0)).toBe('https://example.com/a.mp3')
+      expect(getAudioSrc(urls, 1)).toBe('https://example.com/b.mp3')
+    })
+
+    it('should extract url property from array of objects', () => {
+      const urls = [{ url: 'https://example.com/a.mp3' }, { url: 'https://example.com/b.mp3' }]
+      expect(getAudioSrc(urls, 0)).toBe('https://example.com/a.mp3')
+      expect(getAudioSrc(urls, 1)).toBe('https://example.com/b.mp3')
+    })
+
+    it('should return empty string for out-of-bounds index', () => {
+      const urls = ['https://example.com/a.mp3']
+      expect(getAudioSrc(urls, 5)).toBe('')
+    })
+  })
+
+  describe('dead audio URL tracking (lazy validation)', () => {
+    afterEach(() => {
+      clearDeadAudioUrlsCache()
+    })
+
+    it('should not mark any URL as dead initially', () => {
+      expect(isAudioUrlDead('https://example.com/audio.mp3')).toBe(false)
+    })
+
+    it('should mark URL as dead after playback failure', () => {
+      const url = 'https://example.com/failed.mp3'
+      expect(isAudioUrlDead(url)).toBe(false)
+
+      markAudioUrlDead(url)
+
+      expect(isAudioUrlDead(url)).toBe(true)
+    })
+
+    it('should not mark empty URL as dead', () => {
+      markAudioUrlDead('')
+      markAudioUrlDead(null)
+      markAudioUrlDead(undefined)
+      // Should not throw and should not affect other URLs
+      expect(isAudioUrlDead('https://example.com/audio.mp3')).toBe(false)
+    })
+
+    it('should persist dead URLs to localStorage', () => {
+      const url = 'https://example.com/dead.mp3'
+      markAudioUrlDead(url)
+
+      // Check localStorage was updated
+      const cached = localStorage.getItem('dead-audio-urls')
+      expect(cached).toBeTruthy()
+      expect(JSON.parse(cached)).toContain(url)
+    })
+
+    it('should load dead URLs from localStorage on init', () => {
+      const url = 'https://example.com/cached-dead.mp3'
+      localStorage.setItem('dead-audio-urls', JSON.stringify([url]))
+
+      loadDeadAudioUrlsCache()
+
+      expect(isAudioUrlDead(url)).toBe(true)
+    })
+
+    it('should clear dead URLs cache', () => {
+      const url = 'https://example.com/to-clear.mp3'
+      markAudioUrlDead(url)
+      expect(isAudioUrlDead(url)).toBe(true)
+
+      clearDeadAudioUrlsCache()
+
+      expect(isAudioUrlDead(url)).toBe(false)
+      expect(localStorage.getItem('dead-audio-urls')).toBeNull()
     })
   })
 })

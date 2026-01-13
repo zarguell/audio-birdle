@@ -33,7 +33,7 @@ import {
   getUserPerformanceSummary,
 } from "./utils/GameLogic";
 import { generateShareText, shareResult } from "./utils/ShareUtils";
-import { createAudioControls, getAudioSrc } from "./utils/AudioUtils";
+import { createAudioControls } from "./utils/AudioUtils";
 import { STORAGE_KEYS, GAME_CONFIG, VIEWS } from "./utils/Constants";
 import {
   checkForUpdates,
@@ -45,7 +45,9 @@ import {
 } from "./utils/CacheUtils";
 import {
   loadDeadAudioUrlsCache,
-  saveDeadAudioUrlsCache,
+  clearDeadAudioUrlsCache,
+  markAudioUrlDead,
+  getAudioSrc,
 } from "./utils/AudioUtils";
 import { SubregionDisplay } from "./utils/SubregionUtils";
 
@@ -99,11 +101,6 @@ export default function AudioBirdle() {
       });
   }, []);
 
-  // Persist dead audio URLs cache whenever it changes
-  useEffect(() => {
-    saveDeadAudioUrlsCache();
-  }, []);
-
   // Bird loading state
   const [todaysBird, setTodaysBird] = useState(null);
   const [loadingBird, setLoadingBird] = useState(false);
@@ -155,6 +152,10 @@ export default function AudioBirdle() {
             console.log(
               "Detected stale data (daily/birds/date changed), auto-refreshing...",
             );
+            // Clear dead audio URLs cache when birds.json updates (new URLs may work)
+            if (birdsCheck.hasUpdate) {
+              clearDeadAudioUrlsCache();
+            }
             handleAutoRefresh();
           }
         },
@@ -267,6 +268,14 @@ export default function AudioBirdle() {
   const handleAudioError = () => {
     setAudioError(true);
     setIsPlaying(false);
+    // Mark this specific URL as dead for future sessions
+    if (todaysBird) {
+      const failedUrl = getAudioSrc(todaysBird.audioUrl, selectedAudioIndex);
+      if (failedUrl) {
+        markAudioUrlDead(failedUrl);
+        console.warn(`Marked audio URL as dead: ${failedUrl}`);
+      }
+    }
   };
 
   // Game actions
