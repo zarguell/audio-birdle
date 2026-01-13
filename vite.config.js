@@ -37,12 +37,12 @@ export default defineConfig({
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/macaulaylibrary\.org\/.*/i,
-            handler: 'CacheFirst',
+            handler: 'StaleWhileRevalidate',
             options: {
               cacheName: 'audio-cache',
               expiration: {
                 maxEntries: 50,
-                maxAgeSeconds: 60 * 60 * 24 * 30 // 30 days
+                maxAgeSeconds: 60 * 60 * 24 * 7 // 7 days (reduced from 30)
               },
               cacheableResponse: {
                 statuses: [0, 200]
@@ -51,12 +51,12 @@ export default defineConfig({
           },
           {
             urlPattern: /^https:\/\/cdn\.download\.ebird\.org\/.*/i,
-            handler: 'CacheFirst',
+            handler: 'StaleWhileRevalidate',
             options: {
               cacheName: 'audio-cache',
               expiration: {
                 maxEntries: 50,
-                maxAgeSeconds: 60 * 60 * 24 * 30 // 30 days
+                maxAgeSeconds: 60 * 60 * 24 * 7 // 7 days (reduced from 30)
               },
               cacheableResponse: {
                 statuses: [0, 200]

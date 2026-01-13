@@ -85,7 +85,10 @@ export default function AudioBirdle() {
         setRegions(regions);
         setBirds(birds);
       })
-      .catch(console.error);
+      .catch((error) => {
+        console.error("Failed to load game data:", error);
+        toast.error("Failed to load game data. Please refresh the page.");
+      });
   }, []);
 
   // Bird loading state
@@ -172,6 +175,9 @@ export default function AudioBirdle() {
               error,
             );
             setLoadingBird(false);
+            toast.error(
+              "Failed to load bird state. Please try refreshing the page.",
+            );
           });
       }
 
@@ -179,8 +185,9 @@ export default function AudioBirdle() {
       console.log("Auto-refresh completed successfully");
     } catch (error) {
       console.error("Auto-refresh failed:", error);
-      // Don't show toast to user for auto-refresh failures
-      // User can still manually refresh if needed
+      toast.error(
+        "Failed to refresh game data. Please refresh the page if state doesn't load.",
+      );
     }
   };
 

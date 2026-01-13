@@ -36,33 +36,50 @@ export const findBirdByHash = (birds, answerHash) => {
   return null;
 };
 
+const MAX_RETRIES = 3;
+const RETRY_DELAY_MS = 500;
+
 /**
- * Load daily bird data from daily.json
+ * Load daily bird data from daily.json with retry logic
  * Tracks version info for cache consistency validation
  * @returns {Promise<Array>} - Promise resolving to daily bird data array
  */
 export const loadDailyBirdData = async () => {
-  try {
-    const response = await fetch("/data/daily.json");
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+  for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+    try {
+      const response = await fetch("/data/daily.json");
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+
+      // Validate that data is an array
+      if (!Array.isArray(data)) {
+        console.error("Daily data is not an array:", data);
+        throw new Error("Daily data must be an array of entries");
+      }
+
+      // Store version info for cache consistency tracking
+      // This allows us to detect when daily.json has been updated
+      await storeDailyJsonVersionInfo(response);
+
+      return data;
+    } catch (error) {
+      if (attempt < MAX_RETRIES) {
+        const delayMs = RETRY_DELAY_MS * Math.pow(2, attempt - 1);
+        console.warn(
+          `Failed to load daily.json (attempt ${attempt}/${MAX_RETRIES}), retrying in ${delayMs}ms:`,
+          error.message,
+        );
+        await new Promise((resolve) => setTimeout(resolve, delayMs));
+      } else {
+        console.error(
+          `Failed to load daily bird data after ${MAX_RETRIES} attempts:`,
+          error,
+        );
+        throw error;
+      }
     }
-    const data = await response.json();
-
-    // Validate that data is an array
-    if (!Array.isArray(data)) {
-      console.error("Daily data is not an array:", data);
-      throw new Error("Daily data must be an array of entries");
-    }
-
-    // Store version info for cache consistency tracking
-    // This allows us to detect when daily.json has been updated
-    await storeDailyJsonVersionInfo(response);
-
-    return data;
-  } catch (error) {
-    console.error("Failed to load daily bird data:", error);
-    throw error;
   }
 };
 
