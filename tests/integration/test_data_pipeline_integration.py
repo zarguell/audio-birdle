@@ -218,9 +218,9 @@ class TestDataPipelineIntegration:
                 region_exists = region in birds_json
                 has_parent = region in virtual_regions
 
-                assert (
-                    region_exists or has_parent
-                ), f"Region {region} should exist in birds.json or have a parent region defined"
+                assert region_exists or has_parent, (
+                    f"Region {region} should exist in birds.json or have a parent region defined"
+                )
 
                 # Subregion format validation
                 # Can be: "US-NY", "New Jersey", "Kentucky", etc.
