@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-09-15",
-      "id": "comrav",
-      "name": "Common Raven",
-      "subregion": "Delaware"
-    },
-    {
       "date": "2025-09-16",
       "id": "olsfly",
       "name": "Olive-sided Flycatcher",
@@ -701,6 +695,12 @@
       "id": "orcwar",
       "name": "Orange-crowned Warbler",
       "subregion": "Kentucky"
+    },
+    {
+      "date": "2026-01-13",
+      "id": "easowl1",
+      "name": "Eastern Screech-Owl",
+      "subregion": "Virginia"
     }
   ],
   "us-lower48": [
@@ -745,6 +745,12 @@
       "id": "carwre",
       "name": "Carolina Wren",
       "subregion": "Kentucky"
+    },
+    {
+      "date": "2026-01-13",
+      "id": "cangoo",
+      "name": "Canada Goose",
+      "subregion": "Virginia"
     }
   ]
 }
