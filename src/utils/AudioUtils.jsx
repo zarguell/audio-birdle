@@ -63,10 +63,7 @@ export const validateAudioUrl = async (url) => {
 
     // Cache result for 1 hour
     audioUrlValidationCache.set(url, isValid);
-    setTimeout(
-      () => audioUrlValidationCache.delete(url),
-      60 * 60 * 1000,
-    );
+    setTimeout(() => audioUrlValidationCache.delete(url), 60 * 60 * 1000);
 
     return isValid;
   } catch (error) {
