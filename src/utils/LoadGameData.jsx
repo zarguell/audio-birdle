@@ -1,4 +1,4 @@
-import { storeVersionInfo } from "./CacheUtils";
+import { storeVersionInfo, storeBirdsJsonVersionInfo } from "./CacheUtils";
 
 const MAX_RETRIES = 3;
 const RETRY_DELAY_MS = 1000;
@@ -62,8 +62,13 @@ export async function loadGameData(forceRefresh = false) {
   });
 
   // Store version info if not forcing refresh
-  if (!forceRefresh && regionsRes.ok) {
-    await storeVersionInfo(regionsRes);
+  if (!forceRefresh) {
+    if (regionsRes.ok) {
+      await storeVersionInfo(regionsRes);
+    }
+    if (birdsRes.ok) {
+      await storeBirdsJsonVersionInfo(birdsRes);
+    }
   }
 
   return { regions, birds };

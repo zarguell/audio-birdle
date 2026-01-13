@@ -153,6 +153,61 @@ export const storeDailyJsonVersionInfo = async (response) => {
 };
 
 /**
+ * Store birds.json version information after successful load
+ * Critical for detecting when bird audio URLs have changed
+ * @param {Response} response - Fetch response from birds.json
+ */
+export const storeBirdsJsonVersionInfo = async (response) => {
+  try {
+    const lastModified = response.headers.get("Last-Modified");
+    const etag = response.headers.get("ETag");
+
+    if (lastModified) {
+      localStorage.setItem(STORAGE_KEYS.BIRDS_JSON_LAST_MODIFIED, lastModified);
+    }
+    if (etag) {
+      localStorage.setItem(STORAGE_KEYS.BIRDS_JSON_ETAG, etag);
+    }
+  } catch (error) {
+    console.warn("Failed to store birds.json version info:", error);
+  }
+};
+
+/**
+ * Check if birds.json (audio URLs) has been updated
+ * @returns {Promise<{hasUpdate: boolean, cachedVersion?: string, serverVersion?: string}>}
+ */
+export const checkBirdsJsonUpdate = async () => {
+  try {
+    const response = await fetch("/data/birds.json", {
+      method: "HEAD",
+      cache: "no-store",
+    });
+
+    const serverLastModified = response.headers.get("Last-Modified");
+    const serverETag = response.headers.get("ETag");
+
+    const cachedLastModified = localStorage.getItem(
+      STORAGE_KEYS.BIRDS_JSON_LAST_MODIFIED,
+    );
+    const cachedETag = localStorage.getItem(STORAGE_KEYS.BIRDS_JSON_ETAG);
+
+    const hasUpdate =
+      (serverLastModified && serverLastModified !== cachedLastModified) ||
+      (serverETag && serverETag !== cachedETag);
+
+    return {
+      hasUpdate,
+      serverVersion: serverLastModified || serverETag,
+      cachedVersion: cachedLastModified || cachedETag,
+    };
+  } catch (error) {
+    console.warn("Failed to check birds.json for updates:", error);
+    return { hasUpdate: false };
+  }
+};
+
+/**
  * Check if today's date has changed since last validation
  * Used to detect when we need to force a daily.json refresh
  * @returns {boolean} - True if date has changed (new day)

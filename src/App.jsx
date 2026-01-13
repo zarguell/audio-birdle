@@ -41,7 +41,12 @@ import {
   hasDateChanged,
   refreshGameData,
   clearServiceWorkerCache,
+  checkBirdsJsonUpdate,
 } from "./utils/CacheUtils";
+import {
+  loadDeadAudioUrlsCache,
+  saveDeadAudioUrlsCache,
+} from "./utils/AudioUtils";
 import { SubregionDisplay } from "./utils/SubregionUtils";
 
 export default function AudioBirdle() {
@@ -80,6 +85,9 @@ export default function AudioBirdle() {
 
   // Load initial data
   useEffect(() => {
+    // Initialize audio URL validation cache from persistent storage
+    loadDeadAudioUrlsCache();
+
     loadGameData()
       .then(({ regions, birds }) => {
         setRegions(regions);
@@ -89,6 +97,11 @@ export default function AudioBirdle() {
         console.error("Failed to load game data:", error);
         toast.error("Failed to load game data. Please refresh the page.");
       });
+  }, []);
+
+  // Persist dead audio URLs cache whenever it changes
+  useEffect(() => {
+    saveDeadAudioUrlsCache();
   }, []);
 
   // Bird loading state
@@ -122,21 +135,30 @@ export default function AudioBirdle() {
     }
   }, [selectedRegion, birds, today]);
 
-  // Check for data updates on load and auto-refresh if daily.json is stale
+  // Check for data updates on load and auto-refresh if daily.json or audio URLs are stale
   useEffect(() => {
     if (selectedRegion) {
-      checkForUpdates().then(({ hasUpdate, dailyJsonUpdate }) => {
-        setHasUpdate(hasUpdate);
+      Promise.all([checkForUpdates(), checkBirdsJsonUpdate()]).then(
+        ([updateCheck, birdsCheck]) => {
+          const hasUpdate = updateCheck.hasUpdate || birdsCheck.hasUpdate;
+          setHasUpdate(hasUpdate);
 
-        // Auto-refresh if daily.json has updates or date has changed
-        // This prevents state inconsistency from cached daily challenge data
-        if (dailyJsonUpdate || hasDateChanged()) {
-          console.log(
-            "Detected stale daily.json or new day, auto-refreshing...",
-          );
-          handleAutoRefresh();
-        }
-      });
+          // Auto-refresh if:
+          // - daily.json has updates (new bird/region)
+          // - birds.json has updates (audio URLs changed)
+          // - date has changed (new day)
+          if (
+            updateCheck.dailyJsonUpdate ||
+            birdsCheck.hasUpdate ||
+            hasDateChanged()
+          ) {
+            console.log(
+              "Detected stale data (daily/birds/date changed), auto-refreshing...",
+            );
+            handleAutoRefresh();
+          }
+        },
+      );
     }
   }, [selectedRegion]);
 

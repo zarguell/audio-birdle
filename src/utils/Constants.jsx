@@ -7,6 +7,9 @@ export const STORAGE_KEYS = {
   DAILY_JSON_LAST_MODIFIED: "audio-birdle-daily-last-modified",
   DAILY_JSON_ETAG: "audio-birdle-daily-etag",
   LAST_VALIDATED_DATE: "audio-birdle-last-validated-date",
+  BIRDS_JSON_ETAG: "audio-birdle-birds-etag",
+  BIRDS_JSON_LAST_MODIFIED: "audio-birdle-birds-last-modified",
+  DEAD_AUDIO_URLS: "audio-birdle-dead-audio-urls",
 };
 
 export const GAME_CONFIG = {
