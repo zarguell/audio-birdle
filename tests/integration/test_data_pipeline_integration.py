@@ -201,17 +201,26 @@ class TestDataPipelineIntegration:
                     )
 
     @staticmethod
-    def test_daily_subregion_references(birds_json, daily_json):
+    def test_daily_subregion_references(birds_json, daily_json, regions_json):
         """Test that subregion references in daily.json are valid."""
+        # Build lookup of virtual regions and their parents
+        virtual_regions = {}
+        for region in regions_json:
+            if "parentRegion" in region:
+                virtual_regions[region["id"]] = region["parentRegion"]
+
         for entry in daily_json:
             if "subregion" in entry and entry["subregion"]:
                 subregion = entry["subregion"]
                 region = entry["region"]
 
-                # Verify region exists in birds.json
-                assert region in birds_json, (
-                    f"Region {region} should exist in birds.json"
-                )
+                # Verify region exists in birds.json OR has a parent region
+                region_exists = region in birds_json
+                has_parent = region in virtual_regions
+
+                assert (
+                    region_exists or has_parent
+                ), f"Region {region} should exist in birds.json or have a parent region defined"
 
                 # Subregion format validation
                 # Can be: "US-NY", "New Jersey", "Kentucky", etc.
