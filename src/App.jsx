@@ -121,10 +121,16 @@ export default function AudioBirdle() {
           } else {
             // Data consistency error - show toast and attempt auto-refresh
             setTodaysBird(null);
-            setDataConsistencyError(result.message || "Failed to load daily challenge");
-            toast.error(result.message || "Data sync issue detected. Attempting refresh...", {
-              duration: 5000,
-            });
+            setDataConsistencyError(
+              result.message || "Failed to load daily challenge",
+            );
+            toast.error(
+              result.message ||
+                "Data sync issue detected. Attempting refresh...",
+              {
+                duration: 5000,
+              },
+            );
             // Auto-attempt refresh after a short delay
             setTimeout(() => {
               handleForceRefresh();
@@ -135,7 +141,9 @@ export default function AudioBirdle() {
         .catch((error) => {
           console.error("Failed to load today's bird:", error);
           setTodaysBird(null);
-          setDataConsistencyError("Failed to load daily challenge. Please refresh.");
+          setDataConsistencyError(
+            "Failed to load daily challenge. Please refresh.",
+          );
           toast.error("Failed to load daily challenge. Please try refreshing.");
           setLoadingBird(false);
         });
@@ -198,14 +206,16 @@ export default function AudioBirdle() {
           newBirds[selectedRegion],
           today,
         );
-        
+
         if (result.success && result.bird) {
           setTodaysBird(result.bird);
           setDataConsistencyError(null);
         } else {
           setTodaysBird(null);
           setDataConsistencyError(result.message);
-          toast.error(result.message || "Failed to load daily challenge after refresh.");
+          toast.error(
+            result.message || "Failed to load daily challenge after refresh.",
+          );
         }
         setLoadingBird(false);
       }
@@ -226,20 +236,20 @@ export default function AudioBirdle() {
    */
   const handleForceRefresh = useCallback(async () => {
     setRefreshingData(true);
-    
+
     try {
       // Clear service worker cache
       await clearServiceWorkerCache();
-      
+
       // Clear dead audio URLs cache
       clearDeadAudioUrlsCache();
-      
+
       // Force fetch fresh data
       const { regions: newRegions, birds: newBirds } = await refreshGameData();
-      
+
       setRegions(newRegions);
       setBirds(newBirds);
-      
+
       // Reload today's bird
       if (selectedRegion && newBirds[selectedRegion]) {
         setLoadingBird(true);
@@ -248,7 +258,7 @@ export default function AudioBirdle() {
           newBirds[selectedRegion],
           today,
         );
-        
+
         if (result.success && result.bird) {
           setTodaysBird(result.bird);
           setDataConsistencyError(null);
@@ -257,20 +267,22 @@ export default function AudioBirdle() {
           // Still failing after refresh - suggest hard reload
           setTodaysBird(null);
           setDataConsistencyError(
-            "Data still out of sync. Try a hard refresh (Ctrl+Shift+R / Cmd+Shift+R)."
+            "Data still out of sync. Try a hard refresh (Ctrl+Shift+R / Cmd+Shift+R).",
           );
           toast.error(
             "Data sync failed. Please try a hard refresh (Ctrl+Shift+R / Cmd+Shift+R).",
-            { duration: 8000 }
+            { duration: 8000 },
           );
         }
         setLoadingBird(false);
       }
-      
+
       setHasUpdate(false);
     } catch (error) {
       console.error("Force refresh failed:", error);
-      toast.error("Refresh failed. Please try a hard refresh (Ctrl+Shift+R / Cmd+Shift+R).");
+      toast.error(
+        "Refresh failed. Please try a hard refresh (Ctrl+Shift+R / Cmd+Shift+R).",
+      );
     } finally {
       setRefreshingData(false);
     }
@@ -417,7 +429,7 @@ export default function AudioBirdle() {
           newBirds[selectedRegion],
           today,
         );
-        
+
         if (result.success && result.bird) {
           setTodaysBird(result.bird);
           setDataConsistencyError(null);
@@ -867,8 +879,10 @@ export default function AudioBirdle() {
                       disabled={refreshingData}
                       className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors flex items-center gap-2 disabled:bg-gray-400"
                     >
-                      <RefreshCw className={`w-4 h-4 ${refreshingData ? 'animate-spin' : ''}`} />
-                      {refreshingData ? 'Refreshing...' : 'Force Refresh Data'}
+                      <RefreshCw
+                        className={`w-4 h-4 ${refreshingData ? "animate-spin" : ""}`}
+                      />
+                      {refreshingData ? "Refreshing..." : "Force Refresh Data"}
                     </button>
                     <button
                       onClick={() => window.location.reload()}
