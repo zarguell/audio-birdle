@@ -695,6 +695,12 @@
       "id": "easowl1",
       "name": "Eastern Screech-Owl",
       "subregion": "Virginia"
+    },
+    {
+      "date": "2026-01-14",
+      "id": "blujay",
+      "name": "Blue Jay",
+      "subregion": "Texas"
     }
   ],
   "us-lower48": [
@@ -745,6 +751,12 @@
       "id": "cangoo",
       "name": "Canada Goose",
       "subregion": "Virginia"
+    },
+    {
+      "date": "2026-01-14",
+      "id": "comrav",
+      "name": "Common Raven",
+      "subregion": "Connecticut"
     }
   ]
 }
