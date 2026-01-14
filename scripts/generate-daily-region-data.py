@@ -48,18 +48,28 @@ def main():
     # Extract unique species codes
     unique_ids = sorted({obs['speciesCode'] for obs in observations})
 
-    # Build output structure
-    output = {
-        region_prefix: {
-            subregion_name: [
-                {'id': species_id} for species_id in unique_ids
-            ]
-        }
-    }
+    # Load existing output file if it exists (to merge data)
+    existing_data = {}
+    if os.path.exists(args.output_file):
+        try:
+            with open(args.output_file, 'r') as existing_f:
+                existing_data = json.load(existing_f)
+            print(f"Loaded existing data from {args.output_file}")
+        except (json.JSONDecodeError, IOError) as e:
+            print(f"Warning: Could not load existing file, starting fresh: {e}")
+            existing_data = {}
 
-    # Save to output file
+    # Build new subregion data
+    new_subregion_data = [{'id': species_id} for species_id in unique_ids]
+
+    # Merge into existing data structure
+    if region_prefix not in existing_data:
+        existing_data[region_prefix] = {}
+    existing_data[region_prefix][subregion_name] = new_subregion_data
+
+    # Save merged output
     with open(args.output_file, 'w') as out_f:
-        json.dump(output, out_f, indent=2)
+        json.dump(existing_data, out_f, indent=2)
 
     print(f"Output written to {args.output_file}")
 

@@ -221,6 +221,142 @@ class TestRegionInference:
             assert region_prefix == expected_region
 
 
+class TestMergeExistingData:
+    """Test merging into existing output file"""
+
+    @patch("requests.get")
+    @patch.dict(os.environ, {"EBIRD_API_KEY": "test-key"})
+    def test_merges_into_existing_file(self, mock_get, tmp_path):
+        """Test that new subregion data is merged into existing file"""
+        # Create existing output file with California data
+        output_file = tmp_path / "output.json"
+        existing_data = {
+            "us": {
+                "California": [{"id": "calqua"}, {"id": "wesscj"}]
+            }
+        }
+        output_file.write_text(json.dumps(existing_data))
+
+        # Setup subregions for New York
+        subregions_data = [{"code": "US-NY", "name": "New York"}]
+        subregions_file = tmp_path / "us-subregions.json"
+        subregions_file.write_text(json.dumps(subregions_data))
+
+        mock_response = MagicMock()
+        mock_response.status_code = 200
+        mock_response.json.return_value = [
+            {"speciesCode": "amerob"},
+            {"speciesCode": "barswa"},
+        ]
+        mock_get.return_value = mock_response
+
+        test_args = [
+            "generate-daily-region-data.py",
+            str(subregions_file),
+            str(output_file),
+        ]
+
+        with (
+            patch("sys.argv", test_args),
+            patch("random.choice", return_value=subregions_data[0]),
+        ):
+            generate_daily_region_data.main()
+
+        with open(output_file) as f:
+            output_data = json.load(f)
+
+        # Both subregions should exist
+        assert "California" in output_data["us"]
+        assert "New York" in output_data["us"]
+        # California data should be preserved
+        assert len(output_data["us"]["California"]) == 2
+        # New York data should be added
+        assert len(output_data["us"]["New York"]) == 2
+
+    @patch("requests.get")
+    @patch.dict(os.environ, {"EBIRD_API_KEY": "test-key"})
+    def test_merges_different_regions(self, mock_get, tmp_path):
+        """Test that different region prefixes are merged correctly"""
+        # Create existing output file with us data
+        output_file = tmp_path / "output.json"
+        existing_data = {
+            "us": {
+                "New York": [{"id": "amerob"}]
+            }
+        }
+        output_file.write_text(json.dumps(existing_data))
+
+        # Setup subregions for EU region
+        subregions_data = [{"code": "EU-DE", "name": "Germany"}]
+        subregions_file = tmp_path / "eu-subregions.json"
+        subregions_file.write_text(json.dumps(subregions_data))
+
+        mock_response = MagicMock()
+        mock_response.status_code = 200
+        mock_response.json.return_value = [{"speciesCode": "eursta"}]
+        mock_get.return_value = mock_response
+
+        test_args = [
+            "generate-daily-region-data.py",
+            str(subregions_file),
+            str(output_file),
+        ]
+
+        with (
+            patch("sys.argv", test_args),
+            patch("random.choice", return_value=subregions_data[0]),
+        ):
+            generate_daily_region_data.main()
+
+        with open(output_file) as f:
+            output_data = json.load(f)
+
+        # Both regions should exist
+        assert "us" in output_data
+        assert "eu" in output_data
+        assert "New York" in output_data["us"]
+        assert "Germany" in output_data["eu"]
+
+    @patch("requests.get")
+    @patch.dict(os.environ, {"EBIRD_API_KEY": "test-key"})
+    def test_handles_corrupted_existing_file(self, mock_get, tmp_path, capsys):
+        """Test graceful handling of corrupted existing file"""
+        output_file = tmp_path / "output.json"
+        output_file.write_text("not valid json {{{")
+
+        subregions_data = [{"code": "US-NY", "name": "New York"}]
+        subregions_file = tmp_path / "us-subregions.json"
+        subregions_file.write_text(json.dumps(subregions_data))
+
+        mock_response = MagicMock()
+        mock_response.status_code = 200
+        mock_response.json.return_value = [{"speciesCode": "amerob"}]
+        mock_get.return_value = mock_response
+
+        test_args = [
+            "generate-daily-region-data.py",
+            str(subregions_file),
+            str(output_file),
+        ]
+
+        with (
+            patch("sys.argv", test_args),
+            patch("random.choice", return_value=subregions_data[0]),
+        ):
+            generate_daily_region_data.main()
+
+        # Should still create valid output
+        with open(output_file) as f:
+            output_data = json.load(f)
+
+        assert "us" in output_data
+        assert "New York" in output_data["us"]
+
+        # Should have printed warning
+        captured = capsys.readouterr()
+        assert "Warning" in captured.out or "starting fresh" in captured.out
+
+
 class TestOutputStructure:
     """Test output data structure"""
 

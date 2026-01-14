@@ -49,9 +49,10 @@ jobs:
 
       - name: Run daily script to find birds in every subregion available
         run: |
+          output="./public/data/daily-subregion-birds.json"
+          # Clear existing file to start fresh each day
+          echo "{}" > "$output"
           for file in ./scripts/data/regions/*-subregions.json; do
-            filename=$(basename "$file" -subregions.json)
-            output="./public/data/daily-subregion-birds.json"
             python ./scripts/generate-daily-region-data.py "$file" "$output"
           done
 
