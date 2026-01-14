@@ -312,24 +312,46 @@ export const getDailyBird = (region, birds, date) => {
 };
 
 /**
- * Get today's bird with fallback support
+ * Result object for daily bird lookup
+ * @typedef {Object} DailyBirdResult
+ * @property {Object|null} bird - The bird object if found
+ * @property {boolean} success - Whether lookup succeeded
+ * @property {string|null} error - Error type if failed: 'fetch_failed', 'hash_not_found', 'no_entry'
+ * @property {string|null} message - Human-readable error message
+ */
+
+/**
+ * Get today's bird - NO FALLBACK to ensure all players get the same bird
+ * Returns a result object with error details if lookup fails
  * @param {string} region - Region identifier
  * @param {Array} birds - Array of birds for the region
  * @param {string} date - Date string (YYYY-MM-DD)
- * @returns {Promise<Object|null>} - Promise resolving to today's bird
+ * @returns {Promise<DailyBirdResult>} - Promise resolving to result object
  */
 export const getDailyBirdWithFallback = async (region, birds, date) => {
   try {
-    // First try to get from daily.json
+    // Try to get from daily.json - this is the ONLY source of truth
     const bird = await getTodaysBirdFromDaily(region, birds, date);
-    if (bird) return bird;
+    if (bird) {
+      return { bird, success: true, error: null, message: null };
+    }
     
-    // Fallback to hash-based selection
-    console.log(`Falling back to hash-based selection for ${region} on ${date}`);
-    return getDailyBird(region, birds, date);
+    // No fallback - return error so UI can handle appropriately
+    console.error(`Daily bird lookup failed for ${region} on ${date} - no matching bird found`);
+    return {
+      bird: null,
+      success: false,
+      error: 'hash_not_found',
+      message: 'Daily challenge data is out of sync. A refresh is needed.'
+    };
   } catch (error) {
     console.error('Error in getDailyBirdWithFallback:', error);
-    return getDailyBird(region, birds, date);
+    return {
+      bird: null,
+      success: false,
+      error: 'fetch_failed',
+      message: 'Failed to load daily challenge. Please check your connection.'
+    };
   }
 };
 

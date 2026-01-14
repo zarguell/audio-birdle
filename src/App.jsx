@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useMemo } from "react";
+import { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import {
   Play,
   Pause,
@@ -21,7 +21,6 @@ import { loadGameData } from "./utils/LoadGameData";
 import { getTodayString, formatDateForDisplay } from "./utils/DateUtils";
 import { getStoredData, setStoredData } from "./utils/StorageUtils";
 import {
-  getDailyBird,
   getDailyBirdWithFallback,
   generateAnswerOptions,
   createInitialGameState,
@@ -37,7 +36,6 @@ import { createAudioControls } from "./utils/AudioUtils";
 import { STORAGE_KEYS, GAME_CONFIG, VIEWS } from "./utils/Constants";
 import {
   checkForUpdates,
-  checkDailyJsonUpdate,
   hasDateChanged,
   refreshGameData,
   clearServiceWorkerCache,
@@ -64,6 +62,7 @@ export default function AudioBirdle() {
   );
   const [hasUpdate, setHasUpdate] = useState(false);
   const [refreshingData, setRefreshingData] = useState(false);
+  const [dataConsistencyError, setDataConsistencyError] = useState(null);
 
   // Game state
   const [gameState, setGameState] = useState(() => {
@@ -113,24 +112,35 @@ export default function AudioBirdle() {
   useEffect(() => {
     if (selectedRegion && birds[selectedRegion]) {
       setLoadingBird(true);
+      setDataConsistencyError(null);
       getDailyBirdWithFallback(selectedRegion, birds[selectedRegion], today)
-        .then((bird) => {
-          setTodaysBird(bird);
+        .then((result) => {
+          if (result.success && result.bird) {
+            setTodaysBird(result.bird);
+            setDataConsistencyError(null);
+          } else {
+            // Data consistency error - show toast and attempt auto-refresh
+            setTodaysBird(null);
+            setDataConsistencyError(result.message || "Failed to load daily challenge");
+            toast.error(result.message || "Data sync issue detected. Attempting refresh...", {
+              duration: 5000,
+            });
+            // Auto-attempt refresh after a short delay
+            setTimeout(() => {
+              handleForceRefresh();
+            }, 1000);
+          }
           setLoadingBird(false);
         })
         .catch((error) => {
           console.error("Failed to load today's bird:", error);
-          // Fallback to deterministic bird selection
-          const fallbackBird = getDailyBird(
-            selectedRegion,
-            birds[selectedRegion],
-            today,
-          );
-          setTodaysBird(fallbackBird);
+          setTodaysBird(null);
+          setDataConsistencyError("Failed to load daily challenge. Please refresh.");
+          toast.error("Failed to load daily challenge. Please try refreshing.");
           setLoadingBird(false);
         });
     }
-  }, [selectedRegion, birds, today]);
+  }, [selectedRegion, birds, today, handleForceRefresh]);
 
   // Check for data updates on load and auto-refresh if daily.json or audio URLs are stale
   useEffect(() => {
@@ -161,13 +171,13 @@ export default function AudioBirdle() {
         },
       );
     }
-  }, [selectedRegion]);
+  }, [selectedRegion, handleAutoRefresh]);
 
   /**
    * Automatically refresh game data when daily.json is stale
    * Runs silently in background without user intervention
    */
-  const handleAutoRefresh = async () => {
+  const handleAutoRefresh = useCallback(async () => {
     if (!navigator.onLine) {
       console.log("Offline, skipping auto-refresh");
       return;
@@ -183,25 +193,21 @@ export default function AudioBirdle() {
       // Reload today's bird if region is selected
       if (selectedRegion && newBirds[selectedRegion]) {
         setLoadingBird(true);
-        getDailyBirdWithFallback(
+        const result = await getDailyBirdWithFallback(
           selectedRegion,
           newBirds[selectedRegion],
           today,
-        )
-          .then((bird) => {
-            setTodaysBird(bird);
-            setLoadingBird(false);
-          })
-          .catch((error) => {
-            console.error(
-              "Failed to reload today's bird after refresh:",
-              error,
-            );
-            setLoadingBird(false);
-            toast.error(
-              "Failed to load bird state. Please try refreshing the page.",
-            );
-          });
+        );
+        
+        if (result.success && result.bird) {
+          setTodaysBird(result.bird);
+          setDataConsistencyError(null);
+        } else {
+          setTodaysBird(null);
+          setDataConsistencyError(result.message);
+          toast.error(result.message || "Failed to load daily challenge after refresh.");
+        }
+        setLoadingBird(false);
       }
 
       setHasUpdate(false);
@@ -212,7 +218,63 @@ export default function AudioBirdle() {
         "Failed to refresh game data. Please refresh the page if state doesn't load.",
       );
     }
-  };
+  }, [selectedRegion, today]);
+
+  /**
+   * Force a complete refresh - clears all caches and reloads the page
+   * This is the nuclear option for data consistency issues
+   */
+  const handleForceRefresh = useCallback(async () => {
+    setRefreshingData(true);
+    
+    try {
+      // Clear service worker cache
+      await clearServiceWorkerCache();
+      
+      // Clear dead audio URLs cache
+      clearDeadAudioUrlsCache();
+      
+      // Force fetch fresh data
+      const { regions: newRegions, birds: newBirds } = await refreshGameData();
+      
+      setRegions(newRegions);
+      setBirds(newBirds);
+      
+      // Reload today's bird
+      if (selectedRegion && newBirds[selectedRegion]) {
+        setLoadingBird(true);
+        const result = await getDailyBirdWithFallback(
+          selectedRegion,
+          newBirds[selectedRegion],
+          today,
+        );
+        
+        if (result.success && result.bird) {
+          setTodaysBird(result.bird);
+          setDataConsistencyError(null);
+          toast.success("Data refreshed successfully!");
+        } else {
+          // Still failing after refresh - suggest hard reload
+          setTodaysBird(null);
+          setDataConsistencyError(
+            "Data still out of sync. Try a hard refresh (Ctrl+Shift+R / Cmd+Shift+R)."
+          );
+          toast.error(
+            "Data sync failed. Please try a hard refresh (Ctrl+Shift+R / Cmd+Shift+R).",
+            { duration: 8000 }
+          );
+        }
+        setLoadingBird(false);
+      }
+      
+      setHasUpdate(false);
+    } catch (error) {
+      console.error("Force refresh failed:", error);
+      toast.error("Refresh failed. Please try a hard refresh (Ctrl+Shift+R / Cmd+Shift+R).");
+    } finally {
+      setRefreshingData(false);
+    }
+  }, [selectedRegion, today]);
 
   // Generate answer options
   const answerOptions = generateAnswerOptions(
@@ -350,17 +412,26 @@ export default function AudioBirdle() {
 
       if (selectedRegion && newBirds[selectedRegion]) {
         setLoadingBird(true);
-        const bird = await getDailyBirdWithFallback(
+        const result = await getDailyBirdWithFallback(
           selectedRegion,
           newBirds[selectedRegion],
           today,
         );
-        setTodaysBird(bird);
+        
+        if (result.success && result.bird) {
+          setTodaysBird(result.bird);
+          setDataConsistencyError(null);
+        } else {
+          setTodaysBird(null);
+          setDataConsistencyError(result.message);
+        }
         setLoadingBird(false);
       }
 
       setHasUpdate(false);
-      toast.success("Data refreshed successfully!");
+      if (!dataConsistencyError) {
+        toast.success("Data refreshed successfully!");
+      }
     } catch (error) {
       console.error("Failed to refresh data:", error);
       toast.error(
@@ -777,6 +848,36 @@ export default function AudioBirdle() {
                   ⚠️ You've already completed Hard Mode today. You can't play
                   Normal Mode on the same day.
                 </p>
+              </div>
+            )}
+
+            {/* Data consistency error - prevents playing with wrong bird */}
+            {dataConsistencyError && !todaysBird && (
+              <div className="bg-red-50 border border-red-300 rounded-lg p-6 mb-4">
+                <div className="text-center">
+                  <p className="text-red-800 font-medium mb-2">
+                    ⚠️ Data Sync Issue
+                  </p>
+                  <p className="text-sm text-red-700 mb-4">
+                    {dataConsistencyError}
+                  </p>
+                  <div className="flex flex-col gap-2 items-center">
+                    <button
+                      onClick={handleForceRefresh}
+                      disabled={refreshingData}
+                      className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors flex items-center gap-2 disabled:bg-gray-400"
+                    >
+                      <RefreshCw className={`w-4 h-4 ${refreshingData ? 'animate-spin' : ''}`} />
+                      {refreshingData ? 'Refreshing...' : 'Force Refresh Data'}
+                    </button>
+                    <button
+                      onClick={() => window.location.reload()}
+                      className="text-red-600 underline text-sm hover:text-red-800"
+                    >
+                      Or reload the page
+                    </button>
+                  </div>
+                </div>
               </div>
             )}
 
