@@ -1,13 +1,14 @@
 [
   {
-    "date": "2026-01-14",
+    "date": "2026-01-13",
     "region": "us",
-    "answerHash": "c409d99a",
-    "subregion": "Hawaii"
+    "answerHash": "9f4389a6",
+    "subregion": "Virginia"
   },
   {
-    "date": "2026-01-14",
+    "date": "2026-01-13",
     "region": "us-lower48",
-    "answerHash": "b8b5a737"
+    "answerHash": "cf3fcc53",
+    "subregion": "Virginia"
   }
 ]

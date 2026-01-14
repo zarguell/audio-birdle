@@ -695,12 +695,6 @@
       "id": "easowl1",
       "name": "Eastern Screech-Owl",
       "subregion": "Virginia"
-    },
-    {
-      "date": "2026-01-14",
-      "id": "normoc",
-      "name": "Northern Mockingbird",
-      "subregion": "Hawaii"
     }
   ],
   "us-lower48": [
@@ -751,11 +745,6 @@
       "id": "cangoo",
       "name": "Canada Goose",
       "subregion": "Virginia"
-    },
-    {
-      "date": "2026-01-14",
-      "id": "bohwax",
-      "name": "Bohemian Waxwing"
     }
   ]
 }
