@@ -108,6 +108,109 @@ export default function AudioBirdle() {
     setSelectedAudioIndex(0);
   }, [todaysBird]);
 
+  /**
+   * Automatically refresh game data when daily.json is stale
+   * Runs silently in background without user intervention
+   */
+  const handleAutoRefresh = useCallback(async () => {
+    if (!navigator.onLine) {
+      console.log("Offline, skipping auto-refresh");
+      return;
+    }
+
+    try {
+      await clearServiceWorkerCache();
+      const { regions: newRegions, birds: newBirds } = await refreshGameData();
+
+      setRegions(newRegions);
+      setBirds(newBirds);
+
+      // Reload today's bird if region is selected
+      if (selectedRegion && newBirds[selectedRegion]) {
+        setLoadingBird(true);
+        const result = await getDailyBirdWithFallback(
+          selectedRegion,
+          newBirds[selectedRegion],
+          today,
+        );
+        
+        if (result.success && result.bird) {
+          setTodaysBird(result.bird);
+          setDataConsistencyError(null);
+        } else {
+          setTodaysBird(null);
+          setDataConsistencyError(result.message);
+          toast.error(result.message || "Failed to load daily challenge after refresh.");
+        }
+        setLoadingBird(false);
+      }
+
+      setHasUpdate(false);
+      console.log("Auto-refresh completed successfully");
+    } catch (error) {
+      console.error("Auto-refresh failed:", error);
+      toast.error(
+        "Failed to refresh game data. Please refresh the page if state doesn't load.",
+      );
+    }
+  }, [selectedRegion, today]);
+
+  /**
+   * Force a complete refresh - clears all caches and reloads page
+   * This is the nuclear option for data consistency issues
+   */
+  const handleForceRefresh = useCallback(async () => {
+    setRefreshingData(true);
+    
+    try {
+      // Clear service worker cache
+      await clearServiceWorkerCache();
+      
+      // Clear dead audio URLs cache
+      clearDeadAudioUrlsCache();
+      
+      // Force fetch fresh data
+      const { regions: newRegions, birds: newBirds } = await refreshGameData();
+      
+      setRegions(newRegions);
+      setBirds(newBirds);
+      
+      // Reload today's bird
+      if (selectedRegion && newBirds[selectedRegion]) {
+        setLoadingBird(true);
+        const result = await getDailyBirdWithFallback(
+          selectedRegion,
+          newBirds[selectedRegion],
+          today,
+        );
+        
+        if (result.success && result.bird) {
+          setTodaysBird(result.bird);
+          setDataConsistencyError(null);
+          toast.success("Data refreshed successfully!");
+        } else {
+          // Still failing after refresh - suggest hard reload
+          setTodaysBird(null);
+          setDataConsistencyError(
+            "Data still out of sync. Try a hard refresh (Ctrl+Shift+R / Cmd+Shift+R)."
+          );
+          toast.error(
+            "Data sync failed. Please try a hard refresh (Ctrl+Shift+R / Cmd+Shift+R).",
+            { duration: 8000 }
+          );
+        }
+        setLoadingBird(false);
+      }
+      
+      setHasUpdate(false);
+    } catch (error) {
+      console.error("Force refresh failed:", error);
+      toast.error("Refresh failed. Please try a hard refresh (Ctrl+Shift+R / Cmd+Shift+R).");
+    } finally {
+      setRefreshingData(false);
+    }
+  }, [selectedRegion, today]);
+
   // Load today's bird when region changes
   useEffect(() => {
     if (selectedRegion && birds[selectedRegion]) {
@@ -172,109 +275,6 @@ export default function AudioBirdle() {
       );
     }
   }, [selectedRegion, handleAutoRefresh]);
-
-  /**
-   * Automatically refresh game data when daily.json is stale
-   * Runs silently in background without user intervention
-   */
-  const handleAutoRefresh = useCallback(async () => {
-    if (!navigator.onLine) {
-      console.log("Offline, skipping auto-refresh");
-      return;
-    }
-
-    try {
-      await clearServiceWorkerCache();
-      const { regions: newRegions, birds: newBirds } = await refreshGameData();
-
-      setRegions(newRegions);
-      setBirds(newBirds);
-
-      // Reload today's bird if region is selected
-      if (selectedRegion && newBirds[selectedRegion]) {
-        setLoadingBird(true);
-        const result = await getDailyBirdWithFallback(
-          selectedRegion,
-          newBirds[selectedRegion],
-          today,
-        );
-        
-        if (result.success && result.bird) {
-          setTodaysBird(result.bird);
-          setDataConsistencyError(null);
-        } else {
-          setTodaysBird(null);
-          setDataConsistencyError(result.message);
-          toast.error(result.message || "Failed to load daily challenge after refresh.");
-        }
-        setLoadingBird(false);
-      }
-
-      setHasUpdate(false);
-      console.log("Auto-refresh completed successfully");
-    } catch (error) {
-      console.error("Auto-refresh failed:", error);
-      toast.error(
-        "Failed to refresh game data. Please refresh the page if state doesn't load.",
-      );
-    }
-  }, [selectedRegion, today]);
-
-  /**
-   * Force a complete refresh - clears all caches and reloads the page
-   * This is the nuclear option for data consistency issues
-   */
-  const handleForceRefresh = useCallback(async () => {
-    setRefreshingData(true);
-    
-    try {
-      // Clear service worker cache
-      await clearServiceWorkerCache();
-      
-      // Clear dead audio URLs cache
-      clearDeadAudioUrlsCache();
-      
-      // Force fetch fresh data
-      const { regions: newRegions, birds: newBirds } = await refreshGameData();
-      
-      setRegions(newRegions);
-      setBirds(newBirds);
-      
-      // Reload today's bird
-      if (selectedRegion && newBirds[selectedRegion]) {
-        setLoadingBird(true);
-        const result = await getDailyBirdWithFallback(
-          selectedRegion,
-          newBirds[selectedRegion],
-          today,
-        );
-        
-        if (result.success && result.bird) {
-          setTodaysBird(result.bird);
-          setDataConsistencyError(null);
-          toast.success("Data refreshed successfully!");
-        } else {
-          // Still failing after refresh - suggest hard reload
-          setTodaysBird(null);
-          setDataConsistencyError(
-            "Data still out of sync. Try a hard refresh (Ctrl+Shift+R / Cmd+Shift+R)."
-          );
-          toast.error(
-            "Data sync failed. Please try a hard refresh (Ctrl+Shift+R / Cmd+Shift+R).",
-            { duration: 8000 }
-          );
-        }
-        setLoadingBird(false);
-      }
-      
-      setHasUpdate(false);
-    } catch (error) {
-      console.error("Force refresh failed:", error);
-      toast.error("Refresh failed. Please try a hard refresh (Ctrl+Shift+R / Cmd+Shift+R).");
-    } finally {
-      setRefreshingData(false);
-    }
-  }, [selectedRegion, today]);
 
   // Generate answer options
   const answerOptions = generateAnswerOptions(
