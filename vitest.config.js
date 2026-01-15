@@ -39,7 +39,7 @@ export default defineConfig({
     hookTimeout: 10000,
     isolate: true,
     // Smart file matching for parallel runs
-    include: ['tests/**/*.{test,spec}.{js,jsx}'],
+    include: ['tests/**/*.{test,spec}.{js,jsx,ts,tsx}'],
     // Allow running tests by pattern
     allowOnly: process.env.CI ? false : true,
   },

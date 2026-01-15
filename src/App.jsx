@@ -31,6 +31,8 @@ import {
   hasCompletedHardMode,
   getUserPerformanceSummary,
 } from "./utils/GameLogic";
+import { useNormalGameStore } from "./stores/normalGameStore";
+import { useHardModeStore } from "./stores/hardModeStore";
 import { generateShareText, shareResult } from "./utils/ShareUtils";
 import { createAudioControls } from "./utils/AudioUtils";
 import { STORAGE_KEYS, GAME_CONFIG, VIEWS } from "./utils/Constants";
@@ -133,7 +135,7 @@ export default function AudioBirdle() {
           newBirds[selectedRegion],
           today,
         );
-        
+
         if (result.success && result.bird) {
           setTodaysBird(result.bird);
           setDataConsistencyError(null);
@@ -161,20 +163,20 @@ export default function AudioBirdle() {
    */
   const handleForceRefresh = useCallback(async () => {
     setRefreshingData(true);
-    
+
     try {
       // Clear service worker cache
       await clearServiceWorkerCache();
-      
+
       // Clear dead audio URLs cache
       clearDeadAudioUrlsCache();
-      
+
       // Force fetch fresh data
       const { regions: newRegions, birds: newBirds } = await refreshGameData();
-      
+
       setRegions(newRegions);
       setBirds(newBirds);
-      
+
       // Reload today's bird
       if (selectedRegion && newBirds[selectedRegion]) {
         setLoadingBird(true);
@@ -183,7 +185,7 @@ export default function AudioBirdle() {
           newBirds[selectedRegion],
           today,
         );
-        
+
         if (result.success && result.bird) {
           setTodaysBird(result.bird);
           setDataConsistencyError(null);
@@ -201,7 +203,7 @@ export default function AudioBirdle() {
         }
         setLoadingBird(false);
       }
-      
+
       setHasUpdate(false);
     } catch (error) {
       console.error("Force refresh failed:", error);
@@ -288,6 +290,23 @@ export default function AudioBirdle() {
   // Persist game state
   useEffect(() => {
     setStoredData(STORAGE_KEYS.GAME_STATE, gameState);
+  }, [gameState]);
+
+  // Dual-write: Sync gameState to Zustand stores (migration support)
+  useEffect(() => {
+    if (!gameState || !gameState.version || gameState.version < 2) return;
+
+    const { setDailyGame: normalSetDailyGame } = useNormalGameStore.getState();
+    Object.entries(gameState.dailyGames || {}).forEach(([key, game]) => {
+      normalSetDailyGame(key, game);
+    });
+
+    if (gameState.hardModeGames) {
+      const { setHardModeGame: hardSetHardModeGame } = useHardModeStore.getState();
+      Object.entries(gameState.hardModeGames).forEach(([key, game]) => {
+        hardSetHardModeGame(key, game);
+      });
+    }
   }, [gameState]);
 
   // Persist selected region
@@ -417,7 +436,7 @@ export default function AudioBirdle() {
           newBirds[selectedRegion],
           today,
         );
-        
+
         if (result.success && result.bird) {
           setTodaysBird(result.bird);
           setDataConsistencyError(null);

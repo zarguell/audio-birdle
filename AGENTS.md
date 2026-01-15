@@ -96,6 +96,14 @@ audio-birdle/
 - Region-specific and global stats
 - Deterministic answer option generation with seeded randomness
 
+**State Management (Zustand v5 Stores)**
+- [src/stores/normalGameStore.ts](src/stores/normalGameStore.ts) - Normal mode game state with persistence
+- [src/stores/hardModeStore.ts](src/stores/hardModeStore.ts) - Hard mode game state with persistence
+- [src/stores/practiceStore.ts](src/stores/practiceStore.ts) - Practice mode state (no persistence)
+- Automatic localStorage persistence via Zustand persist middleware
+- Version migration support (v0/v1 → v2)
+- Dual-write migration in [src/App.jsx](src/App.jsx) ensures backward compatibility
+
 **Daily Bird System ([src/utils/DailyBirdUtils.jsx](src/utils/DailyBirdUtils.jsx))**
 - Hash-based bird ID hashing (8-char hex)
 - Daily.json loading and validation
