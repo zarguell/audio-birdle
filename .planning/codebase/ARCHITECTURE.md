@@ -7,6 +7,7 @@
 **Overall:** Static Client-Side React Application with Python Data Processing Pipeline
 
 **Key Characteristics:**
+
 - Monolithic static web application (no server-side rendering)
 - Clear separation between frontend React app and backend Python scripts
 - Fully static architecture with no database
@@ -16,6 +17,7 @@
 ## Layers
 
 **Presentation Layer (React/Vite):**
+
 - Purpose: User interface and interaction handling
 - Contains: React components, view routing, audio playback controls
 - Location: `src/main.jsx`, `src/App.jsx`, `src/utils/*.jsx` components
@@ -23,6 +25,7 @@
 - Used by: End users in web browser
 
 **Business Logic Layer (Utility Modules):**
+
 - Purpose: Core game mechanics, state management, data processing
 - Contains: Game state management, guess processing, daily bird selection, taxonomic comparison
 - Location: `src/utils/GameLogic.jsx`, `src/utils/DailyBirdUtils.jsx`, `src/utils/TaxonomyUtils.jsx`, `src/utils/AudioUtils.jsx`
@@ -30,6 +33,7 @@
 - Used by: Presentation Layer (App.jsx)
 
 **Data Layer (Static JSON + Python Processing):**
+
 - Purpose: Data storage and processing pipeline
 - Contains: Static JSON files (birds, regions, daily challenges), Python data processing scripts
 - Location: `public/data/*.json`, `scripts/*.py`
@@ -37,6 +41,7 @@
 - Used by: Business Logic Layer (LoadGameData fetches JSON)
 
 **Infrastructure Layer (Testing & Deployment):**
+
 - Purpose: Quality assurance and deployment automation
 - Contains: Test suites, CI/CD workflows, deployment configuration
 - Location: `tests/`, `.github/workflows/`, `wrangler.jsonc`
@@ -80,6 +85,7 @@
 4. Dead URLs tracked in localStorage for future exclusion
 
 **State Management:**
+
 - Client-side localStorage - No persistent in-memory state
 - Each game session independent
 - State versioning supports migrations (version 2 format)
@@ -87,30 +93,35 @@
 ## Key Abstractions
 
 **GameLogic (Service-like Utility):**
+
 - Purpose: Core game mechanics and state management
 - Location: `src/utils/GameLogic.jsx`
 - Examples: `processGuess()`, `createInitialGameState()`, `calculateStats()`
 - Pattern: Stateless functions with React state integration
 
 **DailyBirdUtils (Hash-based Selection):**
+
 - Purpose: Deterministic daily bird selection
 - Location: `src/utils/DailyBirdUtils.jsx`
 - Examples: `loadDailyBirdData()`, `getDailyBirdId()`, `hashBirdId()`
 - Pattern: Hash-based lookup with fallback to seeded random selection
 
 **LoadGameData (Data Fetching):**
+
 - Purpose: Fetch and cache static JSON data
 - Location: `src/utils/LoadGameData.jsx`
 - Examples: `loadGameData()`, `loadRegionData()`, `forceRefresh()`
 - Pattern: Async fetching with retry logic and cache validation
 
 **StorageUtils (Persistence):**
+
 - Purpose: localStorage wrapper with error handling
 - Location: `src/utils/StorageUtils.jsx`
 - Examples: `loadState()`, `saveState()`, `migrateState()`
 - Pattern: Safe localStorage operations with JSON parsing
 
 **AudioUtils (Media Controls):**
+
 - Purpose: Audio playback and dead URL tracking
 - Location: `src/utils/AudioUtils.jsx`
 - Examples: `createAudioControls()`, `trackDeadURL()`
@@ -119,21 +130,25 @@
 ## Entry Points
 
 **React Application Entry:**
+
 - Location: `src/main.jsx`
 - Triggers: Browser loads the application
 - Responsibilities: Initialize React app, render App component with StrictMode
 
 **Main Application Component:**
+
 - Location: `src/App.jsx`
 - Triggers: Mounted by main.jsx
 - Responsibilities: View routing, game state orchestration, data loading, audio playback
 
 **Python Data Processing Scripts:**
+
 - Location: `scripts/generate-daily-birds.py`, `scripts/game-data-generator.py`
 - Triggers: GitHub Actions cron job or manual execution
 - Responsibilities: Fetch eBird data, generate JSON files, update daily challenges
 
 **Development Server:**
+
 - Location: Vite dev server (configured in `vite.config.js`)
 - Triggers: `npm run dev`
 - Responsibilities: Hot module reloading, development build
@@ -143,6 +158,7 @@
 **Strategy:** Try/catch at data loading boundaries, graceful degradation
 
 **Patterns:**
+
 - localStorage operations wrapped in try/catch with error logging
 - Audio playback failures tracked and excluded from future attempts
 - Data fetching with retry logic in `LoadGameData.jsx`
@@ -152,26 +168,30 @@
 ## Cross-Cutting Concerns
 
 **Hash Consistency:**
+
 - Identical hashing algorithm in Python (`scripts/generate-daily-birds.py`) and JavaScript (`src/utils/HashUtils.jsx`)
 - Shared secret salt (`"birdle-salt-2025"`) for deterministic selection
 - Critical for daily challenge consistency
 
 **State Persistence:**
+
 - All game state stored in localStorage via StorageUtils
 - State versioning supports automatic migrations
 - Separate storage for normal mode, hard mode, and practice mode
 
 **Data Freshness:**
+
 - Background cache validation in `LoadGameData.jsx`
 - Force refresh option for users
 - Daily automated updates via GitHub Actions
 
 **Testing:**
+
 - Comprehensive mocking of browser APIs (localStorage, Audio, fetch)
 - Shared fixtures in `tests/conftest.py` for Python tests
 - Smart test selection in CI based on commit patterns
 
 ---
 
-*Architecture analysis: 2026-01-15*
-*Update when major patterns change*
+_Architecture analysis: 2026-01-15_
+_Update when major patterns change_
