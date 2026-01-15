@@ -112,17 +112,59 @@ def filter_birds_by_subregion(birds, subregion_bird_ids):
     return filtered_birds
 
 
-def select_bird_for_region(birds, recent_answers, subregion_bird_ids=None):
-    """Select a random bird that hasn't been used recently, optionally filtered by subregion"""
-    # First filter by subregion if provided
+def verify_bird_exists_in_birds_json(
+    selected_bird, birds_data, region_id, virtual_regions
+):
+    """
+    Verify that the selected bird ID exists in birds.json before hashing.
+    This prevents data consistency issues where a bird exists in subregion data
+    but not in the final birds.json file.
+
+    Returns: True if bird exists, False otherwise
+    """
+    bird_id = selected_bird["id"]
+    bird_name = selected_bird["name"] if "name" in selected_bird else "Unknown"
+
+    check_region_id = region_id
+    if virtual_regions and region_id in virtual_regions:
+        check_region_id = virtual_regions[region_id]["parent"]
+
+    region_birds = birds_data.get(check_region_id, [])
+    if not region_birds:
+        print(f"Error: No birds found in birds.json for region {check_region_id}")
+        return False
+
+    bird_exists = any(bird["id"] == bird_id for bird in region_birds)
+
+    if not bird_exists:
+        print(
+            f"ERROR: Selected bird '{bird_id}' ({bird_name}) "
+            f"does not exist in birds.json for region '{check_region_id}'. "
+            f"This indicates a data consistency issue between subregion data and birds.json."
+        )
+        return False
+
+    return True
+
+
+def select_bird_for_region(
+    birds,
+    recent_answers,
+    subregion_bird_ids=None,
+    birds_data=None,
+    region_id=None,
+    virtual_regions=None,
+):
+    """
+    Select a random bird that hasn't been used recently, optionally filtered by subregion.
+    Now includes verification that the selected bird exists in birds.json.
+    """
     if subregion_bird_ids:
         birds = filter_birds_by_subregion(birds, subregion_bird_ids)
         if not birds:
             print("Warning: No birds available in subregion. Using all region birds.")
-            # Fall back to all birds in region if subregion filtering yields no results
             return None
 
-    # Then filter by recent answers
     available_birds = [bird for bird in birds if bird["id"] not in recent_answers]
 
     if not available_birds:
@@ -134,7 +176,21 @@ def select_bird_for_region(birds, recent_answers, subregion_bird_ids=None):
     if not available_birds:
         return None
 
-    return random.choice(available_birds)
+    selected_bird = random.choice(available_birds)
+
+    if birds_data and region_id:
+        if not verify_bird_exists_in_birds_json(
+            selected_bird, birds_data, region_id, virtual_regions
+        ):
+            print("Retrying with a different bird...")
+            available_birds = [
+                b for b in available_birds if b["id"] != selected_bird["id"]
+            ]
+            if available_birds:
+                return random.choice(available_birds)
+            return None
+
+    return selected_bird
 
 
 def update_history(history, daily_data, current_date):
@@ -316,6 +372,8 @@ def main():
             region_birds,
             recent_answers,
             subregion_bird_ids if selected_subregion else None,
+            birds_data,
+            region_id,
         )
 
         if not selected_bird:
