@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2025-09-17",
-      "id": "easkin",
-      "name": "Eastern Kingbird",
-      "subregion": "Wyoming"
-    },
-    {
       "date": "2025-09-18",
       "id": "apapan",
       "name": "Apapane",
@@ -701,6 +695,12 @@
       "id": "blujay",
       "name": "Blue Jay",
       "subregion": "Texas"
+    },
+    {
+      "date": "2026-01-15",
+      "id": "palwar",
+      "name": "Palm Warbler",
+      "subregion": "Delaware"
     }
   ],
   "us-lower48": [
@@ -757,6 +757,12 @@
       "id": "comrav",
       "name": "Common Raven",
       "subregion": "Connecticut"
+    },
+    {
+      "date": "2026-01-15",
+      "id": "coohaw",
+      "name": "Cooper's Hawk",
+      "subregion": "Texas"
     }
   ]
 }
