@@ -14,15 +14,13 @@ import { extractGenus } from "./TaxonomyUtils";
 import { getTodayString } from "./DateUtils";
 import { generateHardModeShareText, shareResult } from "./ShareUtils";
 import { SubregionDisplay } from "./SubregionUtils";
-import { hasCompletedNormalMode } from "./GameLogic";
+import { useHardModeStore } from "../stores/hardModeStore";
 
 export default function HardModeGame({
   region,
   birds,
   todaysBird,
-  gameState,
   onBack,
-  onGuess,
 }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [audioError, setAudioError] = useState(false);
@@ -30,8 +28,7 @@ export default function HardModeGame({
   const audioRef = useRef(null);
 
   const today = getTodayString();
-  const hardModeGame = gameState?.hardModeGames?.[`${region}-${today}`];
-  const normalModeCompleted = hasCompletedNormalMode(gameState, region, today);
+  const hardModeGame = useHardModeStore((state) => state.getHardModeGame(`${region}-${today}`));
 
   // Reset audio index when bird changes
   useEffect(() => {
@@ -68,7 +65,20 @@ export default function HardModeGame({
   };
 
   const handleGuess = (bird) => {
-    onGuess(bird);
+    const taxonomicScore = {
+      order: bird.order === todaysBird.order,
+      family: bird.family === todaysBird.family,
+      genus: bird.genus === todaysBird.genus,
+      species: bird.scientificName === todaysBird.scientificName,
+    };
+
+    useHardModeStore.getState().processHardModeGuess(`${region}-${today}`, {
+      birdId: bird.id,
+      textInput: bird.name,
+      correct: bird.id === todaysBird.id,
+      timestamp: Date.now(),
+      taxonomicScore,
+    });
   };
 
   const handleShare = async () => {

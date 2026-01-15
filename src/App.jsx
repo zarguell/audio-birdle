@@ -23,12 +23,8 @@ import { getStoredData, setStoredData } from "./utils/StorageUtils";
 import {
   getDailyBirdWithFallback,
   generateAnswerOptions,
-  createInitialGameState,
-  getDailyGameState,
-  processGuess,
-  processHardModeGuess,
   hasPlayedRegionDate,
-  hasCompletedHardMode,
+  hasCompletedNormalMode,
   getUserPerformanceSummary,
 } from "./utils/GameLogic";
 import { useNormalGameStore } from "./stores/normalGameStore";
@@ -66,12 +62,6 @@ export default function AudioBirdle() {
   const [refreshingData, setRefreshingData] = useState(false);
   const [dataConsistencyError, setDataConsistencyError] = useState(null);
 
-  // Game state
-  const [gameState, setGameState] = useState(() => {
-    const stored = getStoredData(STORAGE_KEYS.GAME_STATE, null);
-    return stored || createInitialGameState();
-  });
-
   const [isPlaying, setIsPlaying] = useState(false);
   const [audioError, setAudioError] = useState(false);
   const audioRef = useRef(null);
@@ -81,9 +71,8 @@ export default function AudioBirdle() {
 
   const today = getTodayString();
 
-  // Current daily game state
   const currentDailyGame = selectedRegion
-    ? getDailyGameState(gameState, selectedRegion, today)
+    ? useNormalGameStore.getState().getDailyGame(`${selectedRegion}-${today}`)
     : null;
 
   // Load initial data
@@ -285,29 +274,7 @@ export default function AudioBirdle() {
     today,
     todaysBird,
     GAME_CONFIG.ANSWER_OPTIONS_COUNT,
-  );
-
-  // Persist game state
-  useEffect(() => {
-    setStoredData(STORAGE_KEYS.GAME_STATE, gameState);
-  }, [gameState]);
-
-  // Dual-write: Sync gameState to Zustand stores (migration support)
-  useEffect(() => {
-    if (!gameState || !gameState.version || gameState.version < 2) return;
-
-    const { setDailyGame: normalSetDailyGame } = useNormalGameStore.getState();
-    Object.entries(gameState.dailyGames || {}).forEach(([key, game]) => {
-      normalSetDailyGame(key, game);
-    });
-
-    if (gameState.hardModeGames) {
-      const { setHardModeGame: hardSetHardModeGame } = useHardModeStore.getState();
-      Object.entries(gameState.hardModeGames).forEach(([key, game]) => {
-        hardSetHardModeGame(key, game);
-      });
-    }
-  }, [gameState]);
+   );
 
   // Persist selected region
   useEffect(() => {
@@ -363,28 +330,30 @@ export default function AudioBirdle() {
   const makeGuess = (birdId) => {
     if (!todaysBird || !selectedRegion) return;
 
-    const newGameState = processGuess(
-      gameState,
-      selectedRegion,
-      today,
+    useNormalGameStore.getState().processGuess(`${selectedRegion}-${today}`, {
       birdId,
-      todaysBird.id,
-    );
-    setGameState(newGameState);
+      correct: birdId === todaysBird.id,
+      timestamp: Date.now(),
+    });
   };
 
   const makeHardModeGuess = (bird) => {
     if (!todaysBird || !selectedRegion) return;
 
-    const newGameState = processHardModeGuess(
-      gameState,
-      selectedRegion,
-      today,
-      bird,
-      bird.name,
-      todaysBird,
-    );
-    setGameState(newGameState);
+    const taxonomicScore = {
+      order: bird.order === todaysBird.order,
+      family: bird.family === todaysBird.family,
+      genus: bird.genus === todaysBird.genus,
+      species: bird.scientificName === todaysBird.scientificName,
+    };
+
+    useHardModeStore.getState().processHardModeGuess(`${selectedRegion}-${today}`, {
+      birdId: bird.id,
+      textInput: bird.name,
+      correct: bird.id === todaysBird.id,
+      timestamp: Date.now(),
+      taxonomicScore,
+    });
   };
 
   // Share functionality
@@ -399,15 +368,20 @@ export default function AudioBirdle() {
   const resetTodaysGame = () => {
     if (!selectedRegion) return;
 
-    const newGameState = { ...gameState };
     const key = `${selectedRegion}-${today}`;
-    delete newGameState.dailyGames[key];
-    setGameState(newGameState);
+    useNormalGameStore.getState().setDailyGame(key, {
+      region: selectedRegion,
+      date: today,
+      guesses: [],
+      completed: false,
+      won: false,
+      maxGuesses: 4,
+    });
   };
 
   const resetAllData = () => {
-    const newGameState = createInitialGameState();
-    setGameState(newGameState);
+    useNormalGameStore.getState().reset();
+    useHardModeStore.getState().reset();
   };
 
   // Refresh game data
@@ -1102,9 +1076,7 @@ export default function AudioBirdle() {
         region={selectedRegion}
         birds={birds}
         todaysBird={todaysBird}
-        gameState={gameState}
         onBack={() => setCurrentView(VIEWS.MODE_SELECTOR)}
-        onGuess={makeHardModeGuess}
       />
     );
   }
