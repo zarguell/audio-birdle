@@ -101,6 +101,17 @@
       "id": "wlswar",
       "name": "Wilson's Warbler",
       "subregion": "Texas"
+    },
+    {
+      "date": "2026-01-15",
+      "id": "chirav",
+      "name": "Chihuahuan Raven"
+    },
+    {
+      "date": "2026-01-15",
+      "id": "blksco2",
+      "name": "Black Scoter",
+      "subregion": "Delaware"
     }
   ],
   "us-lower48": [
@@ -180,6 +191,17 @@
       "date": "2026-01-15",
       "id": "bnhnut",
       "name": "Brown-headed Nuthatch",
+      "subregion": "Texas"
+    },
+    {
+      "date": "2026-01-15",
+      "id": "barswa",
+      "name": "Barn Swallow"
+    },
+    {
+      "date": "2026-01-15",
+      "id": "motowl",
+      "name": "Mottled Owl",
       "subregion": "Texas"
     }
   ]
