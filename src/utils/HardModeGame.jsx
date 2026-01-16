@@ -29,7 +29,9 @@ export default function HardModeGame({
   const audioRef = useRef(null);
 
   const today = getTodayString();
-  const hardModeGame = useHardModeStore((state) => state.getHardModeGame(`${region}-${today}`));
+  const hardModeGame = useHardModeStore((state) =>
+    state.getHardModeGame(`${region}-${today}`),
+  );
 
   // Reset audio index when bird changes
   useEffect(() => {
