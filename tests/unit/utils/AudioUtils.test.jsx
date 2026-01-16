@@ -5,7 +5,6 @@ import {
   isAudioUrlDead,
   markAudioUrlDead,
   loadDeadAudioUrlsCache,
-  saveDeadAudioUrlsCache,
   clearDeadAudioUrlsCache
 } from '@/utils/AudioUtils'
 
@@ -249,14 +248,14 @@ describe('AudioUtils', () => {
       markAudioUrlDead(url)
 
       // Check localStorage was updated
-      const cached = localStorage.getItem('dead-audio-urls')
+      const cached = localStorage.getItem('audio-birdle-dead-audio-urls')
       expect(cached).toBeTruthy()
       expect(JSON.parse(cached)).toContain(url)
     })
 
     it('should load dead URLs from localStorage on init', () => {
       const url = 'https://example.com/cached-dead.mp3'
-      localStorage.setItem('dead-audio-urls', JSON.stringify([url]))
+      localStorage.setItem('audio-birdle-dead-audio-urls', JSON.stringify([url]))
 
       loadDeadAudioUrlsCache()
 
@@ -271,7 +270,7 @@ describe('AudioUtils', () => {
       clearDeadAudioUrlsCache()
 
       expect(isAudioUrlDead(url)).toBe(false)
-      expect(localStorage.getItem('dead-audio-urls')).toBeNull()
+      expect(localStorage.getItem('audio-birdle-dead-audio-urls')).toBeNull()
     })
   })
 })

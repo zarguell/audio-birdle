@@ -11,8 +11,8 @@ import { STORAGE_KEYS } from "./Constants";
  * @returns {{lastModified: string|null, etag: string|null}}
  */
 export const getVersionFromResponse = (response) => ({
-  lastModified: response.headers.get("Last-Modified"),
-  etag: response.headers.get("ETag"),
+  lastModified: response.headers?.get("Last-Modified") || null,
+  etag: response.headers?.get("ETag") || null,
 });
 
 /**

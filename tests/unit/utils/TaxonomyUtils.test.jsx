@@ -357,7 +357,6 @@ describe('TaxonomyUtils', () => {
     })
 
     it('should handle hyphenated names', () => {
-      const bird = sampleBirds[3]
       const result = filterBirdsByQuery(sampleBirds, 'collared')
 
       expect(result.some(b => b.id === 'eucdov')).toBe(true)

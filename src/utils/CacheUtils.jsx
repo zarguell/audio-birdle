@@ -1,12 +1,12 @@
 /**
  * Cache management utilities for PWA data refresh
+ * Handles service worker cache, data file versioning, and refresh operations
  */
 
 import { STORAGE_KEYS } from "./Constants";
 import {
   checkDataFileUpdate,
   storeDataFileVersion,
-  getCachedVersion,
 } from "./versionUtils";
 
 const DATA_FILES = [
@@ -18,8 +18,33 @@ const DATA_FILES = [
 ];
 
 /**
+ * Log error with context prefix
+ * @param {string} prefix - Error context
+ * @param {Error} error - Error object
+ */
+const logError = (prefix, error) => {
+  console.error(`${prefix}:`, error);
+};
+
+/**
+ * Check if localStorage is accessible
+ * @returns {boolean}
+ */
+const isLocalStorageAvailable = () => {
+  try {
+    const testKey = "__storage_test__";
+    localStorage.setItem(testKey, "test");
+    localStorage.removeItem(testKey);
+    return true;
+  } catch {
+    return false;
+  }
+};
+
+/**
  * Check if service worker is active and ready
- * @returns {Promise<ServiceWorkerRegistration|null>}
+ * Used before cache operations to verify PWA support
+ * @returns {Promise<ServiceWorkerRegistration|null>} Service worker registration or null if unavailable
  */
 export const getServiceWorker = async () => {
   if (!("serviceWorker" in navigator)) {
@@ -30,15 +55,15 @@ export const getServiceWorker = async () => {
     const registration = await navigator.serviceWorker.getRegistration();
     return registration;
   } catch (error) {
-    console.error("Failed to get service worker registration:", error);
+    logError("Failed to get service worker registration", error);
     return null;
   }
 };
 
 /**
  * Check if daily.json has been updated
- * Critical for daily challenge consistency
- * @returns {Promise<{hasUpdate: boolean, cachedVersion?: string, serverVersion?: string}>}
+ * Critical for daily challenge consistency - triggers cache refresh when changed
+ * @returns {Promise<{hasUpdate: boolean, cachedVersion?: string, serverVersion?: string}>} Update status and version info
  */
 export const checkDailyJsonUpdate = async () =>
   checkDataFileUpdate(
@@ -49,7 +74,8 @@ export const checkDailyJsonUpdate = async () =>
 
 /**
  * Get version information from cached vs fresh data
- * @returns {Promise<{hasUpdate: boolean, cachedVersion?: string, serverVersion?: string, dailyJsonUpdate?: boolean}>}
+ * Checks both regions.json and daily.json for updates
+ * @returns {Promise<{hasUpdate: boolean, cachedVersion?: string, serverVersion?: string, dailyJsonUpdate?: boolean}>} Update status and version details
  */
 export const checkForUpdates = async () => {
   const regionsCheck = await checkDataFileUpdate(
@@ -69,6 +95,7 @@ export const checkForUpdates = async () => {
 
 /**
  * Store version information after successful data load
+ * Saves Last-Modified and ETag headers to localStorage
  * @param {Response} response - Fetch response from data file
  */
 export const storeVersionInfo = (response) =>
@@ -76,14 +103,16 @@ export const storeVersionInfo = (response) =>
 
 /**
  * Store daily.json version information after successful load
+ * Also records today's date as last validated to detect day changes
  * @param {Response} response - Fetch response from daily.json
  */
 export const storeDailyJsonVersionInfo = (response) => {
   storeDataFileVersion(response, STORAGE_KEYS.DAILY_JSON_LAST_MODIFIED, STORAGE_KEYS.DAILY_JSON_ETAG);
 
-  // Store today's date as last validated
-  const today = new Date().toISOString().split("T")[0];
-  localStorage.setItem(STORAGE_KEYS.LAST_VALIDATED_DATE, today);
+  if (isLocalStorageAvailable()) {
+    const today = new Date().toISOString().split("T")[0];
+    localStorage.setItem(STORAGE_KEYS.LAST_VALIDATED_DATE, today);
+  }
 };
 
 /**
@@ -96,7 +125,7 @@ export const storeBirdsJsonVersionInfo = (response) =>
 
 /**
  * Check if birds.json (audio URLs) has been updated
- * @returns {Promise<{hasUpdate: boolean, cachedVersion?: string, serverVersion?: string}>}
+ * @returns {Promise<{hasUpdate: boolean, cachedVersion?: string, serverVersion?: string}>} Update status and version info
  */
 export const checkBirdsJsonUpdate = async () =>
   checkDataFileUpdate(
@@ -107,26 +136,27 @@ export const checkBirdsJsonUpdate = async () =>
 
 /**
  * Check if today's date has changed since last validation
- * @returns {boolean} - True if date has changed (new day)
+ * Used to determine if daily challenge should be refreshed
+ * @returns {boolean} True if date has changed or no previous validation exists
  */
 export const hasDateChanged = () => {
-  try {
-    const lastValidatedDate = localStorage.getItem(STORAGE_KEYS.LAST_VALIDATED_DATE);
-    if (!lastValidatedDate) {
-      return true; // First time, treat as new day
-    }
-
-    const today = new Date().toISOString().split("T")[0];
-    return today !== lastValidatedDate;
-  } catch (error) {
-    console.warn("Failed to check date change:", error);
-    return true; // On error, assume date changed
+  if (!isLocalStorageAvailable()) {
+    return true;
   }
+
+  const lastValidatedDate = localStorage.getItem(STORAGE_KEYS.LAST_VALIDATED_DATE);
+  if (!lastValidatedDate) {
+    return true;
+  }
+
+  const today = new Date().toISOString().split("T")[0];
+  return today !== lastValidatedDate;
 };
 
 /**
- * Clear service worker cache
- * @returns {Promise<boolean>}
+ * Clear all service worker caches
+ * Used to force fresh data load when versions don't match
+ * @returns {Promise<boolean>} True if cache cleared successfully, false on error
  */
 export const clearServiceWorkerCache = async () => {
   try {
@@ -134,15 +164,17 @@ export const clearServiceWorkerCache = async () => {
     await Promise.all(cacheNames.map((cacheName) => caches.delete(cacheName)));
     return true;
   } catch (error) {
-    console.error("Failed to clear service worker cache:", error);
+    logError("Failed to clear service worker cache", error);
     return false;
   }
 };
 
 /**
- * Force refresh all game data files
- * @param {Function} onProgress - Callback for progress updates
- * @returns {Promise<{regions: Object, birds: Object}>}
+ * Force refresh all game data files from server
+ * Bypasses cache to ensure latest data is loaded
+ * @param {Function} [onProgress] - Optional callback(current, total, file) for progress updates
+ * @returns {Promise<{regions: Object, birds: Object}>} Loaded regions and birds data
+ * @throws {Error} If any data file fails to load
  */
 export const refreshGameData = async (onProgress) => {
   const results = {};
@@ -168,7 +200,6 @@ export const refreshGameData = async (onProgress) => {
 
     const data = await response.json();
 
-    // Store in appropriate result key
     if (file.includes("regions.json")) {
       results.regions = data;
       storeVersionInfo(response);

@@ -76,26 +76,6 @@ export function useGameData(initialRegion = null) {
     }
   }, [initialRegion, birds, today, loadTodaysBird]);
 
-  // Check for updates
-  useEffect(() => {
-    if (!initialRegion) return;
-
-    Promise.all([checkForUpdates(), checkBirdsJsonUpdate()]).then(
-      ([updateCheck, birdsCheck]) => {
-        const hasNewUpdate = updateCheck.hasUpdate || birdsCheck.hasUpdate;
-        setHasUpdate(hasNewUpdate);
-
-        if (updateCheck.dailyJsonUpdate || birdsCheck.hasUpdate || hasDateChanged()) {
-          console.log("Detected stale data, auto-refreshing...");
-          if (birdsCheck.hasUpdate) {
-            clearDeadAudioUrlsCache();
-          }
-          handleAutoRefresh();
-        }
-      }
-    );
-  }, [initialRegion]);
-
   // Auto refresh
   const handleAutoRefresh = useCallback(async () => {
     if (!initialRegion) return;
@@ -122,6 +102,26 @@ export function useGameData(initialRegion = null) {
       console.error("Auto-refresh failed:", error);
     }
   }, [initialRegion, today]);
+
+  // Check for updates
+  useEffect(() => {
+    if (!initialRegion) return;
+
+    Promise.all([checkForUpdates(), checkBirdsJsonUpdate()]).then(
+      ([updateCheck, birdsCheck]) => {
+        const hasNewUpdate = updateCheck.hasUpdate || birdsCheck.hasUpdate;
+        setHasUpdate(hasNewUpdate);
+
+        if (updateCheck.dailyJsonUpdate || birdsCheck.hasUpdate || hasDateChanged()) {
+          console.log("Detected stale data, auto-refreshing...");
+          if (birdsCheck.hasUpdate) {
+            clearDeadAudioUrlsCache();
+          }
+          handleAutoRefresh();
+        }
+      }
+    );
+  }, [initialRegion, handleAutoRefresh]);
 
   // Force refresh (user triggered)
   const handleForceRefresh = useCallback(async () => {

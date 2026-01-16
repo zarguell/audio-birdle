@@ -9,6 +9,7 @@ export default [
       'dist',
       'htmlcov/**',
       'coverage/**',
+      '.venv/**',
     ],
   },
   {

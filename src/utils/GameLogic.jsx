@@ -261,7 +261,7 @@ export const processGuess = (gameState, region, date, guessedBirdId, correctBird
  * @param {string} region - Region identifier
  * @param {Object} dailyGame - Completed daily game state
  */
-const updateUserStats = (gameState, region, dailyGame) => {
+const updateUserStats = (gameState, region, dailyGame) => { // eslint-disable-line no-unused-vars -- Kept for backward compatibility
   const stats = gameState.stats;
 
   // Update overall stats
@@ -574,7 +574,7 @@ export const processHardModeGuess = (
  * @param {string} region - Region identifier
  * @param {Object} hardModeGame - Completed hard mode game state
  */
-const updateHardModeStats = (gameState, region, hardModeGame) => {
+const updateHardModeStats = (gameState, region, hardModeGame) => { // eslint-disable-line no-unused-vars -- Kept for backward compatibility
   if (!gameState.stats.hardModeStats) {
     gameState.stats.hardModeStats = {
       totalGamesPlayed: 0,
@@ -704,7 +704,7 @@ export const hasCompletedHardMode = (gameState, region, date) => {
  * @param {Object} gameState - Main game state object (kept for backward compatibility, not used)
  * @returns {Object} - Performance summary
  */
-export const getUserPerformanceSummary = (gameState) => {
+export const getUserPerformanceSummary = () => { // gameState param removed, now uses Zustand store directly
   const stats = useNormalGameStore.getState().stats;
 
   return {

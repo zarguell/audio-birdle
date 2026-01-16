@@ -117,25 +117,31 @@ describe('DailyBirdUtils', () => {
     })
 
     it('should handle HTTP errors', async () => {
-      global.fetch.mockResolvedValueOnce({
-        ok: false,
-        status: 404
-      })
+      const errorResponse = { ok: false, status: 404 }
+      global.fetch
+        .mockResolvedValueOnce(errorResponse)
+        .mockResolvedValueOnce(errorResponse)
+        .mockResolvedValueOnce(errorResponse)
 
       await expect(loadDailyBirdData()).rejects.toThrow('HTTP error! status: 404')
     })
 
     it('should validate data is array', async () => {
-      global.fetch.mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ not: 'an array' })
-      })
+      const badResponse = { ok: true, json: async () => ({ not: 'an array' }) }
+      global.fetch
+        .mockResolvedValueOnce(badResponse)
+        .mockResolvedValueOnce(badResponse)
+        .mockResolvedValueOnce(badResponse)
 
       await expect(loadDailyBirdData()).rejects.toThrow('Daily data must be an array')
     })
 
     it('should handle network errors', async () => {
-      global.fetch.mockRejectedValueOnce(new Error('Network error'))
+      const networkError = new Error('Network error')
+      global.fetch
+        .mockRejectedValueOnce(networkError)
+        .mockRejectedValueOnce(networkError)
+        .mockRejectedValueOnce(networkError)
 
       await expect(loadDailyBirdData()).rejects.toThrow('Network error')
     })
