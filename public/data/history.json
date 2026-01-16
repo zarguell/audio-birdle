@@ -112,6 +112,12 @@
       "id": "blksco2",
       "name": "Black Scoter",
       "subregion": "Delaware"
+    },
+    {
+      "date": "2026-01-16",
+      "id": "mutswa",
+      "name": "Mute Swan",
+      "subregion": "South Carolina"
     }
   ],
   "us-lower48": [
@@ -203,6 +209,12 @@
       "id": "motowl",
       "name": "Mottled Owl",
       "subregion": "Texas"
+    },
+    {
+      "date": "2026-01-16",
+      "id": "grbher3",
+      "name": "Great Blue Heron",
+      "subregion": "Colorado"
     }
   ]
 }
