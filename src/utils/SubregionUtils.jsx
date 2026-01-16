@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { fetchWithRetry } from './RetryUtils';
 
 // Hook to fetch subregion data
 export const useSubregion = (selectedRegion, today) => {
@@ -8,7 +9,7 @@ export const useSubregion = (selectedRegion, today) => {
   useEffect(() => {
     const fetchSubregion = async () => {
       try {
-        const response = await fetch('/data/daily.json');
+        const response = await fetchWithRetry('/data/daily.json');
         const data = await response.json();
 
         // Find today's entry for the selected region
