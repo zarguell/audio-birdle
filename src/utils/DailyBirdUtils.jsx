@@ -9,12 +9,11 @@ const SECRET_SALT = "birdle-salt-2025";
 /**
  * Hash a bird ID with the secret salt
  * @param {string} birdId - The bird's unique identifier
- * @returns {string} - Truncated hash (8 characters)
+ * @returns {string} - 8-character lowercase hex hash
  */
 export const hashBirdId = (birdId) => {
   const combined = `${birdId}-${SECRET_SALT}`;
-  const fullHash = hashString(combined).toString(16);
-  return fullHash.substring(0, 8); // Return first 8 characters
+  return hashString(combined); // Already returns 8-char hex string
 };
 
 /**
