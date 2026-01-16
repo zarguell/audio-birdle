@@ -21,7 +21,26 @@ SECRET_SALT = "birdle-salt-2025"
 
 def hash_bird_id(bird_id):
     """
-    Hash a bird ID with the secret salt using the same algorithm as JavaScript
+    Hash a bird ID with the secret salt using the DJB2 hash algorithm.
+
+    This implements the canonical DJB2 hash algorithm and MUST match the
+    JavaScript implementation in HashUtils.jsx exactly. Both implementations
+    must produce identical 8-character lowercase hex strings for daily bird
+    selection to work correctly.
+
+    Algorithm: hash = ((hash << 5) - hash) + char_code
+    Output: 32-bit unsigned integer formatted as 8-character lowercase hex
+
+    Args:
+        bird_id: The bird's unique identifier (e.g., "amerob")
+
+    Returns:
+        8-character lowercase hex string (e.g., "104c723e")
+
+    Note:
+        The salt (SECRET_SALT) is appended to the bird_id before hashing
+        to prevent reverse engineering and ensure consistent hashing across
+        the data pipeline (Python scripts → daily.json → JavaScript frontend).
     """
     combined = f"{bird_id}-{SECRET_SALT}"
     hash_value = 0
@@ -29,12 +48,14 @@ def hash_bird_id(bird_id):
     for char in combined:
         char_code = ord(char)
         hash_value = ((hash_value << 5) - hash_value) + char_code
-        # Convert to 32-bit signed integer
+        # Ensure 32-bit unsigned integer (matches JavaScript >>> 0)
         hash_value = hash_value & 0xFFFFFFFF
+        # Manual signed/unsigned adjustment for Python compatibility
         if hash_value >= 0x80000000:
             hash_value -= 0x100000000
 
-    # Convert to hex and take first 8 characters
+    # Convert to 8-character lowercase hex with zero-padding
+    # format(..., '08x') produces zero-padded hex, [:8] ensures exactly 8 chars
     hex_hash = format(hash_value & 0xFFFFFFFF, "08x")
     return hex_hash[:8]
 
