@@ -1,5 +1,15 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { getStoredData, setStoredData, removeStoredData } from '@/utils/StorageUtils'
+import {
+  getStoredData,
+  setStoredData,
+  removeStoredData,
+  getStorage,
+  setStorage,
+  removeStorage,
+  isStorageAvailable,
+  getStorageKeys,
+  clearStorage
+} from '@/utils/StorageUtils'
 
 describe('StorageUtils', () => {
   beforeEach(() => {
@@ -10,7 +20,174 @@ describe('StorageUtils', () => {
     global.localStorage.removeItem.mockClear()
   })
 
-  describe('getStoredData', () => {
+  describe('isStorageAvailable', () => {
+    it('should return true when localStorage is working', () => {
+      const result = isStorageAvailable()
+
+      expect(result).toBe(true)
+      expect(global.localStorage.setItem).toHaveBeenCalledWith('__storage_test__', 'test')
+      expect(global.localStorage.removeItem).toHaveBeenCalledWith('__storage_test__')
+    })
+
+    it('should return false when localStorage is disabled', () => {
+      global.localStorage.setItem.mockImplementationOnce(() => {
+        throw new Error('localStorage disabled')
+      })
+
+      const result = isStorageAvailable()
+
+      expect(result).toBe(false)
+    })
+
+    it('should return false when localStorage.removeItem fails', () => {
+      global.localStorage.removeItem.mockImplementationOnce(() => {
+        throw new Error('Remove failed')
+      })
+
+      const result = isStorageAvailable()
+
+      expect(result).toBe(false)
+    })
+  })
+
+  describe('getStorage (new API)', () => {
+    it('should retrieve and parse stored data', () => {
+      const testData = { key: 'value' }
+      global.localStorage.getItem.mockReturnValueOnce(JSON.stringify(testData))
+
+      const result = getStorage('test-key', {})
+
+      expect(result).toEqual(testData)
+      expect(global.localStorage.getItem).toHaveBeenCalledWith('test-key')
+    })
+
+    it('should return default value if no data stored', () => {
+      global.localStorage.getItem.mockReturnValueOnce(null)
+
+      const defaultValue = { default: true }
+      const result = getStorage('test-key', defaultValue)
+
+      expect(result).toEqual(defaultValue)
+    })
+
+    it('should handle JSON parse errors gracefully', () => {
+      global.localStorage.getItem.mockReturnValueOnce('invalid json')
+
+      const defaultValue = { default: true }
+      const result = getStorage('test-key', defaultValue)
+
+      expect(result).toEqual(defaultValue)
+    })
+
+    it('should handle QuotaExceededError on get', () => {
+      const error = new Error('Quota exceeded')
+      error.name = 'QuotaExceededError'
+      global.localStorage.getItem.mockImplementationOnce(() => {
+        throw error
+      })
+
+      const consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+      const result = getStorage('test-key', 'default')
+
+      expect(result).toBe('default')
+      expect(consoleWarnSpy).toHaveBeenCalledWith('Failed to get test-key: Quota exceeded')
+      consoleWarnSpy.mockRestore()
+    })
+
+    it('should return success boolean for successful operations', () => {
+      const testData = { key: 'value' }
+
+      const result = setStorage('test-key', testData)
+
+      expect(result).toBe(true)
+    })
+
+    it('should handle QuotaExceededError on set', () => {
+      const error = new Error('Quota exceeded')
+      error.name = 'QuotaExceededError'
+      global.localStorage.setItem.mockImplementationOnce(() => {
+        throw error
+      })
+
+      const consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+      const result = setStorage('test-key', { data: 'test' })
+
+      expect(result).toBe(false)
+      expect(consoleWarnSpy).toHaveBeenCalledWith('Failed to set test-key: Quota exceeded')
+      consoleWarnSpy.mockRestore()
+    })
+
+    it('should remove storage successfully', () => {
+      const result = removeStorage('test-key')
+
+      expect(result).toBe(true)
+      expect(global.localStorage.removeItem).toHaveBeenCalledWith('test-key')
+    })
+
+    it('should return false when removeStorage fails', () => {
+      global.localStorage.removeItem.mockImplementationOnce(() => {
+        throw new Error('Remove error')
+      })
+
+      const consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+      const result = removeStorage('test-key')
+
+      expect(result).toBe(false)
+      expect(consoleWarnSpy).toHaveBeenCalledWith('Failed to remove test-key:', expect.any(Error))
+      consoleWarnSpy.mockRestore()
+    })
+  })
+
+  describe('getStorageKeys', () => {
+    it('should return all localStorage keys', () => {
+      Object.keys = vi.fn().mockReturnValue(['key1', 'key2', 'key3'])
+
+      const keys = getStorageKeys()
+
+      expect(keys).toEqual(['key1', 'key2', 'key3'])
+      expect(Object.keys).toHaveBeenCalledWith(global.localStorage)
+    })
+  })
+
+  describe('clearStorage', () => {
+    it('should clear all app-specific keys', () => {
+      Object.keys = vi.fn().mockReturnValue([
+        'audio-birdle-region',
+        'audio-birdle-game-state',
+        'other-app-key'
+      ])
+
+      const cleared = clearStorage()
+
+      expect(cleared).toBe(2)
+      expect(global.localStorage.removeItem).toHaveBeenCalledTimes(2)
+      expect(global.localStorage.removeItem).toHaveBeenCalledWith('audio-birdle-region')
+      expect(global.localStorage.removeItem).toHaveBeenCalledWith('audio-birdle-game-state')
+    })
+
+    it('should use custom prefix when provided', () => {
+      Object.keys = vi.fn().mockReturnValue([
+        'custom-prefix-key1',
+        'custom-prefix-key2',
+        'audio-birdle-key'
+      ])
+
+      const cleared = clearStorage('custom-prefix-')
+
+      expect(cleared).toBe(2)
+      expect(global.localStorage.removeItem).toHaveBeenCalledTimes(2)
+    })
+
+    it('should return 0 when getStorageKeys fails', () => {
+      Object.keys = vi.fn().mockReturnValue([])
+
+      const cleared = clearStorage()
+
+      expect(cleared).toBe(0)
+    })
+  })
+
+  describe('getStoredData (legacy API)', () => {
     it('should retrieve and parse stored data', () => {
       const testData = { key: 'value' }
       global.localStorage.getItem.mockReturnValueOnce(JSON.stringify(testData))
@@ -98,7 +275,7 @@ describe('StorageUtils', () => {
     })
   })
 
-  describe('setStoredData', () => {
+  describe('setStoredData (legacy API)', () => {
     it('should stringify and store data', () => {
       const testData = { key: 'value' }
 
@@ -173,7 +350,7 @@ describe('StorageUtils', () => {
     })
   })
 
-  describe('removeStoredData', () => {
+  describe('removeStoredData (legacy API)', () => {
     it('should remove data from storage', () => {
       removeStoredData('test-key')
 
@@ -200,45 +377,72 @@ describe('StorageUtils', () => {
     })
   })
 
+  describe('API backward compatibility', () => {
+    it('should have getStoredData work identically to getStorage', () => {
+      const testData = { value: 'test' }
+      global.localStorage.getItem.mockReturnValueOnce(JSON.stringify(testData))
+
+      const legacyResult = getStoredData('test-key', {})
+      expect(legacyResult).toEqual(testData)
+    })
+
+    it('should have setStoredData work identically to setStorage', () => {
+      const testData = { value: 'test' }
+
+      setStoredData('test-key', testData)
+
+      expect(global.localStorage.setItem).toHaveBeenCalledWith(
+        'test-key',
+        JSON.stringify(testData)
+      )
+    })
+
+    it('should have removeStoredData work identically to removeStorage', () => {
+      removeStoredData('test-key')
+
+      expect(global.localStorage.removeItem).toHaveBeenCalledWith('test-key')
+    })
+  })
+
   describe('integration scenarios', () => {
-    it('should store and retrieve data correctly', () => {
+    it('should store and retrieve data correctly with new API', () => {
       const testData = { user: 'test', score: 100 }
 
-      setStoredData('game-state', testData)
+      setStorage('game-state', testData)
 
       global.localStorage.getItem.mockReturnValueOnce(JSON.stringify(testData))
-      const retrieved = getStoredData('game-state', {})
+      const retrieved = getStorage('game-state', {})
 
       expect(retrieved).toEqual(testData)
     })
 
-    it('should handle update cycle', () => {
+    it('should handle update cycle with new API', () => {
       const data1 = { score: 100 }
       const data2 = { score: 200 }
 
-      setStoredData('score', data1)
+      setStorage('score', data1)
 
       global.localStorage.getItem.mockReturnValueOnce(JSON.stringify(data1))
-      const retrieved1 = getStoredData('score', {})
+      const retrieved1 = getStorage('score', {})
 
       expect(retrieved1).toEqual(data1)
 
-      setStoredData('score', data2)
+      setStorage('score', data2)
 
       global.localStorage.getItem.mockReturnValueOnce(JSON.stringify(data2))
-      const retrieved2 = getStoredData('score', {})
+      const retrieved2 = getStorage('score', {})
 
       expect(retrieved2).toEqual(data2)
     })
 
-    it('should handle remove and default cycle', () => {
+    it('should handle remove and default cycle with new API', () => {
       const testData = { value: 'test' }
 
-      setStoredData('temp-data', testData)
-      removeStoredData('temp-data')
+      setStorage('temp-data', testData)
+      removeStorage('temp-data')
 
       global.localStorage.getItem.mockReturnValueOnce(null)
-      const retrieved = getStoredData('temp-data', { default: true })
+      const retrieved = getStorage('temp-data', { default: true })
 
       expect(retrieved).toEqual({ default: true })
     })
@@ -253,10 +457,10 @@ describe('StorageUtils', () => {
         nested: { value: 123 }
       }
 
-      setStoredData('complex', original)
+      setStorage('complex', original)
 
       global.localStorage.getItem.mockReturnValueOnce(JSON.stringify(original))
-      const retrieved = getStoredData('complex', {})
+      const retrieved = getStorage('complex', {})
 
       expect(retrieved).toEqual(original)
       expect(typeof retrieved.string).toBe('string')
