@@ -8,7 +8,8 @@ import { createAudioControls } from "../utils/AudioUtils";
 export function useAudioPlayer(initialAudioIndex = 0) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [audioError, setAudioError] = useState(false);
-  const [selectedAudioIndex, setSelectedAudioIndex] = useState(initialAudioIndex);
+  const [selectedAudioIndex, setSelectedAudioIndex] =
+    useState(initialAudioIndex);
   const audioRef = useRef(null);
 
   const audioControls = useMemo(() => createAudioControls(audioRef), []);
