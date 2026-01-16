@@ -98,6 +98,21 @@ export default function AudioBirdle() {
     shareResult(shareText);
   }, [currentDailyGame, todaysBird, selectedRegion]);
 
+  // Migration: Migrate old localStorage data on app mount (runs once)
+  useEffect(() => {
+    const normalStore = useNormalGameStore.getState();
+    const hardStore = useHardModeStore.getState();
+
+    // Trigger migration for both stores
+    // This will read from old localStorage keys and migrate to new Zustand format
+    console.log('App mounted: Checking for old data to migrate...');
+
+    normalStore.migrateFromOldFormat();
+    hardStore.migrateFromOldFormat();
+
+    console.log('Migration check complete');
+  }, []); // Run once on mount
+
   // Initialize game for today if it doesn't exist
   useEffect(() => {
     if (selectedRegion && today && !currentDailyGame) {
