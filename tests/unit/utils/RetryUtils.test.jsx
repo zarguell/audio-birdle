@@ -153,7 +153,7 @@ describe("RetryUtils", () => {
         .mockRejectedValueOnce(new Error("Operation failed"))
         .mockResolvedValueOnce("success");
 
-      const promise = retryWithBackoff(operation, { baseDelay: 500 });
+      await retryWithBackoff(operation, { baseDelay: 500 });
 
       // First attempt fails immediately
       await vi.runAllTimersAsync();
@@ -163,7 +163,6 @@ describe("RetryUtils", () => {
 
     it("should include context in error messages", async () => {
       const consoleWarnSpy = vi.spyOn(console, "warn");
-      const consoleErrorSpy = vi.spyOn(console, "error");
       const operation = vi
         .fn()
         .mockRejectedValueOnce(new Error("Database error"))
