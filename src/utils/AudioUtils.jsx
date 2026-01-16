@@ -1,5 +1,6 @@
 // Audio player utilities
 import { STORAGE_KEYS } from "./Constants";
+import { getStorage, setStorage, removeStorage } from "./StorageUtils";
 
 // Track dead audio URLs to avoid repeated failed playback attempts
 // Only populated when actual audio playback fails (lazy validation)
@@ -56,14 +57,9 @@ export const markAudioUrlDead = (url) => {
  * Persists across sessions - only contains URLs that actually failed playback
  */
 export const loadDeadAudioUrlsCache = () => {
-  try {
-    const cached = localStorage.getItem(STORAGE_KEYS.DEAD_AUDIO_URLS || "");
-    if (cached) {
-      const urls = JSON.parse(cached);
-      urls.forEach((url) => deadAudioUrls.add(url));
-    }
-  } catch (error) {
-    console.warn("Failed to load dead audio URLs cache:", error);
+  const cached = getStorage(STORAGE_KEYS.DEAD_AUDIO_URLS, []);
+  if (cached && cached.length > 0) {
+    cached.forEach((url) => deadAudioUrls.add(url));
   }
 };
 
@@ -71,15 +67,8 @@ export const loadDeadAudioUrlsCache = () => {
  * Save dead audio URLs to localStorage for persistence
  */
 export const saveDeadAudioUrlsCache = () => {
-  try {
-    const urls = Array.from(deadAudioUrls);
-    localStorage.setItem(
-      STORAGE_KEYS.DEAD_AUDIO_URLS || "",
-      JSON.stringify(urls),
-    );
-  } catch (error) {
-    console.warn("Failed to save dead audio URLs cache:", error);
-  }
+  const urls = Array.from(deadAudioUrls);
+  setStorage(STORAGE_KEYS.DEAD_AUDIO_URLS, urls);
 };
 
 /**
@@ -88,11 +77,7 @@ export const saveDeadAudioUrlsCache = () => {
  */
 export const clearDeadAudioUrlsCache = () => {
   deadAudioUrls.clear();
-  try {
-    localStorage.removeItem(STORAGE_KEYS.DEAD_AUDIO_URLS || "");
-  } catch (error) {
-    console.warn("Failed to clear dead audio URLs cache:", error);
-  }
+  removeStorage(STORAGE_KEYS.DEAD_AUDIO_URLS);
 };
 
 export const createAudioControls = (audioRef) => {
