@@ -256,21 +256,29 @@ export const useNormalGameStore = create<NormalGameState & NormalGameActions>()(
         })),
 
       /**
-       * Migrate from old localStorage format
+       * Migrate from old localStorage format (audio-birdle-game-state key)
+       * Reads from the old v1/v0 format and converts to v2 multi-region format
        */
       migrateFromOldFormat: () => {
-        const oldState = localStorage.getItem('audio-birdle-normal-game');
+        const OLD_STORAGE_KEY = 'audio-birdle-game-state';
+        const oldState = localStorage.getItem(OLD_STORAGE_KEY);
+
         if (!oldState) {
+          console.log('No old game state found to migrate');
           return;
         }
 
         try {
           const parsed = JSON.parse(oldState);
+          console.log('Migrating old normal game state:', parsed);
 
-          // Handle version 0 (single game format)
+          let newDailyGames: Record<string, DailyGame> = {};
+          let newStats = createInitialStats();
+
+          // Handle version 0 (single game format before multi-region support)
           if (parsed.region && parsed.lastPlayed && !parsed.dailyGames) {
             const key = `${parsed.region}-${parsed.lastPlayed}`;
-            const newDailyGames: Record<string, DailyGame> = {
+            newDailyGames = {
               [key]: {
                 region: parsed.region,
                 date: parsed.lastPlayed,
@@ -281,20 +289,49 @@ export const useNormalGameStore = create<NormalGameState & NormalGameActions>()(
               },
             };
 
-            set({
-              dailyGames: newDailyGames,
-              stats: parsed.stats || createInitialStats(),
-            });
+            // Migrate stats if they exist
+            if (parsed.stats) {
+              newStats = {
+                totalGamesPlayed: parsed.stats.totalGamesPlayed || 0,
+                totalGamesWon: parsed.stats.totalGamesWon || 0,
+                currentStreak: parsed.stats.currentStreak || 0,
+                maxStreak: parsed.stats.maxStreak || 0,
+                regionStats: parsed.stats.regionStats || {},
+              };
+            }
+
+            console.log('Migrated v0 state to v2:', { newDailyGames, newStats });
           }
           // Handle version 1 (already has dailyGames)
           else if (parsed.dailyGames) {
-            set({
-              dailyGames: parsed.dailyGames,
-              stats: parsed.stats || createInitialStats(),
-            });
+            newDailyGames = parsed.dailyGames;
+
+            // Migrate stats if they exist
+            if (parsed.stats) {
+              newStats = {
+                totalGamesPlayed: parsed.stats.totalGamesPlayed || 0,
+                totalGamesWon: parsed.stats.totalGamesWon || 0,
+                currentStreak: parsed.stats.currentStreak || 0,
+                maxStreak: parsed.stats.maxStreak || 0,
+                regionStats: parsed.stats.regionStats || {},
+              };
+            }
+
+            console.log('Migrated v1 state to v2:', { newDailyGames, newStats });
           }
+
+          // Update store with migrated data
+          set({
+            dailyGames: newDailyGames,
+            stats: newStats,
+          });
+
+          // Clean up old localStorage key after successful migration
+          // We keep it as backup for now - can be removed in future phase
+          console.log('Migration complete. Old key preserved as backup:', OLD_STORAGE_KEY);
         } catch (error) {
           console.error('Failed to migrate old normal game state:', error);
+          // Don't delete old state if migration failed - user can try again
         }
       },
     }),

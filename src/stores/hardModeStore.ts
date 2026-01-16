@@ -274,21 +274,29 @@ export const useHardModeStore = create<HardModeState & HardModeActions>()(
         })),
 
       /**
-       * Migrate from old localStorage format
+       * Migrate from old localStorage format (audio-birdle-hard-mode key)
+       * Reads from the old v1/v0 format and converts to v2 multi-region format
        */
       migrateFromOldFormat: () => {
-        const oldState = localStorage.getItem('audio-birdle-hard-mode');
+        const OLD_STORAGE_KEY = 'audio-birdle-hard-mode';
+        const oldState = localStorage.getItem(OLD_STORAGE_KEY);
+
         if (!oldState) {
+          console.log('No old hard mode state found to migrate');
           return;
         }
 
         try {
           const parsed = JSON.parse(oldState);
+          console.log('Migrating old hard mode state:', parsed);
 
-          // Handle version 0 (single game format)
+          let newHardModeGames: Record<string, HardModeDailyGame> = {};
+          let newStats = createInitialStats();
+
+          // Handle version 0 (single game format before multi-region support)
           if (parsed.region && parsed.lastPlayed && !parsed.hardModeGames) {
             const key = `${parsed.region}-${parsed.lastPlayed}`;
-            const newHardModeGames: Record<string, HardModeDailyGame> = {
+            newHardModeGames = {
               [key]: {
                 region: parsed.region,
                 date: parsed.lastPlayed,
@@ -300,20 +308,49 @@ export const useHardModeStore = create<HardModeState & HardModeActions>()(
               },
             };
 
-            set({
-              hardModeGames: newHardModeGames,
-              stats: parsed.stats || createInitialStats(),
-            });
+            // Migrate stats if they exist
+            if (parsed.stats) {
+              newStats = {
+                totalGamesPlayed: parsed.stats.totalGamesPlayed || 0,
+                totalGamesWon: parsed.stats.totalGamesWon || 0,
+                currentStreak: parsed.stats.currentStreak || 0,
+                maxStreak: parsed.stats.maxStreak || 0,
+                regionStats: parsed.stats.regionStats || {},
+              };
+            }
+
+            console.log('Migrated v0 hard mode state to v2:', { newHardModeGames, newStats });
           }
           // Handle version 1 (already has hardModeGames)
           else if (parsed.hardModeGames) {
-            set({
-              hardModeGames: parsed.hardModeGames,
-              stats: parsed.stats || createInitialStats(),
-            });
+            newHardModeGames = parsed.hardModeGames;
+
+            // Migrate stats if they exist
+            if (parsed.stats) {
+              newStats = {
+                totalGamesPlayed: parsed.stats.totalGamesPlayed || 0,
+                totalGamesWon: parsed.stats.totalGamesWon || 0,
+                currentStreak: parsed.stats.currentStreak || 0,
+                maxStreak: parsed.stats.maxStreak || 0,
+                regionStats: parsed.stats.regionStats || {},
+              };
+            }
+
+            console.log('Migrated v1 hard mode state to v2:', { newHardModeGames, newStats });
           }
+
+          // Update store with migrated data
+          set({
+            hardModeGames: newHardModeGames,
+            stats: newStats,
+          });
+
+          // Clean up old localStorage key after successful migration
+          // We keep it as backup for now - can be removed in future phase
+          console.log('Hard mode migration complete. Old key preserved as backup:', OLD_STORAGE_KEY);
         } catch (error) {
           console.error('Failed to migrate old hard mode state:', error);
+          // Don't delete old state if migration failed - user can try again
         }
       },
     }),
