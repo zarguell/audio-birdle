@@ -296,16 +296,22 @@ export const useHardModeStore = create<HardModeState & HardModeActions>()(
           // Handle version 0 (single game format before multi-region support)
           if (parsed.region && parsed.lastPlayed && !parsed.hardModeGames) {
             const key = `${parsed.region}-${parsed.lastPlayed}`;
+            const migratedGame: HardModeDailyGame = {
+              region: parsed.region,
+              date: parsed.lastPlayed,
+              mode: 'hard',
+              guesses: parsed.guesses || [],
+              completed: parsed.completed || false,
+              won: parsed.won || false,
+              maxGuesses: parsed.maxGuesses || 6,
+            };
+
+            // Preserve optional fields if present
+            if (parsed.startTime) migratedGame.startTime = parsed.startTime;
+            if (parsed.endTime) migratedGame.endTime = parsed.endTime;
+
             newHardModeGames = {
-              [key]: {
-                region: parsed.region,
-                date: parsed.lastPlayed,
-                mode: 'hard',
-                guesses: parsed.guesses || [],
-                completed: parsed.completed || false,
-                won: parsed.won || false,
-                maxGuesses: parsed.maxGuesses || 6,
-              },
+              [key]: migratedGame,
             };
 
             // Migrate stats if they exist

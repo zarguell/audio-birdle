@@ -278,15 +278,21 @@ export const useNormalGameStore = create<NormalGameState & NormalGameActions>()(
           // Handle version 0 (single game format before multi-region support)
           if (parsed.region && parsed.lastPlayed && !parsed.dailyGames) {
             const key = `${parsed.region}-${parsed.lastPlayed}`;
+            const migratedGame: DailyGame = {
+              region: parsed.region,
+              date: parsed.lastPlayed,
+              guesses: parsed.guesses || [],
+              completed: parsed.completed || false,
+              won: parsed.won || false,
+              maxGuesses: parsed.maxGuesses || 4,
+            };
+
+            // Preserve optional fields if present
+            if (parsed.startTime) migratedGame.startTime = parsed.startTime;
+            if (parsed.endTime) migratedGame.endTime = parsed.endTime;
+
             newDailyGames = {
-              [key]: {
-                region: parsed.region,
-                date: parsed.lastPlayed,
-                guesses: parsed.guesses || [],
-                completed: parsed.completed || false,
-                won: parsed.won || false,
-                maxGuesses: parsed.maxGuesses || 4,
-              },
+              [key]: migratedGame,
             };
 
             // Migrate stats if they exist

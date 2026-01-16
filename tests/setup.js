@@ -7,13 +7,25 @@ afterEach(() => {
   cleanup()
 })
 
-// Mock localStorage
-const localStorageMock = {
-  getItem: vi.fn(),
-  setItem: vi.fn(),
-  removeItem: vi.fn(),
-  clear: vi.fn(),
-}
+// Mock localStorage with actual storage implementation
+const localStorageMock = (() => {
+  let store = {};
+
+  return {
+    getItem: vi.fn((key) => store[key] || null),
+    setItem: vi.fn((key, value) => {
+      store[key] = value.toString();
+    }),
+    removeItem: vi.fn((key) => {
+      delete store[key];
+    }),
+    clear: vi.fn(() => {
+      store = {};
+    }),
+    // Helper for testing to see what's in storage
+    getStore: () => store,
+  };
+})();
 
 global.localStorage = localStorageMock
 
@@ -51,4 +63,6 @@ beforeEach(() => {
   localStorageMock.setItem.mockClear()
   localStorageMock.removeItem.mockClear()
   localStorageMock.clear.mockClear()
+  // Clear the internal storage
+  localStorageMock.clear()
 })
