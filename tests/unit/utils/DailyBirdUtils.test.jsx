@@ -6,7 +6,13 @@ import {
   getTodaysBirdFromDaily,
   generateDailyEntry
 } from '@/utils/DailyBirdUtils'
+import { fetchWithRetry } from '@/utils/RetryUtils'
 import { sampleBirds, sampleDailyData } from '../fixtures/sampleBirds'
+
+// Mock RetryUtils
+vi.mock('@/utils/RetryUtils', () => ({
+  fetchWithRetry: vi.fn()
+}))
 
 describe('DailyBirdUtils', () => {
   beforeEach(() => {
@@ -105,7 +111,7 @@ describe('DailyBirdUtils', () => {
 
   describe('loadDailyBirdData', () => {
     it('should load daily data successfully', async () => {
-      global.fetch.mockResolvedValueOnce({
+      fetchWithRetry.mockResolvedValueOnce({
         ok: true,
         json: async () => sampleDailyData
       })
@@ -113,41 +119,33 @@ describe('DailyBirdUtils', () => {
       const data = await loadDailyBirdData()
 
       expect(data).toEqual(sampleDailyData)
-      expect(global.fetch).toHaveBeenCalledWith('/data/daily.json')
+      expect(fetchWithRetry).toHaveBeenCalledWith('/data/daily.json', {}, { maxRetries: 3, baseDelay: 500 })
     })
 
     it('should handle HTTP errors', async () => {
-      const errorResponse = { ok: false, status: 404 }
-      global.fetch
-        .mockResolvedValueOnce(errorResponse)
-        .mockResolvedValueOnce(errorResponse)
-        .mockResolvedValueOnce(errorResponse)
+      const errorResponse = { ok: false, status: 404, statusText: 'Not Found' }
+      const error = new Error('HTTP 404: Not Found for /data/daily.json')
+      fetchWithRetry.mockRejectedValueOnce(error)
 
-      await expect(loadDailyBirdData()).rejects.toThrow('HTTP error! status: 404')
+      await expect(loadDailyBirdData()).rejects.toThrow('HTTP 404')
     })
 
     it('should validate data is array', async () => {
       const badResponse = { ok: true, json: async () => ({ not: 'an array' }) }
-      global.fetch
-        .mockResolvedValueOnce(badResponse)
-        .mockResolvedValueOnce(badResponse)
-        .mockResolvedValueOnce(badResponse)
+      fetchWithRetry.mockResolvedValueOnce(badResponse)
 
       await expect(loadDailyBirdData()).rejects.toThrow('Daily data must be an array')
     })
 
     it('should handle network errors', async () => {
       const networkError = new Error('Network error')
-      global.fetch
-        .mockRejectedValueOnce(networkError)
-        .mockRejectedValueOnce(networkError)
-        .mockRejectedValueOnce(networkError)
+      fetchWithRetry.mockRejectedValueOnce(networkError)
 
       await expect(loadDailyBirdData()).rejects.toThrow('Network error')
     })
 
     it('should handle empty array', async () => {
-      global.fetch.mockResolvedValueOnce({
+      fetchWithRetry.mockResolvedValueOnce({
         ok: true,
         json: async () => []
       })
@@ -159,7 +157,7 @@ describe('DailyBirdUtils', () => {
     })
 
     it('should handle malformed JSON', async () => {
-      global.fetch.mockResolvedValueOnce({
+      fetchWithRetry.mockResolvedValueOnce({
         ok: true,
         json: async () => {
           throw new Error('Invalid JSON')
@@ -176,7 +174,7 @@ describe('DailyBirdUtils', () => {
       const hash = hashBirdId(bird.id)
       const dailyData = [{ date: '2025-12-27', region: 'us', answerHash: hash }]
 
-      global.fetch.mockResolvedValueOnce({
+      fetchWithRetry.mockResolvedValueOnce({
         ok: true,
         json: async () => dailyData
       })
@@ -189,7 +187,7 @@ describe('DailyBirdUtils', () => {
     })
 
     it('should return null if no entry for date', async () => {
-      global.fetch.mockResolvedValueOnce({
+      fetchWithRetry.mockResolvedValueOnce({
         ok: true,
         json: async () => []
       })
@@ -204,7 +202,7 @@ describe('DailyBirdUtils', () => {
       const hash = hashBirdId(bird.id)
       const dailyData = [{ date: '2025-12-27', region: 'eu', answerHash: hash }]
 
-      global.fetch.mockResolvedValueOnce({
+      fetchWithRetry.mockResolvedValueOnce({
         ok: true,
         json: async () => dailyData
       })
@@ -223,7 +221,7 @@ describe('DailyBirdUtils', () => {
     })
 
     it('should handle non-array daily data', async () => {
-      global.fetch.mockResolvedValueOnce({
+      fetchWithRetry.mockResolvedValueOnce({
         ok: true,
         json: async () => ({ not: 'an array' })
       })
@@ -236,7 +234,7 @@ describe('DailyBirdUtils', () => {
     it('should return null if bird hash not found', async () => {
       const dailyData = [{ date: '2025-12-27', region: 'us', answerHash: 'invalidhash' }]
 
-      global.fetch.mockResolvedValueOnce({
+      fetchWithRetry.mockResolvedValueOnce({
         ok: true,
         json: async () => dailyData
       })
@@ -258,7 +256,7 @@ describe('DailyBirdUtils', () => {
         { date: '2025-12-26', region: 'us', answerHash: hash2 }
       ]
 
-      global.fetch.mockResolvedValueOnce({
+      fetchWithRetry.mockResolvedValueOnce({
         ok: true,
         json: async () => dailyData
       })
