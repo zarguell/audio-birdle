@@ -31,6 +31,7 @@ export default defineConfig({
       // Only track critical files
       include: [
         'src/utils/**/*.jsx',
+        'src/stores/**/*.ts',
         'src/App.jsx',
       ],
     },
