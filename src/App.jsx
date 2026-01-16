@@ -16,13 +16,8 @@ import BirdCompletionCard from "./utils/BirdCompletionCard";
 import CountdownToMidnight from "./utils/CountdownToMidnight";
 import { getTodayString, formatDateForDisplay } from "./utils/DateUtils";
 import { getStoredData } from "./utils/StorageUtils";
-import {
-  hasPlayedRegionDate,
-  hasCompletedHardMode,
-  hasCompletedNormalMode,
-  getUserPerformanceSummary,
-} from "./utils/GameLogic";
 import { generateShareText, shareResult } from "./utils/ShareUtils";
+import { createRegionDateKey } from "./utils/GameLogic";
 import { getAudioSrc, clearDeadAudioUrlsCache } from "./utils/AudioUtils";
 import { STORAGE_KEYS, GAME_CONFIG, VIEWS } from "./utils/Constants";
 import { SubregionDisplay } from "./utils/SubregionUtils";
@@ -139,12 +134,8 @@ export default function AudioBirdle() {
 
           <div className="space-y-2">
             {regions.map((region) => {
-              const gameState = useNormalGameStore.getState();
-              const hasPlayedToday = hasPlayedRegionDate(
-                gameState,
-                region.id,
-                today,
-              );
+              const key = createRegionDateKey(region.id, today);
+              const hasPlayedToday = useNormalGameStore.getState().getDailyGame(key)?.guesses.length > 0;
               return (
                 <button
                   key={region.id}
@@ -290,8 +281,17 @@ export default function AudioBirdle() {
   };
 
   const renderStats = () => {
-    const gameState = useNormalGameStore.getState();
-    const stats = getUserPerformanceSummary(gameState);
+    const storeState = useNormalGameStore.getState();
+    const stats = storeState.stats;
+
+    const totalGames = stats.totalGamesPlayed;
+    const winRate = totalGames > 0 ? (stats.totalGamesWon / totalGames * 100).toFixed(1) : 0;
+    const regionBreakdown = Object.entries(stats.regionStats).map(([region, regionStats]) => ({
+      region,
+      games: regionStats.gamesPlayed,
+      winRate: regionStats.gamesPlayed > 0 ? (regionStats.gamesWon / regionStats.gamesPlayed * 100).toFixed(1) : 0,
+      avgGuesses: regionStats.averageGuesses.toFixed(1),
+    }));
 
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 p-4">
@@ -315,19 +315,19 @@ export default function AudioBirdle() {
               <div className="grid grid-cols-2 gap-4">
                 <div className="text-center p-3 bg-gray-50 rounded-lg">
                   <div className="text-2xl font-bold text-blue-600">
-                    {stats.totalGames}
+                    {totalGames}
                   </div>
                   <div className="text-sm text-gray-600">Games Played</div>
                 </div>
                 <div className="text-center p-3 bg-gray-50 rounded-lg">
                   <div className="text-2xl font-bold text-green-600">
-                    {stats.winRate}%
+                    {winRate}%
                   </div>
                   <div className="text-sm text-gray-600">Win Rate</div>
                 </div>
                 <div className="text-center p-3 bg-gray-50 rounded-lg">
                   <div className="text-2xl font-bold text-purple-600">
-                    {stats.averageGuesses}
+                    {stats.averageGuesses.toFixed(1)}
                   </div>
                   <div className="text-sm text-gray-600">Avg Guesses</div>
                 </div>
@@ -341,11 +341,11 @@ export default function AudioBirdle() {
             </div>
 
             {/* Regional breakdown */}
-            {stats.regionBreakdown.length > 0 && (
+            {regionBreakdown.length > 0 && (
               <div>
                 <h3 className="font-semibold text-lg mb-3">By Region</h3>
                 <div className="space-y-2">
-                  {stats.regionBreakdown.map((regionStat) => {
+                  {regionBreakdown.map((regionStat) => {
                     const regionName =
                       regions.find((r) => r.id === regionStat.region)?.name ||
                       regionStat.region;
@@ -371,7 +371,7 @@ export default function AudioBirdle() {
               </div>
             )}
 
-            {stats.totalGames === 0 && (
+            {totalGames === 0 && (
               <div className="text-center py-8 text-gray-500">
                 <BarChart3 className="w-12 h-12 mx-auto mb-2 opacity-50" />
                 <p>No games played yet!</p>
@@ -463,12 +463,8 @@ export default function AudioBirdle() {
   );
 
   const renderGame = () => {
-    const gameState = useHardModeStore.getState();
-    const hardModeCompleted = hasCompletedHardMode(
-      gameState,
-      selectedRegion,
-      today,
-    );
+    const hardModeKey = createRegionDateKey(selectedRegion, today);
+    const hardModeCompleted = useHardModeStore.getState().getHardModeGame(hardModeKey)?.completed === true;
 
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 p-4">
@@ -759,12 +755,8 @@ export default function AudioBirdle() {
   }
 
   if (currentView === VIEWS.HARD_MODE) {
-    const normalGameState = useNormalGameStore.getState();
-    const normalModeCompleted = hasCompletedNormalMode(
-      normalGameState,
-      selectedRegion,
-      today
-    );
+    const normalModeKey = createRegionDateKey(selectedRegion, today);
+    const normalModeCompleted = useNormalGameStore.getState().getDailyGame(normalModeKey)?.completed === true;
 
     return (
       <HardModeGame
