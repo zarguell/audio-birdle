@@ -33,6 +33,8 @@ export interface HardModeDailyGame {
   completed: boolean;
   won: boolean;
   maxGuesses: number;
+  startTime?: string;
+  endTime?: string;
 }
 
 /**
@@ -196,12 +198,14 @@ export const useHardModeStore = create<HardModeState & HardModeActions>()(
           const updatedGame = {
             ...hardModeGame,
             guesses: [...hardModeGame.guesses, guess],
+            startTime: hardModeGame.startTime || new Date().toISOString(),
           };
 
           // Check if game is completed and update stats accordingly
           if (guess.correct || updatedGame.guesses.length >= updatedGame.maxGuesses) {
             updatedGame.completed = true;
             updatedGame.won = guess.correct;
+            updatedGame.endTime = new Date().toISOString();
 
             // Update stats only when game completes
             return {
