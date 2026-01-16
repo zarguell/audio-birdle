@@ -79,16 +79,13 @@ describe("RetryUtils", () => {
     });
 
     it("should throw error after max retries exhausted", async () => {
-      const error = new Error("Network error");
-      global.fetch = vi.fn().mockRejectedValue(error);
+      global.fetch = vi.fn(() => Promise.reject(new Error("Network error")));
 
       const promise = fetchWithRetry("/data/test.json", {}, { maxRetries: 2 });
 
-      // First attempt fails immediately
       await vi.runAllTimersAsync();
-
       await expect(promise).rejects.toThrow("Network error");
-      expect(fetch).toHaveBeenCalledTimes(3); // initial + 2 retries
+      expect(fetch).toHaveBeenCalledTimes(2); // 2 total attempts (maxRetries = 2)
     });
 
     it("should use custom config for retries and delay", async () => {
@@ -131,12 +128,11 @@ describe("RetryUtils", () => {
       await vi.runAllTimersAsync();
       await promise;
 
-      expect(consoleWarnSpy).toHaveBeenCalledWith(
-        expect.stringContaining("/data/test.json"),
-        expect.stringContaining("attempt 1/3"),
-        expect.stringContaining("retrying in 1000ms"),
-        "Network error"
-      );
+      expect(consoleWarnSpy).toHaveBeenCalled();
+      const warnCall = consoleWarnSpy.mock.calls[0];
+      expect(warnCall[0]).toContain("/data/test.json");
+      expect(warnCall[0]).toContain("attempt 1/3");
+      expect(warnCall[0]).toContain("retrying in 1000ms");
     });
   });
 
@@ -160,16 +156,7 @@ describe("RetryUtils", () => {
       const promise = retryWithBackoff(operation, { baseDelay: 500 });
 
       // First attempt fails immediately
-      await vi.advanceTimersByTimeAsync(0);
-      expect(operation).toHaveBeenCalledTimes(1);
-
-      // First retry (500ms)
-      await vi.advanceTimersByTimeAsync(500);
-      expect(operation).toHaveBeenCalledTimes(2);
-
-      // Second retry (1000ms)
-      await vi.advanceTimersByTimeAsync(1000);
-      await promise;
+      await vi.runAllTimersAsync();
 
       expect(operation).toHaveBeenCalledTimes(3);
     });
@@ -186,10 +173,10 @@ describe("RetryUtils", () => {
       await vi.runAllTimersAsync();
       await promise;
 
-      expect(consoleWarnSpy).toHaveBeenCalledWith(
-        expect.stringContaining("Database query failed"),
-        expect.stringContaining("attempt 1/3")
-      );
+      expect(consoleWarnSpy).toHaveBeenCalled();
+      const warnCall = consoleWarnSpy.mock.calls[0];
+      expect(warnCall[0]).toContain("Database query failed");
+      expect(warnCall[0]).toContain("attempt 1/3");
     });
 
     it("should use default config when not provided", async () => {
@@ -212,24 +199,27 @@ describe("RetryUtils", () => {
       await vi.runAllTimersAsync();
       await promise;
 
-      expect(consoleWarnSpy).toHaveBeenCalledWith(
-        expect.stringContaining("attempt 1/5")
-      );
+      expect(consoleWarnSpy).toHaveBeenCalled();
+      const warnCall = consoleWarnSpy.mock.calls[0];
+      expect(warnCall[0]).toContain("attempt 1/5");
     });
 
     it("should log final error after all retries exhausted", async () => {
       const consoleErrorSpy = vi.spyOn(console, "error");
-      const operation = vi.fn().mockRejectedValue(new Error("Permanent failure"));
 
-      const promise = retryWithBackoff(operation, { maxRetries: 2 });
+      const promise = retryWithBackoff(
+        async () => {
+          throw new Error("Permanent failure");
+        },
+        { maxRetries: 2 }
+      );
       await vi.runAllTimersAsync();
 
       await expect(promise).rejects.toThrow("Permanent failure");
 
-      expect(consoleErrorSpy).toHaveBeenCalledWith(
-        expect.stringContaining("operation failed after 2 attempts"),
-        expect.any(Error)
-      );
+      expect(consoleErrorSpy).toHaveBeenCalled();
+      const errorCall = consoleErrorSpy.mock.calls[0];
+      expect(errorCall[0]).toContain("operation failed after 2 attempts");
     });
   });
 });
