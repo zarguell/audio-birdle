@@ -95,9 +95,9 @@ class TestGeneratedHashesValid:
                 bird_hashes.add(bird_hash)
 
             # Verify the answer hash exists
-            assert (
-                answer_hash in bird_hashes
-            ), f"Hash {answer_hash} for region {region} on {entry['date']} not found in birds database. Available hashes: {sorted(bird_hashes)[:5]}..."
+            assert answer_hash in bird_hashes, (
+                f"Hash {answer_hash} for region {region} on {entry['date']} not found in birds database. Available hashes: {sorted(bird_hashes)[:5]}..."
+            )
 
     @staticmethod
     def test_hash_lowercase():
