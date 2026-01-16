@@ -3,33 +3,33 @@ import {
   Play,
   Pause,
   Settings,
-  Share2,
   Volume2,
   MapPin,
   RefreshCw,
-  Info,
   BarChart3,
   Target,
 } from "lucide-react";
-import { toast } from "sonner";
 
 import PracticeGame from "./utils/PracticeGame";
 import HardModeGame from "./utils/HardModeGame";
 import BirdCompletionCard from "./utils/BirdCompletionCard";
 import CountdownToMidnight from "./utils/CountdownToMidnight";
 import { getTodayString, formatDateForDisplay } from "./utils/DateUtils";
-import { getStoredData, setStoredData } from "./utils/StorageUtils";
+import { getStoredData } from "./utils/StorageUtils";
 import {
   hasPlayedRegionDate,
-  hasCompletedNormalMode,
+  hasCompletedHardMode,
   getUserPerformanceSummary,
 } from "./utils/GameLogic";
 import { generateShareText, shareResult } from "./utils/ShareUtils";
+import { getAudioSrc, clearDeadAudioUrlsCache } from "./utils/AudioUtils";
 import { STORAGE_KEYS, GAME_CONFIG, VIEWS } from "./utils/Constants";
 import { SubregionDisplay } from "./utils/SubregionUtils";
 import { useAudioPlayer } from "./hooks/useAudioPlayer";
 import { useGameData } from "./hooks/useGameData";
 import { useDailyGame } from "./hooks/useDailyGame";
+import { useNormalGameStore } from "./stores/normalGameStore";
+import { useHardModeStore } from "./stores/hardModeStore";
 
 export default function AudioBirdle() {
   // Persistence state
@@ -43,6 +43,26 @@ export default function AudioBirdle() {
   // Custom hooks for better separation of concerns
   const audioPlayer = useAudioPlayer();
   const {
+    isPlaying,
+    audioError,
+    setAudioError,
+    selectedAudioIndex,
+    setSelectedAudioIndex,
+    audioRef,
+    toggleAudio,
+    handleAudioError,
+  } = audioPlayer;
+
+  // Helper to reset playing state when audio ends
+  const handleAudioEnded = useCallback(() => {
+    // AudioPlayer doesn't export this, so we create it here
+    // The audio element will naturally stop, but we need to update state
+    if (audioPlayer.isPlaying) {
+      // Force update through the player's methods
+      audioPlayer.handleAudioError(); // This will set isPlaying to false
+    }
+  }, [audioPlayer]);
+  const {
     regions,
     birds,
     todaysBird,
@@ -50,6 +70,8 @@ export default function AudioBirdle() {
     dataConsistencyError,
     hasUpdate,
     refreshingData,
+    handleAutoRefresh,
+    handleForceRefresh,
     handleRefreshData,
   } = useGameData(selectedRegion);
 
@@ -57,7 +79,6 @@ export default function AudioBirdle() {
 
   const {
     makeGuess,
-    makeHardModeGuess,
     resetTodaysGame,
     resetAllData,
     getDailyGame,
@@ -67,128 +88,20 @@ export default function AudioBirdle() {
   const currentDailyGame = getDailyGame();
   const [currentView, setCurrentView] = useState(VIEWS.MODE_SELECTOR);
 
-  /**
-   * Force a complete refresh - clears all caches and reloads page
-   * This is the nuclear option for data consistency issues
-   */
-  const handleForceRefresh = useCallback(async () => {
-    setRefreshingData(true);
-
-    try {
-      // Clear service worker cache
-      await clearServiceWorkerCache();
-
-      // Clear dead audio URLs cache
-      clearDeadAudioUrlsCache();
-
-      // Force fetch fresh data
-      const { regions: newRegions, birds: newBirds } = await refreshGameData();
-
-      setRegions(newRegions);
-      setBirds(newBirds);
-
-      // Reload today's bird
-      if (selectedRegion && newBirds[selectedRegion]) {
-        setLoadingBird(true);
-        const result = await getDailyBirdWithFallback(
-          selectedRegion,
-          newBirds[selectedRegion],
-          today,
-        );
-
-        if (result.success && result.bird) {
-          setTodaysBird(result.bird);
-          setDataConsistencyError(null);
-          toast.success("Data refreshed successfully!");
-        } else {
-          // Still failing after refresh - suggest hard reload
-          setTodaysBird(null);
-          setDataConsistencyError(
-            "Data still out of sync. Try a hard refresh (Ctrl+Shift+R / Cmd+Shift+R)."
-          );
-          toast.error(
-            "Data sync failed. Please try a hard refresh (Ctrl+Shift+R / Cmd+Shift+R).",
-            { duration: 8000 }
-          );
-        }
-        setLoadingBird(false);
-      }
-
-      setHasUpdate(false);
-    } catch (error) {
-      console.error("Force refresh failed:", error);
-      toast.error("Refresh failed. Please try a hard refresh (Ctrl+Shift+R / Cmd+Shift+R).");
-    } finally {
-      setRefreshingData(false);
-    }
-  }, [selectedRegion, today]);
-
-  // Load today's bird when region changes
-  useEffect(() => {
-    if (selectedRegion && birds[selectedRegion]) {
-      setLoadingBird(true);
-      setDataConsistencyError(null);
-      getDailyBirdWithFallback(selectedRegion, birds[selectedRegion], today)
-        .then((result) => {
-          if (result.success && result.bird) {
-            setTodaysBird(result.bird);
-            setDataConsistencyError(null);
-          } else {
-            // Data consistency error - show toast and attempt auto-refresh
-            setTodaysBird(null);
-            setDataConsistencyError(result.message || "Failed to load daily challenge");
-            toast.error(result.message || "Data sync issue detected. Attempting refresh...", {
-              duration: 5000,
-            });
-            // Auto-attempt refresh after a short delay
-            setTimeout(() => {
-              handleForceRefresh();
-            }, 1000);
-          }
-          setLoadingBird(false);
-        })
-        .catch((error) => {
-          console.error("Failed to load today's bird:", error);
-          setTodaysBird(null);
-          setDataConsistencyError("Failed to load daily challenge. Please refresh.");
-          toast.error("Failed to load daily challenge. Please try refreshing.");
-          setLoadingBird(false);
-        });
-    }
-  }, [selectedRegion, birds, today, handleForceRefresh]);
-
-  // Check for data updates on load and auto-refresh if daily.json or audio URLs are stale
-  useEffect(() => {
-    if (selectedRegion) {
-      Promise.all([checkForUpdates(), checkBirdsJsonUpdate()]).then(
-        ([updateCheck, birdsCheck]) => {
-          const hasUpdate = updateCheck.hasUpdate || birdsCheck.hasUpdate;
-          setHasUpdate(hasUpdate);
-
-          // Auto-refresh if:
-          // - daily.json has updates (new bird/region)
-          // - birds.json has updates (audio URLs changed)
-          // - date has changed (new day)
-          if (
-            updateCheck.dailyJsonUpdate ||
-            birdsCheck.hasUpdate ||
-            hasDateChanged()
-          ) {
-            console.log(
-              "Detected stale data (daily/birds/date changed), auto-refreshing...",
-            );
-            // Clear dead audio URLs cache when birds.json updates (new URLs may work)
-            if (birdsCheck.hasUpdate) {
-              clearDeadAudioUrlsCache();
-            }
-            handleAutoRefresh();
-          }
-        },
-      );
-    }
-  }, [selectedRegion, handleAutoRefresh]);
-
   // Share functionality
+  const handleShareResult = useCallback(async () => {
+    if (!currentDailyGame || !todaysBird) return;
+
+    const shareText = generateShareText(
+      currentDailyGame,
+      window.location.href,
+      todaysBird.name,
+      selectedRegion
+    );
+
+    shareResult(shareText);
+  }, [currentDailyGame, todaysBird, selectedRegion]);
+
   const renderRegionSelector = () => (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 p-4">
       <div className="max-w-md mx-auto pt-16">
@@ -207,6 +120,7 @@ export default function AudioBirdle() {
 
           <div className="space-y-2">
             {regions.map((region) => {
+              const gameState = useNormalGameStore.getState();
               const hasPlayedToday = hasPlayedRegionDate(
                 gameState,
                 region.id,
@@ -357,6 +271,7 @@ export default function AudioBirdle() {
   };
 
   const renderStats = () => {
+    const gameState = useNormalGameStore.getState();
     const stats = getUserPerformanceSummary(gameState);
 
     return (
@@ -529,6 +444,7 @@ export default function AudioBirdle() {
   );
 
   const renderGame = () => {
+    const gameState = useHardModeStore.getState();
     const hardModeCompleted = hasCompletedHardMode(
       gameState,
       selectedRegion,
