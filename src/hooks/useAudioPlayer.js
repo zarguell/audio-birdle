@@ -43,6 +43,7 @@ export function useAudioPlayer(initialAudioIndex = 0) {
   return {
     isPlaying,
     audioError,
+    setAudioError,
     selectedAudioIndex,
     setSelectedAudioIndex,
     audioRef,

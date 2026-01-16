@@ -102,6 +102,24 @@ export default function AudioBirdle() {
     shareResult(shareText);
   }, [currentDailyGame, todaysBird, selectedRegion]);
 
+  // Initialize game for today if it doesn't exist
+  useEffect(() => {
+    if (selectedRegion && today && !currentDailyGame) {
+      const key = `${selectedRegion}-${today}`;
+      const existingGame = useNormalGameStore.getState().getDailyGame(key);
+      if (!existingGame) {
+        useNormalGameStore.getState().setDailyGame(key, {
+          region: selectedRegion,
+          date: today,
+          guesses: [],
+          completed: false,
+          won: false,
+          maxGuesses: 4,
+        });
+      }
+    }
+  }, [selectedRegion, today, currentDailyGame]);
+
   const renderRegionSelector = () => (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 p-4">
       <div className="max-w-md mx-auto pt-16">
