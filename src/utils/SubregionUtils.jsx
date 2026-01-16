@@ -10,12 +10,12 @@ export const useSubregion = (selectedRegion, today) => {
       try {
         const response = await fetch('/data/daily.json');
         const data = await response.json();
-        
+
         // Find today's entry for the selected region
-        const todayEntry = data.find(entry => 
+        const todayEntry = data.find(entry =>
           entry.date === today && entry.region === selectedRegion
         );
-        
+
         if (todayEntry) {
           setSubregion(todayEntry.subregion);
         }
@@ -35,7 +35,7 @@ export const useSubregion = (selectedRegion, today) => {
 // Component to display subregion
 export const SubregionDisplay = ({ selectedRegion, today }) => {
   const { subregion, loading } = useSubregion(selectedRegion, today);
-  
+
   if (loading) return <span>loading...</span>;
   return subregion;
 };

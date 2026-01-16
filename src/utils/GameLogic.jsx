@@ -50,13 +50,13 @@ export const createInitialGameState = () => {
 const needsMigration = (gameState) => {
   // If no version field, it's definitely old
   if (!gameState.version) return true;
-  
+
   // If version is less than current, needs migration
   if (gameState.version < 2) return true;
-  
+
   // If dailyGames doesn't exist, it's old format
   if (!gameState.dailyGames) return true;
-  
+
   return false;
 };
 
@@ -67,9 +67,9 @@ const needsMigration = (gameState) => {
  */
 const migrateGameState = (oldGameState) => {
   console.log('Migrating old game state format to new format');
-  
+
   const newGameState = createInitialGameState();
-  
+
   // If old state exists and has some structure, try to preserve what we can
   if (oldGameState && typeof oldGameState === 'object') {
     // Preserve existing stats if they exist
@@ -78,20 +78,20 @@ const migrateGameState = (oldGameState) => {
         ...newGameState.stats,
         ...oldGameState.stats
       };
-      
+
       // Ensure regionStats exists
       if (!newGameState.stats.regionStats) {
         newGameState.stats.regionStats = {};
       }
     }
-    
+
     // Try to migrate old daily game data if it exists
     // This handles various old formats that might exist
     if (oldGameState.guesses || oldGameState.completed !== undefined) {
       // Old format had game data at root level
       const today = new Date().toISOString().split('T')[0];
       const defaultRegion = 'us'; // Assume US region for old games
-      
+
       const migratedGame = createInitialDailyGameState(defaultRegion, today);
       migratedGame.guesses = oldGameState.guesses || [];
       migratedGame.completed = oldGameState.completed || false;
@@ -99,16 +99,16 @@ const migrateGameState = (oldGameState) => {
       migratedGame.startTime = oldGameState.startTime || new Date().toISOString();
       migratedGame.endTime = oldGameState.endTime || null;
       migratedGame.birdId = oldGameState.birdId || null;
-      
+
       const key = createRegionDateKey(defaultRegion, today);
       newGameState.dailyGames[key] = migratedGame;
-      
+
       newGameState.lastPlayed = {
         region: defaultRegion,
         date: today
       };
     }
-    
+
     // Preserve any other fields that might be useful
     if (oldGameState.lastPlayed) {
       newGameState.lastPlayed = {
@@ -117,7 +117,7 @@ const migrateGameState = (oldGameState) => {
       };
     }
   }
-  
+
   return newGameState;
 };
 
@@ -131,12 +131,12 @@ export const ensureGameStateFormat = (gameState) => {
   if (!gameState) {
     return createInitialGameState();
   }
-  
+
   // If needs migration, migrate it
   if (needsMigration(gameState)) {
     return migrateGameState(gameState);
   }
-  
+
   // State is current format, return as-is
   return gameState;
 };
@@ -171,13 +171,13 @@ export const createInitialDailyGameState = (region, date) => {
 export const getDailyGameState = (gameState, region, date) => {
   // Ensure game state is in correct format before proceeding
   const validGameState = ensureGameStateFormat(gameState);
-  
+
   const key = createRegionDateKey(region, date);
-  
+
   if (!validGameState.dailyGames[key]) {
     validGameState.dailyGames[key] = createInitialDailyGameState(region, date);
   }
-  
+
   return validGameState.dailyGames[key];
 };
 
@@ -208,37 +208,37 @@ export const processGuess = (gameState, region, date, guessedBirdId, correctBird
   const validGameState = ensureGameStateFormat(gameState);
   const newGameState = { ...validGameState };
   const dailyGame = getDailyGameState(newGameState, region, date);
-  
+
   // Don't allow guesses if game is already completed
   if (dailyGame.completed) {
     return newGameState;
   }
-  
+
   const isCorrect = guessedBirdId === correctBirdId;
-  
+
   // Add the guess
   const guess = {
     birdId: guessedBirdId,
     correct: isCorrect,
     timestamp: new Date().toISOString()
   };
-  
+
   dailyGame.guesses.push(guess);
   dailyGame.birdId = correctBirdId; // Store the correct answer
-  
+
   // Check if game is completed
   if (isCorrect || dailyGame.guesses.length >= dailyGame.maxGuesses) {
     dailyGame.completed = true;
     dailyGame.won = isCorrect;
     dailyGame.endTime = new Date().toISOString();
-    
+
     // Update overall stats
     updateUserStats(newGameState, region, dailyGame);
   }
-  
+
   // Update last played info
   newGameState.lastPlayed = { region, date };
-  
+
   return newGameState;
 };
 
@@ -250,19 +250,19 @@ export const processGuess = (gameState, region, date, guessedBirdId, correctBird
  */
 const updateUserStats = (gameState, region, dailyGame) => {
   const stats = gameState.stats;
-  
+
   // Update overall stats
   stats.totalGamesPlayed++;
   if (dailyGame.won) {
     stats.totalGamesWon++;
   }
-  
+
   // Update average guesses
   const totalGuesses = Object.values(gameState.dailyGames)
     .filter(game => game.completed)
     .reduce((sum, game) => sum + game.guesses.length, 0);
   stats.averageGuesses = totalGuesses / stats.totalGamesPlayed;
-  
+
   // Update streaks (simplified - you might want more complex logic)
   if (dailyGame.won) {
     stats.currentStreak++;
@@ -270,7 +270,7 @@ const updateUserStats = (gameState, region, dailyGame) => {
   } else {
     stats.currentStreak = 0;
   }
-  
+
   // Update region-specific stats
   if (!stats.regionStats[region]) {
     stats.regionStats[region] = {
@@ -279,13 +279,13 @@ const updateUserStats = (gameState, region, dailyGame) => {
       averageGuesses: 0
     };
   }
-  
+
   const regionStats = stats.regionStats[region];
   regionStats.gamesPlayed++;
   if (dailyGame.won) {
     regionStats.gamesWon++;
   }
-  
+
   // Calculate region-specific average
   const regionTotalGuesses = Object.values(gameState.dailyGames)
     .filter(game => game.completed && game.region === region)
@@ -304,7 +304,7 @@ export const getDailyBird = (region, birds, date) => {
   // This is a fallback synchronous method if the async version fails
   // You might want to implement a hash-based selection here as fallback
   if (!birds || birds.length === 0) return null;
-  
+
   // Simple hash-based selection as fallback
   const seed = hashString(`${region}-${date}`);
   const index = Math.abs(seed) % birds.length;
@@ -335,7 +335,7 @@ export const getDailyBirdWithFallback = async (region, birds, date) => {
     if (bird) {
       return { bird, success: true, error: null, message: null };
     }
-    
+
     // No fallback - return error so UI can handle appropriately
     console.error(`Daily bird lookup failed for ${region} on ${date} - no matching bird found`);
     return {
@@ -378,13 +378,13 @@ const createSeededRandom = (seed) => {
 const deterministicShuffle = (array, seed) => {
   const shuffled = [...array];
   const random = createSeededRandom(seed);
-  
+
   // Fisher-Yates shuffle with seeded random
   for (let i = shuffled.length - 1; i > 0; i--) {
     const j = Math.floor(random() * (i + 1));
     [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
   }
-  
+
   return shuffled;
 };
 
@@ -399,7 +399,7 @@ const deterministicShuffle = (array, seed) => {
  */
 export const generateAnswerOptions = (region, birds, date, correctBird, optionCount = 4) => {
   if (!birds[region] || !correctBird) return [];
-  
+
   const regionBirds = birds[region];
 
   // Create a seed based on region, date, and correct bird ID for deterministic selection
@@ -407,12 +407,12 @@ export const generateAnswerOptions = (region, birds, date, correctBird, optionCo
 
   // Get birds that aren't the correct answer
   const availableBirds = regionBirds.filter(bird => bird.id !== correctBird.id);
-  
+
   // First, try to get birds from the same family as the correct bird
   const sameFamilyBirds = availableBirds.filter(bird => bird.family === correctBird.family);
-  
+
   let selectedWrongBirds = [];
-  
+
   if (sameFamilyBirds.length >= optionCount - 1) {
     // We have enough birds from the same family
     const shuffledSameFamily = deterministicShuffle(sameFamilyBirds, seed);
@@ -422,26 +422,26 @@ export const generateAnswerOptions = (region, birds, date, correctBird, optionCo
     // and fill the rest from the entire available list
     const shuffledSameFamily = deterministicShuffle(sameFamilyBirds, seed);
     selectedWrongBirds = [...shuffledSameFamily];
-    
+
     // Get remaining birds (excluding same family birds and correct bird)
     const remainingBirds = availableBirds.filter(bird => bird.family !== correctBird.family);
     const shuffledRemaining = deterministicShuffle(remainingBirds, seed);
-    
+
     // Add birds from other families to reach the desired count
     const stillNeeded = optionCount - 1 - selectedWrongBirds.length;
     for (let i = 0; i < Math.min(stillNeeded, shuffledRemaining.length); i++) {
       selectedWrongBirds.push(shuffledRemaining[i]);
     }
   }
-  
+
   // Combine correct answer with wrong answers
   const allOptions = [correctBird, ...selectedWrongBirds];
-  
+
   // Shuffle all options deterministically so correct answer position is consistent
   // Use a different seed component for final shuffle to avoid patterns
   const finalSeed = hashString(`${region}-${date}-${correctBird.id}-final`);
   const finalOptions = deterministicShuffle(allOptions, finalSeed);
-  
+
   return finalOptions;
 };
 

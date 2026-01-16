@@ -19,7 +19,7 @@ Have a bug, feature request, or improvement idea?
 Want to contribute code?
 
 1. **Fork** the repository
-2. **Create a branch** for your change:  
+2. **Create a branch** for your change:
    `git checkout -b feature/my-awesome-feature`
 3. **Make your changes** and commit:
    - Follow existing coding styles

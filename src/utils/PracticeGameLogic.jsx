@@ -67,7 +67,7 @@ export const getPracticeBird = (region, birds, practiceIndex) => {
 
   const regionBirds = birds[region];
   const shuffledBirds = randomShuffle(regionBirds);
-  
+
   // Use modulo to cycle through birds infinitely
   const index = practiceIndex % shuffledBirds.length;
   return shuffledBirds[index];
@@ -78,7 +78,7 @@ export const getPracticeBird = (region, birds, practiceIndex) => {
  */
 export const generatePracticeAnswerOptions = (region, birds, practiceIndex, correctBird, optionCount = 4) => {
   if (!birds[region] || !correctBird) return [];
-  
+
   const regionBirds = birds[region];
 
   // Get birds that aren't the correct answer
@@ -105,14 +105,14 @@ export const generatePracticeAnswerOptions = (region, birds, practiceIndex, corr
     const remainingBirds = availableBirds.filter(bird => bird.family !== correctBird.family);
     const seedRemaining = hashString(`practice-options-${region}-${practiceIndex}-${correctBird.id}-remaining`);
     const shuffledRemaining = deterministicShuffle(remainingBirds, seedRemaining);
-    
+
     // Add birds from other families to reach the desired count
     const stillNeeded = optionCount - 1 - selectedWrongBirds.length;
     for (let i = 0; i < Math.min(stillNeeded, shuffledRemaining.length); i++) {
       selectedWrongBirds.push(shuffledRemaining[i]);
     }
   }
-  
+
   // Combine and shuffle all options
   const allOptions = [correctBird, ...selectedWrongBirds];
   const finalSeed = hashString(`practice-final-${region}-${practiceIndex}-${correctBird.id}`);

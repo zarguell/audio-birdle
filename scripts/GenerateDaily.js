@@ -21,27 +21,27 @@ const mockBirds = {
 // Function to generate entries for multiple days
 function generateDailyEntries(startDate, numDays, regions) {
   const entries = [];
-  
+
   for (let i = 0; i < numDays; i++) {
     const date = new Date(startDate);
     date.setDate(date.getDate() + i);
     const dateStr = date.toISOString().split('T')[0];
-    
+
     for (const region of regions) {
       const birds = mockBirds[region];
       if (birds && birds.length > 0) {
         // For demo purposes, cycle through birds. In production, you'd choose strategically
         const birdIndex = i % birds.length;
         const selectedBird = birds[birdIndex];
-        
+
         const entry = generateDailyEntry(dateStr, region, selectedBird.id);
         entries.push(entry);
-        
+
         console.log(`${dateStr} ${region}: ${selectedBird.name} (${selectedBird.id}) -> ${entry.answerHash}`);
       }
     }
   }
-  
+
   return entries;
 }
 

@@ -41,7 +41,7 @@ if __name__ == "__main__":
     # Fetch the taxonomy data
     try:
         data = fetch_region(args.region)
-        
+
         # If an output file is specified, save the data
         if args.output:
             save_to_file(data, args.output)

@@ -13,7 +13,7 @@ from selenium.webdriver.common.by import By
 from selenium.common import exceptions
 from selenium.webdriver.chrome.service import Service
 
-# ------------- 
+# -------------
 def ConstructRequestUrl(taxonCode:str, tag:str, regionCode:str) -> str:
   baseUrl = 'https://media.ebird.org/catalog?'
   return baseUrl + f'tag={tag}&regionCode={regionCode}&taxonCode={taxonCode}'
@@ -33,7 +33,7 @@ def GetSpeciesNextPagesUrl(driver, reqUrl, speciesCode, maxUrls):
   while button is not None and len(df) < maxUrls:
     button.click()
     button = GetMoreResultsButton(driver, '.pagination > button')
-  
+
   soup = Soup(driver.page_source, 'lxml')
   nextPageUrls = soup.find_all('a', class_='ResultsGallery-link')
   for u in nextPageUrls[:maxUrls]:  # Limit to maxUrls
@@ -101,7 +101,7 @@ def main():
         return
 
     print(f"📊 Processing {len(taxonomy)} species...")
-    
+
     for i, entry in enumerate(taxonomy, 1):
         species_code = entry.get("speciesCode")
         if not species_code:
@@ -115,26 +115,26 @@ def main():
 
     print(f"\n📋 Total page URLs collected: {len(urlDF)}")
     print("🎵 Fetching audio URLs...")
-    
+
     # Download and save audio, and save its URL
     audioUrls = GetSpeciesAudioUrls(driver, urlDF['page Url'], urlDF['code'])
-    
+
     # Ensure lengths match (should now be guaranteed)
     if len(audioUrls) != len(urlDF):
         print(f"⚠️  Warning: Length mismatch - {len(audioUrls)} audio URLs vs {len(urlDF)} page URLs")
         # Pad with None if needed
         while len(audioUrls) < len(urlDF):
             audioUrls.append(None)
-    
+
     urlDF['audio Url'] = audioUrls
 
     # Generate output filename based on input filename
     input_stem = args.taxonomy_file.stem
     output_file = args.taxonomy_file.parent / f"{input_stem}-urls.json"
-    
+
     # Save to JSON file
     urlDF.to_json(output_file, orient='records', indent=2)
-    
+
     # Print summary
     successful_urls = urlDF['audio Url'].notna().sum()
     total_urls = len(urlDF)

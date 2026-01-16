@@ -15,10 +15,10 @@ def fetch_taxonomy(version, category='all', fmt='json', species=None):
     headers = {
         'X-eBirdApiToken': api_key
     }
-    
+
     # Prepare parameters, only include if specified
     params = {}
-    
+
     if version:
         params['version'] = version
     if category:
@@ -57,7 +57,7 @@ if __name__ == "__main__":
     # Fetch the taxonomy data
     try:
         data = fetch_taxonomy(args.version, args.category, args.fmt, args.species)
-        
+
         # If an output file is specified, save the data
         if args.output:
             save_to_file(data, args.output)
