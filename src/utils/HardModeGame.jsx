@@ -21,6 +21,7 @@ export default function HardModeGame({
   birds,
   todaysBird,
   onBack,
+  normalModeCompleted = false,
 }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [audioError, setAudioError] = useState(false);

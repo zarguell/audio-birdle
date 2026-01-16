@@ -19,6 +19,7 @@ import { getStoredData } from "./utils/StorageUtils";
 import {
   hasPlayedRegionDate,
   hasCompletedHardMode,
+  hasCompletedNormalMode,
   getUserPerformanceSummary,
 } from "./utils/GameLogic";
 import { generateShareText, shareResult } from "./utils/ShareUtils";
@@ -758,12 +759,20 @@ export default function AudioBirdle() {
   }
 
   if (currentView === VIEWS.HARD_MODE) {
+    const normalGameState = useNormalGameStore.getState();
+    const normalModeCompleted = hasCompletedNormalMode(
+      normalGameState,
+      selectedRegion,
+      today
+    );
+
     return (
       <HardModeGame
         region={selectedRegion}
         birds={birds}
         todaysBird={todaysBird}
         onBack={() => setCurrentView(VIEWS.MODE_SELECTOR)}
+        normalModeCompleted={normalModeCompleted}
       />
     );
   }
