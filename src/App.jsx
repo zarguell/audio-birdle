@@ -96,7 +96,7 @@ export default function AudioBirdle() {
       currentDailyGame,
       window.location.href,
       todaysBird.name,
-      selectedRegion
+      selectedRegion,
     );
 
     shareResult(shareText);
@@ -529,8 +529,10 @@ export default function AudioBirdle() {
                       disabled={refreshingData}
                       className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors flex items-center gap-2 disabled:bg-gray-400"
                     >
-                      <RefreshCw className={`w-4 h-4 ${refreshingData ? 'animate-spin' : ''}`} />
-                      {refreshingData ? 'Refreshing...' : 'Force Refresh Data'}
+                      <RefreshCw
+                        className={`w-4 h-4 ${refreshingData ? "animate-spin" : ""}`}
+                      />
+                      {refreshingData ? "Refreshing..." : "Force Refresh Data"}
                     </button>
                     <button
                       onClick={() => window.location.reload()}
