@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useMemo, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
   Play,
   Pause,
@@ -17,134 +17,55 @@ import PracticeGame from "./utils/PracticeGame";
 import HardModeGame from "./utils/HardModeGame";
 import BirdCompletionCard from "./utils/BirdCompletionCard";
 import CountdownToMidnight from "./utils/CountdownToMidnight";
-import { loadGameData } from "./utils/LoadGameData";
 import { getTodayString, formatDateForDisplay } from "./utils/DateUtils";
 import { getStoredData, setStoredData } from "./utils/StorageUtils";
 import {
-  getDailyBirdWithFallback,
-  generateAnswerOptions,
   hasPlayedRegionDate,
   hasCompletedNormalMode,
   getUserPerformanceSummary,
 } from "./utils/GameLogic";
-import { useNormalGameStore } from "./stores/normalGameStore";
-import { useHardModeStore } from "./stores/hardModeStore";
 import { generateShareText, shareResult } from "./utils/ShareUtils";
-import { createAudioControls } from "./utils/AudioUtils";
 import { STORAGE_KEYS, GAME_CONFIG, VIEWS } from "./utils/Constants";
-import {
-  checkForUpdates,
-  hasDateChanged,
-  refreshGameData,
-  clearServiceWorkerCache,
-  checkBirdsJsonUpdate,
-} from "./utils/CacheUtils";
-import {
-  loadDeadAudioUrlsCache,
-  clearDeadAudioUrlsCache,
-  markAudioUrlDead,
-  getAudioSrc,
-} from "./utils/AudioUtils";
 import { SubregionDisplay } from "./utils/SubregionUtils";
+import { useAudioPlayer } from "./hooks/useAudioPlayer";
+import { useGameData } from "./hooks/useGameData";
+import { useDailyGame } from "./hooks/useDailyGame";
 
 export default function AudioBirdle() {
-  // Data state
-  const [regions, setRegions] = useState([]);
-  const [birds, setBirds] = useState({});
-  const [currentView, setCurrentView] = useState(VIEWS.MODE_SELECTOR);
+  // Persistence state
   const [selectedRegion, setSelectedRegion] = useState(() =>
     getStoredData(STORAGE_KEYS.REGION, null),
   );
   const [lastPlayedMode, setLastPlayedMode] = useState(() =>
     getStoredData(STORAGE_KEYS.LAST_PLAYED_MODE, "normal"),
   );
-  const [hasUpdate, setHasUpdate] = useState(false);
-  const [refreshingData, setRefreshingData] = useState(false);
-  const [dataConsistencyError, setDataConsistencyError] = useState(null);
 
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [audioError, setAudioError] = useState(false);
-  const audioRef = useRef(null);
-
-  // Audio selector state
-  const [selectedAudioIndex, setSelectedAudioIndex] = useState(0);
+  // Custom hooks for better separation of concerns
+  const audioPlayer = useAudioPlayer();
+  const {
+    regions,
+    birds,
+    todaysBird,
+    loadingBird,
+    dataConsistencyError,
+    hasUpdate,
+    refreshingData,
+    handleRefreshData,
+  } = useGameData(selectedRegion);
 
   const today = getTodayString();
 
-  const currentDailyGame = selectedRegion
-    ? useNormalGameStore.getState().getDailyGame(`${selectedRegion}-${today}`)
-    : null;
+  const {
+    makeGuess,
+    makeHardModeGuess,
+    resetTodaysGame,
+    resetAllData,
+    getDailyGame,
+    answerOptions,
+  } = useDailyGame(selectedRegion, today, birds, todaysBird);
 
-  // Load initial data
-  useEffect(() => {
-    // Initialize audio URL validation cache from persistent storage
-    loadDeadAudioUrlsCache();
-
-    loadGameData()
-      .then(({ regions, birds }) => {
-        setRegions(regions);
-        setBirds(birds);
-      })
-      .catch((error) => {
-        console.error("Failed to load game data:", error);
-        toast.error("Failed to load game data. Please refresh the page.");
-      });
-  }, []);
-
-  // Bird loading state
-  const [todaysBird, setTodaysBird] = useState(null);
-  const [loadingBird, setLoadingBird] = useState(false);
-
-  useEffect(() => {
-    setSelectedAudioIndex(0);
-  }, [todaysBird]);
-
-  /**
-   * Automatically refresh game data when daily.json is stale
-   * Runs silently in background without user intervention
-   */
-  const handleAutoRefresh = useCallback(async () => {
-    if (!navigator.onLine) {
-      console.log("Offline, skipping auto-refresh");
-      return;
-    }
-
-    try {
-      await clearServiceWorkerCache();
-      const { regions: newRegions, birds: newBirds } = await refreshGameData();
-
-      setRegions(newRegions);
-      setBirds(newBirds);
-
-      // Reload today's bird if region is selected
-      if (selectedRegion && newBirds[selectedRegion]) {
-        setLoadingBird(true);
-        const result = await getDailyBirdWithFallback(
-          selectedRegion,
-          newBirds[selectedRegion],
-          today,
-        );
-
-        if (result.success && result.bird) {
-          setTodaysBird(result.bird);
-          setDataConsistencyError(null);
-        } else {
-          setTodaysBird(null);
-          setDataConsistencyError(result.message);
-          toast.error(result.message || "Failed to load daily challenge after refresh.");
-        }
-        setLoadingBird(false);
-      }
-
-      setHasUpdate(false);
-      console.log("Auto-refresh completed successfully");
-    } catch (error) {
-      console.error("Auto-refresh failed:", error);
-      toast.error(
-        "Failed to refresh game data. Please refresh the page if state doesn't load.",
-      );
-    }
-  }, [selectedRegion, today]);
+  const currentDailyGame = getDailyGame();
+  const [currentView, setCurrentView] = useState(VIEWS.MODE_SELECTOR);
 
   /**
    * Force a complete refresh - clears all caches and reloads page
@@ -267,175 +188,7 @@ export default function AudioBirdle() {
     }
   }, [selectedRegion, handleAutoRefresh]);
 
-  // Generate answer options
-  const answerOptions = generateAnswerOptions(
-    selectedRegion,
-    birds,
-    today,
-    todaysBird,
-    GAME_CONFIG.ANSWER_OPTIONS_COUNT,
-   );
-
-  // Persist selected region
-  useEffect(() => {
-    if (selectedRegion) {
-      setStoredData(STORAGE_KEYS.REGION, selectedRegion);
-    }
-  }, [selectedRegion]);
-
-  // Persist last played mode
-  useEffect(() => {
-    if (lastPlayedMode) {
-      setStoredData(STORAGE_KEYS.LAST_PLAYED_MODE, lastPlayedMode);
-    }
-  }, [lastPlayedMode]);
-
-  // Audio controls
-  // eslint-disable-next-line react-hooks/refs
-  const audioControls = useMemo(() => createAudioControls(audioRef), []);
-
-  const toggleAudio = async () => {
-    if (isPlaying) {
-      audioControls.pauseAudio();
-      setIsPlaying(false);
-    } else {
-      const success = await audioControls.playAudio();
-      if (success) {
-        setIsPlaying(true);
-      } else {
-        setAudioError(true);
-        setIsPlaying(false);
-      }
-    }
-  };
-
-  const handleAudioEnded = () => {
-    setIsPlaying(false);
-  };
-
-  const handleAudioError = () => {
-    setAudioError(true);
-    setIsPlaying(false);
-    // Mark this specific URL as dead for future sessions
-    if (todaysBird) {
-      const failedUrl = getAudioSrc(todaysBird.audioUrl, selectedAudioIndex);
-      if (failedUrl) {
-        markAudioUrlDead(failedUrl);
-        console.warn(`Marked audio URL as dead: ${failedUrl}`);
-      }
-    }
-  };
-
-  // Game actions
-  const makeGuess = (birdId) => {
-    if (!todaysBird || !selectedRegion) return;
-
-    useNormalGameStore.getState().processGuess(`${selectedRegion}-${today}`, {
-      birdId,
-      correct: birdId === todaysBird.id,
-      timestamp: Date.now(),
-    });
-  };
-
-  const makeHardModeGuess = (bird) => {
-    if (!todaysBird || !selectedRegion) return;
-
-    const taxonomicScore = {
-      order: bird.order === todaysBird.order,
-      family: bird.family === todaysBird.family,
-      genus: bird.genus === todaysBird.genus,
-      species: bird.scientificName === todaysBird.scientificName,
-    };
-
-    useHardModeStore.getState().processHardModeGuess(`${selectedRegion}-${today}`, {
-      birdId: bird.id,
-      textInput: bird.name,
-      correct: bird.id === todaysBird.id,
-      timestamp: Date.now(),
-      taxonomicScore,
-    });
-  };
-
   // Share functionality
-  const handleShareResult = async () => {
-    if (!currentDailyGame) return;
-
-    const shareText = generateShareText(currentDailyGame, window.location.href);
-    await shareResult(shareText);
-  };
-
-  // Reset functions
-  const resetTodaysGame = () => {
-    if (!selectedRegion) return;
-
-    const key = `${selectedRegion}-${today}`;
-    useNormalGameStore.getState().setDailyGame(key, {
-      region: selectedRegion,
-      date: today,
-      guesses: [],
-      completed: false,
-      won: false,
-      maxGuesses: 4,
-    });
-  };
-
-  const resetAllData = () => {
-    useNormalGameStore.getState().reset();
-    useHardModeStore.getState().reset();
-  };
-
-  // Refresh game data
-  const handleRefreshData = async () => {
-    if (!navigator.onLine) {
-      toast.error(
-        "Cannot refresh data while offline. Please connect to the internet and try again.",
-      );
-      return;
-    }
-
-    setRefreshingData(true);
-
-    try {
-      await clearServiceWorkerCache();
-
-      const { regions: newRegions, birds: newBirds } = await refreshGameData();
-
-      setRegions(newRegions);
-      setBirds(newBirds);
-
-      if (selectedRegion && newBirds[selectedRegion]) {
-        setLoadingBird(true);
-        const result = await getDailyBirdWithFallback(
-          selectedRegion,
-          newBirds[selectedRegion],
-          today,
-        );
-
-        if (result.success && result.bird) {
-          setTodaysBird(result.bird);
-          setDataConsistencyError(null);
-        } else {
-          setTodaysBird(null);
-          setDataConsistencyError(result.message);
-        }
-        setLoadingBird(false);
-      }
-
-      setHasUpdate(false);
-      if (!dataConsistencyError) {
-        toast.success("Data refreshed successfully!");
-      }
-    } catch (error) {
-      console.error("Failed to refresh data:", error);
-      toast.error(
-        "Failed to refresh data. Please try again or check your internet connection.",
-      );
-    } finally {
-      setRefreshingData(false);
-    }
-  };
-
-  // Region selector view
   const renderRegionSelector = () => (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 p-4">
       <div className="max-w-md mx-auto pt-16">
