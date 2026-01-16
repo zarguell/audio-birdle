@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-01-02",
-      "id": "shshaw",
-      "name": "Sharp-shinned Hawk",
-      "subregion": "Maine"
-    },
-    {
       "date": "2026-01-03",
       "id": "whrsha",
       "name": "White-rumped Shama",
@@ -118,6 +112,17 @@
       "id": "mutswa",
       "name": "Mute Swan",
       "subregion": "South Carolina"
+    },
+    {
+      "date": "2026-01-16",
+      "id": "kineid",
+      "name": "King Eider"
+    },
+    {
+      "date": "2026-01-16",
+      "id": "sonspa",
+      "name": "Song Sparrow",
+      "subregion": "Colorado"
     }
   ],
   "us-lower48": [
@@ -215,6 +220,17 @@
       "id": "grbher3",
       "name": "Great Blue Heron",
       "subregion": "Colorado"
+    },
+    {
+      "date": "2026-01-16",
+      "id": "lotduc",
+      "name": "Long-tailed Duck"
+    },
+    {
+      "date": "2026-01-16",
+      "id": "graspa",
+      "name": "Grasshopper Sparrow",
+      "subregion": "South Carolina"
     }
   ]
 }
