@@ -153,6 +153,48 @@ audio-birdle/
 - Hash-based bird lookup
 - Fallback to hash-based selection if daily.json unavailable
 
+### Canonical Hash Algorithm
+
+**Critical:** The hash implementation MUST be identical in Python and JavaScript. Any changes to the algorithm require updating both implementations and all tests.
+
+**Algorithm Details:**
+- **Name:** DJB2 hash (variant)
+- **Formula:** `hash = ((hash << 5) - hash) + char_code`
+- **Salt:** `"birdle-salt-2025"` (appended to bird ID)
+- **Output:** 32-bit unsigned integer formatted as 8-character lowercase hex string
+- **Example:** `hashBirdId("amerob")` → `"104c723e"`
+
+**Implementations:**
+- **JavaScript:** [src/utils/HashUtils.jsx](src/utils/HashUtils.jsx) - `hashString()` function
+- **Python:** [scripts/generate-daily-birds.py](scripts/generate-daily-birds.py) - `hash_bird_id()` function
+
+**Key Requirements:**
+1. **Zero-padding:** Hashes must always be exactly 8 characters (e.g., `"0391253f"`, not `"391253f"`)
+2. **Lowercase:** Hashes must be lowercase hexadecimal
+3. **Deterministic:** Same input must always produce same output
+4. **Consistent:** Python and JavaScript must produce identical output for same input
+
+**Data Pipeline:**
+```
+Python Script (generate-daily-birds.py)
+  → hash_bird_id(birdId)
+  → daily.json { answerHash: "8charhex" }
+  → Frontend (DailyBirdUtils.jsx)
+  → hashBirdId(birdId) for lookup
+  → findBirdByHash() matches bird
+```
+
+**Testing:**
+- JavaScript: [tests/unit/utils/HashUtils.test.jsx](tests/unit/utils/HashUtils.test.jsx) - 16 tests
+- Python: [tests/test_generate_daily_birds.py](tests/test_generate_daily_birds.py) - 8 hash tests
+- Both verify identical output for test vectors
+
+**Warning:** Never change the hash algorithm without:
+1. Updating both Python and JavaScript implementations
+2. Updating all test expectations
+3. Creating a migration strategy for existing daily.json data
+4. Ensuring backward compatibility or data migration
+
 **Data Management:**
 - [StorageUtils.jsx](src/utils/StorageUtils.jsx) - LocalStorage wrapper with error handling
 - [LoadGameData.jsx](src/utils/LoadGameData.jsx) - Fetch JSON data from `/data/`
