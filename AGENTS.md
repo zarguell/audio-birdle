@@ -46,7 +46,7 @@ audio-birdle/
 │   │   ├── normalGameStore.ts        # Normal mode state with persistence
 │   │   ├── hardModeStore.ts          # Hard mode state with persistence
 │   │   └── practiceStore.ts          # Practice mode state (no persistence)
-│   └── utils/            # Utility modules (14 files)
+│   └── utils/            # Utility modules (15 files)
 │       ├── GameLogic.jsx           # Core game mechanics, state management
 │       ├── TaxonomyUtils.jsx       # Taxonomic comparison for hard mode
 │       ├── HardModeGame.jsx        # Hard mode view component
@@ -54,12 +54,13 @@ audio-birdle/
 │       ├── TaxonomicBadge.jsx      # Taxonomic score display badge
 │       ├── DailyBirdUtils.jsx       # Daily bird selection, hashing
 │       ├── AudioUtils.jsx           # Audio playback controls
-│       ├── CacheUtils.jsx           # Data caching and version checking (214 lines - simplified)
+│       ├── CacheUtils.jsx           # Data caching and version checking (206 lines - simplified)
 │       ├── PracticeGameLogic.jsx    # Practice mode logic
 │       ├── PracticeGame.jsx         # Practice mode view component
-│       ├── StorageUtils.jsx         # LocalStorage wrapper
+│       ├── StorageUtils.jsx         # Unified localStorage operations with error handling
 │       ├── ShareUtils.jsx           # Social sharing
-│       ├── HashUtils.jsx            # String hashing
+│       ├── HashUtils.jsx            # Canonical hash implementation (verified with Python)
+│       ├── RetryUtils.jsx           # Shared retry logic with exponential backoff
 │       ├── LoadGameData.jsx         # Data loading from JSON
 │       ├── DateUtils.jsx            # Date utilities
 │       └── Constants.jsx            # Game constants
@@ -196,9 +197,10 @@ Python Script (generate-daily-birds.py)
 4. Ensuring backward compatibility or data migration
 
 **Data Management:**
-- [StorageUtils.jsx](src/utils/StorageUtils.jsx) - LocalStorage wrapper with error handling
+- [StorageUtils.jsx](src/utils/StorageUtils.jsx) - Unified localStorage operations with error handling
+- [RetryUtils.jsx](src/utils/RetryUtils.jsx) - Shared retry logic with exponential backoff
 - [LoadGameData.jsx](src/utils/LoadGameData.jsx) - Fetch JSON data from `/data/`
-- [HashUtils.jsx](src/utils/HashUtils.jsx) - String hashing utilities
+- [HashUtils.jsx](src/utils/HashUtils.jsx) - Canonical hash implementation (verified with Python)
 
 ### Python Data Processing Scripts
 
@@ -219,6 +221,55 @@ Python Script (generate-daily-birds.py)
    - API integration with eBird v2 API
    - Subregion selection
    - Species code extraction and deduplication
+
+### Common Utilities
+
+**StorageUtils** - Unified localStorage operations with error handling:
+```javascript
+import { getStorage, setStorage, removeStorage, isStorageAvailable } from './utils/StorageUtils';
+
+// Check if localStorage is available
+if (isStorageAvailable()) {
+  // Get data with default value
+  const gameState = getStorage('audio-birdle-game-state', null);
+
+  // Set data (automatically stringified)
+  setStorage('audio-birdle-game-state', { guesses: [], won: true });
+
+  // Remove data
+  removeStorage('audio-birdle-game-state');
+}
+```
+
+**RetryUtils** - Network operations with automatic retry:
+```javascript
+import { fetchWithRetry, retryWithBackoff } from './utils/RetryUtils';
+
+// Fetch with retry (3 attempts, exponential backoff)
+const response = await fetchWithRetry('/data/birds.json', {}, { maxRetries: 3, baseDelay: 1000 });
+const data = await response.json();
+
+// Retry any async operation
+const result = await retryWithBackoff(
+  async () => {
+    const data = await someAsyncOperation();
+    if (!data) throw new Error('No data');
+    return data;
+  },
+  { maxRetries: 2, baseDelay: 500, context: 'data-fetch' }
+);
+```
+
+**HashUtils** - Canonical hash implementation (matches Python):
+```javascript
+import { hashString } from './utils/HashUtils';
+
+// Generate 8-character hex hash (matches Python implementation)
+const birdHash = hashString('American Robin');
+// Returns: 'a1b2c3d4' (8-char hex string)
+```
+
+**Important:** Hash algorithm is canonical across Python and JavaScript. Both use same salt "birdle-salt-2025". DO NOT modify the hash implementation without updating both languages.
 
 ### Game Configuration ([Constants.jsx](src/utils/Constants.jsx))
 
@@ -321,6 +372,23 @@ STORAGE_KEYS: region, game-state constants
 
 ## Development Workflow
 
+### When Adding New Features
+
+1. **Network Operations:** Always use RetryUtils for fetch calls. Don't implement custom retry logic.
+   ```javascript
+   import { fetchWithRetry } from './utils/RetryUtils';
+   const response = await fetchWithRetry('/data/file.json');
+   ```
+
+2. **Storage Operations:** Always use StorageUtils for localStorage. Don't use localStorage directly.
+   ```javascript
+   import { getStorage, setStorage } from './utils/StorageUtils';
+   const data = getStorage('key', defaultValue);
+   setStorage('key', data);
+   ```
+
+3. **Hash Operations:** Use HashUtils.hashString() for consistent bird ID hashing. Don't implement custom hash.
+
 ### Commands
 
 ```bash
@@ -372,7 +440,8 @@ The [smart-test.yml](.github/workflows/smart-test.yml) workflow intelligently ru
 
 ## Important Notes
 
-- **Hash Consistency:** Python and JavaScript use identical hashing algorithm (same salt: "birdle-salt-2025")
+- **Utility Usage:** Use RetryUtils for all network operations (don't implement custom retry logic). Use StorageUtils for all localStorage access (includes error handling and QuotaExceededError detection).
+- **Hash Consistency:** Python and JavaScript use identical hashing algorithm (same salt: "birdle-salt-2025"). DO NOT modify hash implementation without updating both languages.
 - **State Migration:** Game state supports automatic migration from old format to version 2
 - **Multi-Region:** Each region-date combination is independent (e.g., "us-2025-12-27", "eu-2025-12-27")
 - **Deterministic:** Answer options generated with seeded randomness for consistency
