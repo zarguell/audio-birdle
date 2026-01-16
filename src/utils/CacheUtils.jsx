@@ -8,6 +8,7 @@ import {
   checkDataFileUpdate,
   storeDataFileVersion,
 } from "./versionUtils";
+import { isStorageAvailable } from "./StorageUtils";
 
 const DATA_FILES = [
   "/data/regions.json",
@@ -24,21 +25,6 @@ const DATA_FILES = [
  */
 const logError = (prefix, error) => {
   console.error(`${prefix}:`, error);
-};
-
-/**
- * Check if localStorage is accessible
- * @returns {boolean}
- */
-const isLocalStorageAvailable = () => {
-  try {
-    const testKey = "__storage_test__";
-    localStorage.setItem(testKey, "test");
-    localStorage.removeItem(testKey);
-    return true;
-  } catch {
-    return false;
-  }
 };
 
 /**
@@ -109,7 +95,7 @@ export const storeVersionInfo = (response) =>
 export const storeDailyJsonVersionInfo = (response) => {
   storeDataFileVersion(response, STORAGE_KEYS.DAILY_JSON_LAST_MODIFIED, STORAGE_KEYS.DAILY_JSON_ETAG);
 
-  if (isLocalStorageAvailable()) {
+  if (isStorageAvailable()) {
     const today = new Date().toISOString().split("T")[0];
     localStorage.setItem(STORAGE_KEYS.LAST_VALIDATED_DATE, today);
   }
@@ -140,7 +126,7 @@ export const checkBirdsJsonUpdate = async () =>
  * @returns {boolean} True if date has changed or no previous validation exists
  */
 export const hasDateChanged = () => {
-  if (!isLocalStorageAvailable()) {
+  if (!isStorageAvailable()) {
     return true;
   }
 
