@@ -9,6 +9,7 @@
 This document establishes integration testing patterns for the Audio-Birdle codebase. Research focused on Vitest integration testing capabilities, existing test patterns in the codebase, and best practices for testing module interactions without full browser environment.
 
 **Key Findings:**
+
 - Vitest provides excellent integration testing support with jsdom environment
 - Existing integration tests follow good patterns but lack comprehensive coverage
 - Fixture strategy needed for common test scenarios (game states, bird data)
@@ -39,6 +40,7 @@ tests/
 ### Recommended Integration Test Organization
 
 **By Feature (Preferred):**
+
 ```
 tests/integration/
 ├── game-flow/               # Complete game workflows
@@ -59,6 +61,7 @@ tests/integration/
 ```
 
 **By Module (Alternative):**
+
 ```
 tests/integration/
 ├── game-logic-integration.test.jsx
@@ -80,48 +83,48 @@ tests/integration/
 ### Using Vitest `test.extend()` for Reusable Fixtures
 
 ```javascript
-import { test as base } from 'vitest'
-import { getStorage, setStorage, removeStorage } from '@/utils/StorageUtils'
+import { test as base } from "vitest";
+import { getStorage, setStorage, removeStorage } from "@/utils/StorageUtils";
 
 // Create custom test context with fixtures
 const test = base.extend({
   // Clear localStorage before each test
   clearStorage: async ({}, use) => {
-    const keys = Object.keys(localStorage)
-    keys.forEach(key => removeStorage(key))
-    await use()
+    const keys = Object.keys(localStorage);
+    keys.forEach((key) => removeStorage(key));
+    await use();
   },
 
   // Create test game state
   gameState: async ({}, use) => {
-    const state = createTestGameState()
-    await use(state)
+    const state = createTestGameState();
+    await use(state);
   },
 
   // Create test bird data
   testBird: async ({}, use) => {
-    const bird = createTestBird()
-    await use(bird)
-  }
-})
+    const bird = createTestBird();
+    await use(bird);
+  },
+});
 
-test.use(clearStorage)
+test.use(clearStorage);
 
-test('should load and save game state', async ({ gameState, testBird }) => {
+test("should load and save game state", async ({ gameState, testBird }) => {
   // Test using fixtures
-  gameState.dailyGames['us-2025-01-16'] = {
-    region: 'us',
-    date: '2025-01-16',
+  gameState.dailyGames["us-2025-01-16"] = {
+    region: "us",
+    date: "2025-01-16",
     guesses: [],
     completed: false,
-    won: false
-  }
+    won: false,
+  };
 
-  setStorage('audio-birdle-game-state', gameState)
-  const loaded = getStorage('audio-birdle-game-state')
+  setStorage("audio-birdle-game-state", gameState);
+  const loaded = getStorage("audio-birdle-game-state");
 
-  expect(loaded).toEqual(gameState)
-})
+  expect(loaded).toEqual(gameState);
+});
 ```
 
 ### Factory Functions for Test Data
@@ -139,121 +142,124 @@ function createTestGameState(overrides = {}) {
       currentStreak: 0,
       maxStreak: 0,
       averageGuesses: 0,
-      regionStats: {}
+      regionStats: {},
     },
     lastPlayed: null,
-    ...overrides
-  }
+    ...overrides,
+  };
 }
 
 // Bird Data Factory
 function createTestBird(overrides = {}) {
   return {
-    id: 'testbird',
-    name: 'Test Bird',
-    scientificName: 'Testus birdus',
-    order: 'Passeriformes',
-    family: 'Testidae',
-    audioUrl: ['http://example.com/audio.mp3'],
-    ...overrides
-  }
+    id: "testbird",
+    name: "Test Bird",
+    scientificName: "Testus birdus",
+    order: "Passeriformes",
+    family: "Testidae",
+    audioUrl: ["http://example.com/audio.mp3"],
+    ...overrides,
+  };
 }
 
 // Region Data Factory
 function createTestRegion(overrides = {}) {
   return {
-    code: 'test',
-    name: 'Test Region',
-    subregions: ['test-sub-1', 'test-sub-2'],
-    ...overrides
-  }
+    code: "test",
+    name: "Test Region",
+    subregions: ["test-sub-1", "test-sub-2"],
+    ...overrides,
+  };
 }
 
 // Daily Entry Factory
 function createDailyEntry(overrides = {}) {
   return {
-    date: '2025-01-16',
-    region: 'us',
-    answerHash: 'a1b2c3d4',
-    ...overrides
-  }
+    date: "2025-01-16",
+    region: "us",
+    answerHash: "a1b2c3d4",
+    ...overrides,
+  };
 }
 
 // Completed Game Factory
 function createCompletedGame(won = true, guesses = 1, overrides = {}) {
   return {
-    region: 'us',
-    date: '2025-01-16',
+    region: "us",
+    date: "2025-01-16",
     guesses: Array.from({ length: guesses }, (_, i) => ({
-      birdId: won && i === guesses - 1 ? 'correct' : `wrong-${i}`,
+      birdId: won && i === guesses - 1 ? "correct" : `wrong-${i}`,
       correct: won && i === guesses - 1,
-      timestamp: Date.now() - (guesses - i) * 1000
+      timestamp: Date.now() - (guesses - i) * 1000,
     })),
     completed: true,
     won,
     maxGuesses: 4,
-    ...overrides
-  }
+    ...overrides,
+  };
 }
 ```
 
 ### Setup/Teardown Patterns
 
 ```javascript
-import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
+import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 
-describe('Game Flow Integration', () => {
-  let mockLocalStorage
+describe("Game Flow Integration", () => {
+  let mockLocalStorage;
 
   beforeEach(() => {
     // Setup: Create fresh mock localStorage
     mockLocalStorage = {
       storage: {},
       getItem(key) {
-        return this.storage[key] || null
+        return this.storage[key] || null;
       },
       setItem(key, value) {
-        this.storage[key] = value
+        this.storage[key] = value;
       },
       removeItem(key) {
-        delete this.storage[key]
+        delete this.storage[key];
       },
       clear() {
-        this.storage = {}
-      }
-    }
+        this.storage = {};
+      },
+    };
 
     // Stub browser APIs
-    vi.stubGlobal('localStorage', mockLocalStorage)
-    vi.stubGlobal('Audio', vi.fn(() => ({
-      play: vi.fn().mockResolvedValue(undefined),
-      pause: vi.fn(),
-      load: vi.fn()
-    })))
+    vi.stubGlobal("localStorage", mockLocalStorage);
+    vi.stubGlobal(
+      "Audio",
+      vi.fn(() => ({
+        play: vi.fn().mockResolvedValue(undefined),
+        pause: vi.fn(),
+        load: vi.fn(),
+      })),
+    );
 
     // Stub fetch for data loading tests
-    vi.stubGlobal('fetch', vi.fn())
-  })
+    vi.stubGlobal("fetch", vi.fn());
+  });
 
   afterEach(() => {
     // Cleanup: Remove mocks
-    vi.unstubAllGlobals()
-    mockLocalStorage.clear()
-  })
+    vi.unstubAllGlobals();
+    mockLocalStorage.clear();
+  });
 
-  it('should process complete game flow', async () => {
+  it("should process complete game flow", async () => {
     // Test using setup mocks
-    const gameState = createTestGameState()
-    setStorage('audio-birdle-game-state', gameState)
+    const gameState = createTestGameState();
+    setStorage("audio-birdle-game-state", gameState);
 
     // Perform game actions
     // ... test logic
 
     // Verify state persisted
-    const persisted = getStorage('audio-birdle-game-state')
-    expect(persisted).toBeDefined()
-  })
-})
+    const persisted = getStorage("audio-birdle-game-state");
+    expect(persisted).toBeDefined();
+  });
+});
 ```
 
 ## 3. Mocking Strategy
@@ -261,6 +267,7 @@ describe('Game Flow Integration', () => {
 ### When to Mock vs Real Implementations
 
 **Mock When:**
+
 - External dependencies (fetch API, browser localStorage, Audio API)
 - Network operations (eBird API calls, JSON file downloads)
 - Browser APIs (matchMedia, service workers)
@@ -268,6 +275,7 @@ describe('Game Flow Integration', () => {
 - File system operations (for Python tests)
 
 **Use Real Implementations When:**
+
 - Business logic functions (GameLogic, TaxonomyUtils, etc.)
 - Data transformation utilities
 - State management logic (Zustand stores)
@@ -279,49 +287,52 @@ describe('Game Flow Integration', () => {
 // Mock localStorage
 const mockLocalStorage = {
   storage: {},
-  getItem: vi.fn(function(key) {
-    return this.storage[key] || null
+  getItem: vi.fn(function (key) {
+    return this.storage[key] || null;
   }),
-  setItem: vi.fn(function(key, value) {
-    this.storage[key] = String(value)
+  setItem: vi.fn(function (key, value) {
+    this.storage[key] = String(value);
   }),
-  removeItem: vi.fn(function(key) {
-    delete this.storage[key]
+  removeItem: vi.fn(function (key) {
+    delete this.storage[key];
   }),
-  clear: vi.fn(function() {
-    this.storage = {}
-  })
-}
+  clear: vi.fn(function () {
+    this.storage = {};
+  }),
+};
 
-vi.stubGlobal('localStorage', mockLocalStorage)
+vi.stubGlobal("localStorage", mockLocalStorage);
 
 // Mock Audio API
 class MockAudio {
   constructor() {
-    this.play = vi.fn().mockResolvedValue(undefined)
-    this.pause = vi.fn()
-    this.load = vi.fn()
-    this.currentTime = 0
-    this.duration = 10
-    this.paused = true
-    this.ended = false
-    this.src = ''
+    this.play = vi.fn().mockResolvedValue(undefined);
+    this.pause = vi.fn();
+    this.load = vi.fn();
+    this.currentTime = 0;
+    this.duration = 10;
+    this.paused = true;
+    this.ended = false;
+    this.src = "";
   }
 }
 
-vi.stubGlobal('Audio', MockAudio)
+vi.stubGlobal("Audio", MockAudio);
 
 // Mock matchMedia
-vi.stubGlobal('matchMedia', vi.fn(() => ({
-  matches: false,
-  media: '',
-  onchange: null,
-  addListener: vi.fn(),
-  removeListener: vi.fn(),
-  addEventListener: vi.fn(),
-  removeEventListener: vi.fn(),
-  dispatchEvent: vi.fn()
-})))
+vi.stubGlobal(
+  "matchMedia",
+  vi.fn(() => ({
+    matches: false,
+    media: "",
+    onchange: null,
+    addListener: vi.fn(),
+    removeListener: vi.fn(),
+    addEventListener: vi.fn(),
+    removeEventListener: vi.fn(),
+    dispatchEvent: vi.fn(),
+  })),
+);
 ```
 
 ### Network Mocking with vi.stubGlobal
@@ -329,65 +340,65 @@ vi.stubGlobal('matchMedia', vi.fn(() => ({
 ```javascript
 // Mock fetch for JSON data loading
 beforeEach(() => {
-  vi.stubGlobal('fetch', vi.fn())
-})
+  vi.stubGlobal("fetch", vi.fn());
+});
 
 afterEach(() => {
-  vi.unstubAllGlobals()
-})
+  vi.unstubAllGlobals();
+});
 
-test('should load game data from JSON', async () => {
+test("should load game data from JSON", async () => {
   const mockBirds = {
-    us: [createTestBird({ id: 'test1', name: 'Test Bird 1' })]
-  }
+    us: [createTestBird({ id: "test1", name: "Test Bird 1" })],
+  };
 
   global.fetch.mockResolvedValue({
     ok: true,
-    json: async () => mockBirds
-  })
+    json: async () => mockBirds,
+  });
 
-  const data = await loadGameData('us')
-  expect(data).toEqual(mockBirds)
-})
+  const data = await loadGameData("us");
+  expect(data).toEqual(mockBirds);
+});
 
-test('should handle fetch errors with retry', async () => {
+test("should handle fetch errors with retry", async () => {
   global.fetch
-    .mockRejectedValueOnce(new Error('Network error'))
-    .mockRejectedValueOnce(new Error('Network error'))
+    .mockRejectedValueOnce(new Error("Network error"))
+    .mockRejectedValueOnce(new Error("Network error"))
     .mockResolvedValueOnce({
       ok: true,
-      json: async () => ({ us: [] })
-    })
+      json: async () => ({ us: [] }),
+    });
 
-  const data = await loadGameData('us')
-  expect(global.fetch).toHaveBeenCalledTimes(3)
-  expect(data).toEqual({ us: [] })
-})
+  const data = await loadGameData("us");
+  expect(global.fetch).toHaveBeenCalledTimes(3);
+  expect(data).toEqual({ us: [] });
+});
 ```
 
 ### Module Mocking with vi.mock()
 
 ```javascript
 // Mock utility module
-vi.mock('@/utils/StorageUtils', () => ({
+vi.mock("@/utils/StorageUtils", () => ({
   getStorage: vi.fn((key, defaultValue) => defaultValue),
   setStorage: vi.fn(),
   removeStorage: vi.fn(),
-  isStorageAvailable: vi.fn(() => true)
-}))
+  isStorageAvailable: vi.fn(() => true),
+}));
 
 // Mock Zustand store
-vi.mock('@/stores/normalGameStore', () => ({
-  useNormalGameStore: vi.fn()
-}))
+vi.mock("@/stores/normalGameStore", () => ({
+  useNormalGameStore: vi.fn(),
+}));
 
 // Test uses mocked implementation
-test('should call storage utilities', () => {
-  const { getStorage, setStorage } = require('@/utils/StorageUtils')
+test("should call storage utilities", () => {
+  const { getStorage, setStorage } = require("@/utils/StorageUtils");
 
-  getStorage('test-key', 'default')
-  expect(getStorage).toHaveBeenCalledWith('test-key', 'default')
-})
+  getStorage("test-key", "default");
+  expect(getStorage).toHaveBeenCalledWith("test-key", "default");
+});
 ```
 
 ### MSW (Mock Service Worker) for API Mocking
@@ -395,6 +406,7 @@ test('should call storage utilities', () => {
 **Recommendation:** MSW is overkill for this codebase. Use vi.stubGlobal for fetch mocking instead.
 
 **Rationale:**
+
 - This codebase doesn't make external API calls at runtime (data is pre-fetched as JSON)
 - Network mocking is limited to JSON file loading
 - vi.stubGlobal provides sufficient control for integration tests
@@ -405,172 +417,187 @@ test('should call storage utilities', () => {
 ### Pattern 1: Testing Complete Workflows
 
 ```javascript
-test('should complete full daily game flow', async () => {
+test("should complete full daily game flow", async () => {
   // Arrange: Setup initial state
-  const gameState = createTestGameState()
-  const testBird = createTestBird({ id: 'amerob', name: 'American Robin' })
-  const dailyEntry = createDailyEntry({ answerHash: hashBirdId('amerob') })
+  const gameState = createTestGameState();
+  const testBird = createTestBird({ id: "amerob", name: "American Robin" });
+  const dailyEntry = createDailyEntry({ answerHash: hashBirdId("amerob") });
 
   // Act: Load daily bird
-  setStorage('audio-birdle-game-state', gameState)
-  const dailyBirdId = getDailyBirdId(dailyEntry, [testBird])
+  setStorage("audio-birdle-game-state", gameState);
+  const dailyBirdId = getDailyBirdId(dailyEntry, [testBird]);
 
-  expect(dailyBirdId).toBe('amerob')
+  expect(dailyBirdId).toBe("amerob");
 
   // Act: Process incorrect guess
-  let updatedState = processGuess(gameState, 'us', '2025-01-16', 'wrong-bird', 'amerob')
-  expect(updatedState.dailyGames['us-2025-01-16'].guesses).toHaveLength(1)
-  expect(updatedState.dailyGames['us-2025-01-16'].won).toBe(false)
+  let updatedState = processGuess(
+    gameState,
+    "us",
+    "2025-01-16",
+    "wrong-bird",
+    "amerob",
+  );
+  expect(updatedState.dailyGames["us-2025-01-16"].guesses).toHaveLength(1);
+  expect(updatedState.dailyGames["us-2025-01-16"].won).toBe(false);
 
   // Act: Process correct guess
-  updatedState = processGuess(updatedState, 'us', '2025-01-16', 'amerob', 'amerob')
-  expect(updatedState.dailyGames['us-2025-01-16'].won).toBe(true)
-  expect(updatedState.dailyGames['us-2025-01-16'].completed).toBe(true)
+  updatedState = processGuess(
+    updatedState,
+    "us",
+    "2025-01-16",
+    "amerob",
+    "amerob",
+  );
+  expect(updatedState.dailyGames["us-2025-01-16"].won).toBe(true);
+  expect(updatedState.dailyGames["us-2025-01-16"].completed).toBe(true);
 
   // Assert: Verify stats updated
-  expect(updatedState.stats.totalGamesPlayed).toBe(1)
-  expect(updatedState.stats.totalGamesWon).toBe(1)
-  expect(updatedState.stats.currentStreak).toBe(1)
-})
+  expect(updatedState.stats.totalGamesPlayed).toBe(1);
+  expect(updatedState.stats.totalGamesWon).toBe(1);
+  expect(updatedState.stats.currentStreak).toBe(1);
+});
 ```
 
 ### Pattern 2: Testing State Persistence and Migrations
 
 ```javascript
-test('should migrate v1 state to v2 format', () => {
+test("should migrate v1 state to v2 format", () => {
   // Arrange: Create v1 state (old format)
   const v1State = {
-    currentRegion: 'us',
+    currentRegion: "us",
     gameState: {
-      guesses: [{ birdId: 'test', correct: true, timestamp: Date.now() }],
+      guesses: [{ birdId: "test", correct: true, timestamp: Date.now() }],
       completed: true,
-      won: true
+      won: true,
     },
     stats: {
       played: 10,
-      won: 5
-    }
-  }
+      won: 5,
+    },
+  };
 
-  setStorage('game-state', v1State)
+  setStorage("game-state", v1State);
 
   // Act: Load and migrate
-  const loadedData = getStorage('game-state')
-  const migratedState = ensureGameStateFormat(loadedData)
+  const loadedData = getStorage("game-state");
+  const migratedState = ensureGameStateFormat(loadedData);
 
   // Assert: Verify migration
-  expect(migratedState.version).toBe(2)
-  expect(migratedState.dailyGames).toBeDefined()
-  expect(migratedState.stats).toBeDefined()
-  expect(migratedState.lastPlayed).toBeDefined()
-})
+  expect(migratedState.version).toBe(2);
+  expect(migratedState.dailyGames).toBeDefined();
+  expect(migratedState.stats).toBeDefined();
+  expect(migratedState.lastPlayed).toBeDefined();
+});
 
-test('should preserve data during migration', () => {
+test("should preserve data during migration", () => {
   const v1State = {
-    currentRegion: 'eu',
+    currentRegion: "eu",
     gameState: {
-      guesses: [{ birdId: 'test', correct: true, timestamp: Date.now() }],
+      guesses: [{ birdId: "test", correct: true, timestamp: Date.now() }],
       completed: true,
-      won: true
+      won: true,
     },
     stats: {
       played: 20,
-      won: 15
-    }
-  }
+      won: 15,
+    },
+  };
 
-  setStorage('game-state', v1State)
+  setStorage("game-state", v1State);
 
-  const loadedData = getStorage('game-state')
-  const migratedState = ensureGameStateFormat(loadedData)
+  const loadedData = getStorage("game-state");
+  const migratedState = ensureGameStateFormat(loadedData);
 
   // Verify stats preserved
-  expect(migratedState.stats.totalGamesPlayed).toBeGreaterThan(0)
-  expect(migratedState.stats.totalGamesWon).toBeGreaterThan(0)
-})
+  expect(migratedState.stats.totalGamesPlayed).toBeGreaterThan(0);
+  expect(migratedState.stats.totalGamesWon).toBeGreaterThan(0);
+});
 ```
 
 ### Pattern 3: Testing Error Scenarios and Recovery
 
 ```javascript
-test('should handle network failures with retry', async () => {
+test("should handle network failures with retry", async () => {
   // Arrange: Mock fetch failures then success
   global.fetch
-    .mockRejectedValueOnce(new Error('Network error'))
-    .mockRejectedValueOnce(new Error('Network error'))
+    .mockRejectedValueOnce(new Error("Network error"))
+    .mockRejectedValueOnce(new Error("Network error"))
     .mockResolvedValueOnce({
       ok: true,
-      json: async () => ({ us: [createTestBird()] })
-    })
+      json: async () => ({ us: [createTestBird()] }),
+    });
 
   // Act: Load data with retry
-  const data = await loadGameData('us')
+  const data = await loadGameData("us");
 
   // Assert: Verify retry and success
-  expect(global.fetch).toHaveBeenCalledTimes(3)
-  expect(data.us).toHaveLength(1)
-})
+  expect(global.fetch).toHaveBeenCalledTimes(3);
+  expect(data.us).toHaveLength(1);
+});
 
-test('should handle localStorage quota exceeded', () => {
+test("should handle localStorage quota exceeded", () => {
   // Arrange: Mock quota exceeded error
   const mockLocalStorage = {
     storage: {},
     setItem: vi.fn((key, value) => {
-      if (key === 'large-key') {
-        throw new DOMException('QuotaExceededError', 'QuotaExceededError')
+      if (key === "large-key") {
+        throw new DOMException("QuotaExceededError", "QuotaExceededError");
       }
-      this.storage[key] = value
+      this.storage[key] = value;
     }),
     getItem: vi.fn(),
-    removeItem: vi.fn()
-  }
+    removeItem: vi.fn(),
+  };
 
-  vi.stubGlobal('localStorage', mockLocalStorage)
+  vi.stubGlobal("localStorage", mockLocalStorage);
 
   // Act: Try to save large data
   expect(() => {
-    setStorage('large-key', 'x'.repeat(10000000))
-  }).not.toThrow()
+    setStorage("large-key", "x".repeat(10000000));
+  }).not.toThrow();
 
   // Assert: Verify graceful degradation
-  expect(mockLocalStorage.setItem).toHaveBeenCalled()
-})
+  expect(mockLocalStorage.setItem).toHaveBeenCalled();
+});
 ```
 
 ### Pattern 4: Testing Cross-Module Interactions
 
 ```javascript
-test('should integrate LoadGameData with CacheUtils', async () => {
+test("should integrate LoadGameData with CacheUtils", async () => {
   // Arrange: Mock fetch with fresh data
-  const freshData = { us: [createTestBird({ id: 'new-bird' })] }
+  const freshData = { us: [createTestBird({ id: "new-bird" })] };
   global.fetch.mockResolvedValue({
     ok: true,
-    json: async () => freshData
-  })
+    json: async () => freshData,
+  });
 
   // Act: Load game data (triggers cache validation)
-  const data = await loadGameData('us', true) // Force refresh
+  const data = await loadGameData("us", true); // Force refresh
 
   // Assert: Verify data loaded and cache updated
-  expect(data).toEqual(freshData)
-  expect(global.fetch).toHaveBeenCalledWith('/data/birds.json', expect.any(Object))
-})
+  expect(data).toEqual(freshData);
+  expect(global.fetch).toHaveBeenCalledWith(
+    "/data/birds.json",
+    expect.any(Object),
+  );
+});
 
-test('should integrate GameLogic with Zustand stores', () => {
+test("should integrate GameLogic with Zustand stores", () => {
   // Arrange: Setup store state
-  const { setDailyGame, processGuess } = useNormalGameStore.getState()
-  const testBird = createTestBird()
+  const { setDailyGame, processGuess } = useNormalGameStore.getState();
+  const testBird = createTestBird();
 
-  setDailyGame('us', '2025-01-16', testBird)
+  setDailyGame("us", "2025-01-16", testBird);
 
   // Act: Process guess through store
-  processGuess('us', '2025-01-16', 'wrong-bird', testBird.id)
+  processGuess("us", "2025-01-16", "wrong-bird", testBird.id);
 
   // Assert: Verify store updated
-  const game = useNormalGameStore.getState().dailyGames['us-2025-01-16']
-  expect(game.guesses).toHaveLength(1)
-  expect(game.guesses[0].correct).toBe(false)
-})
+  const game = useNormalGameStore.getState().dailyGames["us-2025-01-16"];
+  expect(game.guesses).toHaveLength(1);
+  expect(game.guesses[0].correct).toBe(false);
+});
 ```
 
 ## 5. Coverage Gaps Analysis
@@ -578,6 +605,7 @@ test('should integrate GameLogic with Zustand stores', () => {
 ### Current Integration Test Coverage
 
 **Existing Integration Tests:**
+
 1. `game-flow.test.jsx` - Game state management and persistence (257 lines)
 2. `hash-consistency.test.js` - Python/JS hash consistency (4,149 bytes)
 3. `test_data_pipeline_integration.py` - Data pipeline validation (10,477 bytes)
@@ -689,18 +717,18 @@ test('should integrate GameLogic with Zustand stores', () => {
 
 ### Prioritized Gap Summary
 
-| Priority | Gap Area | Test Scenarios | Impact |
-|----------|----------|----------------|---------|
-| CRITICAL | Audio Playback Integration | 4 scenarios | Audio failures, dead URL tracking |
-| CRITICAL | Store Interactions | 4 scenarios | State persistence, migrations, cross-store consistency |
-| HIGH | Network Error Scenarios | 4 scenarios | Network resilience, retry behavior |
-| HIGH | Storage Error Scenarios | 4 scenarios | Storage error handling, data loss risk |
-| MEDIUM | Data Loading with Cache | 4 scenarios | Cache validation, stale data |
-| MEDIUM | Daily Bird Selection | 4 scenarios | Fallback logic, hash failures |
-| MEDIUM | State Migration | 4 scenarios | Migration success, data loss risk |
-| MEDIUM | Hard Mode Integration | 4 scenarios | Hard mode specific features |
-| LOW | Practice Mode Integration | 3 scenarios | Unlimited rounds, no persistence |
-| LOW | Cross-Mode State Consistency | 3 scenarios | Stats separation, isolation |
+| Priority | Gap Area                     | Test Scenarios | Impact                                                 |
+| -------- | ---------------------------- | -------------- | ------------------------------------------------------ |
+| CRITICAL | Audio Playback Integration   | 4 scenarios    | Audio failures, dead URL tracking                      |
+| CRITICAL | Store Interactions           | 4 scenarios    | State persistence, migrations, cross-store consistency |
+| HIGH     | Network Error Scenarios      | 4 scenarios    | Network resilience, retry behavior                     |
+| HIGH     | Storage Error Scenarios      | 4 scenarios    | Storage error handling, data loss risk                 |
+| MEDIUM   | Data Loading with Cache      | 4 scenarios    | Cache validation, stale data                           |
+| MEDIUM   | Daily Bird Selection         | 4 scenarios    | Fallback logic, hash failures                          |
+| MEDIUM   | State Migration              | 4 scenarios    | Migration success, data loss risk                      |
+| MEDIUM   | Hard Mode Integration        | 4 scenarios    | Hard mode specific features                            |
+| LOW      | Practice Mode Integration    | 3 scenarios    | Unlimited rounds, no persistence                       |
+| LOW      | Cross-Mode State Consistency | 3 scenarios    | Stats separation, isolation                            |
 
 ## 6. Anti-Patterns to Avoid
 
@@ -708,80 +736,98 @@ test('should integrate GameLogic with Zustand stores', () => {
 
 ```javascript
 // BAD: Tests internal implementation
-test('should set guesses array', () => {
-  gameState.dailyGames['us-2025-01-16'].guesses = []
-  expect(gameState.dailyGames['us-2025-01-16'].guesses).toEqual([])
-})
+test("should set guesses array", () => {
+  gameState.dailyGames["us-2025-01-16"].guesses = [];
+  expect(gameState.dailyGames["us-2025-01-16"].guesses).toEqual([]);
+});
 
 // GOOD: Tests observable behavior
-test('should record guess when user makes selection', () => {
-  const result = processGuess(gameState, 'us', '2025-01-16', 'bird-id', 'correct-id')
-  expect(result.dailyGames['us-2025-01-16'].guesses).toHaveLength(1)
-})
+test("should record guess when user makes selection", () => {
+  const result = processGuess(
+    gameState,
+    "us",
+    "2025-01-16",
+    "bird-id",
+    "correct-id",
+  );
+  expect(result.dailyGames["us-2025-01-16"].guesses).toHaveLength(1);
+});
 ```
 
 ### Anti-Pattern 2: Over-Mocking
 
 ```javascript
 // BAD: Mocks everything, tests nothing real
-vi.mock('@/utils/GameLogic')
-vi.mock('@/utils/StorageUtils')
-vi.mock('@/utils/DailyBirdUtils')
+vi.mock("@/utils/GameLogic");
+vi.mock("@/utils/StorageUtils");
+vi.mock("@/utils/DailyBirdUtils");
 
-test('should call game logic', () => {
-  processGuess()
-  expect(GameLogic.processGuess).toHaveBeenCalled()
-})
+test("should call game logic", () => {
+  processGuess();
+  expect(GameLogic.processGuess).toHaveBeenCalled();
+});
 
 // GOOD: Mocks only external dependencies
-vi.stubGlobal('localStorage', mockLocalStorage)
+vi.stubGlobal("localStorage", mockLocalStorage);
 
-test('should process guess and update state', () => {
-  const result = processGuess(gameState, 'us', '2025-01-16', 'bird-id', 'correct-id')
-  expect(result.dailyGames['us-2025-01-16'].won).toBe(true)
-})
+test("should process guess and update state", () => {
+  const result = processGuess(
+    gameState,
+    "us",
+    "2025-01-16",
+    "bird-id",
+    "correct-id",
+  );
+  expect(result.dailyGames["us-2025-01-16"].won).toBe(true);
+});
 ```
 
 ### Anti-Pattern 3: Testing Multiple Things in One Test
 
 ```javascript
 // BAD: Tests too many things
-test('should do everything', () => {
+test("should do everything", () => {
   // Tests loading, processing, persistence, stats, migration...
-  expect(1).toBe(1)
-})
+  expect(1).toBe(1);
+});
 
 // GOOD: One assertion per test
-test('should load daily bird data', () => {
-  const bird = loadDailyBirdData('us', '2025-01-16')
-  expect(bird).toBeDefined()
-})
+test("should load daily bird data", () => {
+  const bird = loadDailyBirdData("us", "2025-01-16");
+  expect(bird).toBeDefined();
+});
 
-test('should process guess correctly', () => {
-  const result = processGuess(gameState, 'us', '2025-01-16', 'bird-id', 'correct-id')
-  expect(result.dailyGames['us-2025-01-16'].won).toBe(true)
-})
+test("should process guess correctly", () => {
+  const result = processGuess(
+    gameState,
+    "us",
+    "2025-01-16",
+    "bird-id",
+    "correct-id",
+  );
+  expect(result.dailyGames["us-2025-01-16"].won).toBe(true);
+});
 ```
 
 ### Anti-Pattern 4: Brittle Time-Based Tests
 
 ```javascript
 // BAD: Depends on system time
-test('should set timestamp', () => {
-  const guess = { birdId: 'test', correct: true, timestamp: Date.now() }
-  expect(guess.timestamp).toBeCloseTo(Date.now(), -3)
-})
+test("should set timestamp", () => {
+  const guess = { birdId: "test", correct: true, timestamp: Date.now() };
+  expect(guess.timestamp).toBeCloseTo(Date.now(), -3);
+});
 
 // GOOD: Control time in tests
-test('should set timestamp', () => {
-  vi.useFakeTimers()
-  vi.setSystemTime(1000000)
+test("should set timestamp", () => {
+  vi.useFakeTimers();
+  vi.setSystemTime(1000000);
 
-  const guess = { birdId: 'test', correct: true, timestamp: Date.now() }
-  expect(guess.timestamp).toBe(1000000)
+  const guess = { birdId: "test", correct: true, timestamp: Date.now() };
+  expect(guess.timestamp).toBe(1000000);
 
-  vi.useRealTimers()
-})
+  vi.useRealTimers();
+});
 ```
 
 ## 7. Recommendations for Plans 02-05
@@ -881,6 +927,6 @@ Priority order based on gap analysis:
 
 ---
 
-*Discovery Document: Phase 5 Plan 01*
-*Integration Testing Research and Recommendations*
-*2026-01-16*
+_Discovery Document: Phase 5 Plan 01_
+_Integration Testing Research and Recommendations_
+_2026-01-16_

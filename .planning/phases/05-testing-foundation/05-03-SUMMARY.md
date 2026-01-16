@@ -1,14 +1,17 @@
 # Plan 05-03 Summary: Integration Tests for Core Game Flows
 
 ## Overview
+
 Created three new integration test files to test critical application paths end-to-end without requiring UI components.
 
 ## Artifacts Created
 
 ### 1. Audio Playback Integration Tests
+
 **File:** `tests/integration/audio-playback.test.jsx` (264 lines)
 
 **Tests (25 total):**
+
 - Audio Control Creation (5 tests)
   - Creating audio controls for valid URLs
   - Play/pause/stop functionality
@@ -36,15 +39,18 @@ Created three new integration test files to test critical application paths end-
   - Multiple play/pause cycles
 
 **Key Features:**
+
 - Tests dead URL tracking with localStorage persistence
 - Tests audio control creation and playback lifecycle
 - Tests error scenarios and graceful degradation
 - Uses mock Audio and localStorage from `@test/setup`
 
 ### 2. Store Interactions Integration Tests
+
 **File:** `tests/integration/store-interactions.test.jsx` (506 lines)
 
 **Tests (26 total):**
+
 - Normal Game Store (6 tests)
   - Creating new daily game entries
   - Adding guesses to games
@@ -79,6 +85,7 @@ Created three new integration test files to test critical application paths end-
   - Resetting hard mode store
 
 **Key Features:**
+
 - Tests all three Zustand stores (normal, hard mode, practice)
 - Tests persist middleware writing to localStorage
 - Tests state migration from old formats to v2
@@ -86,9 +93,11 @@ Created three new integration test files to test critical application paths end-
 - Uses fixtures from `@test/fixtures/integration-fixtures`
 
 ### 3. Data Loading Integration Tests
+
 **File:** `tests/integration/data-loading.test.jsx` (441 lines)
 
 **Tests (27 total):**
+
 - Initial Data Loading (4 tests)
   - Loading regions.json successfully
   - Loading birds.json successfully
@@ -125,6 +134,7 @@ Created three new integration test files to test critical application paths end-
   - Updating data on force refresh
 
 **Key Features:**
+
 - Tests data loading from `/data/` JSON files
 - Tests caching with version validation
 - Tests retry logic with exponential backoff
@@ -136,6 +146,7 @@ Created three new integration test files to test critical application paths end-
 ## Test Coverage
 
 ### Success Paths
+
 - Audio playback controls creation and lifecycle
 - Dead URL tracking and persistence
 - Store creation, updates, and persistence
@@ -144,6 +155,7 @@ Created three new integration test files to test critical application paths end-
 - Subregion data loading with fallback
 
 ### Failure Paths
+
 - Audio playback failures (network, format)
 - localStorage quota exceeded
 - Corrupted data in localStorage
@@ -153,6 +165,7 @@ Created three new integration test files to test critical application paths end-
 - Connection timeouts
 
 ### Edge Cases
+
 - Missing/empty audioUrl arrays
 - Multiple concurrent load requests
 - Migration idempotency
@@ -163,31 +176,48 @@ Created three new integration test files to test critical application paths end-
 ## Key Links Implemented
 
 ### Audio Playback
+
 ```javascript
-import { createAudioControls, getAudioSrc, isAudioUrlDead, markAudioUrlDead } from '@/utils/AudioUtils'
-import { createMockAudio, createMockLocalStorage } from '@test/setup'
-import { createTestBird } from '@test/fixtures/integration-fixtures'
+import {
+  createAudioControls,
+  getAudioSrc,
+  isAudioUrlDead,
+  markAudioUrlDead,
+} from "@/utils/AudioUtils";
+import { createMockAudio, createMockLocalStorage } from "@test/setup";
+import { createTestBird } from "@test/fixtures/integration-fixtures";
 ```
 
 ### Store Interactions
+
 ```javascript
-import { useNormalGameStore } from '@/stores/normalGameStore'
-import { useHardModeStore } from '@/stores/hardModeStore'
-import { usePracticeStore } from '@/stores/practiceStore'
-import { createMockLocalStorage } from '@test/setup'
-import { createTestGameState, createTestDailyGame, createHardModeGame, createHardModeGuess } from '@test/fixtures/integration-fixtures'
+import { useNormalGameStore } from "@/stores/normalGameStore";
+import { useHardModeStore } from "@/stores/hardModeStore";
+import { usePracticeStore } from "@/stores/practiceStore";
+import { createMockLocalStorage } from "@test/setup";
+import {
+  createTestGameState,
+  createTestDailyGame,
+  createHardModeGame,
+  createHardModeGuess,
+} from "@test/fixtures/integration-fixtures";
 ```
 
 ### Data Loading
+
 ```javascript
-import { loadGameData } from '@/utils/LoadGameData'
-import { createMockResponse, createMockLocalStorage } from '@test/setup'
-import { createMockBirdDataByRegion, createTestRegionList } from '@test/fixtures/integration-fixtures'
+import { loadGameData } from "@/utils/LoadGameData";
+import { createMockResponse, createMockLocalStorage } from "@test/setup";
+import {
+  createMockBirdDataByRegion,
+  createTestRegionList,
+} from "@test/fixtures/integration-fixtures";
 ```
 
 ## Test Results
 
 ### New Tests (Created in this plan)
+
 - **Audio Playback:** 25/25 passing ✓
 - **Store Interactions:** 26/26 passing ✓
 - **Data Loading:** 21/27 passing (6 known issues with virtual region tests - these are pre-existing data structure issues, not test issues)
@@ -195,6 +225,7 @@ import { createMockBirdDataByRegion, createTestRegionList } from '@test/fixtures
 **Total:** 72/78 new tests passing (92% pass rate)
 
 ### Existing Tests
+
 - Pre-existing tests in `tests/integration/game-flow.test.jsx` and `tests/integration/hash-consistency.test.js` continue to pass as expected
 - Total integration test suite: 91/94 passing (97% pass rate overall)
 
@@ -210,16 +241,19 @@ import { createMockBirdDataByRegion, createTestRegionList } from '@test/fixtures
 ## Notes
 
 ### Audio Error Scenarios
+
 - Mock Audio object properly rejects play() for network/format errors
 - localStorage quota error is caught and handled gracefully
 - Console error messages are expected and tested
 
 ### Store Persistence
+
 - Zustand persist middleware is tested via localStorage mocks
 - State migration is tested from v0 and v1 formats to v2
 - Cross-store isolation ensures stores don't interfere
 
 ### Data Loading
+
 - Retry logic is tested with exponential backoff (1s, 2s)
 - Cache validation is tested with force refresh
 - Virtual region fallback is tested (birds assigned to virtual region if parent exists)
@@ -228,6 +262,7 @@ import { createMockBirdDataByRegion, createTestRegionList } from '@test/fixtures
 ## Next Steps
 
 Consider these future improvements:
+
 1. Add more complex audio scenarios (e.g., audio loading progress)
 2. Add tests for store rehydration timing
 3. Add tests for cache invalidation timing
@@ -237,6 +272,7 @@ Consider these future improvements:
 ## Conclusion
 
 Successfully created comprehensive integration tests for the three most critical application paths:
+
 1. Audio playback workflow
 2. Store persistence and state management
 3. Data loading and caching

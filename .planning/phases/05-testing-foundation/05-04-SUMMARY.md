@@ -20,6 +20,7 @@ Created comprehensive integration tests for error scenarios and network failures
 **Test Coverage (33 tests across 6 categories):**
 
 #### Empty Data Tests (5 tests)
+
 - Empty birds.json array
 - Empty regions.json array
 - Daily.json with no entries for current date
@@ -27,6 +28,7 @@ Created comprehensive integration tests for error scenarios and network failures
 - Game state with no games played
 
 #### Malformed Data Tests (5 tests)
+
 - Malformed JSON (invalid syntax)
 - Birds with missing required fields
 - Invalid hash format in daily.json
@@ -34,6 +36,7 @@ Created comprehensive integration tests for error scenarios and network failures
 - Birds.json with non-object data
 
 #### Boundary Condition Tests (7 tests)
+
 - Game with exactly 0 guesses
 - Game with exactly MAX_GUESSES guesses
 - Game with more than MAX_GUESSES guesses (edge case)
@@ -43,6 +46,7 @@ Created comprehensive integration tests for error scenarios and network failures
 - Hash lookup with null parameters
 
 #### Storage Error Tests (6 tests)
+
 - localStorage.getItem throwing exception
 - localStorage.setItem with quota exceeded
 - localStorage.setItem throwing SecurityError
@@ -51,6 +55,7 @@ Created comprehensive integration tests for error scenarios and network failures
 - Circular references in storage data
 
 #### Daily Bird Fallback Tests (5 tests)
+
 - Fallback when hash lookup fails (no match)
 - Daily.json with missing required fields
 - Duplicate hash (collision handling)
@@ -58,6 +63,7 @@ Created comprehensive integration tests for error scenarios and network failures
 - Daily.json with non-array data
 
 #### Game State Edge Cases (5 tests)
+
 - Missing dailyGames in state
 - Missing hardModeGames in state
 - Perfect game (all guesses correct)
@@ -71,46 +77,54 @@ Created comprehensive integration tests for error scenarios and network failures
 **Test Coverage (34 tests across 7 categories):**
 
 #### Retry Logic Tests (8 tests)
+
 - Retry on network error (ENOTFOUND)
 - Retry on HTTP 500, 502, 503, 504 errors
 - Retry behavior on 404, 401, 403 errors
 - Error after all retries exhausted
 
 #### Exponential Backoff Tests (4 tests)
+
 - Delay increases with each retry (100ms → 200ms → 400ms)
 - Custom baseDelay configuration
 - Custom maxRetries configuration
 - Max total delay doesn't exceed reasonable limit
 
 #### Timeout Tests (3 tests)
+
 - Fetch timeout handling with retry
 - No retry on success even with timeout
 - Custom timeout configuration
 
 #### Recovery Tests (4 tests)
+
 - Success after initial failure + retry
 - Success after multiple retries
 - Graceful degradation when unavailable
 - Recovery with mixed error types
 
 #### Concurrent Request Tests (3 tests)
+
 - Multiple concurrent requests with retry
 - Error isolation between requests
 - No race conditions in retry logic
 
 #### Audio URL Failure Tests (4 tests)
+
 - Audio playback with network error
 - Fallback to next URL in array
 - Tracking all failed URLs
 - Handling when all URLs fail
 
 #### RetryWithBackoff Generic Tests (4 tests)
+
 - Retry any async operation
 - Pass context to error messages
 - Success on first try (no retry)
 - LoadGameData with network failures
 
 #### LoadGameData Network Tests (4 tests)
+
 - Regions.json fetch failure
 - Birds.json fetch failure after regions success
 - Recovery from intermittent errors
@@ -119,6 +133,7 @@ Created comprehensive integration tests for error scenarios and network failures
 ## Test Results
 
 ✅ **All 67 integration tests passing**
+
 - 33 tests in error-scenarios.test.jsx
 - 34 tests in network-failures.test.jsx
 
@@ -138,14 +153,15 @@ To test exponential backoff without slowing down tests, `setTimeout` was mocked 
 
 ```javascript
 global.setTimeout = vi.fn((fn, delay) => {
-  setTimeoutCalls.push({ delay, fn })
-  return realSetTimeout(fn, 0)
-})
+  setTimeoutCalls.push({ delay, fn });
+  return realSetTimeout(fn, 0);
+});
 ```
 
 ### Storage Error Simulation
 
 Tests simulate various storage failure modes:
+
 - `QuotaExceededError` for quota limit
 - `SecurityError` for access violations
 - Circular references for JSON.stringify failures
@@ -172,6 +188,7 @@ Tests simulate various storage failure modes:
 ## Integration with Existing Tests
 
 The new tests integrate seamlessly with the existing test suite:
+
 - Uses shared fixtures from `tests/fixtures/integration-fixtures.jsx`
 - Follows patterns from existing integration tests (game-flow, hash-consistency)
 - Compatible with Vitest configuration and mocking setup
@@ -186,6 +203,7 @@ The tests verify the **actual** behavior of `RetryUtils.jsx`, which currently re
 ### Future Enhancements
 
 If needed, the retry logic could be enhanced to:
+
 - Distinguish between retryable (5xx, network) and non-retryable (4xx) errors
 - Add jitter to backoff delays
 - Implement circuit breaker pattern for cascading failures
@@ -193,6 +211,7 @@ If needed, the retry logic could be enhanced to:
 ### Code Coverage
 
 These tests significantly improve coverage for:
+
 - `src/utils/RetryUtils.jsx` - All retry scenarios
 - `src/utils/StorageUtils.jsx` - All error handling paths
 - `src/utils/DailyBirdUtils.jsx` - Fallback behavior
@@ -206,6 +225,7 @@ These tests significantly improve coverage for:
 ## Next Steps
 
 This completes the testing foundation phase. Subsequent phases can build on this robust test infrastructure to add:
+
 - Component testing with React Testing Library
 - E2E testing with Playwright/Cypress
 - Performance testing

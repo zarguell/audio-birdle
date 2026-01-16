@@ -4,10 +4,12 @@
 **Based on:** 06-02-SEVERITY-MATRIX.md
 
 ## Sprint 1: Critical Fixes (Plan 07-01)
+
 **Estimated Time:** 30-45 minutes
 **Success Criteria:** All critical tests passing, no crashes
 
 ### 1. [BUG-001] Fix getUserPerformanceSummary crash on undefined averageGuesses
+
 - **File:** `src/utils/GameLogic.jsx`
 - **Error:** `TypeError: Cannot read properties of undefined (reading 'toFixed')`
 - **Line:** 713
@@ -25,6 +27,7 @@
   - `should include region breakdown`
 
 ### 2. [BUG-002] Fix getDailyBird returning undefined
+
 - **File:** `src/utils/GameLogic.jsx`
 - **Error:** `expected undefined to be defined`
 - **Lines:** 316-325
@@ -39,10 +42,12 @@
   - `should return different birds for different dates`
 
 ## Sprint 2: Major Fixes (Plan 07-02)
+
 **Estimated Time:** 60-90 minutes
 **Success Criteria:** All major tests passing, state tracking working correctly
 
 ### 3. [BUG-003] Fix version info storage - ETag header quote mismatch
+
 - **File:** `src/utils/versionUtils.js` (or wherever storeDataFileVersion is defined)
 - **Error:** `expected "Wed, 15 Jan 2025 12:00:00 GMT"` but got `"\"Wed, 15 Jan 2025 12:00:00 GMT\""`
 - **Impact:** Version tracking fails to store correct ETag values
@@ -56,6 +61,7 @@
   - `should store birds.json version info`
 
 ### 4. [BUG-004] Fix hasDateChanged crash on invalid localStorage data
+
 - **File:** `src/utils/StorageUtils.jsx` OR `src/utils/CacheUtils.jsx`
 - **Error:** `SyntaxError: Unexpected non-whitespace character after JSON at position 4`
 - **Impact:** Date comparison crashes on invalid localStorage data
@@ -68,6 +74,7 @@
   - `should return false if date is same`
 
 ### 5. [BUG-005] Fix processGuess returning wrong bird ID
+
 - **File:** `src/utils/GameLogic.jsx` OR `src/stores/normalGameStore.ts`
 - **Error:** `expected 'barswa' to be 'amerob'` - guess stored with wrong ID
 - **Impact:** Incorrect guess data stored, affects game state
@@ -84,6 +91,7 @@
   - `should process incorrect guess in hard mode` (hard mode)
 
 ### 6. [BUG-006] Fix game completion status tracking
+
 - **File:** `src/stores/normalGameStore.ts` OR `src/stores/hardModeStore.ts`
 - **Error:** `expected false to be true` - completed/won status wrong
 - **Impact:** Game completion tracking broken
@@ -96,6 +104,7 @@
   - `should complete game after max hard mode guesses (6)` (hard mode)
 
 ### 7. [BUG-007] Fix streak not resetting on loss
+
 - **File:** `src/stores/normalGameStore.ts` OR `src/stores/hardModeStore.ts`
 - **Error:** `expected 0 to be 1` - streak increments on loss
 - **Impact:** Streak tracking broken
@@ -108,6 +117,7 @@
   - `should reset hard mode streak on loss` (hard mode)
 
 ### 8. [BUG-008] Fix lastPlayed not set in hard mode
+
 - **File:** `src/stores/hardModeStore.ts`
 - **Error:** `expected undefined to deeply equal { region: 'us', ... }`
 - **Impact:** lastPlayed tracking missing in hard mode
@@ -119,6 +129,7 @@
   - `should set lastPlayed with mode: hard`
 
 ### 9. [BUG-009] Fix taxonomic score calculation
+
 - **File:** `src/utils/TaxonomyUtils.jsx` OR `src/stores/hardModeStore.ts`
 - **Error:** `expected false to be true` - score calculation wrong
 - **Impact:** Hard mode feedback incorrect
@@ -130,6 +141,7 @@
   - `should calculate taxonomic score correctly`
 
 ### 10. [BUG-010] Fix hasPlayedHardModeRegionDate incorrect true
+
 - **File:** `src/utils/GameLogic.jsx` OR `src/stores/hardModeStore.ts`
 - **Error:** Returns true for unplayed games
 - **Impact:** Hard mode play tracking broken
@@ -141,6 +153,7 @@
   - `should return false for unplayed hard mode game`
 
 ### 11. [BUG-011] Fix hasCompletedNormalMode incorrect true
+
 - **File:** `src/utils/GameLogic.jsx` OR `src/stores/normalGameStore.ts`
 - **Error:** Returns true for incomplete games
 - **Impact:** Normal mode completion tracking broken
@@ -152,6 +165,7 @@
   - `should return false for incomplete normal mode game`
 
 ### 12. [BUG-012] Fix hasCompletedHardMode incorrect true
+
 - **File:** `src/utils/GameLogic.jsx` OR `src/stores/hardModeStore.ts`
 - **Error:** Returns true for incomplete games
 - **Impact:** Hard mode completion tracking broken
@@ -163,10 +177,12 @@
   - `should return false for incomplete hard mode game`
 
 ## Sprint 3: Minor Fixes (Plan 07-03)
+
 **Estimated Time:** 30-45 minutes
 **Success Criteria:** All minor tests passing, edge cases handled
 
 ### 13. [BUG-013] Fix integration test state persistence
+
 - **File:** `tests/integration/game-flow.test.jsx`
 - **Error:** `Game us-2025-01-15 not found` after creation
 - **Impact:** Integration tests failing
@@ -180,6 +196,7 @@
   - `should calculate performance summary correctly`
 
 ### 14. [BUG-014] Fix deterministic bird selection edge case
+
 - **File:** `src/utils/GameLogic.jsx`
 - **Error:** `expected [ { id: 'amerob', ... }, ... ] to include undefined`
 - **Impact:** Different dates may return same bird (rare edge case)
@@ -191,6 +208,7 @@
   - `should return different birds for different dates`
 
 ### 15. [BUG-015] Fix hardModeGames initialization edge case
+
 - **File:** `src/utils/GameLogic.jsx`
 - **Error:** `expected undefined to be defined`
 - **Impact:** Rare edge case when hardModeGames object is missing
@@ -202,10 +220,12 @@
   - `should initialize hardModeGames object if missing`
 
 ## Sprint 4: Test Infrastructure & Quality (Plan 07-03)
+
 **Estimated Time:** 30-45 minutes
 **Success Criteria:** Clean test output, no lint errors
 
 ### 16. [INF-001] Fix service worker mock
+
 - **File:** `tests/setup.js` OR test helper
 - **Error:** `TypeError: Cannot read properties of undefined (reading 'getRegistration')`
 - **Impact:** Service worker tests erroring (but passing)
@@ -214,6 +234,7 @@
 - **Dependencies:** None
 
 ### 17-19. [INF-002, INF-003] Suppress expected error logs
+
 - **File:** `tests/unit/utils/CacheUtils.test.jsx`
 - **Error:** Error logging in tests for expected error conditions
 - **Impact:** Test output noisy
@@ -222,6 +243,7 @@
 - **Dependencies:** INF-001
 
 ### 20-32. [QLTY-001 through QLTY-013] Clean up linting errors
+
 - **Files:** Multiple test files and src files
 - **Error:** Unused imports, variables, empty blocks
 - **Impact:** Code quality
@@ -230,42 +252,50 @@
 - **Dependencies:** None
 
 ## Sprint 5: Documentation (Plan 07-03)
+
 **Estimated Time:** 20-30 minutes
 **Success Criteria:** Documentation complete and accurate
 
 ### 33. [DOC-001] Document RetryUtils usage patterns
+
 - **Files:** `src/utils/RetryUtils.jsx`, AGENTS.md
 - **Gap:** Missing examples for retryWithBackoff()
 - **Content:** Add usage examples to AGENTS.md
 - **Estimate:** Quick (10-15 min)
 
 ### 34. [DOC-002] Document StorageUtils API
+
 - **Files:** `src/utils/StorageUtils.jsx`, AGENTS.md
 - **Gap:** Missing examples for new utility functions
 - **Content:** Add API documentation with examples
 - **Estimate:** Quick (10-15 min)
 
 ### 35. [DOC-003] Document store patterns
+
 - **Files:** `src/stores/*.ts`, AGENTS.md
 - **Gap:** Missing usage examples for Zustand stores
 - **Content:** Add store usage patterns and examples
 - **Estimate:** Quick (10-15 min)
 
 ## Sprint 6: Final Validation (Plan 07-04)
+
 **Estimated Time:** 20 minutes
 **Success Criteria:** 100% test pass rate, clean build
 
 ### 36. Run full test suite
+
 - **Command:** `npm test -- --run`
 - **Success:** All 531 tests passing
 - **Estimate:** 5 minutes
 
 ### 37. Run linting
+
 - **Command:** `npm run lint`
 - **Success:** No errors or warnings
 - **Estimate:** 2 minutes
 
 ### 38. Run build
+
 - **Command:** `npm run build`
 - **Success:** Clean build with no errors
 - **Estimate:** 2 minutes
@@ -276,6 +306,7 @@
 **Total Estimated Time:** 4-5 hours
 
 **By Priority:**
+
 - P0 (Critical): 2 issues, 30 min
 - P1 (Major): 10 issues, 90 min
 - P2 (Infrastructure): 3 issues, 30 min
@@ -285,6 +316,7 @@
 - Validation: 3 tasks, 10 min
 
 **By Sprint:**
+
 - Sprint 1 (Critical): 30-45 min
 - Sprint 2 (Major): 60-90 min
 - Sprint 3 (Minor): 30-45 min

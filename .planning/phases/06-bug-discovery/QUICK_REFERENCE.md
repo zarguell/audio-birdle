@@ -6,11 +6,11 @@
 
 ## Phase 6 Plans at a Glance
 
-| Plan | Duration | Objective | Deliverables |
-|------|----------|-----------|--------------|
-| 06-01 | ~30 min | Run full test suite | 06-01-FINDINGS.md |
-| 06-02 | ~40 min | Categorize issues | Severity matrix, bug list, strategy |
-| 06-03 | ~30 min | Create bug tracking | Bug tracker, verification checklist |
+| Plan  | Duration | Objective           | Deliverables                        |
+| ----- | -------- | ------------------- | ----------------------------------- |
+| 06-01 | ~30 min  | Run full test suite | 06-01-FINDINGS.md                   |
+| 06-02 | ~40 min  | Categorize issues   | Severity matrix, bug list, strategy |
+| 06-03 | ~30 min  | Create bug tracking | Bug tracker, verification checklist |
 
 ## Execution Order
 
@@ -21,6 +21,7 @@
 ## Quick Start: Plan 06-01
 
 **Commands to run:**
+
 ```bash
 # JavaScript tests with coverage
 npm run test:coverage
@@ -37,6 +38,7 @@ npm run build
 ```
 
 **What to collect:**
+
 - Total test counts (passing/failing)
 - Error messages for each failure
 - Coverage percentages (if available)
@@ -49,16 +51,17 @@ npm run build
 
 **Total:** 24 known failures
 
-| Category | Count | Files | Priority |
-|----------|-------|-------|----------|
-| Integration Tests | 3 | game-flow.test.jsx | Low |
-| GameLogic Tests | 15 | GameLogic.test.jsx | Low |
-| AudioUtils Tests | 3 | AudioUtils.test.jsx | Medium |
-| DailyBirdUtils Tests | 3 | DailyBirdUtils.test.jsx | High |
+| Category             | Count | Files                   | Priority |
+| -------------------- | ----- | ----------------------- | -------- |
+| Integration Tests    | 3     | game-flow.test.jsx      | Low      |
+| GameLogic Tests      | 15    | GameLogic.test.jsx      | Low      |
+| AudioUtils Tests     | 3     | AudioUtils.test.jsx     | Medium   |
+| DailyBirdUtils Tests | 3     | DailyBirdUtils.test.jsx | High     |
 
 ## Quick Start: Plan 06-02
 
 **Categories to use:**
+
 1. **Critical** - Breaks core functionality (data loading, game play)
 2. **Major** - Important features affected (has workarounds)
 3. **Minor** - Edge cases, cosmetic issues
@@ -66,6 +69,7 @@ npm run build
 5. **Quality** - Linting, code smells
 
 **Deliverables:**
+
 - `06-02-SEVERITY-MATRIX.md` - Bugs categorized by severity
 - `06-02-BUG-LIST.md` - Prioritized bug list
 - `06-02-STRATEGY.md` - Phase 7 strategy
@@ -73,11 +77,13 @@ npm run build
 ## Quick Start: Plan 06-03
 
 **What to create:**
+
 - `06-03-BUG-TRACKER.md` - Track all bugs with status
 - `06-03-VERIFICATION.md` - Phase 7 verification checklist
 - `06-03-WORKFLOW.md` - Bug fix process documentation
 
 **Status codes:**
+
 - 🔴 Open - Discovered, not assigned
 - 🟡 Assigned - Assigned to Phase 7 plan
 - 🟢 In Progress - Currently being fixed
@@ -88,21 +94,25 @@ npm run build
 ## Phase 7 Plan Assignments
 
 **Plan 07-01 (Critical Fixes):**
+
 - HTTP error handling in DailyBirdUtils
 - Data loading bugs
 - Core game functionality issues
 
 **Plan 07-02 (Major + Minor Fixes):**
+
 - localStorage mocking issues
 - GameLogic edge cases
 - Integration test failures
 
 **Plan 07-03 (Documentation + Quality):**
+
 - Utility usage documentation (RetryUtils, StorageUtils, HashUtils)
 - Code quality issues
 - Linting cleanup
 
 **Plan 07-04 (Final Validation):**
+
 - Full test suite verification
 - Build verification
 - Manual game flow testing
@@ -110,6 +120,7 @@ npm run build
 ## Success Criteria
 
 Phase 6 is complete when:
+
 - ✅ All test suites executed (JS unit/integration, Python)
 - ✅ All failures categorized by severity
 - ✅ Prioritized bug list created
@@ -121,17 +132,20 @@ Phase 6 is complete when:
 ## Expected Outcomes
 
 **Test Results:**
+
 - Current: 503/531 passing (94.7%)
 - Known failures: 24 tests
 - Document all failures with specific error messages
 
 **Bug Categorization:**
+
 - Critical: 3-6 bugs (data loading, HTTP errors)
 - Major: 3-6 bugs (test infrastructure)
 - Minor: 8-12 bugs (edge cases)
 - Documentation: 5-8 gaps
 
 **Phase 7 Ready:**
+
 - All bugs assigned to specific plans
 - Effort estimates for each bug
 - Clear verification criteria
@@ -140,31 +154,35 @@ Phase 6 is complete when:
 ## Files to Create
 
 **Plan 06-01:**
+
 - `06-01-FINDINGS.md` - Test results
 
 **Plan 06-02:**
+
 - `06-02-SEVERITY-MATRIX.md` - Severity categorization
 - `06-02-BUG-LIST.md` - Prioritized bug list
 - `06-02-STRATEGY.md` - Fix strategy
 
 **Plan 06-03:**
+
 - `06-03-BUG-TRACKER.md` - Bug tracking spreadsheet
 - `06-03-VERIFICATION.md` - Verification checklist
 - `06-03-WORKFLOW.md` - Fix process documentation
 
 **Summary:**
+
 - `SUMMARY.md` - Phase 6 overview (already created)
 
 ## Time Tracking
 
 Track time spent on each plan for velocity metrics:
 
-| Plan | Estimate | Actual | Notes |
-|------|----------|--------|-------|
-| 06-01 | 30 min | ___ | ___ |
-| 06-02 | 40 min | ___ | ___ |
-| 06-03 | 30 min | ___ | ___ |
-| **Total** | **100 min** | **___** | **___** |
+| Plan      | Estimate    | Actual     | Notes      |
+| --------- | ----------- | ---------- | ---------- |
+| 06-01     | 30 min      | \_\_\_     | \_\_\_     |
+| 06-02     | 40 min      | \_\_\_     | \_\_\_     |
+| 06-03     | 30 min      | \_\_\_     | \_\_\_     |
+| **Total** | **100 min** | **\_\_\_** | **\_\_\_** |
 
 ## Next Steps After Phase 6
 

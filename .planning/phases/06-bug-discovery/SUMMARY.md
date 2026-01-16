@@ -15,6 +15,7 @@ Phase 6 focuses on discovering and categorizing bugs in the refactored codebase.
 **Objective:** Execute comprehensive test suite (JS unit/integration + Python) and document all failures, warnings, and issues.
 
 **Tasks:**
+
 1. Run JavaScript test suite with coverage (`npm run test:coverage`)
 2. Run Python test suite (`pytest tests/ -v`)
 3. Run linting and build verification (`npm run lint && npm run build`)
@@ -22,12 +23,14 @@ Phase 6 focuses on discovering and categorizing bugs in the refactored codebase.
 5. Document all findings in `06-01-FINDINGS.md`
 
 **Deliverables:**
+
 - Test results document with specific error messages
 - Coverage report (if available)
 - Linting and build verification results
 - Known failures verified and documented
 
 **Success Criteria:**
+
 - All test suites executed
 - Test results documented with error messages
 - Linting/build verification completed
@@ -38,6 +41,7 @@ Phase 6 focuses on discovering and categorizing bugs in the refactored codebase.
 **Objective:** Analyze all test failures and code quality issues, categorize by severity, and create prioritized bug list.
 
 **Tasks:**
+
 1. Analyze test failures by category (critical/major/minor/infrastructure/quality)
 2. Create severity matrix with impact assessments and effort estimates
 3. Create prioritized bug list mapped to Phase 7 plans
@@ -45,11 +49,13 @@ Phase 6 focuses on discovering and categorizing bugs in the refactored codebase.
 5. Create fix strategy summary for Phase 7
 
 **Deliverables:**
+
 - `06-02-SEVERITY-MATRIX.md` - Categorized bug list by severity
 - `06-02-BUG-LIST.md` - Prioritized bug list with estimates
 - `06-02-STRATEGY.md` - Phase 7 fix strategy outline
 
 **Success Criteria:**
+
 - All test failures analyzed and categorized
 - Severity matrix created
 - Prioritized bug list ready
@@ -61,6 +67,7 @@ Phase 6 focuses on discovering and categorizing bugs in the refactored codebase.
 **Objective:** Create systematic bug tracking for Phase 6 and Phase 7, ensuring all issues are tracked and verifiable.
 
 **Tasks:**
+
 1. Create bug tracker spreadsheet/document (`06-03-BUG-TRACKER.md`)
 2. Create Phase 7 plan assignments for all bugs
 3. Create verification checklist for Phase 7 (`06-03-VERIFICATION.md`)
@@ -68,12 +75,14 @@ Phase 6 focuses on discovering and categorizing bugs in the refactored codebase.
 5. Update project state (`STATE.md`)
 
 **Deliverables:**
+
 - `06-03-BUG-TRACKER.md` - Systematic bug tracking with status
 - `06-03-VERIFICATION.md` - Comprehensive verification checklist
 - `06-03-WORKFLOW.md` - Bug fix process documentation
 - Updated `STATE.md` with Phase 6 completion
 
 **Success Criteria:**
+
 - Bug tracker created with all discovered issues
 - All bugs assigned to Phase 7 plans (07-01, 07-02, 07-03)
 - Verification checklist created
@@ -83,24 +92,28 @@ Phase 6 focuses on discovering and categorizing bugs in the refactored codebase.
 ## Known Test Failures from Phase 5
 
 **Integration Tests (3 failures):**
+
 - Location: `tests/integration/game-flow.test.jsx`
 - Description: Edge cases in game flow testing
 - Acceptable: Yes (98.1% pass rate acceptable)
 - Impact: Does not affect app functionality
 
 **GameLogic Tests (15 failures):**
+
 - Location: `tests/unit/utils/GameLogic.test.jsx`
 - Description: Edge cases in hybrid store/state approach
 - Acceptable: Yes (70.6% pass rate meets threshold)
 - Impact: Edge cases, not core game functionality
 
 **AudioUtils Tests (3 failures):**
+
 - Location: `tests/unit/utils/AudioUtils.test.jsx`
 - Description: localStorage mocking issues
 - Acceptable: No (mocking infrastructure issue)
 - Impact: Tests fail due to mock setup, not code bugs
 
 **DailyBirdUtils Tests (3 failures):**
+
 - Location: `tests/unit/utils/DailyBirdUtils.test.jsx`
 - Description: HTTP error handling bugs
 - Acceptable: No (error handling issue)
@@ -143,16 +156,19 @@ Phase 6 focuses on discovering and categorizing bugs in the refactored codebase.
 ## Expected Test Results After Phase 6
 
 **Current (Phase 5 completion):**
+
 - JavaScript: 503/531 passing (94.7%)
 - Integration: 158/161 passing (98.1%)
 - Python: All tests passing
 
 **After Phase 6 (discovery):**
+
 - Document all 24 known failures with specific error messages
 - Categorize by severity (critical/major/minor/infrastructure)
 - Create prioritized bug list for Phase 7
 
 **After Phase 7 (bug fixes):**
+
 - Target: >97% test pass rate (515/531+ passing)
 - Target: 100% integration tests passing (161/161)
 - Target: All critical bugs fixed
@@ -162,6 +178,7 @@ Phase 6 focuses on discovering and categorizing bugs in the refactored codebase.
 ## Success Metrics
 
 Phase 6 is successful when:
+
 - All test suites executed and documented
 - All bugs categorized by severity and impact
 - Prioritized bug list created with effort estimates

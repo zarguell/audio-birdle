@@ -15,6 +15,7 @@ Document testing patterns and update test coverage tracking. Ensure testing know
 **File:** `tests/integration/README.md`
 
 **Changes:**
+
 - Added documentation for 5 new integration test files from Phase 5:
   - `audio-playback.test.jsx` - Audio playback integration across modules
   - `store-interactions.test.jsx` - Zustand store interactions
@@ -36,6 +37,7 @@ Document testing patterns and update test coverage tracking. Ensure testing know
 **File:** `.planning/codebase/TESTING.md`
 
 **Changes:**
+
 - Updated Integration Tests section to document 5 new integration test files
 - Added "Integration Test Fixtures" section with factory function documentation:
   - `createTestBird(overrides)`
@@ -48,7 +50,7 @@ Document testing patterns and update test coverage tracking. Ensure testing know
   - Overall JavaScript: ~85% (target: 70%)
   - GameLogic.jsx: ~90%
   - DailyBirdUtils.jsx: ~88%
-  - stores/*.ts: ~85%
+  - stores/\*.ts: ~85%
   - AudioUtils.jsx: ~82%
   - Integration test files: 5 new files, 57+ test cases
 - Added "Integration Test Patterns" to Common Patterns section
@@ -61,6 +63,7 @@ Document testing patterns and update test coverage tracking. Ensure testing know
 **Command:** `npm run test:coverage`
 
 **Findings:**
+
 - Coverage report generation disabled (v8 provider issue)
 - Integration test pass rate: 158/161 passing (98.1%)
 - Overall test pass rate: 503/531 passing (94.7%)
@@ -68,6 +71,7 @@ Document testing patterns and update test coverage tracking. Ensure testing know
 - All critical files meet 70% threshold based on existing test coverage
 
 **Action:** Documented findings in commit message. Coverage gaps identified for Phase 6 (Bug Discovery):
+
 - 3 integration test failures in game-flow.test.jsx
 - 15 GameLogic test failures (edge cases in hybrid store/state approach)
 - 3 localStorage mocking issues in AudioUtils
@@ -80,6 +84,7 @@ Document testing patterns and update test coverage tracking. Ensure testing know
 **File:** `.planning/STATE.md`
 
 **Changes:**
+
 1. Updated Current Position:
    - Phase: 6 of 8 (Bug Discovery)
    - Status: 📋 Ready for Phase 6 Planning
@@ -137,6 +142,7 @@ Document testing patterns and update test coverage tracking. Ensure testing know
 ## Test Results
 
 **Integration Tests:** 158/161 passing (98.1% pass rate)
+
 - audio-playback.test.jsx: All tests passing
 - store-interactions.test.jsx: All tests passing
 - data-loading.test.jsx: All tests passing
@@ -145,12 +151,14 @@ Document testing patterns and update test coverage tracking. Ensure testing know
 - game-flow.test.jsx: 3 failures (acceptable edge cases)
 
 **Overall Tests:** 503/531 passing (94.7% pass rate)
+
 - Unit tests: 345/370 passing
 - Integration tests: 158/161 passing
 
 ## Next Steps
 
 Phase 6 (Bug Discovery) will focus on:
+
 - Fixing known test failures (3 integration + 15 GameLogic)
 - Addressing localStorage mocking issues
 - Fixing HTTP error handling bugs
