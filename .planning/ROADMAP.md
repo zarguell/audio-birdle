@@ -1,23 +1,29 @@
-# Roadmap: Audio-Birdle Refactor
+# Roadmap: Audio-Birdle Bug Fix Investigation
 
 ## Overview
 
-Incremental refactor of the Audio-Birdle codebase to improve maintainability and reduce complexity. Each phase delivers a complete, testable improvement while maintaining backward compatibility and ensuring all 157 existing tests continue to pass.
+Comprehensive investigation and bug fixing to restore core functionality of the Audio-Birdle app. The app currently doesn't work in development mode - users cannot select a region, choose game mode, or play the game successfully. This roadmap focuses on identifying and fixing these critical issues through hands-on debugging and validation.
 
 ## Domain Expertise
 
-None (general React/JavaScript refactor using established patterns)
+None
 
 ## Phases
+
+**Phase Numbering:**
+- Integer phases (1, 2, 3): Planned milestone work
+- Decimal phases (2.1, 2.2): Urgent insertions (marked with INSERTED)
+
+Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Foundation** - Setup refactoring infrastructure and validation
 - [x] **Phase 2: State Management** - Introduce Zustand for centralized state
 - [x] **Phase 3: Large File Refactor** - Break down App.jsx and CacheUtils.jsx
 - [x] **Phase 4: Utility Extraction** - Create shared utilities to eliminate duplicates
-- [ ] **Phase 5: Testing Foundation** - Add integration tests and improve coverage
-- [ ] **Phase 6: Bug Discovery** - Run expanded tests to find issues
-- [ ] **Phase 7: Bug Fixes** - Fix issues discovered in testing
-- [ ] **Phase 8: Polish** - Documentation, code quality, validation
+- [x] **Phase 5: Testing Foundation** - Add integration tests and improve coverage
+- [x] **Phase 6: Bug Discovery** - Run expanded tests to find issues
+- [ ] **Phase 7: Critical Bug Investigation** - Hands-on debugging of core app functionality
+- [ ] **Phase 8: Fix Validation** - Verify all fixes and ensure full app functionality
 
 ## Phase Details
 
@@ -101,12 +107,14 @@ Plans:
 
 **Plans**: 5 plans
 
+**Status**: ✅ Complete (2026-01-16)
+
 Plans:
-- [ ] 05-01: Research and establish integration testing patterns
-- [ ] 05-02: Create integration test infrastructure and fixtures
-- [ ] 05-03: Add integration tests for core game flows (load, play, win)
-- [ ] 05-04: Add edge case tests for error scenarios (network failures, bad data)
-- [ ] 05-05: Document testing patterns and update test coverage
+- [x] 05-01: Research and establish integration testing patterns
+- [x] 05-02: Create integration test infrastructure and fixtures
+- [x] 05-03: Add integration tests for core game flows (load, play, win)
+- [x] 05-04: Add edge case tests for error scenarios (network failures, bad data)
+- [x] 05-05: Document testing patterns and update test coverage
 
 ### Phase 6: Bug Discovery
 
@@ -118,41 +126,36 @@ Plans:
 
 **Plans**: 3 plans
 
+**Status**: ✅ Complete (2026-01-16)
+
 Plans:
-- [ ] 06-01: Run full test suite and document failures and warnings
-- [ ] 06-02: Analyze test failures and categorize issues (critical, minor, documentation)
-- [ ] 06-03: Create prioritized bug list with effort estimates
+- [x] 06-01: Run full test suite and document failures and warnings
+- [x] 06-02: Analyze test failures and categorize issues (critical, minor, documentation)
+- [x] 06-03: Create prioritized bug list with effort estimates
 
-### Phase 7: Bug Fixes
-
-**Goal**: Fix issues discovered during testing phase
-
+### Phase 7: Critical Bug Investigation
+**Goal**: Hands-on debugging of core app functionality to identify why the app doesn't work
 **Depends on**: Phase 6 (Bug Discovery)
-
-**Research**: Unlikely (internal code fixes)
-
+**Research**: Likely (debugging techniques, React component lifecycle)
+**Research topics**: React debugging, browser dev tools, component state inspection
 **Plans**: 4 plans
 
 Plans:
-- [ ] 07-01: Fix critical bugs that break game functionality
-- [ ] 07-02: Fix minor bugs and edge case failures
-- [ ] 07-03: Address documentation gaps identified through testing
-- [ ] 07-04: Validate all fixes and ensure full test suite passes
+- [ ] 07-01: Reproduce issues in development environment and document exact failure points
+- [ ] 07-02: Debug region selection and game mode functionality using browser dev tools
+- [ ] 07-03: Investigate bird selection and game progression issues
+- [ ] 07-04: Identify root causes of critical functionality failures
 
-### Phase 8: Polish
-
-**Goal**: Documentation, code quality validation, and final polish
-
-**Depends on**: Phase 7 (Bug Fixes)
-
-**Research**: Unlikely (documentation and cleanup)
-
+### Phase 8: Fix Validation
+**Goal**: Implement fixes for identified issues and verify full app functionality
+**Depends on**: Phase 7 (Critical Bug Investigation)
+**Research**: Unlikely (implementation and testing)
 **Plans**: 3 plans
 
 Plans:
-- [ ] 08-01: Document complex modules (CacheUtils, game logic, state management)
-- [ ] 08-02: Run final code quality checks (linting, coverage, complexity)
-- [ ] 08-03: Validate refactor against requirements and document improvements
+- [ ] 08-01: Implement fixes for critical functionality issues
+- [ ] 08-02: Test all game modes (normal, hard, practice) with different regions
+- [ ] 08-03: Verify deployment and production build still works correctly
 
 ## Progress
 
@@ -165,7 +168,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 | 2. State Management | 4/4 | Complete | 2026-01-16 |
 | 3. Large File Refactor | 5/5 | Complete | 2026-01-16 |
 | 4. Utility Extraction | 4/4 | Complete | 2026-01-16 |
-| 5. Testing Foundation | 0/5 | Not started | - |
-| 6. Bug Discovery | 0/3 | Not started | - |
-| 7. Bug Fixes | 0/4 | Not started | - |
-| 8. Polish | 0/3 | Not started | - |
+| 5. Testing Foundation | 5/5 | Complete | 2026-01-16 |
+| 6. Bug Discovery | 3/3 | Complete | 2026-01-16 |
+| 7. Critical Bug Investigation | 0/4 | Not started | - |
+| 8. Fix Validation | 0/3 | Not started | - |
