@@ -153,10 +153,9 @@ describe("RetryUtils", () => {
         .mockRejectedValueOnce(new Error("Operation failed"))
         .mockResolvedValueOnce("success");
 
-      await retryWithBackoff(operation, { baseDelay: 500 });
-
-      // First attempt fails immediately
+      const promise = retryWithBackoff(operation, { baseDelay: 500 });
       await vi.runAllTimersAsync();
+      await promise;
 
       expect(operation).toHaveBeenCalledTimes(3);
     });
