@@ -374,6 +374,7 @@ def main():
             subregion_bird_ids if selected_subregion else None,
             birds_data,
             region_id,
+            virtual_regions,
         )
 
         if not selected_bird:

@@ -123,6 +123,12 @@
       "id": "sonspa",
       "name": "Song Sparrow",
       "subregion": "Colorado"
+    },
+    {
+      "date": "2026-01-16",
+      "id": "rolhaw",
+      "name": "Rough-legged Hawk",
+      "subregion": "Colorado"
     }
   ],
   "us-lower48": [
@@ -231,6 +237,12 @@
       "id": "graspa",
       "name": "Grasshopper Sparrow",
       "subregion": "South Carolina"
+    },
+    {
+      "date": "2026-01-16",
+      "id": "lewwoo",
+      "name": "Lewis's Woodpecker",
+      "subregion": "Colorado"
     }
   ]
 }
