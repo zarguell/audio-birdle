@@ -3,18 +3,19 @@ from dotenv import load_dotenv
 import requests
 import argparse
 
+
 def fetch_region(region):
     # Get the API key from the environment variable
     load_dotenv()
-    api_key = os.getenv('EBIRD_API_KEY')
+    api_key = os.getenv("EBIRD_API_KEY")
     if not api_key:
-        raise ValueError("API key not found. Please set the EBIRD_API_KEY environment variable.")
+        raise ValueError(
+            "API key not found. Please set the EBIRD_API_KEY environment variable."
+        )
 
     # Define the URL and headers
-    url = 'https://api.ebird.org/v2/product/spplist/'
-    headers = {
-        'X-eBirdApiToken': api_key
-    }
+    url = "https://api.ebird.org/v2/product/spplist/"
+    headers = {"X-eBirdApiToken": api_key}
 
     # Make the request
     response = requests.get(url + region, headers=headers)
@@ -25,16 +26,24 @@ def fetch_region(region):
     else:
         response.raise_for_status()
 
+
 def save_to_file(data, output_file):
-    with open(output_file, 'wb') as f:
+    with open(output_file, "wb") as f:
         f.write(data)
     print(f"Data saved to {output_file}")
 
+
 if __name__ == "__main__":
     # Set up command-line argument parsing
-    parser = argparse.ArgumentParser(description='Fetch eBird data for a specify region.')
-    parser.add_argument('--region', required=True, help='Any location, USFWS region, subnational2, subnational1, country, or custom region code')
-    parser.add_argument('--output', help='File to save the output data.')
+    parser = argparse.ArgumentParser(
+        description="Fetch eBird data for a specify region."
+    )
+    parser.add_argument(
+        "--region",
+        required=True,
+        help="Any location, USFWS region, subnational2, subnational1, country, or custom region code",
+    )
+    parser.add_argument("--output", help="File to save the output data.")
 
     args = parser.parse_args()
 
@@ -46,6 +55,6 @@ if __name__ == "__main__":
         if args.output:
             save_to_file(data, args.output)
         else:
-            print(data.decode('utf-8'))  # Print the data if no output file is specified
+            print(data.decode("utf-8"))  # Print the data if no output file is specified
     except Exception as e:
         print(f"Error: {e}")

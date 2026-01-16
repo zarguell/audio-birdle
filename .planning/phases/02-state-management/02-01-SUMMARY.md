@@ -18,6 +18,7 @@
 ## Decisions Made
 
 **Store Structure Decision**: **Separate stores** (not unified)
+
 - **Rationale**: Each game mode has independent state with different structures
 - **Benefits**: Clear separation, easier testing, better performance, focused changes
 - **Stores**:
@@ -26,18 +27,21 @@
   3. `practiceStore.ts` - Practice mode (not persisted)
 
 **Persistence Approach**: **Zustand persist middleware**
+
 - Uses `persist` middleware with `createJSONStorage`
 - Automatic hydration on page load
 - Built-in migration support via `version` and `migrate` options
 - Storage keys: `audio-birdle-normal-game`, `audio-birdle-hard-mode`
 
 **Migration Strategy**: **Dual-write gradual migration**
+
 - **Phase 1** (Weeks 1-2): Both manual localStorage and Zustand write same data
 - **Phase 2** (After Week 2): Remove manual localStorage code
 - **Zero data loss**: Existing users' progress preserved throughout migration
 - **Rollback safe**: Can revert to manual localStorage if issues arise
 
 **Testing Approach**: **Leverage existing Vitest setup**
+
 - No changes needed to `vitest.config.js` (already has jsdom + localStorage mocks)
 - New tests: Store tests (actions, state updates) + migration tests (v1→v2)
 - Migration testing: Validate old state structure migrates correctly to new format
@@ -49,6 +53,7 @@ None (research phase completed successfully).
 ## Next Step
 
 **Phase 2, Plan 2** — Create Zustand store with game state structure
+
 - Implement `normalGameStore.ts` with persist middleware
 - Implement `hardModeStore.ts` with persist middleware
 - Implement `practiceStore.ts` (no persistence)

@@ -19,18 +19,20 @@ Progress: ████░░░░░░░░░░░░░░ 22%
 ## Performance Metrics
 
 **Velocity:**
+
 - Total plans completed: 5
 - Average duration: ~48 minutes
 - Total execution time: 4.0 hours
 
 **By Phase:**
 
-| Phase | Plans | Total | Avg/Plan |
-|-------|-------|-------|----------|
-| 1. Foundation | 3/3 | ~16min | ~16min |
-| 2. State Management | 1/4 | ~48min | ~48min |
+| Phase               | Plans | Total  | Avg/Plan |
+| ------------------- | ----- | ------ | -------- |
+| 1. Foundation       | 3/3   | ~16min | ~16min   |
+| 2. State Management | 1/4   | ~48min | ~48min   |
 
 **Recent Trend:**
+
 - Last 4 plans: 16min, 12min, 48min, 48min (Plan 1)
 - Trend: Increasing (research tasks taking longer)
 

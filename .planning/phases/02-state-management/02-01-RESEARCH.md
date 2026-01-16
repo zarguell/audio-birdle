@@ -32,6 +32,7 @@ src/stores/
 ### State Shape Examples
 
 **Normal Game Store:**
+
 ```typescript
 {
   dailyGames: {
@@ -60,6 +61,7 @@ src/stores/
 ```
 
 **Hard Mode Store:**
+
 ```typescript
 {
   hardModeGames: {
@@ -88,6 +90,7 @@ src/stores/
 ```
 
 **Practice Store:**
+
 ```typescript
 {
   currentBird: null,
@@ -115,9 +118,10 @@ src/stores/
 **Recommendation**: Use `persist` middleware with `createJSONStorage`
 
 **Configuration**:
+
 ```typescript
-import { create } from 'zustand'
-import { persist, createJSONStorage } from 'zustand/middleware'
+import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
 
 export const useNormalGameStore = create(
   persist(
@@ -125,14 +129,14 @@ export const useNormalGameStore = create(
       // ... state
     }),
     {
-      name: 'audio-birdle-normal-game',
+      name: "audio-birdle-normal-game",
       storage: createJSONStorage(() => localStorage),
-      version: 2,  // Critical for migration support
-      migrate: handleMigration,  // Custom migration function
-      onRehydrateStorage: () => console.log('Store hydrated')
-    }
-  )
-)
+      version: 2, // Critical for migration support
+      migrate: handleMigration, // Custom migration function
+      onRehydrateStorage: () => console.log("Store hydrated"),
+    },
+  ),
+);
 ```
 
 ### Storage Keys
@@ -140,11 +144,13 @@ export const useNormalGameStore = create(
 **Current**: `STORAGE_KEYS.GAME_STATE` → entire state object
 
 **With Zustand**: Automatic with each store:
+
 - `audio-birdle-normal-game`
 - `audio-birdle-hard-mode`
 - Practice store not persisted
 
 **Benefits**:
+
 - Automatic hydration on page load
 - Type-safe storage operations
 - Built-in migration support via `version` and `migrate` options
@@ -158,20 +164,22 @@ export const useNormalGameStore = create(
 **Goal**: Existing users keep their game progress while Zustand is introduced.
 
 **Implementation**:
+
 ```typescript
 // In GameLogic.jsx, add Zustand alongside existing localStorage calls
-import { useNormalGameStore } from '@/stores/normalGameStore'
+import { useNormalGameStore } from "@/stores/normalGameStore";
 
 export const saveGameState = (gameState) => {
   // EXISTING: Keep manual localStorage working
-  setStoredData(STORAGE_KEYS.GAME_STATE, gameState)
+  setStoredData(STORAGE_KEYS.GAME_STATE, gameState);
 
   // NEW: Also write to Zustand
-  useNormalGameStore.getState().setDailyGame(key, game)
-}
+  useNormalGameStore.getState().setDailyGame(key, game);
+};
 ```
 
 **Behavior**:
+
 - Manual localStorage: Works as-is (backward compatibility)
 - Zustand: New storage system (future-proof)
 - Both systems write same data → zero data loss
@@ -181,13 +189,14 @@ export const saveGameState = (gameState) => {
 **Purpose**: Move from version 0 (manual) to version 2 (Zustand)
 
 **Implementation**:
+
 ```typescript
 // In utils/GameLogic.jsx
 export const migrateGameState = (oldState: any) => {
   // Validate old state structure
-  if (!oldState || typeof oldState !== 'object') {
+  if (!oldState || typeof oldState !== "object") {
     // Fresh start - use defaults
-    return getInitialState()
+    return getInitialState();
   }
 
   // Migrate to new version 2 structure
@@ -195,14 +204,14 @@ export const migrateGameState = (oldState: any) => {
     version: 2,
     dailyGames: oldState.dailyGames || {},
     stats: oldState.stats || getDefaultStats(),
-    lastPlayed: oldState.lastPlayed || { region: null, date: null }
-  }
+    lastPlayed: oldState.lastPlayed || { region: null, date: null },
+  };
 
   // Backup old data
-  setStoredData(STORAGE_KEYS.GAME_STATE + '-backup', oldState)
+  setStoredData(STORAGE_KEYS.GAME_STATE + "-backup", oldState);
 
-  return newState
-}
+  return newState;
+};
 ```
 
 **Migration Trigger**: Zustand's `migrate` option calls this when `version < 2`
@@ -210,6 +219,7 @@ export const migrateGameState = (oldState: any) => {
 ### Phase 3: Clean-Up (After Week 2)
 
 **Tasks**:
+
 1. Remove manual `setStoredData(STORAGE_KEYS.GAME_STATE, ...)` calls
 2. Remove `getStoredData(STORAGE_KEYS.GAME_STATE)` calls
 3. Keep `StorageUtils.jsx` only for non-game data (cache etags)
@@ -226,59 +236,69 @@ export const migrateGameState = (oldState: any) => {
 ### New Tests Needed
 
 **Store Tests**:
+
 ```typescript
 // tests/unit/stores/normalGameStore.test.ts
-describe('Normal Game Store', () => {
+describe("Normal Game Store", () => {
   beforeEach(() => {
     // Reset store before each test
     useNormalGameStore.setState({
       dailyGames: {},
       stats: getDefaultStats(),
-      version: 2
-    })
-  })
+      version: 2,
+    });
+  });
 
-  it('should save daily game', () => {
-    const game = { /* game data */ }
-    useNormalGameStore.getState().setDailyGame('us-2025-01-15', game)
+  it("should save daily game", () => {
+    const game = {
+      /* game data */
+    };
+    useNormalGameStore.getState().setDailyGame("us-2025-01-15", game);
 
-    const state = useNormalGameStore.getState()
-    expect(state.dailyGames['us-2025-01-15']).toEqual(game)
-  })
+    const state = useNormalGameStore.getState();
+    expect(state.dailyGames["us-2025-01-15"]).toEqual(game);
+  });
 
-  it('should update stats after winning', () => {
+  it("should update stats after winning", () => {
     // ... test stats update logic
-  })
+  });
 
-  it('should persist to localStorage', () => {
-    const game = { /* game data */ }
-    useNormalGameStore.getState().setDailyGame('us-2025-01-15', game)
+  it("should persist to localStorage", () => {
+    const game = {
+      /* game data */
+    };
+    useNormalGameStore.getState().setDailyGame("us-2025-01-15", game);
 
-    const stored = localStorage.getItem('audio-birdle-normal-game')
-    expect(stored).toBeTruthy()
+    const stored = localStorage.getItem("audio-birdle-normal-game");
+    expect(stored).toBeTruthy();
 
-    const parsed = JSON.parse(stored!)
-    expect(parsed.state.dailyGames['us-2025-01-15']).toEqual(game)
-  })
-})
+    const parsed = JSON.parse(stored!);
+    expect(parsed.state.dailyGames["us-2025-01-15"]).toEqual(game);
+  });
+});
 ```
 
 **Migration Tests**:
+
 ```typescript
 // tests/unit/migrations/gameStateMigration.test.ts
-describe('Game State Migration', () => {
-  it('should migrate v1 to v2', () => {
+describe("Game State Migration", () => {
+  it("should migrate v1 to v2", () => {
     const oldV1State = {
       version: 1,
-      dailyGames: { 'us-2025-01-15': { /* old structure */ } }
-    }
+      dailyGames: {
+        "us-2025-01-15": {
+          /* old structure */
+        },
+      },
+    };
 
-    const migrated = migrateGameState(oldV1State)
+    const migrated = migrateGameState(oldV1State);
 
-    expect(migrated.version).toBe(2)
-    expect(migrated.dailyGames).toBeDefined()
-  })
-})
+    expect(migrated.version).toBe(2);
+    expect(migrated.dailyGames).toBeDefined();
+  });
+});
 ```
 
 ---
@@ -328,6 +348,7 @@ describe('Game State Migration', () => {
 **No Additional Dependencies Needed**: Zustand includes all middleware (persist, devtools, immer).
 
 **Optional Additions**:
+
 - `zustand-devtools` - For state inspection during development
 
 ---

@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
 export default function CountdownToMidnight() {
-  const [timeLeft, setTimeLeft] = useState('');
+  const [timeLeft, setTimeLeft] = useState("");
 
   useEffect(() => {
     const updateCountdown = () => {
       const now = new Date();
 
       // Get current time in EST
-      const nowEST = new Date(now.toLocaleString("en-US", {timeZone: "America/New_York"}));
+      const nowEST = new Date(
+        now.toLocaleString("en-US", { timeZone: "America/New_York" }),
+      );
 
       // Calculate midnight EST for today
       const midnightEST = new Date(nowEST);
