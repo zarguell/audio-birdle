@@ -4,6 +4,7 @@
  */
 
 import { STORAGE_KEYS } from "./Constants";
+import { setStorage, getStorage } from "./StorageUtils";
 
 /**
  * Get version info from fetch response headers
@@ -23,10 +24,10 @@ export const getVersionFromResponse = (response) => ({
  */
 export const storeVersion = (version, lastModifiedKey, etagKey) => {
   if (version.lastModified) {
-    localStorage.setItem(lastModifiedKey, version.lastModified);
+    setStorage(lastModifiedKey, version.lastModified);
   }
   if (version.etag) {
-    localStorage.setItem(etagKey, version.etag);
+    setStorage(etagKey, version.etag);
   }
 };
 
@@ -37,8 +38,8 @@ export const storeVersion = (version, lastModifiedKey, etagKey) => {
  * @returns {{lastModified: string|null, etag: string|null}}
  */
 export const getCachedVersion = (lastModifiedKey, etagKey) => ({
-  lastModified: localStorage.getItem(lastModifiedKey),
-  etag: localStorage.getItem(etagKey),
+  lastModified: getStorage(lastModifiedKey, null),
+  etag: getStorage(etagKey, null),
 });
 
 /**

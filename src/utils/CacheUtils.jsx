@@ -8,7 +8,7 @@ import {
   checkDataFileUpdate,
   storeDataFileVersion,
 } from "./versionUtils";
-import { isStorageAvailable } from "./StorageUtils";
+import { isStorageAvailable, setStorage, getStorage } from "./StorageUtils";
 
 const DATA_FILES = [
   "/data/regions.json",
@@ -97,7 +97,7 @@ export const storeDailyJsonVersionInfo = (response) => {
 
   if (isStorageAvailable()) {
     const today = new Date().toISOString().split("T")[0];
-    localStorage.setItem(STORAGE_KEYS.LAST_VALIDATED_DATE, today);
+    setStorage(STORAGE_KEYS.LAST_VALIDATED_DATE, today);
   }
 };
 
@@ -130,7 +130,7 @@ export const hasDateChanged = () => {
     return true;
   }
 
-  const lastValidatedDate = localStorage.getItem(STORAGE_KEYS.LAST_VALIDATED_DATE);
+  const lastValidatedDate = getStorage(STORAGE_KEYS.LAST_VALIDATED_DATE, null);
   if (!lastValidatedDate) {
     return true;
   }
