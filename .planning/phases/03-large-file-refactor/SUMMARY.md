@@ -19,17 +19,18 @@ Break down App.jsx (796 lines) and CacheUtils.jsx (183 lines) into focused, main
 
 ## Plans
 
-| Plan | Description | Status |
-|------|-------------|--------|
+| Plan  | Description                                         | Status     |
+| ----- | --------------------------------------------------- | ---------- |
 | 03-01 | Analyze App.jsx and CacheUtils.jsx responsibilities | 📋 Planned |
-| 03-02 | Extract custom hooks from App.jsx | 📋 Planned |
-| 03-03 | Extract view components from App.jsx | 📋 Planned |
-| 03-04 | Simplify CacheUtils.jsx | 📋 Planned |
-| 03-05 | Update imports, tests, and validation | 📋 Planned |
+| 03-02 | Extract custom hooks from App.jsx                   | 📋 Planned |
+| 03-03 | Extract view components from App.jsx                | 📋 Planned |
+| 03-04 | Simplify CacheUtils.jsx                             | 📋 Planned |
+| 03-05 | Update imports, tests, and validation               | 📋 Planned |
 
 ## Deliverables
 
 ### Custom Hooks (5 new)
+
 - `usePersistence` - Region and mode persistence
 - `useGameNavigation` - View routing state
 - `useGameInitialization` - Game creation on mount
@@ -37,6 +38,7 @@ Break down App.jsx (796 lines) and CacheUtils.jsx (183 lines) into focused, main
 - `useMigration` - Zustand store migration
 
 ### Components (5 new)
+
 - `RegionSelector` - Region selection UI
 - `ModeSelector` - Game mode selection UI
 - `StatsView` - Statistics display
@@ -44,6 +46,7 @@ Break down App.jsx (796 lines) and CacheUtils.jsx (183 lines) into focused, main
 - `GameView` - Main game view (container)
 
 ### Optimized Files
+
 - `App.jsx` - Reduced to ≤200 lines (routing + composition)
 - `CacheUtils.jsx` - Improved documentation and organization
 
@@ -52,6 +55,7 @@ Break down App.jsx (796 lines) and CacheUtils.jsx (183 lines) into focused, main
 ### File Structure Changes
 
 **Before**:
+
 ```
 src/
 ├── App.jsx (796 lines)
@@ -64,6 +68,7 @@ src/
 ```
 
 **After**:
+
 ```
 src/
 ├── App.jsx (~150 lines)
@@ -88,14 +93,14 @@ src/
 
 ### Metrics
 
-| Metric | Before | After | Change |
-|--------|--------|-------|--------|
-| App.jsx lines | 796 | ~150 | -81% |
-| Total files | 2 | 17+ | +750% |
-| Avg file size | 489 lines | ~70 lines | -86% |
-| Components | 0 | 5 | +5 |
-| Hooks | 3 | 8 | +5 |
-| Test coverage | 70% | ≥70% | Maintained |
+| Metric        | Before    | After     | Change     |
+| ------------- | --------- | --------- | ---------- |
+| App.jsx lines | 796       | ~150      | -81%       |
+| Total files   | 2         | 17+       | +750%      |
+| Avg file size | 489 lines | ~70 lines | -86%       |
+| Components    | 0         | 5         | +5         |
+| Hooks         | 3         | 8         | +5         |
+| Test coverage | 70%       | ≥70%      | Maintained |
 
 ### Benefits
 
@@ -109,18 +114,23 @@ src/
 ## Risks and Mitigations
 
 ### Risk 1: Breaking Changes
+
 **Mitigation**: Run tests after each plan, commit frequently
 
 ### Risk 2: Props Drilling
+
 **Mitigation**: Use Zustand stores directly in components
 
 ### Risk 3: Circular Dependencies
+
 **Mitigation**: Use dependency injection, keep utilities clean
 
 ### Risk 4: Test Coverage Drop
+
 **Mitigation**: Add tests for new components/hooks, maintain ≥70%
 
 ### Risk 5: Performance Regression
+
 **Mitigation**: Use React.memo where appropriate, profile renders
 
 ## Dependencies

@@ -9,64 +9,65 @@ This document provides a comprehensive analysis of App.jsx (797 lines) and Cache
 ## App.jsx Analysis
 
 ### Overview
+
 - **Total Lines:** 797
 - **Primary Responsibilities:** Main application component with view routing, state management, and game orchestration
 - **Complexity:** High - contains 5 render functions, multiple useEffect hooks, and mixed concerns
 
 ### State Variables and Their Purposes
 
-| State Variable | Type | Purpose | Dependencies |
-|---------------|------|---------|--------------|
-| `selectedRegion` | string | Currently selected region (e.g., "us", "eu") | Initialized from localStorage |
+| State Variable   | Type   | Purpose                                              | Dependencies                  |
+| ---------------- | ------ | ---------------------------------------------------- | ----------------------------- |
+| `selectedRegion` | string | Currently selected region (e.g., "us", "eu")         | Initialized from localStorage |
 | `lastPlayedMode` | string | Last game mode played ("normal", "hard", "practice") | Initialized from localStorage |
-| `currentView` | string | Current view/page (from VIEWS constant) | None |
+| `currentView`    | string | Current view/page (from VIEWS constant)              | None                          |
 
 **Total local state:** 3 variables
 **External state:** Zustand stores (useNormalGameStore, useHardModeStore)
 
 ### Custom Hooks Used
 
-| Hook | Purpose | Return Values |
-|------|---------|---------------|
-| `useAudioPlayer` | Audio playback management | isPlaying, audioError, setAudioError, selectedAudioIndex, setSelectedAudioIndex, audioRef, toggleAudio, handleAudioError |
-| `useGameData` | Data loading and refreshing | regions, birds, todaysBird, loadingBird, dataConsistencyError, hasUpdate, refreshingData, handleAutoRefresh, handleForceRefresh, handleRefreshData |
-| `useDailyGame` | Game state and actions | makeGuess, resetTodaysGame, resetAllData, getDailyGame, answerOptions, makeHardModeGuess, resetTodaysGame, resetAllData, getHardModeGame |
+| Hook             | Purpose                     | Return Values                                                                                                                                      |
+| ---------------- | --------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `useAudioPlayer` | Audio playback management   | isPlaying, audioError, setAudioError, selectedAudioIndex, setSelectedAudioIndex, audioRef, toggleAudio, handleAudioError                           |
+| `useGameData`    | Data loading and refreshing | regions, birds, todaysBird, loadingBird, dataConsistencyError, hasUpdate, refreshingData, handleAutoRefresh, handleForceRefresh, handleRefreshData |
+| `useDailyGame`   | Game state and actions      | makeGuess, resetTodaysGame, resetAllData, getDailyGame, answerOptions, makeHardModeGuess, resetTodaysGame, resetAllData, getHardModeGame           |
 
 ### Render Functions (with Line Counts)
 
-| Function | Lines | Purpose | Complexity |
-|----------|-------|---------|------------|
-| `renderRegionSelector` | 134-175 (42 lines) | Region selection UI | Low |
-| `renderModeSelector` | 178-296 (119 lines) | Game mode selection | Medium |
-| `renderStats` | 298-400 (103 lines) | Statistics display | Medium |
-| `renderSettings` | 402-478 (77 lines) | Settings view | Low |
-| `renderGame` | 480-750 (271 lines) | Main game view (normal mode) | High |
+| Function               | Lines               | Purpose                      | Complexity |
+| ---------------------- | ------------------- | ---------------------------- | ---------- |
+| `renderRegionSelector` | 134-175 (42 lines)  | Region selection UI          | Low        |
+| `renderModeSelector`   | 178-296 (119 lines) | Game mode selection          | Medium     |
+| `renderStats`          | 298-400 (103 lines) | Statistics display           | Medium     |
+| `renderSettings`       | 402-478 (77 lines)  | Settings view                | Low        |
+| `renderGame`           | 480-750 (271 lines) | Main game view (normal mode) | High       |
 
 **Total render function code:** ~612 lines (77% of file)
 
 ### useEffect Hooks Analysis
 
-| Hook | Lines | Purpose | Dependencies | Frequency |
-|------|-------|---------|--------------|-----------|
-| Migration | 102-114 | Migrate old localStorage to Zustand | [] | Once on mount |
-| Game Initialization | 117-132 | Initialize game for today | [selectedRegion, today, currentDailyGame] | On region/date change |
+| Hook                | Lines   | Purpose                             | Dependencies                              | Frequency             |
+| ------------------- | ------- | ----------------------------------- | ----------------------------------------- | --------------------- |
+| Migration           | 102-114 | Migrate old localStorage to Zustand | []                                        | Once on mount         |
+| Game Initialization | 117-132 | Initialize game for today           | [selectedRegion, today, currentDailyGame] | On region/date change |
 
 **Total useEffect code:** ~30 lines
 
 ### Key Responsibilities Mapping
 
-| Responsibility | Lines | Type | Extractable? |
-|----------------|-------|------|--------------|
-| **Persistence Management** | 31-37 | State initialization | Yes (usePersistence hook) |
-| **Migration Logic** | 102-114 | useEffect | Yes (useMigration hook) |
-| **Game Initialization** | 117-132 | useEffect | Yes (useGameInitialization hook) |
-| **Share Functionality** | 88-99 | useCallback | Yes (useShareResult hook) |
-| **View Routing** | 752-796 | Main render logic | Yes (useGameNavigation hook) |
-| **Region Selector** | 134-175 | Render function | Yes (RegionSelector component) |
-| **Mode Selector** | 178-296 | Render function | Yes (ModeSelector component) |
-| **Stats View** | 298-400 | Render function | Yes (StatsView component) |
-| **Settings View** | 402-478 | Render function | Yes (SettingsView component) |
-| **Game View** | 480-750 | Render function | Yes (GameView component with sub-components) |
+| Responsibility             | Lines   | Type                 | Extractable?                                 |
+| -------------------------- | ------- | -------------------- | -------------------------------------------- |
+| **Persistence Management** | 31-37   | State initialization | Yes (usePersistence hook)                    |
+| **Migration Logic**        | 102-114 | useEffect            | Yes (useMigration hook)                      |
+| **Game Initialization**    | 117-132 | useEffect            | Yes (useGameInitialization hook)             |
+| **Share Functionality**    | 88-99   | useCallback          | Yes (useShareResult hook)                    |
+| **View Routing**           | 752-796 | Main render logic    | Yes (useGameNavigation hook)                 |
+| **Region Selector**        | 134-175 | Render function      | Yes (RegionSelector component)               |
+| **Mode Selector**          | 178-296 | Render function      | Yes (ModeSelector component)                 |
+| **Stats View**             | 298-400 | Render function      | Yes (StatsView component)                    |
+| **Settings View**          | 402-478 | Render function      | Yes (SettingsView component)                 |
+| **Game View**              | 480-750 | Render function      | Yes (GameView component with sub-components) |
 
 ### Data Flow Patterns
 
@@ -94,14 +95,14 @@ This document provides a comprehensive analysis of App.jsx (797 lines) and Cache
 
 ### Dependencies Between Sections
 
-| Section | Depends On | Dependencies |
-|---------|------------|--------------|
-| `renderRegionSelector` | regions | useGameData.regions, useNormalGameStore |
-| `renderModeSelector` | regions, selectedRegion, lastPlayedMode | useGameData.regions, local state |
-| `renderStats` | regions | useGameData.regions, useNormalGameStore |
-| `renderSettings` | regions, selectedRegion, hasUpdate, refreshingData | useGameData.regions, local state, useGameData |
-| `renderGame` | Everything | All hooks, stores, and state |
-| `useEffect` hooks | Stores | useNormalGameStore, useHardModeStore |
+| Section                | Depends On                                         | Dependencies                                  |
+| ---------------------- | -------------------------------------------------- | --------------------------------------------- |
+| `renderRegionSelector` | regions                                            | useGameData.regions, useNormalGameStore       |
+| `renderModeSelector`   | regions, selectedRegion, lastPlayedMode            | useGameData.regions, local state              |
+| `renderStats`          | regions                                            | useGameData.regions, useNormalGameStore       |
+| `renderSettings`       | regions, selectedRegion, hasUpdate, refreshingData | useGameData.regions, local state, useGameData |
+| `renderGame`           | Everything                                         | All hooks, stores, and state                  |
+| `useEffect` hooks      | Stores                                             | useNormalGameStore, useHardModeStore          |
 
 ### Code Quality Issues
 
@@ -115,45 +116,48 @@ This document provides a comprehensive analysis of App.jsx (797 lines) and Cache
 ## CacheUtils.jsx Analysis
 
 ### Overview
+
 - **Total Lines:** 184
 - **Primary Responsibilities:** Cache management, version tracking, data refresh
 - **Complexity:** Medium - repetitive patterns but well-organized
 
 ### Structure Breakdown
 
-| Section | Lines | Purpose | Complexity |
-|---------|-------|---------|------------|
-| Constants | 12-18 | Data file paths | Low |
-| `getServiceWorker` | 24-36 | Service worker registration | Low |
-| `checkDailyJsonUpdate` | 43-48 | Daily.json version check | Low |
-| `checkForUpdates` | 54-68 | General update check | Low |
-| `storeVersionInfo` | 74-75 | Store version metadata | Low |
-| `storeDailyJsonVersionInfo` | 81-87 | Store daily.json version | Low |
-| `storeBirdsJsonVersionInfo` | 94-95 | Store birds.json version | Low |
-| `checkBirdsJsonUpdate` | 101-106 | Birds.json version check | Low |
-| `hasDateChanged` | 112-125 | Date validation | Low |
-| `clearServiceWorkerCache` | 131-140 | Cache clearing | Low |
-| `refreshGameData` | 147-183 | Force refresh data | Medium |
+| Section                     | Lines   | Purpose                     | Complexity |
+| --------------------------- | ------- | --------------------------- | ---------- |
+| Constants                   | 12-18   | Data file paths             | Low        |
+| `getServiceWorker`          | 24-36   | Service worker registration | Low        |
+| `checkDailyJsonUpdate`      | 43-48   | Daily.json version check    | Low        |
+| `checkForUpdates`           | 54-68   | General update check        | Low        |
+| `storeVersionInfo`          | 74-75   | Store version metadata      | Low        |
+| `storeDailyJsonVersionInfo` | 81-87   | Store daily.json version    | Low        |
+| `storeBirdsJsonVersionInfo` | 94-95   | Store birds.json version    | Low        |
+| `checkBirdsJsonUpdate`      | 101-106 | Birds.json version check    | Low        |
+| `hasDateChanged`            | 112-125 | Date validation             | Low        |
+| `clearServiceWorkerCache`   | 131-140 | Cache clearing              | Low        |
+| `refreshGameData`           | 147-183 | Force refresh data          | Medium     |
 
 ### Try/Catch Block Analysis
 
-| Function | Try/Catch Blocks | Error Handling | Purpose |
-|----------|------------------|----------------|---------|
-| `getServiceWorker` | 1 | Console error + return null | Graceful degradation |
-| `hasDateChanged` | 1 | Console warn + return true | Fallback to true |
-| `clearServiceWorkerCache` | 1 | Console error + return false | Graceful degradation |
-| `refreshGameData` | 0 | Throws errors up | Propagates errors |
+| Function                  | Try/Catch Blocks | Error Handling               | Purpose              |
+| ------------------------- | ---------------- | ---------------------------- | -------------------- |
+| `getServiceWorker`        | 1                | Console error + return null  | Graceful degradation |
+| `hasDateChanged`          | 1                | Console warn + return true   | Fallback to true     |
+| `clearServiceWorkerCache` | 1                | Console error + return false | Graceful degradation |
+| `refreshGameData`         | 0                | Throws errors up             | Propagates errors    |
 
 **Total Try/Catch Blocks:** 3 (appropriate use for graceful degradation)
 
 ### Version Tracking Logic
 
 **Three separate version stores:**
+
 1. **General cache** (regions.json, birds.json): `CACHE_LAST_MODIFIED`, `CACHE_ETAG`
 2. **Daily.json specific:** `DAILY_JSON_LAST_MODIFIED`, `DAILY_JSON_ETAG`
 3. **Birds.json specific:** `BIRDS_JSON_LAST_MODIFIED`, `BIRDS_JSON_ETAG`
 
 **Pattern:** Each data file has:
+
 - Last-modified timestamp (HTTP header)
 - ETag (entity tag for content validation)
 - Storage keys in Constants.jsx
@@ -161,19 +165,27 @@ This document provides a comprehensive analysis of App.jsx (797 lines) and Cache
 ### Repetitive Patterns
 
 1. **Version checking pattern (appears 3x):**
+
    ```javascript
    checkDataFileUpdate(
      "/data/file.json",
      STORAGE_KEYS.FILE_LAST_MODIFIED,
-     STORAGE_KEYS.FILE_ETAG
+     STORAGE_KEYS.FILE_ETAG,
    );
    ```
+
    **Consolidation opportunity:** Create generic function with parameters
 
 2. **Version storing pattern (appears 3x):**
+
    ```javascript
-   storeDataFileVersion(response, STORAGE_KEYS.FILE_LAST_MODIFIED, STORAGE_KEYS.FILE_ETAG);
+   storeDataFileVersion(
+     response,
+     STORAGE_KEYS.FILE_LAST_MODIFIED,
+     STORAGE_KEYS.FILE_ETAG,
+   );
    ```
+
    **Consolidation opportunity:** Already consolidated via versionUtils
 
 3. **Refresh data pattern (appears in 3 refresh functions in useGameData):**
@@ -188,35 +200,35 @@ This document provides a comprehensive analysis of App.jsx (797 lines) and Cache
 
 ### Documentation Quality
 
-| Function | Documentation | Score |
-|----------|---------------|-------|
-| `getServiceWorker` | ✅ Clear | 9/10 |
-| `checkDailyJsonUpdate` | ✅ Clear | 9/10 |
-| `checkForUpdates` | ✅ Clear | 9/10 |
-| `storeVersionInfo` | ✅ Clear | 9/10 |
-| `storeDailyJsonVersionInfo` | ✅ Clear | 9/10 |
-| `storeBirdsJsonVersionInfo` | ✅ Clear | 9/10 |
-| `checkBirdsJsonUpdate` | ✅ Clear | 9/10 |
-| `hasDateChanged` | ✅ Clear | 9/10 |
-| `clearServiceWorkerCache` | ✅ Clear | 9/10 |
-| `refreshGameData` | ✅ Clear | 8/10 |
+| Function                    | Documentation | Score |
+| --------------------------- | ------------- | ----- |
+| `getServiceWorker`          | ✅ Clear      | 9/10  |
+| `checkDailyJsonUpdate`      | ✅ Clear      | 9/10  |
+| `checkForUpdates`           | ✅ Clear      | 9/10  |
+| `storeVersionInfo`          | ✅ Clear      | 9/10  |
+| `storeDailyJsonVersionInfo` | ✅ Clear      | 9/10  |
+| `storeBirdsJsonVersionInfo` | ✅ Clear      | 9/10  |
+| `checkBirdsJsonUpdate`      | ✅ Clear      | 9/10  |
+| `hasDateChanged`            | ✅ Clear      | 9/10  |
+| `clearServiceWorkerCache`   | ✅ Clear      | 9/10  |
+| `refreshGameData`           | ✅ Clear      | 8/10  |
 
 **Overall documentation score:** 9/10 (excellent)
 
 ### Testing Coverage Gaps
 
-| Function | Test Coverage | Gaps |
-|----------|---------------|------|
-| `getServiceWorker` | ❌ Untested | Needs unit tests for service worker availability |
-| `checkDailyJsonUpdate` | ❌ Untested | Needs tests with mocked versionUtils |
-| `checkForUpdates` | ❌ Untested | Needs tests with multiple file updates |
-| `storeVersionInfo` | ❌ Untested | Needs tests with mocked responses |
-| `storeDailyJsonVersionInfo` | ❌ Untested | Needs tests with date validation |
-| `storeBirdsJsonVersionInfo` | ❌ Untested | Needs tests with bird-specific validation |
-| `checkBirdsJsonUpdate` | ❌ Untested | Needs tests with mocked versionUtils |
-| `hasDateChanged` | ❌ Untested | Needs tests for date comparison |
-| `clearServiceWorkerCache` | ❌ Untested | Needs tests with mocked caches API |
-| `refreshGameData` | ❌ Untested | Needs integration tests with fetch mocking |
+| Function                    | Test Coverage | Gaps                                             |
+| --------------------------- | ------------- | ------------------------------------------------ |
+| `getServiceWorker`          | ❌ Untested   | Needs unit tests for service worker availability |
+| `checkDailyJsonUpdate`      | ❌ Untested   | Needs tests with mocked versionUtils             |
+| `checkForUpdates`           | ❌ Untested   | Needs tests with multiple file updates           |
+| `storeVersionInfo`          | ❌ Untested   | Needs tests with mocked responses                |
+| `storeDailyJsonVersionInfo` | ❌ Untested   | Needs tests with date validation                 |
+| `storeBirdsJsonVersionInfo` | ❌ Untested   | Needs tests with bird-specific validation        |
+| `checkBirdsJsonUpdate`      | ❌ Untested   | Needs tests with mocked versionUtils             |
+| `hasDateChanged`            | ❌ Untested   | Needs tests for date comparison                  |
+| `clearServiceWorkerCache`   | ❌ Untested   | Needs tests with mocked caches API               |
+| `refreshGameData`           | ❌ Untested   | Needs integration tests with fetch mocking       |
 
 **Current test coverage:** ~0% (no tests exist)
 **Target coverage:** 80%+
@@ -236,27 +248,27 @@ This document provides a comprehensive analysis of App.jsx (797 lines) and Cache
 
 ### Custom Hooks to Extract from App.jsx
 
-| Hook Name | Responsibility | Lines | Priority | Dependencies |
-|-----------|---------------|-------|----------|--------------|
-| `usePersistence` | Load/save localStorage state | 31-37 | Medium | StorageUtils |
-| `useGameInitialization` | Initialize game for today | 117-132 | High | useNormalGameStore |
-| `useMigration` | Migrate old data format | 102-114 | Low | useNormalGameStore, useHardModeStore |
-| `useShareResult` | Share functionality | 88-99 | Medium | ShareUtils |
-| `useGameNavigation` | View routing and navigation | 752-796 | High | All hooks, stores |
+| Hook Name               | Responsibility               | Lines   | Priority | Dependencies                         |
+| ----------------------- | ---------------------------- | ------- | -------- | ------------------------------------ |
+| `usePersistence`        | Load/save localStorage state | 31-37   | Medium   | StorageUtils                         |
+| `useGameInitialization` | Initialize game for today    | 117-132 | High     | useNormalGameStore                   |
+| `useMigration`          | Migrate old data format      | 102-114 | Low      | useNormalGameStore, useHardModeStore |
+| `useShareResult`        | Share functionality          | 88-99   | Medium   | ShareUtils                           |
+| `useGameNavigation`     | View routing and navigation  | 752-796 | High     | All hooks, stores                    |
 
 ### Components to Extract from App.jsx
 
-| Component Name | Current Location | Lines | Priority | Props Needed |
-|---------------|------------------|-------|----------|--------------|
-| `RegionSelector` | renderRegionSelector | 134-175 | Low | regions, onSelect, today |
-| `ModeSelector` | renderModeSelector | 178-296 | Medium | modes, onSelect, lastPlayedMode, onSettings |
-| `StatsView` | renderStats | 298-400 | Medium | stats, regions, onBack |
-| `SettingsView` | renderSettings | 402-478 | Medium | region, onChangeRegion, onBack, onStats, hasUpdate, refreshingData, handleRefresh |
-| `GameView` | renderGame | 480-750 | High | All game data, hooks, functions |
-| `AudioPlayerSection` | (within renderGame) | 586-656 | High | todaysBird, selectedAudioIndex, toggleAudio, isPlaying, audioError, loadingBird, setSelectedAudioIndex, audioRef, handleAudioError |
-| `GuessesList` | (within renderGame) | 659-687 | Medium | guesses, answerOptions |
-| `AnswerChoices` | (within renderGame) | 699-720 | Medium | options, onGuess, game |
-| `GameCompleted` | (within renderGame) | 723-740 | Medium | won, todaysBird, selectedAudioIndex, onShare |
+| Component Name       | Current Location     | Lines   | Priority | Props Needed                                                                                                                       |
+| -------------------- | -------------------- | ------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `RegionSelector`     | renderRegionSelector | 134-175 | Low      | regions, onSelect, today                                                                                                           |
+| `ModeSelector`       | renderModeSelector   | 178-296 | Medium   | modes, onSelect, lastPlayedMode, onSettings                                                                                        |
+| `StatsView`          | renderStats          | 298-400 | Medium   | stats, regions, onBack                                                                                                             |
+| `SettingsView`       | renderSettings       | 402-478 | Medium   | region, onChangeRegion, onBack, onStats, hasUpdate, refreshingData, handleRefresh                                                  |
+| `GameView`           | renderGame           | 480-750 | High     | All game data, hooks, functions                                                                                                    |
+| `AudioPlayerSection` | (within renderGame)  | 586-656 | High     | todaysBird, selectedAudioIndex, toggleAudio, isPlaying, audioError, loadingBird, setSelectedAudioIndex, audioRef, handleAudioError |
+| `GuessesList`        | (within renderGame)  | 659-687 | Medium   | guesses, answerOptions                                                                                                             |
+| `AnswerChoices`      | (within renderGame)  | 699-720 | Medium   | options, onGuess, game                                                                                                             |
+| `GameCompleted`      | (within renderGame)  | 723-740 | Medium   | won, todaysBird, selectedAudioIndex, onShare                                                                                       |
 
 ### Proposed New File Structure
 
@@ -321,26 +333,26 @@ Step 5: Refactor App.jsx to use all new hooks and components
 
 ### High Risk Extractions
 
-| Extraction | Risk | Mitigation |
-|------------|------|------------|
-| `useGameNavigation` | Changes core view routing logic | Write integration tests before extraction |
-| `GameView` | Largest component (271 lines) | Extract sub-components first, test thoroughly |
+| Extraction          | Risk                            | Mitigation                                    |
+| ------------------- | ------------------------------- | --------------------------------------------- |
+| `useGameNavigation` | Changes core view routing logic | Write integration tests before extraction     |
+| `GameView`          | Largest component (271 lines)   | Extract sub-components first, test thoroughly |
 
 ### Medium Risk Extractions
 
-| Extraction | Risk | Mitigation |
-|------------|------|------------|
-| `useGameInitialization` | Interacts with Zustand store | Mock store in tests |
-| `SettingsView` | Depends on multiple state sources | Use TypeScript for prop validation |
-| `AudioPlayerSection` | Complex audio state management | Test with mocked audio element |
+| Extraction              | Risk                              | Mitigation                         |
+| ----------------------- | --------------------------------- | ---------------------------------- |
+| `useGameInitialization` | Interacts with Zustand store      | Mock store in tests                |
+| `SettingsView`          | Depends on multiple state sources | Use TypeScript for prop validation |
+| `AudioPlayerSection`    | Complex audio state management    | Test with mocked audio element     |
 
 ### Low Risk Extractions
 
-| Extraction | Risk | Mitigation |
-|------------|------|------------|
-| `RegionSelector` | Simple UI component | Write snapshot tests |
-| `ModeSelector` | Pure presentational component | Write snapshot tests |
-| `StatsView` | Read-only display | Write unit tests with mocked data |
+| Extraction       | Risk                          | Mitigation                        |
+| ---------------- | ----------------------------- | --------------------------------- |
+| `RegionSelector` | Simple UI component           | Write snapshot tests              |
+| `ModeSelector`   | Pure presentational component | Write snapshot tests              |
+| `StatsView`      | Read-only display             | Write unit tests with mocked data |
 
 ---
 
@@ -349,6 +361,7 @@ Step 5: Refactor App.jsx to use all new hooks and components
 ### Phase 1: Custom Hooks Extraction (Lowest Risk)
 
 #### 1.1 Extract `usePersistence` Hook
+
 **File:** `src/hooks/usePersistence.js`
 **Lines from App.jsx:** 31-37
 **Responsibility:** Initialize state from localStorage
@@ -371,6 +384,7 @@ export function usePersistence() {
 ```
 
 **Props Interface:**
+
 ```javascript
 // Returns:
 {
@@ -385,6 +399,7 @@ export function usePersistence() {
 **Test Strategy:** Mock localStorage with test fixtures
 
 #### 1.2 Extract `useMigration` Hook
+
 **File:** `src/hooks/useMigration.js`
 **Lines from App.jsx:** 102-114
 **Responsibility:** Migrate old localStorage to Zustand format
@@ -394,10 +409,10 @@ export function useMigration() {
   useEffect(() => {
     const normalStore = useNormalGameStore.getState();
     const hardStore = useHardModeStore.getState();
-    console.log('App mounted: Checking for old data to migrate...');
+    console.log("App mounted: Checking for old data to migrate...");
     normalStore.migrateFromOldFormat();
     hardStore.migrateFromOldFormat();
-    console.log('Migration check complete');
+    console.log("Migration check complete");
   }, []);
 }
 ```
@@ -407,6 +422,7 @@ export function useMigration() {
 **Test Strategy:** Mock stores, verify migration functions called
 
 #### 1.3 Extract `useShareResult` Hook
+
 **File:** `src/hooks/useShareResult.js`
 **Lines from App.jsx:** 88-99
 **Responsibility:** Generate and share game results
@@ -419,7 +435,7 @@ export function useShareResult(currentDailyGame, todaysBird, selectedRegion) {
       currentDailyGame,
       window.location.href,
       todaysBird.name,
-      selectedRegion
+      selectedRegion,
     );
     shareResult(shareText);
   }, [currentDailyGame, todaysBird, selectedRegion]);
@@ -429,6 +445,7 @@ export function useShareResult(currentDailyGame, todaysBird, selectedRegion) {
 ```
 
 **Props Interface:**
+
 ```javascript
 // Input:
 {
@@ -443,6 +460,7 @@ export function useShareResult(currentDailyGame, todaysBird, selectedRegion) {
 **Test Strategy:** Mock generateShareText and shareResult functions
 
 #### 1.4 Extract `useGameInitialization` Hook
+
 **File:** `src/hooks/useGameInitialization.js`
 **Lines from App.jsx:** 117-132
 **Responsibility:** Initialize daily game if not exists
@@ -469,6 +487,7 @@ export function useGameInitialization(selectedRegion, today, currentDailyGame) {
 ```
 
 **Props Interface:**
+
 ```javascript
 // Input:
 {
@@ -483,6 +502,7 @@ export function useGameInitialization(selectedRegion, today, currentDailyGame) {
 **Test Strategy:** Mock store, verify setDailyGame called correctly
 
 #### 1.5 Extract `useGameNavigation` Hook
+
 **File:** `src/hooks/useGameNavigation.js`
 **Lines from App.jsx:** 752-796
 **Responsibility:** View routing and navigation logic
@@ -540,7 +560,7 @@ export function useGameNavigation({
 
   const renderGame = () => (
     <GameView
-      // ... all game props
+    // ... all game props
     />
   );
 
@@ -575,6 +595,7 @@ export function useGameNavigation({
 ```
 
 **Props Interface:**
+
 ```javascript
 // Input:
 {
@@ -599,11 +620,13 @@ export function useGameNavigation({
 ### Phase 2: Component Extraction (Lowest Risk First)
 
 #### 2.1 Extract `RegionSelector` Component
+
 **File:** `src/components/RegionSelector/RegionSelector.jsx`
 **Lines from App.jsx:** 134-175
 **Responsibility:** Region selection UI
 
 **Props Interface:**
+
 ```javascript
 {
   regions: Region[],
@@ -616,11 +639,13 @@ export function useGameNavigation({
 **Test Strategy:** Snapshot tests, interaction tests
 
 #### 2.2 Extract `ModeSelector` Component
+
 **File:** `src/components/ModeSelector/ModeSelector.jsx`
 **Lines from App.jsx:** 178-296
 **Responsibility:** Game mode selection UI
 
 **Props Interface:**
+
 ```javascript
 {
   modes: Mode[],
@@ -636,11 +661,13 @@ export function useGameNavigation({
 **Test Strategy:** Snapshot tests, click interaction tests
 
 #### 2.3 Extract `StatsView` Component
+
 **File:** `src/components/StatsView/StatsView.jsx`
 **Lines from App.jsx:** 298-400
 **Responsibility:** Statistics display
 
 **Props Interface:**
+
 ```javascript
 {
   stats: Stats,
@@ -653,11 +680,13 @@ export function useGameNavigation({
 **Test Strategy:** Unit tests with mock stats data
 
 #### 2.4 Extract `SettingsView` Component
+
 **File:** `src/components/SettingsView/SettingsView.jsx`
 **Lines from App.jsx:** 402-478
 **Responsibility:** Settings and data management UI
 
 **Props Interface:**
+
 ```javascript
 {
   region: string,
@@ -680,11 +709,13 @@ export function useGameNavigation({
 ### Phase 3: GameView Sub-components (Medium Risk)
 
 #### 3.1 Extract `AudioPlayerSection` Component
+
 **File:** `src/components/GameView/AudioPlayerSection.jsx`
 **Lines from App.jsx:** 586-656
 **Responsibility:** Audio playback controls
 
 **Props Interface:**
+
 ```javascript
 {
   todaysBird: Bird | null,
@@ -703,11 +734,13 @@ export function useGameNavigation({
 **Test Strategy:** Tests with mocked audio element
 
 #### 3.2 Extract `GuessesList` Component
+
 **File:** `src/components/GameView/GuessesList.jsx`
 **Lines from App.jsx:** 659-687
 **Responsibility:** Display previous guesses
 
 **Props Interface:**
+
 ```javascript
 {
   guesses: Guess[],
@@ -719,11 +752,13 @@ export function useGameNavigation({
 **Test Strategy:** Unit tests with mock guess data
 
 #### 3.3 Extract `AnswerChoices` Component
+
 **File:** `src/components/GameView/AnswerChoices.jsx`
 **Lines from App.jsx:** 699-720
 **Responsibility:** Display answer options
 
 **Props Interface:**
+
 ```javascript
 {
   options: Bird[],
@@ -737,11 +772,13 @@ export function useGameNavigation({
 **Test Strategy:** Interaction tests with mocked onGuess
 
 #### 3.4 Extract `GameCompleted` Component
+
 **File:** `src/components/GameView/GameCompleted.jsx`
 **Lines from App.jsx:** 723-740
 **Responsibility:** Display game completion state
 
 **Props Interface:**
+
 ```javascript
 {
   won: boolean,
@@ -759,11 +796,13 @@ export function useGameNavigation({
 ### Phase 4: Extract `GameView` Component (High Risk)
 
 #### 4.1 Extract `GameView` Component
+
 **File:** `src/components/GameView/GameView.jsx`
 **Lines from App.jsx:** 480-750
 **Responsibility:** Main game view with all game logic
 
 **Props Interface:**
+
 ```javascript
 {
   // Data
@@ -907,6 +946,7 @@ src/
 ```
 
 **Key Dependencies:**
+
 - All hooks depend on existing utilities (no circular dependencies)
 - All components depend on hooks, not each other (except GameView)
 - GameView depends on its sub-components
@@ -917,6 +957,7 @@ src/
 ## Test Strategy for Refactored Code
 
 ### Testing Philosophy
+
 - **Unit Tests:** Test individual hooks and components in isolation
 - **Integration Tests:** Test component composition and data flow
 - **Snapshot Tests:** Capture UI output to prevent unintended changes
@@ -925,15 +966,18 @@ src/
 ### Custom Hook Testing Strategy
 
 #### `usePersistence` Hook Tests
+
 **File:** `src/hooks/usePersistence.test.jsx`
 
 **Test Cases:**
+
 1. Initialize selectedRegion from localStorage
 2. Initialize lastPlayedMode from localStorage
 3. Return correct state and setters
 4. Handle missing localStorage gracefully
 
 **Mocking Strategy:**
+
 ```javascript
 // Mock localStorage
 const mockGetItem = vi.fn();
@@ -947,15 +991,18 @@ global.localStorage = {
 **Coverage Target:** 90%
 
 #### `useMigration` Hook Tests
+
 **File:** `src/hooks/useMigration.test.jsx`
 
 **Test Cases:**
+
 1. Call migrateFromOldFormat on normal store on mount
 2. Call migrateFromOldFormat on hard store on mount
 3. Log migration messages
 4. Only run once (empty dependency array)
 
 **Mocking Strategy:**
+
 ```javascript
 // Mock Zustand stores
 vi.mock("../stores/normalGameStore", () => ({
@@ -970,9 +1017,11 @@ vi.mock("../stores/normalGameStore", () => ({
 **Coverage Target:** 85%
 
 #### `useShareResult` Hook Tests
+
 **File:** `src/hooks/useShareResult.test.jsx`
 
 **Test Cases:**
+
 1. Generate share text with currentDailyGame
 2. Generate share text with todaysBird
 3. Generate share text with selectedRegion
@@ -981,6 +1030,7 @@ vi.mock("../stores/normalGameStore", () => ({
 6. Return early if todaysBird is null
 
 **Mocking Strategy:**
+
 ```javascript
 // Mock ShareUtils
 vi.mock("../utils/ShareUtils", () => ({
@@ -992,9 +1042,11 @@ vi.mock("../utils/ShareUtils", () => ({
 **Coverage Target:** 90%
 
 #### `useGameInitialization` Hook Tests
+
 **File:** `src/hooks/useGameInitialization.test.jsx`
 
 **Test Cases:**
+
 1. Initialize game when selectedRegion and today exist
 2. Initialize game when currentDailyGame is null
 3. Not initialize if game already exists
@@ -1002,6 +1054,7 @@ vi.mock("../utils/ShareUtils", () => ({
 5. Set correct initial game state
 
 **Mocking Strategy:**
+
 ```javascript
 // Mock Zustand store
 vi.mock("../stores/normalGameStore", () => ({
@@ -1017,9 +1070,11 @@ vi.mock("../stores/normalGameStore", () => ({
 **Coverage Target:** 90%
 
 #### `useGameNavigation` Hook Tests
+
 **File:** `src/hooks/useGameNavigation.test.jsx`
 
 **Test Cases:**
+
 1. Return RegionSelector when selectedRegion is null
 2. Return ModeSelector when currentView is MODE_SELECTOR
 3. Return StatsView when currentView is STATS
@@ -1030,6 +1085,7 @@ vi.mock("../stores/normalGameStore", () => ({
 8. Pass correct props to each component
 
 **Mocking Strategy:**
+
 ```javascript
 // Mock all components
 vi.mock("../components/RegionSelector", () => ({
@@ -1048,15 +1104,18 @@ vi.mock("../components/ModeSelector", () => ({
 ### Component Testing Strategy
 
 #### `RegionSelector` Component Tests
+
 **File:** `src/components/RegionSelector/RegionSelector.test.jsx`
 
 **Test Cases:**
+
 1. Render all regions
 2. Show "Played Today" badge for regions with guesses
 3. Call onSelect with regionId when clicked
 4. Match snapshot
 
 **Mocking Strategy:**
+
 ```javascript
 // Mock Zustand store
 vi.mock("../../stores/normalGameStore", () => ({
@@ -1071,9 +1130,11 @@ vi.mock("../../stores/normalGameStore", () => ({
 **Coverage Target:** 90%
 
 #### `ModeSelector` Component Tests
+
 **File:** `src/components/ModeSelector/ModeSelector.test.jsx`
 
 **Test Cases:**
+
 1. Render all game modes
 2. Show "Last played" badge for lastPlayedMode
 3. Call onSelect with mode when clicked
@@ -1086,9 +1147,11 @@ vi.mock("../../stores/normalGameStore", () => ({
 **Coverage Target:** 90%
 
 #### `StatsView` Component Tests
+
 **File:** `src/components/StatsView/StatsView.test.jsx`
 
 **Test Cases:**
+
 1. Display overall stats (games played, win rate, avg guesses, streak)
 2. Display region breakdown
 3. Call onBack when back button clicked
@@ -1100,9 +1163,11 @@ vi.mock("../../stores/normalGameStore", () => ({
 **Coverage Target:** 90%
 
 #### `SettingsView` Component Tests
+
 **File:** `src/components/SettingsView/SettingsView.test.jsx`
 
 **Test Cases:**
+
 1. Display current region
 2. Call onChangeRegion when "Change Region" clicked
 3. Call onBack when back button clicked
@@ -1119,9 +1184,11 @@ vi.mock("../../stores/normalGameStore", () => ({
 **Coverage Target:** 90%
 
 #### `AudioPlayerSection` Component Tests
+
 **File:** `src/components/GameView/AudioPlayerSection.test.jsx`
 
 **Test Cases:**
+
 1. Show audio selector when multiple recordings available
 2. Call setSelectedAudioIndex when selection changed
 3. Call toggleAudio when play/pause clicked
@@ -1133,6 +1200,7 @@ vi.mock("../../stores/normalGameStore", () => ({
 9. Match snapshot
 
 **Mocking Strategy:**
+
 ```javascript
 // Mock audio element
 vi.mock("../../utils/AudioUtils", () => ({
@@ -1143,9 +1211,11 @@ vi.mock("../../utils/AudioUtils", () => ({
 **Coverage Target:** 85%
 
 #### `GuessesList` Component Tests
+
 **File:** `src/components/GameView/GuessesList.test.jsx`
 
 **Test Cases:**
+
 1. Render all guesses
 2. Show checkmark for correct guesses
 3. Show X for incorrect guesses
@@ -1157,9 +1227,11 @@ vi.mock("../../utils/AudioUtils", () => ({
 **Coverage Target:** 95%
 
 #### `AnswerChoices` Component Tests
+
 **File:** `src/components/GameView/AnswerChoices.test.jsx`
 
 **Test Cases:**
+
 1. Render all answer options
 2. Show current guess count (e.g., "1/4")
 3. Call onGuess with birdId when clicked
@@ -1171,9 +1243,11 @@ vi.mock("../../utils/AudioUtils", () => ({
 **Coverage Target:** 95%
 
 #### `GameCompleted` Component Tests
+
 **File:** `src/components/GameView/GameCompleted.test.jsx`
 
 **Test Cases:**
+
 1. Show "🎉 Well done!" when won is true
 2. Show "😔 Better luck tomorrow!" when won is false
 3. Render BirdCompletionCard with correct props
@@ -1181,6 +1255,7 @@ vi.mock("../../utils/AudioUtils", () => ({
 5. Match snapshot for both states
 
 **Mocking Strategy:**
+
 ```javascript
 // Mock BirdCompletionCard
 vi.mock("../../utils/BirdCompletionCard", () => ({
@@ -1191,9 +1266,11 @@ vi.mock("../../utils/BirdCompletionCard", () => ({
 **Coverage Target:** 90%
 
 #### `GameView` Component Tests
+
 **File:** `src/components/GameView/GameView.test.jsx`
 
 **Test Cases:**
+
 1. Render audio player section
 2. Render guesses list when guesses exist
 3. Render answer choices when game not completed
@@ -1208,6 +1285,7 @@ vi.mock("../../utils/BirdCompletionCard", () => ({
 12. Match snapshot
 
 **Mocking Strategy:**
+
 ```javascript
 // Mock all sub-components
 vi.mock("./AudioPlayerSection", () => ({
@@ -1235,9 +1313,11 @@ vi.mock("../../stores/hardModeStore", () => ({
 ### Integration Testing Strategy
 
 #### App.jsx Integration Tests
+
 **File:** `src/App.test.jsx` (update existing file)
 
 **Test Cases:**
+
 1. Full user flow: select region → select mode → play game → view stats
 2. Migration runs on mount
 3. Game initializes for today
@@ -1246,6 +1326,7 @@ vi.mock("../../stores/hardModeStore", () => ({
 6. State persists across re-renders
 
 **Mocking Strategy:**
+
 ```javascript
 // Mock all hooks and components
 vi.mock("./hooks/usePersistence", () => ({
@@ -1272,9 +1353,11 @@ vi.mock("./components/RegionSelector", () => ({
 ### CacheUtils Refactoring Tests
 
 #### CacheUtils Tests
+
 **File:** `src/utils/CacheUtils.test.jsx` (new file)
 
 **Test Cases:**
+
 1. `getServiceWorker` returns null when service worker not supported
 2. `getServiceWorker` returns registration when available
 3. `checkDailyJsonUpdate` checks daily.json version
@@ -1291,6 +1374,7 @@ vi.mock("./components/RegionSelector", () => ({
 14. `refreshGameData` calls onProgress callback
 
 **Mocking Strategy:**
+
 ```javascript
 // Mock navigator.serviceWorker
 const mockRegistration = { foo: "bar" };
@@ -1311,11 +1395,9 @@ global.fetch = vi.fn((url) =>
     ok: true,
     json: () => Promise.resolve({ data: "mock" }),
     headers: {
-      get: vi.fn((name) =>
-        name === "last-modified" ? "12345" : "etag-123"
-      ),
+      get: vi.fn((name) => (name === "last-modified" ? "12345" : "etag-123")),
     },
-  })
+  }),
 );
 
 // Mock versionUtils
@@ -1333,6 +1415,7 @@ vi.mock("./versionUtils", () => ({
 ### Test Utilities and Fixtures
 
 #### Test Fixtures
+
 **File:** `tests/fixtures/gameState.js` (new file)
 
 ```javascript
@@ -1375,7 +1458,10 @@ export const mockBird = {
   scientificName: "Turdus migratorius",
   order: "Passeriformes",
   family: "Turdidae (Turdidae)",
-  audioUrl: ["https://example.com/audio1.mp3", "https://example.com/audio2.mp3"],
+  audioUrl: [
+    "https://example.com/audio1.mp3",
+    "https://example.com/audio2.mp3",
+  ],
 };
 
 // Mock region data
@@ -1415,6 +1501,7 @@ export const mockAnswerOptions = [
 ```
 
 #### Test Utilities
+
 **File:** `tests/utils/testUtils.js` (new file)
 
 ```javascript
@@ -1458,30 +1545,33 @@ export function mockAudioElement() {
 
 ### Test Coverage Summary
 
-| Module | Target Coverage | Priority |
-|--------|----------------|----------|
-| Custom Hooks | 85-90% | High |
-| Components | 80-95% | High |
-| Integration | 70% | Medium |
-| CacheUtils | 85% | Medium |
-| **Overall** | **80%** | **High** |
+| Module       | Target Coverage | Priority |
+| ------------ | --------------- | -------- |
+| Custom Hooks | 85-90%          | High     |
+| Components   | 80-95%          | High     |
+| Integration  | 70%             | Medium   |
+| CacheUtils   | 85%             | Medium   |
+| **Overall**  | **80%**         | **High** |
 
 ---
 
 ### Test Execution Strategy
 
 #### Pre-Extraction Tests
+
 1. Write integration tests for current App.jsx
 2. Ensure all existing tests pass
 3. Establish baseline coverage
 
 #### During Extraction
+
 1. Write tests for new hook/component BEFORE extracting
 2. Extract code
 3. Verify tests still pass
 4. Run full test suite
 
 #### Post-Extraction
+
 1. Run full test suite
 2. Check coverage meets targets
 3. Manual smoke testing
@@ -1492,6 +1582,7 @@ export function mockAudioElement() {
 ### Test Files to Create
 
 **Custom Hooks:**
+
 - `src/hooks/usePersistence.test.jsx` (new)
 - `src/hooks/useMigration.test.jsx` (new)
 - `src/hooks/useShareResult.test.jsx` (new)
@@ -1499,6 +1590,7 @@ export function mockAudioElement() {
 - `src/hooks/useGameNavigation.test.jsx` (new)
 
 **Components:**
+
 - `src/components/RegionSelector/RegionSelector.test.jsx` (new)
 - `src/components/ModeSelector/ModeSelector.test.jsx` (new)
 - `src/components/StatsView/StatsView.test.jsx` (new)
@@ -1510,9 +1602,11 @@ export function mockAudioElement() {
 - `src/components/GameView/GameView.test.jsx` (new)
 
 **Utilities:**
+
 - `src/utils/CacheUtils.test.jsx` (new)
 
 **Fixtures:**
+
 - `tests/fixtures/gameState.js` (new)
 - `tests/utils/testUtils.js` (new)
 

@@ -9,7 +9,7 @@ export function useShareResult(currentDailyGame, todaysBird, selectedRegion) {
       currentDailyGame,
       window.location.href,
       todaysBird.name,
-      selectedRegion
+      selectedRegion,
     );
 
     shareResult(shareText);

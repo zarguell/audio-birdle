@@ -1,11 +1,11 @@
-import { vi, beforeEach, afterEach } from 'vitest'
-import { cleanup } from '@testing-library/react'
-import '@testing-library/jest-dom'
+import { vi, beforeEach, afterEach } from "vitest";
+import { cleanup } from "@testing-library/react";
+import "@testing-library/jest-dom";
 
 // Cleanup after each test
 afterEach(() => {
-  cleanup()
-})
+  cleanup();
+});
 
 // Mock localStorage with actual storage implementation
 const localStorageMock = (() => {
@@ -27,12 +27,12 @@ const localStorageMock = (() => {
   };
 })();
 
-global.localStorage = localStorageMock
+global.localStorage = localStorageMock;
 
 // Mock window.matchMedia
-Object.defineProperty(window, 'matchMedia', {
+Object.defineProperty(window, "matchMedia", {
   writable: true,
-  value: vi.fn().mockImplementation(query => ({
+  value: vi.fn().mockImplementation((query) => ({
     matches: false,
     media: query,
     onchange: null,
@@ -42,7 +42,7 @@ Object.defineProperty(window, 'matchMedia', {
     removeEventListener: vi.fn(),
     dispatchEvent: vi.fn(),
   })),
-})
+});
 
 // Mock Audio API
 global.Audio = vi.fn().mockImplementation(() => ({
@@ -51,18 +51,18 @@ global.Audio = vi.fn().mockImplementation(() => ({
   load: vi.fn(),
   addEventListener: vi.fn(),
   removeEventListener: vi.fn(),
-}))
+}));
 
 // Mock fetch globally
-global.fetch = vi.fn()
+global.fetch = vi.fn();
 
 beforeEach(() => {
   // Clear mocks before each test
-  vi.clearAllMocks()
-  localStorageMock.getItem.mockClear()
-  localStorageMock.setItem.mockClear()
-  localStorageMock.removeItem.mockClear()
-  localStorageMock.clear.mockClear()
+  vi.clearAllMocks();
+  localStorageMock.getItem.mockClear();
+  localStorageMock.setItem.mockClear();
+  localStorageMock.removeItem.mockClear();
+  localStorageMock.clear.mockClear();
   // Clear the internal storage
-  localStorageMock.clear()
-})
+  localStorageMock.clear();
+});

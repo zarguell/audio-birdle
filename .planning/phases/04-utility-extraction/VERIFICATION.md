@@ -9,6 +9,7 @@
 **Status:** ✅ MOSTLY COMPLETE (1 minor issue)
 
 Phase 04 has successfully achieved its primary goals:
+
 - ✅ RetryUtils module created and integrated across all network operations
 - ✅ StorageUtils unified API implemented and used consistently
 - ✅ Hash implementations verified consistent between Python and JavaScript
@@ -23,17 +24,18 @@ Phase 04 has successfully achieved its primary goals:
 
 ### Must_Haves Verification
 
-| Requirement | Status | Evidence | Notes |
-|-------------|--------|----------|-------|
-| "Retry logic exists in single shared module" | ✅ PASS | `/Users/zach/localcode/audio-birdle/src/utils/RetryUtils.jsx` (74 lines) | Exports `fetchWithRetry` and `retryWithBackoff` |
-| "LoadGameData uses RetryUtils for all fetch operations" | ✅ PASS | Line 2: `import { fetchWithRetry } from "./RetryUtils"` | Lines 15, 18 use fetchWithRetry |
-| "DailyBirdUtils uses RetryUtils for all fetch operations" | ✅ PASS | Line 4: `import { fetchWithRetry } from "./RetryUtils"` | Line 45: `fetchWithRetry("/data/daily.json", ...)` |
-| "Retry behavior is consistent across all network operations" | ✅ PASS | Both use same config pattern | LoadGameData: default config, DailyBirdUtils: `{ maxRetries: 3, baseDelay: 500 }` |
-| "Tests verify retry logic with exponential backoff" | ✅ PASS | `/Users/zach/localcode/audio-birdle/tests/unit/utils/RetryUtils.test.jsx` (223 lines, 21 tests) | All 21 tests passing |
+| Requirement                                                  | Status  | Evidence                                                                                        | Notes                                                                             |
+| ------------------------------------------------------------ | ------- | ----------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| "Retry logic exists in single shared module"                 | ✅ PASS | `/Users/zach/localcode/audio-birdle/src/utils/RetryUtils.jsx` (74 lines)                        | Exports `fetchWithRetry` and `retryWithBackoff`                                   |
+| "LoadGameData uses RetryUtils for all fetch operations"      | ✅ PASS | Line 2: `import { fetchWithRetry } from "./RetryUtils"`                                         | Lines 15, 18 use fetchWithRetry                                                   |
+| "DailyBirdUtils uses RetryUtils for all fetch operations"    | ✅ PASS | Line 4: `import { fetchWithRetry } from "./RetryUtils"`                                         | Line 45: `fetchWithRetry("/data/daily.json", ...)`                                |
+| "Retry behavior is consistent across all network operations" | ✅ PASS | Both use same config pattern                                                                    | LoadGameData: default config, DailyBirdUtils: `{ maxRetries: 3, baseDelay: 500 }` |
+| "Tests verify retry logic with exponential backoff"          | ✅ PASS | `/Users/zach/localcode/audio-birdle/tests/unit/utils/RetryUtils.test.jsx` (223 lines, 21 tests) | All 21 tests passing                                                              |
 
 ### Artifact Verification
 
 **File:** `src/utils/RetryUtils.jsx`
+
 - ✅ Exists: Yes
 - ✅ Lines: 74 (exceeds 40 minimum)
 - ✅ Exports: `fetchWithRetry`, `retryWithBackoff` (both present)
@@ -45,6 +47,7 @@ Phase 04 has successfully achieved its primary goals:
   - Context-aware error logging
 
 **File:** `tests/unit/utils/RetryUtils.test.jsx`
+
 - ✅ Exists: Yes
 - ✅ Lines: 223 (exceeds 50 minimum)
 - ✅ Tests: 21 tests (exceeds 8 minimum)
@@ -53,9 +56,9 @@ Phase 04 has successfully achieved its primary goals:
 
 ### Key Links Verification
 
-| From | To | Via | Status |
-|------|-----|-----|--------|
-| `src/utils/LoadGameData.jsx` | `src/utils/RetryUtils.jsx` | `import { fetchWithRetry } from './RetryUtils'` | ✅ PASS |
+| From                           | To                         | Via                                             | Status  |
+| ------------------------------ | -------------------------- | ----------------------------------------------- | ------- |
+| `src/utils/LoadGameData.jsx`   | `src/utils/RetryUtils.jsx` | `import { fetchWithRetry } from './RetryUtils'` | ✅ PASS |
 | `src/utils/DailyBirdUtils.jsx` | `src/utils/RetryUtils.jsx` | `import { fetchWithRetry } from './RetryUtils'` | ✅ PASS |
 
 ### Code Quality Verification
@@ -86,17 +89,18 @@ $ grep -r "fetch(" src/utils/*.jsx | grep -v "fetchWithRetry" | grep -v "test"
 
 ### Must_Haves Verification
 
-| Requirement | Status | Evidence | Notes |
-|-------------|--------|----------|-------|
-| "Unified storage API handles all localStorage operations" | ✅ PASS | `/Users/zach/localcode/audio-birdle/src/utils/StorageUtils.jsx` (130 lines) | Exports: `getStorage`, `setStorage`, `removeStorage`, `isStorageAvailable` |
-| "Error handling is consistent across all storage operations" | ✅ PASS | Lines 27-74: All functions have try-catch with QuotaExceededError detection | Consistent error format: "Failed to [operation] for [key]: [error]" |
-| "AudioUtils uses StorageManager instead of direct localStorage" | ✅ PASS | Lines 3, 60, 71, 80: Import and usage | No direct localStorage calls |
-| "StorageUtils provides get/set/remove with error handling" | ✅ PASS | Lines 27-74: All three functions present | Returns boolean for set/remove, value/default for get |
-| "Tests verify error handling for quota exceeded, disabled storage" | ✅ PASS | `/Users/zach/localcode/audio-birdle/tests/unit/utils/StorageUtils.test.jsx` (473 lines, 116 tests) | Tests for QuotaExceededError, disabled storage, parse errors |
+| Requirement                                                        | Status  | Evidence                                                                                           | Notes                                                                      |
+| ------------------------------------------------------------------ | ------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| "Unified storage API handles all localStorage operations"          | ✅ PASS | `/Users/zach/localcode/audio-birdle/src/utils/StorageUtils.jsx` (130 lines)                        | Exports: `getStorage`, `setStorage`, `removeStorage`, `isStorageAvailable` |
+| "Error handling is consistent across all storage operations"       | ✅ PASS | Lines 27-74: All functions have try-catch with QuotaExceededError detection                        | Consistent error format: "Failed to [operation] for [key]: [error]"        |
+| "AudioUtils uses StorageManager instead of direct localStorage"    | ✅ PASS | Lines 3, 60, 71, 80: Import and usage                                                              | No direct localStorage calls                                               |
+| "StorageUtils provides get/set/remove with error handling"         | ✅ PASS | Lines 27-74: All three functions present                                                           | Returns boolean for set/remove, value/default for get                      |
+| "Tests verify error handling for quota exceeded, disabled storage" | ✅ PASS | `/Users/zach/localcode/audio-birdle/tests/unit/utils/StorageUtils.test.jsx` (473 lines, 116 tests) | Tests for QuotaExceededError, disabled storage, parse errors               |
 
 ### Artifact Verification
 
 **File:** `src/utils/StorageUtils.jsx`
+
 - ✅ Exists: Yes
 - ✅ Lines: 130 (exceeds 60 minimum)
 - ✅ Exports: `getStorage`, `setStorage`, `removeStorage`, `isStorageAvailable`, `getStorageKeys`, `clearStorage`
@@ -109,6 +113,7 @@ $ grep -r "fetch(" src/utils/*.jsx | grep -v "fetchWithRetry" | grep -v "test"
   - Legacy API maintained for backward compatibility
 
 **File:** `tests/unit/utils/StorageUtils.test.jsx`
+
 - ✅ Exists: Yes
 - ✅ Lines: 473 (exceeds 80 minimum)
 - ✅ Tests: 116 tests (exceeds 15 minimum)
@@ -117,9 +122,9 @@ $ grep -r "fetch(" src/utils/*.jsx | grep -v "fetchWithRetry" | grep -v "test"
 
 ### Key Links Verification
 
-| From | To | Via | Status |
-|------|-----|-----|--------|
-| `src/utils/AudioUtils.jsx` | `src/utils/StorageUtils.jsx` | `import { getStorage, setStorage, removeStorage } from './StorageUtils'` | ✅ PASS |
+| From                       | To                           | Via                                                                           | Status  |
+| -------------------------- | ---------------------------- | ----------------------------------------------------------------------------- | ------- |
+| `src/utils/AudioUtils.jsx` | `src/utils/StorageUtils.jsx` | `import { getStorage, setStorage, removeStorage } from './StorageUtils'`      | ✅ PASS |
 | `src/utils/CacheUtils.jsx` | `src/utils/StorageUtils.jsx` | `import { isStorageAvailable, setStorage, getStorage } from './StorageUtils'` | ✅ PASS |
 
 ### Code Quality Verification
@@ -150,17 +155,18 @@ $ grep "localStorage\|Storage" src/utils/AudioUtils.jsx
 
 ### Must_Haves Verification
 
-| Requirement | Status | Evidence | Notes |
-|-------------|--------|----------|-------|
-| "Python and JavaScript hash implementations produce identical output" | ✅ PASS | Manual testing shows both produce `1f16a85c` for `mallar3-birdle-salt-2025` | DJB2 algorithm identical |
-| "HashUtils.jsx provides canonical hashString implementation" | ✅ PASS | `/Users/zach/localcode/audio-birdle/src/utils/HashUtils.jsx` (36 lines) | Zero-padded to 8 chars, lowercase hex |
-| "Python script imports hash_bird_id from shared utility module" | ✅ PASS | `/Users/zach/localcode/audio-birdle/scripts/generate-daily-birds.py` | Lines 22-56: hash_bird_id function |
-| "Tests verify hash consistency across 100+ sample bird IDs" | ⚠️ PARTIAL | JS tests: 25 tests, Python tests: 8 hash tests | Python test has 1 outdated expected value |
-| "Zero-padding and bit handling are consistent between languages" | ✅ PASS | Both use `padStart(8, '0')` / `format(hash, '08x')` | Both produce 8-char lowercase hex |
+| Requirement                                                           | Status     | Evidence                                                                    | Notes                                     |
+| --------------------------------------------------------------------- | ---------- | --------------------------------------------------------------------------- | ----------------------------------------- |
+| "Python and JavaScript hash implementations produce identical output" | ✅ PASS    | Manual testing shows both produce `1f16a85c` for `mallar3-birdle-salt-2025` | DJB2 algorithm identical                  |
+| "HashUtils.jsx provides canonical hashString implementation"          | ✅ PASS    | `/Users/zach/localcode/audio-birdle/src/utils/HashUtils.jsx` (36 lines)     | Zero-padded to 8 chars, lowercase hex     |
+| "Python script imports hash_bird_id from shared utility module"       | ✅ PASS    | `/Users/zach/localcode/audio-birdle/scripts/generate-daily-birds.py`        | Lines 22-56: hash_bird_id function        |
+| "Tests verify hash consistency across 100+ sample bird IDs"           | ⚠️ PARTIAL | JS tests: 25 tests, Python tests: 8 hash tests                              | Python test has 1 outdated expected value |
+| "Zero-padding and bit handling are consistent between languages"      | ✅ PASS    | Both use `padStart(8, '0')` / `format(hash, '08x')`                         | Both produce 8-char lowercase hex         |
 
 ### Artifact Verification
 
 **File:** `src/utils/HashUtils.jsx`
+
 - ✅ Exists: Yes
 - ✅ Lines: 36 (exceeds 30 minimum)
 - ✅ Exports: `hashString`, `shuffleArray`
@@ -172,6 +178,7 @@ $ grep "localStorage\|Storage" src/utils/AudioUtils.jsx
   - Lowercase hexadecimal output
 
 **File:** `scripts/generate-daily-birds.py`
+
 - ✅ Exists: Yes
 - ✅ Lines: 206 (exceeds 25 minimum for hash function)
 - ✅ Contains: `def hash_bird_id(bird_id)` function (lines 22-56)
@@ -183,6 +190,7 @@ $ grep "localStorage\|Storage" src/utils/AudioUtils.jsx
   - Comprehensive docstring explaining algorithm and requirements
 
 **File:** `tests/unit/utils/HashUtils.test.jsx`
+
 - ✅ Exists: Yes
 - ✅ Lines: 188 (exceeds 40 minimum)
 - ✅ Tests: 25 tests (exceeds 10 minimum)
@@ -190,15 +198,16 @@ $ grep "localStorage\|Storage" src/utils/AudioUtils.jsx
 - ✅ Status: All passing
 
 **File:** `tests/test_generate_daily_birds.py`
+
 - ✅ Exists: Yes
 - ✅ Hash tests: 8 tests
 - ⚠️ Status: 1 test has outdated expected value
 
 ### Key Links Verification
 
-| From | To | Via | Status |
-|------|-----|-----|--------|
-| `src/utils/DailyBirdUtils.jsx` | `src/utils/HashUtils.jsx` | `import { hashString } from "./HashUtils"` | ✅ PASS |
+| From                              | To                                   | Via                                                  | Status        |
+| --------------------------------- | ------------------------------------ | ---------------------------------------------------- | ------------- |
+| `src/utils/DailyBirdUtils.jsx`    | `src/utils/HashUtils.jsx`            | `import { hashString } from "./HashUtils"`           | ✅ PASS       |
 | `scripts/generate-daily-birds.py` | `tests/test_generate_daily_birds.py` | `test_hash_consistency verifies JS and Python match` | ⚠️ TEST ISSUE |
 
 ### Cross-Language Hash Consistency Verification
@@ -233,17 +242,18 @@ $ python3 -c "SECRET_SALT = 'birdle-salt-2025'; combined = 'mallar3-birdle-salt-
 
 ### Must_Haves Verification
 
-| Requirement | Status | Evidence | Notes |
-|-------------|--------|----------|-------|
-| "All duplicate retry patterns replaced with RetryUtils" | ✅ PASS | No remaining retry patterns found via grep | Only RetryUtils.jsx contains retry logic |
-| "All duplicate storage patterns replaced with StorageUtils" | ✅ PASS | No direct localStorage in utils (except StorageUtils itself) | versionUtils.js, CacheUtils.jsx, AudioUtils.jsx all use StorageUtils |
-| "Hash implementation is consistent across Python and JavaScript" | ✅ PASS | Both produce identical output for all test cases | DJB2 algorithm verified |
-| "Codebase documentation updated with new utility modules" | ✅ PASS | AGENTS.md updated with Common Utilities section | 76 lines added, includes usage examples |
-| "No remaining duplicate utility patterns identified" | ✅ PASS | Searched for retry, storage, hash, JSON patterns | Only minor specific-feature duplications found (not critical) |
+| Requirement                                                      | Status  | Evidence                                                     | Notes                                                                |
+| ---------------------------------------------------------------- | ------- | ------------------------------------------------------------ | -------------------------------------------------------------------- |
+| "All duplicate retry patterns replaced with RetryUtils"          | ✅ PASS | No remaining retry patterns found via grep                   | Only RetryUtils.jsx contains retry logic                             |
+| "All duplicate storage patterns replaced with StorageUtils"      | ✅ PASS | No direct localStorage in utils (except StorageUtils itself) | versionUtils.js, CacheUtils.jsx, AudioUtils.jsx all use StorageUtils |
+| "Hash implementation is consistent across Python and JavaScript" | ✅ PASS | Both produce identical output for all test cases             | DJB2 algorithm verified                                              |
+| "Codebase documentation updated with new utility modules"        | ✅ PASS | AGENTS.md updated with Common Utilities section              | 76 lines added, includes usage examples                              |
+| "No remaining duplicate utility patterns identified"             | ✅ PASS | Searched for retry, storage, hash, JSON patterns             | Only minor specific-feature duplications found (not critical)        |
 
 ### Artifact Verification
 
 **File:** `AGENTS.md`
+
 - ✅ Exists: Yes
 - ✅ Lines: Updated with new utilities (76 lines added, 7 removed)
 - ✅ Contains: RetryUtils, StorageUtils, HashUtils documentation
@@ -291,13 +301,13 @@ $ grep -r "hash.*<<<.*5.*-.*hash\|DJB2" src/ scripts/ --include="*.jsx" --includ
 
 ### Must_Haves Summary
 
-| Plan | Requirements | Verified | Pass Rate | Status |
-|------|-------------|----------|-----------|--------|
-| 04-01 | 5 | 5 | 100% | ✅ COMPLETE |
-| 04-02 | 5 | 5 | 100% | ✅ COMPLETE |
-| 04-03 | 5 | 4 | 80% | ✅ COMPLETE (minor test issue) |
-| 04-04 | 5 | 5 | 100% | ✅ COMPLETE |
-| **TOTAL** | **20** | **19** | **95%** | ✅ MOSTLY COMPLETE |
+| Plan      | Requirements | Verified | Pass Rate | Status                         |
+| --------- | ------------ | -------- | --------- | ------------------------------ |
+| 04-01     | 5            | 5        | 100%      | ✅ COMPLETE                    |
+| 04-02     | 5            | 5        | 100%      | ✅ COMPLETE                    |
+| 04-03     | 5            | 4        | 80%       | ✅ COMPLETE (minor test issue) |
+| 04-04     | 5            | 5        | 100%      | ✅ COMPLETE                    |
+| **TOTAL** | **20**       | **19**   | **95%**   | ✅ MOSTLY COMPLETE             |
 
 ### Test Results Summary
 
@@ -317,49 +327,54 @@ $ npm test -- --run
 ### Code Quality Metrics
 
 #### Lines of Code
+
 - **RetryUtils.jsx:** 74 lines (new)
 - **StorageUtils.jsx:** 130 lines (enhanced from 27)
 - **HashUtils.jsx:** 36 lines (verified)
 - **Total new utility code:** 240 lines
 
 #### Test Coverage
+
 - **RetryUtils tests:** 223 lines, 21 tests
 - **StorageUtils tests:** 473 lines, 116 tests
 - **HashUtils tests:** 188 lines, 25 tests
 - **Total new test code:** 884 lines, 162 tests
 
 #### Code Duplication Eliminated
+
 - **Retry logic:** 82 lines removed from LoadGameData and DailyBirdUtils
 - **Storage logic:** 26 lines removed from AudioUtils and CacheUtils
 - **Total duplication removed:** 108 lines
 
 #### Documentation
+
 - **AGENTS.md:** 76 lines added, comprehensive utilities section
 - **Code comments:** Enhanced in all three utility modules
 
 ### Success Criteria Assessment
 
-| Criteria | Target | Actual | Status |
-|----------|--------|--------|--------|
-| RetryUtils module created | Yes | Yes (74 lines) | ✅ |
-| RetryUtils used by LoadGameData | Yes | Yes (lines 15, 18) | ✅ |
-| RetryUtils used by DailyBirdUtils | Yes | Yes (line 45) | ✅ |
-| RetryUtils test coverage | 8+ tests | 21 tests | ✅ |
-| StorageUtils unified API | Yes | Yes (6 exports) | ✅ |
-| AudioUtils uses StorageUtils | Yes | Yes (3 functions) | ✅ |
-| CacheUtils uses StorageUtils | Yes | Yes (3 functions) | ✅ |
-| StorageUtils test coverage | 15+ tests | 116 tests | ✅ |
-| Hash consistency verified | Yes | Yes (cross-language) | ✅ |
-| Hash test coverage (JS) | 10+ tests | 25 tests | ✅ |
-| Hash test coverage (Python) | 6+ tests | 8 tests | ✅ |
-| No duplicate retry patterns | Yes | Yes (verified via grep) | ✅ |
-| No duplicate storage patterns | Yes | Yes (verified via grep) | ✅ |
-| Documentation updated | Yes | Yes (AGENTS.md) | ✅ |
-| All utility tests passing | Yes | 69/69 (100%) | ✅ |
+| Criteria                          | Target    | Actual                  | Status |
+| --------------------------------- | --------- | ----------------------- | ------ |
+| RetryUtils module created         | Yes       | Yes (74 lines)          | ✅     |
+| RetryUtils used by LoadGameData   | Yes       | Yes (lines 15, 18)      | ✅     |
+| RetryUtils used by DailyBirdUtils | Yes       | Yes (line 45)           | ✅     |
+| RetryUtils test coverage          | 8+ tests  | 21 tests                | ✅     |
+| StorageUtils unified API          | Yes       | Yes (6 exports)         | ✅     |
+| AudioUtils uses StorageUtils      | Yes       | Yes (3 functions)       | ✅     |
+| CacheUtils uses StorageUtils      | Yes       | Yes (3 functions)       | ✅     |
+| StorageUtils test coverage        | 15+ tests | 116 tests               | ✅     |
+| Hash consistency verified         | Yes       | Yes (cross-language)    | ✅     |
+| Hash test coverage (JS)           | 10+ tests | 25 tests                | ✅     |
+| Hash test coverage (Python)       | 6+ tests  | 8 tests                 | ✅     |
+| No duplicate retry patterns       | Yes       | Yes (verified via grep) | ✅     |
+| No duplicate storage patterns     | Yes       | Yes (verified via grep) | ✅     |
+| Documentation updated             | Yes       | Yes (AGENTS.md)         | ✅     |
+| All utility tests passing         | Yes       | 69/69 (100%)            | ✅     |
 
 ### Issues Found
 
 #### Minor Issues
+
 1. **Python Test Expected Value Outdated**
    - **File:** `tests/test_generate_daily_birds.py`
    - **Issue:** Test expects `mallar3` to hash to `6e8e7f7c`, but correct hash is `1f16a85c`
@@ -369,6 +384,7 @@ $ npm test -- --run
    - **Verification:** Both Python and JavaScript correctly produce `1f16a85c`
 
 #### Non-Issues (Verified as Expected)
+
 1. **Uncaught Promise Rejections in RetryUtils Tests**
    - **Observation:** 2 unhandled rejection warnings in test output
    - **Analysis:** These are expected - tests verify error throwing behavior
@@ -378,6 +394,7 @@ $ npm test -- --run
 ### Recommendations
 
 #### Immediate Actions
+
 1. **Fix Python Test Expected Value**
    ```python
    # In tests/test_generate_daily_birds.py, line ~45:
@@ -389,6 +406,7 @@ $ npm test -- --run
    ```
 
 #### Future Improvements
+
 1. **Consider adding timeout to RetryUtils**
    - Current: Retry count limited, but no overall timeout
    - Enhancement: Add `maxTimeout` parameter to fail after total time exceeds threshold
@@ -410,6 +428,7 @@ $ npm test -- --run
 The phase has achieved its primary goal of creating shared utilities to eliminate duplicate patterns across the codebase. All critical must_haves have been verified through direct code inspection and testing.
 
 ### Key Achievements
+
 - ✅ **RetryUtils:** 74 lines, 21 tests, used by LoadGameData and DailyBirdUtils
 - ✅ **StorageUtils:** 130 lines, 116 tests, used by AudioUtils, CacheUtils, versionUtils
 - ✅ **HashUtils:** 36 lines, 25 tests (JS), 8 tests (Python), verified consistent across languages
@@ -417,12 +436,15 @@ The phase has achieved its primary goal of creating shared utilities to eliminat
 - ✅ **Code Quality:** 108 lines of duplication eliminated, no regressions
 
 ### Minor Issue to Address
+
 - ⚠️ Python test expected value for `mallar3` hash needs updating from `6e8e7f7c` to `1f16a85c`
 - **Impact:** 1 test failure (implementations are correct)
 - **Effort:** 1 line change
 
 ### Verification Methodology
+
 This verification report is based on:
+
 1. **Actual code inspection** - Read all source files mentioned in plans
 2. **Test execution** - Ran JavaScript and Python test suites
 3. **Grep searches** - Verified no remaining duplicate patterns

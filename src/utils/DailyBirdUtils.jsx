@@ -42,7 +42,11 @@ export const findBirdByHash = (birds, answerHash) => {
  * @returns {Promise<Array>} - Promise resolving to daily bird data array
  */
 export const loadDailyBirdData = async () => {
-  const response = await fetchWithRetry("/data/daily.json", {}, { maxRetries: 3, baseDelay: 500 });
+  const response = await fetchWithRetry(
+    "/data/daily.json",
+    {},
+    { maxRetries: 3, baseDelay: 500 },
+  );
   const data = await response.json();
 
   // Validate that data is an array

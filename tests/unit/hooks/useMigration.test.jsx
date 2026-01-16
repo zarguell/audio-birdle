@@ -1,19 +1,19 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { renderHook } from '@testing-library/react';
-import { useMigration } from '@/hooks/useMigration';
-import { useNormalGameStore } from '@/stores/normalGameStore';
-import { useHardModeStore } from '@/stores/hardModeStore';
+import { describe, it, expect, vi, beforeEach } from "vitest";
+import { renderHook } from "@testing-library/react";
+import { useMigration } from "@/hooks/useMigration";
+import { useNormalGameStore } from "@/stores/normalGameStore";
+import { useHardModeStore } from "@/stores/hardModeStore";
 
-vi.mock('@/stores/normalGameStore');
-vi.mock('@/stores/hardModeStore');
+vi.mock("@/stores/normalGameStore");
+vi.mock("@/stores/hardModeStore");
 
-describe('useMigration', () => {
+describe("useMigration", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     console.log = vi.fn();
   });
 
-  it('should run migration on mount', () => {
+  it("should run migration on mount", () => {
     const mockMigrateNormal = vi.fn();
     const mockMigrateHard = vi.fn();
 
@@ -31,7 +31,7 @@ describe('useMigration', () => {
     expect(mockMigrateHard).toHaveBeenCalled();
   });
 
-  it('should log migration status', () => {
+  it("should log migration status", () => {
     useNormalGameStore.getState.mockReturnValue({
       migrateFromOldFormat: vi.fn(),
     });
@@ -43,14 +43,12 @@ describe('useMigration', () => {
     renderHook(() => useMigration());
 
     expect(console.log).toHaveBeenCalledWith(
-      'App mounted: Checking for old data to migrate...'
+      "App mounted: Checking for old data to migrate...",
     );
-    expect(console.log).toHaveBeenCalledWith(
-      'Migration check complete'
-    );
+    expect(console.log).toHaveBeenCalledWith("Migration check complete");
   });
 
-  it('should only run once on mount', () => {
+  it("should only run once on mount", () => {
     const mockMigrateNormal = vi.fn();
     const mockMigrateHard = vi.fn();
 
@@ -71,7 +69,7 @@ describe('useMigration', () => {
     expect(mockMigrateHard).toHaveBeenCalledTimes(1);
   });
 
-  it('should get state from both stores', () => {
+  it("should get state from both stores", () => {
     useNormalGameStore.getState.mockReturnValue({
       migrateFromOldFormat: vi.fn(),
     });

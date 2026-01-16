@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { describe, it, expect, vi, beforeEach } from "vitest";
 import {
   getStoredData,
   setStoredData,
@@ -8,466 +8,496 @@ import {
   removeStorage,
   isStorageAvailable,
   getStorageKeys,
-  clearStorage
-} from '@/utils/StorageUtils'
+  clearStorage,
+} from "@/utils/StorageUtils";
 
-describe('StorageUtils', () => {
+describe("StorageUtils", () => {
   beforeEach(() => {
     // Clear localStorage before each test
-    vi.clearAllMocks()
-    global.localStorage.getItem.mockClear()
-    global.localStorage.setItem.mockClear()
-    global.localStorage.removeItem.mockClear()
-  })
+    vi.clearAllMocks();
+    global.localStorage.getItem.mockClear();
+    global.localStorage.setItem.mockClear();
+    global.localStorage.removeItem.mockClear();
+  });
 
-  describe('isStorageAvailable', () => {
-    it('should return true when localStorage is working', () => {
-      const result = isStorageAvailable()
+  describe("isStorageAvailable", () => {
+    it("should return true when localStorage is working", () => {
+      const result = isStorageAvailable();
 
-      expect(result).toBe(true)
-      expect(global.localStorage.setItem).toHaveBeenCalledWith('__storage_test__', 'test')
-      expect(global.localStorage.removeItem).toHaveBeenCalledWith('__storage_test__')
-    })
+      expect(result).toBe(true);
+      expect(global.localStorage.setItem).toHaveBeenCalledWith(
+        "__storage_test__",
+        "test",
+      );
+      expect(global.localStorage.removeItem).toHaveBeenCalledWith(
+        "__storage_test__",
+      );
+    });
 
-    it('should return false when localStorage is disabled', () => {
+    it("should return false when localStorage is disabled", () => {
       global.localStorage.setItem.mockImplementationOnce(() => {
-        throw new Error('localStorage disabled')
-      })
+        throw new Error("localStorage disabled");
+      });
 
-      const result = isStorageAvailable()
+      const result = isStorageAvailable();
 
-      expect(result).toBe(false)
-    })
+      expect(result).toBe(false);
+    });
 
-    it('should return false when localStorage.removeItem fails', () => {
+    it("should return false when localStorage.removeItem fails", () => {
       global.localStorage.removeItem.mockImplementationOnce(() => {
-        throw new Error('Remove failed')
-      })
+        throw new Error("Remove failed");
+      });
 
-      const result = isStorageAvailable()
+      const result = isStorageAvailable();
 
-      expect(result).toBe(false)
-    })
-  })
+      expect(result).toBe(false);
+    });
+  });
 
-  describe('getStorage (new API)', () => {
-    it('should retrieve and parse stored data', () => {
-      const testData = { key: 'value' }
-      global.localStorage.getItem.mockReturnValueOnce(JSON.stringify(testData))
+  describe("getStorage (new API)", () => {
+    it("should retrieve and parse stored data", () => {
+      const testData = { key: "value" };
+      global.localStorage.getItem.mockReturnValueOnce(JSON.stringify(testData));
 
-      const result = getStorage('test-key', {})
+      const result = getStorage("test-key", {});
 
-      expect(result).toEqual(testData)
-      expect(global.localStorage.getItem).toHaveBeenCalledWith('test-key')
-    })
+      expect(result).toEqual(testData);
+      expect(global.localStorage.getItem).toHaveBeenCalledWith("test-key");
+    });
 
-    it('should return default value if no data stored', () => {
-      global.localStorage.getItem.mockReturnValueOnce(null)
+    it("should return default value if no data stored", () => {
+      global.localStorage.getItem.mockReturnValueOnce(null);
 
-      const defaultValue = { default: true }
-      const result = getStorage('test-key', defaultValue)
+      const defaultValue = { default: true };
+      const result = getStorage("test-key", defaultValue);
 
-      expect(result).toEqual(defaultValue)
-    })
+      expect(result).toEqual(defaultValue);
+    });
 
-    it('should handle JSON parse errors gracefully', () => {
-      global.localStorage.getItem.mockReturnValueOnce('invalid json')
+    it("should handle JSON parse errors gracefully", () => {
+      global.localStorage.getItem.mockReturnValueOnce("invalid json");
 
-      const defaultValue = { default: true }
-      const result = getStorage('test-key', defaultValue)
+      const defaultValue = { default: true };
+      const result = getStorage("test-key", defaultValue);
 
-      expect(result).toEqual(defaultValue)
-    })
+      expect(result).toEqual(defaultValue);
+    });
 
-    it('should handle QuotaExceededError on get', () => {
-      const error = new Error('Quota exceeded')
-      error.name = 'QuotaExceededError'
+    it("should handle QuotaExceededError on get", () => {
+      const error = new Error("Quota exceeded");
+      error.name = "QuotaExceededError";
       global.localStorage.getItem.mockImplementationOnce(() => {
-        throw error
-      })
+        throw error;
+      });
 
-      const consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
-      const result = getStorage('test-key', 'default')
+      const consoleWarnSpy = vi
+        .spyOn(console, "warn")
+        .mockImplementation(() => {});
+      const result = getStorage("test-key", "default");
 
-      expect(result).toBe('default')
-      expect(consoleWarnSpy).toHaveBeenCalledWith('Failed to get test-key: Quota exceeded')
-      consoleWarnSpy.mockRestore()
-    })
+      expect(result).toBe("default");
+      expect(consoleWarnSpy).toHaveBeenCalledWith(
+        "Failed to get test-key: Quota exceeded",
+      );
+      consoleWarnSpy.mockRestore();
+    });
 
-    it('should return success boolean for successful operations', () => {
-      const testData = { key: 'value' }
+    it("should return success boolean for successful operations", () => {
+      const testData = { key: "value" };
 
-      const result = setStorage('test-key', testData)
+      const result = setStorage("test-key", testData);
 
-      expect(result).toBe(true)
-    })
+      expect(result).toBe(true);
+    });
 
-    it('should handle QuotaExceededError on set', () => {
-      const error = new Error('Quota exceeded')
-      error.name = 'QuotaExceededError'
+    it("should handle QuotaExceededError on set", () => {
+      const error = new Error("Quota exceeded");
+      error.name = "QuotaExceededError";
       global.localStorage.setItem.mockImplementationOnce(() => {
-        throw error
-      })
+        throw error;
+      });
 
-      const consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
-      const result = setStorage('test-key', { data: 'test' })
+      const consoleWarnSpy = vi
+        .spyOn(console, "warn")
+        .mockImplementation(() => {});
+      const result = setStorage("test-key", { data: "test" });
 
-      expect(result).toBe(false)
-      expect(consoleWarnSpy).toHaveBeenCalledWith('Failed to set test-key: Quota exceeded')
-      consoleWarnSpy.mockRestore()
-    })
+      expect(result).toBe(false);
+      expect(consoleWarnSpy).toHaveBeenCalledWith(
+        "Failed to set test-key: Quota exceeded",
+      );
+      consoleWarnSpy.mockRestore();
+    });
 
-    it('should remove storage successfully', () => {
-      const result = removeStorage('test-key')
+    it("should remove storage successfully", () => {
+      const result = removeStorage("test-key");
 
-      expect(result).toBe(true)
-      expect(global.localStorage.removeItem).toHaveBeenCalledWith('test-key')
-    })
+      expect(result).toBe(true);
+      expect(global.localStorage.removeItem).toHaveBeenCalledWith("test-key");
+    });
 
-    it('should return false when removeStorage fails', () => {
+    it("should return false when removeStorage fails", () => {
       global.localStorage.removeItem.mockImplementationOnce(() => {
-        throw new Error('Remove error')
-      })
+        throw new Error("Remove error");
+      });
 
-      const consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
-      const result = removeStorage('test-key')
+      const consoleWarnSpy = vi
+        .spyOn(console, "warn")
+        .mockImplementation(() => {});
+      const result = removeStorage("test-key");
 
-      expect(result).toBe(false)
-      expect(consoleWarnSpy).toHaveBeenCalledWith('Failed to remove test-key:', expect.any(Error))
-      consoleWarnSpy.mockRestore()
-    })
-  })
+      expect(result).toBe(false);
+      expect(consoleWarnSpy).toHaveBeenCalledWith(
+        "Failed to remove test-key:",
+        expect.any(Error),
+      );
+      consoleWarnSpy.mockRestore();
+    });
+  });
 
-  describe('getStorageKeys', () => {
-    it('should return all localStorage keys', () => {
-      Object.keys = vi.fn().mockReturnValue(['key1', 'key2', 'key3'])
+  describe("getStorageKeys", () => {
+    it("should return all localStorage keys", () => {
+      Object.keys = vi.fn().mockReturnValue(["key1", "key2", "key3"]);
 
-      const keys = getStorageKeys()
+      const keys = getStorageKeys();
 
-      expect(keys).toEqual(['key1', 'key2', 'key3'])
-      expect(Object.keys).toHaveBeenCalledWith(global.localStorage)
-    })
-  })
+      expect(keys).toEqual(["key1", "key2", "key3"]);
+      expect(Object.keys).toHaveBeenCalledWith(global.localStorage);
+    });
+  });
 
-  describe('clearStorage', () => {
-    it('should clear all app-specific keys', () => {
-      Object.keys = vi.fn().mockReturnValue([
-        'audio-birdle-region',
-        'audio-birdle-game-state',
-        'other-app-key'
-      ])
+  describe("clearStorage", () => {
+    it("should clear all app-specific keys", () => {
+      Object.keys = vi
+        .fn()
+        .mockReturnValue([
+          "audio-birdle-region",
+          "audio-birdle-game-state",
+          "other-app-key",
+        ]);
 
-      const cleared = clearStorage()
+      const cleared = clearStorage();
 
-      expect(cleared).toBe(2)
-      expect(global.localStorage.removeItem).toHaveBeenCalledTimes(2)
-      expect(global.localStorage.removeItem).toHaveBeenCalledWith('audio-birdle-region')
-      expect(global.localStorage.removeItem).toHaveBeenCalledWith('audio-birdle-game-state')
-    })
+      expect(cleared).toBe(2);
+      expect(global.localStorage.removeItem).toHaveBeenCalledTimes(2);
+      expect(global.localStorage.removeItem).toHaveBeenCalledWith(
+        "audio-birdle-region",
+      );
+      expect(global.localStorage.removeItem).toHaveBeenCalledWith(
+        "audio-birdle-game-state",
+      );
+    });
 
-    it('should use custom prefix when provided', () => {
-      Object.keys = vi.fn().mockReturnValue([
-        'custom-prefix-key1',
-        'custom-prefix-key2',
-        'audio-birdle-key'
-      ])
+    it("should use custom prefix when provided", () => {
+      Object.keys = vi
+        .fn()
+        .mockReturnValue([
+          "custom-prefix-key1",
+          "custom-prefix-key2",
+          "audio-birdle-key",
+        ]);
 
-      const cleared = clearStorage('custom-prefix-')
+      const cleared = clearStorage("custom-prefix-");
 
-      expect(cleared).toBe(2)
-      expect(global.localStorage.removeItem).toHaveBeenCalledTimes(2)
-    })
+      expect(cleared).toBe(2);
+      expect(global.localStorage.removeItem).toHaveBeenCalledTimes(2);
+    });
 
-    it('should return 0 when getStorageKeys fails', () => {
-      Object.keys = vi.fn().mockReturnValue([])
+    it("should return 0 when getStorageKeys fails", () => {
+      Object.keys = vi.fn().mockReturnValue([]);
 
-      const cleared = clearStorage()
+      const cleared = clearStorage();
 
-      expect(cleared).toBe(0)
-    })
-  })
+      expect(cleared).toBe(0);
+    });
+  });
 
-  describe('getStoredData (legacy API)', () => {
-    it('should retrieve and parse stored data', () => {
-      const testData = { key: 'value' }
-      global.localStorage.getItem.mockReturnValueOnce(JSON.stringify(testData))
+  describe("getStoredData (legacy API)", () => {
+    it("should retrieve and parse stored data", () => {
+      const testData = { key: "value" };
+      global.localStorage.getItem.mockReturnValueOnce(JSON.stringify(testData));
 
-      const result = getStoredData('test-key', {})
+      const result = getStoredData("test-key", {});
 
-      expect(result).toEqual(testData)
-      expect(global.localStorage.getItem).toHaveBeenCalledWith('test-key')
-    })
+      expect(result).toEqual(testData);
+      expect(global.localStorage.getItem).toHaveBeenCalledWith("test-key");
+    });
 
-    it('should return default value if no data stored', () => {
-      global.localStorage.getItem.mockReturnValueOnce(null)
+    it("should return default value if no data stored", () => {
+      global.localStorage.getItem.mockReturnValueOnce(null);
 
-      const defaultValue = { default: true }
-      const result = getStoredData('test-key', defaultValue)
+      const defaultValue = { default: true };
+      const result = getStoredData("test-key", defaultValue);
 
-      expect(result).toEqual(defaultValue)
-    })
+      expect(result).toEqual(defaultValue);
+    });
 
-    it('should return default value if stored value is empty string', () => {
-      global.localStorage.getItem.mockReturnValueOnce('')
+    it("should return default value if stored value is empty string", () => {
+      global.localStorage.getItem.mockReturnValueOnce("");
 
-      const defaultValue = 'default'
-      const result = getStoredData('test-key', defaultValue)
+      const defaultValue = "default";
+      const result = getStoredData("test-key", defaultValue);
 
-      expect(result).toBe(defaultValue)
-    })
+      expect(result).toBe(defaultValue);
+    });
 
-    it('should handle JSON parse errors gracefully', () => {
-      global.localStorage.getItem.mockReturnValueOnce('invalid json')
+    it("should handle JSON parse errors gracefully", () => {
+      global.localStorage.getItem.mockReturnValueOnce("invalid json");
 
-      const defaultValue = { default: true }
-      const result = getStoredData('test-key', defaultValue)
+      const defaultValue = { default: true };
+      const result = getStoredData("test-key", defaultValue);
 
-      expect(result).toEqual(defaultValue)
-    })
+      expect(result).toEqual(defaultValue);
+    });
 
-    it('should parse numbers correctly', () => {
-      global.localStorage.getItem.mockReturnValueOnce('42')
+    it("should parse numbers correctly", () => {
+      global.localStorage.getItem.mockReturnValueOnce("42");
 
-      const result = getStoredData('test-key', 0)
+      const result = getStoredData("test-key", 0);
 
-      expect(result).toBe(42)
-      expect(typeof result).toBe('number')
-    })
+      expect(result).toBe(42);
+      expect(typeof result).toBe("number");
+    });
 
-    it('should parse booleans correctly', () => {
-      global.localStorage.getItem.mockReturnValueOnce('true')
+    it("should parse booleans correctly", () => {
+      global.localStorage.getItem.mockReturnValueOnce("true");
 
-      const result = getStoredData('test-key', false)
+      const result = getStoredData("test-key", false);
 
-      expect(result).toBe(true)
-      expect(typeof result).toBe('boolean')
-    })
+      expect(result).toBe(true);
+      expect(typeof result).toBe("boolean");
+    });
 
-    it('should parse arrays correctly', () => {
-      const testArray = [1, 2, 3]
-      global.localStorage.getItem.mockReturnValueOnce(JSON.stringify(testArray))
+    it("should parse arrays correctly", () => {
+      const testArray = [1, 2, 3];
+      global.localStorage.getItem.mockReturnValueOnce(
+        JSON.stringify(testArray),
+      );
 
-      const result = getStoredData('test-key', [])
+      const result = getStoredData("test-key", []);
 
-      expect(result).toEqual(testArray)
-      expect(Array.isArray(result)).toBe(true)
-    })
+      expect(result).toEqual(testArray);
+      expect(Array.isArray(result)).toBe(true);
+    });
 
-    it('should parse complex objects correctly', () => {
+    it("should parse complex objects correctly", () => {
       const complexObject = {
         nested: { value: 123 },
         array: [1, 2, 3],
-        string: 'test'
-      }
-      global.localStorage.getItem.mockReturnValueOnce(JSON.stringify(complexObject))
+        string: "test",
+      };
+      global.localStorage.getItem.mockReturnValueOnce(
+        JSON.stringify(complexObject),
+      );
 
-      const result = getStoredData('test-key', {})
+      const result = getStoredData("test-key", {});
 
-      expect(result).toEqual(complexObject)
-    })
+      expect(result).toEqual(complexObject);
+    });
 
-    it('should handle null stored data', () => {
-      global.localStorage.getItem.mockReturnValueOnce(null)
+    it("should handle null stored data", () => {
+      global.localStorage.getItem.mockReturnValueOnce(null);
 
-      const result = getStoredData('test-key', 'default')
+      const result = getStoredData("test-key", "default");
 
-      expect(result).toBe('default')
-    })
-  })
+      expect(result).toBe("default");
+    });
+  });
 
-  describe('setStoredData (legacy API)', () => {
-    it('should stringify and store data', () => {
-      const testData = { key: 'value' }
+  describe("setStoredData (legacy API)", () => {
+    it("should stringify and store data", () => {
+      const testData = { key: "value" };
 
-      setStoredData('test-key', testData)
-
-      expect(global.localStorage.setItem).toHaveBeenCalledWith(
-        'test-key',
-        JSON.stringify(testData)
-      )
-    })
-
-    it('should handle string values', () => {
-      const testValue = 'test string'
-
-      setStoredData('test-key', testValue)
+      setStoredData("test-key", testData);
 
       expect(global.localStorage.setItem).toHaveBeenCalledWith(
-        'test-key',
-        JSON.stringify(testValue)
-      )
-    })
+        "test-key",
+        JSON.stringify(testData),
+      );
+    });
 
-    it('should handle number values', () => {
-      const testValue = 42
+    it("should handle string values", () => {
+      const testValue = "test string";
 
-      setStoredData('test-key', testValue)
-
-      expect(global.localStorage.setItem).toHaveBeenCalledWith(
-        'test-key',
-        '42'
-      )
-    })
-
-    it('should handle null values', () => {
-      setStoredData('test-key', null)
+      setStoredData("test-key", testValue);
 
       expect(global.localStorage.setItem).toHaveBeenCalledWith(
-        'test-key',
-        'null'
-      )
-    })
+        "test-key",
+        JSON.stringify(testValue),
+      );
+    });
 
-    it('should handle array values', () => {
-      const testArray = [1, 2, 3]
+    it("should handle number values", () => {
+      const testValue = 42;
 
-      setStoredData('test-key', testArray)
+      setStoredData("test-key", testValue);
 
       expect(global.localStorage.setItem).toHaveBeenCalledWith(
-        'test-key',
-        '[1,2,3]'
-      )
-    })
+        "test-key",
+        "42",
+      );
+    });
 
-    it('should handle storage errors gracefully', () => {
+    it("should handle null values", () => {
+      setStoredData("test-key", null);
+
+      expect(global.localStorage.setItem).toHaveBeenCalledWith(
+        "test-key",
+        "null",
+      );
+    });
+
+    it("should handle array values", () => {
+      const testArray = [1, 2, 3];
+
+      setStoredData("test-key", testArray);
+
+      expect(global.localStorage.setItem).toHaveBeenCalledWith(
+        "test-key",
+        "[1,2,3]",
+      );
+    });
+
+    it("should handle storage errors gracefully", () => {
       global.localStorage.setItem.mockImplementationOnce(() => {
-        throw new Error('Storage quota exceeded')
-      })
+        throw new Error("Storage quota exceeded");
+      });
 
-      expect(() => setStoredData('test-key', { data: 'test' })).not.toThrow()
-    })
+      expect(() => setStoredData("test-key", { data: "test" })).not.toThrow();
+    });
 
-    it('should stringify complex objects correctly', () => {
+    it("should stringify complex objects correctly", () => {
       const complexObject = {
         nested: { value: 123 },
-        array: [1, 2, 3]
-      }
+        array: [1, 2, 3],
+      };
 
-      setStoredData('test-key', complexObject)
+      setStoredData("test-key", complexObject);
 
-      const stored = JSON.parse(global.localStorage.setItem.mock.calls[0][1])
-      expect(stored).toEqual(complexObject)
-    })
-  })
+      const stored = JSON.parse(global.localStorage.setItem.mock.calls[0][1]);
+      expect(stored).toEqual(complexObject);
+    });
+  });
 
-  describe('removeStoredData (legacy API)', () => {
-    it('should remove data from storage', () => {
-      removeStoredData('test-key')
+  describe("removeStoredData (legacy API)", () => {
+    it("should remove data from storage", () => {
+      removeStoredData("test-key");
 
-      expect(global.localStorage.removeItem).toHaveBeenCalledWith('test-key')
-    })
+      expect(global.localStorage.removeItem).toHaveBeenCalledWith("test-key");
+    });
 
-    it('should handle removal errors gracefully', () => {
+    it("should handle removal errors gracefully", () => {
       global.localStorage.removeItem.mockImplementationOnce(() => {
-        throw new Error('Remove error')
-      })
+        throw new Error("Remove error");
+      });
 
-      expect(() => removeStoredData('test-key')).not.toThrow()
-    })
+      expect(() => removeStoredData("test-key")).not.toThrow();
+    });
 
-    it('should handle multiple removals', () => {
-      removeStoredData('key1')
-      removeStoredData('key2')
-      removeStoredData('key3')
+    it("should handle multiple removals", () => {
+      removeStoredData("key1");
+      removeStoredData("key2");
+      removeStoredData("key3");
 
-      expect(global.localStorage.removeItem).toHaveBeenCalledTimes(3)
-      expect(global.localStorage.removeItem).toHaveBeenNthCalledWith(1, 'key1')
-      expect(global.localStorage.removeItem).toHaveBeenNthCalledWith(2, 'key2')
-      expect(global.localStorage.removeItem).toHaveBeenNthCalledWith(3, 'key3')
-    })
-  })
+      expect(global.localStorage.removeItem).toHaveBeenCalledTimes(3);
+      expect(global.localStorage.removeItem).toHaveBeenNthCalledWith(1, "key1");
+      expect(global.localStorage.removeItem).toHaveBeenNthCalledWith(2, "key2");
+      expect(global.localStorage.removeItem).toHaveBeenNthCalledWith(3, "key3");
+    });
+  });
 
-  describe('API backward compatibility', () => {
-    it('should have getStoredData work identically to getStorage', () => {
-      const testData = { value: 'test' }
-      global.localStorage.getItem.mockReturnValueOnce(JSON.stringify(testData))
+  describe("API backward compatibility", () => {
+    it("should have getStoredData work identically to getStorage", () => {
+      const testData = { value: "test" };
+      global.localStorage.getItem.mockReturnValueOnce(JSON.stringify(testData));
 
-      const legacyResult = getStoredData('test-key', {})
-      expect(legacyResult).toEqual(testData)
-    })
+      const legacyResult = getStoredData("test-key", {});
+      expect(legacyResult).toEqual(testData);
+    });
 
-    it('should have setStoredData work identically to setStorage', () => {
-      const testData = { value: 'test' }
+    it("should have setStoredData work identically to setStorage", () => {
+      const testData = { value: "test" };
 
-      setStoredData('test-key', testData)
+      setStoredData("test-key", testData);
 
       expect(global.localStorage.setItem).toHaveBeenCalledWith(
-        'test-key',
-        JSON.stringify(testData)
-      )
-    })
+        "test-key",
+        JSON.stringify(testData),
+      );
+    });
 
-    it('should have removeStoredData work identically to removeStorage', () => {
-      removeStoredData('test-key')
+    it("should have removeStoredData work identically to removeStorage", () => {
+      removeStoredData("test-key");
 
-      expect(global.localStorage.removeItem).toHaveBeenCalledWith('test-key')
-    })
-  })
+      expect(global.localStorage.removeItem).toHaveBeenCalledWith("test-key");
+    });
+  });
 
-  describe('integration scenarios', () => {
-    it('should store and retrieve data correctly with new API', () => {
-      const testData = { user: 'test', score: 100 }
+  describe("integration scenarios", () => {
+    it("should store and retrieve data correctly with new API", () => {
+      const testData = { user: "test", score: 100 };
 
-      setStorage('game-state', testData)
+      setStorage("game-state", testData);
 
-      global.localStorage.getItem.mockReturnValueOnce(JSON.stringify(testData))
-      const retrieved = getStorage('game-state', {})
+      global.localStorage.getItem.mockReturnValueOnce(JSON.stringify(testData));
+      const retrieved = getStorage("game-state", {});
 
-      expect(retrieved).toEqual(testData)
-    })
+      expect(retrieved).toEqual(testData);
+    });
 
-    it('should handle update cycle with new API', () => {
-      const data1 = { score: 100 }
-      const data2 = { score: 200 }
+    it("should handle update cycle with new API", () => {
+      const data1 = { score: 100 };
+      const data2 = { score: 200 };
 
-      setStorage('score', data1)
+      setStorage("score", data1);
 
-      global.localStorage.getItem.mockReturnValueOnce(JSON.stringify(data1))
-      const retrieved1 = getStorage('score', {})
+      global.localStorage.getItem.mockReturnValueOnce(JSON.stringify(data1));
+      const retrieved1 = getStorage("score", {});
 
-      expect(retrieved1).toEqual(data1)
+      expect(retrieved1).toEqual(data1);
 
-      setStorage('score', data2)
+      setStorage("score", data2);
 
-      global.localStorage.getItem.mockReturnValueOnce(JSON.stringify(data2))
-      const retrieved2 = getStorage('score', {})
+      global.localStorage.getItem.mockReturnValueOnce(JSON.stringify(data2));
+      const retrieved2 = getStorage("score", {});
 
-      expect(retrieved2).toEqual(data2)
-    })
+      expect(retrieved2).toEqual(data2);
+    });
 
-    it('should handle remove and default cycle with new API', () => {
-      const testData = { value: 'test' }
+    it("should handle remove and default cycle with new API", () => {
+      const testData = { value: "test" };
 
-      setStorage('temp-data', testData)
-      removeStorage('temp-data')
+      setStorage("temp-data", testData);
+      removeStorage("temp-data");
 
-      global.localStorage.getItem.mockReturnValueOnce(null)
-      const retrieved = getStorage('temp-data', { default: true })
+      global.localStorage.getItem.mockReturnValueOnce(null);
+      const retrieved = getStorage("temp-data", { default: true });
 
-      expect(retrieved).toEqual({ default: true })
-    })
+      expect(retrieved).toEqual({ default: true });
+    });
 
-    it('should preserve data types through storage cycle', () => {
+    it("should preserve data types through storage cycle", () => {
       const original = {
-        string: 'text',
+        string: "text",
         number: 42,
         boolean: true,
         array: [1, 2, 3],
         null: null,
-        nested: { value: 123 }
-      }
+        nested: { value: 123 },
+      };
 
-      setStorage('complex', original)
+      setStorage("complex", original);
 
-      global.localStorage.getItem.mockReturnValueOnce(JSON.stringify(original))
-      const retrieved = getStorage('complex', {})
+      global.localStorage.getItem.mockReturnValueOnce(JSON.stringify(original));
+      const retrieved = getStorage("complex", {});
 
-      expect(retrieved).toEqual(original)
-      expect(typeof retrieved.string).toBe('string')
-      expect(typeof retrieved.number).toBe('number')
-      expect(typeof retrieved.boolean).toBe('boolean')
-      expect(Array.isArray(retrieved.array)).toBe(true)
-      expect(retrieved.null).toBeNull()
-    })
-  })
-})
+      expect(retrieved).toEqual(original);
+      expect(typeof retrieved.string).toBe("string");
+      expect(typeof retrieved.number).toBe("number");
+      expect(typeof retrieved.boolean).toBe("boolean");
+      expect(Array.isArray(retrieved.array)).toBe(true);
+      expect(retrieved.null).toBeNull();
+    });
+  });
+});

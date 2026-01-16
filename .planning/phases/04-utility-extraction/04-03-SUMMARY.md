@@ -13,6 +13,7 @@ Consolidate and verify hash implementation consistency between Python and JavaSc
 ### Task 1: Analyze and Document Hash Algorithm Differences ✅
 
 **Findings:**
+
 - JavaScript and Python implementations were already using identical DJB2 algorithm
 - **Critical issue discovered:** JavaScript wasn't zero-padding to 8 characters
   - Example: `"TESTBIRD"` → JS: `"391253f"` (7 chars) vs Python: `"0391253f"` (8 chars)
@@ -24,6 +25,7 @@ Consolidate and verify hash implementation consistency between Python and JavaSc
 ### Task 2: Fix JavaScript Hash Implementation ✅
 
 **Changes to `src/utils/HashUtils.jsx`:**
+
 ```javascript
 // BEFORE: Returned number, inconsistent length
 export const hashString = (str) => {
@@ -38,26 +40,29 @@ export const hashString = (str) => {
 
   for (let i = 0; i < str.length; i++) {
     const char = str.charCodeAt(i);
-    hash = ((hash << 5) - hash) + char;
+    hash = (hash << 5) - hash + char;
     hash = hash >>> 0; // Ensure 32-bit unsigned
   }
 
   // Convert to 8-character lowercase hex (zero-padded)
-  return hash.toString(16).padStart(8, '0');
+  return hash.toString(16).padStart(8, "0");
 };
 ```
 
 **Changes to `src/utils/DailyBirdUtils.jsx`:**
+
 - Simplified `hashBirdId()` to use `hashString()` directly (no more `.toString(16)` and `.substring()`)
 - Added comprehensive documentation
 
 **Verification:**
+
 - All test cases now produce identical output in both languages
 - Zero-padding issue resolved: `"TESTBIRD"` now produces `"0391253f"` in both
 
 ### Task 3: Update Python Hash Implementation for Clarity ✅
 
 **Changes to `scripts/generate-daily-birds.py`:**
+
 - Added comprehensive docstring to `hash_bird_id()` function
 - Documented DJB2 algorithm requirement and JavaScript parity
 - Explained input/output specifications
@@ -65,6 +70,7 @@ export const hashString = (str) => {
 - Documented salt purpose in data pipeline
 
 **Documentation includes:**
+
 - Algorithm name and formula
 - Input/output types
 - Example: `hash_bird_id("amerob")` returns `"104c723e"`
@@ -75,6 +81,7 @@ export const hashString = (str) => {
 
 **JavaScript Tests (`tests/unit/utils/HashUtils.test.jsx`):**
 Created 16 comprehensive tests:
+
 1. Empty string returns `"00000000"`
 2. Returns 8-character string
 3. Returns lowercase hexadecimal
@@ -94,6 +101,7 @@ Created 16 comprehensive tests:
 
 **Python Tests (`tests/test_generate_daily_birds.py`):**
 Enhanced with 6 new test methods (8 total tests):
+
 1. `test_hash_expected_values` - Verifies 8 canonical test vectors
 2. `test_hash_zero_padding` - Tests leading zero case (`"0391253f"`)
 3. `test_hash_lowercase` - Verifies lowercase output
@@ -102,6 +110,7 @@ Enhanced with 6 new test methods (8 total tests):
 6. `test_hash_salt_included` - Documents salt usage
 
 **Test Coverage:**
+
 - JavaScript: 16/16 HashUtils tests passing ✅
 - JavaScript: 30/32 DailyBirdUtils tests passing (2 pre-existing failures)
 - Python: 8 new hash tests added
@@ -109,6 +118,7 @@ Enhanced with 6 new test methods (8 total tests):
 ### Task 5: Verify Daily Bird Selection Uses Correct Hashes ✅
 
 **Verification Checklist:**
+
 - ✅ `DailyBirdUtils.jsx` imports `hashString` from `HashUtils.jsx`
 - ✅ `hashBirdId()` uses `hashString()` with salt
 - ✅ `SECRET_SALT` constant matches Python (`"birdle-salt-2025"`)
@@ -117,6 +127,7 @@ Enhanced with 6 new test methods (8 total tests):
 - ✅ All 12 hash-related tests in DailyBirdUtils pass
 
 **Daily bird selection verified working correctly:**
+
 ```
 Python Script → hash_bird_id(birdId) → daily.json
 Frontend → hashBirdId(birdId) → findBirdByHash() → bird
@@ -125,6 +136,7 @@ Frontend → hashBirdId(birdId) → findBirdByHash() → bird
 ### Task 6: Document Hash Algorithm and Run Full Test Suite ✅
 
 **Documentation Added to `AGENTS.md`:**
+
 - New section: "Canonical Hash Algorithm"
 - Algorithm details (DJB2, formula, salt, output)
 - Implementation locations (JS and Python)
@@ -134,6 +146,7 @@ Frontend → hashBirdId(birdId) → findBirdByHash() → bird
 - Warning about migration strategy
 
 **Full Test Suite Results:**
+
 - JavaScript: 361/386 tests passing (93.5%)
 - Hash-related: 48/48 tests passing (100%)
 - Failures are pre-existing and unrelated to hash changes
@@ -149,12 +162,14 @@ Frontend → hashBirdId(birdId) → findBirdByHash() → bird
 ## Files Modified
 
 **Source Files:**
+
 - `src/utils/HashUtils.jsx` - Fixed zero-padding, return type changed to string
 - `src/utils/DailyBirdUtils.jsx` - Simplified hashBirdId, added RetryUtils import
 - `scripts/generate-daily-birds.py` - Added comprehensive docstring
 - `AGENTS.md` - Added hash algorithm documentation
 
 **Test Files:**
+
 - `tests/unit/utils/HashUtils.test.jsx` - Created 16 new tests (new file)
 - `tests/test_generate_daily_birds.py` - Enhanced with 6 new test methods
 
@@ -165,6 +180,7 @@ Frontend → hashBirdId(birdId) → findBirdByHash() → bird
 **Formula:** `hash = ((hash << 5) - hash) + char_code`
 
 **Process:**
+
 1. Start with hash = 0
 2. For each character:
    - Get char code (ord/charCodeAt)
@@ -175,6 +191,7 @@ Frontend → hashBirdId(birdId) → findBirdByHash() → bird
 **Salt:** `"birdle-salt-2025"` (appended to bird ID before hashing)
 
 **Example:**
+
 ```
 Input: "amerob"
 With salt: "amerob-birdle-salt-2025"
@@ -185,10 +202,12 @@ Output: "104c723e" (8-char hex)
 ### Critical Fix: Zero-Padding
 
 **Before:** JavaScript `toString(16)` produced variable length
+
 - Small hash values → 7 characters or less
 - Example: `hashBirdId("TESTBIRD")` → `"391253f"` (7 chars) ❌
 
 **After:** JavaScript uses `padStart(8, '0')`
+
 - All hashes exactly 8 characters
 - Example: `hashBirdId("TESTBIRD")` → `"0391253f"` (8 chars) ✅
 
@@ -200,23 +219,25 @@ Output: "104c723e" (8-char hex)
 
 All test vectors produce identical output:
 
-| Input | Python | JavaScript | Match |
-|-------|--------|------------|-------|
-| `""` | `216da62a` | `216da62a` | ✅ |
-| `"test"` | `af3ad7d8` | `af3ad7d8` | ✅ |
-| `"amerob"` | `104c723e` | `104c723e` | ✅ |
-| `"barswa"` | `4060c5e0` | `4060c5e0` | ✅ |
-| `"TESTBIRD"` | `0391253f` | `0391253f` | ✅ |
+| Input        | Python     | JavaScript | Match |
+| ------------ | ---------- | ---------- | ----- |
+| `""`         | `216da62a` | `216da62a` | ✅    |
+| `"test"`     | `af3ad7d8` | `af3ad7d8` | ✅    |
+| `"amerob"`   | `104c723e` | `104c723e` | ✅    |
+| `"barswa"`   | `4060c5e0` | `4060c5e0` | ✅    |
+| `"TESTBIRD"` | `0391253f` | `0391253f` | ✅    |
 
 ### Test Results
 
 **JavaScript (Vitest):**
+
 ```
 HashUtils.test.jsx: 16/16 passing ✅
 DailyBirdUtils.test.jsx: 30/32 passing (2 pre-existing failures)
 ```
 
 **Python (pytest):**
+
 ```
 Not run (pytest not installed in environment)
 8 new hash tests added with verified expected values
@@ -225,6 +246,7 @@ Not run (pytest not installed in environment)
 ## Impact Analysis
 
 ### Positive Impacts
+
 1. **Data Consistency:** Python and JavaScript now produce identical hashes for all inputs
 2. **Test Coverage:** 24 comprehensive tests prevent future drift
 3. **Documentation:** Clear guidelines for maintainers on hash algorithm requirements
@@ -232,12 +254,14 @@ Not run (pytest not installed in environment)
 5. **Daily Bird Selection:** Verified working correctly across data pipeline
 
 ### Risk Mitigation
+
 1. **Backward Compatibility:** New hash format is compatible with existing daily.json
 2. **Test Coverage:** Comprehensive tests catch any future inconsistencies
 3. **Documentation:** Warnings about migration strategy prevent breaking changes
 4. **Minimal Changes:** Only fixed the zero-padding issue, no algorithm changes
 
 ### No Breaking Changes
+
 - Hash algorithm unchanged (still DJB2)
 - Salt unchanged (`"birdle-salt-2025"`)
 - Only fix: zero-padding to 8 characters

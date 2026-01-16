@@ -7,12 +7,12 @@ export function useMigration() {
     const normalStore = useNormalGameStore.getState();
     const hardStore = useHardModeStore.getState();
 
-    console.log('App mounted: Checking for old data to migrate...');
+    console.log("App mounted: Checking for old data to migrate...");
 
     normalStore.migrateFromOldFormat();
     hardStore.migrateFromOldFormat();
 
-    console.log('Migration check complete');
+    console.log("Migration check complete");
   }, []);
 }
 

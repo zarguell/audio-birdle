@@ -1,5 +1,5 @@
-import { create } from 'zustand';
-import { persist, createJSONStorage } from 'zustand/middleware';
+import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
 
 /**
  * Taxonomic score for hard mode guesses
@@ -28,7 +28,7 @@ export interface HardModeGuess {
 export interface HardModeDailyGame {
   region: string;
   date: string;
-  mode: 'hard';
+  mode: "hard";
   guesses: HardModeGuess[];
   completed: boolean;
   won: boolean;
@@ -92,7 +92,12 @@ const createInitialStats = (): HardModeGameStats => ({
 /**
  * Helper function to update stats when a game completes
  */
-function updateStats(state: any, region: string, won: boolean, guesses: number): HardModeGameStats {
+function updateStats(
+  state: any,
+  region: string,
+  won: boolean,
+  guesses: number,
+): HardModeGameStats {
   const newStats = { ...state.stats };
 
   newStats.totalGamesPlayed++;
@@ -116,7 +121,8 @@ function updateStats(state: any, region: string, won: boolean, guesses: number):
   const regionStats = newStats.regionStats[region];
   regionStats.totalGuesses += guesses;
   regionStats.gamesPlayed++;
-  regionStats.averageGuesses = regionStats.totalGuesses / regionStats.gamesPlayed;
+  regionStats.averageGuesses =
+    regionStats.totalGuesses / regionStats.gamesPlayed;
 
   if (won) {
     regionStats.gamesWon++;
@@ -135,7 +141,11 @@ const migrateHardModeState = (persistedState: any, version: number): any => {
   }
 
   // Migrate from old format (version 0 or 1)
-  console.log('Migrating hard mode state from version', version, 'to version 2');
+  console.log(
+    "Migrating hard mode state from version",
+    version,
+    "to version 2",
+  );
 
   const newState: HardModeState = {
     hardModeGames: persistedState.hardModeGames || {},
@@ -182,7 +192,7 @@ export const useHardModeStore = create<HardModeState & HardModeActions>()(
       /**
        * Process a hard mode guess with taxonomic feedback
        */
-       processHardModeGuess: (key: string, guess: HardModeGuess) => {
+      processHardModeGuess: (key: string, guess: HardModeGuess) => {
         set((state) => {
           const hardModeGame = state.hardModeGames[key];
           if (!hardModeGame) {
@@ -202,7 +212,10 @@ export const useHardModeStore = create<HardModeState & HardModeActions>()(
           };
 
           // Check if game is completed and update stats accordingly
-          if (guess.correct || updatedGame.guesses.length >= updatedGame.maxGuesses) {
+          if (
+            guess.correct ||
+            updatedGame.guesses.length >= updatedGame.maxGuesses
+          ) {
             updatedGame.completed = true;
             updatedGame.won = guess.correct;
             updatedGame.endTime = new Date().toISOString();
@@ -213,7 +226,12 @@ export const useHardModeStore = create<HardModeState & HardModeActions>()(
                 ...state.hardModeGames,
                 [key]: updatedGame,
               },
-              stats: updateStats(state, hardModeGame.region, updatedGame.won, updatedGame.guesses.length),
+              stats: updateStats(
+                state,
+                hardModeGame.region,
+                updatedGame.won,
+                updatedGame.guesses.length,
+              ),
             };
           }
 
@@ -237,7 +255,10 @@ export const useHardModeStore = create<HardModeState & HardModeActions>()(
           if (won) {
             newStats.totalGamesWon++;
             newStats.currentStreak++;
-            newStats.maxStreak = Math.max(newStats.maxStreak, newStats.currentStreak);
+            newStats.maxStreak = Math.max(
+              newStats.maxStreak,
+              newStats.currentStreak,
+            );
           } else {
             newStats.currentStreak = 0;
           }
@@ -254,7 +275,8 @@ export const useHardModeStore = create<HardModeState & HardModeActions>()(
           const regionStats = newStats.regionStats[region];
           regionStats.totalGuesses += guesses;
           regionStats.gamesPlayed++;
-          regionStats.averageGuesses = regionStats.totalGuesses / regionStats.gamesPlayed;
+          regionStats.averageGuesses =
+            regionStats.totalGuesses / regionStats.gamesPlayed;
 
           if (won) {
             regionStats.gamesWon++;
@@ -278,17 +300,17 @@ export const useHardModeStore = create<HardModeState & HardModeActions>()(
        * Reads from the old v1/v0 format and converts to v2 multi-region format
        */
       migrateFromOldFormat: () => {
-        const OLD_STORAGE_KEY = 'audio-birdle-hard-mode';
+        const OLD_STORAGE_KEY = "audio-birdle-hard-mode";
         const oldState = localStorage.getItem(OLD_STORAGE_KEY);
 
         if (!oldState) {
-          console.log('No old hard mode state found to migrate');
+          console.log("No old hard mode state found to migrate");
           return;
         }
 
         try {
           const parsed = JSON.parse(oldState);
-          console.log('Migrating old hard mode state:', parsed);
+          console.log("Migrating old hard mode state:", parsed);
 
           let newHardModeGames: Record<string, HardModeDailyGame> = {};
           let newStats = createInitialStats();
@@ -299,7 +321,7 @@ export const useHardModeStore = create<HardModeState & HardModeActions>()(
             const migratedGame: HardModeDailyGame = {
               region: parsed.region,
               date: parsed.lastPlayed,
-              mode: 'hard',
+              mode: "hard",
               guesses: parsed.guesses || [],
               completed: parsed.completed || false,
               won: parsed.won || false,
@@ -325,7 +347,10 @@ export const useHardModeStore = create<HardModeState & HardModeActions>()(
               };
             }
 
-            console.log('Migrated v0 hard mode state to v2:', { newHardModeGames, newStats });
+            console.log("Migrated v0 hard mode state to v2:", {
+              newHardModeGames,
+              newStats,
+            });
           }
           // Handle version 1 (already has hardModeGames)
           else if (parsed.hardModeGames) {
@@ -342,7 +367,10 @@ export const useHardModeStore = create<HardModeState & HardModeActions>()(
               };
             }
 
-            console.log('Migrated v1 hard mode state to v2:', { newHardModeGames, newStats });
+            console.log("Migrated v1 hard mode state to v2:", {
+              newHardModeGames,
+              newStats,
+            });
           }
 
           // Update store with migrated data
@@ -353,21 +381,24 @@ export const useHardModeStore = create<HardModeState & HardModeActions>()(
 
           // Clean up old localStorage key after successful migration
           // We keep it as backup for now - can be removed in future phase
-          console.log('Hard mode migration complete. Old key preserved as backup:', OLD_STORAGE_KEY);
+          console.log(
+            "Hard mode migration complete. Old key preserved as backup:",
+            OLD_STORAGE_KEY,
+          );
         } catch (error) {
-          console.error('Failed to migrate old hard mode state:', error);
+          console.error("Failed to migrate old hard mode state:", error);
           // Don't delete old state if migration failed - user can try again
         }
       },
     }),
     {
-      name: 'audio-birdle-hard-mode',
+      name: "audio-birdle-hard-mode",
       storage: createJSONStorage(() => localStorage),
       version: 2,
       migrate: migrateHardModeState,
       onRehydrateStorage: () => (state) => {
-        console.log('Hard mode store rehydrated', state);
+        console.log("Hard mode store rehydrated", state);
       },
-    }
-  )
+    },
+  ),
 );

@@ -49,7 +49,8 @@ export const getCachedVersion = (lastModifiedKey, etagKey) => ({
  * @returns {boolean} - True if versions differ (update available)
  */
 export const hasVersionChanged = (serverVersion, cachedVersion) =>
-  (serverVersion.lastModified && serverVersion.lastModified !== cachedVersion.lastModified) ||
+  (serverVersion.lastModified &&
+    serverVersion.lastModified !== cachedVersion.lastModified) ||
   (serverVersion.etag && serverVersion.etag !== cachedVersion.etag);
 
 /**

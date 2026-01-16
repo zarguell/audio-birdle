@@ -1,12 +1,12 @@
 // Updated GameLogic.js with deterministic answer generation
 // Now delegates to Zustand stores for state management while maintaining backward compatibility
 
-import { getTodaysBirdFromDaily } from './DailyBirdUtils';
-import { hashString } from './HashUtils';
-import { GAME_CONFIG } from './Constants';
-import { compareTaxonomy } from './TaxonomyUtils';
-import { useNormalGameStore } from '../stores/normalGameStore';
-import { useHardModeStore } from '../stores/hardModeStore';
+import { getTodaysBirdFromDaily } from "./DailyBirdUtils";
+import { hashString } from "./HashUtils";
+import { GAME_CONFIG } from "./Constants";
+import { compareTaxonomy } from "./TaxonomyUtils";
+import { useNormalGameStore } from "../stores/normalGameStore";
+import { useHardModeStore } from "../stores/hardModeStore";
 
 /**
  * Create a unique key for a region-date combination
@@ -33,15 +33,15 @@ export const createInitialGameState = () => {
       averageGuesses: 0,
       currentStreak: 0,
       maxStreak: 0,
-      regionStats: {} // Stats broken down by region
+      regionStats: {}, // Stats broken down by region
     },
     // Last played info for quick reference
     lastPlayed: {
       region: null,
-      date: null
+      date: null,
     },
     // Version for future migrations
-    version: 2
+    version: 2,
   };
 };
 
@@ -69,17 +69,17 @@ const needsMigration = (gameState) => {
  * @returns {Object} - Migrated game state
  */
 const migrateGameState = (oldGameState) => {
-  console.log('Migrating old game state format to new format');
+  console.log("Migrating old game state format to new format");
 
   const newGameState = createInitialGameState();
 
   // If old state exists and has some structure, try to preserve what we can
-  if (oldGameState && typeof oldGameState === 'object') {
+  if (oldGameState && typeof oldGameState === "object") {
     // Preserve existing stats if they exist
     if (oldGameState.stats) {
       newGameState.stats = {
         ...newGameState.stats,
-        ...oldGameState.stats
+        ...oldGameState.stats,
       };
 
       // Ensure regionStats exists
@@ -92,14 +92,15 @@ const migrateGameState = (oldGameState) => {
     // This handles various old formats that might exist
     if (oldGameState.guesses || oldGameState.completed !== undefined) {
       // Old format had game data at root level
-      const today = new Date().toISOString().split('T')[0];
-      const defaultRegion = 'us'; // Assume US region for old games
+      const today = new Date().toISOString().split("T")[0];
+      const defaultRegion = "us"; // Assume US region for old games
 
       const migratedGame = createInitialDailyGameState(defaultRegion, today);
       migratedGame.guesses = oldGameState.guesses || [];
       migratedGame.completed = oldGameState.completed || false;
       migratedGame.won = oldGameState.won || false;
-      migratedGame.startTime = oldGameState.startTime || new Date().toISOString();
+      migratedGame.startTime =
+        oldGameState.startTime || new Date().toISOString();
       migratedGame.endTime = oldGameState.endTime || null;
       migratedGame.birdId = oldGameState.birdId || null;
 
@@ -108,7 +109,7 @@ const migrateGameState = (oldGameState) => {
 
       newGameState.lastPlayed = {
         region: defaultRegion,
-        date: today
+        date: today,
       };
     }
 
@@ -116,7 +117,7 @@ const migrateGameState = (oldGameState) => {
     if (oldGameState.lastPlayed) {
       newGameState.lastPlayed = {
         ...newGameState.lastPlayed,
-        ...oldGameState.lastPlayed
+        ...oldGameState.lastPlayed,
       };
     }
   }
@@ -160,7 +161,7 @@ export const createInitialDailyGameState = (region, date) => {
     maxGuesses: GAME_CONFIG.MAX_GUESSES,
     startTime: new Date().toISOString(),
     endTime: null,
-    birdId: null // Will be set when the daily bird is determined
+    birdId: null, // Will be set when the daily bird is determined
   };
 };
 
@@ -226,7 +227,13 @@ export const hasPlayedRegionDate = (gameState, region, date) => {
  * @param {string} correctBirdId - ID of the correct bird
  * @returns {Object} - Updated game state object (for backward compatibility with tests)
  */
-export const processGuess = (gameState, region, date, guessedBirdId, correctBirdId) => {
+export const processGuess = (
+  gameState,
+  region,
+  date,
+  guessedBirdId,
+  correctBirdId,
+) => {
   const key = createRegionDateKey(region, date);
   const isCorrect = guessedBirdId === correctBirdId;
 
@@ -248,10 +255,10 @@ export const processGuess = (gameState, region, date, guessedBirdId, correctBird
 
   return {
     dailyGames: {
-      [key]: updatedGame
+      [key]: updatedGame,
     },
     stats: storeStats,
-    version: 2
+    version: 2,
   };
 };
 
@@ -261,7 +268,8 @@ export const processGuess = (gameState, region, date, guessedBirdId, correctBird
  * @param {string} region - Region identifier
  * @param {Object} dailyGame - Completed daily game state
  */
-const updateUserStats = (gameState, region, dailyGame) => { // eslint-disable-line no-unused-vars -- Kept for backward compatibility
+const updateUserStats = (gameState, region, dailyGame) => {
+  // eslint-disable-line no-unused-vars -- Kept for backward compatibility
   const stats = gameState.stats;
 
   // Update overall stats
@@ -272,7 +280,7 @@ const updateUserStats = (gameState, region, dailyGame) => { // eslint-disable-li
 
   // Update average guesses
   const totalGuesses = Object.values(gameState.dailyGames)
-    .filter(game => game.completed)
+    .filter((game) => game.completed)
     .reduce((sum, game) => sum + game.guesses.length, 0);
   stats.averageGuesses = totalGuesses / stats.totalGamesPlayed;
 
@@ -289,7 +297,7 @@ const updateUserStats = (gameState, region, dailyGame) => { // eslint-disable-li
     stats.regionStats[region] = {
       gamesPlayed: 0,
       gamesWon: 0,
-      averageGuesses: 0
+      averageGuesses: 0,
     };
   }
 
@@ -301,7 +309,7 @@ const updateUserStats = (gameState, region, dailyGame) => { // eslint-disable-li
 
   // Calculate region-specific average
   const regionTotalGuesses = Object.values(gameState.dailyGames)
-    .filter(game => game.completed && game.region === region)
+    .filter((game) => game.completed && game.region === region)
     .reduce((sum, game) => sum + game.guesses.length, 0);
   regionStats.averageGuesses = regionTotalGuesses / regionStats.gamesPlayed;
 };
@@ -350,20 +358,22 @@ export const getDailyBirdWithFallback = async (region, birds, date) => {
     }
 
     // No fallback - return error so UI can handle appropriately
-    console.error(`Daily bird lookup failed for ${region} on ${date} - no matching bird found`);
+    console.error(
+      `Daily bird lookup failed for ${region} on ${date} - no matching bird found`,
+    );
     return {
       bird: null,
       success: false,
-      error: 'hash_not_found',
-      message: 'Daily challenge data is out of sync. A refresh is needed.'
+      error: "hash_not_found",
+      message: "Daily challenge data is out of sync. A refresh is needed.",
     };
   } catch (error) {
-    console.error('Error in getDailyBirdWithFallback:', error);
+    console.error("Error in getDailyBirdWithFallback:", error);
     return {
       bird: null,
       success: false,
-      error: 'fetch_failed',
-      message: 'Failed to load daily challenge. Please check your connection.'
+      error: "fetch_failed",
+      message: "Failed to load daily challenge. Please check your connection.",
     };
   }
 };
@@ -410,7 +420,13 @@ const deterministicShuffle = (array, seed) => {
  * @param {number} optionCount - Number of options to generate
  * @returns {Array} - Array of bird options including the correct answer
  */
-export const generateAnswerOptions = (region, birds, date, correctBird, optionCount = 4) => {
+export const generateAnswerOptions = (
+  region,
+  birds,
+  date,
+  correctBird,
+  optionCount = 4,
+) => {
   if (!birds[region] || !correctBird) return [];
 
   const regionBirds = birds[region];
@@ -419,10 +435,14 @@ export const generateAnswerOptions = (region, birds, date, correctBird, optionCo
   const seed = hashString(`${region}-${date}-${correctBird.id}-options`);
 
   // Get birds that aren't the correct answer
-  const availableBirds = regionBirds.filter(bird => bird.id !== correctBird.id);
+  const availableBirds = regionBirds.filter(
+    (bird) => bird.id !== correctBird.id,
+  );
 
   // First, try to get birds from the same family as the correct bird
-  const sameFamilyBirds = availableBirds.filter(bird => bird.family === correctBird.family);
+  const sameFamilyBirds = availableBirds.filter(
+    (bird) => bird.family === correctBird.family,
+  );
 
   let selectedWrongBirds = [];
 
@@ -437,7 +457,9 @@ export const generateAnswerOptions = (region, birds, date, correctBird, optionCo
     selectedWrongBirds = [...shuffledSameFamily];
 
     // Get remaining birds (excluding same family birds and correct bird)
-    const remainingBirds = availableBirds.filter(bird => bird.family !== correctBird.family);
+    const remainingBirds = availableBirds.filter(
+      (bird) => bird.family !== correctBird.family,
+    );
     const shuffledRemaining = deterministicShuffle(remainingBirds, seed);
 
     // Add birds from other families to reach the desired count
@@ -472,14 +494,14 @@ export const createInitialHardModeGameState = (region, date) => {
   return {
     region,
     date,
-    mode: 'hard',
+    mode: "hard",
     guesses: [],
     completed: false,
     won: false,
     maxGuesses: GAME_CONFIG.HARD_MODE_MAX_GUESSES,
     startTime: new Date().toISOString(),
     endTime: null,
-    birdId: null
+    birdId: null,
   };
 };
 
@@ -503,7 +525,7 @@ export const getHardModeGameState = (gameState, region, date) => {
   const initialGame = {
     region,
     date,
-    mode: 'hard',
+    mode: "hard",
     guesses: [],
     completed: false,
     won: false,
@@ -531,7 +553,7 @@ export const processHardModeGuess = (
   date,
   guessedBird,
   textInput,
-  correctBird
+  correctBird,
 ) => {
   const key = createRegionDateKey(region, date);
 
@@ -541,7 +563,9 @@ export const processHardModeGuess = (
 
   // For backward compatibility with tests, sync provided state to store first
   if (gameState && gameState.hardModeGames && gameState.hardModeGames[key]) {
-    useHardModeStore.getState().setHardModeGame(key, gameState.hardModeGames[key]);
+    useHardModeStore
+      .getState()
+      .setHardModeGame(key, gameState.hardModeGames[key]);
   }
 
   // Use store's processHardModeGuess action
@@ -559,12 +583,12 @@ export const processHardModeGuess = (
 
   return {
     hardModeGames: {
-      [key]: updatedGame
+      [key]: updatedGame,
     },
     stats: {
-      hardModeStats: storeStats
+      hardModeStats: storeStats,
     },
-    version: 2
+    version: 2,
   };
 };
 
@@ -574,7 +598,8 @@ export const processHardModeGuess = (
  * @param {string} region - Region identifier
  * @param {Object} hardModeGame - Completed hard mode game state
  */
-const updateHardModeStats = (gameState, region, hardModeGame) => { // eslint-disable-line no-unused-vars -- Kept for backward compatibility
+const updateHardModeStats = (gameState, region, hardModeGame) => {
+  // eslint-disable-line no-unused-vars -- Kept for backward compatibility
   if (!gameState.stats.hardModeStats) {
     gameState.stats.hardModeStats = {
       totalGamesPlayed: 0,
@@ -582,7 +607,7 @@ const updateHardModeStats = (gameState, region, hardModeGame) => { // eslint-dis
       averageGuesses: 0,
       currentStreak: 0,
       maxStreak: 0,
-      regionStats: {}
+      regionStats: {},
     };
   }
 
@@ -595,7 +620,7 @@ const updateHardModeStats = (gameState, region, hardModeGame) => { // eslint-dis
 
   // Calculate average guesses
   const totalGuesses = Object.values(gameState.hardModeGames)
-    .filter(game => game.completed)
+    .filter((game) => game.completed)
     .reduce((sum, game) => sum + game.guesses.length, 0);
   stats.averageGuesses = totalGuesses / stats.totalGamesPlayed;
 
@@ -612,7 +637,7 @@ const updateHardModeStats = (gameState, region, hardModeGame) => { // eslint-dis
     stats.regionStats[region] = {
       gamesPlayed: 0,
       gamesWon: 0,
-      averageGuesses: 0
+      averageGuesses: 0,
     };
   }
 
@@ -623,7 +648,7 @@ const updateHardModeStats = (gameState, region, hardModeGame) => { // eslint-dis
   }
 
   const regionTotalGuesses = Object.values(gameState.hardModeGames)
-    .filter(game => game.completed && game.region === region)
+    .filter((game) => game.completed && game.region === region)
     .reduce((sum, game) => sum + game.guesses.length, 0);
   regionStats.averageGuesses = regionTotalGuesses / regionStats.gamesPlayed;
 };
@@ -704,20 +729,31 @@ export const hasCompletedHardMode = (gameState, region, date) => {
  * @param {Object} gameState - Main game state object (kept for backward compatibility, not used)
  * @returns {Object} - Performance summary
  */
-export const getUserPerformanceSummary = () => { // gameState param removed, now uses Zustand store directly
+export const getUserPerformanceSummary = () => {
+  // gameState param removed, now uses Zustand store directly
   const stats = useNormalGameStore.getState().stats;
 
   return {
     totalGames: stats.totalGamesPlayed,
-    winRate: stats.totalGamesPlayed > 0 ? (stats.totalGamesWon / stats.totalGamesPlayed * 100).toFixed(1) : 0,
+    winRate:
+      stats.totalGamesPlayed > 0
+        ? ((stats.totalGamesWon / stats.totalGamesPlayed) * 100).toFixed(1)
+        : 0,
     averageGuesses: stats.averageGuesses.toFixed(1),
     currentStreak: stats.currentStreak,
     maxStreak: stats.maxStreak,
-    regionBreakdown: Object.entries(stats.regionStats).map(([region, regionStats]) => ({
-      region,
-      games: regionStats.gamesPlayed,
-      winRate: regionStats.gamesPlayed > 0 ? (regionStats.gamesWon / regionStats.gamesPlayed * 100).toFixed(1) : 0,
-      avgGuesses: regionStats.averageGuesses.toFixed(1)
-    }))
+    regionBreakdown: Object.entries(stats.regionStats).map(
+      ([region, regionStats]) => ({
+        region,
+        games: regionStats.gamesPlayed,
+        winRate:
+          regionStats.gamesPlayed > 0
+            ? ((regionStats.gamesWon / regionStats.gamesPlayed) * 100).toFixed(
+                1,
+              )
+            : 0,
+        avgGuesses: regionStats.averageGuesses.toFixed(1),
+      }),
+    ),
   };
 };

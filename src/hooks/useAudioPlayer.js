@@ -14,11 +14,15 @@ import { createAudioControls } from "../utils/AudioUtils";
 export function useAudioPlayer(initialAudioIndex = 0) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [audioError, setAudioError] = useState(false);
-  const [selectedAudioIndex, setSelectedAudioIndex] = useState(initialAudioIndex);
+  const [selectedAudioIndex, setSelectedAudioIndex] =
+    useState(initialAudioIndex);
   const audioRef = useRef(null);
 
   // Ref is only accessed in event handlers, not during render
-  const audioControls = useMemo(() => createAudioControls(audioRef), [audioRef]);
+  const audioControls = useMemo(
+    () => createAudioControls(audioRef),
+    [audioRef],
+  );
 
   const toggleAudio = useCallback(async () => {
     if (isPlaying) {

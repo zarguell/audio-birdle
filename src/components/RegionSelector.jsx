@@ -22,7 +22,9 @@ export default function RegionSelector({ regions, today, onRegionSelect }) {
           <div className="space-y-2">
             {regions.map((region) => {
               const key = createRegionDateKey(region.id, today);
-              const hasPlayedToday = useNormalGameStore.getState().getDailyGame(key)?.guesses.length > 0;
+              const hasPlayedToday =
+                useNormalGameStore.getState().getDailyGame(key)?.guesses
+                  .length > 0;
               return (
                 <button
                   key={region.id}

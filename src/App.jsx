@@ -19,7 +19,12 @@ import { useMigration } from "./hooks/useMigration";
 import { useNormalGameStore } from "./stores/normalGameStore";
 
 export default function AudioBirdle() {
-  const { selectedRegion, setSelectedRegion, lastPlayedMode, setLastPlayedMode } = usePersistence();
+  const {
+    selectedRegion,
+    setSelectedRegion,
+    lastPlayedMode,
+    setLastPlayedMode,
+  } = usePersistence();
 
   const audioPlayer = useAudioPlayer();
   const { selectedAudioIndex, setSelectedAudioIndex } = audioPlayer;
@@ -52,7 +57,11 @@ export default function AudioBirdle() {
 
   useGameInitialization(selectedRegion, today, currentDailyGame);
 
-  const { handleShareResult } = useShareResult(currentDailyGame, todaysBird, selectedRegion);
+  const { handleShareResult } = useShareResult(
+    currentDailyGame,
+    todaysBird,
+    selectedRegion,
+  );
 
   const gameModes = [
     {
@@ -65,8 +74,7 @@ export default function AudioBirdle() {
     },
     {
       name: "Hard Mode",
-      description:
-        "Daily challenge • 6 guesses • Free text • Taxonomic hints",
+      description: "Daily challenge • 6 guesses • Free text • Taxonomic hints",
       icon: "🔥",
       mode: "hard",
       view: VIEWS.HARD_MODE,
@@ -83,7 +91,13 @@ export default function AudioBirdle() {
   ];
 
   if (!selectedRegion) {
-    return <RegionSelector regions={regions} today={today} onRegionSelect={setSelectedRegion} />;
+    return (
+      <RegionSelector
+        regions={regions}
+        today={today}
+        onRegionSelect={setSelectedRegion}
+      />
+    );
   }
 
   if (currentView === VIEWS.MODE_SELECTOR) {
@@ -114,7 +128,9 @@ export default function AudioBirdle() {
 
   if (currentView === VIEWS.HARD_MODE) {
     const normalModeKey = createRegionDateKey(selectedRegion, today);
-    const normalModeCompleted = useNormalGameStore.getState().getDailyGame(normalModeKey)?.completed === true;
+    const normalModeCompleted =
+      useNormalGameStore.getState().getDailyGame(normalModeKey)?.completed ===
+      true;
 
     return (
       <HardModeGame

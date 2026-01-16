@@ -1,5 +1,5 @@
-import { create } from 'zustand';
-import { persist, createJSONStorage } from 'zustand/middleware';
+import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
 
 /**
  * Daily game state structure for a specific region-date combination
@@ -54,7 +54,10 @@ export interface NormalGameState {
 export interface NormalGameActions {
   setDailyGame: (key: string, game: DailyGame) => void;
   getDailyGame: (key: string) => DailyGame | undefined;
-  processGuess: (key: string, guess: { birdId: string; correct: boolean; timestamp: number }) => void;
+  processGuess: (
+    key: string,
+    guess: { birdId: string; correct: boolean; timestamp: number },
+  ) => void;
   updateStats: (region: string, won: boolean, guesses: number) => void;
   reset: () => void;
   migrateFromOldFormat: () => void;
@@ -74,7 +77,12 @@ const createInitialStats = (): GameStats => ({
 /**
  * Helper function to update stats when a game completes
  */
-function updateStats(state: any, region: string, won: boolean, guesses: number): GameStats {
+function updateStats(
+  state: any,
+  region: string,
+  won: boolean,
+  guesses: number,
+): GameStats {
   const newStats = { ...state.stats };
 
   newStats.totalGamesPlayed++;
@@ -98,7 +106,8 @@ function updateStats(state: any, region: string, won: boolean, guesses: number):
   const regionStats = newStats.regionStats[region];
   regionStats.totalGuesses += guesses;
   regionStats.gamesPlayed++;
-  regionStats.averageGuesses = regionStats.totalGuesses / regionStats.gamesPlayed;
+  regionStats.averageGuesses =
+    regionStats.totalGuesses / regionStats.gamesPlayed;
 
   if (won) {
     regionStats.gamesWon++;
@@ -117,7 +126,11 @@ const migrateGameState = (persistedState: any, version: number): any => {
   }
 
   // Migrate from old format (version 0 or 1)
-  console.log('Migrating normal game state from version', version, 'to version 2');
+  console.log(
+    "Migrating normal game state from version",
+    version,
+    "to version 2",
+  );
 
   const newState: NormalGameState = {
     dailyGames: persistedState.dailyGames || {},
@@ -164,7 +177,10 @@ export const useNormalGameStore = create<NormalGameState & NormalGameActions>()(
       /**
        * Process a guess for the current daily game
        */
-       processGuess: (key: string, guess: { birdId: string; correct: boolean; timestamp: number }) => {
+      processGuess: (
+        key: string,
+        guess: { birdId: string; correct: boolean; timestamp: number },
+      ) => {
         set((state) => {
           const dailyGame = state.dailyGames[key];
           if (!dailyGame) {
@@ -184,7 +200,10 @@ export const useNormalGameStore = create<NormalGameState & NormalGameActions>()(
           };
 
           // Check if game is completed and update stats accordingly
-          if (guess.correct || updatedGame.guesses.length >= updatedGame.maxGuesses) {
+          if (
+            guess.correct ||
+            updatedGame.guesses.length >= updatedGame.maxGuesses
+          ) {
             updatedGame.completed = true;
             updatedGame.won = guess.correct;
             updatedGame.endTime = new Date().toISOString();
@@ -195,7 +214,12 @@ export const useNormalGameStore = create<NormalGameState & NormalGameActions>()(
                 ...state.dailyGames,
                 [key]: updatedGame,
               },
-              stats: updateStats(state, dailyGame.region, updatedGame.won, updatedGame.guesses.length),
+              stats: updateStats(
+                state,
+                dailyGame.region,
+                updatedGame.won,
+                updatedGame.guesses.length,
+              ),
             };
           }
 
@@ -219,7 +243,10 @@ export const useNormalGameStore = create<NormalGameState & NormalGameActions>()(
           if (won) {
             newStats.totalGamesWon++;
             newStats.currentStreak++;
-            newStats.maxStreak = Math.max(newStats.maxStreak, newStats.currentStreak);
+            newStats.maxStreak = Math.max(
+              newStats.maxStreak,
+              newStats.currentStreak,
+            );
           } else {
             newStats.currentStreak = 0;
           }
@@ -236,7 +263,8 @@ export const useNormalGameStore = create<NormalGameState & NormalGameActions>()(
           const regionStats = newStats.regionStats[region];
           regionStats.totalGuesses += guesses;
           regionStats.gamesPlayed++;
-          regionStats.averageGuesses = regionStats.totalGuesses / regionStats.gamesPlayed;
+          regionStats.averageGuesses =
+            regionStats.totalGuesses / regionStats.gamesPlayed;
 
           if (won) {
             regionStats.gamesWon++;
@@ -260,17 +288,17 @@ export const useNormalGameStore = create<NormalGameState & NormalGameActions>()(
        * Reads from the old v1/v0 format and converts to v2 multi-region format
        */
       migrateFromOldFormat: () => {
-        const OLD_STORAGE_KEY = 'audio-birdle-game-state';
+        const OLD_STORAGE_KEY = "audio-birdle-game-state";
         const oldState = localStorage.getItem(OLD_STORAGE_KEY);
 
         if (!oldState) {
-          console.log('No old game state found to migrate');
+          console.log("No old game state found to migrate");
           return;
         }
 
         try {
           const parsed = JSON.parse(oldState);
-          console.log('Migrating old normal game state:', parsed);
+          console.log("Migrating old normal game state:", parsed);
 
           let newDailyGames: Record<string, DailyGame> = {};
           let newStats = createInitialStats();
@@ -306,7 +334,10 @@ export const useNormalGameStore = create<NormalGameState & NormalGameActions>()(
               };
             }
 
-            console.log('Migrated v0 state to v2:', { newDailyGames, newStats });
+            console.log("Migrated v0 state to v2:", {
+              newDailyGames,
+              newStats,
+            });
           }
           // Handle version 1 (already has dailyGames)
           else if (parsed.dailyGames) {
@@ -323,7 +354,10 @@ export const useNormalGameStore = create<NormalGameState & NormalGameActions>()(
               };
             }
 
-            console.log('Migrated v1 state to v2:', { newDailyGames, newStats });
+            console.log("Migrated v1 state to v2:", {
+              newDailyGames,
+              newStats,
+            });
           }
 
           // Update store with migrated data
@@ -334,21 +368,24 @@ export const useNormalGameStore = create<NormalGameState & NormalGameActions>()(
 
           // Clean up old localStorage key after successful migration
           // We keep it as backup for now - can be removed in future phase
-          console.log('Migration complete. Old key preserved as backup:', OLD_STORAGE_KEY);
+          console.log(
+            "Migration complete. Old key preserved as backup:",
+            OLD_STORAGE_KEY,
+          );
         } catch (error) {
-          console.error('Failed to migrate old normal game state:', error);
+          console.error("Failed to migrate old normal game state:", error);
           // Don't delete old state if migration failed - user can try again
         }
       },
     }),
     {
-      name: 'audio-birdle-normal-game',
+      name: "audio-birdle-normal-game",
       storage: createJSONStorage(() => localStorage),
       version: 2,
       migrate: migrateGameState,
       onRehydrateStorage: () => (state) => {
-        console.log('Normal game store rehydrated', state);
+        console.log("Normal game store rehydrated", state);
       },
-    }
-  )
+    },
+  ),
 );

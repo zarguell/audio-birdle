@@ -13,6 +13,7 @@ Verify and complete Zustand store implementation with all required state structu
 ### Task 1: Verify normalGameStore Completeness ✅
 
 **State Fields Verified:**
+
 - ✅ `dailyGames: Record<string, DailyGame>` - Multi-region, multi-date game tracking
 - ✅ `stats: GameStats` - Complete statistics structure with:
   - `totalGamesPlayed`, `totalGamesWon`
@@ -20,6 +21,7 @@ Verify and complete Zustand store implementation with all required state structu
   - `regionStats: Record<string, RegionStats>` - Per-region tracking
 
 **Actions Verified:**
+
 - ✅ `setDailyGame(key, game)` - Create/update daily game
 - ✅ `getDailyGame(key)` - Retrieve daily game
 - ✅ `processGuess(key, guess)` - Add guess, auto-complete game, update stats
@@ -28,18 +30,21 @@ Verify and complete Zustand store implementation with all required state structu
 - ✅ `migrateFromOldFormat()` - Handle v0/v1 → v2 migration
 
 **Persist Middleware Configuration:**
+
 - ✅ Storage key: `'audio-birdle-normal-game'`
 - ✅ Version: 2
 - ✅ Migration function: `migrateGameState` - Handles version transitions
 - ✅ Storage: `createJSONStorage(() => localStorage)`
 
 **Parity with GameLogic.jsx:**
+
 - All essential state fields present
 - Missing non-essential fields (startTime, endTime, birdId, lastPlayed, averageGuesses)
 - These are either derived or tracked separately in the new architecture
 - Stores use `totalGuesses` + `gamesPlayed` to calculate average on-demand
 
 **Test Results:**
+
 - 15 tests passing (3 skipped - migration tests pending integration)
 - Coverage: 77.02% lines, 38.29% branches, 94.11% functions
 - Uncovered lines: Migration functions (270-293) - functional but skipped in tests
@@ -47,10 +52,12 @@ Verify and complete Zustand store implementation with all required state structu
 ### Task 2: Verify hardModeStore Completeness ✅
 
 **State Fields Verified:**
+
 - ✅ `hardModeGames: Record<string, HardModeDailyGame>` - Hard mode game tracking
 - ✅ `stats: HardModeGameStats` - Separate stats from normal mode
 
 **Actions Verified:**
+
 - ✅ `setHardModeGame(key, game)` - Create/update hard mode game
 - ✅ `getHardModeGame(key)` - Retrieve hard mode game
 - ✅ `processHardModeGuess(key, guess)` - Add guess with taxonomic score
@@ -59,17 +66,20 @@ Verify and complete Zustand store implementation with all required state structu
 - ✅ `migrateFromOldFormat()` - Handle v0/v1 → v2 migration
 
 **Taxonomic Score Tracking:**
+
 - ✅ `TaxonomicScore` interface: `{ order, family, genus, species }`
 - ✅ `HardModeGuess` includes taxonomic feedback
 - ✅ Supports progressive hints (Order → Family → Genus)
 
 **Persist Middleware Configuration:**
+
 - ✅ Storage key: `'audio-birdle-hard-mode'`
 - ✅ Version: 2
 - ✅ Migration function: `migrateHardModeState`
 - ✅ Separate storage from normal mode
 
 **Test Results:**
+
 - 16 tests passing (3 skipped - migration tests pending integration)
 - Coverage: 77.02% lines, 38.29% branches, 94.11% functions
 - Uncovered lines: Migration functions (281-312) - functional but skipped in tests
@@ -77,22 +87,26 @@ Verify and complete Zustand store implementation with all required state structu
 ### Task 3: Verify practiceStore Completeness ✅
 
 **State Fields Verified:**
+
 - ✅ `currentBird: Bird | null` - Current practice bird
 - ✅ `guesses: PracticeGuess[]` - Guess history
 - ✅ `completed: boolean` - Round completion status
 
 **Actions Verified:**
+
 - ✅ `setCurrentBird(bird)` - Set new bird, resets guesses/completed
 - ✅ `addGuess(guess)` - Add guess, auto-completes on correct guess
 - ✅ `setCompleted(completed)` - Manual completion control
 - ✅ `reset()` - Clear all state
 
 **Persist Middleware:**
+
 - ✅ NO persist middleware - Practice mode is transient by design
 - ✅ State resets on page refresh
 - ✅ Supports unlimited rounds without localStorage pollution
 
 **Test Results:**
+
 - 14 tests passing (1 skipped - localStorage persistence test)
 - Coverage: 100% lines, 100% branches, 100% functions
 - Perfect coverage - all functionality tested
@@ -113,16 +127,19 @@ Tests: 38 passed | 7 skipped
 ### Store State Structures Match GameLogic.jsx ✅
 
 **Normal Mode:**
+
 - All core state fields present (dailyGames, stats)
 - Migration support for old format → v2
 - Region-date key structure matches: `{region}-{date}`
 
 **Hard Mode:**
+
 - Separate state structure (hardModeGames, hardModeStats)
 - Taxonomic score tracking in guesses
 - Same migration pattern as normal mode
 
 **Practice Mode:**
+
 - Simplified state structure (no persistence)
 - Matches PracticeGame.jsx requirements
 - Automatic state management for unlimited rounds
@@ -130,42 +147,49 @@ Tests: 38 passed | 7 skipped
 ### All Required Actions Implemented ✅
 
 **Normal Mode Actions:**
+
 - Game CRUD: setDailyGame, getDailyGame
 - Game flow: processGuess (auto-completes, updates stats)
 - Stats management: updateStats, reset
 - Migration: migrateFromOldFormat (v0/v1 → v2)
 
 **Hard Mode Actions:**
+
 - Game CRUD: setHardModeGame, getHardModeGame
 - Game flow: processHardModeGuess (with taxonomic feedback)
 - Stats management: updateHardModeStats, reset
 - Migration: migrateFromOldFormat (v0/v1 → v2)
 
 **Practice Mode Actions:**
+
 - Game flow: setCurrentBird (resets state), addGuess (auto-completes)
 - State control: setCompleted, reset
 
 ### Persist Middleware Configured Correctly ✅
 
 **Normal/Hard Mode:**
+
 - ✅ Correct storage keys
 - ✅ Version 2 with migration support
 - ✅ JSON storage with localStorage
 - ✅ onRehydrateStorage logging for debugging
 
 **Practice Mode:**
+
 - ✅ No persist middleware (correct design)
 - ✅ Transient state for unlimited free-play
 
 ### Migration Functions Handle v1 → v2 ✅
 
 **Migration Implementation:**
+
 - ✅ Version 0 (single game format) → Version 2
 - ✅ Version 1 (dailyGames format) → Version 2
 - ✅ Graceful handling of missing/invalid state
 - ✅ Error handling with console logging
 
 **Migration Paths:**
+
 1. **v0 → v2:** Single game object → Multi-region-date games
    - Creates key: `{region}-{date}`
    - Preserves guesses, completed, won, stats
@@ -179,21 +203,23 @@ Tests: 38 passed | 7 skipped
 
 ### Overall Store Coverage
 
-| Store | Lines | Branches | Functions | Status |
-|-------|-------|----------|-----------|--------|
-| practiceStore.ts | 100% | 100% | 100% | ✅ Excellent |
-| normalGameStore.ts | 77.02% | 38.29% | 94.11% | ⚠️ Good |
-| hardModeStore.ts | 77.02% | 38.29% | 94.11% | ⚠️ Good |
+| Store              | Lines  | Branches | Functions | Status       |
+| ------------------ | ------ | -------- | --------- | ------------ |
+| practiceStore.ts   | 100%   | 100%     | 100%      | ✅ Excellent |
+| normalGameStore.ts | 77.02% | 38.29%   | 94.11%    | ⚠️ Good      |
+| hardModeStore.ts   | 77.02% | 38.29%   | 94.11%    | ⚠️ Good      |
 
 ### Coverage Gaps Identified
 
 **Normal/Hard Mode Stores (77% lines, 38% branches):**
+
 - Uncovered lines: Migration functions (270-293 normal, 281-312 hard)
 - Root cause: Migration tests are skipped (`it.skip`)
 - Impact: Low - migration logic exists and works, just not fully tested
 - Path to 80%: Enable migration tests or add coverage for those code paths
 
 **Practice Store (100% coverage):**
+
 - All functionality fully tested
 - Perfect coverage achieved
 
@@ -206,6 +232,7 @@ Tests: 38 passed | 7 skipped
 5. **Production Usage:** Stores already in use in App.jsx with dual-write strategy
 
 The 77% coverage represents:
+
 - All core game functionality: Fully covered
 - Migration edge cases: Skipped pending integration tests
 - Helper functions: Fully covered
@@ -217,6 +244,7 @@ The 77% coverage represents:
 **Decision:** Three independent stores (normal, hard, practice)
 
 **Rationale:**
+
 - Clean separation of concerns
 - Each mode has distinct state shape
 - Independent persistence strategies
@@ -228,6 +256,7 @@ The 77% coverage represents:
 **Decision:** Omit startTime, endTime, birdId, lastPlayed, averageGuesses from stores
 
 **Rationale:**
+
 - **startTime/endTime:** Analytics/debugging fields, not needed for core game logic
 - **birdId:** Tracked separately in daily.json and answer key
 - **lastPlayed:** Can be derived from dailyGames keys
@@ -240,6 +269,7 @@ The 77% coverage represents:
 **Decision:** Both localStorage and Zustand write same data during migration period
 
 **Rationale:**
+
 - Zero data loss during transition
 - Backward compatibility with existing code
 - Gradual migration path
@@ -252,6 +282,7 @@ The 77% coverage represents:
 ### ✅ Ready for Integration
 
 **Stores Are Production-Ready:**
+
 1. All state structures defined and typed
 2. All actions implemented and tested
 3. Persist middleware configured correctly
@@ -259,6 +290,7 @@ The 77% coverage represents:
 5. Already in use in App.jsx with dual-write strategy
 
 **Next Steps (Plan 02-03):**
+
 1. Migrate GameLogic.jsx functions to use stores
 2. Replace localStorage calls with store actions
 3. Update components to use store hooks
@@ -266,6 +298,7 @@ The 77% coverage represents:
 5. Enable migration tests after integration
 
 **Confidence Level:** High
+
 - Stores are complete and functional
 - Test coverage demonstrates correctness
 - Architecture supports smooth migration
@@ -288,6 +321,7 @@ The 77% coverage represents:
 **Decision:** Accept for now, enable in Plan 02-03 during integration
 
 **Rationale:**
+
 - Migration logic is implemented and functional
 - Better tested in integration context with real data
 - Not blocking for game logic migration
@@ -298,6 +332,7 @@ The 77% coverage represents:
 ### Store Implementation Complete ✅
 
 All three Zustand stores are:
+
 - ✅ Fully implemented with complete state and actions
 - ✅ Correctly configured with persist middleware (except practice)
 - ✅ Type-safe with TypeScript interfaces
@@ -308,6 +343,7 @@ All three Zustand stores are:
 ### Coverage Assessment
 
 **Current State:**
+
 - practiceStore: 100% coverage (perfect)
 - normalGameStore: 77% coverage (good, core logic fully tested)
 - hardModeStore: 77% coverage (good, core logic fully tested)
@@ -343,6 +379,7 @@ Coverage:
 ## Next Steps
 
 **Plan 02-03: Migrate Game Logic to Use Zustand Stores**
+
 1. Replace GameLogic.jsx functions with store actions
 2. Update components to use store hooks
 3. Remove manual localStorage management

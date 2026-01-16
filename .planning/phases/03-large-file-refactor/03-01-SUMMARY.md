@@ -28,6 +28,7 @@ None (analysis phase).
 ## Key Findings
 
 ### App.jsx Analysis
+
 - **Monolithic component:** 797 lines with 5 render functions
 - **State:** Only 3 local state variables (selectedRegion, lastPlayedMode, currentView)
 - **Render functions:** ~612 lines (77% of file), with `renderGame` being largest at 271 lines
@@ -35,6 +36,7 @@ None (analysis phase).
 - **Complexity:** High - mixed concerns (view routing, state management, migration, data fetching)
 
 ### CacheUtils.jsx Analysis
+
 - **Well-organized:** 184 lines with clear separation of concerns
 - **Repetitive patterns:** 3 similar version checking functions that could be consolidated
 - **Documentation:** Excellent (9/10 score)
@@ -42,6 +44,7 @@ None (analysis phase).
 - **Optimization opportunities:** Consolidate version checking, extract refresh pattern, add error recovery
 
 ### Extraction Plan
+
 - **Phase 1:** Extract 5 custom hooks (usePersistence, useMigration, useShareResult, useGameInitialization, useGameNavigation)
 - **Phase 2:** Extract 4 leaf components (RegionSelector, ModeSelector, StatsView, SettingsView)
 - **Phase 3:** Extract 4 GameView sub-components (AudioPlayerSection, GuessesList, AnswerChoices, GameCompleted)
@@ -49,6 +52,7 @@ None (analysis phase).
 - **Expected reduction:** ~600 lines removed from App.jsx (from 797 to ~150 lines)
 
 ### Test Strategy
+
 - **18 new test files** to create
 - **2,500 estimated lines** of test code
 - **Coverage targets:** 80% overall, with individual module targets of 70-95%
@@ -58,37 +62,41 @@ None (analysis phase).
 ## Risk Assessment
 
 ### High Risk
+
 - `useGameNavigation` - Changes core view routing logic
 - `GameView` - Largest component (271 lines)
 
 ### Medium Risk
+
 - `useGameInitialization` - Interacts with Zustand store
 - `SettingsView` - Depends on multiple state sources
 - `AudioPlayerSection` - Complex audio state management
 
 ### Low Risk
+
 - `RegionSelector` - Simple UI component
 - `ModeSelector` - Pure presentational component
 - `StatsView` - Read-only display
 
 ## Metrics
 
-| Metric | Value |
-|--------|-------|
-| App.jsx current size | 797 lines |
-| App.jsx target size | ~150 lines |
-| Lines to extract | ~600 lines |
-| CacheUtils current size | 184 lines |
-| CacheUtils target size | ~150 lines |
-| New test files | 18 files |
-| New test lines | ~2,500 lines |
-| Target coverage | 80% overall |
+| Metric                  | Value        |
+| ----------------------- | ------------ |
+| App.jsx current size    | 797 lines    |
+| App.jsx target size     | ~150 lines   |
+| Lines to extract        | ~600 lines   |
+| CacheUtils current size | 184 lines    |
+| CacheUtils target size  | ~150 lines   |
+| New test files          | 18 files     |
+| New test lines          | ~2,500 lines |
+| Target coverage         | 80% overall  |
 
 ## Next Step
 
 **Plan 03-02** — Extract custom hooks from App.jsx
 
 This plan will involve:
+
 1. Creating test fixtures and utilities
 2. Writing tests for each custom hook BEFORE extracting
 3. Extracting hooks in this order: useMigration → usePersistence → useShareResult → useGameInitialization → useGameNavigation

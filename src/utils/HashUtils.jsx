@@ -11,12 +11,12 @@ export const hashString = (str) => {
 
   for (let i = 0; i < str.length; i++) {
     const char = str.charCodeAt(i);
-    hash = ((hash << 5) - hash) + char;
+    hash = (hash << 5) - hash + char;
     hash = hash >>> 0; // Ensure 32-bit unsigned
   }
 
   // Convert to 8-character lowercase hex (zero-padded)
-  return hash.toString(16).padStart(8, '0');
+  return hash.toString(16).padStart(8, "0");
 };
 
 export const shuffleArray = (array, seed) => {
@@ -25,9 +25,12 @@ export const shuffleArray = (array, seed) => {
   let randomIndex;
 
   while (currentIndex !== 0) {
-    randomIndex = Math.floor((seed % currentIndex));
+    randomIndex = Math.floor(seed % currentIndex);
     currentIndex--;
-    [shuffled[currentIndex], shuffled[randomIndex]] = [shuffled[randomIndex], shuffled[currentIndex]];
+    [shuffled[currentIndex], shuffled[randomIndex]] = [
+      shuffled[randomIndex],
+      shuffled[currentIndex],
+    ];
     seed = Math.floor(seed / 2);
   }
 

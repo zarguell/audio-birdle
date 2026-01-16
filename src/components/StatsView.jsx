@@ -2,13 +2,19 @@ import { BarChart3 } from "lucide-react";
 
 export default function StatsView({ stats, regions, onBack }) {
   const totalGames = stats.totalGamesPlayed;
-  const winRate = totalGames > 0 ? (stats.totalGamesWon / totalGames * 100).toFixed(1) : 0;
-  const regionBreakdown = Object.entries(stats.regionStats).map(([region, regionStats]) => ({
-    region,
-    games: regionStats.gamesPlayed,
-    winRate: regionStats.gamesPlayed > 0 ? (regionStats.gamesWon / regionStats.gamesPlayed * 100).toFixed(1) : 0,
-    avgGuesses: regionStats.averageGuesses.toFixed(1),
-  }));
+  const winRate =
+    totalGames > 0 ? ((stats.totalGamesWon / totalGames) * 100).toFixed(1) : 0;
+  const regionBreakdown = Object.entries(stats.regionStats).map(
+    ([region, regionStats]) => ({
+      region,
+      games: regionStats.gamesPlayed,
+      winRate:
+        regionStats.gamesPlayed > 0
+          ? ((regionStats.gamesWon / regionStats.gamesPlayed) * 100).toFixed(1)
+          : 0,
+      avgGuesses: regionStats.averageGuesses.toFixed(1),
+    }),
+  );
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 p-4">
@@ -25,9 +31,7 @@ export default function StatsView({ stats, regions, onBack }) {
 
         <div className="bg-white rounded-xl shadow-lg p-6 space-y-6">
           <div>
-            <h3 className="font-semibold text-lg mb-3">
-              Overall Performance
-            </h3>
+            <h3 className="font-semibold text-lg mb-3">Overall Performance</h3>
             <div className="grid grid-cols-2 gap-4">
               <div className="text-center p-3 bg-gray-50 rounded-lg">
                 <div className="text-2xl font-bold text-blue-600">

@@ -1,7 +1,13 @@
 import { Settings } from "lucide-react";
 import { VIEWS } from "../utils/Constants";
 
-export default function ModeSelector({ gameModes, onModeSelect, lastPlayedMode, selectedRegion, regions }) {
+export default function ModeSelector({
+  gameModes,
+  onModeSelect,
+  lastPlayedMode,
+  selectedRegion,
+  regions,
+}) {
   const colorClasses = {
     blue: {
       border: "border-blue-200",

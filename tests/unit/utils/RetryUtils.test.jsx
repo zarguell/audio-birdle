@@ -63,7 +63,11 @@ describe("RetryUtils", () => {
       };
       global.fetch = vi
         .fn()
-        .mockResolvedValueOnce({ ok: false, status: 500, statusText: "Server Error" })
+        .mockResolvedValueOnce({
+          ok: false,
+          status: 500,
+          statusText: "Server Error",
+        })
         .mockResolvedValueOnce(mockSuccess);
 
       const promise = fetchWithRetry("/data/test.json");
@@ -167,7 +171,9 @@ describe("RetryUtils", () => {
         .mockRejectedValueOnce(new Error("Database error"))
         .mockResolvedValueOnce("success");
 
-      const promise = retryWithBackoff(operation, { context: "Database query" });
+      const promise = retryWithBackoff(operation, {
+        context: "Database query",
+      });
       await vi.runAllTimersAsync();
       await promise;
 
@@ -209,7 +215,7 @@ describe("RetryUtils", () => {
         async () => {
           throw new Error("Permanent failure");
         },
-        { maxRetries: 2 }
+        { maxRetries: 2 },
       );
       await vi.runAllTimersAsync();
 

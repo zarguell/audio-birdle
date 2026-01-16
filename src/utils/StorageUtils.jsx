@@ -9,8 +9,8 @@
  */
 export const isStorageAvailable = () => {
   try {
-    const testKey = '__storage_test__';
-    localStorage.setItem(testKey, 'test');
+    const testKey = "__storage_test__";
+    localStorage.setItem(testKey, "test");
     localStorage.removeItem(testKey);
     return true;
   } catch {
@@ -29,7 +29,7 @@ export const getStorage = (key, defaultValue) => {
     const stored = localStorage.getItem(key);
     return stored ? JSON.parse(stored) : defaultValue;
   } catch (error) {
-    if (error.name === 'QuotaExceededError') {
+    if (error.name === "QuotaExceededError") {
       console.warn(`Failed to get ${key}: Quota exceeded`);
     } else {
       console.warn(`Failed to get ${key}:`, error);
@@ -49,7 +49,7 @@ export const setStorage = (key, value) => {
     localStorage.setItem(key, JSON.stringify(value));
     return true;
   } catch (error) {
-    if (error.name === 'QuotaExceededError') {
+    if (error.name === "QuotaExceededError") {
       console.warn(`Failed to set ${key}: Quota exceeded`);
     } else {
       console.warn(`Failed to set ${key}:`, error);
@@ -81,7 +81,7 @@ export const getStorageKeys = () => {
   try {
     return Object.keys(localStorage);
   } catch (error) {
-    console.warn('Failed to get storage keys:', error);
+    console.warn("Failed to get storage keys:", error);
     return [];
   }
 };
@@ -92,7 +92,7 @@ export const getStorageKeys = () => {
  * @param {string} [keyPrefix='audio-birdle-'] - Prefix to identify app keys
  * @returns {number} Number of keys cleared
  */
-export const clearStorage = (keyPrefix = 'audio-birdle-') => {
+export const clearStorage = (keyPrefix = "audio-birdle-") => {
   try {
     const keys = getStorageKeys();
     let cleared = 0;
@@ -104,7 +104,7 @@ export const clearStorage = (keyPrefix = 'audio-birdle-') => {
     });
     return cleared;
   } catch (error) {
-    console.warn('Failed to clear storage:', error);
+    console.warn("Failed to clear storage:", error);
     return 0;
   }
 };

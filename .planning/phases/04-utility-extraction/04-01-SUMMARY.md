@@ -12,6 +12,7 @@ Extract duplicate retry logic from LoadGameData and DailyBirdUtils into a shared
 ## What Was Done
 
 ### 1. Created RetryUtils Module ✅
+
 - **File:** `src/utils/RetryUtils.jsx` (73 lines)
 - **Exports:**
   - `fetchWithRetry(url, options, config)` - Fetch with retry and exponential backoff
@@ -19,11 +20,12 @@ Extract duplicate retry logic from LoadGameData and DailyBirdUtils into a shared
 - **Features:**
   - Configurable maxRetries (default: 3)
   - Configurable baseDelay (default: 1000ms)
-  - Exponential backoff: delayMs = baseDelay * 2^(attempt-1)
+  - Exponential backoff: delayMs = baseDelay \* 2^(attempt-1)
   - Context-aware error logging (console.warn for retries, console.error for final failure)
   - Consistent error messages across all operations
 
 ### 2. Comprehensive Test Coverage ✅
+
 - **File:** `tests/unit/utils/RetryUtils.test.jsx` (225 lines)
 - **Tests:** 12 tests covering:
   - Successful fetch without retries
@@ -37,6 +39,7 @@ Extract duplicate retry logic from LoadGameData and DailyBirdUtils into a shared
 - **Result:** All 12 tests passing ✅
 
 ### 3. Refactored LoadGameData ✅
+
 - **Changes:**
   - Removed 36 lines of duplicate retry code
   - Added import: `import { fetchWithRetry } from './RetryUtils'`
@@ -46,6 +49,7 @@ Extract duplicate retry logic from LoadGameData and DailyBirdUtils into a shared
 - **Tests:** All 11 LoadGameData tests passing ✅
 
 ### 4. Refactored DailyBirdUtils ✅
+
 - **Changes:**
   - Removed 46 lines of duplicate retry code
   - Added import: `import { fetchWithRetry } from './RetryUtils'`
@@ -55,6 +59,7 @@ Extract duplicate retry logic from LoadGameData and DailyBirdUtils into a shared
 - **Tests:** All 32 DailyBirdUtils tests passing ✅
 
 ### 5. Updated Test Mocking ✅
+
 - **LoadGameData tests:** No changes needed (already using mock data)
 - **DailyBirdUtils tests:**
   - Added `vi.mock('@/utils/RetryUtils')` at top of file
@@ -63,6 +68,7 @@ Extract duplicate retry logic from LoadGameData and DailyBirdUtils into a shared
   - All 32 tests passing with new mocking approach ✅
 
 ### 6. Verification ✅
+
 - **Test Results:**
   - RetryUtils: 12/12 passing ✅
   - LoadGameData: 11/11 passing ✅
@@ -77,16 +83,18 @@ Extract duplicate retry logic from LoadGameData and DailyBirdUtils into a shared
 ## Code Metrics
 
 ### Lines of Code Reduction
-| File | Before | After | Reduction | % Change |
-|------|--------|-------|-----------|----------|
-| LoadGameData.jsx | 76 | 40 | -36 | -47% |
-| DailyBirdUtils.jsx | 145 | 99 | -46 | -32% |
-| **Total Reduction** | **221** | **139** | **-82** | **-37%** |
-| + RetryUtils.jsx | 0 | 73 | +73 | New module |
-| + RetryUtils.test.jsx | 0 | 225 | +225 | New tests |
-| **Net Change** | **221** | **437** | **+216** | **+98%** |
+
+| File                  | Before  | After   | Reduction | % Change   |
+| --------------------- | ------- | ------- | --------- | ---------- |
+| LoadGameData.jsx      | 76      | 40      | -36       | -47%       |
+| DailyBirdUtils.jsx    | 145     | 99      | -46       | -32%       |
+| **Total Reduction**   | **221** | **139** | **-82**   | **-37%**   |
+| + RetryUtils.jsx      | 0       | 73      | +73       | New module |
+| + RetryUtils.test.jsx | 0       | 225     | +225      | New tests  |
+| **Net Change**        | **221** | **437** | **+216**  | **+98%**   |
 
 ### Code Quality Improvements
+
 - ✅ Eliminated 82 lines of duplicate retry logic
 - ✅ Centralized retry behavior in single module
 - ✅ Consistent error handling across all network operations

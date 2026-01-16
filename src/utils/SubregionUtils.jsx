@@ -1,27 +1,27 @@
-import { useState, useEffect } from 'react';
-import { fetchWithRetry } from './RetryUtils';
+import { useState, useEffect } from "react";
+import { fetchWithRetry } from "./RetryUtils";
 
 // Hook to fetch subregion data
 export const useSubregion = (selectedRegion, today) => {
-  const [subregion, setSubregion] = useState('');
+  const [subregion, setSubregion] = useState("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchSubregion = async () => {
       try {
-        const response = await fetchWithRetry('/data/daily.json');
+        const response = await fetchWithRetry("/data/daily.json");
         const data = await response.json();
 
         // Find today's entry for the selected region
-        const todayEntry = data.find(entry =>
-          entry.date === today && entry.region === selectedRegion
+        const todayEntry = data.find(
+          (entry) => entry.date === today && entry.region === selectedRegion,
         );
 
         if (todayEntry) {
           setSubregion(todayEntry.subregion);
         }
       } catch (error) {
-        console.error('Error fetching subregion:', error);
+        console.error("Error fetching subregion:", error);
       } finally {
         setLoading(false);
       }
