@@ -48,6 +48,57 @@ class TestHashBirdId:
 
         assert hash1 != hash2
 
+
+class TestGeneratedHashesValid:
+    """Test that generated daily.json hashes are valid"""
+
+    @staticmethod
+    def test_daily_json_hashes_exist_in_birds_json():
+        """Test that all hashes in daily.json exist in birds.json"""
+        # Load daily.json
+        daily_path = os.path.join(
+            os.path.dirname(__file__), "..", "public", "data", "daily.json"
+        )
+        with open(daily_path) as f:
+            daily_data = json.load(f)
+
+        # Load birds.json
+        birds_path = os.path.join(
+            os.path.dirname(__file__), "..", "public", "data", "birds.json"
+        )
+        with open(birds_path) as f:
+            birds_data = json.load(f)
+
+        # Check each entry
+        for entry in daily_data:
+            region = entry["region"]
+            answer_hash = entry["answerHash"]
+
+            # Get birds for this region (handle virtual regions)
+            region_birds = birds_data.get(region, [])
+            if not region_birds:
+                # Try to find parent region for virtual regions
+                regions_path = os.path.join(
+                    os.path.dirname(__file__), "..", "public", "data", "regions.json"
+                )
+                with open(regions_path) as rf:
+                    regions = json.load(rf)
+                for r in regions:
+                    if r["id"] == region and "parentRegion" in r:
+                        region_birds = birds_data.get(r["parentRegion"], [])
+                        break
+
+            # Generate hashes for all birds in this region
+            bird_hashes = set()
+            for bird in region_birds:
+                bird_hash = generate_daily_birds.hash_bird_id(bird["id"])
+                bird_hashes.add(bird_hash)
+
+            # Verify the answer hash exists
+            assert (
+                answer_hash in bird_hashes
+            ), f"Hash {answer_hash} for region {region} on {entry['date']} not found in birds database. Available hashes: {sorted(bird_hashes)[:5]}..."
+
     @staticmethod
     def test_hash_lowercase():
         """Test that hash is lowercase"""
