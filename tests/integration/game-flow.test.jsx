@@ -222,8 +222,8 @@ describe('Game Flow Integration Tests', () => {
           currentStreak: 1,
           maxStreak: 2,
           regionStats: {
-            us: { gamesPlayed: 2, gamesWon: 2, averageGuesses: 2 },
-            eu: { gamesPlayed: 1, gamesWon: 0, averageGuesses: 4 }
+            us: { gamesPlayed: 2, gamesWon: 2, totalGuesses: 4, averageGuesses: 2 },
+            eu: { gamesPlayed: 1, gamesWon: 0, totalGuesses: 4, averageGuesses: 4 }
           }
         }
       }
