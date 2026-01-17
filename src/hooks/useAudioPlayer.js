@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/preserve-manual-memoization, react-hooks/refs */
+/* eslint-disable react-hooks/refs */
 import { useState, useRef, useMemo, useCallback } from "react";
 import { createAudioControls } from "../utils/AudioUtils";
 
