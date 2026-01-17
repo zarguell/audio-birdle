@@ -66,9 +66,9 @@ class TestHashBirdId:
         """Test that hashes match expected values (must match JavaScript)"""
         for bird_id, expected_hash in TestHashBirdId.EXPECTED_HASHES.items():
             actual_hash = generate_daily_birds.hash_bird_id(bird_id)
-            assert (
-                actual_hash == expected_hash
-            ), f"Hash mismatch for {bird_id}: expected {expected_hash}, got {actual_hash}"
+            assert actual_hash == expected_hash, (
+                f"Hash mismatch for {bird_id}: expected {expected_hash}, got {actual_hash}"
+            )
 
     @staticmethod
     def test_hash_zero_padding():
