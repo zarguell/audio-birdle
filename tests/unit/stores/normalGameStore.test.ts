@@ -244,7 +244,6 @@ describe('useNormalGameStore', () => {
     it('should migrate from version 0 to version 2', () => {
       useNormalGameStore.getState().reset(); // Start fresh
       const oldState = {
-      const oldState = {
         region: 'us',
         lastPlayed: '2025-01-15',
         guesses: [{ birdId: 'amerob', correct: true, timestamp: Date.now() }],
@@ -275,7 +274,6 @@ describe('useNormalGameStore', () => {
 
     it('should migrate from version 1 to version 2', () => {
       useNormalGameStore.getState().reset(); // Start fresh
-      const oldState = {
       const oldState = {
         dailyGames: {
           'us-2025-01-15': {
@@ -318,7 +316,6 @@ describe('useNormalGameStore', () => {
     it('should migrate multiple games from version 0', () => {
       useNormalGameStore.getState().reset(); // Start fresh
       const oldState = {
-      const oldState = {
         region: 'us',
         lastPlayed: '2025-01-16',
         guesses: [{ birdId: 'mallar3', correct: false, timestamp: Date.now() }],
@@ -351,7 +348,6 @@ describe('useNormalGameStore', () => {
 
     it('should migrate with multiple regions from version 1', () => {
       useNormalGameStore.getState().reset(); // Start fresh
-      const oldState = {
       const oldState = {
         dailyGames: {
           'us-2025-01-15': {
@@ -411,7 +407,6 @@ describe('useNormalGameStore', () => {
     it('should handle missing fields in old state with defaults', () => {
       useNormalGameStore.getState().reset(); // Start fresh
       const oldState = {
-      const oldState = {
         region: 'us',
         lastPlayed: '2025-01-15',
         // Missing guesses, completed, won, maxGuesses, stats
@@ -431,7 +426,6 @@ describe('useNormalGameStore', () => {
 
     it.skip('should be idempotent - can run multiple times safely', () => {
       useNormalGameStore.getState().reset(); // Start fresh
-      const oldState = {
       const oldState = {
         region: 'us',
         lastPlayed: '2025-01-15',
@@ -462,7 +456,6 @@ describe('useNormalGameStore', () => {
 
     it('should preserve startTime and endTime if present in old state', () => {
       useNormalGameStore.getState().reset(); // Start fresh
-      const oldState = {
       const oldState = {
         region: 'us',
         lastPlayed: '2025-01-15',

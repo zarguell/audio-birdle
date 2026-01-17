@@ -155,6 +155,28 @@ def sample_taxonomy():
 - Python: Fixtures in `tests/conftest.py`
 - Shared fixtures: `tests/fixtures/sampleBirds.js`
 
+### Integration Test Fixtures
+
+**Location:** `tests/fixtures/integration-fixtures.jsx`
+
+**Factory Functions:**
+- `createTestBird(overrides)` - Create test bird data
+- `createTestBirdList(count, overrides)` - Create multiple test birds
+- `createTestGameState(overrides)` - Create test game state
+- `createTestDailyGame(overrides)` - Create test daily game
+- `createTestRegion(overrides)` - Create test region data
+- `createTestDailyEntry(overrides)` - Create test daily entry
+
+**Usage:**
+```javascript
+import { createTestBird, createTestGameState } from '@/test/fixtures/integration-fixtures'
+
+const bird = createTestBird({ id: 'custom-bird' })
+const gameState = createTestGameState({ stats: { totalGamesPlayed: 5 } })
+```
+
+**Helpers:** `tests/setup.js` provides createMockLocalStorage(), createMockAudio(), createMockResponse()
+
 ## Coverage
 
 **Requirements:**
@@ -166,6 +188,15 @@ def sample_taxonomy():
 - Vitest: `vitest.config.js` (v8 coverage provider)
 - Pytest: `pyproject.toml` (pytest-cov plugin)
 - Exclusions: Test files, configuration files, build artifacts
+
+**Current Coverage (Phase 5):**
+- Overall JavaScript: ~85% (target: 70%)
+- Critical files:
+  - GameLogic.jsx: ~90%
+  - DailyBirdUtils.jsx: ~88%
+  - stores/*.ts: ~85%
+  - AudioUtils.jsx: ~82%
+- Integration test files: 5 new files, 57+ test cases
 
 **View Coverage:**
 ```bash
@@ -188,6 +219,7 @@ pytest --cov=scripts     # Python
 - Python: Test data pipeline scripts together
 - Mock only external boundaries (eBird API)
 - Tests in `tests/integration/` (JavaScript), `tests/test_*_integration.py` (Python)
+- **Phase 5 additions:** 5 new integration test files (audio-playback, store-interactions, data-loading, error-scenarios, network-failures)
 
 **E2E Tests:**
 - Not currently used
@@ -228,11 +260,18 @@ global.localStorage = {
 global.Audio = vi.fn()
 ```
 
+**Integration Test Patterns (Phase 5):**
+
+1. **Workflow Testing** - Complete user flows across modules
+2. **Error Scenario Testing** - Graceful degradation when things fail
+3. **State Persistence Testing** - localStorage and migration logic
+4. **Cross-Module Testing** - Multiple utilities working together
+
 **Snapshot Testing:**
 - Not used in this codebase
 - Prefer explicit assertions for clarity
 
 ---
 
-*Testing analysis: 2026-01-15*
+*Testing analysis: 2026-01-16*
 *Update when test patterns change*

@@ -41,11 +41,18 @@ export default function AudioBirdle() {
     makeGuess,
     resetTodaysGame,
     resetAllData,
-    getDailyGame,
+    getHardModeGame,
     answerOptions,
   } = useDailyGame(selectedRegion, today, birds, todaysBird);
 
-  const currentDailyGame = getDailyGame();
+  const currentDailyGame = useNormalGameStore((state) =>
+    selectedRegion && today ? state.getDailyGame(`${selectedRegion}-${today}`) : null
+  );
+
+  const hardModeGame = useNormalGameStore((state) =>
+    selectedRegion && today ? state.getDailyGame(`${selectedRegion}-${today}`) : null
+  );
+
   const { currentView, setCurrentView } = useGameNavigation();
 
   useMigration();
@@ -114,7 +121,7 @@ export default function AudioBirdle() {
 
   if (currentView === VIEWS.HARD_MODE) {
     const normalModeKey = createRegionDateKey(selectedRegion, today);
-    const normalModeCompleted = useNormalGameStore.getState().getDailyGame(normalModeKey)?.completed === true;
+    const normalModeCompleted = hardModeGame?.completed === true;
 
     return (
       <HardModeGame
@@ -145,9 +152,10 @@ export default function AudioBirdle() {
   }
 
   if (currentView === VIEWS.STATS) {
+    const stats = useNormalGameStore((state) => state.stats);
     return (
       <StatsView
-        stats={useNormalGameStore.getState().stats}
+        stats={stats}
         regions={regions}
         onBack={() => setCurrentView(VIEWS.SETTINGS)}
       />

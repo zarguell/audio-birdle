@@ -18,8 +18,15 @@ import {
   hasCompletedHardMode
 } from '@/utils/GameLogic'
 import { sampleBirds } from '../fixtures/sampleBirds'
+import { useNormalGameStore } from '@/stores/normalGameStore'
+import { useHardModeStore } from '@/stores/hardModeStore'
 
 describe('GameLogic', () => {
+  beforeEach(() => {
+    useNormalGameStore.getState().reset()
+    useHardModeStore.getState().reset()
+  })
+
   describe('createInitialGameState', () => {
     it('should create initial game state structure', () => {
       const state = createInitialGameState()
@@ -445,7 +452,9 @@ describe('GameLogic', () => {
       const hardState = getHardModeGameState(gameState, 'us', '2025-12-27')
 
       expect(hardState).toBeDefined()
-      expect(gameState.hardModeGames).toBeDefined()
+      expect(hardState.mode).toBe('hard')
+      expect(hardState.region).toBe('us')
+      expect(hardState.date).toBe('2025-12-27')
     })
   })
 
@@ -594,7 +603,7 @@ describe('GameLogic', () => {
       expect(state.stats.hardModeStats.currentStreak).toBe(0)
     })
 
-    it('should set lastPlayed with mode: hard', () => {
+    it('should store hard mode game correctly in store', () => {
       const newState = processHardModeGuess(
         gameState,
         'us',
@@ -604,11 +613,14 @@ describe('GameLogic', () => {
         sampleBirds.us[0]
       )
 
-      expect(newState.lastPlayed).toEqual({
-        region: 'us',
-        date: '2025-12-27',
-        mode: 'hard'
-      })
+      const key = createRegionDateKey('us', '2025-12-27')
+      expect(newState.hardModeGames).toBeDefined()
+      expect(newState.hardModeGames[key]).toBeDefined()
+      expect(newState.hardModeGames[key].mode).toBe('hard')
+      expect(newState.hardModeGames[key].region).toBe('us')
+      expect(newState.hardModeGames[key].date).toBe('2025-12-27')
+      expect(newState.hardModeGames[key].won).toBe(true)
+      expect(newState.hardModeGames[key].completed).toBe(true)
     })
 
     it('should calculate taxonomic score correctly', () => {

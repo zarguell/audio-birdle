@@ -233,6 +233,13 @@ export const processGuess = (gameState, region, date, guessedBirdId, correctBird
   // For backward compatibility with tests, sync provided state to store first
   if (gameState && gameState.dailyGames && gameState.dailyGames[key]) {
     useNormalGameStore.getState().setDailyGame(key, gameState.dailyGames[key]);
+  } else {
+    // Check if game exists in store, if not initialize it
+    const existingGame = useNormalGameStore.getState().getDailyGame(key);
+    if (!existingGame) {
+      const initialGame = createInitialDailyGameState(region, date);
+      useNormalGameStore.getState().setDailyGame(key, initialGame);
+    }
   }
 
   // Use store's processGuess action
@@ -319,7 +326,8 @@ export const getDailyBird = (region, birds, date) => {
   if (!birds || birds.length === 0) return null;
 
   // Simple hash-based selection as fallback
-  const seed = hashString(`${region}-${date}`);
+  const hash = hashString(`${region}-${date}`);
+  const seed = parseInt(hash, 16);
   const index = Math.abs(seed) % birds.length;
   return birds[index];
 };
@@ -542,6 +550,21 @@ export const processHardModeGuess = (
   // For backward compatibility with tests, sync provided state to store first
   if (gameState && gameState.hardModeGames && gameState.hardModeGames[key]) {
     useHardModeStore.getState().setHardModeGame(key, gameState.hardModeGames[key]);
+  } else {
+    // Check if game exists in store, if not initialize it
+    const existingGame = useHardModeStore.getState().getHardModeGame(key);
+    if (!existingGame) {
+      const initialGame = {
+        region,
+        date,
+        mode: 'hard',
+        guesses: [],
+        completed: false,
+        won: false,
+        maxGuesses: GAME_CONFIG.HARD_MODE_MAX_GUESSES,
+      };
+      useHardModeStore.getState().setHardModeGame(key, initialGame);
+    }
   }
 
   // Use store's processHardModeGuess action
@@ -704,20 +727,23 @@ export const hasCompletedHardMode = (gameState, region, date) => {
  * @param {Object} gameState - Main game state object (kept for backward compatibility, not used)
  * @returns {Object} - Performance summary
  */
-export const getUserPerformanceSummary = () => { // gameState param removed, now uses Zustand store directly
-  const stats = useNormalGameStore.getState().stats;
+export const getUserPerformanceSummary = (gameState) => {
+  const stats = gameState?.stats || useNormalGameStore.getState().stats;
+
+  const totalGuesses = Object.values(stats.regionStats).reduce((sum, region) => sum + region.totalGuesses, 0);
+  const averageGuesses = stats.totalGamesPlayed > 0 ? totalGuesses / stats.totalGamesPlayed : 0;
 
   return {
     totalGames: stats.totalGamesPlayed,
     winRate: stats.totalGamesPlayed > 0 ? (stats.totalGamesWon / stats.totalGamesPlayed * 100).toFixed(1) : 0,
-    averageGuesses: stats.averageGuesses.toFixed(1),
+    averageGuesses: averageGuesses.toFixed(1),
     currentStreak: stats.currentStreak,
     maxStreak: stats.maxStreak,
     regionBreakdown: Object.entries(stats.regionStats).map(([region, regionStats]) => ({
       region,
       games: regionStats.gamesPlayed,
       winRate: regionStats.gamesPlayed > 0 ? (regionStats.gamesWon / regionStats.gamesPlayed * 100).toFixed(1) : 0,
-      avgGuesses: regionStats.averageGuesses.toFixed(1)
+      avgGuesses: (regionStats.averageGuesses || 0).toFixed(1)
     }))
   };
 };

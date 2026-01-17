@@ -126,9 +126,9 @@ describe('CacheUtils', () => {
     it('should store version info from response headers', () => {
       const mockResponse = {
         headers: {
-          get: vi.fn()
-            .mockReturnValueOnce('Wed, 15 Jan 2025 12:00:00 GMT')
-            .mockReturnValueOnce('"1234567890"'),
+        get: vi.fn()
+          .mockReturnValueOnce('Wed, 15 Jan 2025 12:00:00 GMT')
+          .mockReturnValueOnce('1234567890'),
         },
       }
 
@@ -136,7 +136,7 @@ describe('CacheUtils', () => {
 
       expect(localStorage.setItem).toHaveBeenCalledWith(
         STORAGE_KEYS.CACHE_LAST_MODIFIED,
-        'Wed, 15 Jan 2025 12:00:00 GMT'
+        '"Wed, 15 Jan 2025 12:00:00 GMT"'
       )
       expect(localStorage.setItem).toHaveBeenCalledWith(
         STORAGE_KEYS.CACHE_ETAG,
@@ -163,23 +163,26 @@ describe('CacheUtils', () => {
         headers: {
           get: vi.fn()
             .mockReturnValueOnce('Wed, 15 Jan 2025 12:00:00 GMT')
-            .mockReturnValueOnce('"0987654321"'),
+            .mockReturnValueOnce('0987654321'),
         },
       }
 
       storeDailyJsonVersionInfo(mockResponse)
 
-      expect(localStorage.setItem).toHaveBeenCalledWith(
+      expect(localStorage.setItem).toHaveBeenNthCalledWith(
+        1,
         STORAGE_KEYS.DAILY_JSON_LAST_MODIFIED,
-        'Wed, 15 Jan 2025 12:00:00 GMT'
+        '"Wed, 15 Jan 2025 12:00:00 GMT"'
       )
-      expect(localStorage.setItem).toHaveBeenCalledWith(
+      expect(localStorage.setItem).toHaveBeenNthCalledWith(
+        2,
         STORAGE_KEYS.DAILY_JSON_ETAG,
         '"0987654321"'
       )
-      expect(localStorage.setItem).toHaveBeenCalledWith(
+      expect(localStorage.setItem).toHaveBeenNthCalledWith(
+        4,
         STORAGE_KEYS.LAST_VALIDATED_DATE,
-        expect.stringMatching(/^\d{4}-\d{2}-\d{2}$/)
+        expect.stringMatching(/^"\d{4}-\d{2}-\d{2}"$/)
       )
     })
 
@@ -200,7 +203,7 @@ describe('CacheUtils', () => {
         headers: {
           get: vi.fn()
             .mockReturnValueOnce('Wed, 15 Jan 2025 10:00:00 GMT')
-            .mockReturnValueOnce('"birds-v2"'),
+            .mockReturnValueOnce('birds-v2'),
         },
       }
 
@@ -208,7 +211,7 @@ describe('CacheUtils', () => {
 
       expect(localStorage.setItem).toHaveBeenCalledWith(
         STORAGE_KEYS.BIRDS_JSON_LAST_MODIFIED,
-        'Wed, 15 Jan 2025 10:00:00 GMT'
+        '"Wed, 15 Jan 2025 10:00:00 GMT"'
       )
       expect(localStorage.setItem).toHaveBeenCalledWith(
         STORAGE_KEYS.BIRDS_JSON_ETAG,
@@ -244,7 +247,7 @@ describe('CacheUtils', () => {
     })
 
     it('should return true if date changed', () => {
-      localStorage.getItem.mockReturnValue('2025-01-14')
+      localStorage.getItem.mockReturnValue('"2025-01-14"')
 
       const result = hasDateChanged()
 
@@ -252,7 +255,7 @@ describe('CacheUtils', () => {
     })
 
     it('should return false if date is same', () => {
-      localStorage.getItem.mockReturnValue(today)
+      localStorage.getItem.mockReturnValue(`"${today}"`)
 
       const result = hasDateChanged()
 
