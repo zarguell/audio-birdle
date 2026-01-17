@@ -230,11 +230,7 @@ class TestMergeExistingData:
         """Test that new subregion data is merged into existing file"""
         # Create existing output file with California data
         output_file = tmp_path / "output.json"
-        existing_data = {
-            "us": {
-                "California": [{"id": "calqua"}, {"id": "wesscj"}]
-            }
-        }
+        existing_data = {"us": {"California": [{"id": "calqua"}, {"id": "wesscj"}]}}
         output_file.write_text(json.dumps(existing_data))
 
         # Setup subregions for New York
@@ -279,11 +275,7 @@ class TestMergeExistingData:
         """Test that different region prefixes are merged correctly"""
         # Create existing output file with us data
         output_file = tmp_path / "output.json"
-        existing_data = {
-            "us": {
-                "New York": [{"id": "amerob"}]
-            }
-        }
+        existing_data = {"us": {"New York": [{"id": "amerob"}]}}
         output_file.write_text(json.dumps(existing_data))
 
         # Setup subregions for EU region
