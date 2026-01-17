@@ -29,7 +29,23 @@ export default function HardModeGame({
   const audioRef = useRef(null);
 
   const today = getTodayString();
-  const hardModeGame = useHardModeStore((state) => state.getHardModeGame(`${region}-${today}`));
+  const key = `${region}-${today}`;
+  const hardModeGame = useHardModeStore((state) => state.getHardModeGame(key));
+
+  // Initialize hard mode game if not exists
+  useEffect(() => {
+    if (!hardModeGame && region && today) {
+      useHardModeStore.getState().setHardModeGame(key, {
+        region,
+        date: today,
+        mode: "hard",
+        guesses: [],
+        completed: false,
+        won: false,
+        maxGuesses: 6,
+      });
+    }
+  }, [region, today, hardModeGame]);
 
   // Reset audio index when bird changes
   useEffect(() => {
