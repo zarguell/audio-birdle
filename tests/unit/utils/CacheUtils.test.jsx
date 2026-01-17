@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
+import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import {
   getServiceWorker,
   checkDailyJsonUpdate,
@@ -10,354 +10,368 @@ import {
   hasDateChanged,
   clearServiceWorkerCache,
   refreshGameData,
-} from '@/utils/CacheUtils'
-import { STORAGE_KEYS } from '@/utils/Constants'
+} from "@/utils/CacheUtils";
+import { STORAGE_KEYS } from "@/utils/Constants";
 
-describe('CacheUtils', () => {
-  let originalNavigator
-  let originalLocalStorage
-  let checkDataFileUpdateMock
+describe("CacheUtils", () => {
+  let originalNavigator;
+  let originalLocalStorage;
+  let checkDataFileUpdateMock;
 
   beforeEach(async () => {
-    const versionUtils = await import('@/utils/versionUtils')
-    checkDataFileUpdateMock = vi.spyOn(versionUtils, 'checkDataFileUpdate')
+    const versionUtils = await import("@/utils/versionUtils");
+    checkDataFileUpdateMock = vi.spyOn(versionUtils, "checkDataFileUpdate");
 
-    originalNavigator = global.navigator
-    originalLocalStorage = global.localStorage
+    originalNavigator = global.navigator;
+    originalLocalStorage = global.localStorage;
 
     global.localStorage = {
       getItem: vi.fn(),
       setItem: vi.fn(),
       removeItem: vi.fn(),
       clear: vi.fn(),
-      get length() { return 0 },
+      get length() {
+        return 0;
+      },
       key: vi.fn(),
-    }
+    };
 
     global.caches = {
       keys: vi.fn(),
       delete: vi.fn(),
-    }
-  })
+    };
+  });
 
   afterEach(() => {
-    global.navigator = originalNavigator
-    global.localStorage = originalLocalStorage
-  })
+    global.navigator = originalNavigator;
+    global.localStorage = originalLocalStorage;
+  });
 
-  describe('getServiceWorker', () => {
-    it('should return null if serviceWorker not supported', async () => {
-      global.navigator = { serviceWorker: undefined }
+  describe("getServiceWorker", () => {
+    it("should return null if serviceWorker not supported", async () => {
+      global.navigator = { serviceWorker: undefined };
 
-      const result = await getServiceWorker()
+      const result = await getServiceWorker();
 
-      expect(result).toBeNull()
-    })
+      expect(result).toBeNull();
+    });
 
-    it('should return registration if serviceWorker available', async () => {
-      const mockRegistration = { scope: '/' }
-      const getRegistrationMock = vi.fn().mockResolvedValue(mockRegistration)
-      global.navigator.serviceWorker = { getRegistration: getRegistrationMock }
+    it("should return registration if serviceWorker available", async () => {
+      const mockRegistration = { scope: "/" };
+      const getRegistrationMock = vi.fn().mockResolvedValue(mockRegistration);
+      global.navigator.serviceWorker = { getRegistration: getRegistrationMock };
 
-      const result = await getServiceWorker()
+      const result = await getServiceWorker();
 
-      expect(result).toBe(mockRegistration)
-    })
+      expect(result).toBe(mockRegistration);
+    });
 
-    it('should return null on error', async () => {
-      const getRegistrationMock = vi.fn().mockRejectedValue(new Error('SW error'))
-      global.navigator.serviceWorker = { getRegistration: getRegistrationMock }
+    it("should return null on error", async () => {
+      const getRegistrationMock = vi
+        .fn()
+        .mockRejectedValue(new Error("SW error"));
+      global.navigator.serviceWorker = { getRegistration: getRegistrationMock };
 
-      const result = await getServiceWorker()
+      const result = await getServiceWorker();
 
-      expect(result).toBeNull()
-    })
-  })
+      expect(result).toBeNull();
+    });
+  });
 
-  describe('checkDailyJsonUpdate', () => {
-    it('should call checkDataFileUpdate with correct keys', async () => {
+  describe("checkDailyJsonUpdate", () => {
+    it("should call checkDataFileUpdate with correct keys", async () => {
       checkDataFileUpdateMock.mockResolvedValue({
         hasUpdate: true,
-        serverVersion: '2025-01-15',
-        cachedVersion: '2025-01-14',
-      })
+        serverVersion: "2025-01-15",
+        cachedVersion: "2025-01-14",
+      });
 
-      const result = await checkDailyJsonUpdate()
+      const result = await checkDailyJsonUpdate();
 
-      expect(result.hasUpdate).toBe(true)
-      expect(result.serverVersion).toBe('2025-01-15')
-    })
-  })
+      expect(result.hasUpdate).toBe(true);
+      expect(result.serverVersion).toBe("2025-01-15");
+    });
+  });
 
-  describe('checkForUpdates', () => {
-    it('should return true if regions.json has update', async () => {
+  describe("checkForUpdates", () => {
+    it("should return true if regions.json has update", async () => {
       checkDataFileUpdateMock
-        .mockResolvedValueOnce({ hasUpdate: true, serverVersion: 'v2' })
-        .mockResolvedValueOnce({ hasUpdate: false })
+        .mockResolvedValueOnce({ hasUpdate: true, serverVersion: "v2" })
+        .mockResolvedValueOnce({ hasUpdate: false });
 
-      const result = await checkForUpdates()
+      const result = await checkForUpdates();
 
-      expect(result.hasUpdate).toBe(true)
-      expect(result.serverVersion).toBe('v2')
-    })
+      expect(result.hasUpdate).toBe(true);
+      expect(result.serverVersion).toBe("v2");
+    });
 
-    it('should return true if daily.json has update', async () => {
+    it("should return true if daily.json has update", async () => {
       checkDataFileUpdateMock
         .mockResolvedValueOnce({ hasUpdate: false })
-        .mockResolvedValueOnce({ hasUpdate: true })
+        .mockResolvedValueOnce({ hasUpdate: true });
 
-      const result = await checkForUpdates()
+      const result = await checkForUpdates();
 
-      expect(result.hasUpdate).toBe(true)
-      expect(result.dailyJsonUpdate).toBe(true)
-    })
+      expect(result.hasUpdate).toBe(true);
+      expect(result.dailyJsonUpdate).toBe(true);
+    });
 
-    it('should return false if no updates', async () => {
-      checkDataFileUpdateMock.mockResolvedValue({ hasUpdate: false })
+    it("should return false if no updates", async () => {
+      checkDataFileUpdateMock.mockResolvedValue({ hasUpdate: false });
 
-      const result = await checkForUpdates()
+      const result = await checkForUpdates();
 
-      expect(result.hasUpdate).toBe(false)
-      expect(result.dailyJsonUpdate).toBe(false)
-    })
-  })
+      expect(result.hasUpdate).toBe(false);
+      expect(result.dailyJsonUpdate).toBe(false);
+    });
+  });
 
-  describe('storeVersionInfo', () => {
-    it('should store version info from response headers', () => {
+  describe("storeVersionInfo", () => {
+    it("should store version info from response headers", () => {
       const mockResponse = {
         headers: {
-        get: vi.fn()
-          .mockReturnValueOnce('Wed, 15 Jan 2025 12:00:00 GMT')
-          .mockReturnValueOnce('1234567890'),
+          get: vi
+            .fn()
+            .mockReturnValueOnce("Wed, 15 Jan 2025 12:00:00 GMT")
+            .mockReturnValueOnce("1234567890"),
         },
-      }
+      };
 
-      storeVersionInfo(mockResponse)
+      storeVersionInfo(mockResponse);
 
       expect(localStorage.setItem).toHaveBeenCalledWith(
         STORAGE_KEYS.CACHE_LAST_MODIFIED,
-        '"Wed, 15 Jan 2025 12:00:00 GMT"'
-      )
+        '"Wed, 15 Jan 2025 12:00:00 GMT"',
+      );
       expect(localStorage.setItem).toHaveBeenCalledWith(
         STORAGE_KEYS.CACHE_ETAG,
-        '"1234567890"'
-      )
-    })
+        '"1234567890"',
+      );
+    });
 
-    it('should not store if headers are null', () => {
+    it("should not store if headers are null", () => {
       const mockResponse = {
         headers: {
           get: vi.fn().mockReturnValue(null),
         },
-      }
+      };
 
-      storeVersionInfo(mockResponse)
+      storeVersionInfo(mockResponse);
 
-      expect(localStorage.setItem).not.toHaveBeenCalled()
-    })
-  })
+      expect(localStorage.setItem).not.toHaveBeenCalled();
+    });
+  });
 
-  describe('storeDailyJsonVersionInfo', () => {
-    it('should store version info and date', () => {
+  describe("storeDailyJsonVersionInfo", () => {
+    it("should store version info and date", () => {
       const mockResponse = {
         headers: {
-          get: vi.fn()
-            .mockReturnValueOnce('Wed, 15 Jan 2025 12:00:00 GMT')
-            .mockReturnValueOnce('0987654321'),
+          get: vi
+            .fn()
+            .mockReturnValueOnce("Wed, 15 Jan 2025 12:00:00 GMT")
+            .mockReturnValueOnce("0987654321"),
         },
-      }
+      };
 
-      storeDailyJsonVersionInfo(mockResponse)
+      storeDailyJsonVersionInfo(mockResponse);
 
       expect(localStorage.setItem).toHaveBeenNthCalledWith(
         1,
         STORAGE_KEYS.DAILY_JSON_LAST_MODIFIED,
-        '"Wed, 15 Jan 2025 12:00:00 GMT"'
-      )
+        '"Wed, 15 Jan 2025 12:00:00 GMT"',
+      );
       expect(localStorage.setItem).toHaveBeenNthCalledWith(
         2,
         STORAGE_KEYS.DAILY_JSON_ETAG,
-        '"0987654321"'
-      )
+        '"0987654321"',
+      );
       expect(localStorage.setItem).toHaveBeenNthCalledWith(
         4,
         STORAGE_KEYS.LAST_VALIDATED_DATE,
-        expect.stringMatching(/^"\d{4}-\d{2}-\d{2}"$/)
-      )
-    })
+        expect.stringMatching(/^"\d{4}-\d{2}-\d{2}"$/),
+      );
+    });
 
-    it('should not throw if version info is null', () => {
+    it("should not throw if version info is null", () => {
       const mockResponse = {
         headers: {
           get: vi.fn().mockReturnValue(null),
         },
-      }
+      };
 
-      expect(() => storeDailyJsonVersionInfo(mockResponse)).not.toThrow()
-    })
-  })
+      expect(() => storeDailyJsonVersionInfo(mockResponse)).not.toThrow();
+    });
+  });
 
-  describe('storeBirdsJsonVersionInfo', () => {
-    it('should store birds.json version info', () => {
+  describe("storeBirdsJsonVersionInfo", () => {
+    it("should store birds.json version info", () => {
       const mockResponse = {
         headers: {
-          get: vi.fn()
-            .mockReturnValueOnce('Wed, 15 Jan 2025 10:00:00 GMT')
-            .mockReturnValueOnce('birds-v2'),
+          get: vi
+            .fn()
+            .mockReturnValueOnce("Wed, 15 Jan 2025 10:00:00 GMT")
+            .mockReturnValueOnce("birds-v2"),
         },
-      }
+      };
 
-      storeBirdsJsonVersionInfo(mockResponse)
+      storeBirdsJsonVersionInfo(mockResponse);
 
       expect(localStorage.setItem).toHaveBeenCalledWith(
         STORAGE_KEYS.BIRDS_JSON_LAST_MODIFIED,
-        '"Wed, 15 Jan 2025 10:00:00 GMT"'
-      )
+        '"Wed, 15 Jan 2025 10:00:00 GMT"',
+      );
       expect(localStorage.setItem).toHaveBeenCalledWith(
         STORAGE_KEYS.BIRDS_JSON_ETAG,
-        '"birds-v2"'
-      )
-    })
-  })
+        '"birds-v2"',
+      );
+    });
+  });
 
-  describe('checkBirdsJsonUpdate', () => {
-    it('should call checkDataFileUpdate with correct keys', async () => {
+  describe("checkBirdsJsonUpdate", () => {
+    it("should call checkDataFileUpdate with correct keys", async () => {
       checkDataFileUpdateMock.mockResolvedValue({
         hasUpdate: true,
-        serverVersion: 'birds-v2',
-        cachedVersion: 'birds-v1',
-      })
+        serverVersion: "birds-v2",
+        cachedVersion: "birds-v1",
+      });
 
-      const result = await checkBirdsJsonUpdate()
+      const result = await checkBirdsJsonUpdate();
 
-      expect(result.hasUpdate).toBe(true)
-      expect(result.serverVersion).toBe('birds-v2')
-    })
-  })
+      expect(result.hasUpdate).toBe(true);
+      expect(result.serverVersion).toBe("birds-v2");
+    });
+  });
 
-  describe('hasDateChanged', () => {
-    const today = new Date().toISOString().split('T')[0]
+  describe("hasDateChanged", () => {
+    const today = new Date().toISOString().split("T")[0];
 
-    it('should return true if no last validated date', () => {
-      localStorage.getItem.mockReturnValue(null)
+    it("should return true if no last validated date", () => {
+      localStorage.getItem.mockReturnValue(null);
 
-      const result = hasDateChanged()
+      const result = hasDateChanged();
 
-      expect(result).toBe(true)
-    })
+      expect(result).toBe(true);
+    });
 
-    it('should return true if date changed', () => {
-      localStorage.getItem.mockReturnValue('"2025-01-14"')
+    it("should return true if date changed", () => {
+      localStorage.getItem.mockReturnValue('"2025-01-14"');
 
-      const result = hasDateChanged()
+      const result = hasDateChanged();
 
-      expect(result).toBe(true)
-    })
+      expect(result).toBe(true);
+    });
 
-    it('should return false if date is same', () => {
-      localStorage.getItem.mockReturnValue(`"${today}"`)
+    it("should return false if date is same", () => {
+      localStorage.getItem.mockReturnValue(`"${today}"`);
 
-      const result = hasDateChanged()
+      const result = hasDateChanged();
 
-      expect(result).toBe(false)
-    })
-  })
+      expect(result).toBe(false);
+    });
+  });
 
-  describe('clearServiceWorkerCache', () => {
-    it('should clear all caches', async () => {
-      global.caches.keys.mockResolvedValue(['cache-v1', 'cache-v2'])
-      global.caches.delete.mockResolvedValue(true)
+  describe("clearServiceWorkerCache", () => {
+    it("should clear all caches", async () => {
+      global.caches.keys.mockResolvedValue(["cache-v1", "cache-v2"]);
+      global.caches.delete.mockResolvedValue(true);
 
-      const result = await clearServiceWorkerCache()
+      const result = await clearServiceWorkerCache();
 
-      expect(result).toBe(true)
-      expect(caches.keys).toHaveBeenCalled()
-      expect(caches.delete).toHaveBeenCalledTimes(2)
-    })
+      expect(result).toBe(true);
+      expect(caches.keys).toHaveBeenCalled();
+      expect(caches.delete).toHaveBeenCalledTimes(2);
+    });
 
-    it('should return false on error', async () => {
-      global.caches.keys.mockRejectedValue(new Error('Cache error'))
+    it("should return false on error", async () => {
+      global.caches.keys.mockRejectedValue(new Error("Cache error"));
 
-      const result = await clearServiceWorkerCache()
+      const result = await clearServiceWorkerCache();
 
-      expect(result).toBe(false)
-    })
-  })
+      expect(result).toBe(false);
+    });
+  });
 
-  describe('refreshGameData', () => {
+  describe("refreshGameData", () => {
     beforeEach(() => {
-      global.fetch = vi.fn()
-    })
+      global.fetch = vi.fn();
+    });
 
-    it('should fetch all data files with no-cache headers', async () => {
-      const mockRegions = { us: [{ id: 'us', name: 'United States' }] }
-      const mockBirds = { us: [{ id: 'amerob', name: 'American Robin' }] }
-      const mockDaily = [{ date: '2025-01-15', region: 'us', answerHash: 'abc123' }]
+    it("should fetch all data files with no-cache headers", async () => {
+      const mockRegions = { us: [{ id: "us", name: "United States" }] };
+      const mockBirds = { us: [{ id: "amerob", name: "American Robin" }] };
+      const mockDaily = [
+        { date: "2025-01-15", region: "us", answerHash: "abc123" },
+      ];
 
-      global.fetch
-        .mockImplementation((url) => {
-          if (url.includes('regions.json')) {
-            return Promise.resolve({
-              ok: true,
-              headers: { get: vi.fn().mockReturnValue('version-1') },
-              json: async () => mockRegions,
-            })
-          } else if (url.includes('birds.json')) {
-            return Promise.resolve({
-              ok: true,
-              headers: { get: vi.fn().mockReturnValue('version-2') },
-              json: async () => mockBirds,
-            })
-          } else if (url.includes('daily.json')) {
-            return Promise.resolve({
-              ok: true,
-              headers: { get: vi.fn().mockReturnValue('version-3') },
-              json: async () => mockDaily,
-            })
-          } else {
-            return Promise.resolve({
-              ok: true,
-              headers: { get: vi.fn().mockReturnValue('version') },
-              json: async () => (url.includes('history') ? [] : {}),
-            })
-          }
-        })
+      global.fetch.mockImplementation((url) => {
+        if (url.includes("regions.json")) {
+          return Promise.resolve({
+            ok: true,
+            headers: { get: vi.fn().mockReturnValue("version-1") },
+            json: async () => mockRegions,
+          });
+        } else if (url.includes("birds.json")) {
+          return Promise.resolve({
+            ok: true,
+            headers: { get: vi.fn().mockReturnValue("version-2") },
+            json: async () => mockBirds,
+          });
+        } else if (url.includes("daily.json")) {
+          return Promise.resolve({
+            ok: true,
+            headers: { get: vi.fn().mockReturnValue("version-3") },
+            json: async () => mockDaily,
+          });
+        } else {
+          return Promise.resolve({
+            ok: true,
+            headers: { get: vi.fn().mockReturnValue("version") },
+            json: async () => (url.includes("history") ? [] : {}),
+          });
+        }
+      });
 
-      const result = await refreshGameData()
+      const result = await refreshGameData();
 
-      expect(global.fetch).toHaveBeenCalledWith('/data/regions.json', {
-        cache: 'no-store',
+      expect(global.fetch).toHaveBeenCalledWith("/data/regions.json", {
+        cache: "no-store",
         headers: {
-          'Cache-Control': 'no-cache',
-          Pragma: 'no-cache',
+          "Cache-Control": "no-cache",
+          Pragma: "no-cache",
         },
-      })
-      expect(result.regions).toEqual(mockRegions)
-      expect(result.birds).toEqual(mockBirds)
-    })
+      });
+      expect(result.regions).toEqual(mockRegions);
+      expect(result.birds).toEqual(mockBirds);
+    });
 
-    it('should throw error on failed fetch', async () => {
+    it("should throw error on failed fetch", async () => {
       global.fetch.mockResolvedValueOnce({
         ok: false,
         status: 404,
-      })
+      });
 
-      await expect(refreshGameData()).rejects.toThrow('Failed to fetch /data/regions.json: 404')
-    })
+      await expect(refreshGameData()).rejects.toThrow(
+        "Failed to fetch /data/regions.json: 404",
+      );
+    });
 
-    it('should call onProgress callback', async () => {
-      const progressCallback = vi.fn()
+    it("should call onProgress callback", async () => {
+      const progressCallback = vi.fn();
       global.fetch.mockResolvedValue({
         ok: true,
-        headers: { get: vi.fn().mockReturnValue('version') },
+        headers: { get: vi.fn().mockReturnValue("version") },
         json: async () => ({}),
-      })
+      });
 
-      await refreshGameData(progressCallback)
+      await refreshGameData(progressCallback);
 
-      expect(progressCallback).toHaveBeenCalledTimes(5)
-      expect(progressCallback).toHaveBeenCalledWith(1, 5, '/data/regions.json')
-      expect(progressCallback).toHaveBeenCalledWith(5, 5, '/data/daily-subregion-birds.json')
-    })
-  })
-})
+      expect(progressCallback).toHaveBeenCalledTimes(5);
+      expect(progressCallback).toHaveBeenCalledWith(1, 5, "/data/regions.json");
+      expect(progressCallback).toHaveBeenCalledWith(
+        5,
+        5,
+        "/data/daily-subregion-birds.json",
+      );
+    });
+  });
+});

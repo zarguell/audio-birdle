@@ -1,17 +1,25 @@
-import { vi, beforeEach, afterEach } from 'vitest'
-import { cleanup } from '@testing-library/react'
-import '@testing-library/jest-dom'
+import { vi, beforeEach, afterEach } from "vitest";
+import { cleanup } from "@testing-library/react";
+import "@testing-library/jest-dom";
 
 export function createMockLocalStorage() {
-  const storage = {}
+  const storage = {};
   return {
     getItem: (key) => storage[key] || null,
-    setItem: (key, value) => { storage[key] = String(value) },
-    removeItem: (key) => { delete storage[key] },
-    clear: () => { Object.keys(storage).forEach(key => delete storage[key]) },
-    get length() { return Object.keys(storage).length },
-    key: (index) => Object.keys(storage)[index] || null
-  }
+    setItem: (key, value) => {
+      storage[key] = String(value);
+    },
+    removeItem: (key) => {
+      delete storage[key];
+    },
+    clear: () => {
+      Object.keys(storage).forEach((key) => delete storage[key]);
+    },
+    get length() {
+      return Object.keys(storage).length;
+    },
+    key: (index) => Object.keys(storage)[index] || null,
+  };
 }
 
 export function createMockAudio() {
@@ -24,8 +32,8 @@ export function createMockAudio() {
     paused: true,
     currentTime: 0,
     duration: 0,
-    volume: 1.0
-  }))
+    volume: 1.0,
+  }));
 }
 
 export function createMockResponse(data, status = 200) {
@@ -34,13 +42,13 @@ export function createMockResponse(data, status = 200) {
     status,
     json: async () => data,
     text: async () => JSON.stringify(data),
-    headers: new Headers({ 'content-type': 'application/json' })
-  }
+    headers: new Headers({ "content-type": "application/json" }),
+  };
 }
 
 afterEach(() => {
-  cleanup()
-})
+  cleanup();
+});
 
 const localStorageMock = (() => {
   let store = {};
@@ -60,12 +68,12 @@ const localStorageMock = (() => {
   };
 })();
 
-global.localStorage = localStorageMock
+global.localStorage = localStorageMock;
 
 // Mock window.matchMedia
-Object.defineProperty(window, 'matchMedia', {
+Object.defineProperty(window, "matchMedia", {
   writable: true,
-  value: vi.fn().mockImplementation(query => ({
+  value: vi.fn().mockImplementation((query) => ({
     matches: false,
     media: query,
     onchange: null,
@@ -75,7 +83,7 @@ Object.defineProperty(window, 'matchMedia', {
     removeEventListener: vi.fn(),
     dispatchEvent: vi.fn(),
   })),
-})
+});
 
 global.Audio = vi.fn().mockImplementation(() => ({
   play: vi.fn().mockResolvedValue(undefined),
@@ -83,15 +91,15 @@ global.Audio = vi.fn().mockImplementation(() => ({
   load: vi.fn(),
   addEventListener: vi.fn(),
   removeEventListener: vi.fn(),
-}))
+}));
 
-global.fetch = vi.fn()
+global.fetch = vi.fn();
 
 beforeEach(() => {
-  vi.clearAllMocks()
-  localStorageMock.getItem.mockClear()
-  localStorageMock.setItem.mockClear()
-  localStorageMock.removeItem.mockClear()
-  localStorageMock.clear.mockClear()
-  localStorageMock.clear()
-})
+  vi.clearAllMocks();
+  localStorageMock.getItem.mockClear();
+  localStorageMock.setItem.mockClear();
+  localStorageMock.removeItem.mockClear();
+  localStorageMock.clear.mockClear();
+  localStorageMock.clear();
+});

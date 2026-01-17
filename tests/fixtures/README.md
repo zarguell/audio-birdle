@@ -17,10 +17,11 @@ Creates a single test bird object with sensible defaults.
 **Returns:** Bird object
 
 **Example:**
-```javascript
-import { createTestBird } from '@/test/fixtures/integration-fixtures'
 
-const bird = createTestBird({ id: 'amerob', name: 'American Robin' })
+```javascript
+import { createTestBird } from "@/test/fixtures/integration-fixtures";
+
+const bird = createTestBird({ id: "amerob", name: "American Robin" });
 ```
 
 #### `createTestBirdList(count = 10, overrides = {})`
@@ -28,14 +29,16 @@ const bird = createTestBird({ id: 'amerob', name: 'American Robin' })
 Creates an array of test birds.
 
 **Parameters:**
+
 - `count` - Number of birds to create (default: 10)
 - `overrides` - Object to override defaults for all birds
 
 **Returns:** Array of bird objects
 
 **Example:**
+
 ```javascript
-const birds = createTestBirdList(50, { order: 'Passeriformes' })
+const birds = createTestBirdList(50, { order: "Passeriformes" });
 ```
 
 ### Game State Factories
@@ -47,12 +50,13 @@ Creates a complete game state object (version 2 format).
 **Returns:** Game state object with empty dailyGames, hardModeGames, and initialized stats
 
 **Example:**
+
 ```javascript
 const gameState = createTestGameState({
   dailyGames: {
-    'us-2025-01-15': createTestDailyGame()
-  }
-})
+    "us-2025-01-15": createTestDailyGame(),
+  },
+});
 ```
 
 #### `createTestDailyGame(overrides = {})`
@@ -62,12 +66,13 @@ Creates a daily game object for a specific region and date.
 **Returns:** Daily game object
 
 **Example:**
+
 ```javascript
 const dailyGame = createTestDailyGame({
-  region: 'eu',
-  date: '2025-01-16',
-  won: true
-})
+  region: "eu",
+  date: "2025-01-16",
+  won: true,
+});
 ```
 
 #### `createCompletedGame(won = true, guesses = 1, overrides = {})`
@@ -75,6 +80,7 @@ const dailyGame = createTestDailyGame({
 Creates a completed game with guess history.
 
 **Parameters:**
+
 - `won` - Whether the game was won (default: true)
 - `guesses` - Number of guesses made (default: 1)
 - `overrides` - Object to override defaults
@@ -82,9 +88,10 @@ Creates a completed game with guess history.
 **Returns:** Completed game object
 
 **Example:**
+
 ```javascript
-const wonGame = createCompletedGame(true, 3)
-const lostGame = createCompletedGame(false, 4)
+const wonGame = createCompletedGame(true, 3);
+const lostGame = createCompletedGame(false, 4);
 ```
 
 ### Hard Mode Factories
@@ -96,11 +103,12 @@ Creates a hard mode game object.
 **Returns:** Hard mode game object
 
 **Example:**
+
 ```javascript
 const hardGame = createHardModeGame({
-  date: '2025-01-17',
-  maxGuesses: 6
-})
+  date: "2025-01-17",
+  maxGuesses: 6,
+});
 ```
 
 #### `createHardModeGuess(overrides = {})`
@@ -110,18 +118,19 @@ Creates a hard mode guess with taxonomic scoring.
 **Returns:** Hard mode guess object
 
 **Example:**
+
 ```javascript
 const guess = createHardModeGuess({
-  birdId: 'target-bird',
-  textInput: 'Target Bird',
+  birdId: "target-bird",
+  textInput: "Target Bird",
   correct: true,
   taxonomicScore: {
     order: true,
     family: true,
     genus: true,
-    species: true
-  }
-})
+    species: true,
+  },
+});
 ```
 
 ### Region Data Factories
@@ -133,12 +142,13 @@ Creates a test region object.
 **Returns:** Region object
 
 **Example:**
+
 ```javascript
 const region = createTestRegion({
-  code: 'uk',
-  name: 'United Kingdom',
-  subregions: ['uk-eng', 'uk-sco', 'uk-wal']
-})
+  code: "uk",
+  name: "United Kingdom",
+  subregions: ["uk-eng", "uk-sco", "uk-wal"],
+});
 ```
 
 #### `createTestRegionList()`
@@ -148,8 +158,9 @@ Creates a list of common test regions (US, EU, AS).
 **Returns:** Array of region objects
 
 **Example:**
+
 ```javascript
-const regions = createTestRegionList()
+const regions = createTestRegionList();
 ```
 
 ### Daily Entry Factories
@@ -161,12 +172,13 @@ Creates a daily challenge entry.
 **Returns:** Daily entry object
 
 **Example:**
+
 ```javascript
 const entry = createTestDailyEntry({
-  date: '2025-01-17',
-  region: 'eu',
-  answerHash: hashBirdId('target-bird')
-})
+  date: "2025-01-17",
+  region: "eu",
+  answerHash: hashBirdId("target-bird"),
+});
 ```
 
 ### Mock Data Helpers
@@ -178,8 +190,9 @@ Creates mock bird data organized by region.
 **Returns:** Object with region codes as keys and bird arrays as values
 
 **Example:**
+
 ```javascript
-const birdData = createMockBirdDataByRegion()
+const birdData = createMockBirdDataByRegion();
 // { us: [...50 birds], eu: [...40 birds], as: [...45 birds] }
 ```
 
@@ -190,8 +203,9 @@ Creates mock daily challenge data for multiple dates.
 **Returns:** Array of daily entry objects
 
 **Example:**
+
 ```javascript
-const dailyData = createMockDailyData()
+const dailyData = createMockDailyData();
 // [3 daily entries for 2025-01-13, 2025-01-14, 2025-01-15]
 ```
 
@@ -200,21 +214,24 @@ const dailyData = createMockDailyData()
 ### Basic Usage
 
 ```javascript
-import { describe, it, expect } from 'vitest'
-import { createTestBird, createTestGameState } from '@/test/fixtures/integration-fixtures'
+import { describe, it, expect } from "vitest";
+import {
+  createTestBird,
+  createTestGameState,
+} from "@/test/fixtures/integration-fixtures";
 
-describe('Game Logic Integration', () => {
-  it('should process guess correctly', () => {
+describe("Game Logic Integration", () => {
+  it("should process guess correctly", () => {
     const gameState = createTestGameState({
       dailyGames: {
-        'us-2025-01-15': createTestDailyGame()
-      }
-    })
-    const bird = createTestBird({ id: 'target-bird' })
+        "us-2025-01-15": createTestDailyGame(),
+      },
+    });
+    const bird = createTestBird({ id: "target-bird" });
 
     // Test code here
-  })
-})
+  });
+});
 ```
 
 ### Override Defaults
@@ -222,21 +239,21 @@ describe('Game Logic Integration', () => {
 ```javascript
 // Create custom bird with specific properties
 const bird = createTestBird({
-  id: 'amerob',
-  name: 'American Robin',
-  order: 'Passeriformes',
-  family: 'Turdidae (Turdidae)',
-  audioUrl: ['http://example.com/robin.mp3']
-})
+  id: "amerob",
+  name: "American Robin",
+  order: "Passeriformes",
+  family: "Turdidae (Turdidae)",
+  audioUrl: ["http://example.com/robin.mp3"],
+});
 
 // Create game state with existing games
 const gameState = createTestGameState({
   stats: {
     totalGamesPlayed: 10,
     totalGamesWon: 7,
-    currentStreak: 3
-  }
-})
+    currentStreak: 3,
+  },
+});
 ```
 
 ### Create Complex Scenarios
@@ -244,29 +261,29 @@ const gameState = createTestGameState({
 ```javascript
 // Create completed game with specific guess history
 const game = createCompletedGame(true, 3, {
-  region: 'eu',
-  date: '2025-01-16',
+  region: "eu",
+  date: "2025-01-16",
   guesses: [
-    { birdId: 'wrong1', correct: false, timestamp: Date.now() - 2000 },
-    { birdId: 'wrong2', correct: false, timestamp: Date.now() - 1000 },
-    { birdId: 'correct', correct: true, timestamp: Date.now() }
-  ]
-})
+    { birdId: "wrong1", correct: false, timestamp: Date.now() - 2000 },
+    { birdId: "wrong2", correct: false, timestamp: Date.now() - 1000 },
+    { birdId: "correct", correct: true, timestamp: Date.now() },
+  ],
+});
 
 // Create hard mode game with taxonomic hints
 const hardGame = createHardModeGame({
   guesses: [
     createHardModeGuess({
-      textInput: 'Wrong Bird',
+      textInput: "Wrong Bird",
       taxonomicScore: {
         order: true,
         family: false,
         genus: false,
-        species: false
-      }
-    })
-  ]
-})
+        species: false,
+      },
+    }),
+  ],
+});
 ```
 
 ## Best Practices
@@ -286,6 +303,7 @@ const hardGame = createHardModeGame({
 ## Contributing
 
 When adding new fixtures:
+
 1. Add factory functions to `integration-fixtures.jsx`
 2. Document the function in this README
 3. Include JSDoc comments in the source code
