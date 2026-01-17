@@ -13,6 +13,7 @@ import {
   getUserPerformanceSummary
 } from '@/utils/GameLogic'
 import { getStoredData, setStoredData } from '@/utils/StorageUtils'
+import { useNormalGameStore } from '@/stores/normalGameStore'
 
 // Mock localStorage for testing
 const mockLocalStorage = {
@@ -36,6 +37,9 @@ describe('Game Flow Integration Tests', () => {
     // Clear localStorage before each test
     mockLocalStorage.clear()
     vi.stubGlobal('localStorage', mockLocalStorage)
+
+    // Reset Zustand stores to prevent test pollution
+    useNormalGameStore.getState().reset()
   })
 
   describe('Complete Daily Game Flow', () => {
