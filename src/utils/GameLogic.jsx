@@ -251,12 +251,11 @@ export const processGuess = (gameState, region, date, guessedBirdId, correctBird
 
   // Return complete state object for backward compatibility
   const updatedGame = useNormalGameStore.getState().getDailyGame(key);
+  const allDailyGames = useNormalGameStore.getState().dailyGames;
   const storeStats = useNormalGameStore.getState().stats;
 
   return {
-    dailyGames: {
-      [key]: updatedGame
-    },
+    dailyGames: allDailyGames,
     stats: storeStats,
     version: 2
   };
