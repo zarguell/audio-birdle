@@ -135,6 +135,12 @@
       "id": "dowwoo",
       "name": "Downy Woodpecker",
       "subregion": "Kansas"
+    },
+    {
+      "date": "2026-01-18",
+      "id": "brnthr",
+      "name": "Brown Thrasher",
+      "subregion": "North Carolina"
     }
   ],
   "us-lower48": [
@@ -255,6 +261,12 @@
       "id": "rehwoo",
       "name": "Red-headed Woodpecker",
       "subregion": "Kansas"
+    },
+    {
+      "date": "2026-01-18",
+      "id": "savspa",
+      "name": "Savannah Sparrow",
+      "subregion": "Delaware"
     }
   ]
 }
