@@ -141,6 +141,12 @@
       "id": "brnthr",
       "name": "Brown Thrasher",
       "subregion": "North Carolina"
+    },
+    {
+      "date": "2026-01-19",
+      "id": "marwre",
+      "name": "Marsh Wren",
+      "subregion": "Washington"
     }
   ],
   "us-lower48": [
@@ -267,6 +273,12 @@
       "id": "savspa",
       "name": "Savannah Sparrow",
       "subregion": "Delaware"
+    },
+    {
+      "date": "2026-01-19",
+      "id": "hoomer",
+      "name": "Hooded Merganser",
+      "subregion": "Maryland"
     }
   ]
 }
