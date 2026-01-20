@@ -147,6 +147,12 @@
       "id": "marwre",
       "name": "Marsh Wren",
       "subregion": "Washington"
+    },
+    {
+      "date": "2026-01-20",
+      "id": "bkcchi",
+      "name": "Black-capped Chickadee",
+      "subregion": "Indiana"
     }
   ],
   "us-lower48": [
@@ -279,6 +285,12 @@
       "id": "hoomer",
       "name": "Hooded Merganser",
       "subregion": "Maryland"
+    },
+    {
+      "date": "2026-01-20",
+      "id": "mallar3",
+      "name": "Mallard",
+      "subregion": "Connecticut"
     }
   ]
 }
