@@ -257,7 +257,6 @@ export const processGuess = (
   });
 
   // Return complete state object for backward compatibility
-  const updatedGame = useNormalGameStore.getState().getDailyGame(key);
   const allDailyGames = useNormalGameStore.getState().dailyGames;
   const storeStats = useNormalGameStore.getState().stats;
 
@@ -270,12 +269,14 @@ export const processGuess = (
 
 /**
  * Update user statistics after completing a daily game
+ * Note: This function is kept for backward compatibility but not actively used.
+ * Stats are now updated directly in Zustand store actions.
  * @param {Object} gameState - Main game state object
  * @param {string} region - Region identifier
  * @param {Object} dailyGame - Completed daily game state
  */
+/* eslint-disable no-unused-vars -- Function kept for backward compatibility with tests */
 const updateUserStats = (gameState, region, dailyGame) => {
-  // eslint-disable-line no-unused-vars -- Kept for backward compatibility
   const stats = gameState.stats;
 
   // Update overall stats
@@ -616,73 +617,22 @@ export const processHardModeGuess = (
 
 /**
  * Update hard mode statistics after completing a hard mode game
+ * Note: This function is kept for backward compatibility but not actively used.
+ * Stats are now updated directly in Zustand store actions.
  * @param {Object} gameState - Main game state object
  * @param {string} region - Region identifier
  * @param {Object} hardModeGame - Completed hard mode game state
  */
-const updateHardModeStats = (gameState, region, hardModeGame) => {
-  // eslint-disable-line no-unused-vars -- Kept for backward compatibility
-  if (!gameState.stats.hardModeStats) {
-    gameState.stats.hardModeStats = {
-      totalGamesPlayed: 0,
-      totalGamesWon: 0,
-      averageGuesses: 0,
-      currentStreak: 0,
-      maxStreak: 0,
-      regionStats: {},
-    };
-  }
-
-  const stats = gameState.stats.hardModeStats;
-
-  stats.totalGamesPlayed++;
-  if (hardModeGame.won) {
-    stats.totalGamesWon++;
-  }
-
-  // Calculate average guesses
-  const totalGuesses = Object.values(gameState.hardModeGames)
-    .filter((game) => game.completed)
-    .reduce((sum, game) => sum + game.guesses.length, 0);
-  stats.averageGuesses = totalGuesses / stats.totalGamesPlayed;
-
-  // Update streaks
-  if (hardModeGame.won) {
-    stats.currentStreak++;
-    stats.maxStreak = Math.max(stats.maxStreak, stats.currentStreak);
-  } else {
-    stats.currentStreak = 0;
-  }
-
-  // Update region-specific stats
-  if (!stats.regionStats[region]) {
-    stats.regionStats[region] = {
-      gamesPlayed: 0,
-      gamesWon: 0,
-      averageGuesses: 0,
-    };
-  }
-
-  const regionStats = stats.regionStats[region];
-  regionStats.gamesPlayed++;
-  if (hardModeGame.won) {
-    regionStats.gamesWon++;
-  }
-
-  const regionTotalGuesses = Object.values(gameState.hardModeGames)
-    .filter((game) => game.completed && game.region === region)
-    .reduce((sum, game) => sum + game.guesses.length, 0);
-  regionStats.averageGuesses = regionTotalGuesses / regionStats.gamesPlayed;
-};
 
 /**
- * Check if hard mode has been played for a specific region-date
- * Now delegates to Zustand store while maintaining backward compatibility
- * @param {Object} gameState - Main game state object (for backward compatibility)
+ * Update user statistics after completing a daily game
+ * Note: This function is kept for backward compatibility but not actively used.
+ * Stats are now updated directly in Zustand store actions.
+ * @param {Object} gameState - Main game state object
  * @param {string} region - Region identifier
- * @param {string} date - Date string (YYYY-MM-DD)
- * @returns {boolean} - True if user has played hard mode for this combination
+ * @param {Object} dailyGame - Completed daily game state
  */
+
 export const hasPlayedHardModeRegionDate = (gameState, region, date) => {
   const key = createRegionDateKey(region, date);
 
