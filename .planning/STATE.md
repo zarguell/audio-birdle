@@ -67,6 +67,12 @@ From ISSUES.md — list open items with phase of origin:
 - Game functionality is broken despite refactor completion
 - Need to shift from theoretical fixes to hands-on debugging
 
+### Pending Todos
+
+- 2026-01-21-improve-audio-loading.md - Improve Audio Loading and Error Handling
+- 2026-01-21-fix-data-sync-issues.md - Fix Data Sync Issues in Game Initialization
+- 2026-01-21-fix-accessibility-issues.md - Fix Accessibility Issues in Form Elements
+
 ## Session Continuity
 
 Last session: 2026-01-16 17:00
