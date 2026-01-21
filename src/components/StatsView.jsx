@@ -1,13 +1,18 @@
 import { BarChart3 } from "lucide-react";
 
 export default function StatsView({ stats, regions, onBack }) {
-  const totalGames = stats.totalGamesPlayed;
-  const winRate = totalGames > 0 ? (stats.totalGamesWon / totalGames * 100).toFixed(1) : 0;
-  const regionBreakdown = Object.entries(stats.regionStats).map(([region, regionStats]) => ({
+  // Handle undefined stats during initial load
+  const totalGames = stats?.totalGamesPlayed || 0;
+  const totalWins = stats?.totalGamesWon || 0;
+  const winRate = totalGames > 0 ? (totalWins / totalGames * 100).toFixed(1) : 0;
+  const avgGuesses = stats?.averageGuesses || 0;
+  const maxStreak = stats?.maxStreak || 0;
+
+  const regionBreakdown = Object.entries(stats?.regionStats || {}).map(([region, regionStats]) => ({
     region,
-    games: regionStats.gamesPlayed,
-    winRate: regionStats.gamesPlayed > 0 ? (regionStats.gamesWon / regionStats.gamesPlayed * 100).toFixed(1) : 0,
-    avgGuesses: regionStats.averageGuesses.toFixed(1),
+    games: regionStats?.gamesPlayed || 0,
+    winRate: (regionStats?.gamesPlayed || 0) > 0 ? ((regionStats?.gamesWon || 0) / regionStats.gamesPlayed * 100).toFixed(1) : 0,
+    avgGuesses: (regionStats?.averageGuesses || 0).toFixed(1),
   }));
 
   return (
@@ -42,15 +47,15 @@ export default function StatsView({ stats, regions, onBack }) {
                 <div className="text-sm text-gray-600">Win Rate</div>
               </div>
               <div className="text-center p-3 bg-gray-50 rounded-lg">
-                <div className="text-2xl font-bold text-purple-600">
-                  {stats.averageGuesses.toFixed(1)}
-                </div>
+              <div className="text-2xl font-bold text-purple-600">
+                   {avgGuesses}
+                 </div>
                 <div className="text-sm text-gray-600">Avg Guesses</div>
               </div>
               <div className="text-center p-3 bg-gray-50 rounded-lg">
                 <div className="text-2xl font-bold text-orange-600">
-                  {stats.maxStreak}
-                </div>
+                   {maxStreak}
+                 </div>
                 <div className="text-sm text-gray-600">Best Streak</div>
               </div>
             </div>

@@ -1,7 +1,7 @@
 import { Settings } from "lucide-react";
 import { VIEWS } from "../utils/Constants";
 
-export default function ModeSelector({ gameModes, onModeSelect, lastPlayedMode, selectedRegion, regions }) {
+export default function ModeSelector({ gameModes, onModeSelect, lastPlayedMode, selectedRegion, regions, normalCompleted = false, hardCompleted = false }) {
   const colorClasses = {
     blue: {
       border: "border-blue-200",
@@ -41,11 +41,16 @@ export default function ModeSelector({ gameModes, onModeSelect, lastPlayedMode, 
 
           {gameModes.map((mode) => {
             const colors = colorClasses[mode.color];
+            // Check if this mode should be disabled because the other mode was already played
+            const isDisabled = (mode.mode === "hard" && normalCompleted) ||
+                             (mode.mode === "normal" && hardCompleted);
+
             return (
               <button
                 key={mode.mode}
-                onClick={() => onModeSelect(mode.view, mode.mode)}
-                className={`w-full text-left p-4 rounded-lg border-2 ${colors.border} ${colors.hoverBg} ${colors.hoverBorder} transition-all`}
+                onClick={() => !isDisabled && onModeSelect(mode.view, mode.mode)}
+                disabled={isDisabled}
+                className={`w-full text-left p-4 rounded-lg border-2 ${colors.border} ${isDisabled ? 'bg-gray-100 cursor-not-allowed' : colors.hoverBg + ' ' + colors.hoverBorder} transition-all`}
               >
                 <div className="flex items-center gap-3">
                   <div className="text-2xl">{mode.icon}</div>
@@ -62,6 +67,13 @@ export default function ModeSelector({ gameModes, onModeSelect, lastPlayedMode, 
                       className={`text-xs ${colors.badge} px-2 py-1 rounded`}
                     >
                       Last played
+                    </span>
+                  )}
+                  {isDisabled && (
+                    <span
+                      className="text-xs bg-gray-200 text-gray-600 px-2 py-1 rounded"
+                    >
+                      Other mode played
                     </span>
                   )}
                 </div>

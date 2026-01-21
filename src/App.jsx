@@ -1,5 +1,4 @@
 import { getTodayString } from "./utils/DateUtils";
-import { createRegionDateKey } from "./utils/GameLogic";
 import { VIEWS } from "./utils/Constants";
 import PracticeGame from "./utils/PracticeGame";
 import HardModeGame from "./utils/HardModeGame";
@@ -17,6 +16,7 @@ import { useGameInitialization } from "./hooks/useGameInitialization";
 import { useShareResult } from "./hooks/useShareResult";
 import { useMigration } from "./hooks/useMigration";
 import { useNormalGameStore } from "./stores/normalGameStore";
+import { useHardModeStore } from "./stores/hardModeStore";
 
 export default function AudioBirdle() {
   const { selectedRegion, setSelectedRegion, lastPlayedMode, setLastPlayedMode } = usePersistence();
@@ -41,7 +41,6 @@ export default function AudioBirdle() {
     makeGuess,
     resetTodaysGame,
     resetAllData,
-    getHardModeGame,
     answerOptions,
   } = useDailyGame(selectedRegion, today, birds, todaysBird);
 
@@ -49,9 +48,15 @@ export default function AudioBirdle() {
     selectedRegion && today ? state.getDailyGame(`${selectedRegion}-${today}`) : null
   );
 
-  const hardModeGame = useNormalGameStore((state) =>
+  const hardModeGame = useHardModeStore((state) =>
+    selectedRegion && today ? state.getHardModeGame(`${selectedRegion}-${today}`) : null
+  );
+
+  const normalModeGame = useNormalGameStore((state) =>
     selectedRegion && today ? state.getDailyGame(`${selectedRegion}-${today}`) : null
   );
+
+  const stats = useNormalGameStore((state) => state.stats);
 
   const { currentView, setCurrentView } = useGameNavigation();
 
@@ -94,6 +99,9 @@ export default function AudioBirdle() {
   }
 
   if (currentView === VIEWS.MODE_SELECTOR) {
+    const normalCompleted = currentDailyGame?.completed === true;
+    const hardCompleted = hardModeGame?.completed === true;
+
     return (
       <ModeSelector
         gameModes={gameModes}
@@ -104,6 +112,8 @@ export default function AudioBirdle() {
         lastPlayedMode={lastPlayedMode}
         selectedRegion={selectedRegion}
         regions={regions}
+        normalCompleted={normalCompleted}
+        hardCompleted={hardCompleted}
       />
     );
   }
@@ -120,8 +130,7 @@ export default function AudioBirdle() {
   }
 
   if (currentView === VIEWS.HARD_MODE) {
-    const normalModeKey = createRegionDateKey(selectedRegion, today);
-    const normalModeCompleted = hardModeGame?.completed === true;
+    const normalModeCompleted = normalModeGame?.completed === true;
 
     return (
       <HardModeGame
@@ -130,6 +139,10 @@ export default function AudioBirdle() {
         todaysBird={todaysBird}
         onBack={() => setCurrentView(VIEWS.MODE_SELECTOR)}
         normalModeCompleted={normalModeCompleted}
+        dataConsistencyError={dataConsistencyError}
+        hasUpdate={hasUpdate}
+        refreshingData={refreshingData}
+        handleForceRefresh={handleForceRefresh}
       />
     );
   }
@@ -152,7 +165,6 @@ export default function AudioBirdle() {
   }
 
   if (currentView === VIEWS.STATS) {
-    const stats = useNormalGameStore((state) => state.stats);
     return (
       <StatsView
         stats={stats}
@@ -161,6 +173,8 @@ export default function AudioBirdle() {
       />
     );
   }
+
+  const hardModeCompleted = hardModeGame?.completed === true;
 
   return (
     <GameView
@@ -193,6 +207,7 @@ export default function AudioBirdle() {
           setCurrentView(VIEWS.PRACTICE);
         }
       }}
+      hardModeCompleted={hardModeCompleted}
     />
   );
 }

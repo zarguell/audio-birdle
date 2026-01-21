@@ -30,6 +30,7 @@ export default function GameView({
   handleShareResult,
   onBack,
   onModeChange,
+  hardModeCompleted = false,
 }) {
   const {
     isPlaying,
@@ -63,9 +64,9 @@ export default function GameView({
           <div className="flex items-center gap-2">
             <button
               onClick={() => onModeChange("hard")}
-              disabled={currentDailyGame?.completed}
+              disabled={currentDailyGame?.completed || hardModeCompleted}
               className={`${
-                currentDailyGame?.completed
+                currentDailyGame?.completed || hardModeCompleted
                   ? "bg-gray-400 cursor-not-allowed"
                   : "bg-red-600 hover:bg-red-700"
               } text-white px-3 py-2 rounded-lg transition-colors flex items-center gap-2 text-sm`}

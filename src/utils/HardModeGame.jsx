@@ -4,7 +4,7 @@
  */
 
 import { useState, useRef, useMemo, useEffect } from "react";
-import { ArrowLeft, Share2, Volume2 } from "lucide-react";
+import { ArrowLeft, Share2, Volume2, RefreshCw } from "lucide-react";
 import HardModeInput from "./HardModeInput";
 import TaxonomicBadge from "./TaxonomicBadge";
 import BirdCompletionCard from "./BirdCompletionCard";
@@ -22,6 +22,10 @@ export default function HardModeGame({
   todaysBird,
   onBack,
   normalModeCompleted = false,
+  dataConsistencyError = null,
+  hasUpdate = false,
+  refreshingData = false,
+  handleForceRefresh = null,
 }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [audioError, setAudioError] = useState(false);
@@ -35,6 +39,7 @@ export default function HardModeGame({
   // Initialize hard mode game if not exists
   useEffect(() => {
     if (!hardModeGame && region && today) {
+      const key = `${region}-${today}`;
       useHardModeStore.getState().setHardModeGame(key, {
         region,
         date: today,
@@ -142,10 +147,44 @@ export default function HardModeGame({
             <ArrowLeft className="w-6 h-6" />
           </button>
           <h1 className="text-2xl font-bold text-gray-800">🔥 Hard Mode</h1>
+          {hasUpdate && (
+            <div className="bg-yellow-400 text-yellow-900 px-3 py-1 rounded-full text-xs font-semibold animate-pulse">
+              Update Available
+            </div>
+          )}
           <div className="w-6"></div>
         </div>
 
         <div className="bg-white rounded-xl shadow-lg p-6">
+          {/* Data consistency error dialog */}
+          {dataConsistencyError && !todaysBird && (
+            <div className="bg-red-50 border border-red-300 rounded-lg p-6 mb-4">
+              <div className="text-center">
+                <p className="text-red-800 font-medium mb-2">
+                  ⚠️ Data Sync Issue
+                </p>
+                <p className="text-sm text-red-700 mb-4">
+                  {dataConsistencyError}
+                </p>
+                <div className="flex flex-col gap-2 items-center">
+                  <button
+                    onClick={handleForceRefresh}
+                    disabled={refreshingData}
+                    className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors flex items-center gap-2 disabled:bg-gray-400"
+                  >
+                    <RefreshCw className={`w-4 h-4 ${refreshingData ? 'animate-spin' : ''}`} />
+                    {refreshingData ? 'Refreshing...' : 'Force Refresh Data'}
+                  </button>
+                  <button
+                    onClick={() => window.location.reload()}
+                    className="text-red-600 underline text-sm hover:text-red-800"
+                  >
+                    Or reload page
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
           {/* Warning if normal mode already completed */}
           {normalModeCompleted && (
             <div className="bg-yellow-50 border border-yellow-300 rounded-lg p-4 mb-4">
