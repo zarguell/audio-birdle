@@ -153,6 +153,12 @@
       "id": "bkcchi",
       "name": "Black-capped Chickadee",
       "subregion": "Indiana"
+    },
+    {
+      "date": "2026-01-21",
+      "id": "haiwoo",
+      "name": "Hairy Woodpecker",
+      "subregion": "District of Columbia"
     }
   ],
   "us-lower48": [
@@ -291,6 +297,12 @@
       "id": "mallar3",
       "name": "Mallard",
       "subregion": "Connecticut"
+    },
+    {
+      "date": "2026-01-21",
+      "id": "cacgoo1",
+      "name": "Cackling Goose",
+      "subregion": "Wyoming"
     }
   ]
 }
