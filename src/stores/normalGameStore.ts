@@ -161,52 +161,52 @@ export const useNormalGameStore = create<NormalGameState & NormalGameActions>()(
         return state.dailyGames[key];
       },
 
-      /**
-       * Process a guess for the current daily game
-       */
-       processGuess: (key: string, guess: { birdId: string; correct: boolean; timestamp: number }) => {
-        set((state) => {
-          const dailyGame = state.dailyGames[key];
-          if (!dailyGame) {
-            console.warn(`Game ${key} not found`);
-            return state;
-          }
+       /**
+        * Process a guess for the current daily game
+        */
+        processGuess: (key: string, guess: { birdId: string; correct: boolean; timestamp: number }) => {
+         set((state) => {
+           const dailyGame = state.dailyGames[key];
+           if (!dailyGame) {
+             console.warn(`Game ${key} not found`);
+             return state;
+           }
 
-          // Don't allow guesses if game is already completed
-          if (dailyGame.completed) {
-            return state;
-          }
+           // Don't allow guesses if game is already completed
+           if (dailyGame.completed) {
+             return state;
+           }
 
-          const updatedGame = {
-            ...dailyGame,
-            guesses: [...dailyGame.guesses, guess],
-            startTime: dailyGame.startTime || new Date().toISOString(),
-          };
+           const updatedGame = {
+             ...dailyGame,
+             guesses: [...dailyGame.guesses, guess],
+             startTime: dailyGame.startTime || new Date().toISOString(),
+           };
 
-          // Check if game is completed and update stats accordingly
-          if (guess.correct || updatedGame.guesses.length >= updatedGame.maxGuesses) {
-            updatedGame.completed = true;
-            updatedGame.won = guess.correct;
-            updatedGame.endTime = new Date().toISOString();
+           // Check if game is completed and update stats accordingly
+           if (guess.correct || updatedGame.guesses.length >= updatedGame.maxGuesses) {
+             updatedGame.completed = true;
+             updatedGame.won = guess.correct;
+             updatedGame.endTime = new Date().toISOString();
 
-            // Update stats only when game completes
-            return {
-              dailyGames: {
-                ...state.dailyGames,
-                [key]: updatedGame,
-              },
-              stats: updateStats(state, dailyGame.region, updatedGame.won, updatedGame.guesses.length),
-            };
-          }
+             // Update stats only when game completes
+             return {
+               dailyGames: {
+                 ...state.dailyGames,
+                 [key]: updatedGame,
+               },
+               stats: updateStats(state, dailyGame.region, updatedGame.won, updatedGame.guesses.length),
+             };
+           }
 
-          return {
-            dailyGames: {
-              ...state.dailyGames,
-              [key]: updatedGame,
-            },
-          };
-        });
-      },
+           return {
+             dailyGames: {
+               ...state.dailyGames,
+               [key]: updatedGame,
+             },
+           };
+         });
+       },
 
       /**
        * Update user statistics after completing a daily game
