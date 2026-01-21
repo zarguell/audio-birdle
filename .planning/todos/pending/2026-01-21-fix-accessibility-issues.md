@@ -11,6 +11,7 @@ files:
 ## Problem
 
 Accessibility audit revealed form field elements missing id or name attributes:
+
 1. Console warning: "A form field element should have an id or name attribute"
 2. This affects screen reader usability and form accessibility
 3. May impact keyboard navigation and form submission
@@ -18,6 +19,7 @@ Accessibility audit revealed form field elements missing id or name attributes:
 ## Solution
 
 Address accessibility issues in form elements:
+
 1. Add proper id and name attributes to all form fields
 2. Ensure proper labeling with aria-label or label elements
 3. Implement proper focus management for keyboard navigation
