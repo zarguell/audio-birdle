@@ -112,8 +112,10 @@ export default function GameView({
                     disabled={refreshingData}
                     className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors flex items-center gap-2 disabled:bg-gray-400"
                   >
-                    <RefreshCw className={`w-4 h-4 ${refreshingData ? 'animate-spin' : ''}`} />
-                    {refreshingData ? 'Refreshing...' : 'Force Refresh Data'}
+                    <RefreshCw
+                      className={`w-4 h-4 ${refreshingData ? "animate-spin" : ""}`}
+                    />
+                    {refreshingData ? "Refreshing..." : "Force Refresh Data"}
                   </button>
                   <button
                     onClick={() => window.location.reload()}
@@ -231,32 +233,30 @@ export default function GameView({
           <p className="text-sm text-gray-500 mt-2">
             Hint: today's selected bird was observed in the last 14 days on
             eBird in{" "}
-            <SubregionDisplay selectedRegion={selectedRegion} today={today} />
-            !
+            <SubregionDisplay selectedRegion={selectedRegion} today={today} />!
           </p>
           <br></br>
 
-          {currentDailyGame &&
-            !currentDailyGame.completed && (
-              <div className="space-y-2">
-                <h3 className="font-semibold mb-2">
-                  Choose the bird ({currentDailyGame.guesses.length + 1}/
-                  {currentDailyGame.maxGuesses}):
-                </h3>
-                {answerOptions.map((bird) => (
-                  <button
-                    key={bird.id}
-                    onClick={() => makeGuess(bird.id)}
-                    className="w-full text-left p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors"
-                  >
-                    <div className="font-medium">{bird.name}</div>
-                    <div className="text-sm text-gray-500 italic">
-                      {bird.scientificName}
-                    </div>
-                  </button>
-                ))}
-              </div>
-            )}
+          {currentDailyGame && !currentDailyGame.completed && (
+            <div className="space-y-2">
+              <h3 className="font-semibold mb-2">
+                Choose the bird ({currentDailyGame.guesses.length + 1}/
+                {currentDailyGame.maxGuesses}):
+              </h3>
+              {answerOptions.map((bird) => (
+                <button
+                  key={bird.id}
+                  onClick={() => makeGuess(bird.id)}
+                  className="w-full text-left p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors"
+                >
+                  <div className="font-medium">{bird.name}</div>
+                  <div className="text-sm text-gray-500 italic">
+                    {bird.scientificName}
+                  </div>
+                </button>
+              ))}
+            </div>
+          )}
 
           {currentDailyGame && currentDailyGame.completed && (
             <div className="text-center">
