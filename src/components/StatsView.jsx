@@ -4,16 +4,25 @@ export default function StatsView({ stats, regions, onBack }) {
   // Handle undefined stats during initial load
   const totalGames = stats?.totalGamesPlayed || 0;
   const totalWins = stats?.totalGamesWon || 0;
-  const winRate = totalGames > 0 ? (totalWins / totalGames * 100).toFixed(1) : 0;
+  const winRate =
+    totalGames > 0 ? ((totalWins / totalGames) * 100).toFixed(1) : 0;
   const avgGuesses = stats?.averageGuesses || 0;
   const maxStreak = stats?.maxStreak || 0;
 
-  const regionBreakdown = Object.entries(stats?.regionStats || {}).map(([region, regionStats]) => ({
-    region,
-    games: regionStats?.gamesPlayed || 0,
-    winRate: (regionStats?.gamesPlayed || 0) > 0 ? ((regionStats?.gamesWon || 0) / regionStats.gamesPlayed * 100).toFixed(1) : 0,
-    avgGuesses: (regionStats?.averageGuesses || 0).toFixed(1),
-  }));
+  const regionBreakdown = Object.entries(stats?.regionStats || {}).map(
+    ([region, regionStats]) => ({
+      region,
+      games: regionStats?.gamesPlayed || 0,
+      winRate:
+        (regionStats?.gamesPlayed || 0) > 0
+          ? (
+              ((regionStats?.gamesWon || 0) / regionStats.gamesPlayed) *
+              100
+            ).toFixed(1)
+          : 0,
+      avgGuesses: (regionStats?.averageGuesses || 0).toFixed(1),
+    }),
+  );
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 p-4">
@@ -30,9 +39,7 @@ export default function StatsView({ stats, regions, onBack }) {
 
         <div className="bg-white rounded-xl shadow-lg p-6 space-y-6">
           <div>
-            <h3 className="font-semibold text-lg mb-3">
-              Overall Performance
-            </h3>
+            <h3 className="font-semibold text-lg mb-3">Overall Performance</h3>
             <div className="grid grid-cols-2 gap-4">
               <div className="text-center p-3 bg-gray-50 rounded-lg">
                 <div className="text-2xl font-bold text-blue-600">
@@ -47,15 +54,15 @@ export default function StatsView({ stats, regions, onBack }) {
                 <div className="text-sm text-gray-600">Win Rate</div>
               </div>
               <div className="text-center p-3 bg-gray-50 rounded-lg">
-              <div className="text-2xl font-bold text-purple-600">
-                   {avgGuesses}
-                 </div>
+                <div className="text-2xl font-bold text-purple-600">
+                  {avgGuesses}
+                </div>
                 <div className="text-sm text-gray-600">Avg Guesses</div>
               </div>
               <div className="text-center p-3 bg-gray-50 rounded-lg">
                 <div className="text-2xl font-bold text-orange-600">
-                   {maxStreak}
-                 </div>
+                  {maxStreak}
+                </div>
                 <div className="text-sm text-gray-600">Best Streak</div>
               </div>
             </div>
