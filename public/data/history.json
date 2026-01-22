@@ -159,6 +159,12 @@
       "id": "haiwoo",
       "name": "Hairy Woodpecker",
       "subregion": "District of Columbia"
+    },
+    {
+      "date": "2026-01-22",
+      "id": "whcspa",
+      "name": "White-crowned Sparrow",
+      "subregion": "New York"
     }
   ],
   "us-lower48": [
@@ -303,6 +309,12 @@
       "id": "cacgoo1",
       "name": "Cackling Goose",
       "subregion": "Wyoming"
+    },
+    {
+      "date": "2026-01-22",
+      "id": "indbun",
+      "name": "Indigo Bunting",
+      "subregion": "New York"
     }
   ]
 }
