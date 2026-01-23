@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.1.18",
-    "lucide-react": "^0.562.0",
+    "lucide-react": "^0.563.0",
     "react": "^19.1.0",
     "react-dom": "^19.2.0",
     "sonner": "^2.0.7",
