@@ -165,6 +165,12 @@
       "id": "whcspa",
       "name": "White-crowned Sparrow",
       "subregion": "New York"
+    },
+    {
+      "date": "2026-01-23",
+      "id": "willet1",
+      "name": "Willet",
+      "subregion": "South Carolina"
     }
   ],
   "us-lower48": [
@@ -315,6 +321,12 @@
       "id": "indbun",
       "name": "Indigo Bunting",
       "subregion": "New York"
+    },
+    {
+      "date": "2026-01-23",
+      "id": "margod",
+      "name": "Marbled Godwit",
+      "subregion": "South Carolina"
     }
   ]
 }
