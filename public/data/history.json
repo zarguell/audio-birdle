@@ -171,6 +171,12 @@
       "id": "willet1",
       "name": "Willet",
       "subregion": "South Carolina"
+    },
+    {
+      "date": "2026-01-24",
+      "id": "norgos",
+      "name": "American Goshawk",
+      "subregion": "Colorado"
     }
   ],
   "us-lower48": [
@@ -327,6 +333,12 @@
       "id": "margod",
       "name": "Marbled Godwit",
       "subregion": "South Carolina"
+    },
+    {
+      "date": "2026-01-24",
+      "id": "snobun",
+      "name": "Snow Bunting",
+      "subregion": "Montana"
     }
   ]
 }
