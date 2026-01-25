@@ -177,6 +177,12 @@
       "id": "norgos",
       "name": "American Goshawk",
       "subregion": "Colorado"
+    },
+    {
+      "date": "2026-01-25",
+      "id": "easblu",
+      "name": "Eastern Bluebird",
+      "subregion": "District of Columbia"
     }
   ],
   "us-lower48": [
@@ -339,6 +345,12 @@
       "id": "snobun",
       "name": "Snow Bunting",
       "subregion": "Montana"
+    },
+    {
+      "date": "2026-01-25",
+      "id": "rebnut",
+      "name": "Red-breasted Nuthatch",
+      "subregion": "District of Columbia"
     }
   ]
 }
