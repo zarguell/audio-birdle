@@ -183,6 +183,12 @@
       "id": "easblu",
       "name": "Eastern Bluebird",
       "subregion": "District of Columbia"
+    },
+    {
+      "date": "2026-01-26",
+      "id": "redjun",
+      "name": "Red Junglefowl",
+      "subregion": "Virginia"
     }
   ],
   "us-lower48": [
@@ -351,6 +357,12 @@
       "id": "rebnut",
       "name": "Red-breasted Nuthatch",
       "subregion": "District of Columbia"
+    },
+    {
+      "date": "2026-01-26",
+      "id": "amerob",
+      "name": "American Robin",
+      "subregion": "North Carolina"
     }
   ]
 }
