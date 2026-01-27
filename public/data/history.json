@@ -189,6 +189,12 @@
       "id": "redjun",
       "name": "Red Junglefowl",
       "subregion": "Virginia"
+    },
+    {
+      "date": "2026-01-27",
+      "id": "amegfi",
+      "name": "American Goldfinch",
+      "subregion": "Utah"
     }
   ],
   "us-lower48": [
@@ -363,6 +369,12 @@
       "id": "amerob",
       "name": "American Robin",
       "subregion": "North Carolina"
+    },
+    {
+      "date": "2026-01-27",
+      "id": "amekes",
+      "name": "American Kestrel",
+      "subregion": "Utah"
     }
   ]
 }
