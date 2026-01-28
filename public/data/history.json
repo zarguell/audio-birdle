@@ -195,6 +195,12 @@
       "id": "amegfi",
       "name": "American Goldfinch",
       "subregion": "Utah"
+    },
+    {
+      "date": "2026-01-28",
+      "id": "rudduc",
+      "name": "Ruddy Duck",
+      "subregion": "Wisconsin"
     }
   ],
   "us-lower48": [
@@ -375,6 +381,12 @@
       "id": "amekes",
       "name": "American Kestrel",
       "subregion": "Utah"
+    },
+    {
+      "date": "2026-01-28",
+      "id": "doccor",
+      "name": "Double-crested Cormorant",
+      "subregion": "Wisconsin"
     }
   ]
 }
