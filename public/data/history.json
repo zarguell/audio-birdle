@@ -201,6 +201,12 @@
       "id": "rudduc",
       "name": "Ruddy Duck",
       "subregion": "Wisconsin"
+    },
+    {
+      "date": "2026-01-29",
+      "id": "dickci",
+      "name": "Dickcissel",
+      "subregion": "Mississippi"
     }
   ],
   "us-lower48": [
@@ -387,6 +393,12 @@
       "id": "doccor",
       "name": "Double-crested Cormorant",
       "subregion": "Wisconsin"
+    },
+    {
+      "date": "2026-01-29",
+      "id": "norbob",
+      "name": "Northern Bobwhite",
+      "subregion": "Maryland"
     }
   ]
 }
