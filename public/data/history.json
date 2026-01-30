@@ -207,6 +207,12 @@
       "id": "dickci",
       "name": "Dickcissel",
       "subregion": "Mississippi"
+    },
+    {
+      "date": "2026-01-30",
+      "id": "killde",
+      "name": "Killdeer",
+      "subregion": "Delaware"
     }
   ],
   "us-lower48": [
@@ -399,6 +405,12 @@
       "id": "norbob",
       "name": "Northern Bobwhite",
       "subregion": "Maryland"
+    },
+    {
+      "date": "2026-01-30",
+      "id": "fiespa",
+      "name": "Field Sparrow",
+      "subregion": "Arkansas"
     }
   ]
 }
