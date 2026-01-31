@@ -3,6 +3,7 @@ import { useNormalGameStore } from "../stores/normalGameStore";
 import { useHardModeStore } from "../stores/hardModeStore";
 import { generateAnswerOptions } from "../utils/GameLogic";
 import { GAME_CONFIG } from "../utils/Constants";
+import { compareTaxonomy } from "../utils/TaxonomyUtils";
 
 /**
  * Custom hook for daily game state and actions
@@ -26,7 +27,7 @@ export function useDailyGame(region, today, birds, todaysBird) {
         timestamp: Date.now(),
       });
     },
-    [region, today, todaysBird]
+    [region, today, todaysBird],
   );
 
   // Process a guess in hard mode
@@ -34,12 +35,7 @@ export function useDailyGame(region, today, birds, todaysBird) {
     (bird) => {
       if (!todaysBird || !region) return;
 
-      const taxonomicScore = {
-        order: bird.order === todaysBird.order,
-        family: bird.family === todaysBird.family,
-        genus: bird.genus === todaysBird.genus,
-        species: bird.scientificName === todaysBird.scientificName,
-      };
+      const taxonomicScore = compareTaxonomy(bird, todaysBird);
 
       useHardModeStore.getState().processHardModeGuess(`${region}-${today}`, {
         birdId: bird.id,
@@ -49,7 +45,7 @@ export function useDailyGame(region, today, birds, todaysBird) {
         taxonomicScore,
       });
     },
-    [region, today, todaysBird]
+    [region, today, todaysBird],
   );
 
   // Reset today's game
@@ -85,7 +81,7 @@ export function useDailyGame(region, today, birds, todaysBird) {
     birds,
     today,
     todaysBird,
-    GAME_CONFIG.ANSWER_OPTIONS_COUNT
+    GAME_CONFIG.ANSWER_OPTIONS_COUNT,
   );
 
   return {
