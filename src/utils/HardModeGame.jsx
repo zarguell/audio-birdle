@@ -90,7 +90,9 @@ export default function HardModeGame({
     const taxonomicScore = {
       order: bird.order === todaysBird.order,
       family: bird.family === todaysBird.family,
-      genus: extractGenus(bird.scientificName) === extractGenus(todaysBird.scientificName),
+      genus:
+        extractGenus(bird.scientificName) ===
+        extractGenus(todaysBird.scientificName),
       species: bird.scientificName === todaysBird.scientificName,
     };
 
@@ -295,7 +297,11 @@ export default function HardModeGame({
                       label="Genus"
                       correct={guess.taxonomicScore.genus}
                       show={true}
-                      value={guessedBird ? extractGenus(guessedBird.scientificName) : null}
+                      value={
+                        guessedBird
+                          ? extractGenus(guessedBird.scientificName)
+                          : null
+                      }
                     />
                     <TaxonomicBadge
                       label="Species"

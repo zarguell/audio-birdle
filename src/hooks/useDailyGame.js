@@ -27,7 +27,7 @@ export function useDailyGame(region, today, birds, todaysBird) {
         timestamp: Date.now(),
       });
     },
-    [region, today, todaysBird]
+    [region, today, todaysBird],
   );
 
   // Process a guess in hard mode
@@ -38,7 +38,9 @@ export function useDailyGame(region, today, birds, todaysBird) {
       const taxonomicScore = {
         order: bird.order === todaysBird.order,
         family: bird.family === todaysBird.family,
-        genus: extractGenus(bird.scientificName) === extractGenus(todaysBird.scientificName),
+        genus:
+          extractGenus(bird.scientificName) ===
+          extractGenus(todaysBird.scientificName),
         species: bird.scientificName === todaysBird.scientificName,
       };
 
@@ -50,7 +52,7 @@ export function useDailyGame(region, today, birds, todaysBird) {
         taxonomicScore,
       });
     },
-    [region, today, todaysBird]
+    [region, today, todaysBird],
   );
 
   // Reset today's game
@@ -86,7 +88,7 @@ export function useDailyGame(region, today, birds, todaysBird) {
     birds,
     today,
     todaysBird,
-    GAME_CONFIG.ANSWER_OPTIONS_COUNT
+    GAME_CONFIG.ANSWER_OPTIONS_COUNT,
   );
 
   return {
