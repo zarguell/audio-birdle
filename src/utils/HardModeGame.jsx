@@ -267,7 +267,6 @@ export default function HardModeGame({
 
           {/* Guess History with Taxonomic Scores */}
           <div className="space-y-2 mb-4">
-<<<<<<< HEAD
             {guessDisplayData.map(({ guess, guessedBird, genus }, index) => (
               <div
                 key={index}
@@ -281,59 +280,6 @@ export default function HardModeGame({
                         {guessedBird.scientificName}
                       </div>
                     )}
-=======
-            {hardModeGame?.guesses.map((guess, index) => {
-              const guessedBird = guess.birdId
-                ? birds[region].find((b) => b.id === guess.birdId)
-                : null;
-              return (
-                <div
-                  key={index}
-                  className="bg-gray-50 rounded-lg p-3 border-2 border-gray-200"
-                >
-                  <div className="flex justify-between items-start mb-2">
-                    <div>
-                      <div className="font-medium">{guess.textInput}</div>
-                      {guessedBird && (
-                        <div className="text-sm text-gray-500 italic">
-                          {guessedBird.scientificName}
-                        </div>
-                      )}
-                    </div>
-                    {!guess.correct && <div className="text-2xl">❌</div>}
-                    {guess.correct && <div className="text-2xl">✅</div>}
-                  </div>
-
-                  {/* Taxonomic Score Indicators */}
-                  <div className="flex flex-wrap gap-2">
-                    <TaxonomicBadge
-                      label="Order"
-                      correct={guess.taxonomicScore.order}
-                      show={true}
-                      value={guessedBird?.order}
-                    />
-                    <TaxonomicBadge
-                      label="Family"
-                      correct={guess.taxonomicScore.family}
-                      show={true}
-                      value={guessedBird?.family}
-                    />
-                    <TaxonomicBadge
-                      label="Genus"
-                      correct={guess.taxonomicScore.genus}
-                      show={true}
-                      value={
-                        guessedBird
-                          ? extractGenus(guessedBird.scientificName)
-                          : null
-                      }
-                    />
-                    <TaxonomicBadge
-                      label="Species"
-                      correct={guess.taxonomicScore.species}
-                      show={true}
-                    />
->>>>>>> cc2fe49491f68570352e59fbcc36a9789c01bbaf
                   </div>
                   {!guess.correct && <div className="text-2xl">❌</div>}
                   {guess.correct && <div className="text-2xl">✅</div>}
