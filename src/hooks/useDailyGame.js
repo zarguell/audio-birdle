@@ -3,7 +3,7 @@ import { useNormalGameStore } from "../stores/normalGameStore";
 import { useHardModeStore } from "../stores/hardModeStore";
 import { generateAnswerOptions } from "../utils/GameLogic";
 import { GAME_CONFIG } from "../utils/Constants";
-import { extractGenus } from "../utils/TaxonomyUtils";
+import { compareTaxonomy } from "../utils/TaxonomyUtils";
 
 /**
  * Custom hook for daily game state and actions
@@ -35,12 +35,7 @@ export function useDailyGame(region, today, birds, todaysBird) {
     (bird) => {
       if (!todaysBird || !region) return;
 
-      const taxonomicScore = {
-        order: bird.order === todaysBird.order,
-        family: bird.family === todaysBird.family,
-        genus: extractGenus(bird.scientificName) === extractGenus(todaysBird.scientificName),
-        species: bird.scientificName === todaysBird.scientificName,
-      };
+      const taxonomicScore = compareTaxonomy(bird, todaysBird);
 
       useHardModeStore.getState().processHardModeGuess(`${region}-${today}`, {
         birdId: bird.id,
