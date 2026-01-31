@@ -267,9 +267,9 @@ export default function HardModeGame({
 
           {/* Guess History with Taxonomic Scores */}
           <div className="space-y-2 mb-4">
-            {guessDisplayData.map(({ guess, guessedBird, genus }, index) => (
+            {guessDisplayData.map(({ guess, guessedBird, genus }) => (
               <div
-                key={index}
+                key={`${guess.birdId}-${guess.timestamp}`}
                 className="bg-gray-50 rounded-lg p-3 border-2 border-gray-200"
               >
                 <div className="flex justify-between items-start mb-2">
