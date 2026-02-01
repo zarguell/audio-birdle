@@ -219,6 +219,12 @@
       "id": "grhowl",
       "name": "Great Horned Owl",
       "subregion": "Georgia"
+    },
+    {
+      "date": "2026-02-01",
+      "id": "amtspa",
+      "name": "American Tree Sparrow",
+      "subregion": "New York"
     }
   ],
   "us-lower48": [
@@ -423,6 +429,12 @@
       "id": "ribgul",
       "name": "Ring-billed Gull",
       "subregion": "Nebraska"
+    },
+    {
+      "date": "2026-02-01",
+      "id": "moudov",
+      "name": "Mourning Dove",
+      "subregion": "New Jersey"
     }
   ]
 }
