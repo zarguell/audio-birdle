@@ -225,6 +225,12 @@
       "id": "amtspa",
       "name": "American Tree Sparrow",
       "subregion": "New York"
+    },
+    {
+      "date": "2026-02-02",
+      "id": "amekes",
+      "name": "American Kestrel",
+      "subregion": "Utah"
     }
   ],
   "us-lower48": [
@@ -435,6 +441,12 @@
       "id": "moudov",
       "name": "Mourning Dove",
       "subregion": "New Jersey"
+    },
+    {
+      "date": "2026-02-02",
+      "id": "buffle",
+      "name": "Bufflehead",
+      "subregion": "Montana"
     }
   ]
 }
