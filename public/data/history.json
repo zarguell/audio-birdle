@@ -231,6 +231,12 @@
       "id": "amekes",
       "name": "American Kestrel",
       "subregion": "Utah"
+    },
+    {
+      "date": "2026-02-03",
+      "id": "wooduc",
+      "name": "Wood Duck",
+      "subregion": "Montana"
     }
   ],
   "us-lower48": [
@@ -447,6 +453,12 @@
       "id": "buffle",
       "name": "Bufflehead",
       "subregion": "Montana"
+    },
+    {
+      "date": "2026-02-03",
+      "id": "rebwoo",
+      "name": "Red-bellied Woodpecker",
+      "subregion": "Iowa"
     }
   ]
 }
