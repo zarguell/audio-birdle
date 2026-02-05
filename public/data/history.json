@@ -243,6 +243,12 @@
       "id": "doccor",
       "name": "Double-crested Cormorant",
       "subregion": "Missouri"
+    },
+    {
+      "date": "2026-02-05",
+      "id": "whwcro",
+      "name": "White-winged Crossbill",
+      "subregion": "New Hampshire"
     }
   ],
   "us-lower48": [
@@ -471,6 +477,12 @@
       "id": "brdowl",
       "name": "Barred Owl",
       "subregion": "Missouri"
+    },
+    {
+      "date": "2026-02-05",
+      "id": "amegfi",
+      "name": "American Goldfinch",
+      "subregion": "New Hampshire"
     }
   ]
 }
