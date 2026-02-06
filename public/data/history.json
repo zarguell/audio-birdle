@@ -249,6 +249,12 @@
       "id": "whwcro",
       "name": "White-winged Crossbill",
       "subregion": "New Hampshire"
+    },
+    {
+      "date": "2026-02-06",
+      "id": "sheowl",
+      "name": "Short-eared Owl",
+      "subregion": "Kentucky"
     }
   ],
   "us-lower48": [
@@ -483,6 +489,12 @@
       "id": "amegfi",
       "name": "American Goldfinch",
       "subregion": "New Hampshire"
+    },
+    {
+      "date": "2026-02-06",
+      "id": "rolhaw",
+      "name": "Rough-legged Hawk",
+      "subregion": "Kentucky"
     }
   ]
 }
