@@ -255,6 +255,12 @@
       "id": "sheowl",
       "name": "Short-eared Owl",
       "subregion": "Kentucky"
+    },
+    {
+      "date": "2026-02-07",
+      "id": "clcspa",
+      "name": "Clay-colored Sparrow",
+      "subregion": "New York"
     }
   ],
   "us-lower48": [
@@ -495,6 +501,12 @@
       "id": "rolhaw",
       "name": "Rough-legged Hawk",
       "subregion": "Kentucky"
+    },
+    {
+      "date": "2026-02-07",
+      "id": "wooduc",
+      "name": "Wood Duck",
+      "subregion": "New York"
     }
   ]
 }
