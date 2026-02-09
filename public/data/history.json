@@ -267,6 +267,12 @@
       "id": "rinduc",
       "name": "Ring-necked Duck",
       "subregion": "Minnesota"
+    },
+    {
+      "date": "2026-02-09",
+      "id": "indbun",
+      "name": "Indigo Bunting",
+      "subregion": "Florida"
     }
   ],
   "us-lower48": [
@@ -519,6 +525,12 @@
       "id": "swaspa",
       "name": "Swamp Sparrow",
       "subregion": "West Virginia"
+    },
+    {
+      "date": "2026-02-09",
+      "id": "nopowl",
+      "name": "Northern Pygmy-Owl",
+      "subregion": "Washington"
     }
   ]
 }
