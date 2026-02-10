@@ -273,6 +273,12 @@
       "id": "indbun",
       "name": "Indigo Bunting",
       "subregion": "Florida"
+    },
+    {
+      "date": "2026-02-10",
+      "id": "bargol",
+      "name": "Barrow's Goldeneye",
+      "subregion": "Maine"
     }
   ],
   "us-lower48": [
@@ -531,6 +537,12 @@
       "id": "nopowl",
       "name": "Northern Pygmy-Owl",
       "subregion": "Washington"
+    },
+    {
+      "date": "2026-02-10",
+      "id": "horlar",
+      "name": "Horned Lark",
+      "subregion": "West Virginia"
     }
   ]
 }
