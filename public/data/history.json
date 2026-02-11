@@ -279,6 +279,12 @@
       "id": "bargol",
       "name": "Barrow's Goldeneye",
       "subregion": "Maine"
+    },
+    {
+      "date": "2026-02-11",
+      "id": "gadwal",
+      "name": "Gadwall",
+      "subregion": "South Dakota"
     }
   ],
   "us-lower48": [
@@ -543,6 +549,12 @@
       "id": "horlar",
       "name": "Horned Lark",
       "subregion": "West Virginia"
+    },
+    {
+      "date": "2026-02-11",
+      "id": "dowwoo",
+      "name": "Downy Woodpecker",
+      "subregion": "Rhode Island"
     }
   ]
 }
