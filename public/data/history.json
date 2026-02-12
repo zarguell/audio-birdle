@@ -285,6 +285,12 @@
       "id": "gadwal",
       "name": "Gadwall",
       "subregion": "South Dakota"
+    },
+    {
+      "date": "2026-02-12",
+      "id": "gryjay",
+      "name": "Canada Jay",
+      "subregion": "New Hampshire"
     }
   ],
   "us-lower48": [
@@ -555,6 +561,12 @@
       "id": "dowwoo",
       "name": "Downy Woodpecker",
       "subregion": "Rhode Island"
+    },
+    {
+      "date": "2026-02-12",
+      "id": "mutswa",
+      "name": "Mute Swan",
+      "subregion": "Virginia"
     }
   ]
 }
