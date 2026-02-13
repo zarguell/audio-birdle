@@ -291,6 +291,12 @@
       "id": "gryjay",
       "name": "Canada Jay",
       "subregion": "New Hampshire"
+    },
+    {
+      "date": "2026-02-13",
+      "id": "shshaw",
+      "name": "Sharp-shinned Hawk",
+      "subregion": "North Dakota"
     }
   ],
   "us-lower48": [
@@ -567,6 +573,12 @@
       "id": "mutswa",
       "name": "Mute Swan",
       "subregion": "Virginia"
+    },
+    {
+      "date": "2026-02-13",
+      "id": "grhowl",
+      "name": "Great Horned Owl",
+      "subregion": "North Dakota"
     }
   ]
 }
