@@ -297,6 +297,12 @@
       "id": "shshaw",
       "name": "Sharp-shinned Hawk",
       "subregion": "North Dakota"
+    },
+    {
+      "date": "2026-02-14",
+      "id": "amerob",
+      "name": "American Robin",
+      "subregion": "Kentucky"
     }
   ],
   "us-lower48": [
@@ -579,6 +585,12 @@
       "id": "grhowl",
       "name": "Great Horned Owl",
       "subregion": "North Dakota"
+    },
+    {
+      "date": "2026-02-14",
+      "id": "sheowl",
+      "name": "Short-eared Owl",
+      "subregion": "Michigan"
     }
   ]
 }
