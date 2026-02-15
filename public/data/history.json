@@ -303,6 +303,12 @@
       "id": "amerob",
       "name": "American Robin",
       "subregion": "Kentucky"
+    },
+    {
+      "date": "2026-02-15",
+      "id": "pilwoo",
+      "name": "Pileated Woodpecker",
+      "subregion": "Illinois"
     }
   ],
   "us-lower48": [
@@ -591,6 +597,12 @@
       "id": "sheowl",
       "name": "Short-eared Owl",
       "subregion": "Michigan"
+    },
+    {
+      "date": "2026-02-15",
+      "id": "daejun",
+      "name": "Dark-eyed Junco",
+      "subregion": "Illinois"
     }
   ]
 }
