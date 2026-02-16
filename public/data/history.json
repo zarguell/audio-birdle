@@ -309,6 +309,12 @@
       "id": "pilwoo",
       "name": "Pileated Woodpecker",
       "subregion": "Illinois"
+    },
+    {
+      "date": "2026-02-16",
+      "id": "rebnut",
+      "name": "Red-breasted Nuthatch",
+      "subregion": "Colorado"
     }
   ],
   "us-lower48": [
@@ -603,6 +609,12 @@
       "id": "daejun",
       "name": "Dark-eyed Junco",
       "subregion": "Illinois"
+    },
+    {
+      "date": "2026-02-16",
+      "id": "perfal",
+      "name": "Peregrine Falcon",
+      "subregion": "Oregon"
     }
   ]
 }
