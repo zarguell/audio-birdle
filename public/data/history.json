@@ -315,6 +315,12 @@
       "id": "rebnut",
       "name": "Red-breasted Nuthatch",
       "subregion": "Colorado"
+    },
+    {
+      "date": "2026-02-17",
+      "id": "amewig",
+      "name": "American Wigeon",
+      "subregion": "South Dakota"
     }
   ],
   "us-lower48": [
@@ -615,6 +621,12 @@
       "id": "perfal",
       "name": "Peregrine Falcon",
       "subregion": "Oregon"
+    },
+    {
+      "date": "2026-02-17",
+      "id": "commer",
+      "name": "Common Merganser",
+      "subregion": "Virginia"
     }
   ]
 }
