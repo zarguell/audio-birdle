@@ -321,6 +321,12 @@
       "id": "amewig",
       "name": "American Wigeon",
       "subregion": "South Dakota"
+    },
+    {
+      "date": "2026-02-18",
+      "id": "lessca",
+      "name": "Lesser Scaup",
+      "subregion": "Utah"
     }
   ],
   "us-lower48": [
@@ -627,6 +633,12 @@
       "id": "commer",
       "name": "Common Merganser",
       "subregion": "Virginia"
+    },
+    {
+      "date": "2026-02-18",
+      "id": "eursta",
+      "name": "European Starling",
+      "subregion": "Utah"
     }
   ]
 }
