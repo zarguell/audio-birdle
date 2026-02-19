@@ -327,6 +327,12 @@
       "id": "lessca",
       "name": "Lesser Scaup",
       "subregion": "Utah"
+    },
+    {
+      "date": "2026-02-19",
+      "id": "comgol",
+      "name": "Common Goldeneye",
+      "subregion": "North Carolina"
     }
   ],
   "us-lower48": [
@@ -639,6 +645,12 @@
       "id": "eursta",
       "name": "European Starling",
       "subregion": "Utah"
+    },
+    {
+      "date": "2026-02-19",
+      "id": "rocpig",
+      "name": "Rock Pigeon",
+      "subregion": "Mississippi"
     }
   ]
 }
