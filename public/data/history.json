@@ -333,6 +333,12 @@
       "id": "comgol",
       "name": "Common Goldeneye",
       "subregion": "North Carolina"
+    },
+    {
+      "date": "2026-02-20",
+      "id": "bklkit",
+      "name": "Black-legged Kittiwake",
+      "subregion": "Maine"
     }
   ],
   "us-lower48": [
@@ -651,6 +657,12 @@
       "id": "rocpig",
       "name": "Rock Pigeon",
       "subregion": "Mississippi"
+    },
+    {
+      "date": "2026-02-20",
+      "id": "gadwal",
+      "name": "Gadwall",
+      "subregion": "Maine"
     }
   ]
 }
