@@ -339,6 +339,12 @@
       "id": "bklkit",
       "name": "Black-legged Kittiwake",
       "subregion": "Maine"
+    },
+    {
+      "date": "2026-02-21",
+      "id": "nswowl",
+      "name": "Northern Saw-whet Owl",
+      "subregion": "South Dakota"
     }
   ],
   "us-lower48": [
@@ -663,6 +669,12 @@
       "id": "gadwal",
       "name": "Gadwall",
       "subregion": "Maine"
+    },
+    {
+      "date": "2026-02-21",
+      "id": "norpin",
+      "name": "Northern Pintail",
+      "subregion": "South Dakota"
     }
   ]
 }
