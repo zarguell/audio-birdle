@@ -345,6 +345,12 @@
       "id": "nswowl",
       "name": "Northern Saw-whet Owl",
       "subregion": "South Dakota"
+    },
+    {
+      "date": "2026-02-22",
+      "id": "bacspa",
+      "name": "Bachman's Sparrow",
+      "subregion": "North Carolina"
     }
   ],
   "us-lower48": [
@@ -675,6 +681,12 @@
       "id": "norpin",
       "name": "Northern Pintail",
       "subregion": "South Dakota"
+    },
+    {
+      "date": "2026-02-22",
+      "id": "norcar",
+      "name": "Northern Cardinal",
+      "subregion": "Wisconsin"
     }
   ]
 }
