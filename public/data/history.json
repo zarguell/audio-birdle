@@ -351,6 +351,12 @@
       "id": "bacspa",
       "name": "Bachman's Sparrow",
       "subregion": "North Carolina"
+    },
+    {
+      "date": "2026-02-23",
+      "id": "lesgol",
+      "name": "Lesser Goldfinch",
+      "subregion": "Washington"
     }
   ],
   "us-lower48": [
@@ -687,6 +693,12 @@
       "id": "norcar",
       "name": "Northern Cardinal",
       "subregion": "Wisconsin"
+    },
+    {
+      "date": "2026-02-23",
+      "id": "rudduc",
+      "name": "Ruddy Duck",
+      "subregion": "Idaho"
     }
   ]
 }
