@@ -357,6 +357,12 @@
       "id": "lesgol",
       "name": "Lesser Goldfinch",
       "subregion": "Washington"
+    },
+    {
+      "date": "2026-02-24",
+      "id": "perfal",
+      "name": "Peregrine Falcon",
+      "subregion": "Washington"
     }
   ],
   "us-lower48": [
@@ -699,6 +705,12 @@
       "id": "rudduc",
       "name": "Ruddy Duck",
       "subregion": "Idaho"
+    },
+    {
+      "date": "2026-02-24",
+      "id": "cowscj1",
+      "name": "California Scrub-Jay",
+      "subregion": "Washington"
     }
   ]
 }
