@@ -363,6 +363,12 @@
       "id": "perfal",
       "name": "Peregrine Falcon",
       "subregion": "Washington"
+    },
+    {
+      "date": "2026-02-25",
+      "id": "reshaw",
+      "name": "Red-shouldered Hawk",
+      "subregion": "Oklahoma"
     }
   ],
   "us-lower48": [
@@ -711,6 +717,12 @@
       "id": "cowscj1",
       "name": "California Scrub-Jay",
       "subregion": "Washington"
+    },
+    {
+      "date": "2026-02-25",
+      "id": "towsol",
+      "name": "Townsend's Solitaire",
+      "subregion": "Oregon"
     }
   ]
 }
