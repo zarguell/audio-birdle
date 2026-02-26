@@ -369,6 +369,12 @@
       "id": "reshaw",
       "name": "Red-shouldered Hawk",
       "subregion": "Oklahoma"
+    },
+    {
+      "date": "2026-02-26",
+      "id": "bushti",
+      "name": "Bushtit",
+      "subregion": "Washington"
     }
   ],
   "us-lower48": [
@@ -723,6 +729,12 @@
       "id": "towsol",
       "name": "Townsend's Solitaire",
       "subregion": "Oregon"
+    },
+    {
+      "date": "2026-02-26",
+      "id": "mouchi",
+      "name": "Mountain Chickadee",
+      "subregion": "Washington"
     }
   ]
 }
