@@ -375,6 +375,12 @@
       "id": "bushti",
       "name": "Bushtit",
       "subregion": "Washington"
+    },
+    {
+      "date": "2026-02-27",
+      "id": "redhea",
+      "name": "Redhead",
+      "subregion": "South Dakota"
     }
   ],
   "us-lower48": [
@@ -735,6 +741,12 @@
       "id": "mouchi",
       "name": "Mountain Chickadee",
       "subregion": "Washington"
+    },
+    {
+      "date": "2026-02-27",
+      "id": "blkski",
+      "name": "Black Skimmer",
+      "subregion": "Florida"
     }
   ]
 }
