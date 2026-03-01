@@ -387,6 +387,12 @@
       "id": "rebmer",
       "name": "Red-breasted Merganser",
       "subregion": "Missouri"
+    },
+    {
+      "date": "2026-03-01",
+      "id": "grtgra",
+      "name": "Great-tailed Grackle",
+      "subregion": "Arizona"
     }
   ],
   "us-lower48": [
@@ -759,6 +765,12 @@
       "id": "lecspa",
       "name": "LeConte's Sparrow",
       "subregion": "Missouri"
+    },
+    {
+      "date": "2026-03-01",
+      "id": "amewig",
+      "name": "American Wigeon",
+      "subregion": "Vermont"
     }
   ]
 }
