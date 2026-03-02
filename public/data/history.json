@@ -393,6 +393,12 @@
       "id": "grtgra",
       "name": "Great-tailed Grackle",
       "subregion": "Arizona"
+    },
+    {
+      "date": "2026-03-02",
+      "id": "rengre",
+      "name": "Red-necked Grebe",
+      "subregion": "Maine"
     }
   ],
   "us-lower48": [
@@ -771,6 +777,12 @@
       "id": "amewig",
       "name": "American Wigeon",
       "subregion": "Vermont"
+    },
+    {
+      "date": "2026-03-02",
+      "id": "comgol",
+      "name": "Common Goldeneye",
+      "subregion": "Minnesota"
     }
   ]
 }
