@@ -399,6 +399,12 @@
       "id": "rengre",
       "name": "Red-necked Grebe",
       "subregion": "Maine"
+    },
+    {
+      "date": "2026-03-03",
+      "id": "houspa",
+      "name": "House Sparrow",
+      "subregion": "Tennessee"
     }
   ],
   "us-lower48": [
@@ -783,6 +789,12 @@
       "id": "comgol",
       "name": "Common Goldeneye",
       "subregion": "Minnesota"
+    },
+    {
+      "date": "2026-03-03",
+      "id": "botgra",
+      "name": "Boat-tailed Grackle",
+      "subregion": "Texas"
     }
   ]
 }
