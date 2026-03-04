@@ -405,6 +405,12 @@
       "id": "houspa",
       "name": "House Sparrow",
       "subregion": "Tennessee"
+    },
+    {
+      "date": "2026-03-04",
+      "id": "whocra",
+      "name": "Whooping Crane",
+      "subregion": "Oklahoma"
     }
   ],
   "us-lower48": [
@@ -794,6 +800,12 @@
       "date": "2026-03-03",
       "id": "botgra",
       "name": "Boat-tailed Grackle",
+      "subregion": "Texas"
+    },
+    {
+      "date": "2026-03-04",
+      "id": "bktgna",
+      "name": "Black-tailed Gnatcatcher",
       "subregion": "Texas"
     }
   ]
