@@ -411,6 +411,12 @@
       "id": "whocra",
       "name": "Whooping Crane",
       "subregion": "Oklahoma"
+    },
+    {
+      "date": "2026-03-05",
+      "id": "norshr4",
+      "name": "Northern Shrike",
+      "subregion": "Nebraska"
     }
   ],
   "us-lower48": [
@@ -807,6 +813,12 @@
       "id": "bktgna",
       "name": "Black-tailed Gnatcatcher",
       "subregion": "Texas"
+    },
+    {
+      "date": "2026-03-05",
+      "id": "grycat",
+      "name": "Gray Catbird",
+      "subregion": "Nebraska"
     }
   ]
 }
