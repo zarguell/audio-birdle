@@ -417,6 +417,12 @@
       "id": "norshr4",
       "name": "Northern Shrike",
       "subregion": "Nebraska"
+    },
+    {
+      "date": "2026-03-06",
+      "id": "brncre",
+      "name": "Brown Creeper",
+      "subregion": "Louisiana"
     }
   ],
   "us-lower48": [
@@ -819,6 +825,12 @@
       "id": "grycat",
       "name": "Gray Catbird",
       "subregion": "Nebraska"
+    },
+    {
+      "date": "2026-03-06",
+      "id": "pinwar",
+      "name": "Pine Warbler",
+      "subregion": "Louisiana"
     }
   ]
 }
