@@ -423,6 +423,12 @@
       "id": "brncre",
       "name": "Brown Creeper",
       "subregion": "Louisiana"
+    },
+    {
+      "date": "2026-03-07",
+      "id": "comgra",
+      "name": "Common Grackle",
+      "subregion": "Alabama"
     }
   ],
   "us-lower48": [
@@ -831,6 +837,12 @@
       "id": "pinwar",
       "name": "Pine Warbler",
       "subregion": "Louisiana"
+    },
+    {
+      "date": "2026-03-07",
+      "id": "comgal1",
+      "name": "Common Gallinule",
+      "subregion": "Alabama"
     }
   ]
 }
