@@ -429,6 +429,12 @@
       "id": "comgra",
       "name": "Common Grackle",
       "subregion": "Alabama"
+    },
+    {
+      "date": "2026-03-08",
+      "id": "comgal1",
+      "name": "Common Gallinule",
+      "subregion": "Virginia"
     }
   ],
   "us-lower48": [
@@ -843,6 +849,12 @@
       "id": "comgal1",
       "name": "Common Gallinule",
       "subregion": "Alabama"
+    },
+    {
+      "date": "2026-03-08",
+      "id": "reshaw",
+      "name": "Red-shouldered Hawk",
+      "subregion": "Michigan"
     }
   ]
 }
