@@ -435,6 +435,12 @@
       "id": "comgal1",
       "name": "Common Gallinule",
       "subregion": "Virginia"
+    },
+    {
+      "date": "2026-03-09",
+      "id": "sancra",
+      "name": "Sandhill Crane",
+      "subregion": "Ohio"
     }
   ],
   "us-lower48": [
@@ -855,6 +861,12 @@
       "id": "reshaw",
       "name": "Red-shouldered Hawk",
       "subregion": "Michigan"
+    },
+    {
+      "date": "2026-03-09",
+      "id": "pibgre",
+      "name": "Pied-billed Grebe",
+      "subregion": "Ohio"
     }
   ]
 }
