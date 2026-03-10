@@ -441,6 +441,12 @@
       "id": "sancra",
       "name": "Sandhill Crane",
       "subregion": "Ohio"
+    },
+    {
+      "date": "2026-03-10",
+      "id": "brdowl",
+      "name": "Barred Owl",
+      "subregion": "North Dakota"
     }
   ],
   "us-lower48": [
@@ -867,6 +873,12 @@
       "id": "pibgre",
       "name": "Pied-billed Grebe",
       "subregion": "Ohio"
+    },
+    {
+      "date": "2026-03-10",
+      "id": "bohwax",
+      "name": "Bohemian Waxwing",
+      "subregion": "North Dakota"
     }
   ]
 }
