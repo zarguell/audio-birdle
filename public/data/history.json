@@ -447,6 +447,12 @@
       "id": "brdowl",
       "name": "Barred Owl",
       "subregion": "North Dakota"
+    },
+    {
+      "date": "2026-03-11",
+      "id": "seaspa",
+      "name": "Seaside Sparrow",
+      "subregion": "Mississippi"
     }
   ],
   "us-lower48": [
@@ -879,6 +885,12 @@
       "id": "bohwax",
       "name": "Bohemian Waxwing",
       "subregion": "North Dakota"
+    },
+    {
+      "date": "2026-03-11",
+      "id": "bkbplo",
+      "name": "Black-bellied Plover",
+      "subregion": "New Jersey"
     }
   ]
 }
