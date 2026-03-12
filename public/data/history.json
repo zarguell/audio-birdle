@@ -453,6 +453,12 @@
       "id": "seaspa",
       "name": "Seaside Sparrow",
       "subregion": "Mississippi"
+    },
+    {
+      "date": "2026-03-12",
+      "id": "snoowl1",
+      "name": "Snowy Owl",
+      "subregion": "Minnesota"
     }
   ],
   "us-lower48": [
@@ -891,6 +897,12 @@
       "id": "bkbplo",
       "name": "Black-bellied Plover",
       "subregion": "New Jersey"
+    },
+    {
+      "date": "2026-03-12",
+      "id": "bkbwoo",
+      "name": "Black-backed Woodpecker",
+      "subregion": "Minnesota"
     }
   ]
 }
