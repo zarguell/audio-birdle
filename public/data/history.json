@@ -459,6 +459,12 @@
       "id": "snoowl1",
       "name": "Snowy Owl",
       "subregion": "Minnesota"
+    },
+    {
+      "date": "2026-03-13",
+      "id": "dunlin",
+      "name": "Dunlin",
+      "subregion": "Louisiana"
     }
   ],
   "us-lower48": [
@@ -902,6 +908,12 @@
       "date": "2026-03-12",
       "id": "bkbwoo",
       "name": "Black-backed Woodpecker",
+      "subregion": "Minnesota"
+    },
+    {
+      "date": "2026-03-13",
+      "id": "pinsis",
+      "name": "Pine Siskin",
       "subregion": "Minnesota"
     }
   ]
