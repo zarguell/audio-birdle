@@ -465,6 +465,12 @@
       "id": "dunlin",
       "name": "Dunlin",
       "subregion": "Louisiana"
+    },
+    {
+      "date": "2026-03-14",
+      "id": "cangoo",
+      "name": "Canada Goose",
+      "subregion": "Missouri"
     }
   ],
   "us-lower48": [
@@ -915,6 +921,12 @@
       "id": "pinsis",
       "name": "Pine Siskin",
       "subregion": "Minnesota"
+    },
+    {
+      "date": "2026-03-14",
+      "id": "wilsni1",
+      "name": "Wilson's Snipe",
+      "subregion": "Missouri"
     }
   ]
 }
