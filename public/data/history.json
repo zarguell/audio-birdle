@@ -477,6 +477,12 @@
       "id": "grbher3",
       "name": "Great Blue Heron",
       "subregion": "South Carolina"
+    },
+    {
+      "date": "2026-03-16",
+      "id": "bkbplo",
+      "name": "Black-bellied Plover",
+      "subregion": "Texas"
     }
   ],
   "us-lower48": [
@@ -939,6 +945,12 @@
       "id": "rewbla",
       "name": "Red-winged Blackbird",
       "subregion": "Iowa"
+    },
+    {
+      "date": "2026-03-16",
+      "id": "whtspa",
+      "name": "White-throated Sparrow",
+      "subregion": "Massachusetts"
     }
   ]
 }
