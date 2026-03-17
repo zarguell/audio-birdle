@@ -483,6 +483,12 @@
       "id": "bkbplo",
       "name": "Black-bellied Plover",
       "subregion": "Texas"
+    },
+    {
+      "date": "2026-03-17",
+      "id": "monpar",
+      "name": "Monk Parakeet",
+      "subregion": "Texas"
     }
   ],
   "us-lower48": [
@@ -951,6 +957,12 @@
       "id": "whtspa",
       "name": "White-throated Sparrow",
       "subregion": "Massachusetts"
+    },
+    {
+      "date": "2026-03-17",
+      "id": "sancra",
+      "name": "Sandhill Crane",
+      "subregion": "Texas"
     }
   ]
 }
