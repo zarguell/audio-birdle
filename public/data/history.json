@@ -489,6 +489,12 @@
       "id": "monpar",
       "name": "Monk Parakeet",
       "subregion": "Texas"
+    },
+    {
+      "date": "2026-03-18",
+      "id": "categr1",
+      "name": "Western Cattle-Egret",
+      "subregion": "South Carolina"
     }
   ],
   "us-lower48": [
@@ -963,6 +969,12 @@
       "id": "sancra",
       "name": "Sandhill Crane",
       "subregion": "Texas"
+    },
+    {
+      "date": "2026-03-18",
+      "id": "comloo",
+      "name": "Common Loon",
+      "subregion": "South Carolina"
     }
   ]
 }
