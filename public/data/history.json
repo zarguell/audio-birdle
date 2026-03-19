@@ -495,6 +495,12 @@
       "id": "categr1",
       "name": "Western Cattle-Egret",
       "subregion": "South Carolina"
+    },
+    {
+      "date": "2026-03-19",
+      "id": "houfin",
+      "name": "House Finch",
+      "subregion": "Minnesota"
     }
   ],
   "us-lower48": [
@@ -975,6 +981,12 @@
       "id": "comloo",
       "name": "Common Loon",
       "subregion": "South Carolina"
+    },
+    {
+      "date": "2026-03-19",
+      "id": "evegro",
+      "name": "Evening Grosbeak",
+      "subregion": "Minnesota"
     }
   ]
 }
