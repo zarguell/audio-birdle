@@ -501,6 +501,12 @@
       "id": "houfin",
       "name": "House Finch",
       "subregion": "Minnesota"
+    },
+    {
+      "date": "2026-03-20",
+      "id": "snoplo5",
+      "name": "Snowy Plover",
+      "subregion": "Mississippi"
     }
   ],
   "us-lower48": [
@@ -987,6 +993,12 @@
       "id": "evegro",
       "name": "Evening Grosbeak",
       "subregion": "Minnesota"
+    },
+    {
+      "date": "2026-03-20",
+      "id": "redhea",
+      "name": "Redhead",
+      "subregion": "Mississippi"
     }
   ]
 }
