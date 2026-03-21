@@ -507,6 +507,12 @@
       "id": "snoplo5",
       "name": "Snowy Plover",
       "subregion": "Mississippi"
+    },
+    {
+      "date": "2026-03-21",
+      "id": "swaspa",
+      "name": "Swamp Sparrow",
+      "subregion": "Louisiana"
     }
   ],
   "us-lower48": [
@@ -999,6 +1005,12 @@
       "id": "redhea",
       "name": "Redhead",
       "subregion": "Mississippi"
+    },
+    {
+      "date": "2026-03-21",
+      "id": "wesmea",
+      "name": "Western Meadowlark",
+      "subregion": "Louisiana"
     }
   ]
 }
