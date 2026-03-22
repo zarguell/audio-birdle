@@ -513,6 +513,12 @@
       "id": "swaspa",
       "name": "Swamp Sparrow",
       "subregion": "Louisiana"
+    },
+    {
+      "date": "2026-03-22",
+      "id": "tunswa",
+      "name": "Tundra Swan",
+      "subregion": "Maryland"
     }
   ],
   "us-lower48": [
@@ -1011,6 +1017,12 @@
       "id": "wesmea",
       "name": "Western Meadowlark",
       "subregion": "Louisiana"
+    },
+    {
+      "date": "2026-03-22",
+      "id": "libher",
+      "name": "Little Blue Heron",
+      "subregion": "Mississippi"
     }
   ]
 }
