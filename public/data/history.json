@@ -519,6 +519,12 @@
       "id": "tunswa",
       "name": "Tundra Swan",
       "subregion": "Maryland"
+    },
+    {
+      "date": "2026-03-23",
+      "id": "borchi2",
+      "name": "Boreal Chickadee",
+      "subregion": "New Hampshire"
     }
   ],
   "us-lower48": [
@@ -1023,6 +1029,12 @@
       "id": "libher",
       "name": "Little Blue Heron",
       "subregion": "Mississippi"
+    },
+    {
+      "date": "2026-03-23",
+      "id": "fragul",
+      "name": "Franklin's Gull",
+      "subregion": "Louisiana"
     }
   ]
 }
