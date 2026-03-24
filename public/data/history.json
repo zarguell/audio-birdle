@@ -525,6 +525,12 @@
       "id": "borchi2",
       "name": "Boreal Chickadee",
       "subregion": "New Hampshire"
+    },
+    {
+      "date": "2026-03-24",
+      "id": "rebwoo",
+      "name": "Red-bellied Woodpecker",
+      "subregion": "District of Columbia"
     }
   ],
   "us-lower48": [
@@ -1035,6 +1041,12 @@
       "id": "fragul",
       "name": "Franklin's Gull",
       "subregion": "Louisiana"
+    },
+    {
+      "date": "2026-03-24",
+      "id": "houspa",
+      "name": "House Sparrow",
+      "subregion": "District of Columbia"
     }
   ]
 }
