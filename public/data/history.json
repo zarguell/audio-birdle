@@ -531,6 +531,12 @@
       "id": "rebwoo",
       "name": "Red-bellied Woodpecker",
       "subregion": "District of Columbia"
+    },
+    {
+      "date": "2026-03-25",
+      "id": "easpho",
+      "name": "Eastern Phoebe",
+      "subregion": "New Jersey"
     }
   ],
   "us-lower48": [
@@ -1047,6 +1053,12 @@
       "id": "houspa",
       "name": "House Sparrow",
       "subregion": "District of Columbia"
+    },
+    {
+      "date": "2026-03-25",
+      "id": "amepip",
+      "name": "American Pipit",
+      "subregion": "New Jersey"
     }
   ]
 }
