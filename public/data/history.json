@@ -537,6 +537,12 @@
       "id": "easpho",
       "name": "Eastern Phoebe",
       "subregion": "New Jersey"
+    },
+    {
+      "date": "2026-03-26",
+      "id": "marwre",
+      "name": "Marsh Wren",
+      "subregion": "Connecticut"
     }
   ],
   "us-lower48": [
@@ -1059,6 +1065,12 @@
       "id": "amepip",
       "name": "American Pipit",
       "subregion": "New Jersey"
+    },
+    {
+      "date": "2026-03-26",
+      "id": "horgre",
+      "name": "Horned Grebe",
+      "subregion": "Connecticut"
     }
   ]
 }
