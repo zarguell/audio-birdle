@@ -543,6 +543,12 @@
       "id": "marwre",
       "name": "Marsh Wren",
       "subregion": "Connecticut"
+    },
+    {
+      "date": "2026-03-27",
+      "id": "grpchi",
+      "name": "Greater Prairie-Chicken",
+      "subregion": "Nebraska"
     }
   ],
   "us-lower48": [
@@ -1071,6 +1077,12 @@
       "id": "horgre",
       "name": "Horned Grebe",
       "subregion": "Connecticut"
+    },
+    {
+      "date": "2026-03-27",
+      "id": "killde",
+      "name": "Killdeer",
+      "subregion": "Nebraska"
     }
   ]
 }
