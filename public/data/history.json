@@ -549,6 +549,12 @@
       "id": "grpchi",
       "name": "Greater Prairie-Chicken",
       "subregion": "Nebraska"
+    },
+    {
+      "date": "2026-03-28",
+      "id": "bknsti",
+      "name": "Black-necked Stilt",
+      "subregion": "Arkansas"
     }
   ],
   "us-lower48": [
@@ -1083,6 +1089,12 @@
       "id": "killde",
       "name": "Killdeer",
       "subregion": "Nebraska"
+    },
+    {
+      "date": "2026-03-28",
+      "id": "lessca",
+      "name": "Lesser Scaup",
+      "subregion": "Kentucky"
     }
   ]
 }
