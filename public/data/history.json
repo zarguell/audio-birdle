@@ -555,6 +555,12 @@
       "id": "bknsti",
       "name": "Black-necked Stilt",
       "subregion": "Arkansas"
+    },
+    {
+      "date": "2026-03-29",
+      "id": "canvas",
+      "name": "Canvasback",
+      "subregion": "Nevada"
     }
   ],
   "us-lower48": [
@@ -1095,6 +1101,12 @@
       "id": "lessca",
       "name": "Lesser Scaup",
       "subregion": "Kentucky"
+    },
+    {
+      "date": "2026-03-29",
+      "id": "canvas",
+      "name": "Canvasback",
+      "subregion": "North Carolina"
     }
   ]
 }
