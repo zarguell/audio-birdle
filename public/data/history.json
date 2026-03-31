@@ -567,6 +567,12 @@
       "id": "clarai11",
       "name": "Clapper Rail",
       "subregion": "Alabama"
+    },
+    {
+      "date": "2026-03-31",
+      "id": "mallar3",
+      "name": "Mallard",
+      "subregion": "Alaska"
     }
   ],
   "us-lower48": [
@@ -1119,6 +1125,12 @@
       "id": "nutman",
       "name": "Scaly-breasted Munia",
       "subregion": "Alabama"
+    },
+    {
+      "date": "2026-03-31",
+      "id": "marwre",
+      "name": "Marsh Wren",
+      "subregion": "New Jersey"
     }
   ]
 }
