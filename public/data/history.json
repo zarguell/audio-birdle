@@ -579,6 +579,12 @@
       "id": "truswa",
       "name": "Trumpeter Swan",
       "subregion": "Ohio"
+    },
+    {
+      "date": "2026-04-02",
+      "id": "anhing",
+      "name": "Anhinga",
+      "subregion": "North Carolina"
     }
   ],
   "us-lower48": [
@@ -1143,6 +1149,12 @@
       "id": "merlin",
       "name": "Merlin",
       "subregion": "Georgia"
+    },
+    {
+      "date": "2026-04-02",
+      "id": "btnwar",
+      "name": "Black-throated Green Warbler",
+      "subregion": "Oklahoma"
     }
   ]
 }
