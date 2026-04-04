@@ -591,6 +591,12 @@
       "id": "rethaw",
       "name": "Red-tailed Hawk",
       "subregion": "New Mexico"
+    },
+    {
+      "date": "2026-04-04",
+      "id": "sagthr",
+      "name": "Sage Thrasher",
+      "subregion": "Wyoming"
     }
   ],
   "us-lower48": [
@@ -1167,6 +1173,12 @@
       "id": "winwre3",
       "name": "Winter Wren",
       "subregion": "Illinois"
+    },
+    {
+      "date": "2026-04-04",
+      "id": "gcrfin",
+      "name": "Gray-crowned Rosy-Finch",
+      "subregion": "Wyoming"
     }
   ]
 }
