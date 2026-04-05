@@ -597,6 +597,12 @@
       "id": "sagthr",
       "name": "Sage Thrasher",
       "subregion": "Wyoming"
+    },
+    {
+      "date": "2026-04-05",
+      "id": "grhowl",
+      "name": "Great Horned Owl",
+      "subregion": "Idaho"
     }
   ],
   "us-lower48": [
@@ -1179,6 +1185,12 @@
       "id": "gcrfin",
       "name": "Gray-crowned Rosy-Finch",
       "subregion": "Wyoming"
+    },
+    {
+      "date": "2026-04-05",
+      "id": "pilwoo",
+      "name": "Pileated Woodpecker",
+      "subregion": "Idaho"
     }
   ]
 }
