@@ -603,6 +603,12 @@
       "id": "grhowl",
       "name": "Great Horned Owl",
       "subregion": "Idaho"
+    },
+    {
+      "date": "2026-04-06",
+      "id": "royter1",
+      "name": "Royal Tern",
+      "subregion": "Maryland"
     }
   ],
   "us-lower48": [
@@ -1191,6 +1197,12 @@
       "id": "pilwoo",
       "name": "Pileated Woodpecker",
       "subregion": "Idaho"
+    },
+    {
+      "date": "2026-04-06",
+      "id": "grbher3",
+      "name": "Great Blue Heron",
+      "subregion": "Nevada"
     }
   ]
 }
