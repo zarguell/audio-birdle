@@ -609,6 +609,12 @@
       "id": "royter1",
       "name": "Royal Tern",
       "subregion": "Maryland"
+    },
+    {
+      "date": "2026-04-07",
+      "id": "banswa",
+      "name": "Bank Swallow",
+      "subregion": "New Jersey"
     }
   ],
   "us-lower48": [
@@ -1203,6 +1209,12 @@
       "id": "grbher3",
       "name": "Great Blue Heron",
       "subregion": "Nevada"
+    },
+    {
+      "date": "2026-04-07",
+      "id": "comgra",
+      "name": "Common Grackle",
+      "subregion": "New Jersey"
     }
   ]
 }
