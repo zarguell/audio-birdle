@@ -615,6 +615,12 @@
       "id": "banswa",
       "name": "Bank Swallow",
       "subregion": "New Jersey"
+    },
+    {
+      "date": "2026-04-08",
+      "id": "lobdow",
+      "name": "Long-billed Dowitcher",
+      "subregion": "Tennessee"
     }
   ],
   "us-lower48": [
@@ -1215,6 +1221,12 @@
       "id": "comgra",
       "name": "Common Grackle",
       "subregion": "New Jersey"
+    },
+    {
+      "date": "2026-04-08",
+      "id": "chwwid",
+      "name": "Chuck-will's-widow",
+      "subregion": "Tennessee"
     }
   ]
 }
