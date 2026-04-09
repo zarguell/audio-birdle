@@ -621,6 +621,12 @@
       "id": "lobdow",
       "name": "Long-billed Dowitcher",
       "subregion": "Tennessee"
+    },
+    {
+      "date": "2026-04-09",
+      "id": "sposan",
+      "name": "Spotted Sandpiper",
+      "subregion": "Missouri"
     }
   ],
   "us-lower48": [
@@ -1227,6 +1233,12 @@
       "id": "chwwid",
       "name": "Chuck-will's-widow",
       "subregion": "Tennessee"
+    },
+    {
+      "date": "2026-04-09",
+      "id": "brespa",
+      "name": "Brewer's Sparrow",
+      "subregion": "California"
     }
   ]
 }
