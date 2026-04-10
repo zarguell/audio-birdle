@@ -627,6 +627,12 @@
       "id": "sposan",
       "name": "Spotted Sandpiper",
       "subregion": "Missouri"
+    },
+    {
+      "date": "2026-04-10",
+      "id": "belkin1",
+      "name": "Belted Kingfisher",
+      "subregion": "District of Columbia"
     }
   ],
   "us-lower48": [
@@ -1239,6 +1245,12 @@
       "id": "brespa",
       "name": "Brewer's Sparrow",
       "subregion": "California"
+    },
+    {
+      "date": "2026-04-10",
+      "id": "amewoo",
+      "name": "American Woodcock",
+      "subregion": "Connecticut"
     }
   ]
 }
