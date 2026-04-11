@@ -633,6 +633,12 @@
       "id": "belkin1",
       "name": "Belted Kingfisher",
       "subregion": "District of Columbia"
+    },
+    {
+      "date": "2026-04-11",
+      "id": "greyel",
+      "name": "Greater Yellowlegs",
+      "subregion": "Kansas"
     }
   ],
   "us-lower48": [
@@ -1251,6 +1257,12 @@
       "id": "amewoo",
       "name": "American Woodcock",
       "subregion": "Connecticut"
+    },
+    {
+      "date": "2026-04-11",
+      "id": "truswa",
+      "name": "Trumpeter Swan",
+      "subregion": "Iowa"
     }
   ]
 }
