@@ -639,6 +639,12 @@
       "id": "greyel",
       "name": "Greater Yellowlegs",
       "subregion": "Kansas"
+    },
+    {
+      "date": "2026-04-12",
+      "id": "blkvul",
+      "name": "Black Vulture",
+      "subregion": "Vermont"
     }
   ],
   "us-lower48": [
@@ -1263,6 +1269,12 @@
       "id": "truswa",
       "name": "Trumpeter Swan",
       "subregion": "Iowa"
+    },
+    {
+      "date": "2026-04-12",
+      "id": "wiltur",
+      "name": "Wild Turkey",
+      "subregion": "Vermont"
     }
   ]
 }
