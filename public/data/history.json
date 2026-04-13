@@ -645,6 +645,12 @@
       "id": "blkvul",
       "name": "Black Vulture",
       "subregion": "Vermont"
+    },
+    {
+      "date": "2026-04-13",
+      "id": "laugul",
+      "name": "Laughing Gull",
+      "subregion": "New York"
     }
   ],
   "us-lower48": [
@@ -1275,6 +1281,12 @@
       "id": "wiltur",
       "name": "Wild Turkey",
       "subregion": "Vermont"
+    },
+    {
+      "date": "2026-04-13",
+      "id": "rengre",
+      "name": "Red-necked Grebe",
+      "subregion": "Rhode Island"
     }
   ]
 }
