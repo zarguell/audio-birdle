@@ -17,8 +17,8 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       commit-type: ${{ steps.analyze-commit.outputs.type }}
-      js-changed: ${{ steps.changed-files.outputs.js_any_changed }}
-      python-changed: ${{ steps.changed-files.outputs.python_any_changed }}
+      js-changed: ${{ steps.filter.outputs.js }}
+      python-changed: ${{ steps.filter.outputs.python }}
       test-category: ${{ steps.analyze-commit.outputs.test-category }}
     steps:
       - name: Checkout code
@@ -26,18 +26,20 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Get changed files
-        id: changed-files
-        uses: tj-actions/changed-files@v47
+      - name: Detect file changes
+        id: filter
+        uses: dorny/paths-filter@fbd0ab8f3e69293af611ebaee6363fc25e6d187d # v4.0.1
         with:
-          files: |
-            src/**/*.{js,jsx}
-            scripts/**/*.py
-            package.json
-            package-lock.json
-            scripts/requirements.txt
-            **/*.{test,spec}.{js,jsx,py}
-          files_separator: ' '
+          filters: |
+            js:
+              - 'src/**/*.{js,jsx}'
+              - 'package.json'
+              - 'package-lock.json'
+              - '**/*.{test,spec}.{js,jsx}'
+            python:
+              - 'scripts/**/*.py'
+              - 'scripts/requirements.txt'
+              - '**/*.{test,spec}.py'
 
       - name: Analyze commit message
         id: analyze-commit
