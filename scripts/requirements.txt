@@ -2,7 +2,7 @@ attrs==25.4.0
 beautifulsoup4==4.14.3
 bs4==0.0.2
 certifi==2026.2.25
-charset-normalizer==3.4.4
+charset-normalizer==3.4.7
 h11==0.16.0
 idna==3.11
 lxml==6.0.2
