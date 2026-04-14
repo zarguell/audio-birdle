@@ -651,6 +651,12 @@
       "id": "laugul",
       "name": "Laughing Gull",
       "subregion": "New York"
+    },
+    {
+      "date": "2026-04-14",
+      "id": "chispa",
+      "name": "Chipping Sparrow",
+      "subregion": "Rhode Island"
     }
   ],
   "us-lower48": [
@@ -1287,6 +1293,12 @@
       "id": "rengre",
       "name": "Red-necked Grebe",
       "subregion": "Rhode Island"
+    },
+    {
+      "date": "2026-04-14",
+      "id": "soogro1",
+      "name": "Sooty Grouse",
+      "subregion": "California"
     }
   ]
 }
