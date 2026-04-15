@@ -657,6 +657,12 @@
       "id": "chispa",
       "name": "Chipping Sparrow",
       "subregion": "Rhode Island"
+    },
+    {
+      "date": "2026-04-15",
+      "id": "orcwar",
+      "name": "Orange-crowned Warbler",
+      "subregion": "Maine"
     }
   ],
   "us-lower48": [
@@ -1299,6 +1305,12 @@
       "id": "soogro1",
       "name": "Sooty Grouse",
       "subregion": "California"
+    },
+    {
+      "date": "2026-04-15",
+      "id": "bktspa",
+      "name": "Black-throated Sparrow",
+      "subregion": "Texas"
     }
   ]
 }
