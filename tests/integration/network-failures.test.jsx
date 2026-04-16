@@ -344,7 +344,7 @@ describe('Network Failure Integration', () => {
           response = await fetchWithRetry(url, {}, { maxRetries: 1, baseDelay: 50 })
           success = true
           break
-        } catch (error) {
+        } catch {
           continue
         }
       }
@@ -363,7 +363,7 @@ describe('Network Failure Integration', () => {
       for (const url of audioUrls) {
         try {
           await fetchWithRetry(url, {}, { maxRetries: 1, baseDelay: 50 })
-        } catch (error) {
+        } catch {
           failedUrls.push(url)
         }
       }
@@ -382,7 +382,7 @@ describe('Network Failure Integration', () => {
           await fetchWithRetry(url, {}, { maxRetries: 1, baseDelay: 50 })
           success = true
           break
-        } catch (error) {
+        } catch {
           continue
         }
       }
@@ -417,7 +417,8 @@ describe('Network Failure Integration', () => {
 
       try {
         await fetchWithRetry('/api/test', {}, { maxRetries: 2, baseDelay: 100 })
-      } catch (error) {
+      } catch {
+        // Expected - testing error handling
       }
 
       expect(consoleSpy).toHaveBeenCalledWith(

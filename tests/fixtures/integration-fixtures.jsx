@@ -1,4 +1,5 @@
-import { hashString } from '@/utils/HashUtils'
+// hashString imported for potential future test use
+import { hashString as UNUSED_HASH } from '@/utils/HashUtils'
 
 export function createTestBird(overrides = {}) {
   return {

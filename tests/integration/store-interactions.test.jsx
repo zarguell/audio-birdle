@@ -3,7 +3,7 @@ import { useNormalGameStore } from '@/stores/normalGameStore'
 import { useHardModeStore } from '@/stores/hardModeStore'
 import { usePracticeStore } from '@/stores/practiceStore'
 import { createMockLocalStorage } from '@test/setup'
-import { createTestGameState, createTestDailyGame, createTestBird, createCompletedGame, createHardModeGame, createHardModeGuess } from '@test/fixtures/integration-fixtures'
+import { createTestGameState as UNUSED_GAME_STATE, createTestDailyGame, createTestBird, createCompletedGame as UNUSED_COMPLETED_GAME, createHardModeGame, createHardModeGuess } from '@test/fixtures/integration-fixtures'
 
 describe('Store Interactions Integration', () => {
   let mockStorage

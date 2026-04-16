@@ -72,6 +72,7 @@ export function useGameData(initialRegion = null) {
   // Reload bird when region or birds change
   useEffect(() => {
     if (initialRegion && birds[initialRegion]) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- loadTodaysBird is a useCallback that fetches and sets state asynchronously
       loadTodaysBird();
     }
   }, [initialRegion, birds, today, loadTodaysBird]);

@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
-import { createAudioControls, getAudioSrc, isAudioUrlDead, markAudioUrlDead, loadDeadAudioUrlsCache, saveDeadAudioUrlsCache, clearDeadAudioUrlsCache } from '@/utils/AudioUtils'
+import { createAudioControls, getAudioSrc, isAudioUrlDead, markAudioUrlDead, loadDeadAudioUrlsCache, clearDeadAudioUrlsCache } from '@/utils/AudioUtils'
 import { createMockAudio, createMockLocalStorage } from '@test/setup'
 import { createTestBird } from '@test/fixtures/integration-fixtures'
 
@@ -226,7 +226,7 @@ describe('Audio Playback Integration', () => {
     it('should handle volume changes', () => {
       const audioInstance = mockAudio()
       audioInstance.volume = 0.5
-      const audioRef = { current: audioInstance }
+      const UNUSED_AUDIO_REF = { current: audioInstance }
 
       expect(audioInstance.volume).toBe(0.5)
 
@@ -237,7 +237,7 @@ describe('Audio Playback Integration', () => {
     it('should track currentTime during playback simulation', () => {
       const audioInstance = mockAudio()
       audioInstance.currentTime = 0
-      const audioRef = { current: audioInstance }
+      const UNUSED_AUDIO_REF = { current: audioInstance }
 
       expect(audioInstance.currentTime).toBe(0)
 

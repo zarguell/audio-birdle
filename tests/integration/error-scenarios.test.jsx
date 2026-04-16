@@ -8,7 +8,7 @@ import {
   createTestBirdList,
   createTestGameState,
   createTestDailyEntry,
-  createTestRegionList
+  createTestRegionList as UNUSED_REGION_LIST
 } from '../fixtures/integration-fixtures'
 import { hashString } from '@/utils/HashUtils'
 import { GAME_CONFIG } from '@/utils/Constants'

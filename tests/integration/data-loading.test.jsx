@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { loadGameData } from '@/utils/LoadGameData'
 import { createMockResponse, createMockLocalStorage } from '@test/setup'
-import { createMockBirdDataByRegion, createMockDailyData, createTestRegionList } from '@test/fixtures/integration-fixtures'
+import { createMockBirdDataByRegion, createTestRegionList } from '@test/fixtures/integration-fixtures'
 
 describe('Data Loading Integration', () => {
   let mockFetch

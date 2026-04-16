@@ -123,7 +123,7 @@ describe('DailyBirdUtils', () => {
     })
 
     it('should handle HTTP errors', async () => {
-      const errorResponse = { ok: false, status: 404, statusText: 'Not Found' }
+      const UNUSED_ERROR_RESPONSE = { ok: false, status: 404, statusText: 'Not Found' }
       const error = new Error('HTTP 404: Not Found for /data/daily.json')
       fetchWithRetry.mockRejectedValueOnce(error)
 

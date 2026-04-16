@@ -452,7 +452,7 @@ export const generateAnswerOptions = (
     (bird) => bird.family === correctBird.family,
   );
 
-  let selectedWrongBirds = [];
+  let selectedWrongBirds;
 
   if (sameFamilyBirds.length >= optionCount - 1) {
     // We have enough birds from the same family

@@ -87,7 +87,7 @@ export const generatePracticeAnswerOptions = (region, birds, practiceIndex, corr
   // First, try to get birds from the same family as the correct bird
   const sameFamilyBirds = availableBirds.filter(bird => bird.family === correctBird.family);
 
-  let selectedWrongBirds = [];
+  let selectedWrongBirds;
 
   if (sameFamilyBirds.length >= optionCount - 1) {
     // We have enough birds from the same family
