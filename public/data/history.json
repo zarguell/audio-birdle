@@ -663,6 +663,12 @@
       "id": "orcwar",
       "name": "Orange-crowned Warbler",
       "subregion": "Maine"
+    },
+    {
+      "date": "2026-04-16",
+      "id": "towwar",
+      "name": "Townsend's Warbler",
+      "subregion": "Arizona"
     }
   ],
   "us-lower48": [
@@ -1311,6 +1317,12 @@
       "id": "bktspa",
       "name": "Black-throated Sparrow",
       "subregion": "Texas"
+    },
+    {
+      "date": "2026-04-16",
+      "id": "willet1",
+      "name": "Willet",
+      "subregion": "Arizona"
     }
   ]
 }
