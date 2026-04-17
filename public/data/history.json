@@ -669,6 +669,12 @@
       "id": "towwar",
       "name": "Townsend's Warbler",
       "subregion": "Arizona"
+    },
+    {
+      "date": "2026-04-17",
+      "id": "coohaw",
+      "name": "Cooper's Hawk",
+      "subregion": "Rhode Island"
     }
   ],
   "us-lower48": [
@@ -1323,6 +1329,12 @@
       "id": "willet1",
       "name": "Willet",
       "subregion": "Arizona"
+    },
+    {
+      "date": "2026-04-17",
+      "id": "buffle",
+      "name": "Bufflehead",
+      "subregion": "Rhode Island"
     }
   ]
 }
