@@ -681,6 +681,12 @@
       "id": "mutswa",
       "name": "Mute Swan",
       "subregion": "West Virginia"
+    },
+    {
+      "date": "2026-04-19",
+      "id": "brnowl",
+      "name": "American Barn Owl",
+      "subregion": "Louisiana"
     }
   ],
   "us-lower48": [
@@ -1347,6 +1353,12 @@
       "id": "cangoo",
       "name": "Canada Goose",
       "subregion": "West Virginia"
+    },
+    {
+      "date": "2026-04-19",
+      "id": "chispa",
+      "name": "Chipping Sparrow",
+      "subregion": "Louisiana"
     }
   ]
 }
