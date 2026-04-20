@@ -687,6 +687,12 @@
       "id": "brnowl",
       "name": "American Barn Owl",
       "subregion": "Louisiana"
+    },
+    {
+      "date": "2026-04-20",
+      "id": "nrwswa",
+      "name": "Northern Rough-winged Swallow",
+      "subregion": "Vermont"
     }
   ],
   "us-lower48": [
@@ -1359,6 +1365,12 @@
       "id": "chispa",
       "name": "Chipping Sparrow",
       "subregion": "Louisiana"
+    },
+    {
+      "date": "2026-04-20",
+      "id": "rocpig",
+      "name": "Rock Pigeon",
+      "subregion": "Kentucky"
     }
   ]
 }
