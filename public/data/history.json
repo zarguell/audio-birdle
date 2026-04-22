@@ -699,6 +699,12 @@
       "id": "gockin",
       "name": "Golden-crowned Kinglet",
       "subregion": "Illinois"
+    },
+    {
+      "date": "2026-04-22",
+      "id": "brnthr",
+      "name": "Brown Thrasher",
+      "subregion": "Maine"
     }
   ],
   "us-lower48": [
@@ -1383,6 +1389,12 @@
       "id": "blkvul",
       "name": "Black Vulture",
       "subregion": "Mississippi"
+    },
+    {
+      "date": "2026-04-22",
+      "id": "gadwal",
+      "name": "Gadwall",
+      "subregion": "Maine"
     }
   ]
 }
