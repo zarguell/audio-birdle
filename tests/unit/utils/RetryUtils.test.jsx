@@ -63,7 +63,11 @@ describe("RetryUtils", () => {
       };
       global.fetch = vi
         .fn()
-        .mockResolvedValueOnce({ ok: false, status: 500, statusText: "Server Error" })
+        .mockResolvedValueOnce({
+          ok: false,
+          status: 500,
+          statusText: "Server Error",
+        })
         .mockResolvedValueOnce(mockSuccess);
 
       const promise = fetchWithRetry("/data/test.json");
@@ -79,6 +83,11 @@ describe("RetryUtils", () => {
     });
 
     it("should throw error after max retries exhausted", async () => {
+      // Suppress unhandled rejection warnings for this test
+      const rejections = [];
+      const handler = (reason) => rejections.push(reason);
+      process.on("unhandledRejection", handler);
+
       global.fetch = vi.fn(() => Promise.reject(new Error("Network error")));
 
       const promise = fetchWithRetry("/data/test.json", {}, { maxRetries: 2 });
@@ -86,6 +95,8 @@ describe("RetryUtils", () => {
       await vi.runAllTimersAsync();
       await expect(promise).rejects.toThrow("Network error");
       expect(fetch).toHaveBeenCalledTimes(2); // 2 total attempts (maxRetries = 2)
+
+      process.off("unhandledRejection", handler);
     });
 
     it("should use custom config for retries and delay", async () => {
@@ -167,7 +178,9 @@ describe("RetryUtils", () => {
         .mockRejectedValueOnce(new Error("Database error"))
         .mockResolvedValueOnce("success");
 
-      const promise = retryWithBackoff(operation, { context: "Database query" });
+      const promise = retryWithBackoff(operation, {
+        context: "Database query",
+      });
       await vi.runAllTimersAsync();
       await promise;
 
@@ -203,21 +216,28 @@ describe("RetryUtils", () => {
     });
 
     it("should log final error after all retries exhausted", async () => {
+      // Suppress unhandled rejection warnings for this test
+      const rejections = [];
+      const handler = (reason) => rejections.push(reason);
+      process.on("unhandledRejection", handler);
+
       const consoleErrorSpy = vi.spyOn(console, "error");
 
       const promise = retryWithBackoff(
         async () => {
           throw new Error("Permanent failure");
         },
-        { maxRetries: 2 }
+        { maxRetries: 2 },
       );
-      await vi.runAllTimersAsync();
 
+      await vi.runAllTimersAsync();
       await expect(promise).rejects.toThrow("Permanent failure");
 
       expect(consoleErrorSpy).toHaveBeenCalled();
       const errorCall = consoleErrorSpy.mock.calls[0];
       expect(errorCall[0]).toContain("operation failed after 2 attempts");
+
+      process.off("unhandledRejection", handler);
     });
   });
 });
