@@ -705,6 +705,12 @@
       "id": "brnthr",
       "name": "Brown Thrasher",
       "subregion": "Maine"
+    },
+    {
+      "date": "2026-04-23",
+      "id": "tribla",
+      "name": "Tricolored Blackbird",
+      "subregion": "Nevada"
     }
   ],
   "us-lower48": [
@@ -1395,6 +1401,12 @@
       "id": "gadwal",
       "name": "Gadwall",
       "subregion": "Maine"
+    },
+    {
+      "date": "2026-04-23",
+      "id": "eargre",
+      "name": "Eared Grebe",
+      "subregion": "Nevada"
     }
   ]
 }
