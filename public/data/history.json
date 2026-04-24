@@ -711,6 +711,12 @@
       "id": "tribla",
       "name": "Tricolored Blackbird",
       "subregion": "Nevada"
+    },
+    {
+      "date": "2026-04-24",
+      "id": "wesblu",
+      "name": "Western Bluebird",
+      "subregion": "Nevada"
     }
   ],
   "us-lower48": [
@@ -1407,6 +1413,12 @@
       "id": "eargre",
       "name": "Eared Grebe",
       "subregion": "Nevada"
+    },
+    {
+      "date": "2026-04-24",
+      "id": "solsan",
+      "name": "Solitary Sandpiper",
+      "subregion": "Utah"
     }
   ]
 }
