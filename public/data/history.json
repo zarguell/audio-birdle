@@ -717,6 +717,12 @@
       "id": "wesblu",
       "name": "Western Bluebird",
       "subregion": "Nevada"
+    },
+    {
+      "date": "2026-04-25",
+      "id": "mouchi",
+      "name": "Mountain Chickadee",
+      "subregion": "Washington"
     }
   ],
   "us-lower48": [
@@ -1419,6 +1425,12 @@
       "id": "solsan",
       "name": "Solitary Sandpiper",
       "subregion": "Utah"
+    },
+    {
+      "date": "2026-04-25",
+      "id": "snobun",
+      "name": "Snow Bunting",
+      "subregion": "Minnesota"
     }
   ]
 }
