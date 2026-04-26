@@ -723,6 +723,12 @@
       "id": "mouchi",
       "name": "Mountain Chickadee",
       "subregion": "Washington"
+    },
+    {
+      "date": "2026-04-26",
+      "id": "pibgre",
+      "name": "Pied-billed Grebe",
+      "subregion": "New Jersey"
     }
   ],
   "us-lower48": [
@@ -1431,6 +1437,12 @@
       "id": "snobun",
       "name": "Snow Bunting",
       "subregion": "Minnesota"
+    },
+    {
+      "date": "2026-04-26",
+      "id": "harduc",
+      "name": "Harlequin Duck",
+      "subregion": "Maine"
     }
   ]
 }
