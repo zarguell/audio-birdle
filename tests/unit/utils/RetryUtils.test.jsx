@@ -229,6 +229,7 @@ describe("RetryUtils", () => {
 
       await expect(promise).rejects.toThrow("Permanent failure");
 
+      expect(operation).toHaveBeenCalledTimes(2);
       expect(consoleErrorSpy).toHaveBeenCalled();
       const errorCall = consoleErrorSpy.mock.calls[0];
       expect(errorCall[0]).toContain("operation failed after 2 attempts");
