@@ -86,7 +86,11 @@ describe("RetryUtils", () => {
       vi.useRealTimers();
       global.fetch = vi.fn(() => Promise.reject(new Error("Network error")));
 
-      const promise = fetchWithRetry("/data/test.json", {}, { maxRetries: 2, baseDelay: 10 });
+      const promise = fetchWithRetry(
+        "/data/test.json",
+        {},
+        { maxRetries: 2, baseDelay: 10 },
+      );
 
       await expect(promise).rejects.toThrow("Network error");
       expect(fetch).toHaveBeenCalledTimes(2);
@@ -218,7 +222,10 @@ describe("RetryUtils", () => {
         .mockRejectedValueOnce(new Error("Permanent failure"))
         .mockRejectedValueOnce(new Error("Permanent failure"));
 
-      const promise = retryWithBackoff(operation, { maxRetries: 2, baseDelay: 10 });
+      const promise = retryWithBackoff(operation, {
+        maxRetries: 2,
+        baseDelay: 10,
+      });
 
       await expect(promise).rejects.toThrow("Permanent failure");
 
