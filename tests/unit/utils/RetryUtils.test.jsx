@@ -83,20 +83,19 @@ describe("RetryUtils", () => {
     });
 
     it("should throw error after max retries exhausted", async () => {
-      // Suppress unhandled rejection warnings for this test
-      const rejections = [];
-      const handler = (reason) => rejections.push(reason);
-      process.on("unhandledRejection", handler);
-
+      vi.useRealTimers();
       global.fetch = vi.fn(() => Promise.reject(new Error("Network error")));
 
-      const promise = fetchWithRetry("/data/test.json", {}, { maxRetries: 2 });
+      const promise = fetchWithRetry(
+        "/data/test.json",
+        {},
+        { maxRetries: 2, baseDelay: 10 },
+      );
 
-      await vi.runAllTimersAsync();
       await expect(promise).rejects.toThrow("Network error");
-      expect(fetch).toHaveBeenCalledTimes(2); // 2 total attempts (maxRetries = 2)
+      expect(fetch).toHaveBeenCalledTimes(2);
 
-      process.off("unhandledRejection", handler);
+      vi.useFakeTimers();
     });
 
     it("should use custom config for retries and delay", async () => {
@@ -216,28 +215,26 @@ describe("RetryUtils", () => {
     });
 
     it("should log final error after all retries exhausted", async () => {
-      // Suppress unhandled rejection warnings for this test
-      const rejections = [];
-      const handler = (reason) => rejections.push(reason);
-      process.on("unhandledRejection", handler);
-
+      vi.useRealTimers();
       const consoleErrorSpy = vi.spyOn(console, "error");
+      const operation = vi
+        .fn()
+        .mockRejectedValueOnce(new Error("Permanent failure"))
+        .mockRejectedValueOnce(new Error("Permanent failure"));
 
-      const promise = retryWithBackoff(
-        async () => {
-          throw new Error("Permanent failure");
-        },
-        { maxRetries: 2 },
-      );
+      const promise = retryWithBackoff(operation, {
+        maxRetries: 2,
+        baseDelay: 10,
+      });
 
-      await vi.runAllTimersAsync();
       await expect(promise).rejects.toThrow("Permanent failure");
 
+      expect(operation).toHaveBeenCalledTimes(2);
       expect(consoleErrorSpy).toHaveBeenCalled();
       const errorCall = consoleErrorSpy.mock.calls[0];
       expect(errorCall[0]).toContain("operation failed after 2 attempts");
 
-      process.off("unhandledRejection", handler);
+      vi.useFakeTimers();
     });
   });
 });
