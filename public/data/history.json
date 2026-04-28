@@ -735,6 +735,12 @@
       "id": "normoc",
       "name": "Northern Mockingbird",
       "subregion": "South Carolina"
+    },
+    {
+      "date": "2026-04-28",
+      "id": "grnher",
+      "name": "Green Heron",
+      "subregion": "Oklahoma"
     }
   ],
   "us-lower48": [
@@ -1455,6 +1461,12 @@
       "id": "zothaw",
       "name": "Zone-tailed Hawk",
       "subregion": "California"
+    },
+    {
+      "date": "2026-04-28",
+      "id": "orcwar",
+      "name": "Orange-crowned Warbler",
+      "subregion": "Alabama"
     }
   ]
 }
