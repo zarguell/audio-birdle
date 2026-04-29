@@ -741,6 +741,12 @@
       "id": "grnher",
       "name": "Green Heron",
       "subregion": "Oklahoma"
+    },
+    {
+      "date": "2026-04-29",
+      "id": "sheowl",
+      "name": "Short-eared Owl",
+      "subregion": "Idaho"
     }
   ],
   "us-lower48": [
@@ -1467,6 +1473,12 @@
       "id": "orcwar",
       "name": "Orange-crowned Warbler",
       "subregion": "Alabama"
+    },
+    {
+      "date": "2026-04-29",
+      "id": "rudduc",
+      "name": "Ruddy Duck",
+      "subregion": "Idaho"
     }
   ]
 }
