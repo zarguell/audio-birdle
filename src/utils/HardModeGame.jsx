@@ -54,15 +54,18 @@ export default function HardModeGame({
 
   // Reset audio index when bird changes
   useEffect(() => {
+    // Reset audio state when the daily bird changes - this is intentional UI reset behavior
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- intentional state reset on prop change
     setSelectedAudioIndex(0);
     setAudioError(false);
   }, [todaysBird]);
 
   // Memoize derived guess data to avoid redundant calculations on re-renders
   const guessDisplayData = useMemo(() => {
-    if (!hardModeGame?.guesses || !birds[region]) return [];
+    const guesses = hardModeGame?.guesses;
+    if (!guesses || !birds[region]) return [];
 
-    return hardModeGame.guesses.map((guess) => {
+    return guesses.map((guess) => {
       const guessedBird = guess.birdId
         ? birds[region].find((b) => b.id === guess.birdId)
         : null;
@@ -73,7 +76,7 @@ export default function HardModeGame({
         genus: guessedBird ? extractGenus(guessedBird.scientificName) : null,
       };
     });
-  }, [hardModeGame?.guesses, birds, region]);
+  }, [hardModeGame, birds, region]);
 
   // Audio controls
   // eslint-disable-next-line react-hooks/refs
