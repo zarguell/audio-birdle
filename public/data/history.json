@@ -675,6 +675,72 @@
       "id": "coohaw",
       "name": "Cooper's Hawk",
       "subregion": "Rhode Island"
+    },
+    {
+      "date": "2026-04-18",
+      "id": "mutswa",
+      "name": "Mute Swan",
+      "subregion": "West Virginia"
+    },
+    {
+      "date": "2026-04-19",
+      "id": "brnowl",
+      "name": "American Barn Owl",
+      "subregion": "Louisiana"
+    },
+    {
+      "date": "2026-04-20",
+      "id": "nrwswa",
+      "name": "Northern Rough-winged Swallow",
+      "subregion": "Vermont"
+    },
+    {
+      "date": "2026-04-21",
+      "id": "gockin",
+      "name": "Golden-crowned Kinglet",
+      "subregion": "Illinois"
+    },
+    {
+      "date": "2026-04-22",
+      "id": "brnthr",
+      "name": "Brown Thrasher",
+      "subregion": "Maine"
+    },
+    {
+      "date": "2026-04-23",
+      "id": "tribla",
+      "name": "Tricolored Blackbird",
+      "subregion": "Nevada"
+    },
+    {
+      "date": "2026-04-24",
+      "id": "wesblu",
+      "name": "Western Bluebird",
+      "subregion": "Nevada"
+    },
+    {
+      "date": "2026-04-25",
+      "id": "mouchi",
+      "name": "Mountain Chickadee",
+      "subregion": "Washington"
+    },
+    {
+      "date": "2026-04-26",
+      "id": "pibgre",
+      "name": "Pied-billed Grebe",
+      "subregion": "New Jersey"
+    },
+    {
+      "date": "2026-04-27",
+      "id": "normoc",
+      "name": "Northern Mockingbird",
+      "subregion": "South Carolina"
+    },
+    {
+      "date": "2026-04-28",
+      "id": "grnher",
+      "name": "Green Heron",
+      "subregion": "Oklahoma"
     }
   ],
   "us-lower48": [
@@ -1335,6 +1401,72 @@
       "id": "buffle",
       "name": "Bufflehead",
       "subregion": "Rhode Island"
+    },
+    {
+      "date": "2026-04-18",
+      "id": "cangoo",
+      "name": "Canada Goose",
+      "subregion": "West Virginia"
+    },
+    {
+      "date": "2026-04-19",
+      "id": "chispa",
+      "name": "Chipping Sparrow",
+      "subregion": "Louisiana"
+    },
+    {
+      "date": "2026-04-20",
+      "id": "rocpig",
+      "name": "Rock Pigeon",
+      "subregion": "Kentucky"
+    },
+    {
+      "date": "2026-04-21",
+      "id": "blkvul",
+      "name": "Black Vulture",
+      "subregion": "Mississippi"
+    },
+    {
+      "date": "2026-04-22",
+      "id": "gadwal",
+      "name": "Gadwall",
+      "subregion": "Maine"
+    },
+    {
+      "date": "2026-04-23",
+      "id": "eargre",
+      "name": "Eared Grebe",
+      "subregion": "Nevada"
+    },
+    {
+      "date": "2026-04-24",
+      "id": "solsan",
+      "name": "Solitary Sandpiper",
+      "subregion": "Utah"
+    },
+    {
+      "date": "2026-04-25",
+      "id": "snobun",
+      "name": "Snow Bunting",
+      "subregion": "Minnesota"
+    },
+    {
+      "date": "2026-04-26",
+      "id": "harduc",
+      "name": "Harlequin Duck",
+      "subregion": "Maine"
+    },
+    {
+      "date": "2026-04-27",
+      "id": "zothaw",
+      "name": "Zone-tailed Hawk",
+      "subregion": "California"
+    },
+    {
+      "date": "2026-04-28",
+      "id": "orcwar",
+      "name": "Orange-crowned Warbler",
+      "subregion": "Alabama"
     }
   ]
 }
