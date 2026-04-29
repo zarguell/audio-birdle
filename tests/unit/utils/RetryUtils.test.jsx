@@ -63,7 +63,11 @@ describe("RetryUtils", () => {
       };
       global.fetch = vi
         .fn()
-        .mockResolvedValueOnce({ ok: false, status: 500, statusText: "Server Error" })
+        .mockResolvedValueOnce({
+          ok: false,
+          status: 500,
+          statusText: "Server Error",
+        })
         .mockResolvedValueOnce(mockSuccess);
 
       const promise = fetchWithRetry("/data/test.json");
@@ -79,13 +83,19 @@ describe("RetryUtils", () => {
     });
 
     it("should throw error after max retries exhausted", async () => {
+      vi.useRealTimers();
       global.fetch = vi.fn(() => Promise.reject(new Error("Network error")));
 
-      const promise = fetchWithRetry("/data/test.json", {}, { maxRetries: 2 });
+      const promise = fetchWithRetry(
+        "/data/test.json",
+        {},
+        { maxRetries: 2, baseDelay: 10 },
+      );
 
-      await vi.runAllTimersAsync();
       await expect(promise).rejects.toThrow("Network error");
-      expect(fetch).toHaveBeenCalledTimes(2); // 2 total attempts (maxRetries = 2)
+      expect(fetch).toHaveBeenCalledTimes(2);
+
+      vi.useFakeTimers();
     });
 
     it("should use custom config for retries and delay", async () => {
@@ -167,7 +177,9 @@ describe("RetryUtils", () => {
         .mockRejectedValueOnce(new Error("Database error"))
         .mockResolvedValueOnce("success");
 
-      const promise = retryWithBackoff(operation, { context: "Database query" });
+      const promise = retryWithBackoff(operation, {
+        context: "Database query",
+      });
       await vi.runAllTimersAsync();
       await promise;
 
@@ -203,21 +215,26 @@ describe("RetryUtils", () => {
     });
 
     it("should log final error after all retries exhausted", async () => {
+      vi.useRealTimers();
       const consoleErrorSpy = vi.spyOn(console, "error");
+      const operation = vi
+        .fn()
+        .mockRejectedValueOnce(new Error("Permanent failure"))
+        .mockRejectedValueOnce(new Error("Permanent failure"));
 
-      const promise = retryWithBackoff(
-        async () => {
-          throw new Error("Permanent failure");
-        },
-        { maxRetries: 2 }
-      );
-      await vi.runAllTimersAsync();
+      const promise = retryWithBackoff(operation, {
+        maxRetries: 2,
+        baseDelay: 10,
+      });
 
       await expect(promise).rejects.toThrow("Permanent failure");
 
+      expect(operation).toHaveBeenCalledTimes(2);
       expect(consoleErrorSpy).toHaveBeenCalled();
       const errorCall = consoleErrorSpy.mock.calls[0];
       expect(errorCall[0]).toContain("operation failed after 2 attempts");
+
+      vi.useFakeTimers();
     });
   });
 });
