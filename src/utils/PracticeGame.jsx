@@ -47,6 +47,7 @@ export default function PracticeGame({ region, birds, regions, onBack }) {
           );
         }
 
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- initializing state on mount/mode change
         setPracticeState({
           ...initialState,
           currentBird: firstBird,
@@ -58,6 +59,7 @@ export default function PracticeGame({ region, birds, regions, onBack }) {
 
   // Reset audio index when bird changes
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- intentional state reset on bird change
     setSelectedAudioIndex(0);
     setAudioError(false);
   }, [practiceState?.currentBird]);
