@@ -729,6 +729,18 @@
       "id": "pibgre",
       "name": "Pied-billed Grebe",
       "subregion": "New Jersey"
+    },
+    {
+      "date": "2026-04-27",
+      "id": "normoc",
+      "name": "Northern Mockingbird",
+      "subregion": "South Carolina"
+    },
+    {
+      "date": "2026-04-28",
+      "id": "grnher",
+      "name": "Green Heron",
+      "subregion": "Oklahoma"
     }
   ],
   "us-lower48": [
@@ -1443,6 +1455,18 @@
       "id": "harduc",
       "name": "Harlequin Duck",
       "subregion": "Maine"
+    },
+    {
+      "date": "2026-04-27",
+      "id": "zothaw",
+      "name": "Zone-tailed Hawk",
+      "subregion": "California"
+    },
+    {
+      "date": "2026-04-28",
+      "id": "orcwar",
+      "name": "Orange-crowned Warbler",
+      "subregion": "Alabama"
     }
   ]
 }
