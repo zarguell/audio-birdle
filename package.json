@@ -45,7 +45,6 @@
     "pytest-cov": "^0.0.1",
     "tailwindcss": "^4.2.4",
     "vite": "^8.0.0",
-    "vite-plugin-pwa": "^1.2.0",
     "vitest": "^4.1.4"
   }
 }
