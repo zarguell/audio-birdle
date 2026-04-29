@@ -9,7 +9,10 @@ import {
   refreshGameData,
   clearServiceWorkerCache,
 } from "../utils/CacheUtils";
-import { loadDeadAudioUrlsCache, clearDeadAudioUrlsCache } from "../utils/AudioUtils";
+import {
+  loadDeadAudioUrlsCache,
+  clearDeadAudioUrlsCache,
+} from "../utils/AudioUtils";
 import { toast } from "sonner";
 
 /**
@@ -55,15 +58,21 @@ export function useGameData(initialRegion = null) {
           setDataConsistencyError(null);
         } else {
           setTodaysBird(null);
-          setDataConsistencyError(result.message || "Failed to load daily challenge");
-          toast.error(result.message || "Data sync issue detected.", { duration: 5000 });
+          setDataConsistencyError(
+            result.message || "Failed to load daily challenge",
+          );
+          toast.error(result.message || "Data sync issue detected.", {
+            duration: 5000,
+          });
         }
         setLoadingBird(false);
       })
       .catch((error) => {
         console.error("Failed to load today's bird:", error);
         setTodaysBird(null);
-        setDataConsistencyError("Failed to load daily challenge. Please refresh.");
+        setDataConsistencyError(
+          "Failed to load daily challenge. Please refresh.",
+        );
         toast.error("Failed to load daily challenge. Please try refreshing.");
         setLoadingBird(false);
       });
@@ -72,6 +81,7 @@ export function useGameData(initialRegion = null) {
   // Reload bird when region or birds change
   useEffect(() => {
     if (initialRegion && birds[initialRegion]) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- loadTodaysBird is a useCallback that fetches and sets state asynchronously
       loadTodaysBird();
     }
   }, [initialRegion, birds, today, loadTodaysBird]);
@@ -88,7 +98,11 @@ export function useGameData(initialRegion = null) {
 
       if (initialRegion && newBirds[initialRegion]) {
         setLoadingBird(true);
-        const result = await getDailyBirdWithFallback(initialRegion, newBirds[initialRegion], today);
+        const result = await getDailyBirdWithFallback(
+          initialRegion,
+          newBirds[initialRegion],
+          today,
+        );
         if (result.success && result.bird) {
           setTodaysBird(result.bird);
           setDataConsistencyError(null);
@@ -112,14 +126,18 @@ export function useGameData(initialRegion = null) {
         const hasNewUpdate = updateCheck.hasUpdate || birdsCheck.hasUpdate;
         setHasUpdate(hasNewUpdate);
 
-        if (updateCheck.dailyJsonUpdate || birdsCheck.hasUpdate || hasDateChanged()) {
+        if (
+          updateCheck.dailyJsonUpdate ||
+          birdsCheck.hasUpdate ||
+          hasDateChanged()
+        ) {
           console.log("Detected stale data, auto-refreshing...");
           if (birdsCheck.hasUpdate) {
             clearDeadAudioUrlsCache();
           }
           handleAutoRefresh();
         }
-      }
+      },
     );
   }, [initialRegion, handleAutoRefresh]);
 
@@ -135,7 +153,11 @@ export function useGameData(initialRegion = null) {
 
       if (initialRegion && newBirds[initialRegion]) {
         setLoadingBird(true);
-        const result = await getDailyBirdWithFallback(initialRegion, newBirds[initialRegion], today);
+        const result = await getDailyBirdWithFallback(
+          initialRegion,
+          newBirds[initialRegion],
+          today,
+        );
         if (result.success && result.bird) {
           setTodaysBird(result.bird);
           setDataConsistencyError(null);
@@ -167,7 +189,11 @@ export function useGameData(initialRegion = null) {
 
       if (initialRegion && newBirds[initialRegion]) {
         setLoadingBird(true);
-        const result = await getDailyBirdWithFallback(initialRegion, newBirds[initialRegion], today);
+        const result = await getDailyBirdWithFallback(
+          initialRegion,
+          newBirds[initialRegion],
+          today,
+        );
         if (result.success && result.bird) {
           setTodaysBird(result.bird);
           setDataConsistencyError(null);
