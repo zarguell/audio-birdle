@@ -18,7 +18,7 @@
     "test:python-coverage": "pytest tests/ -v --cov=scripts --cov-report=html"
   },
   "dependencies": {
-    "@tailwindcss/postcss": "^4.1.18",
+    "@tailwindcss/postcss": "^4.2.4",
     "lucide-react": "^1.0.0",
     "react": "^19.2.5",
     "react-dom": "^19.2.4",
@@ -43,7 +43,7 @@
     "postcss": "^8.5.4",
     "pytest": "^1.0.0",
     "pytest-cov": "^0.0.1",
-    "tailwindcss": "^4.2.0",
+    "tailwindcss": "^4.2.4",
     "vite": "^8.0.0",
     "vite-plugin-pwa": "^1.2.0",
     "vitest": "^4.1.4"
