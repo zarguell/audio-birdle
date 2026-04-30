@@ -747,6 +747,12 @@
       "id": "sheowl",
       "name": "Short-eared Owl",
       "subregion": "Idaho"
+    },
+    {
+      "date": "2026-04-30",
+      "id": "shshaw",
+      "name": "Sharp-shinned Hawk",
+      "subregion": "North Dakota"
     }
   ],
   "us-lower48": [
@@ -1479,6 +1485,12 @@
       "id": "rudduc",
       "name": "Ruddy Duck",
       "subregion": "Idaho"
+    },
+    {
+      "date": "2026-04-30",
+      "id": "amtspa",
+      "name": "American Tree Sparrow",
+      "subregion": "North Dakota"
     }
   ]
 }
