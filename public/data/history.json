@@ -753,6 +753,12 @@
       "id": "shshaw",
       "name": "Sharp-shinned Hawk",
       "subregion": "North Dakota"
+    },
+    {
+      "date": "2026-05-01",
+      "id": "osprey",
+      "name": "Osprey",
+      "subregion": "Arkansas"
     }
   ],
   "us-lower48": [
@@ -1491,6 +1497,12 @@
       "id": "amtspa",
       "name": "American Tree Sparrow",
       "subregion": "North Dakota"
+    },
+    {
+      "date": "2026-05-01",
+      "id": "louwat",
+      "name": "Louisiana Waterthrush",
+      "subregion": "Arkansas"
     }
   ]
 }
