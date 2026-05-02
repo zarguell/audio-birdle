@@ -759,6 +759,12 @@
       "id": "osprey",
       "name": "Osprey",
       "subregion": "Arkansas"
+    },
+    {
+      "date": "2026-05-02",
+      "id": "weskin",
+      "name": "Western Kingbird",
+      "subregion": "Arizona"
     }
   ],
   "us-lower48": [
@@ -1503,6 +1509,12 @@
       "id": "louwat",
       "name": "Louisiana Waterthrush",
       "subregion": "Arkansas"
+    },
+    {
+      "date": "2026-05-02",
+      "id": "plsvir",
+      "name": "Plumbeous Vireo",
+      "subregion": "Arizona"
     }
   ]
 }
