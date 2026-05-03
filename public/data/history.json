@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-01-03",
-      "id": "whrsha",
-      "name": "White-rumped Shama",
-      "subregion": "Hawaii"
-    },
-    {
       "date": "2026-01-04",
       "id": "calqua",
       "name": "California Quail",
@@ -765,6 +759,12 @@
       "id": "weskin",
       "name": "Western Kingbird",
       "subregion": "Arizona"
+    },
+    {
+      "date": "2026-05-03",
+      "id": "camwar",
+      "name": "Cape May Warbler",
+      "subregion": "Louisiana"
     }
   ],
   "us-lower48": [
@@ -1515,6 +1515,12 @@
       "id": "plsvir",
       "name": "Plumbeous Vireo",
       "subregion": "Arizona"
+    },
+    {
+      "date": "2026-05-03",
+      "id": "varthr",
+      "name": "Varied Thrush",
+      "subregion": "California"
     }
   ]
 }
