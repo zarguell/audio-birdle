@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-01-04",
-      "id": "calqua",
-      "name": "California Quail",
-      "subregion": "Idaho"
-    },
-    {
       "date": "2026-01-05",
       "id": "steeid",
       "name": "Steller's Eider",
@@ -765,6 +759,12 @@
       "id": "camwar",
       "name": "Cape May Warbler",
       "subregion": "Louisiana"
+    },
+    {
+      "date": "2026-05-04",
+      "id": "caster1",
+      "name": "Caspian Tern",
+      "subregion": "Mississippi"
     }
   ],
   "us-lower48": [
@@ -1521,6 +1521,12 @@
       "id": "varthr",
       "name": "Varied Thrush",
       "subregion": "California"
+    },
+    {
+      "date": "2026-05-04",
+      "id": "botgra",
+      "name": "Boat-tailed Grackle",
+      "subregion": "Mississippi"
     }
   ]
 }
