@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-01-09",
-      "id": "rocwre",
-      "name": "Rock Wren",
-      "subregion": "Texas"
-    },
-    {
       "date": "2026-01-10",
       "id": "coohaw",
       "name": "Cooper's Hawk",
@@ -765,15 +759,15 @@
       "id": "easowl1",
       "name": "Eastern Screech-Owl",
       "subregion": "Ohio"
+    },
+    {
+      "date": "2026-05-09",
+      "id": "forter",
+      "name": "Forster's Tern",
+      "subregion": "Wyoming"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-01-09",
-      "id": "btywar",
-      "name": "Black-throated Gray Warbler",
-      "subregion": "Texas"
-    },
     {
       "date": "2026-01-10",
       "id": "snogoo",
@@ -1533,6 +1527,12 @@
       "id": "cerwar",
       "name": "Cerulean Warbler",
       "subregion": "Ohio"
+    },
+    {
+      "date": "2026-05-09",
+      "id": "caster1",
+      "name": "Caspian Tern",
+      "subregion": "Pennsylvania"
     }
   ]
 }
