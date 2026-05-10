@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-01-10",
-      "id": "coohaw",
-      "name": "Cooper's Hawk",
-      "subregion": "New Jersey"
-    },
-    {
       "date": "2026-01-11",
       "id": "belkin1",
       "name": "Belted Kingfisher",
@@ -765,15 +759,15 @@
       "id": "forter",
       "name": "Forster's Tern",
       "subregion": "Wyoming"
+    },
+    {
+      "date": "2026-05-10",
+      "id": "norsho",
+      "name": "Northern Shoveler",
+      "subregion": "Arizona"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-01-10",
-      "id": "snogoo",
-      "name": "Snow Goose",
-      "subregion": "New Jersey"
-    },
     {
       "date": "2026-01-11",
       "id": "goleag",
@@ -1533,6 +1527,12 @@
       "id": "caster1",
       "name": "Caspian Tern",
       "subregion": "Pennsylvania"
+    },
+    {
+      "date": "2026-05-10",
+      "id": "rinphe1",
+      "name": "Ring-necked Pheasant",
+      "subregion": "Arizona"
     }
   ]
 }
