@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-01-11",
-      "id": "belkin1",
-      "name": "Belted Kingfisher",
-      "subregion": "West Virginia"
-    },
-    {
       "date": "2026-01-12",
       "id": "orcwar",
       "name": "Orange-crowned Warbler",
@@ -765,15 +759,15 @@
       "id": "norsho",
       "name": "Northern Shoveler",
       "subregion": "Arizona"
+    },
+    {
+      "date": "2026-05-11",
+      "id": "ameavo",
+      "name": "American Avocet",
+      "subregion": "Louisiana"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-01-11",
-      "id": "goleag",
-      "name": "Golden Eagle",
-      "subregion": "West Virginia"
-    },
     {
       "date": "2026-01-12",
       "id": "carwre",
@@ -1533,6 +1527,12 @@
       "id": "rinphe1",
       "name": "Ring-necked Pheasant",
       "subregion": "Arizona"
+    },
+    {
+      "date": "2026-05-11",
+      "id": "grnher",
+      "name": "Green Heron",
+      "subregion": "Louisiana"
     }
   ]
 }
