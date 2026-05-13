@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-01-13",
-      "id": "easowl1",
-      "name": "Eastern Screech-Owl",
-      "subregion": "Virginia"
-    },
-    {
       "date": "2026-01-14",
       "id": "blujay",
       "name": "Blue Jay",
@@ -765,15 +759,15 @@
       "id": "varthr",
       "name": "Varied Thrush",
       "subregion": "California"
+    },
+    {
+      "date": "2026-05-13",
+      "id": "rocpig",
+      "name": "Rock Pigeon",
+      "subregion": "New Hampshire"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-01-13",
-      "id": "cangoo",
-      "name": "Canada Goose",
-      "subregion": "Virginia"
-    },
     {
       "date": "2026-01-14",
       "id": "comrav",
@@ -1533,6 +1527,12 @@
       "id": "shshaw",
       "name": "Sharp-shinned Hawk",
       "subregion": "North Dakota"
+    },
+    {
+      "date": "2026-05-13",
+      "id": "comyel",
+      "name": "Common Yellowthroat",
+      "subregion": "New Hampshire"
     }
   ]
 }
