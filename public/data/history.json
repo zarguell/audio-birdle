@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-01-14",
-      "id": "blujay",
-      "name": "Blue Jay",
-      "subregion": "Texas"
-    },
-    {
       "date": "2026-01-15",
       "id": "palwar",
       "name": "Palm Warbler",
@@ -765,15 +759,15 @@
       "id": "rocpig",
       "name": "Rock Pigeon",
       "subregion": "New Hampshire"
+    },
+    {
+      "date": "2026-05-14",
+      "id": "whbnut",
+      "name": "White-breasted Nuthatch",
+      "subregion": "Georgia"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-01-14",
-      "id": "comrav",
-      "name": "Common Raven",
-      "subregion": "Connecticut"
-    },
     {
       "date": "2026-01-15",
       "id": "coohaw",
@@ -1533,6 +1527,12 @@
       "id": "comyel",
       "name": "Common Yellowthroat",
       "subregion": "New Hampshire"
+    },
+    {
+      "date": "2026-05-14",
+      "id": "bknsti",
+      "name": "Black-necked Stilt",
+      "subregion": "Georgia"
     }
   ]
 }
