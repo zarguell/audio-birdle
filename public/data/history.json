@@ -1,41 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-01-15",
-      "id": "palwar",
-      "name": "Palm Warbler",
-      "subregion": "Delaware"
-    },
-    {
-      "date": "2026-01-15",
-      "id": "sumtan",
-      "name": "Summer Tanager",
-      "subregion": "Texas"
-    },
-    {
-      "date": "2026-01-15",
-      "id": "easpho",
-      "name": "Eastern Phoebe",
-      "subregion": "Delaware"
-    },
-    {
-      "date": "2026-01-15",
-      "id": "wlswar",
-      "name": "Wilson's Warbler",
-      "subregion": "Texas"
-    },
-    {
-      "date": "2026-01-15",
-      "id": "chirav",
-      "name": "Chihuahuan Raven"
-    },
-    {
-      "date": "2026-01-15",
-      "id": "blksco2",
-      "name": "Black Scoter",
-      "subregion": "Delaware"
-    },
-    {
       "date": "2026-01-16",
       "id": "mutswa",
       "name": "Mute Swan",
@@ -765,44 +730,15 @@
       "id": "whbnut",
       "name": "White-breasted Nuthatch",
       "subregion": "Georgia"
+    },
+    {
+      "date": "2026-05-15",
+      "id": "bkhgro",
+      "name": "Black-headed Grosbeak",
+      "subregion": "Oklahoma"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-01-15",
-      "id": "coohaw",
-      "name": "Cooper's Hawk",
-      "subregion": "Texas"
-    },
-    {
-      "date": "2026-01-15",
-      "id": "easowl1",
-      "name": "Eastern Screech-Owl",
-      "subregion": "Delaware"
-    },
-    {
-      "date": "2026-01-15",
-      "id": "comyel",
-      "name": "Common Yellowthroat",
-      "subregion": "Delaware"
-    },
-    {
-      "date": "2026-01-15",
-      "id": "bnhnut",
-      "name": "Brown-headed Nuthatch",
-      "subregion": "Texas"
-    },
-    {
-      "date": "2026-01-15",
-      "id": "barswa",
-      "name": "Barn Swallow"
-    },
-    {
-      "date": "2026-01-15",
-      "id": "motowl",
-      "name": "Mottled Owl",
-      "subregion": "Texas"
-    },
     {
       "date": "2026-01-16",
       "id": "grbher3",
@@ -1533,6 +1469,12 @@
       "id": "bknsti",
       "name": "Black-necked Stilt",
       "subregion": "Georgia"
+    },
+    {
+      "date": "2026-05-15",
+      "id": "yerwar",
+      "name": "Yellow-rumped Warbler",
+      "subregion": "Maine"
     }
   ]
 }
