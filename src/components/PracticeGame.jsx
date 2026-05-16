@@ -7,7 +7,7 @@ import {
   ArrowRight,
   Target,
 } from "lucide-react";
-import { createAudioControls, getAudioSrc } from "./AudioUtils";
+import { createAudioControls, getAudioSrc } from "../utils/AudioUtils";
 import {
   createInitialPracticeState,
   getPracticeBird,
@@ -15,12 +15,12 @@ import {
   processPracticeGuess,
   processHardPracticeGuess,
   startNewPracticeRound,
-} from "./PracticeGameLogic";
-import HardModeInput from "./HardModeInput";
-import TaxonomicBadge from "./TaxonomicBadge";
-import BirdCompletionCard from "./BirdCompletionCard";
-import { GAME_CONFIG } from "./Constants";
-import { extractGenus } from "./TaxonomyUtils";
+} from "../utils/PracticeGameLogic";
+import HardModeInput from "../utils/HardModeInput";
+import TaxonomicBadge from "../utils/TaxonomicBadge";
+import BirdCompletionCard from "../utils/BirdCompletionCard";
+import { GAME_CONFIG } from "../utils/Constants";
+import { extractGenus } from "../utils/TaxonomyUtils";
 
 export default function PracticeGame({ region, birds, regions, onBack }) {
   const [practiceState, setPracticeState] = useState(null);

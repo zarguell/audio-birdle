@@ -1,7 +1,7 @@
 import { getTodayString } from "./utils/DateUtils";
 import { VIEWS } from "./utils/Constants";
-import PracticeGame from "./utils/PracticeGame";
-import HardModeGame from "./utils/HardModeGame";
+import PracticeGame from "./components/PracticeGame";
+import HardModeGame from "./components/HardModeGame";
 import RegionSelector from "./components/RegionSelector";
 import ModeSelector from "./components/ModeSelector";
 import StatsView from "./components/StatsView";

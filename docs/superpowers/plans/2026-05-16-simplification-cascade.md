@@ -2273,7 +2273,7 @@ Input/feedback rendered conditionally based on isHardMode flag."
 
 Remove these functions (they're no longer needed after store unification):
 - `migrateGameState` (lines 71-126)
-- `ensureGameStateFormat` (lines 133-146)  
+- `ensureGameStateFormat` (lines 133-146)
 - `needsMigration` (lines 53-64)
 - `updateUserStats` (if present — the exploration noted it's "not actively used")
 - `createInitialGameState` (lines 25-46 — was the old non-store initial state)
@@ -2409,7 +2409,7 @@ In `src/hooks/useGameData.js`, the same 12-line block that loads today's bird ap
 // Add this helper before the hook function:
 const loadAndSetBird = async (initialRegion, newBirds, today, setTodaysBird, setDataConsistencyError, setLoadingBird) => {
   if (!initialRegion || !newBirds[initialRegion]) return;
-  
+
   setLoadingBird(true);
   const result = await getDailyBirdWithFallback(initialRegion, newBirds[initialRegion], today);
   if (result.success && result.bird) {

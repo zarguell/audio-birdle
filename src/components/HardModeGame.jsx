@@ -5,15 +5,15 @@
 
 import { useState, useRef, useMemo, useEffect } from "react";
 import { ArrowLeft, Share2, Volume2, RefreshCw } from "lucide-react";
-import HardModeInput from "./HardModeInput";
-import TaxonomicBadge from "./TaxonomicBadge";
-import BirdCompletionCard from "./BirdCompletionCard";
-import { createAudioControls, getAudioSrc } from "./AudioUtils";
-import { GAME_CONFIG } from "./Constants";
-import { extractGenus, compareTaxonomy } from "./TaxonomyUtils";
-import { getTodayString } from "./DateUtils";
-import { generateHardModeShareText, shareResult } from "./ShareUtils";
-import { SubregionDisplay } from "./SubregionUtils";
+import HardModeInput from "../utils/HardModeInput";
+import TaxonomicBadge from "../utils/TaxonomicBadge";
+import BirdCompletionCard from "../utils/BirdCompletionCard";
+import { createAudioControls, getAudioSrc } from "../utils/AudioUtils";
+import { GAME_CONFIG } from "../utils/Constants";
+import { extractGenus, compareTaxonomy } from "../utils/TaxonomyUtils";
+import { getTodayString } from "../utils/DateUtils";
+import { generateHardModeShareText, shareResult } from "../utils/ShareUtils";
+import { SubregionDisplay } from "../utils/SubregionUtils";
 import { useGameStore } from "../stores/gameStore";
 
 export default function HardModeGame({
