@@ -1,29 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-01-16",
-      "id": "mutswa",
-      "name": "Mute Swan",
-      "subregion": "South Carolina"
-    },
-    {
-      "date": "2026-01-16",
-      "id": "kineid",
-      "name": "King Eider"
-    },
-    {
-      "date": "2026-01-16",
-      "id": "sonspa",
-      "name": "Song Sparrow",
-      "subregion": "Colorado"
-    },
-    {
-      "date": "2026-01-16",
-      "id": "rolhaw",
-      "name": "Rough-legged Hawk",
-      "subregion": "Colorado"
-    },
-    {
       "date": "2026-01-17",
       "id": "dowwoo",
       "name": "Downy Woodpecker",
@@ -736,32 +713,15 @@
       "id": "bkhgro",
       "name": "Black-headed Grosbeak",
       "subregion": "Oklahoma"
+    },
+    {
+      "date": "2026-05-16",
+      "id": "glwgul",
+      "name": "Glaucous-winged Gull",
+      "subregion": "Washington"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-01-16",
-      "id": "grbher3",
-      "name": "Great Blue Heron",
-      "subregion": "Colorado"
-    },
-    {
-      "date": "2026-01-16",
-      "id": "lotduc",
-      "name": "Long-tailed Duck"
-    },
-    {
-      "date": "2026-01-16",
-      "id": "graspa",
-      "name": "Grasshopper Sparrow",
-      "subregion": "South Carolina"
-    },
-    {
-      "date": "2026-01-16",
-      "id": "lewwoo",
-      "name": "Lewis's Woodpecker",
-      "subregion": "Colorado"
-    },
     {
       "date": "2026-01-17",
       "id": "rehwoo",
@@ -1475,6 +1435,12 @@
       "id": "yerwar",
       "name": "Yellow-rumped Warbler",
       "subregion": "Maine"
+    },
+    {
+      "date": "2026-05-16",
+      "id": "baleag",
+      "name": "Bald Eagle",
+      "subregion": "Washington"
     }
   ]
 }
