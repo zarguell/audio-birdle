@@ -1,14 +1,11 @@
 import { describe, it, expect, beforeEach } from 'vitest'
 import {
-  createInitialGameState,
-  createInitialDailyGameState,
   getDailyGameState,
   hasPlayedRegionDate,
   processGuess,
   getDailyBird,
   generateAnswerOptions,
   getUserPerformanceSummary,
-  ensureGameStateFormat,
   createRegionDateKey,
   createInitialHardModeGameState,
   getHardModeGameState,
@@ -19,26 +16,38 @@ import {
 } from '@/utils/GameLogic'
 import { sampleBirds } from '../fixtures/sampleBirds'
 import { useGameStore } from '@/stores/gameStore'
+import { GAME_CONFIG } from '@/utils/Constants'
+
+const createInitialGameState = () => ({
+  dailyGames: {},
+  stats: {
+    totalGamesPlayed: 0,
+    totalGamesWon: 0,
+    averageGuesses: 0,
+    currentStreak: 0,
+    maxStreak: 0,
+    regionStats: {},
+  },
+  lastPlayed: { region: null, date: null },
+  version: 2,
+})
+
+const createInitialDailyGameState = (region, date) => ({
+  region,
+  date,
+  mode: "normal",
+  guesses: [],
+  completed: false,
+  won: false,
+  maxGuesses: GAME_CONFIG.MAX_GUESSES,
+  startTime: new Date().toISOString(),
+  endTime: null,
+  birdId: null,
+})
 
 describe('GameLogic', () => {
   beforeEach(() => {
     useGameStore.getState().reset()
-  })
-
-  describe('createInitialGameState', () => {
-    it('should create initial game state structure', () => {
-      const state = createInitialGameState()
-
-      expect(state).toHaveProperty('dailyGames', {})
-      expect(state).toHaveProperty('stats')
-      expect(state).toHaveProperty('lastPlayed')
-      expect(state).toHaveProperty('version', 2)
-      expect(state.stats).toHaveProperty('totalGamesPlayed', 0)
-      expect(state.stats).toHaveProperty('totalGamesWon', 0)
-      expect(state.stats).toHaveProperty('currentStreak', 0)
-      expect(state.stats).toHaveProperty('maxStreak', 0)
-      expect(state.stats).toHaveProperty('regionStats', {})
-    })
   })
 
   describe('createRegionDateKey', () => {
@@ -50,21 +59,6 @@ describe('GameLogic', () => {
       expect(key1).toBe('us-2025-12-27')
       expect(key1).not.toBe(key2)
       expect(key1).not.toBe(key3)
-    })
-  })
-
-  describe('createInitialDailyGameState', () => {
-    it('should create initial daily game state', () => {
-      const state = createInitialDailyGameState('us', '2025-12-27')
-
-      expect(state.region).toBe('us')
-      expect(state.date).toBe('2025-12-27')
-      expect(state.guesses).toEqual([])
-      expect(state.completed).toBe(false)
-      expect(state.won).toBe(false)
-      expect(state.maxGuesses).toBe(4)  // MAX_GUESSES from Constants
-      expect(state.startTime).toBeDefined()
-      expect(state.endTime).toBeNull()
     })
   })
 
@@ -309,52 +303,6 @@ describe('GameLogic', () => {
       expect(summary.regionBreakdown).toHaveLength(1)
       expect(summary.regionBreakdown[0].region).toBe('us')
       expect(summary.regionBreakdown[0].games).toBe(1)
-    })
-  })
-
-  describe('ensureGameStateFormat', () => {
-    it('should migrate old state format', () => {
-      const oldState = {
-        guesses: [{ birdId: 'amerob', correct: true }],
-        completed: true,
-        won: true
-      }
-
-      const newState = ensureGameStateFormat(oldState)
-
-      expect(newState.version).toBe(2)
-      expect(newState.dailyGames).toBeDefined()
-      expect(newState.stats).toBeDefined()
-    })
-
-    it('should return current format as-is', () => {
-      const currentState = createInitialGameState()
-      const result = ensureGameStateFormat(currentState)
-
-      expect(result.version).toBe(2)
-    })
-
-    it('should create new state for null input', () => {
-      const result = ensureGameStateFormat(null)
-
-      expect(result.version).toBe(2)
-      expect(result.dailyGames).toBeDefined()
-    })
-
-    it('should preserve existing stats during migration', () => {
-      const oldState = {
-        version: 1,
-        stats: {
-          totalGamesPlayed: 5,
-          totalGamesWon: 3
-        }
-      }
-
-      const newState = ensureGameStateFormat(oldState)
-
-      expect(newState.stats.totalGamesPlayed).toBe(5)
-      expect(newState.stats.totalGamesWon).toBe(3)
-      expect(newState.version).toBe(2)
     })
   })
 

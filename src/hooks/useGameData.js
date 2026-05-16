@@ -86,6 +86,20 @@ export function useGameData(initialRegion = null) {
     }
   }, [initialRegion, birds, today, loadTodaysBird]);
 
+  const loadAndSetBird = async (newBirds) => {
+    if (!initialRegion || !newBirds[initialRegion]) return;
+    setLoadingBird(true);
+    const result = await getDailyBirdWithFallback(initialRegion, newBirds[initialRegion], today);
+    if (result.success && result.bird) {
+      setTodaysBird(result.bird);
+      setDataConsistencyError(null);
+    } else {
+      setTodaysBird(null);
+      setDataConsistencyError(result.message || "Failed to load daily challenge");
+    }
+    setLoadingBird(false);
+  };
+
   // Auto refresh
   const handleAutoRefresh = useCallback(async () => {
     if (!initialRegion) return;
@@ -96,22 +110,7 @@ export function useGameData(initialRegion = null) {
       setRegions(newRegions);
       setBirds(newBirds);
 
-      if (initialRegion && newBirds[initialRegion]) {
-        setLoadingBird(true);
-        const result = await getDailyBirdWithFallback(
-          initialRegion,
-          newBirds[initialRegion],
-          today,
-        );
-        if (result.success && result.bird) {
-          setTodaysBird(result.bird);
-          setDataConsistencyError(null);
-        } else {
-          setTodaysBird(null);
-          setDataConsistencyError(result.message);
-        }
-        setLoadingBird(false);
-      }
+      await loadAndSetBird(newBirds);
     } catch (error) {
       console.error("Auto-refresh failed:", error);
     }
@@ -151,22 +150,7 @@ export function useGameData(initialRegion = null) {
       setRegions(newRegions);
       setBirds(newBirds);
 
-      if (initialRegion && newBirds[initialRegion]) {
-        setLoadingBird(true);
-        const result = await getDailyBirdWithFallback(
-          initialRegion,
-          newBirds[initialRegion],
-          today,
-        );
-        if (result.success && result.bird) {
-          setTodaysBird(result.bird);
-          setDataConsistencyError(null);
-        } else {
-          setTodaysBird(null);
-          setDataConsistencyError(result.message);
-        }
-        setLoadingBird(false);
-      }
+      await loadAndSetBird(newBirds);
     } catch (error) {
       console.error("Force refresh failed:", error);
     }
@@ -187,22 +171,7 @@ export function useGameData(initialRegion = null) {
       setRegions(newRegions);
       setBirds(newBirds);
 
-      if (initialRegion && newBirds[initialRegion]) {
-        setLoadingBird(true);
-        const result = await getDailyBirdWithFallback(
-          initialRegion,
-          newBirds[initialRegion],
-          today,
-        );
-        if (result.success && result.bird) {
-          setTodaysBird(result.bird);
-          setDataConsistencyError(null);
-        } else {
-          setTodaysBird(null);
-          setDataConsistencyError(result.message);
-        }
-        setLoadingBird(false);
-      }
+      await loadAndSetBird(newBirds);
 
       setHasUpdate(false);
       if (!dataConsistencyError) {

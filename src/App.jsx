@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { getTodayString } from "./utils/DateUtils";
 import { VIEWS } from "./utils/Constants";
 import RegionSelector from "./components/RegionSelector";
@@ -7,7 +8,6 @@ import SettingsView from "./components/SettingsView";
 import GameView from "./components/GameView";
 import { useGameData } from "./hooks/useGameData";
 import { usePersistence } from "./hooks/usePersistence";
-import { useGameNavigation } from "./hooks/useGameNavigation";
 
 import { useGameStore } from "./stores/gameStore";
 
@@ -46,7 +46,7 @@ export default function AudioBirdle() {
 
   const stats = useGameStore((state) => state.stats);
 
-  const { currentView, setCurrentView } = useGameNavigation();
+  const [currentView, setCurrentView] = useState(VIEWS.MODE_SELECTOR);
 
   const gameModes = [
     {

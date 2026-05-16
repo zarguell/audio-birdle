@@ -11,108 +11,6 @@ export const createRegionDateKey = (region, date) => {
   return `${region}-${date}`;
 };
 
-export const createInitialGameState = () => {
-  return {
-    dailyGames: {},
-    stats: {
-      totalGamesPlayed: 0,
-      totalGamesWon: 0,
-      averageGuesses: 0,
-      currentStreak: 0,
-      maxStreak: 0,
-      regionStats: {},
-    },
-    lastPlayed: {
-      region: null,
-      date: null,
-    },
-    version: 2,
-  };
-};
-
-const needsMigration = (gameState) => {
-  if (!gameState.version) return true;
-  if (gameState.version < 2) return true;
-  if (!gameState.dailyGames) return true;
-  return false;
-};
-
-const migrateGameState = (oldGameState) => {
-  console.log("Migrating old game state format to new format");
-
-  const newGameState = createInitialGameState();
-
-  if (oldGameState && typeof oldGameState === "object") {
-    if (oldGameState.stats) {
-      newGameState.stats = {
-        ...newGameState.stats,
-        ...oldGameState.stats,
-      };
-
-      if (!newGameState.stats.regionStats) {
-        newGameState.stats.regionStats = {};
-      }
-    }
-
-    if (oldGameState.guesses || oldGameState.completed !== undefined) {
-      const today = new Date().toISOString().split("T")[0];
-      const defaultRegion = "us";
-
-      const migratedGame = createInitialDailyGameState(defaultRegion, today);
-      migratedGame.guesses = oldGameState.guesses || [];
-      migratedGame.completed = oldGameState.completed || false;
-      migratedGame.won = oldGameState.won || false;
-      migratedGame.startTime =
-        oldGameState.startTime || new Date().toISOString();
-      migratedGame.endTime = oldGameState.endTime || null;
-      migratedGame.birdId = oldGameState.birdId || null;
-
-      const key = createRegionDateKey(defaultRegion, today);
-      newGameState.dailyGames[key] = migratedGame;
-
-      newGameState.lastPlayed = {
-        region: defaultRegion,
-        date: today,
-      };
-    }
-
-    if (oldGameState.lastPlayed) {
-      newGameState.lastPlayed = {
-        ...newGameState.lastPlayed,
-        ...oldGameState.lastPlayed,
-      };
-    }
-  }
-
-  return newGameState;
-};
-
-export const ensureGameStateFormat = (gameState) => {
-  if (!gameState) {
-    return createInitialGameState();
-  }
-
-  if (needsMigration(gameState)) {
-    return migrateGameState(gameState);
-  }
-
-  return gameState;
-};
-
-export const createInitialDailyGameState = (region, date) => {
-  return {
-    region,
-    date,
-    mode: 'normal',
-    guesses: [],
-    completed: false,
-    won: false,
-    maxGuesses: GAME_CONFIG.MAX_GUESSES,
-    startTime: new Date().toISOString(),
-    endTime: null,
-    birdId: null,
-  };
-};
 
 export const getDailyGameState = (gameState, region, date) => {
   const key = `${region}-${date}-normal`;
@@ -144,8 +42,7 @@ export const hasPlayedRegionDate = (gameState, region, date) => {
     return true;
   }
 
-  const validGameState = ensureGameStateFormat(gameState);
-  return validGameState.dailyGames[key]?.guesses.length > 0;
+  return gameState?.dailyGames?.[key]?.guesses?.length > 0;
 };
 
 export const processGuess = (
@@ -192,46 +89,6 @@ export const processGuess = (
   };
 };
 
-/* eslint-disable no-unused-vars */
-const updateUserStats = (gameState, region, dailyGame) => {
-  const stats = gameState.stats;
-
-  stats.totalGamesPlayed++;
-  if (dailyGame.won) {
-    stats.totalGamesWon++;
-  }
-
-  const totalGuesses = Object.values(gameState.dailyGames)
-    .filter((game) => game.completed)
-    .reduce((sum, game) => sum + game.guesses.length, 0);
-  stats.averageGuesses = totalGuesses / stats.totalGamesPlayed;
-
-  if (dailyGame.won) {
-    stats.currentStreak++;
-    stats.maxStreak = Math.max(stats.maxStreak, stats.currentStreak);
-  } else {
-    stats.currentStreak = 0;
-  }
-
-  if (!stats.regionStats[region]) {
-    stats.regionStats[region] = {
-      gamesPlayed: 0,
-      gamesWon: 0,
-      averageGuesses: 0,
-    };
-  }
-
-  const regionStats = stats.regionStats[region];
-  regionStats.gamesPlayed++;
-  if (dailyGame.won) {
-    regionStats.gamesWon++;
-  }
-
-  const regionTotalGuesses = Object.values(gameState.dailyGames)
-    .filter((game) => game.completed && game.region === region)
-    .reduce((sum, game) => sum + game.guesses.length, 0);
-  regionStats.averageGuesses = regionTotalGuesses / regionStats.gamesPlayed;
-};
 
 export const getDailyBird = (region, birds, date) => {
   if (!birds || birds.length === 0) return null;
@@ -432,8 +289,7 @@ export const hasCompletedNormalMode = (gameState, region, date) => {
     return true;
   }
 
-  const validGameState = ensureGameStateFormat(gameState);
-  return validGameState.dailyGames[key]?.completed === true;
+  return gameState?.dailyGames?.[key]?.completed === true;
 };
 
 export const hasCompletedHardMode = (gameState, region, date) => {

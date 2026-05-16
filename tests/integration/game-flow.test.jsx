@@ -9,8 +9,8 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import {
   processGuess,
-  ensureGameStateFormat,
   getUserPerformanceSummary,
+  createRegionDateKey,
 } from "@/utils/GameLogic";
 import { getStorage, setStorage } from "@/utils/StorageUtils";
 import { useGameStore } from "@/stores/gameStore";
@@ -133,56 +133,7 @@ describe("Game Flow Integration Tests", () => {
     });
   });
 
-  describe("State Persistence and Migration", () => {
-    it("should migrate v1 state to v2 format", () => {
-      // Create a v1 state (old format)
-      const v1State = {
-        currentRegion: "us",
-        gameState: {
-          guesses: [],
-          completed: false,
-          won: false,
-        },
-        stats: {
-          played: 10,
-          won: 5,
-        },
-      };
-
-      mockLocalStorage.storage["game-state"] = JSON.stringify(v1State);
-
-      // Load and migrate
-      const loadedData = getStorage("game-state");
-      const migratedState = ensureGameStateFormat(loadedData);
-
-      expect(migratedState.version).toBe(2);
-      expect(migratedState.dailyGames).toBeDefined();
-      expect(migratedState.stats).toBeDefined();
-    });
-
-    it("should preserve data during migration", () => {
-      const v1State = {
-        currentRegion: "eu",
-        gameState: {
-          guesses: [{ birdId: "test", correct: true, timestamp: Date.now() }],
-          completed: true,
-          won: true,
-        },
-        stats: {
-          played: 20,
-          won: 15,
-        },
-      };
-
-      mockLocalStorage.storage["game-state"] = JSON.stringify(v1State);
-
-      const loadedData = getStorage("game-state");
-      const migratedState = ensureGameStateFormat(loadedData);
-
-      expect(migratedState.version).toBe(2);
-      expect(migratedState.stats.totalGamesPlayed).toBeDefined();
-    });
-
+  describe("State Persistence", () => {
     it("should save and load state correctly", () => {
       const testState = {
         version: 2,
@@ -296,10 +247,8 @@ describe("Game Flow Integration Tests", () => {
       const loadedData = getStorage("game-state", null);
       expect(loadedData).toBeNull();
 
-      // Should create fresh state
-      const freshState = ensureGameStateFormat(null);
-      expect(freshState.version).toBe(2);
-      expect(freshState.dailyGames).toEqual({});
+      // Should handle null gracefully
+      expect(loadedData).toBeNull();
     });
 
     it("should handle missing localStorage keys", () => {
