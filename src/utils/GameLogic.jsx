@@ -1,99 +1,62 @@
 // Updated GameLogic.js with deterministic answer generation
-// Now delegates to Zustand stores for state management while maintaining backward compatibility
+// Now delegates to unified Zustand store for all state management
 
 import { getTodaysBirdFromDaily } from "./DailyBirdUtils";
-import { hashString, createSeededRandom, deterministicShuffle } from "./HashUtils";
+import { hashString, deterministicShuffle } from "./HashUtils";
 import { GAME_CONFIG } from "./Constants";
 import { compareTaxonomy } from "./TaxonomyUtils";
-import { useNormalGameStore } from "../stores/normalGameStore";
-import { useHardModeStore } from "../stores/hardModeStore";
+import { useGameStore } from "../stores/gameStore";
 
-/**
- * Create a unique key for a region-date combination
- * @param {string} region - Region identifier
- * @param {string} date - Date string (YYYY-MM-DD)
- * @returns {string} - Unique key for this region-date combination
- */
 export const createRegionDateKey = (region, date) => {
   return `${region}-${date}`;
 };
 
-/**
- * Create initial game state structure that supports multiple regions and dates
- * @returns {Object} - Initial game state structure
- */
 export const createInitialGameState = () => {
   return {
-    // Daily games organized by region-date keys
     dailyGames: {},
-    // Historical stats for the user
     stats: {
       totalGamesPlayed: 0,
       totalGamesWon: 0,
       averageGuesses: 0,
       currentStreak: 0,
       maxStreak: 0,
-      regionStats: {}, // Stats broken down by region
+      regionStats: {},
     },
-    // Last played info for quick reference
     lastPlayed: {
       region: null,
       date: null,
     },
-    // Version for future migrations
     version: 2,
   };
 };
 
-/**
- * Detect if game state is using old format and needs migration
- * @param {Object} gameState - Game state to check
- * @returns {boolean} - True if state needs migration
- */
 const needsMigration = (gameState) => {
-  // If no version field, it's definitely old
   if (!gameState.version) return true;
-
-  // If version is less than current, needs migration
   if (gameState.version < 2) return true;
-
-  // If dailyGames doesn't exist, it's old format
   if (!gameState.dailyGames) return true;
-
   return false;
 };
 
-/**
- * Migrate old game state format to new format
- * @param {Object} oldGameState - Old format game state
- * @returns {Object} - Migrated game state
- */
 const migrateGameState = (oldGameState) => {
   console.log("Migrating old game state format to new format");
 
   const newGameState = createInitialGameState();
 
-  // If old state exists and has some structure, try to preserve what we can
   if (oldGameState && typeof oldGameState === "object") {
-    // Preserve existing stats if they exist
     if (oldGameState.stats) {
       newGameState.stats = {
         ...newGameState.stats,
         ...oldGameState.stats,
       };
 
-      // Ensure regionStats exists
       if (!newGameState.stats.regionStats) {
         newGameState.stats.regionStats = {};
       }
     }
 
-    // Try to migrate old daily game data if it exists
-    // This handles various old formats that might exist
     if (oldGameState.guesses || oldGameState.completed !== undefined) {
-      // Old format had game data at root level
       const today = new Date().toISOString().split("T")[0];
-      const defaultRegion = "us"; // Assume US region for old games
+      const defaultRegion = "us";
 
       const migratedGame = createInitialDailyGameState(defaultRegion, today);
       migratedGame.guesses = oldGameState.guesses || [];
@@ -113,7 +76,6 @@ const migrateGameState = (oldGameState) => {
       };
     }
 
-    // Preserve any other fields that might be useful
     if (oldGameState.lastPlayed) {
       newGameState.lastPlayed = {
         ...newGameState.lastPlayed,
@@ -125,108 +87,67 @@ const migrateGameState = (oldGameState) => {
   return newGameState;
 };
 
-/**
- * Ensure game state is in the correct format, migrating if necessary
- * @param {Object} gameState - Game state to validate/migrate
- * @returns {Object} - Valid game state in current format
- */
 export const ensureGameStateFormat = (gameState) => {
-  // If no game state at all, create fresh
   if (!gameState) {
     return createInitialGameState();
   }
 
-  // If needs migration, migrate it
   if (needsMigration(gameState)) {
     return migrateGameState(gameState);
   }
 
-  // State is current format, return as-is
   return gameState;
 };
 
-/**
- * Create initial state for a specific region-date combination
- * @param {string} region - Region identifier
- * @param {string} date - Date string (YYYY-MM-DD)
- * @returns {Object} - Initial daily game state
- */
 export const createInitialDailyGameState = (region, date) => {
   return {
     region,
     date,
+    mode: 'normal',
     guesses: [],
     completed: false,
     won: false,
     maxGuesses: GAME_CONFIG.MAX_GUESSES,
     startTime: new Date().toISOString(),
     endTime: null,
-    birdId: null, // Will be set when the daily bird is determined
+    birdId: null,
   };
 };
 
-/**
- * Get the current daily game state for a specific region-date
- * Now delegates to Zustand store while maintaining backward compatibility
- * @param {Object} gameState - Main game state object (kept for backward compatibility, not used)
- * @param {string} region - Region identifier
- * @param {string} date - Date string (YYYY-MM-DD)
- * @returns {Object} - Daily game state for this region-date
- */
 export const getDailyGameState = (gameState, region, date) => {
-  const key = createRegionDateKey(region, date);
-  const storeGame = useNormalGameStore.getState().getDailyGame(key);
+  const key = `${region}-${date}-normal`;
+  const storeGame = useGameStore.getState().getDailyGame(key);
 
   if (storeGame) {
     return storeGame;
   }
 
-  // Create initial game state if not exists
   const initialGame = {
     region,
     date,
+    mode: 'normal',
     guesses: [],
     completed: false,
     won: false,
     maxGuesses: GAME_CONFIG.MAX_GUESSES,
   };
 
-  useNormalGameStore.getState().setDailyGame(key, initialGame);
+  useGameStore.getState().setDailyGame(key, initialGame);
   return initialGame;
 };
 
-/**
- * Check if user has played a specific region-date combination
- * Now delegates to Zustand store while maintaining backward compatibility
- * @param {Object} gameState - Main game state object (for backward compatibility)
- * @param {string} region - Region identifier
- * @param {string} date - Date string (YYYY-MM-DD)
- * @returns {boolean} - True if user has played this combination
- */
 export const hasPlayedRegionDate = (gameState, region, date) => {
-  const key = createRegionDateKey(region, date);
+  const key = `${region}-${date}-normal`;
 
-  // Check both store and provided state for backward compatibility
-  const storeGame = useNormalGameStore.getState().getDailyGame(key);
+  const storeGame = useGameStore.getState().getDailyGame(key);
   if (storeGame && storeGame.guesses.length > 0) {
     return true;
   }
 
-  // Fall back to provided state (for tests)
   const validGameState = ensureGameStateFormat(gameState);
   return validGameState.dailyGames[key]?.guesses.length > 0;
 };
 
-/**
- * Process a guess for the current daily game
- * Now delegates to Zustand store while maintaining backward compatibility
- * @param {Object} gameState - Main game state object (for backward compatibility, synced to store)
- * @param {string} region - Region identifier
- * @param {string} date - Date string (YYYY-MM-DD)
- * @param {string} guessedBirdId - ID of the guessed bird
- * @param {string} correctBirdId - ID of the correct bird
- * @returns {Object} - Updated game state object (for backward compatibility with tests)
- */
 export const processGuess = (
   gameState,
   region,
@@ -234,31 +155,35 @@ export const processGuess = (
   guessedBirdId,
   correctBirdId,
 ) => {
-  const key = createRegionDateKey(region, date);
+  const key = `${region}-${date}-normal`;
   const isCorrect = guessedBirdId === correctBirdId;
 
-  // For backward compatibility with tests, sync provided state to store first
   if (gameState && gameState.dailyGames && gameState.dailyGames[key]) {
-    useNormalGameStore.getState().setDailyGame(key, gameState.dailyGames[key]);
+    useGameStore.getState().setDailyGame(key, gameState.dailyGames[key]);
   } else {
-    // Check if game exists in store, if not initialize it
-    const existingGame = useNormalGameStore.getState().getDailyGame(key);
+    const existingGame = useGameStore.getState().getDailyGame(key);
     if (!existingGame) {
-      const initialGame = createInitialDailyGameState(region, date);
-      useNormalGameStore.getState().setDailyGame(key, initialGame);
+      const initialGame = {
+        region,
+        date,
+        mode: 'normal',
+        guesses: [],
+        completed: false,
+        won: false,
+        maxGuesses: GAME_CONFIG.MAX_GUESSES,
+      };
+      useGameStore.getState().setDailyGame(key, initialGame);
     }
   }
 
-  // Use store's processGuess action
-  useNormalGameStore.getState().processGuess(key, {
+  useGameStore.getState().processGuess(key, {
     birdId: guessedBirdId,
     correct: isCorrect,
     timestamp: Date.now(),
   });
 
-  // Return complete state object for backward compatibility
-  const allDailyGames = useNormalGameStore.getState().dailyGames;
-  const storeStats = useNormalGameStore.getState().stats;
+  const allDailyGames = useGameStore.getState().dailyGames;
+  const storeStats = useGameStore.getState().stats;
 
   return {
     dailyGames: allDailyGames,
@@ -267,31 +192,20 @@ export const processGuess = (
   };
 };
 
-/**
- * Update user statistics after completing a daily game
- * Note: This function is kept for backward compatibility but not actively used.
- * Stats are now updated directly in Zustand store actions.
- * @param {Object} gameState - Main game state object
- * @param {string} region - Region identifier
- * @param {Object} dailyGame - Completed daily game state
- */
-/* eslint-disable no-unused-vars -- Function kept for backward compatibility with tests */
+/* eslint-disable no-unused-vars */
 const updateUserStats = (gameState, region, dailyGame) => {
   const stats = gameState.stats;
 
-  // Update overall stats
   stats.totalGamesPlayed++;
   if (dailyGame.won) {
     stats.totalGamesWon++;
   }
 
-  // Update average guesses
   const totalGuesses = Object.values(gameState.dailyGames)
     .filter((game) => game.completed)
     .reduce((sum, game) => sum + game.guesses.length, 0);
   stats.averageGuesses = totalGuesses / stats.totalGamesPlayed;
 
-  // Update streaks (simplified - you might want more complex logic)
   if (dailyGame.won) {
     stats.currentStreak++;
     stats.maxStreak = Math.max(stats.maxStreak, stats.currentStreak);
@@ -299,7 +213,6 @@ const updateUserStats = (gameState, region, dailyGame) => {
     stats.currentStreak = 0;
   }
 
-  // Update region-specific stats
   if (!stats.regionStats[region]) {
     stats.regionStats[region] = {
       gamesPlayed: 0,
@@ -314,58 +227,28 @@ const updateUserStats = (gameState, region, dailyGame) => {
     regionStats.gamesWon++;
   }
 
-  // Calculate region-specific average
   const regionTotalGuesses = Object.values(gameState.dailyGames)
     .filter((game) => game.completed && game.region === region)
     .reduce((sum, game) => sum + game.guesses.length, 0);
   regionStats.averageGuesses = regionTotalGuesses / regionStats.gamesPlayed;
 };
 
-/**
- * Get today's bird with region-date awareness
- * @param {string} region - Region identifier
- * @param {Array} birds - Array of birds for the region
- * @param {string} date - Date string (YYYY-MM-DD)
- * @returns {Object|null} - Today's bird or null
- */
 export const getDailyBird = (region, birds, date) => {
-  // This is a fallback synchronous method if the async version fails
-  // You might want to implement a hash-based selection here as fallback
   if (!birds || birds.length === 0) return null;
 
-  // Simple hash-based selection as fallback
   const hash = hashString(`${region}-${date}`);
   const seed = parseInt(hash, 16);
   const index = Math.abs(seed) % birds.length;
   return birds[index];
 };
 
-/**
- * Result object for daily bird lookup
- * @typedef {Object} DailyBirdResult
- * @property {Object|null} bird - The bird object if found
- * @property {boolean} success - Whether lookup succeeded
- * @property {string|null} error - Error type if failed: 'fetch_failed', 'hash_not_found', 'no_entry'
- * @property {string|null} message - Human-readable error message
- */
-
-/**
- * Get today's bird - NO FALLBACK to ensure all players get the same bird
- * Returns a result object with error details if lookup fails
- * @param {string} region - Region identifier
- * @param {Array} birds - Array of birds for the region
- * @param {string} date - Date string (YYYY-MM-DD)
- * @returns {Promise<DailyBirdResult>} - Promise resolving to result object
- */
 export const getDailyBirdWithFallback = async (region, birds, date) => {
   try {
-    // Try to get from daily.json - this is the ONLY source of truth
     const bird = await getTodaysBirdFromDaily(region, birds, date);
     if (bird) {
       return { bird, success: true, error: null, message: null };
     }
 
-    // No fallback - return error so UI can handle appropriately
     console.error(
       `Daily bird lookup failed for ${region} on ${date} - no matching bird found`,
     );
@@ -386,17 +269,6 @@ export const getDailyBirdWithFallback = async (region, birds, date) => {
   }
 };
 
-
-
-/**
- * Generate deterministic answer options for the daily game
- * @param {string} region - Region identifier
- * @param {Object} birds - Birds data object
- * @param {string} date - Date string
- * @param {Object} correctBird - The correct bird for today
- * @param {number} optionCount - Number of options to generate
- * @returns {Array} - Array of bird options including the correct answer
- */
 export const generateAnswerOptions = (
   region,
   birds,
@@ -408,15 +280,12 @@ export const generateAnswerOptions = (
 
   const regionBirds = birds[region];
 
-  // Create a seed based on region, date, and correct bird ID for deterministic selection
   const seed = hashString(`${region}-${date}-${correctBird.id}-options`);
 
-  // Get birds that aren't the correct answer
   const availableBirds = regionBirds.filter(
     (bird) => bird.id !== correctBird.id,
   );
 
-  // First, try to get birds from the same family as the correct bird
   const sameFamilyBirds = availableBirds.filter(
     (bird) => bird.family === correctBird.family,
   );
@@ -424,33 +293,25 @@ export const generateAnswerOptions = (
   let selectedWrongBirds;
 
   if (sameFamilyBirds.length >= optionCount - 1) {
-    // We have enough birds from the same family
     const shuffledSameFamily = deterministicShuffle(sameFamilyBirds, seed);
     selectedWrongBirds = shuffledSameFamily.slice(0, optionCount - 1);
   } else {
-    // Not enough birds from same family, use all available same-family birds
-    // and fill the rest from the entire available list
     const shuffledSameFamily = deterministicShuffle(sameFamilyBirds, seed);
     selectedWrongBirds = [...shuffledSameFamily];
 
-    // Get remaining birds (excluding same family birds and correct bird)
     const remainingBirds = availableBirds.filter(
       (bird) => bird.family !== correctBird.family,
     );
     const shuffledRemaining = deterministicShuffle(remainingBirds, seed);
 
-    // Add birds from other families to reach the desired count
     const stillNeeded = optionCount - 1 - selectedWrongBirds.length;
     for (let i = 0; i < Math.min(stillNeeded, shuffledRemaining.length); i++) {
       selectedWrongBirds.push(shuffledRemaining[i]);
     }
   }
 
-  // Combine correct answer with wrong answers
   const allOptions = [correctBird, ...selectedWrongBirds];
 
-  // Shuffle all options deterministically so correct answer position is consistent
-  // Use a different seed component for final shuffle to avoid patterns
   const finalSeed = hashString(`${region}-${date}-${correctBird.id}-final`);
   const finalOptions = deterministicShuffle(allOptions, finalSeed);
 
@@ -461,12 +322,6 @@ export const generateAnswerOptions = (
 // HARD MODE FUNCTIONS
 // ============================================================================
 
-/**
- * Create initial hard mode game state
- * @param {string} region - Region identifier
- * @param {string} date - Date string (YYYY-MM-DD)
- * @returns {Object} - Initial hard mode game state
- */
 export const createInitialHardModeGameState = (region, date) => {
   return {
     region,
@@ -482,23 +337,14 @@ export const createInitialHardModeGameState = (region, date) => {
   };
 };
 
-/**
- * Get hard mode game state for a specific region-date
- * Now delegates to Zustand store while maintaining backward compatibility
- * @param {Object} gameState - Main game state object (kept for backward compatibility, not used)
- * @param {string} region - Region identifier
- * @param {string} date - Date string (YYYY-MM-DD)
- * @returns {Object} - Hard mode game state for this region-date
- */
 export const getHardModeGameState = (gameState, region, date) => {
-  const key = createRegionDateKey(region, date);
-  const storeGame = useHardModeStore.getState().getHardModeGame(key);
+  const key = `${region}-${date}-hard`;
+  const storeGame = useGameStore.getState().getDailyGame(key);
 
   if (storeGame) {
     return storeGame;
   }
 
-  // Create initial game state if not exists
   const initialGame = {
     region,
     date,
@@ -509,21 +355,10 @@ export const getHardModeGameState = (gameState, region, date) => {
     maxGuesses: GAME_CONFIG.HARD_MODE_MAX_GUESSES,
   };
 
-  useHardModeStore.getState().setHardModeGame(key, initialGame);
+  useGameStore.getState().setDailyGame(key, initialGame);
   return initialGame;
 };
 
-/**
- * Process a hard mode guess with free-text input
- * Now delegates to Zustand store while maintaining backward compatibility
- * @param {Object} gameState - Main game state object (for backward compatibility, synced to store)
- * @param {string} region - Region identifier
- * @param {string} date - Date string (YYYY-MM-DD)
- * @param {Object} guessedBird - The bird object guessed (from autocomplete)
- * @param {string} textInput - Original user's text input for display
- * @param {Object} correctBird - The correct bird
- * @returns {Object} - Updated game state object (for backward compatibility with tests)
- */
 export const processHardModeGuess = (
   gameState,
   region,
@@ -532,20 +367,15 @@ export const processHardModeGuess = (
   textInput,
   correctBird,
 ) => {
-  const key = createRegionDateKey(region, date);
+  const key = `${region}-${date}-hard`;
 
-  // Compare taxonomy and create guess
   const taxonomicScore = compareTaxonomy(guessedBird, correctBird);
   const isCorrect = guessedBird.id === correctBird.id;
 
-  // For backward compatibility with tests, sync provided state to store first
-  if (gameState && gameState.hardModeGames && gameState.hardModeGames[key]) {
-    useHardModeStore
-      .getState()
-      .setHardModeGame(key, gameState.hardModeGames[key]);
+  if (gameState && gameState.dailyGames && gameState.dailyGames[key]) {
+    useGameStore.getState().setDailyGame(key, gameState.dailyGames[key]);
   } else {
-    // Check if game exists in store, if not initialize it
-    const existingGame = useHardModeStore.getState().getHardModeGame(key);
+    const existingGame = useGameStore.getState().getDailyGame(key);
     if (!existingGame) {
       const initialGame = {
         region,
@@ -556,12 +386,11 @@ export const processHardModeGuess = (
         won: false,
         maxGuesses: GAME_CONFIG.HARD_MODE_MAX_GUESSES,
       };
-      useHardModeStore.getState().setHardModeGame(key, initialGame);
+      useGameStore.getState().setDailyGame(key, initialGame);
     }
   }
 
-  // Use store's processHardModeGuess action
-  useHardModeStore.getState().processHardModeGuess(key, {
+  useGameStore.getState().processGuess(key, {
     birdId: guessedBird.id,
     textInput,
     correct: isCorrect,
@@ -569,109 +398,60 @@ export const processHardModeGuess = (
     taxonomicScore,
   });
 
-  // Return complete state object for backward compatibility
-  const updatedGame = useHardModeStore.getState().getHardModeGame(key);
-  const storeStats = useHardModeStore.getState().stats;
+  const updatedGame = useGameStore.getState().getDailyGame(key);
+  const storeStats = useGameStore.getState().stats;
 
   return {
-    hardModeGames: {
+    dailyGames: {
       [key]: updatedGame,
     },
-    stats: {
-      hardModeStats: storeStats,
-    },
+    stats: storeStats,
     version: 2,
   };
 };
 
-/**
- * Update hard mode statistics after completing a hard mode game
- * Note: This function is kept for backward compatibility but not actively used.
- * Stats are now updated directly in Zustand store actions.
- * @param {Object} gameState - Main game state object
- * @param {string} region - Region identifier
- * @param {Object} hardModeGame - Completed hard mode game state
- */
-
-/**
- * Update user statistics after completing a daily game
- * Note: This function is kept for backward compatibility but not actively used.
- * Stats are now updated directly in Zustand store actions.
- * @param {Object} gameState - Main game state object
- * @param {string} region - Region identifier
- * @param {Object} dailyGame - Completed daily game state
- */
-
 export const hasPlayedHardModeRegionDate = (gameState, region, date) => {
-  const key = createRegionDateKey(region, date);
+  const key = `${region}-${date}-hard`;
 
-  // Check store first (for app usage)
-  const storeGame = useHardModeStore.getState().getHardModeGame(key);
+  const storeGame = useGameStore.getState().getDailyGame(key);
   if (storeGame && storeGame.guesses.length > 0) {
     return true;
   }
 
-  // Fall back to provided state (for tests)
-  if (!gameState.hardModeGames) {
+  if (!gameState.dailyGames) {
     return false;
   }
-  return gameState.hardModeGames[key]?.guesses.length > 0;
+  return gameState.dailyGames[key]?.guesses.length > 0;
 };
 
-/**
- * Check if normal mode has been completed for a specific region-date
- * Now delegates to Zustand store while maintaining backward compatibility
- * @param {Object} gameState - Main game state object (for backward compatibility)
- * @param {string} region - Region identifier
- * @param {string} date - Date string (YYYY-MM-DD)
- * @returns {boolean} - True if normal mode is completed for this combination
- */
 export const hasCompletedNormalMode = (gameState, region, date) => {
-  const key = createRegionDateKey(region, date);
+  const key = `${region}-${date}-normal`;
 
-  // Check store first (for app usage)
-  const storeGame = useNormalGameStore.getState().getDailyGame(key);
+  const storeGame = useGameStore.getState().getDailyGame(key);
   if (storeGame?.completed === true) {
     return true;
   }
 
-  // Fall back to provided state (for tests)
   const validGameState = ensureGameStateFormat(gameState);
   return validGameState.dailyGames[key]?.completed === true;
 };
 
-/**
- * Check if hard mode has been completed for a specific region-date
- * Now delegates to Zustand store while maintaining backward compatibility
- * @param {Object} gameState - Main game state object (for backward compatibility)
- * @param {string} region - Region identifier
- * @param {string} date - Date string (YYYY-MM-DD)
- * @returns {boolean} - True if hard mode is completed for this combination
- */
 export const hasCompletedHardMode = (gameState, region, date) => {
-  const key = createRegionDateKey(region, date);
+  const key = `${region}-${date}-hard`;
 
-  // Check store first (for app usage)
-  const storeGame = useHardModeStore.getState().getHardModeGame(key);
+  const storeGame = useGameStore.getState().getDailyGame(key);
   if (storeGame?.completed === true) {
     return true;
   }
 
-  // Fall back to provided state (for tests)
-  if (!gameState.hardModeGames) {
+  if (!gameState.dailyGames) {
     return false;
   }
-  return gameState.hardModeGames[key]?.completed === true;
+  return gameState.dailyGames[key]?.completed === true;
 };
 
-/**
- * Get user's performance summary
- * Now delegates to Zustand store while maintaining backward compatibility
- * @param {Object} gameState - Main game state object (kept for backward compatibility, not used)
- * @returns {Object} - Performance summary
- */
 export const getUserPerformanceSummary = (gameState) => {
-  const stats = gameState?.stats || useNormalGameStore.getState().stats;
+  const stats = gameState?.stats || useGameStore.getState().stats;
 
   const totalGuesses = Object.values(stats.regionStats).reduce(
     (sum, region) => sum + region.totalGuesses,

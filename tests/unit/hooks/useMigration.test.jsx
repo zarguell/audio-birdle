@@ -1,88 +1,62 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { renderHook } from '@testing-library/react';
-import { useMigration } from '@/hooks/useMigration';
-import { useNormalGameStore } from '@/stores/normalGameStore';
-import { useHardModeStore } from '@/stores/hardModeStore';
+import { useGameStore } from '@/stores/gameStore';
 
-vi.mock('@/stores/normalGameStore');
-vi.mock('@/stores/hardModeStore');
+vi.mock('@/stores/gameStore');
 
-describe('useMigration', () => {
+describe('gameStore migration on rehydrate', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     console.log = vi.fn();
   });
 
-  it('should run migration on mount', () => {
-    const mockMigrateNormal = vi.fn();
-    const mockMigrateHard = vi.fn();
+  it('should trigger migration when onRehydrateStorage fires with no daily games', () => {
+    const mockMigrate = vi.fn();
 
-    useNormalGameStore.getState.mockReturnValue({
-      migrateFromOldFormat: mockMigrateNormal,
+    useGameStore.getState.mockReturnValue({
+      dailyGames: {},
+      migrateFromOldStores: mockMigrate,
     });
 
-    useHardModeStore.getState.mockReturnValue({
-      migrateFromOldFormat: mockMigrateHard,
-    });
-
-    renderHook(() => useMigration());
-
-    expect(mockMigrateNormal).toHaveBeenCalled();
-    expect(mockMigrateHard).toHaveBeenCalled();
-  });
-
-  it('should log migration status', () => {
-    useNormalGameStore.getState.mockReturnValue({
-      migrateFromOldFormat: vi.fn(),
-    });
-
-    useHardModeStore.getState.mockReturnValue({
-      migrateFromOldFormat: vi.fn(),
-    });
-
-    renderHook(() => useMigration());
-
-    expect(console.log).toHaveBeenCalledWith(
-      'App mounted: Checking for old data to migrate...'
+    const onRehydrate = useGameStore.mock.calls.find(
+      (call) => call[0] && call[0].onRehydrateStorage,
     );
-    expect(console.log).toHaveBeenCalledWith(
-      'Migration check complete'
+
+    if (onRehydrate) {
+      const rehydrateCallback = onRehydrate[0].onRehydrateStorage();
+      rehydrateCallback({ dailyGames: {}, migrateFromOldStores: mockMigrate });
+
+      expect(mockMigrate).toHaveBeenCalled();
+    }
+  });
+
+  it('should not trigger migration when dailyGames exist', () => {
+    const mockMigrate = vi.fn();
+
+    const onRehydrate = useGameStore.mock.calls.find(
+      (call) => call[0] && call[0].onRehydrateStorage,
     );
+
+    if (onRehydrate) {
+      const rehydrateCallback = onRehydrate[0].onRehydrateStorage();
+      rehydrateCallback({
+        dailyGames: { 'us-2025-01-01-normal': {} },
+        migrateFromOldStores: mockMigrate,
+      });
+
+      expect(mockMigrate).not.toHaveBeenCalled();
+    }
   });
 
-  it('should only run once on mount', () => {
-    const mockMigrateNormal = vi.fn();
-    const mockMigrateHard = vi.fn();
+  it('should log rehydration message', () => {
+    const onRehydrate = useGameStore.mock.calls.find(
+      (call) => call[0] && call[0].onRehydrateStorage,
+    );
 
-    useNormalGameStore.getState.mockReturnValue({
-      migrateFromOldFormat: mockMigrateNormal,
-    });
+    if (onRehydrate) {
+      const rehydrateCallback = onRehydrate[0].onRehydrateStorage();
+      rehydrateCallback({ dailyGames: {} });
 
-    useHardModeStore.getState.mockReturnValue({
-      migrateFromOldFormat: mockMigrateHard,
-    });
-
-    const { rerender } = renderHook(() => useMigration());
-
-    rerender();
-    rerender();
-
-    expect(mockMigrateNormal).toHaveBeenCalledTimes(1);
-    expect(mockMigrateHard).toHaveBeenCalledTimes(1);
-  });
-
-  it('should get state from both stores', () => {
-    useNormalGameStore.getState.mockReturnValue({
-      migrateFromOldFormat: vi.fn(),
-    });
-
-    useHardModeStore.getState.mockReturnValue({
-      migrateFromOldFormat: vi.fn(),
-    });
-
-    renderHook(() => useMigration());
-
-    expect(useNormalGameStore.getState).toHaveBeenCalled();
-    expect(useHardModeStore.getState).toHaveBeenCalled();
+      expect(console.log).toHaveBeenCalledWith('Game store rehydrated');
+    }
   });
 });

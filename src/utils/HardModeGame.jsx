@@ -14,7 +14,7 @@ import { extractGenus, compareTaxonomy } from "./TaxonomyUtils";
 import { getTodayString } from "./DateUtils";
 import { generateHardModeShareText, shareResult } from "./ShareUtils";
 import { SubregionDisplay } from "./SubregionUtils";
-import { useHardModeStore } from "../stores/hardModeStore";
+import { useGameStore } from "../stores/gameStore";
 
 export default function HardModeGame({
   region,
@@ -33,14 +33,14 @@ export default function HardModeGame({
   const audioRef = useRef(null);
 
   const today = getTodayString();
-  const key = `${region}-${today}`;
-  const hardModeGame = useHardModeStore((state) => state.getHardModeGame(key));
+  const key = `${region}-${today}-hard`;
+  const hardModeGame = useGameStore((state) => state.getDailyGame(key));
 
   // Initialize hard mode game if not exists
   useEffect(() => {
     if (!hardModeGame && region && today) {
-      const key = `${region}-${today}`;
-      useHardModeStore.getState().setHardModeGame(key, {
+      const key = `${region}-${today}-hard`;
+      useGameStore.getState().setDailyGame(key, {
         region,
         date: today,
         mode: "hard",
@@ -109,7 +109,7 @@ export default function HardModeGame({
   const handleGuess = (bird) => {
     const taxonomicScore = compareTaxonomy(bird, todaysBird);
 
-    useHardModeStore.getState().processHardModeGuess(`${region}-${today}`, {
+    useGameStore.getState().processGuess(`${region}-${today}-hard`, {
       birdId: bird.id,
       textInput: bird.name,
       correct: bird.id === todaysBird.id,

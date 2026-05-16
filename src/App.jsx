@@ -14,9 +14,8 @@ import { usePersistence } from "./hooks/usePersistence";
 import { useGameNavigation } from "./hooks/useGameNavigation";
 import { useGameInitialization } from "./hooks/useGameInitialization";
 import { useShareResult } from "./hooks/useShareResult";
-import { useMigration } from "./hooks/useMigration";
-import { useNormalGameStore } from "./stores/normalGameStore";
-import { useHardModeStore } from "./stores/hardModeStore";
+
+import { useGameStore } from "./stores/gameStore";
 
 export default function AudioBirdle() {
   const {
@@ -45,34 +44,26 @@ export default function AudioBirdle() {
   const { makeGuess, resetTodaysGame, resetAllData, answerOptions } =
     useDailyGame(selectedRegion, today, birds, todaysBird);
 
-  const currentDailyGame = useNormalGameStore((state) =>
+  const normalGame = useGameStore((state) =>
     selectedRegion && today
-      ? state.getDailyGame(`${selectedRegion}-${today}`)
+      ? state.getDailyGame(`${selectedRegion}-${today}-normal`)
       : null,
   );
 
-  const hardModeGame = useHardModeStore((state) =>
+  const hardModeGame = useGameStore((state) =>
     selectedRegion && today
-      ? state.getHardModeGame(`${selectedRegion}-${today}`)
+      ? state.getDailyGame(`${selectedRegion}-${today}-hard`)
       : null,
   );
 
-  const normalModeGame = useNormalGameStore((state) =>
-    selectedRegion && today
-      ? state.getDailyGame(`${selectedRegion}-${today}`)
-      : null,
-  );
-
-  const stats = useNormalGameStore((state) => state.stats);
+  const stats = useGameStore((state) => state.stats);
 
   const { currentView, setCurrentView } = useGameNavigation();
 
-  useMigration();
-
-  useGameInitialization(selectedRegion, today, currentDailyGame);
+  useGameInitialization(selectedRegion, today, normalGame);
 
   const { handleShareResult } = useShareResult(
-    currentDailyGame,
+    normalGame,
     todaysBird,
     selectedRegion,
   );
@@ -115,7 +106,7 @@ export default function AudioBirdle() {
   }
 
   if (currentView === VIEWS.MODE_SELECTOR) {
-    const normalCompleted = currentDailyGame?.completed === true;
+    const normalCompleted = normalGame?.completed === true;
     const hardCompleted = hardModeGame?.completed === true;
 
     return (
@@ -146,7 +137,7 @@ export default function AudioBirdle() {
   }
 
   if (currentView === VIEWS.HARD_MODE) {
-    const normalModeCompleted = normalModeGame?.completed === true;
+    const normalModeCompleted = normalGame?.completed === true;
 
     return (
       <HardModeGame
@@ -198,7 +189,7 @@ export default function AudioBirdle() {
       today={today}
       regions={regions}
       todaysBird={todaysBird}
-      currentDailyGame={currentDailyGame}
+      currentDailyGame={normalGame}
       answerOptions={answerOptions}
       makeGuess={makeGuess}
       audioPlayer={audioPlayer}

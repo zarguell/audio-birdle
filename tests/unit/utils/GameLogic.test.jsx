@@ -18,13 +18,11 @@ import {
   hasCompletedHardMode
 } from '@/utils/GameLogic'
 import { sampleBirds } from '../fixtures/sampleBirds'
-import { useNormalGameStore } from '@/stores/normalGameStore'
-import { useHardModeStore } from '@/stores/hardModeStore'
+import { useGameStore } from '@/stores/gameStore'
 
 describe('GameLogic', () => {
   beforeEach(() => {
-    useNormalGameStore.getState().reset()
-    useHardModeStore.getState().reset()
+    useGameStore.getState().reset()
   })
 
   describe('createInitialGameState', () => {
@@ -71,10 +69,18 @@ describe('GameLogic', () => {
   })
 
   describe('getDailyGameState', () => {
-    it('should return existing daily game state', () => {
+    it('should return existing daily game state from store', () => {
       const gameState = createInitialGameState()
-      const key = createRegionDateKey('us', '2025-12-27')
-      gameState.dailyGames[key] = createInitialDailyGameState('us', '2025-12-27')
+      const key = 'us-2025-12-27-normal'
+      useGameStore.getState().setDailyGame(key, {
+        region: 'us',
+        date: '2025-12-27',
+        mode: 'normal',
+        guesses: [],
+        completed: false,
+        won: false,
+        maxGuesses: 4,
+      })
 
       const dailyState = getDailyGameState(gameState, 'us', '2025-12-27')
 
@@ -101,13 +107,12 @@ describe('GameLogic', () => {
 
       const hasPlayed = hasPlayedRegionDate(gameState, 'us', '2025-12-27')
 
-      // hasPlayedRegionDate returns undefined if key doesn't exist (falsy)
       expect(hasPlayed).toBeFalsy()
     })
 
     it('should return true for played game', () => {
       const gameState = createInitialGameState()
-      const key = createRegionDateKey('us', '2025-12-27')
+      const key = 'us-2025-12-27-normal'
       const dailyGame = createInitialDailyGameState('us', '2025-12-27')
       dailyGame.guesses = [{ birdId: 'amerob', correct: true, timestamp: new Date().toISOString() }]
       gameState.dailyGames[key] = dailyGame
@@ -133,7 +138,7 @@ describe('GameLogic', () => {
         'amerob'
       )
 
-      const key = createRegionDateKey('us', '2025-12-27')
+      const key = 'us-2025-12-27-normal'
       const dailyGame = newState.dailyGames[key]
 
       expect(dailyGame.guesses).toHaveLength(1)
@@ -153,7 +158,7 @@ describe('GameLogic', () => {
         'amerob'
       )
 
-      const key = createRegionDateKey('us', '2025-12-27')
+      const key = 'us-2025-12-27-normal'
       const dailyGame = newState.dailyGames[key]
 
       expect(dailyGame.guesses).toHaveLength(1)
@@ -168,7 +173,7 @@ describe('GameLogic', () => {
         state = processGuess(state, 'us', '2025-12-27', 'wrong', 'amerob')
       }
 
-      const key = createRegionDateKey('us', '2025-12-27')
+      const key = 'us-2025-12-27-normal'
       const dailyGame = state.dailyGames[key]
 
       expect(dailyGame.completed).toBe(true)
@@ -193,10 +198,10 @@ describe('GameLogic', () => {
 
     it('should not allow guesses after completion', () => {
       let state = processGuess(gameState, 'us', '2025-12-27', 'amerob', 'amerob')
-      const beforeLength = state.dailyGames['us-2025-12-27'].guesses.length
+      const beforeLength = state.dailyGames['us-2025-12-27-normal'].guesses.length
 
       state = processGuess(state, 'us', '2025-12-27', 'wrong', 'amerob')
-      const afterLength = state.dailyGames['us-2025-12-27'].guesses.length
+      const afterLength = state.dailyGames['us-2025-12-27-normal'].guesses.length
 
       expect(afterLength).toBe(beforeLength)
     })
@@ -420,10 +425,16 @@ describe('GameLogic', () => {
   describe('getHardModeGameState', () => {
     it('should return existing hard mode game state', () => {
       const gameState = createInitialGameState()
-      const key = createRegionDateKey('us', '2025-12-27')
-      gameState.hardModeGames = {
-        [key]: createInitialHardModeGameState('us', '2025-12-27')
-      }
+      const key = 'us-2025-12-27-hard'
+      useGameStore.getState().setDailyGame(key, {
+        region: 'us',
+        date: '2025-12-27',
+        mode: 'hard',
+        guesses: [],
+        completed: false,
+        won: false,
+        maxGuesses: 6,
+      })
 
       const hardState = getHardModeGameState(gameState, 'us', '2025-12-27')
 
@@ -445,16 +456,25 @@ describe('GameLogic', () => {
       expect(hardState.guesses).toEqual([])
     })
 
-    it('should initialize hardModeGames object if missing', () => {
+    it('should read from store when game state has no matching entry', () => {
       const gameState = createInitialGameState()
-      delete gameState.hardModeGames
+      const key = 'us-2025-12-27-hard'
+      useGameStore.getState().setDailyGame(key, {
+        region: 'us',
+        date: '2025-12-27',
+        mode: 'hard',
+        guesses: [{ birdId: 'test', correct: true, timestamp: Date.now() }],
+        completed: true,
+        won: true,
+        maxGuesses: 6,
+      })
 
       const hardState = getHardModeGameState(gameState, 'us', '2025-12-27')
 
       expect(hardState).toBeDefined()
       expect(hardState.mode).toBe('hard')
-      expect(hardState.region).toBe('us')
-      expect(hardState.date).toBe('2025-12-27')
+      expect(hardState.guesses).toHaveLength(1)
+      expect(hardState.completed).toBe(true)
     })
   })
 
@@ -474,8 +494,8 @@ describe('GameLogic', () => {
         sampleBirds.us[0]  // Correct is American Robin
       )
 
-      const key = createRegionDateKey('us', '2025-12-27')
-      const hardGame = newState.hardModeGames[key]
+      const key = 'us-2025-12-27-hard'
+      const hardGame = newState.dailyGames[key]
 
       expect(hardGame.guesses).toHaveLength(1)
       expect(hardGame.guesses[0].birdId).toBe('amerob')
@@ -497,8 +517,8 @@ describe('GameLogic', () => {
         sampleBirds.us[0]  // Correct is American Robin
       )
 
-      const key = createRegionDateKey('us', '2025-12-27')
-      const hardGame = newState.hardModeGames[key]
+      const key = 'us-2025-12-27-hard'
+      const hardGame = newState.dailyGames[key]
 
       expect(hardGame.guesses).toHaveLength(1)
       expect(hardGame.guesses[0].birdId).toBe('barswa')
@@ -521,8 +541,8 @@ describe('GameLogic', () => {
         )
       }
 
-      const key = createRegionDateKey('us', '2025-12-27')
-      const hardGame = state.hardModeGames[key]
+      const key = 'us-2025-12-27-hard'
+      const hardGame = state.dailyGames[key]
 
       expect(hardGame.completed).toBe(true)
       expect(hardGame.won).toBe(false)
@@ -539,7 +559,7 @@ describe('GameLogic', () => {
         sampleBirds.us[0]
       )
 
-      const beforeLength = state.hardModeGames['us-2025-12-27'].guesses.length
+      const beforeLength = state.dailyGames['us-2025-12-27-hard'].guesses.length
 
       state = processHardModeGuess(
         state,
@@ -550,7 +570,7 @@ describe('GameLogic', () => {
         sampleBirds.us[0]
       )
 
-      const afterLength = state.hardModeGames['us-2025-12-27'].guesses.length
+      const afterLength = state.dailyGames['us-2025-12-27-hard'].guesses.length
       expect(afterLength).toBe(beforeLength)
     })
 
@@ -564,11 +584,11 @@ describe('GameLogic', () => {
         sampleBirds.us[0]
       )
 
-      expect(newState.stats.hardModeStats).toBeDefined()
-      expect(newState.stats.hardModeStats.totalGamesPlayed).toBe(1)
-      expect(newState.stats.hardModeStats.totalGamesWon).toBe(1)
-      expect(newState.stats.hardModeStats.currentStreak).toBe(1)
-      expect(newState.stats.hardModeStats.maxStreak).toBe(1)
+      expect(newState.stats).toBeDefined()
+      expect(newState.stats.totalGamesPlayed).toBe(1)
+      expect(newState.stats.totalGamesWon).toBe(1)
+      expect(newState.stats.currentStreak).toBe(1)
+      expect(newState.stats.maxStreak).toBe(1)
     })
 
     it('should update region-specific hard mode stats', () => {
@@ -581,9 +601,9 @@ describe('GameLogic', () => {
         sampleBirds.us[0]
       )
 
-      expect(newState.stats.hardModeStats.regionStats['us']).toBeDefined()
-      expect(newState.stats.hardModeStats.regionStats['us'].gamesPlayed).toBe(1)
-      expect(newState.stats.hardModeStats.regionStats['us'].gamesWon).toBe(1)
+      expect(newState.stats.regionStats['us']).toBeDefined()
+      expect(newState.stats.regionStats['us'].gamesPlayed).toBe(1)
+      expect(newState.stats.regionStats['us'].gamesWon).toBe(1)
     })
 
     it('should reset hard mode streak on loss', () => {
@@ -600,7 +620,7 @@ describe('GameLogic', () => {
         )
       }
 
-      expect(state.stats.hardModeStats.currentStreak).toBe(0)
+      expect(state.stats.currentStreak).toBe(0)
     })
 
     it('should store hard mode game correctly in store', () => {
@@ -613,14 +633,14 @@ describe('GameLogic', () => {
         sampleBirds.us[0]
       )
 
-      const key = createRegionDateKey('us', '2025-12-27')
-      expect(newState.hardModeGames).toBeDefined()
-      expect(newState.hardModeGames[key]).toBeDefined()
-      expect(newState.hardModeGames[key].mode).toBe('hard')
-      expect(newState.hardModeGames[key].region).toBe('us')
-      expect(newState.hardModeGames[key].date).toBe('2025-12-27')
-      expect(newState.hardModeGames[key].won).toBe(true)
-      expect(newState.hardModeGames[key].completed).toBe(true)
+      const key = 'us-2025-12-27-hard'
+      expect(newState.dailyGames).toBeDefined()
+      expect(newState.dailyGames[key]).toBeDefined()
+      expect(newState.dailyGames[key].mode).toBe('hard')
+      expect(newState.dailyGames[key].region).toBe('us')
+      expect(newState.dailyGames[key].date).toBe('2025-12-27')
+      expect(newState.dailyGames[key].won).toBe(true)
+      expect(newState.dailyGames[key].completed).toBe(true)
     })
 
     it('should calculate taxonomic score correctly', () => {
@@ -634,8 +654,8 @@ describe('GameLogic', () => {
         sampleBirds.us[0]  // American Robin
       )
 
-      const key = createRegionDateKey('us', '2025-12-27')
-      const guess = newState.hardModeGames[key].guesses[0]
+      const key = 'us-2025-12-27-hard'
+      const guess = newState.dailyGames[key].guesses[0]
 
       expect(guess.taxonomicScore.order).toBe(true)  // Both Passeriformes
       expect(guess.taxonomicScore.family).toBe(false)  // Different families
@@ -653,18 +673,39 @@ describe('GameLogic', () => {
       expect(hasPlayed).toBe(false)
     })
 
-    it('should return true for played hard mode game', () => {
-      const gameState = createInitialGameState()
-      let state = processHardModeGuess(
-        gameState,
-        'us',
-        '2025-12-27',
-        sampleBirds.us[0],  // American Robin
-        'American Robin',
-        sampleBirds.us[0]
-      )
+    it('should return true for played hard mode game (from store)', () => {
+      const key = 'us-2025-12-27-hard'
+      useGameStore.getState().setDailyGame(key, {
+        region: 'us',
+        date: '2025-12-27',
+        mode: 'hard',
+        guesses: [{ birdId: 'amerob', correct: true, timestamp: Date.now() }],
+        completed: true,
+        won: true,
+        maxGuesses: 6,
+      })
 
-      const hasPlayed = hasPlayedHardModeRegionDate(state, 'us', '2025-12-27')
+      const gameState = createInitialGameState()
+      const hasPlayed = hasPlayedHardModeRegionDate(gameState, 'us', '2025-12-27')
+
+      expect(hasPlayed).toBe(true)
+    })
+
+    it('should return true for played hard mode game (from gameState)', () => {
+      const gameState = createInitialGameState()
+      gameState.dailyGames = {
+        'us-2025-12-27-hard': {
+          region: 'us',
+          date: '2025-12-27',
+          mode: 'hard',
+          guesses: [{ birdId: 'amerob', correct: true, timestamp: Date.now() }],
+          completed: true,
+          won: true,
+          maxGuesses: 6,
+        }
+      }
+
+      const hasPlayed = hasPlayedHardModeRegionDate(gameState, 'us', '2025-12-27')
 
       expect(hasPlayed).toBe(true)
     })
@@ -673,7 +714,7 @@ describe('GameLogic', () => {
   describe('hasCompletedNormalMode', () => {
     it('should return false for incomplete normal mode game', () => {
       const gameState = createInitialGameState()
-      const key = createRegionDateKey('us', '2025-12-27')
+      const key = 'us-2025-12-27-normal'
       gameState.dailyGames[key] = createInitialDailyGameState('us', '2025-12-27')
 
       const hasCompleted = hasCompletedNormalMode(gameState, 'us', '2025-12-27')
@@ -694,32 +735,37 @@ describe('GameLogic', () => {
   describe('hasCompletedHardMode', () => {
     it('should return false for incomplete hard mode game', () => {
       const gameState = createInitialGameState()
-      let state = processHardModeGuess(
-        gameState,
-        'us',
-        '2025-12-27',
-        sampleBirds.us[1],  // Barn Swallow (wrong guess)
-        'Barn Swallow',
-        sampleBirds.us[0]
-      )
 
-      const hasCompleted = hasCompletedHardMode(state, 'us', '2025-12-27')
+      useGameStore.getState().setDailyGame('us-2025-12-27-hard', {
+        region: 'us',
+        date: '2025-12-27',
+        mode: 'hard',
+        guesses: [],
+        completed: false,
+        won: false,
+        maxGuesses: 6,
+      })
+
+      const hasCompleted = hasCompletedHardMode(gameState, 'us', '2025-12-27')
 
       expect(hasCompleted).toBe(false)
     })
 
     it('should return true for completed hard mode game', () => {
       const gameState = createInitialGameState()
-      let state = processHardModeGuess(
-        gameState,
-        'us',
-        '2025-12-27',
-        sampleBirds.us[0],  // American Robin
-        'American Robin',
-        sampleBirds.us[0]
-      )
+      gameState.dailyGames = {
+        'us-2025-12-27-hard': {
+          region: 'us',
+          date: '2025-12-27',
+          mode: 'hard',
+          guesses: [{ birdId: 'amerob', correct: true, timestamp: Date.now() }],
+          completed: true,
+          won: true,
+          maxGuesses: 6,
+        }
+      }
 
-      const hasCompleted = hasCompletedHardMode(state, 'us', '2025-12-27')
+      const hasCompleted = hasCompletedHardMode(gameState, 'us', '2025-12-27')
 
       expect(hasCompleted).toBe(true)
     })

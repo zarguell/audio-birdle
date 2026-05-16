@@ -1,14 +1,14 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook } from '@testing-library/react';
 import { useGameInitialization } from '@/hooks/useGameInitialization';
-import { useNormalGameStore } from '@/stores/normalGameStore';
+import { useGameStore } from '@/stores/gameStore';
 
-vi.mock('@/stores/normalGameStore');
+vi.mock('@/stores/gameStore');
 
 describe('useGameInitialization', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    useNormalGameStore.getState.mockReturnValue({
+    useGameStore.getState.mockReturnValue({
       getDailyGame: vi.fn(() => null),
       setDailyGame: vi.fn(),
     });
@@ -16,7 +16,7 @@ describe('useGameInitialization', () => {
 
   it('should initialize game for valid region and date', () => {
     const mockSetDailyGame = vi.fn();
-    useNormalGameStore.getState.mockReturnValue({
+    useGameStore.getState.mockReturnValue({
       getDailyGame: vi.fn(() => null),
       setDailyGame: mockSetDailyGame,
     });
@@ -25,9 +25,10 @@ describe('useGameInitialization', () => {
       useGameInitialization('us', '2025-01-15', null)
     );
 
-    expect(mockSetDailyGame).toHaveBeenCalledWith('us-2025-01-15', {
+    expect(mockSetDailyGame).toHaveBeenCalledWith('us-2025-01-15-normal', {
       region: 'us',
       date: '2025-01-15',
+      mode: 'normal',
       guesses: [],
       completed: false,
       won: false,
@@ -37,7 +38,7 @@ describe('useGameInitialization', () => {
 
   it('should not initialize game if region is missing', () => {
     const mockSetDailyGame = vi.fn();
-    useNormalGameStore.getState.mockReturnValue({
+    useGameStore.getState.mockReturnValue({
       getDailyGame: vi.fn(() => null),
       setDailyGame: mockSetDailyGame,
     });
@@ -51,7 +52,7 @@ describe('useGameInitialization', () => {
 
   it('should not initialize game if date is missing', () => {
     const mockSetDailyGame = vi.fn();
-    useNormalGameStore.getState.mockReturnValue({
+    useGameStore.getState.mockReturnValue({
       getDailyGame: vi.fn(() => null),
       setDailyGame: mockSetDailyGame,
     });
@@ -65,7 +66,7 @@ describe('useGameInitialization', () => {
 
   it('should not initialize game if currentDailyGame exists', () => {
     const mockSetDailyGame = vi.fn();
-    useNormalGameStore.getState.mockReturnValue({
+    useGameStore.getState.mockReturnValue({
       getDailyGame: vi.fn(() => ({ guesses: [] })),
       setDailyGame: mockSetDailyGame,
     });
@@ -80,7 +81,7 @@ describe('useGameInitialization', () => {
   it('should check for existing game before initializing', () => {
     const mockGetDailyGame = vi.fn(() => ({ guesses: [] }));
     const mockSetDailyGame = vi.fn();
-    useNormalGameStore.getState.mockReturnValue({
+    useGameStore.getState.mockReturnValue({
       getDailyGame: mockGetDailyGame,
       setDailyGame: mockSetDailyGame,
     });
@@ -89,7 +90,7 @@ describe('useGameInitialization', () => {
       useGameInitialization('us', '2025-01-15', null)
     );
 
-    expect(mockGetDailyGame).toHaveBeenCalledWith('us-2025-01-15');
+    expect(mockGetDailyGame).toHaveBeenCalledWith('us-2025-01-15-normal');
     expect(mockSetDailyGame).not.toHaveBeenCalled();
   });
 });

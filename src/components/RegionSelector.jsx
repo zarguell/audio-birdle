@@ -1,6 +1,5 @@
 import { MapPin } from "lucide-react";
-import { createRegionDateKey } from "../utils/GameLogic";
-import { useNormalGameStore } from "../stores/normalGameStore";
+import { useGameStore } from "../stores/gameStore";
 
 export default function RegionSelector({ regions, today, onRegionSelect }) {
   return (
@@ -21,8 +20,8 @@ export default function RegionSelector({ regions, today, onRegionSelect }) {
 
           <div className="space-y-2">
             {regions.map((region) => {
-              const key = createRegionDateKey(region.id, today);
-              const hasPlayedToday = useNormalGameStore.getState().getDailyGame(key)?.guesses.length > 0;
+              const key = `${region.id}-${today}-normal`;
+              const hasPlayedToday = useGameStore.getState().getDailyGame(key)?.guesses.length > 0;
               return (
                 <button
                   key={region.id}

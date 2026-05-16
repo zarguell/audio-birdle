@@ -1,6 +1,5 @@
 import { useCallback } from "react";
-import { useNormalGameStore } from "../stores/normalGameStore";
-import { useHardModeStore } from "../stores/hardModeStore";
+import { useGameStore } from "../stores/gameStore";
 import { generateAnswerOptions } from "../utils/GameLogic";
 import { GAME_CONFIG } from "../utils/Constants";
 import { compareTaxonomy } from "../utils/TaxonomyUtils";
@@ -10,10 +9,10 @@ import { compareTaxonomy } from "../utils/TaxonomyUtils";
  * Provides game state access and actions for normal and hard mode
  */
 export function useDailyGame(region, today, birds, todaysBird) {
-  // Get daily game from normal store
+  // Get daily game from store
   const getDailyGame = useCallback(() => {
     if (!region) return null;
-    return useNormalGameStore.getState().getDailyGame(`${region}-${today}`);
+    return useGameStore.getState().getDailyGame(`${region}-${today}-normal`);
   }, [region, today]);
 
   // Process a guess in normal mode
@@ -21,7 +20,7 @@ export function useDailyGame(region, today, birds, todaysBird) {
     (birdId) => {
       if (!todaysBird || !region) return;
 
-      useNormalGameStore.getState().processGuess(`${region}-${today}`, {
+      useGameStore.getState().processGuess(`${region}-${today}-normal`, {
         birdId,
         correct: birdId === todaysBird.id,
         timestamp: Date.now(),
@@ -37,7 +36,7 @@ export function useDailyGame(region, today, birds, todaysBird) {
 
       const taxonomicScore = compareTaxonomy(bird, todaysBird);
 
-      useHardModeStore.getState().processHardModeGuess(`${region}-${today}`, {
+      useGameStore.getState().processGuess(`${region}-${today}-hard`, {
         birdId: bird.id,
         textInput: bird.name,
         correct: bird.id === todaysBird.id,
@@ -52,10 +51,11 @@ export function useDailyGame(region, today, birds, todaysBird) {
   const resetTodaysGame = useCallback(() => {
     if (!region) return;
 
-    const key = `${region}-${today}`;
-    useNormalGameStore.getState().setDailyGame(key, {
+    const key = `${region}-${today}-normal`;
+    useGameStore.getState().setDailyGame(key, {
       region,
       date: today,
+      mode: 'normal',
       guesses: [],
       completed: false,
       won: false,
@@ -65,14 +65,13 @@ export function useDailyGame(region, today, birds, todaysBird) {
 
   // Reset all game data
   const resetAllData = useCallback(() => {
-    useNormalGameStore.getState().reset();
-    useHardModeStore.getState().reset();
+    useGameStore.getState().reset();
   }, []);
 
   // Get hard mode game
   const getHardModeGame = useCallback(() => {
     if (!region) return null;
-    return useHardModeStore.getState().getHardModeGame(`${region}-${today}`);
+    return useGameStore.getState().getDailyGame(`${region}-${today}-hard`);
   }, [region, today]);
 
   // Generate answer options

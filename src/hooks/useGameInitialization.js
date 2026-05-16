@@ -1,15 +1,16 @@
 import { useEffect } from "react";
-import { useNormalGameStore } from "../stores/normalGameStore";
+import { useGameStore } from "../stores/gameStore";
 
 export function useGameInitialization(selectedRegion, today, currentDailyGame) {
   useEffect(() => {
     if (selectedRegion && today && !currentDailyGame) {
-      const key = `${selectedRegion}-${today}`;
-      const existingGame = useNormalGameStore.getState().getDailyGame(key);
+      const key = `${selectedRegion}-${today}-normal`;
+      const existingGame = useGameStore.getState().getDailyGame(key);
       if (!existingGame) {
-        useNormalGameStore.getState().setDailyGame(key, {
+        useGameStore.getState().setDailyGame(key, {
           region: selectedRegion,
           date: today,
+          mode: 'normal',
           guesses: [],
           completed: false,
           won: false,

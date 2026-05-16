@@ -10,6 +10,7 @@ export const STORAGE_KEYS = {
   BIRDS_JSON_ETAG: "audio-birdle-birds-etag",
   BIRDS_JSON_LAST_MODIFIED: "audio-birdle-birds-last-modified",
   DEAD_AUDIO_URLS: "audio-birdle-dead-audio-urls",
+  GAME: "audio-birdle-game",
 };
 
 export const GAME_CONFIG = {

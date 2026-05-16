@@ -13,7 +13,7 @@ import {
   getUserPerformanceSummary,
 } from "@/utils/GameLogic";
 import { getStorage, setStorage } from "@/utils/StorageUtils";
-import { useNormalGameStore } from "@/stores/normalGameStore";
+import { useGameStore } from "@/stores/gameStore";
 
 // Mock localStorage for testing
 const mockLocalStorage = {
@@ -39,7 +39,7 @@ describe("Game Flow Integration Tests", () => {
     vi.stubGlobal("localStorage", mockLocalStorage);
 
     // Reset Zustand stores to prevent test pollution
-    useNormalGameStore.getState().reset();
+    useGameStore.getState().reset();
   });
 
   describe("Complete Daily Game Flow", () => {
@@ -67,16 +67,16 @@ describe("Game Flow Integration Tests", () => {
 
       // First guess - incorrect
       gameState = processGuess(gameState, region, date, "mallar3", testBird.id);
-      expect(gameState.dailyGames[`${region}-${date}`].guesses).toHaveLength(1);
-      expect(gameState.dailyGames[`${region}-${date}`].guesses[0].correct).toBe(
+      expect(gameState.dailyGames[`${region}-${date}-normal`].guesses).toHaveLength(1);
+      expect(gameState.dailyGames[`${region}-${date}-normal`].guesses[0].correct).toBe(
         false,
       );
-      expect(gameState.dailyGames[`${region}-${date}`].completed).toBe(false);
+      expect(gameState.dailyGames[`${region}-${date}-normal`].completed).toBe(false);
 
       // Second guess - incorrect
       gameState = processGuess(gameState, region, date, "horlar", testBird.id);
-      expect(gameState.dailyGames[`${region}-${date}`].guesses).toHaveLength(2);
-      expect(gameState.dailyGames[`${region}-${date}`].completed).toBe(false);
+      expect(gameState.dailyGames[`${region}-${date}-normal`].guesses).toHaveLength(2);
+      expect(gameState.dailyGames[`${region}-${date}-normal`].completed).toBe(false);
 
       // Third guess - correct
       gameState = processGuess(
@@ -86,12 +86,12 @@ describe("Game Flow Integration Tests", () => {
         testBird.id,
         testBird.id,
       );
-      expect(gameState.dailyGames[`${region}-${date}`].guesses).toHaveLength(3);
-      expect(gameState.dailyGames[`${region}-${date}`].guesses[2].correct).toBe(
+      expect(gameState.dailyGames[`${region}-${date}-normal`].guesses).toHaveLength(3);
+      expect(gameState.dailyGames[`${region}-${date}-normal`].guesses[2].correct).toBe(
         true,
       );
-      expect(gameState.dailyGames[`${region}-${date}`].completed).toBe(true);
-      expect(gameState.dailyGames[`${region}-${date}`].won).toBe(true);
+      expect(gameState.dailyGames[`${region}-${date}-normal`].completed).toBe(true);
+      expect(gameState.dailyGames[`${region}-${date}-normal`].won).toBe(true);
     });
 
     it("should handle game loss after max guesses", () => {
@@ -127,9 +127,9 @@ describe("Game Flow Integration Tests", () => {
         );
       }
 
-      expect(gameState.dailyGames[`${region}-${date}`].guesses).toHaveLength(4);
-      expect(gameState.dailyGames[`${region}-${date}`].completed).toBe(true);
-      expect(gameState.dailyGames[`${region}-${date}`].won).toBe(false);
+      expect(gameState.dailyGames[`${region}-${date}-normal`].guesses).toHaveLength(4);
+      expect(gameState.dailyGames[`${region}-${date}-normal`].completed).toBe(true);
+      expect(gameState.dailyGames[`${region}-${date}-normal`].won).toBe(false);
     });
   });
 
