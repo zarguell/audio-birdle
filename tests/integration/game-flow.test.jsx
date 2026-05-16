@@ -12,7 +12,7 @@ import {
   ensureGameStateFormat,
   getUserPerformanceSummary,
 } from "@/utils/GameLogic";
-import { getStoredData, setStoredData } from "@/utils/StorageUtils";
+import { getStorage, setStorage } from "@/utils/StorageUtils";
 import { useNormalGameStore } from "@/stores/normalGameStore";
 
 // Mock localStorage for testing
@@ -152,7 +152,7 @@ describe("Game Flow Integration Tests", () => {
       mockLocalStorage.storage["game-state"] = JSON.stringify(v1State);
 
       // Load and migrate
-      const loadedData = getStoredData("game-state");
+      const loadedData = getStorage("game-state");
       const migratedState = ensureGameStateFormat(loadedData);
 
       expect(migratedState.version).toBe(2);
@@ -176,7 +176,7 @@ describe("Game Flow Integration Tests", () => {
 
       mockLocalStorage.storage["game-state"] = JSON.stringify(v1State);
 
-      const loadedData = getStoredData("game-state");
+      const loadedData = getStorage("game-state");
       const migratedState = ensureGameStateFormat(loadedData);
 
       expect(migratedState.version).toBe(2);
@@ -207,8 +207,8 @@ describe("Game Flow Integration Tests", () => {
         },
       };
 
-      setStoredData("game-state", testState);
-      const loadedState = getStoredData("game-state");
+      setStorage("game-state", testState);
+      const loadedState = getStorage("game-state");
 
       expect(loadedState).toEqual(testState);
     });
@@ -293,7 +293,7 @@ describe("Game Flow Integration Tests", () => {
     it("should handle corrupted localStorage gracefully", () => {
       mockLocalStorage.storage["game-state"] = "invalid-json{{{";
 
-      const loadedData = getStoredData("game-state", null);
+      const loadedData = getStorage("game-state", null);
       expect(loadedData).toBeNull();
 
       // Should create fresh state
@@ -303,7 +303,7 @@ describe("Game Flow Integration Tests", () => {
     });
 
     it("should handle missing localStorage keys", () => {
-      const data = getStoredData("non-existent-key", null);
+      const data = getStorage("non-existent-key", null);
       expect(data).toBeNull();
     });
   });

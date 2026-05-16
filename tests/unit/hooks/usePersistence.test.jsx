@@ -1,11 +1,11 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
 import { usePersistence } from '@/hooks/usePersistence';
-import { getStoredData, setStoredData } from '@/utils/StorageUtils';
+import { getStorage, setStorage } from '@/utils/StorageUtils';
 
 vi.mock('@/utils/StorageUtils', () => ({
-  getStoredData: vi.fn(),
-  setStoredData: vi.fn(),
+  getStorage: vi.fn(),
+  setStorage: vi.fn(),
   STORAGE_KEYS: {
     REGION: 'audio-birdle-region',
     LAST_PLAYED_MODE: 'audio-birdle-last-mode',
@@ -18,16 +18,16 @@ describe('usePersistence', () => {
   });
 
   it('should initialize selectedRegion from localStorage', () => {
-    getStoredData.mockReturnValue('us');
+    getStorage.mockReturnValue('us');
 
     const { result } = renderHook(() => usePersistence());
 
-    expect(getStoredData).toHaveBeenCalledWith('audio-birdle-region', null);
+    expect(getStorage).toHaveBeenCalledWith('audio-birdle-region', null);
     expect(result.current.selectedRegion).toBe('us');
   });
 
   it('should initialize selectedRegion to null if not stored', () => {
-    getStoredData.mockReturnValue(null);
+    getStorage.mockReturnValue(null);
 
     const { result } = renderHook(() => usePersistence());
 
@@ -35,19 +35,19 @@ describe('usePersistence', () => {
   });
 
   it('should initialize lastPlayedMode from localStorage', () => {
-    getStoredData.mockImplementation((key, defaultValue) => {
+    getStorage.mockImplementation((key, defaultValue) => {
       if (key === 'audio-birdle-last-mode') return 'hard';
       return defaultValue;
     });
 
     const { result } = renderHook(() => usePersistence());
 
-    expect(getStoredData).toHaveBeenCalledWith('audio-birdle-last-mode', 'normal');
+    expect(getStorage).toHaveBeenCalledWith('audio-birdle-last-mode', 'normal');
     expect(result.current.lastPlayedMode).toBe('hard');
   });
 
   it('should initialize lastPlayedMode to normal if not stored', () => {
-    getStoredData.mockReturnValue('normal');
+    getStorage.mockReturnValue('normal');
 
     const { result } = renderHook(() => usePersistence());
 
@@ -55,7 +55,7 @@ describe('usePersistence', () => {
   });
 
   it('should save selectedRegion to localStorage when it changes', () => {
-    getStoredData.mockReturnValue(null);
+    getStorage.mockReturnValue(null);
 
     const { result } = renderHook(() => usePersistence());
 
@@ -63,11 +63,11 @@ describe('usePersistence', () => {
       result.current.setSelectedRegion('eu');
     });
 
-    expect(setStoredData).toHaveBeenCalledWith('audio-birdle-region', 'eu');
+    expect(setStorage).toHaveBeenCalledWith('audio-birdle-region', 'eu');
   });
 
   it('should save lastPlayedMode to localStorage when it changes', () => {
-    getStoredData.mockImplementation((key) => {
+    getStorage.mockImplementation((key) => {
       if (key === 'audio-birdle-region') return null;
       return 'normal';
     });
@@ -78,6 +78,6 @@ describe('usePersistence', () => {
       result.current.setLastPlayedMode('hard');
     });
 
-    expect(setStoredData).toHaveBeenCalledWith('audio-birdle-last-mode', 'hard');
+    expect(setStorage).toHaveBeenCalledWith('audio-birdle-last-mode', 'hard');
   });
 });

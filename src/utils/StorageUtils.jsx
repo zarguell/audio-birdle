@@ -108,22 +108,3 @@ export const clearStorage = (keyPrefix = 'audio-birdle-') => {
     return 0;
   }
 };
-
-// Legacy API - maintained for backward compatibility
-/**
- * @deprecated Use getStorage instead
- * Retrieve and parse data from localStorage
- */
-export const getStoredData = getStorage;
-
-/**
- * @deprecated Use setStorage instead
- * Store data in localStorage
- */
-export const setStoredData = setStorage;
-
-/**
- * @deprecated Use removeStorage instead
- * Remove data from localStorage
- */
-export const removeStoredData = removeStorage;
