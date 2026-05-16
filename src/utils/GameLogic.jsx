@@ -2,7 +2,7 @@
 // Now delegates to Zustand stores for state management while maintaining backward compatibility
 
 import { getTodaysBirdFromDaily } from "./DailyBirdUtils";
-import { hashString } from "./HashUtils";
+import { hashString, createSeededRandom, deterministicShuffle } from "./HashUtils";
 import { GAME_CONFIG } from "./Constants";
 import { compareTaxonomy } from "./TaxonomyUtils";
 import { useNormalGameStore } from "../stores/normalGameStore";
@@ -386,38 +386,7 @@ export const getDailyBirdWithFallback = async (region, birds, date) => {
   }
 };
 
-/**
- * Deterministic random number generator using a seed
- * @param {number} seed - Seed value for deterministic randomness
- * @returns {function} - Function that returns deterministic "random" numbers between 0 and 1
- */
-const createSeededRandom = (seed) => {
-  let state = seed;
-  return () => {
-    // Linear congruential generator - simple but effective for our needs
-    state = (state * 1664525 + 1013904223) >>> 0; // Keep it 32-bit
-    return (state % 2147483647) / 2147483647; // Normalize to 0-1
-  };
-};
 
-/**
- * Shuffle array deterministically using seeded random
- * @param {Array} array - Array to shuffle
- * @param {number} seed - Seed for deterministic shuffling
- * @returns {Array} - New shuffled array
- */
-const deterministicShuffle = (array, seed) => {
-  const shuffled = [...array];
-  const random = createSeededRandom(seed);
-
-  // Fisher-Yates shuffle with seeded random
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
-
-  return shuffled;
-};
 
 /**
  * Generate deterministic answer options for the daily game

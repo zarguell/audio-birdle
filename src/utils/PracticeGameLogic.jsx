@@ -1,4 +1,4 @@
-import { hashString } from "./HashUtils";
+import { hashString, deterministicShuffle, randomShuffle } from "./HashUtils";
 import { GAME_CONFIG } from "./Constants";
 import { compareTaxonomy } from "./TaxonomyUtils";
 
@@ -23,43 +23,7 @@ export const createInitialPracticeState = (region, isHardMode = false) => {
   };
 };
 
-/**
- * Creates a seeded random generator for consistent results
- */
-const createSeededRandom = (seed) => {
-  let state = seed;
-  return () => {
-    state = (state * 1664525 + 1013904223) >>> 0;
-    return (state % 2147483647) / 2147483647;
-  };
-};
 
-/**
- * Deterministic shuffle using seed
- */
-const deterministicShuffle = (array, seed) => {
-  const shuffled = [...array];
-  const random = createSeededRandom(seed);
-
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
-
-  return shuffled;
-};
-
-/**
- * Truly random shuffle using Fisher-Yates algorithm with Math.random()
- */
-const randomShuffle = (array) => {
-  const shuffled = [...array];
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
-  return shuffled;
-};
 
 /**
  * Gets a practice bird based on region and practice index

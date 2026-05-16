@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { hashString } from '@/utils/HashUtils'
+import { hashString, createSeededRandom, deterministicShuffle, randomShuffle } from '@/utils/HashUtils'
 
 // Expected hash values for consistency verification
 // These MUST match Python implementation exactly
@@ -161,6 +161,63 @@ describe('HashUtils', () => {
       })
     })
   })
+
+  describe('createSeededRandom', () => {
+    it('should produce deterministic output for same seed', () => {
+      const rand1 = createSeededRandom(42);
+      const rand2 = createSeededRandom(42);
+      const results1 = Array.from({ length: 10 }, () => rand1());
+      const results2 = Array.from({ length: 10 }, () => rand2());
+      expect(results1).toEqual(results2);
+    });
+
+    it('should produce different output for different seeds', () => {
+      const rand1 = createSeededRandom(42);
+      const rand2 = createSeededRandom(99);
+      const r1 = rand1();
+      const r2 = rand2();
+      expect(r1).not.toBe(r2);
+    });
+
+    it('should produce values between 0 and 1', () => {
+      const rand = createSeededRandom(42);
+      for (let i = 0; i < 100; i++) {
+        const val = rand();
+        expect(val).toBeGreaterThanOrEqual(0);
+        expect(val).toBeLessThan(1);
+      }
+    });
+  });
+
+  describe('deterministicShuffle', () => {
+    it('should shuffle array deterministically', () => {
+      const input = [1, 2, 3, 4, 5];
+      const result1 = deterministicShuffle(input, 42);
+      const result2 = deterministicShuffle(input, 42);
+      expect(result1).toEqual(result2);
+    });
+
+    it('should contain same elements after shuffle', () => {
+      const input = [1, 2, 3, 4, 5];
+      const result = deterministicShuffle(input, 42);
+      expect(result.sort()).toEqual(input.sort());
+    });
+
+    it('should not mutate original array', () => {
+      const input = [1, 2, 3, 4, 5];
+      const copy = [...input];
+      deterministicShuffle(input, 42);
+      expect(input).toEqual(copy);
+    });
+  });
+
+  describe('randomShuffle', () => {
+    it('should contain same elements after shuffle', () => {
+      const input = [1, 2, 3, 4, 5];
+      const result = randomShuffle(input);
+      expect(result.sort()).toEqual(input.sort());
+    });
+  });
 
   describe('hashString consistency with Python', () => {
     it('should match Python implementation for empty string', () => {

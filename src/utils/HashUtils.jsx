@@ -19,17 +19,22 @@ export const hashString = (str) => {
   return hash.toString(16).padStart(8, '0');
 };
 
-export const shuffleArray = (array, seed) => {
+export const createSeededRandom = (seed) => {
+  let state = seed;
+  return () => {
+    state = (state * 1664525 + 1013904223) >>> 0;
+    return (state % 2147483647) / 2147483647;
+  };
+};
+
+export const deterministicShuffle = (array, seed) => {
   const shuffled = [...array];
-  let currentIndex = shuffled.length;
-  let randomIndex;
-
-  while (currentIndex !== 0) {
-    randomIndex = Math.floor((seed % currentIndex));
-    currentIndex--;
-    [shuffled[currentIndex], shuffled[randomIndex]] = [shuffled[randomIndex], shuffled[currentIndex]];
-    seed = Math.floor(seed / 2);
+  const random = createSeededRandom(seed);
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
   }
-
   return shuffled;
 };
+
+export const randomShuffle = (array) => deterministicShuffle(array, Date.now());
