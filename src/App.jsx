@@ -1,19 +1,13 @@
 import { getTodayString } from "./utils/DateUtils";
 import { VIEWS } from "./utils/Constants";
-import PracticeGame from "./components/PracticeGame";
-import HardModeGame from "./components/HardModeGame";
 import RegionSelector from "./components/RegionSelector";
 import ModeSelector from "./components/ModeSelector";
 import StatsView from "./components/StatsView";
 import SettingsView from "./components/SettingsView";
 import GameView from "./components/GameView";
-import { useAudioPlayer } from "./hooks/useAudioPlayer";
 import { useGameData } from "./hooks/useGameData";
-import { useDailyGame } from "./hooks/useDailyGame";
 import { usePersistence } from "./hooks/usePersistence";
 import { useGameNavigation } from "./hooks/useGameNavigation";
-import { useGameInitialization } from "./hooks/useGameInitialization";
-import { useShareResult } from "./hooks/useShareResult";
 
 import { useGameStore } from "./stores/gameStore";
 
@@ -24,9 +18,6 @@ export default function AudioBirdle() {
     lastPlayedMode,
     setLastPlayedMode,
   } = usePersistence();
-
-  const audioPlayer = useAudioPlayer();
-  const { selectedAudioIndex, setSelectedAudioIndex } = audioPlayer;
 
   const {
     regions,
@@ -40,9 +31,6 @@ export default function AudioBirdle() {
   } = useGameData(selectedRegion);
 
   const today = getTodayString();
-
-  const { makeGuess, resetTodaysGame, resetAllData, answerOptions } =
-    useDailyGame(selectedRegion, today, birds, todaysBird);
 
   const normalGame = useGameStore((state) =>
     selectedRegion && today
@@ -60,35 +48,28 @@ export default function AudioBirdle() {
 
   const { currentView, setCurrentView } = useGameNavigation();
 
-  useGameInitialization(selectedRegion, today, normalGame);
-
-  const { handleShareResult } = useShareResult(
-    normalGame,
-    todaysBird,
-    selectedRegion,
-  );
-
   const gameModes = [
     {
       name: "Normal Mode",
-      description: "Daily challenge • 4 guesses • Multiple choice",
-      icon: "🎯",
+      description: "Daily challenge \u2022 4 guesses \u2022 Multiple choice",
+      icon: "\uD83C\uDFAF",
       mode: "normal",
       view: VIEWS.GAME,
       color: "blue",
     },
     {
       name: "Hard Mode",
-      description: "Daily challenge • 6 guesses • Free text • Taxonomic hints",
-      icon: "🔥",
+      description:
+        "Daily challenge \u2022 6 guesses \u2022 Free text \u2022 Taxonomic hints",
+      icon: "\uD83D\uDD25",
       mode: "hard",
       view: VIEWS.HARD_MODE,
       color: "red",
     },
     {
       name: "Practice Mode",
-      description: "Unlimited play • No daily limit",
-      icon: "🎮",
+      description: "Unlimited play \u2022 No daily limit",
+      icon: "\uD83C\uDFAE",
       mode: "practice",
       view: VIEWS.PRACTICE,
       color: "purple",
@@ -127,29 +108,36 @@ export default function AudioBirdle() {
 
   if (currentView === VIEWS.PRACTICE) {
     return (
-      <PracticeGame
+      <GameView
+        mode="normal"
+        isPractice={true}
         region={selectedRegion}
-        birds={birds}
+        today={today}
         regions={regions}
+        todaysBird={null}
+        birds={birds}
         onBack={() => setCurrentView(VIEWS.MODE_SELECTOR)}
       />
     );
   }
 
   if (currentView === VIEWS.HARD_MODE) {
-    const normalModeCompleted = normalGame?.completed === true;
-
     return (
-      <HardModeGame
+      <GameView
+        mode="hard"
+        isPractice={false}
         region={selectedRegion}
-        birds={birds}
+        today={today}
+        regions={regions}
         todaysBird={todaysBird}
+        birds={birds}
         onBack={() => setCurrentView(VIEWS.MODE_SELECTOR)}
-        normalModeCompleted={normalModeCompleted}
+        onNavigateSettings={() => setCurrentView(VIEWS.SETTINGS)}
         dataConsistencyError={dataConsistencyError}
         hasUpdate={hasUpdate}
         refreshingData={refreshingData}
         handleForceRefresh={handleForceRefresh}
+        normalModeCompleted={normalGame?.completed === true}
       />
     );
   }
@@ -162,8 +150,20 @@ export default function AudioBirdle() {
         onBack={() => setCurrentView(VIEWS.MODE_SELECTOR)}
         onChangeRegion={() => setSelectedRegion(null)}
         onViewStats={() => setCurrentView(VIEWS.STATS)}
-        onResetTodaysGame={resetTodaysGame}
-        onResetAllData={resetAllData}
+        onResetTodaysGame={() => {
+          if (!selectedRegion) return;
+          const key = `${selectedRegion}-${today}-normal`;
+          useGameStore.getState().setDailyGame(key, {
+            region: selectedRegion,
+            date: today,
+            mode: "normal",
+            guesses: [],
+            completed: false,
+            won: false,
+            maxGuesses: 4,
+          });
+        }}
+        onResetAllData={() => useGameStore.getState().reset()}
         onRefreshData={handleRefreshData}
         refreshingData={refreshingData}
         hasUpdate={hasUpdate}
@@ -185,35 +185,21 @@ export default function AudioBirdle() {
 
   return (
     <GameView
-      selectedRegion={selectedRegion}
+      mode="normal"
+      isPractice={false}
+      region={selectedRegion}
       today={today}
       regions={regions}
       todaysBird={todaysBird}
-      currentDailyGame={normalGame}
-      answerOptions={answerOptions}
-      makeGuess={makeGuess}
-      audioPlayer={audioPlayer}
-      selectedAudioIndex={selectedAudioIndex}
-      setSelectedAudioIndex={setSelectedAudioIndex}
+      birds={birds}
+      onBack={() => setCurrentView(VIEWS.MODE_SELECTOR)}
+      onNavigateSettings={() => setCurrentView(VIEWS.SETTINGS)}
+      onNavigatePractice={() => setCurrentView(VIEWS.PRACTICE)}
+      onNavigateHard={() => setCurrentView(VIEWS.HARD_MODE)}
       dataConsistencyError={dataConsistencyError}
       hasUpdate={hasUpdate}
       refreshingData={refreshingData}
       handleForceRefresh={handleForceRefresh}
-      handleShareResult={handleShareResult}
-      onBack={(destination) => {
-        if (destination === "settings") {
-          setCurrentView(VIEWS.SETTINGS);
-        } else {
-          setCurrentView(VIEWS.MODE_SELECTOR);
-        }
-      }}
-      onModeChange={(mode) => {
-        if (mode === "hard") {
-          setCurrentView(VIEWS.HARD_MODE);
-        } else if (mode === "practice") {
-          setCurrentView(VIEWS.PRACTICE);
-        }
-      }}
       hardModeCompleted={hardModeCompleted}
     />
   );
