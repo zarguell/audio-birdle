@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-01-17",
-      "id": "dowwoo",
-      "name": "Downy Woodpecker",
-      "subregion": "Kansas"
-    },
-    {
       "date": "2026-01-18",
       "id": "brnthr",
       "name": "Brown Thrasher",
@@ -719,15 +713,15 @@
       "id": "glwgul",
       "name": "Glaucous-winged Gull",
       "subregion": "Washington"
+    },
+    {
+      "date": "2026-05-17",
+      "id": "fragul",
+      "name": "Franklin's Gull",
+      "subregion": "Missouri"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-01-17",
-      "id": "rehwoo",
-      "name": "Red-headed Woodpecker",
-      "subregion": "Kansas"
-    },
     {
       "date": "2026-01-18",
       "id": "savspa",
@@ -1441,6 +1435,12 @@
       "id": "baleag",
       "name": "Bald Eagle",
       "subregion": "Washington"
+    },
+    {
+      "date": "2026-05-17",
+      "id": "bkcchi",
+      "name": "Black-capped Chickadee",
+      "subregion": "Missouri"
     }
   ]
 }
