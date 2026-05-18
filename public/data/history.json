@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-01-18",
-      "id": "brnthr",
-      "name": "Brown Thrasher",
-      "subregion": "North Carolina"
-    },
-    {
       "date": "2026-01-19",
       "id": "marwre",
       "name": "Marsh Wren",
@@ -719,15 +713,15 @@
       "id": "fragul",
       "name": "Franklin's Gull",
       "subregion": "Missouri"
+    },
+    {
+      "date": "2026-05-18",
+      "id": "gadwal",
+      "name": "Gadwall",
+      "subregion": "Maine"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-01-18",
-      "id": "savspa",
-      "name": "Savannah Sparrow",
-      "subregion": "Delaware"
-    },
     {
       "date": "2026-01-19",
       "id": "hoomer",
@@ -1441,6 +1435,12 @@
       "id": "bkcchi",
       "name": "Black-capped Chickadee",
       "subregion": "Missouri"
+    },
+    {
+      "date": "2026-05-18",
+      "id": "rehwoo",
+      "name": "Red-headed Woodpecker",
+      "subregion": "Maine"
     }
   ]
 }
