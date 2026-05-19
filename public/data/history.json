@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-01-19",
-      "id": "marwre",
-      "name": "Marsh Wren",
-      "subregion": "Washington"
-    },
-    {
       "date": "2026-01-20",
       "id": "bkcchi",
       "name": "Black-capped Chickadee",
@@ -719,15 +713,15 @@
       "id": "gadwal",
       "name": "Gadwall",
       "subregion": "Maine"
+    },
+    {
+      "date": "2026-05-19",
+      "id": "norpar",
+      "name": "Northern Parula",
+      "subregion": "Kentucky"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-01-19",
-      "id": "hoomer",
-      "name": "Hooded Merganser",
-      "subregion": "Maryland"
-    },
     {
       "date": "2026-01-20",
       "id": "mallar3",
@@ -1441,6 +1435,12 @@
       "id": "rehwoo",
       "name": "Red-headed Woodpecker",
       "subregion": "Maine"
+    },
+    {
+      "date": "2026-05-19",
+      "id": "comloo",
+      "name": "Common Loon",
+      "subregion": "Wisconsin"
     }
   ]
 }
