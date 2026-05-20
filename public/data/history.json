@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-01-20",
-      "id": "bkcchi",
-      "name": "Black-capped Chickadee",
-      "subregion": "Indiana"
-    },
-    {
       "date": "2026-01-21",
       "id": "haiwoo",
       "name": "Hairy Woodpecker",
@@ -719,15 +713,15 @@
       "id": "norpar",
       "name": "Northern Parula",
       "subregion": "Kentucky"
+    },
+    {
+      "date": "2026-05-20",
+      "id": "babwar",
+      "name": "Bay-breasted Warbler",
+      "subregion": "Louisiana"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-01-20",
-      "id": "mallar3",
-      "name": "Mallard",
-      "subregion": "Connecticut"
-    },
     {
       "date": "2026-01-21",
       "id": "cacgoo1",
@@ -1441,6 +1435,12 @@
       "id": "comloo",
       "name": "Common Loon",
       "subregion": "Wisconsin"
+    },
+    {
+      "date": "2026-05-20",
+      "id": "snogoo",
+      "name": "Snow Goose",
+      "subregion": "Louisiana"
     }
   ]
 }
