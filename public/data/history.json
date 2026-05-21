@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-01-21",
-      "id": "haiwoo",
-      "name": "Hairy Woodpecker",
-      "subregion": "District of Columbia"
-    },
-    {
       "date": "2026-01-22",
       "id": "whcspa",
       "name": "White-crowned Sparrow",
@@ -719,15 +713,15 @@
       "id": "babwar",
       "name": "Bay-breasted Warbler",
       "subregion": "Louisiana"
+    },
+    {
+      "date": "2026-05-21",
+      "id": "btbwar",
+      "name": "Black-throated Blue Warbler",
+      "subregion": "Massachusetts"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-01-21",
-      "id": "cacgoo1",
-      "name": "Cackling Goose",
-      "subregion": "Wyoming"
-    },
     {
       "date": "2026-01-22",
       "id": "indbun",
@@ -1441,6 +1435,12 @@
       "id": "snogoo",
       "name": "Snow Goose",
       "subregion": "Louisiana"
+    },
+    {
+      "date": "2026-05-21",
+      "id": "brwhaw",
+      "name": "Broad-winged Hawk",
+      "subregion": "West Virginia"
     }
   ]
 }
