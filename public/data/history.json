@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-01-22",
-      "id": "whcspa",
-      "name": "White-crowned Sparrow",
-      "subregion": "New York"
-    },
-    {
       "date": "2026-01-23",
       "id": "willet1",
       "name": "Willet",
@@ -719,15 +713,15 @@
       "id": "btbwar",
       "name": "Black-throated Blue Warbler",
       "subregion": "Massachusetts"
+    },
+    {
+      "date": "2026-05-22",
+      "id": "reevir1",
+      "name": "Red-eyed Vireo",
+      "subregion": "Minnesota"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-01-22",
-      "id": "indbun",
-      "name": "Indigo Bunting",
-      "subregion": "New York"
-    },
     {
       "date": "2026-01-23",
       "id": "margod",
@@ -1441,6 +1435,12 @@
       "id": "brwhaw",
       "name": "Broad-winged Hawk",
       "subregion": "West Virginia"
+    },
+    {
+      "date": "2026-05-22",
+      "id": "amekes",
+      "name": "American Kestrel",
+      "subregion": "Minnesota"
     }
   ]
 }
