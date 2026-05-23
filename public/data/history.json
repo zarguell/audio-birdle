@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-01-23",
-      "id": "willet1",
-      "name": "Willet",
-      "subregion": "South Carolina"
-    },
-    {
       "date": "2026-01-24",
       "id": "norgos",
       "name": "American Goshawk",
@@ -719,15 +713,15 @@
       "id": "reevir1",
       "name": "Red-eyed Vireo",
       "subregion": "Minnesota"
+    },
+    {
+      "date": "2026-05-23",
+      "id": "rebmer",
+      "name": "Red-breasted Merganser",
+      "subregion": "Illinois"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-01-23",
-      "id": "margod",
-      "name": "Marbled Godwit",
-      "subregion": "South Carolina"
-    },
     {
       "date": "2026-01-24",
       "id": "snobun",
@@ -1441,6 +1435,12 @@
       "id": "amekes",
       "name": "American Kestrel",
       "subregion": "Minnesota"
+    },
+    {
+      "date": "2026-05-23",
+      "id": "comnig",
+      "name": "Common Nighthawk",
+      "subregion": "Delaware"
     }
   ]
 }
