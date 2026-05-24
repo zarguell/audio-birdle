@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-01-24",
-      "id": "norgos",
-      "name": "American Goshawk",
-      "subregion": "Colorado"
-    },
-    {
       "date": "2026-01-25",
       "id": "easblu",
       "name": "Eastern Bluebird",
@@ -719,15 +713,15 @@
       "id": "rebmer",
       "name": "Red-breasted Merganser",
       "subregion": "Illinois"
+    },
+    {
+      "date": "2026-05-24",
+      "id": "brthum",
+      "name": "Broad-tailed Hummingbird",
+      "subregion": "Montana"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-01-24",
-      "id": "snobun",
-      "name": "Snow Bunting",
-      "subregion": "Montana"
-    },
     {
       "date": "2026-01-25",
       "id": "rebnut",
@@ -1441,6 +1435,12 @@
       "id": "comnig",
       "name": "Common Nighthawk",
       "subregion": "Delaware"
+    },
+    {
+      "date": "2026-05-24",
+      "id": "chiswi",
+      "name": "Chimney Swift",
+      "subregion": "Montana"
     }
   ]
 }
