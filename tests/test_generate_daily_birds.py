@@ -32,8 +32,8 @@ class TestHashBirdId:
         "barswa": "4060c5e0",
         "bird-with-dash": "f0e934a5",
         "TESTBIRD": "0391253f",
-        "mallar3": "6e8e7f7c",
-        "hoomer": "a1b2c3d4",
+        "mallar3": "1f16a85c",
+        "hoomer": "5cf9cfd8",
     }
 
     @staticmethod

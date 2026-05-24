@@ -268,7 +268,11 @@ class TestProcessTaxonomyData:
         birds = game_data_generator.process_taxonomy_data(taxonomy_data, url_groups)
 
         assert len(birds[0]["audioUrl"]) == 3
-        assert birds[0]["audioUrl"] == ["url1", "url2", "url3"]
+        assert birds[0]["audioUrl"] == [
+            {"url": "url1", "attribution": {}},
+            {"url": "url2", "attribution": {}},
+            {"url": "url3", "attribution": {}},
+        ]
 
 
 class TestLoadExistingOutput:

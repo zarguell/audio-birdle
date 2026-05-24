@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { fetchWithRetry } from './RetryUtils';
 
 // Hook to fetch subregion data
+// eslint-disable-next-line react-refresh/only-export-components
 export const useSubregion = (selectedRegion, today) => {
   const [subregion, setSubregion] = useState('');
   const [loading, setLoading] = useState(true);

@@ -114,7 +114,7 @@ export function useGameData(initialRegion = null) {
     } catch (error) {
       console.error("Auto-refresh failed:", error);
     }
-  }, [initialRegion, today]);
+  }, [initialRegion, today, loadAndSetBird]);
 
   // Check for updates
   useEffect(() => {
@@ -154,7 +154,7 @@ export function useGameData(initialRegion = null) {
     } catch (error) {
       console.error("Force refresh failed:", error);
     }
-  }, [initialRegion, today]);
+  }, [initialRegion, today, loadAndSetBird]);
 
   // Manual refresh
   const handleRefreshData = useCallback(async () => {
@@ -183,7 +183,7 @@ export function useGameData(initialRegion = null) {
     } finally {
       setRefreshingData(false);
     }
-  }, [initialRegion, today, dataConsistencyError]);
+  }, [initialRegion, today, dataConsistencyError, loadAndSetBird]);
 
   return {
     regions,

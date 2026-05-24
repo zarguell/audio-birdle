@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { useGameStore } from '@/stores/gameStore'
 import { createMockLocalStorage } from '@test/setup'
-import { createTestGameState, createTestDailyGame, createTestBird, createCompletedGame, createHardModeGame, createHardModeGuess } from '@test/fixtures/integration-fixtures'
+import { createTestDailyGame, createHardModeGame, createHardModeGuess } from '@test/fixtures/integration-fixtures'
 
 describe('Store Interactions Integration', () => {
   let mockStorage

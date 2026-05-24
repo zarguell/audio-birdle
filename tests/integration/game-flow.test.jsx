@@ -10,7 +10,6 @@ import { describe, it, expect, beforeEach, vi } from "vitest";
 import {
   processGuess,
   getUserPerformanceSummary,
-  createRegionDateKey,
 } from "@/utils/GameLogic";
 import { getStorage, setStorage } from "@/utils/StorageUtils";
 import { useGameStore } from "@/stores/gameStore";
