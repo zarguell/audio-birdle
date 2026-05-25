@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-01-25",
-      "id": "easblu",
-      "name": "Eastern Bluebird",
-      "subregion": "District of Columbia"
-    },
-    {
       "date": "2026-01-26",
       "id": "redjun",
       "name": "Red Junglefowl",
@@ -719,15 +713,15 @@
       "id": "brthum",
       "name": "Broad-tailed Hummingbird",
       "subregion": "Montana"
+    },
+    {
+      "date": "2026-05-25",
+      "id": "norcar",
+      "name": "Northern Cardinal",
+      "subregion": "Kentucky"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-01-25",
-      "id": "rebnut",
-      "name": "Red-breasted Nuthatch",
-      "subregion": "District of Columbia"
-    },
     {
       "date": "2026-01-26",
       "id": "amerob",
@@ -1441,6 +1435,12 @@
       "id": "chiswi",
       "name": "Chimney Swift",
       "subregion": "Montana"
+    },
+    {
+      "date": "2026-05-25",
+      "id": "buwtea",
+      "name": "Blue-winged Teal",
+      "subregion": "Kentucky"
     }
   ]
 }
