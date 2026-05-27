@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-01-27",
-      "id": "amegfi",
-      "name": "American Goldfinch",
-      "subregion": "Utah"
-    },
-    {
       "date": "2026-01-28",
       "id": "rudduc",
       "name": "Ruddy Duck",
@@ -719,15 +713,15 @@
       "id": "easblu",
       "name": "Eastern Bluebird",
       "subregion": "Florida"
+    },
+    {
+      "date": "2026-05-27",
+      "id": "buwwar",
+      "name": "Blue-winged Warbler",
+      "subregion": "Illinois"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-01-27",
-      "id": "amekes",
-      "name": "American Kestrel",
-      "subregion": "Utah"
-    },
     {
       "date": "2026-01-28",
       "id": "doccor",
@@ -1441,6 +1435,12 @@
       "id": "barswa",
       "name": "Barn Swallow",
       "subregion": "Florida"
+    },
+    {
+      "date": "2026-05-27",
+      "id": "miskit",
+      "name": "Mississippi Kite",
+      "subregion": "Mississippi"
     }
   ]
 }
