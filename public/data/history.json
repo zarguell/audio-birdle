@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-01-28",
-      "id": "rudduc",
-      "name": "Ruddy Duck",
-      "subregion": "Wisconsin"
-    },
-    {
       "date": "2026-01-29",
       "id": "dickci",
       "name": "Dickcissel",
@@ -719,15 +713,15 @@
       "id": "buwwar",
       "name": "Blue-winged Warbler",
       "subregion": "Illinois"
+    },
+    {
+      "date": "2026-05-28",
+      "id": "scatan",
+      "name": "Scarlet Tanager",
+      "subregion": "New Jersey"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-01-28",
-      "id": "doccor",
-      "name": "Double-crested Cormorant",
-      "subregion": "Wisconsin"
-    },
     {
       "date": "2026-01-29",
       "id": "norbob",
@@ -1441,6 +1435,12 @@
       "id": "miskit",
       "name": "Mississippi Kite",
       "subregion": "Mississippi"
+    },
+    {
+      "date": "2026-05-28",
+      "id": "brocow",
+      "name": "Bronzed Cowbird",
+      "subregion": "Oklahoma"
     }
   ]
 }
