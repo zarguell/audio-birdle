@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-01-29",
-      "id": "dickci",
-      "name": "Dickcissel",
-      "subregion": "Mississippi"
-    },
-    {
       "date": "2026-01-30",
       "id": "killde",
       "name": "Killdeer",
@@ -719,15 +713,15 @@
       "id": "scatan",
       "name": "Scarlet Tanager",
       "subregion": "New Jersey"
+    },
+    {
+      "date": "2026-05-29",
+      "id": "ribgul",
+      "name": "Ring-billed Gull",
+      "subregion": "District of Columbia"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-01-29",
-      "id": "norbob",
-      "name": "Northern Bobwhite",
-      "subregion": "Maryland"
-    },
     {
       "date": "2026-01-30",
       "id": "fiespa",
@@ -1441,6 +1435,12 @@
       "id": "brocow",
       "name": "Bronzed Cowbird",
       "subregion": "Oklahoma"
+    },
+    {
+      "date": "2026-05-29",
+      "id": "veery",
+      "name": "Veery",
+      "subregion": "District of Columbia"
     }
   ]
 }
