@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-01-30",
-      "id": "killde",
-      "name": "Killdeer",
-      "subregion": "Delaware"
-    },
-    {
       "date": "2026-01-31",
       "id": "grhowl",
       "name": "Great Horned Owl",
@@ -719,15 +713,15 @@
       "id": "ribgul",
       "name": "Ring-billed Gull",
       "subregion": "District of Columbia"
+    },
+    {
+      "date": "2026-05-30",
+      "id": "virwar",
+      "name": "Virginia's Warbler",
+      "subregion": "Arizona"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-01-30",
-      "id": "fiespa",
-      "name": "Field Sparrow",
-      "subregion": "Arkansas"
-    },
     {
       "date": "2026-01-31",
       "id": "ribgul",
@@ -1441,6 +1435,12 @@
       "id": "veery",
       "name": "Veery",
       "subregion": "District of Columbia"
+    },
+    {
+      "date": "2026-05-30",
+      "id": "houspa",
+      "name": "House Sparrow",
+      "subregion": "Arizona"
     }
   ]
 }
