@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-01-31",
-      "id": "grhowl",
-      "name": "Great Horned Owl",
-      "subregion": "Georgia"
-    },
-    {
       "date": "2026-02-01",
       "id": "amtspa",
       "name": "American Tree Sparrow",
@@ -719,15 +713,15 @@
       "id": "virwar",
       "name": "Virginia's Warbler",
       "subregion": "Arizona"
+    },
+    {
+      "date": "2026-05-31",
+      "id": "baleag",
+      "name": "Bald Eagle",
+      "subregion": "Illinois"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-01-31",
-      "id": "ribgul",
-      "name": "Ring-billed Gull",
-      "subregion": "Nebraska"
-    },
     {
       "date": "2026-02-01",
       "id": "moudov",
@@ -1441,6 +1435,12 @@
       "id": "houspa",
       "name": "House Sparrow",
       "subregion": "Arizona"
+    },
+    {
+      "date": "2026-05-31",
+      "id": "hoowar",
+      "name": "Hooded Warbler",
+      "subregion": "Massachusetts"
     }
   ]
 }
