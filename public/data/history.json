@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-02-01",
-      "id": "amtspa",
-      "name": "American Tree Sparrow",
-      "subregion": "New York"
-    },
-    {
       "date": "2026-02-02",
       "id": "amekes",
       "name": "American Kestrel",
@@ -719,15 +713,15 @@
       "id": "baleag",
       "name": "Bald Eagle",
       "subregion": "Illinois"
+    },
+    {
+      "date": "2026-06-01",
+      "id": "brdowl",
+      "name": "Barred Owl",
+      "subregion": "Vermont"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-02-01",
-      "id": "moudov",
-      "name": "Mourning Dove",
-      "subregion": "New Jersey"
-    },
     {
       "date": "2026-02-02",
       "id": "buffle",
@@ -1441,6 +1435,12 @@
       "id": "hoowar",
       "name": "Hooded Warbler",
       "subregion": "Massachusetts"
+    },
+    {
+      "date": "2026-06-01",
+      "id": "vesspa",
+      "name": "Vesper Sparrow",
+      "subregion": "Vermont"
     }
   ]
 }
