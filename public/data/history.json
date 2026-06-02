@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-02-02",
-      "id": "amekes",
-      "name": "American Kestrel",
-      "subregion": "Utah"
-    },
-    {
       "date": "2026-02-03",
       "id": "wooduc",
       "name": "Wood Duck",
@@ -719,15 +713,15 @@
       "id": "brdowl",
       "name": "Barred Owl",
       "subregion": "Vermont"
+    },
+    {
+      "date": "2026-06-02",
+      "id": "canwar",
+      "name": "Canada Warbler",
+      "subregion": "Iowa"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-02-02",
-      "id": "buffle",
-      "name": "Bufflehead",
-      "subregion": "Montana"
-    },
     {
       "date": "2026-02-03",
       "id": "rebwoo",
@@ -1441,6 +1435,12 @@
       "id": "vesspa",
       "name": "Vesper Sparrow",
       "subregion": "Vermont"
+    },
+    {
+      "date": "2026-06-02",
+      "id": "amered",
+      "name": "American Redstart",
+      "subregion": "Iowa"
     }
   ]
 }
