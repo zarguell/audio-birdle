@@ -719,6 +719,12 @@
       "id": "rotbec",
       "name": "Rose-throated Becard",
       "subregion": "Arizona"
+    },
+    {
+      "date": "2026-06-03",
+      "id": "canvas",
+      "name": "Canvasback",
+      "subregion": "New York"
     }
   ],
   "us-lower48": [
@@ -1441,6 +1447,12 @@
       "id": "norbob",
       "name": "Northern Bobwhite",
       "subregion": "Delaware"
+    },
+    {
+      "date": "2026-06-03",
+      "id": "mallar3",
+      "name": "Mallard",
+      "subregion": "New York"
     }
   ]
 }
