@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-02-03",
-      "id": "wooduc",
-      "name": "Wood Duck",
-      "subregion": "Montana"
-    },
-    {
       "date": "2026-02-04",
       "id": "doccor",
       "name": "Double-crested Cormorant",
@@ -719,15 +713,15 @@
       "id": "canwar",
       "name": "Canada Warbler",
       "subregion": "Iowa"
+    },
+    {
+      "date": "2026-06-03",
+      "id": "rotbec",
+      "name": "Rose-throated Becard",
+      "subregion": "Arizona"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-02-03",
-      "id": "rebwoo",
-      "name": "Red-bellied Woodpecker",
-      "subregion": "Iowa"
-    },
     {
       "date": "2026-02-04",
       "id": "brdowl",
@@ -1441,6 +1435,12 @@
       "id": "amered",
       "name": "American Redstart",
       "subregion": "Iowa"
+    },
+    {
+      "date": "2026-06-03",
+      "id": "norbob",
+      "name": "Northern Bobwhite",
+      "subregion": "Delaware"
     }
   ]
 }
