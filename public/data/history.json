@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-02-04",
-      "id": "doccor",
-      "name": "Double-crested Cormorant",
-      "subregion": "Missouri"
-    },
-    {
       "date": "2026-02-05",
       "id": "whwcro",
       "name": "White-winged Crossbill",
@@ -725,15 +719,15 @@
       "id": "canvas",
       "name": "Canvasback",
       "subregion": "New York"
+    },
+    {
+      "date": "2026-06-04",
+      "id": "calqua",
+      "name": "California Quail",
+      "subregion": "Nevada"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-02-04",
-      "id": "brdowl",
-      "name": "Barred Owl",
-      "subregion": "Missouri"
-    },
     {
       "date": "2026-02-05",
       "id": "amegfi",
@@ -1453,6 +1447,12 @@
       "id": "mallar3",
       "name": "Mallard",
       "subregion": "New York"
+    },
+    {
+      "date": "2026-06-04",
+      "id": "canvas",
+      "name": "Canvasback",
+      "subregion": "Colorado"
     }
   ]
 }
