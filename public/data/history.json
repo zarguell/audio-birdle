@@ -725,6 +725,12 @@
       "id": "calqua",
       "name": "California Quail",
       "subregion": "Nevada"
+    },
+    {
+      "date": "2026-06-04",
+      "id": "mouwar",
+      "name": "Mourning Warbler",
+      "subregion": "Nebraska"
     }
   ],
   "us-lower48": [
@@ -1453,6 +1459,12 @@
       "id": "canvas",
       "name": "Canvasback",
       "subregion": "Colorado"
+    },
+    {
+      "date": "2026-06-04",
+      "id": "paibun",
+      "name": "Painted Bunting",
+      "subregion": "Nebraska"
     }
   ]
 }
