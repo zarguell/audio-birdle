@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-02-05",
-      "id": "whwcro",
-      "name": "White-winged Crossbill",
-      "subregion": "New Hampshire"
-    },
-    {
       "date": "2026-02-06",
       "id": "sheowl",
       "name": "Short-eared Owl",
@@ -731,15 +725,15 @@
       "id": "mouwar",
       "name": "Mourning Warbler",
       "subregion": "Nebraska"
+    },
+    {
+      "date": "2026-06-05",
+      "id": "hoomer",
+      "name": "Hooded Merganser",
+      "subregion": "Wyoming"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-02-05",
-      "id": "amegfi",
-      "name": "American Goldfinch",
-      "subregion": "New Hampshire"
-    },
     {
       "date": "2026-02-06",
       "id": "rolhaw",
@@ -1465,6 +1459,12 @@
       "id": "paibun",
       "name": "Painted Bunting",
       "subregion": "Nebraska"
+    },
+    {
+      "date": "2026-06-05",
+      "id": "buwwar",
+      "name": "Blue-winged Warbler",
+      "subregion": "Wisconsin"
     }
   ]
 }
