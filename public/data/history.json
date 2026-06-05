@@ -731,6 +731,12 @@
       "id": "hoomer",
       "name": "Hooded Merganser",
       "subregion": "Wyoming"
+    },
+    {
+      "date": "2026-06-05",
+      "id": "wesfly",
+      "name": "Western Flycatcher",
+      "subregion": "New Mexico"
     }
   ],
   "us-lower48": [
@@ -1465,6 +1471,12 @@
       "id": "buwwar",
       "name": "Blue-winged Warbler",
       "subregion": "Wisconsin"
+    },
+    {
+      "date": "2026-06-05",
+      "id": "subfly",
+      "name": "Sulphur-bellied Flycatcher",
+      "subregion": "New Mexico"
     }
   ]
 }
