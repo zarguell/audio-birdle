@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-02-06",
-      "id": "sheowl",
-      "name": "Short-eared Owl",
-      "subregion": "Kentucky"
-    },
-    {
       "date": "2026-02-07",
       "id": "clcspa",
       "name": "Clay-colored Sparrow",
@@ -737,15 +731,15 @@
       "id": "wesfly",
       "name": "Western Flycatcher",
       "subregion": "New Mexico"
+    },
+    {
+      "date": "2026-06-06",
+      "id": "amewig",
+      "name": "American Wigeon",
+      "subregion": "Colorado"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-02-06",
-      "id": "rolhaw",
-      "name": "Rough-legged Hawk",
-      "subregion": "Kentucky"
-    },
     {
       "date": "2026-02-07",
       "id": "wooduc",
@@ -1477,6 +1471,12 @@
       "id": "subfly",
       "name": "Sulphur-bellied Flycatcher",
       "subregion": "New Mexico"
+    },
+    {
+      "date": "2026-06-06",
+      "id": "btnwar",
+      "name": "Black-throated Green Warbler",
+      "subregion": "Vermont"
     }
   ]
 }
