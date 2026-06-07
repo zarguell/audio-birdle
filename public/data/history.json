@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-02-07",
-      "id": "clcspa",
-      "name": "Clay-colored Sparrow",
-      "subregion": "New York"
-    },
-    {
       "date": "2026-02-08",
       "id": "rinduc",
       "name": "Ring-necked Duck",
@@ -737,15 +731,15 @@
       "id": "amewig",
       "name": "American Wigeon",
       "subregion": "Colorado"
+    },
+    {
+      "date": "2026-06-07",
+      "id": "leasan",
+      "name": "Least Sandpiper",
+      "subregion": "District of Columbia"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-02-07",
-      "id": "wooduc",
-      "name": "Wood Duck",
-      "subregion": "New York"
-    },
     {
       "date": "2026-02-08",
       "id": "swaspa",
@@ -1477,6 +1471,12 @@
       "id": "btnwar",
       "name": "Black-throated Green Warbler",
       "subregion": "Vermont"
+    },
+    {
+      "date": "2026-06-07",
+      "id": "norwat",
+      "name": "Northern Waterthrush",
+      "subregion": "District of Columbia"
     }
   ]
 }
