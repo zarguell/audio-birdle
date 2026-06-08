@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-02-08",
-      "id": "rinduc",
-      "name": "Ring-necked Duck",
-      "subregion": "Minnesota"
-    },
-    {
       "date": "2026-02-09",
       "id": "indbun",
       "name": "Indigo Bunting",
@@ -737,15 +731,15 @@
       "id": "leasan",
       "name": "Least Sandpiper",
       "subregion": "District of Columbia"
+    },
+    {
+      "date": "2026-06-08",
+      "id": "mallar3",
+      "name": "Mallard",
+      "subregion": "Washington"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-02-08",
-      "id": "swaspa",
-      "name": "Swamp Sparrow",
-      "subregion": "West Virginia"
-    },
     {
       "date": "2026-02-09",
       "id": "nopowl",
@@ -1477,6 +1471,12 @@
       "id": "norwat",
       "name": "Northern Waterthrush",
       "subregion": "District of Columbia"
+    },
+    {
+      "date": "2026-06-08",
+      "id": "acafly",
+      "name": "Acadian Flycatcher",
+      "subregion": "Tennessee"
     }
   ]
 }
