@@ -737,6 +737,12 @@
       "id": "mallar3",
       "name": "Mallard",
       "subregion": "Washington"
+    },
+    {
+      "date": "2026-06-08",
+      "id": "phivir",
+      "name": "Philadelphia Vireo",
+      "subregion": "Vermont"
     }
   ],
   "us-lower48": [
@@ -1477,6 +1483,12 @@
       "id": "acafly",
       "name": "Acadian Flycatcher",
       "subregion": "Tennessee"
+    },
+    {
+      "date": "2026-06-08",
+      "id": "chswar",
+      "name": "Chestnut-sided Warbler",
+      "subregion": "Vermont"
     }
   ]
 }
