@@ -743,6 +743,12 @@
       "id": "comnig",
       "name": "Common Nighthawk",
       "subregion": "Arkansas"
+    },
+    {
+      "date": "2026-06-10",
+      "id": "houwre",
+      "name": "Northern House Wren",
+      "subregion": "Iowa"
     }
   ],
   "us-lower48": [
@@ -1489,6 +1495,12 @@
       "id": "categr1",
       "name": "Western Cattle-Egret",
       "subregion": "Wyoming"
+    },
+    {
+      "date": "2026-06-10",
+      "id": "purmar",
+      "name": "Purple Martin",
+      "subregion": "Iowa"
     }
   ]
 }
