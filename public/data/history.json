@@ -749,6 +749,12 @@
       "id": "budger",
       "name": "Budgerigar",
       "subregion": "California"
+    },
+    {
+      "date": "2026-06-11",
+      "id": "amecro",
+      "name": "American Crow",
+      "subregion": "Oklahoma"
     }
   ],
   "us-lower48": [
@@ -1500,6 +1506,12 @@
       "date": "2026-06-11",
       "id": "cantow",
       "name": "Canyon Towhee",
+      "subregion": "Arizona"
+    },
+    {
+      "date": "2026-06-11",
+      "id": "comgal1",
+      "name": "Common Gallinule",
       "subregion": "Arizona"
     }
   ]
