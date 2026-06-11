@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-02-11",
-      "id": "gadwal",
-      "name": "Gadwall",
-      "subregion": "South Dakota"
-    },
-    {
       "date": "2026-02-12",
       "id": "gryjay",
       "name": "Canada Jay",
@@ -749,15 +743,15 @@
       "id": "houwre",
       "name": "Northern House Wren",
       "subregion": "Iowa"
+    },
+    {
+      "date": "2026-06-11",
+      "id": "budger",
+      "name": "Budgerigar",
+      "subregion": "California"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-02-11",
-      "id": "dowwoo",
-      "name": "Downy Woodpecker",
-      "subregion": "Rhode Island"
-    },
     {
       "date": "2026-02-12",
       "id": "mutswa",
@@ -1501,6 +1495,12 @@
       "id": "purmar",
       "name": "Purple Martin",
       "subregion": "Iowa"
+    },
+    {
+      "date": "2026-06-11",
+      "id": "cantow",
+      "name": "Canyon Towhee",
+      "subregion": "Arizona"
     }
   ]
 }
