@@ -755,6 +755,12 @@
       "id": "grcfly",
       "name": "Great Crested Flycatcher",
       "subregion": "West Virginia"
+    },
+    {
+      "date": "2026-06-12",
+      "id": "yetvir",
+      "name": "Yellow-throated Vireo",
+      "subregion": "Mississippi"
     }
   ],
   "us-lower48": [
@@ -1513,6 +1519,12 @@
       "id": "eursta",
       "name": "European Starling",
       "subregion": "West Virginia"
+    },
+    {
+      "date": "2026-06-12",
+      "id": "grekis",
+      "name": "Great Kiskadee",
+      "subregion": "Texas"
     }
   ]
 }
