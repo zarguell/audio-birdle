@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-02-12",
-      "id": "gryjay",
-      "name": "Canada Jay",
-      "subregion": "New Hampshire"
-    },
-    {
       "date": "2026-02-13",
       "id": "shshaw",
       "name": "Sharp-shinned Hawk",
@@ -755,15 +749,15 @@
       "id": "amecro",
       "name": "American Crow",
       "subregion": "Oklahoma"
+    },
+    {
+      "date": "2026-06-12",
+      "id": "grcfly",
+      "name": "Great Crested Flycatcher",
+      "subregion": "West Virginia"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-02-12",
-      "id": "mutswa",
-      "name": "Mute Swan",
-      "subregion": "Virginia"
-    },
     {
       "date": "2026-02-13",
       "id": "grhowl",
@@ -1513,6 +1507,12 @@
       "id": "comgal1",
       "name": "Common Gallinule",
       "subregion": "Arizona"
+    },
+    {
+      "date": "2026-06-12",
+      "id": "eursta",
+      "name": "European Starling",
+      "subregion": "West Virginia"
     }
   ]
 }
