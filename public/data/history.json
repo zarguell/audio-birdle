@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-02-13",
-      "id": "shshaw",
-      "name": "Sharp-shinned Hawk",
-      "subregion": "North Dakota"
-    },
-    {
       "date": "2026-02-14",
       "id": "amerob",
       "name": "American Robin",
@@ -761,15 +755,15 @@
       "id": "yetvir",
       "name": "Yellow-throated Vireo",
       "subregion": "Mississippi"
+    },
+    {
+      "date": "2026-06-13",
+      "id": "veery",
+      "name": "Veery",
+      "subregion": "Illinois"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-02-13",
-      "id": "grhowl",
-      "name": "Great Horned Owl",
-      "subregion": "North Dakota"
-    },
     {
       "date": "2026-02-14",
       "id": "sheowl",
@@ -1525,6 +1519,12 @@
       "id": "grekis",
       "name": "Great Kiskadee",
       "subregion": "Texas"
+    },
+    {
+      "date": "2026-06-13",
+      "id": "rufgro",
+      "name": "Ruffed Grouse",
+      "subregion": "Michigan"
     }
   ]
 }
