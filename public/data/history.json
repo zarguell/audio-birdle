@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-02-14",
-      "id": "amerob",
-      "name": "American Robin",
-      "subregion": "Kentucky"
-    },
-    {
       "date": "2026-02-15",
       "id": "pilwoo",
       "name": "Pileated Woodpecker",
@@ -761,15 +755,15 @@
       "id": "veery",
       "name": "Veery",
       "subregion": "Illinois"
+    },
+    {
+      "date": "2026-06-14",
+      "id": "horlar",
+      "name": "Horned Lark",
+      "subregion": "Arkansas"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-02-14",
-      "id": "sheowl",
-      "name": "Short-eared Owl",
-      "subregion": "Michigan"
-    },
     {
       "date": "2026-02-15",
       "id": "daejun",
@@ -1525,6 +1519,12 @@
       "id": "rufgro",
       "name": "Ruffed Grouse",
       "subregion": "Michigan"
+    },
+    {
+      "date": "2026-06-14",
+      "id": "prowar",
+      "name": "Prothonotary Warbler",
+      "subregion": "Missouri"
     }
   ]
 }
