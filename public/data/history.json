@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-02-15",
-      "id": "pilwoo",
-      "name": "Pileated Woodpecker",
-      "subregion": "Illinois"
-    },
-    {
       "date": "2026-02-16",
       "id": "rebnut",
       "name": "Red-breasted Nuthatch",
@@ -761,15 +755,15 @@
       "id": "horlar",
       "name": "Horned Lark",
       "subregion": "Arkansas"
+    },
+    {
+      "date": "2026-06-15",
+      "id": "gowwar",
+      "name": "Golden-winged Warbler",
+      "subregion": "West Virginia"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-02-15",
-      "id": "daejun",
-      "name": "Dark-eyed Junco",
-      "subregion": "Illinois"
-    },
     {
       "date": "2026-02-16",
       "id": "perfal",
@@ -1525,6 +1519,12 @@
       "id": "prowar",
       "name": "Prothonotary Warbler",
       "subregion": "Missouri"
+    },
+    {
+      "date": "2026-06-15",
+      "id": "nrwswa",
+      "name": "Northern Rough-winged Swallow",
+      "subregion": "Iowa"
     }
   ]
 }
