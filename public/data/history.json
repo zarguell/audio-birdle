@@ -761,6 +761,12 @@
       "id": "gowwar",
       "name": "Golden-winged Warbler",
       "subregion": "West Virginia"
+    },
+    {
+      "date": "2026-06-15",
+      "id": "rebwoo",
+      "name": "Red-bellied Woodpecker",
+      "subregion": "Ohio"
     }
   ],
   "us-lower48": [
@@ -1525,6 +1531,12 @@
       "id": "nrwswa",
       "name": "Northern Rough-winged Swallow",
       "subregion": "Iowa"
+    },
+    {
+      "date": "2026-06-15",
+      "id": "eurgol",
+      "name": "European Goldfinch",
+      "subregion": "Illinois"
     }
   ]
 }
