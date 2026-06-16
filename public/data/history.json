@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-02-16",
-      "id": "rebnut",
-      "name": "Red-breasted Nuthatch",
-      "subregion": "Colorado"
-    },
-    {
       "date": "2026-02-17",
       "id": "amewig",
       "name": "American Wigeon",
@@ -767,15 +761,21 @@
       "id": "rebwoo",
       "name": "Red-bellied Woodpecker",
       "subregion": "Ohio"
+    },
+    {
+      "date": "2026-06-16",
+      "id": "louwat",
+      "name": "Louisiana Waterthrush",
+      "subregion": "District of Columbia"
+    },
+    {
+      "date": "2026-06-16",
+      "id": "orcori",
+      "name": "Orchard Oriole",
+      "subregion": "Colorado"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-02-16",
-      "id": "perfal",
-      "name": "Peregrine Falcon",
-      "subregion": "Oregon"
-    },
     {
       "date": "2026-02-17",
       "id": "commer",
@@ -1537,6 +1537,18 @@
       "id": "eurgol",
       "name": "European Goldfinch",
       "subregion": "Illinois"
+    },
+    {
+      "date": "2026-06-16",
+      "id": "whevir",
+      "name": "White-eyed Vireo",
+      "subregion": "District of Columbia"
+    },
+    {
+      "date": "2026-06-16",
+      "id": "easpho",
+      "name": "Eastern Phoebe",
+      "subregion": "Colorado"
     }
   ]
 }
