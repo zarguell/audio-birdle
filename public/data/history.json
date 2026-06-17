@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-02-17",
-      "id": "amewig",
-      "name": "American Wigeon",
-      "subregion": "South Dakota"
-    },
-    {
       "date": "2026-02-18",
       "id": "lessca",
       "name": "Lesser Scaup",
@@ -773,15 +767,15 @@
       "id": "orcori",
       "name": "Orchard Oriole",
       "subregion": "Colorado"
+    },
+    {
+      "date": "2026-06-17",
+      "id": "ovenbi1",
+      "name": "Ovenbird",
+      "subregion": "Kentucky"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-02-17",
-      "id": "commer",
-      "name": "Common Merganser",
-      "subregion": "Virginia"
-    },
     {
       "date": "2026-02-18",
       "id": "eursta",
@@ -1549,6 +1543,12 @@
       "id": "easpho",
       "name": "Eastern Phoebe",
       "subregion": "Colorado"
+    },
+    {
+      "date": "2026-06-17",
+      "id": "reshaw",
+      "name": "Red-shouldered Hawk",
+      "subregion": "Nevada"
     }
   ]
 }
