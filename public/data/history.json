@@ -773,6 +773,12 @@
       "id": "ovenbi1",
       "name": "Ovenbird",
       "subregion": "Kentucky"
+    },
+    {
+      "date": "2026-06-17",
+      "id": "wiltur",
+      "name": "Wild Turkey",
+      "subregion": "Pennsylvania"
     }
   ],
   "us-lower48": [
@@ -1549,6 +1555,12 @@
       "id": "reshaw",
       "name": "Red-shouldered Hawk",
       "subregion": "Nevada"
+    },
+    {
+      "date": "2026-06-17",
+      "id": "sancra",
+      "name": "Sandhill Crane",
+      "subregion": "Washington"
     }
   ]
 }
