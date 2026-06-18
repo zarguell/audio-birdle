@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-02-18",
-      "id": "lessca",
-      "name": "Lesser Scaup",
-      "subregion": "Utah"
-    },
-    {
       "date": "2026-02-19",
       "id": "comgol",
       "name": "Common Goldeneye",
@@ -779,15 +773,15 @@
       "id": "wiltur",
       "name": "Wild Turkey",
       "subregion": "Pennsylvania"
+    },
+    {
+      "date": "2026-06-18",
+      "id": "logshr",
+      "name": "Loggerhead Shrike",
+      "subregion": "Mississippi"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-02-18",
-      "id": "eursta",
-      "name": "European Starling",
-      "subregion": "Utah"
-    },
     {
       "date": "2026-02-19",
       "id": "rocpig",
@@ -1561,6 +1555,12 @@
       "id": "sancra",
       "name": "Sandhill Crane",
       "subregion": "Washington"
+    },
+    {
+      "date": "2026-06-18",
+      "id": "woothr",
+      "name": "Wood Thrush",
+      "subregion": "New Hampshire"
     }
   ]
 }
