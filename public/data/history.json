@@ -779,6 +779,12 @@
       "id": "logshr",
       "name": "Loggerhead Shrike",
       "subregion": "Mississippi"
+    },
+    {
+      "date": "2026-06-18",
+      "id": "bkbcuc",
+      "name": "Black-billed Cuckoo",
+      "subregion": "Minnesota"
     }
   ],
   "us-lower48": [
@@ -1561,6 +1567,12 @@
       "id": "woothr",
       "name": "Wood Thrush",
       "subregion": "New Hampshire"
+    },
+    {
+      "date": "2026-06-18",
+      "id": "rebmer",
+      "name": "Red-breasted Merganser",
+      "subregion": "Minnesota"
     }
   ]
 }
