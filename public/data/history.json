@@ -785,6 +785,12 @@
       "id": "treswa",
       "name": "Tree Swallow",
       "subregion": "Idaho"
+    },
+    {
+      "date": "2026-06-19",
+      "id": "sprgro",
+      "name": "Spruce Grouse",
+      "subregion": "New Hampshire"
     }
   ],
   "us-lower48": [
@@ -1573,6 +1579,12 @@
       "id": "herwar",
       "name": "Hermit Warbler",
       "subregion": "Oregon"
+    },
+    {
+      "date": "2026-06-19",
+      "id": "yebfly",
+      "name": "Yellow-bellied Flycatcher",
+      "subregion": "New Hampshire"
     }
   ]
 }
