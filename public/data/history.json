@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-02-19",
-      "id": "comgol",
-      "name": "Common Goldeneye",
-      "subregion": "North Carolina"
-    },
-    {
       "date": "2026-02-20",
       "id": "bklkit",
       "name": "Black-legged Kittiwake",
@@ -785,15 +779,15 @@
       "id": "bkbcuc",
       "name": "Black-billed Cuckoo",
       "subregion": "Minnesota"
+    },
+    {
+      "date": "2026-06-19",
+      "id": "treswa",
+      "name": "Tree Swallow",
+      "subregion": "Idaho"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-02-19",
-      "id": "rocpig",
-      "name": "Rock Pigeon",
-      "subregion": "Mississippi"
-    },
     {
       "date": "2026-02-20",
       "id": "gadwal",
@@ -1573,6 +1567,12 @@
       "id": "rebmer",
       "name": "Red-breasted Merganser",
       "subregion": "Minnesota"
+    },
+    {
+      "date": "2026-06-19",
+      "id": "herwar",
+      "name": "Hermit Warbler",
+      "subregion": "Oregon"
     }
   ]
 }
