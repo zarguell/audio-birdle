@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-02-20",
-      "id": "bklkit",
-      "name": "Black-legged Kittiwake",
-      "subregion": "Maine"
-    },
-    {
       "date": "2026-02-21",
       "id": "nswowl",
       "name": "Northern Saw-whet Owl",
@@ -791,15 +785,15 @@
       "id": "sprgro",
       "name": "Spruce Grouse",
       "subregion": "New Hampshire"
+    },
+    {
+      "date": "2026-06-20",
+      "id": "moudov",
+      "name": "Mourning Dove",
+      "subregion": "Vermont"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-02-20",
-      "id": "gadwal",
-      "name": "Gadwall",
-      "subregion": "Maine"
-    },
     {
       "date": "2026-02-21",
       "id": "norpin",
@@ -1585,6 +1579,12 @@
       "id": "yebfly",
       "name": "Yellow-bellied Flycatcher",
       "subregion": "New Hampshire"
+    },
+    {
+      "date": "2026-06-20",
+      "id": "grbher3",
+      "name": "Great Blue Heron",
+      "subregion": "Wisconsin"
     }
   ]
 }
