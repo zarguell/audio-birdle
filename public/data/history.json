@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-02-21",
-      "id": "nswowl",
-      "name": "Northern Saw-whet Owl",
-      "subregion": "South Dakota"
-    },
-    {
       "date": "2026-02-22",
       "id": "bacspa",
       "name": "Bachman's Sparrow",
@@ -791,15 +785,15 @@
       "id": "moudov",
       "name": "Mourning Dove",
       "subregion": "Vermont"
+    },
+    {
+      "date": "2026-06-21",
+      "id": "sposan",
+      "name": "Spotted Sandpiper",
+      "subregion": "New Hampshire"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-02-21",
-      "id": "norpin",
-      "name": "Northern Pintail",
-      "subregion": "South Dakota"
-    },
     {
       "date": "2026-02-22",
       "id": "norcar",
@@ -1585,6 +1579,12 @@
       "id": "grbher3",
       "name": "Great Blue Heron",
       "subregion": "Wisconsin"
+    },
+    {
+      "date": "2026-06-21",
+      "id": "sagspa1",
+      "name": "Sagebrush Sparrow",
+      "subregion": "Nevada"
     }
   ]
 }
