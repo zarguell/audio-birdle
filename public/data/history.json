@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-02-22",
-      "id": "bacspa",
-      "name": "Bachman's Sparrow",
-      "subregion": "North Carolina"
-    },
-    {
       "date": "2026-02-23",
       "id": "lesgol",
       "name": "Lesser Goldfinch",
@@ -791,15 +785,15 @@
       "id": "sposan",
       "name": "Spotted Sandpiper",
       "subregion": "New Hampshire"
+    },
+    {
+      "date": "2026-06-22",
+      "id": "daejun",
+      "name": "Dark-eyed Junco",
+      "subregion": "Nebraska"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-02-22",
-      "id": "norcar",
-      "name": "Northern Cardinal",
-      "subregion": "Wisconsin"
-    },
     {
       "date": "2026-02-23",
       "id": "rudduc",
@@ -1585,6 +1579,12 @@
       "id": "sagspa1",
       "name": "Sagebrush Sparrow",
       "subregion": "Nevada"
+    },
+    {
+      "date": "2026-06-22",
+      "id": "leabit",
+      "name": "Least Bittern",
+      "subregion": "South Carolina"
     }
   ]
 }
