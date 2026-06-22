@@ -791,6 +791,12 @@
       "id": "daejun",
       "name": "Dark-eyed Junco",
       "subregion": "Nebraska"
+    },
+    {
+      "date": "2026-06-22",
+      "id": "brnthr",
+      "name": "Brown Thrasher",
+      "subregion": "Kansas"
     }
   ],
   "us-lower48": [
@@ -1585,6 +1591,12 @@
       "id": "leabit",
       "name": "Least Bittern",
       "subregion": "South Carolina"
+    },
+    {
+      "date": "2026-06-22",
+      "id": "bawwar",
+      "name": "Black-and-white Warbler",
+      "subregion": "Kansas"
     }
   ]
 }
