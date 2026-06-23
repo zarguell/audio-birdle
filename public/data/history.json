@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-02-23",
-      "id": "lesgol",
-      "name": "Lesser Goldfinch",
-      "subregion": "Washington"
-    },
-    {
       "date": "2026-02-24",
       "id": "perfal",
       "name": "Peregrine Falcon",
@@ -797,15 +791,15 @@
       "id": "brnthr",
       "name": "Brown Thrasher",
       "subregion": "Kansas"
+    },
+    {
+      "date": "2026-06-23",
+      "id": "yebcha",
+      "name": "Yellow-breasted Chat",
+      "subregion": "West Virginia"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-02-23",
-      "id": "rudduc",
-      "name": "Ruddy Duck",
-      "subregion": "Idaho"
-    },
     {
       "date": "2026-02-24",
       "id": "cowscj1",
@@ -1597,6 +1591,12 @@
       "id": "bawwar",
       "name": "Black-and-white Warbler",
       "subregion": "Kansas"
+    },
+    {
+      "date": "2026-06-23",
+      "id": "rebwoo",
+      "name": "Red-bellied Woodpecker",
+      "subregion": "West Virginia"
     }
   ]
 }
