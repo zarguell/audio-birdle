@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-02-24",
-      "id": "perfal",
-      "name": "Peregrine Falcon",
-      "subregion": "Washington"
-    },
-    {
       "date": "2026-02-25",
       "id": "reshaw",
       "name": "Red-shouldered Hawk",
@@ -797,15 +791,15 @@
       "id": "yebcha",
       "name": "Yellow-breasted Chat",
       "subregion": "West Virginia"
+    },
+    {
+      "date": "2026-06-24",
+      "id": "purmar",
+      "name": "Purple Martin",
+      "subregion": "Missouri"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-02-24",
-      "id": "cowscj1",
-      "name": "California Scrub-Jay",
-      "subregion": "Washington"
-    },
     {
       "date": "2026-02-25",
       "id": "towsol",
@@ -1597,6 +1591,12 @@
       "id": "rebwoo",
       "name": "Red-bellied Woodpecker",
       "subregion": "West Virginia"
+    },
+    {
+      "date": "2026-06-24",
+      "id": "logshr",
+      "name": "Loggerhead Shrike",
+      "subregion": "Missouri"
     }
   ]
 }
