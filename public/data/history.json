@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-02-25",
-      "id": "reshaw",
-      "name": "Red-shouldered Hawk",
-      "subregion": "Oklahoma"
-    },
-    {
       "date": "2026-02-26",
       "id": "bushti",
       "name": "Bushtit",
@@ -797,15 +791,15 @@
       "id": "purmar",
       "name": "Purple Martin",
       "subregion": "Missouri"
+    },
+    {
+      "date": "2026-06-25",
+      "id": "prafal",
+      "name": "Prairie Falcon",
+      "subregion": "Colorado"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-02-25",
-      "id": "towsol",
-      "name": "Townsend's Solitaire",
-      "subregion": "Oregon"
-    },
     {
       "date": "2026-02-26",
       "id": "mouchi",
@@ -1597,6 +1591,12 @@
       "id": "logshr",
       "name": "Loggerhead Shrike",
       "subregion": "Missouri"
+    },
+    {
+      "date": "2026-06-25",
+      "id": "leafly",
+      "name": "Least Flycatcher",
+      "subregion": "Colorado"
     }
   ]
 }
