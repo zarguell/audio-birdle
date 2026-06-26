@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-02-26",
-      "id": "bushti",
-      "name": "Bushtit",
-      "subregion": "Washington"
-    },
-    {
       "date": "2026-02-27",
       "id": "redhea",
       "name": "Redhead",
@@ -797,15 +791,15 @@
       "id": "prafal",
       "name": "Prairie Falcon",
       "subregion": "Colorado"
+    },
+    {
+      "date": "2026-06-26",
+      "id": "blksco2",
+      "name": "Black Scoter",
+      "subregion": "New Jersey"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-02-26",
-      "id": "mouchi",
-      "name": "Mountain Chickadee",
-      "subregion": "Washington"
-    },
     {
       "date": "2026-02-27",
       "id": "blkski",
@@ -1597,6 +1591,12 @@
       "id": "leafly",
       "name": "Least Flycatcher",
       "subregion": "Colorado"
+    },
+    {
+      "date": "2026-06-26",
+      "id": "comter",
+      "name": "Common Tern",
+      "subregion": "Virginia"
     }
   ]
 }
