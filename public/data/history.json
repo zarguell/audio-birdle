@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-02-27",
-      "id": "redhea",
-      "name": "Redhead",
-      "subregion": "South Dakota"
-    },
-    {
       "date": "2026-02-28",
       "id": "rebmer",
       "name": "Red-breasted Merganser",
@@ -797,15 +791,15 @@
       "id": "blksco2",
       "name": "Black Scoter",
       "subregion": "New Jersey"
+    },
+    {
+      "date": "2026-06-27",
+      "id": "comter",
+      "name": "Common Tern",
+      "subregion": "Texas"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-02-27",
-      "id": "blkski",
-      "name": "Black Skimmer",
-      "subregion": "Florida"
-    },
     {
       "date": "2026-02-28",
       "id": "lecspa",
@@ -1597,6 +1591,12 @@
       "id": "comter",
       "name": "Common Tern",
       "subregion": "Virginia"
+    },
+    {
+      "date": "2026-06-27",
+      "id": "wilplo",
+      "name": "Wilson's Plover",
+      "subregion": "Texas"
     }
   ]
 }
