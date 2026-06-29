@@ -1,216 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-01-26",
-      "id": "redjun",
-      "name": "Red Junglefowl",
-      "subregion": "Virginia"
-    },
-    {
-      "date": "2026-01-27",
-      "id": "amegfi",
-      "name": "American Goldfinch",
-      "subregion": "Utah"
-    },
-    {
-      "date": "2026-01-28",
-      "id": "rudduc",
-      "name": "Ruddy Duck",
-      "subregion": "Wisconsin"
-    },
-    {
-      "date": "2026-01-29",
-      "id": "dickci",
-      "name": "Dickcissel",
-      "subregion": "Mississippi"
-    },
-    {
-      "date": "2026-01-30",
-      "id": "killde",
-      "name": "Killdeer",
-      "subregion": "Delaware"
-    },
-    {
-      "date": "2026-01-31",
-      "id": "grhowl",
-      "name": "Great Horned Owl",
-      "subregion": "Georgia"
-    },
-    {
-      "date": "2026-02-01",
-      "id": "amtspa",
-      "name": "American Tree Sparrow",
-      "subregion": "New York"
-    },
-    {
-      "date": "2026-02-02",
-      "id": "amekes",
-      "name": "American Kestrel",
-      "subregion": "Utah"
-    },
-    {
-      "date": "2026-02-03",
-      "id": "wooduc",
-      "name": "Wood Duck",
-      "subregion": "Montana"
-    },
-    {
-      "date": "2026-02-04",
-      "id": "doccor",
-      "name": "Double-crested Cormorant",
-      "subregion": "Missouri"
-    },
-    {
-      "date": "2026-02-05",
-      "id": "whwcro",
-      "name": "White-winged Crossbill",
-      "subregion": "New Hampshire"
-    },
-    {
-      "date": "2026-02-06",
-      "id": "sheowl",
-      "name": "Short-eared Owl",
-      "subregion": "Kentucky"
-    },
-    {
-      "date": "2026-02-07",
-      "id": "clcspa",
-      "name": "Clay-colored Sparrow",
-      "subregion": "New York"
-    },
-    {
-      "date": "2026-02-08",
-      "id": "rinduc",
-      "name": "Ring-necked Duck",
-      "subregion": "Minnesota"
-    },
-    {
-      "date": "2026-02-09",
-      "id": "indbun",
-      "name": "Indigo Bunting",
-      "subregion": "Florida"
-    },
-    {
-      "date": "2026-02-10",
-      "id": "bargol",
-      "name": "Barrow's Goldeneye",
-      "subregion": "Maine"
-    },
-    {
-      "date": "2026-02-11",
-      "id": "gadwal",
-      "name": "Gadwall",
-      "subregion": "South Dakota"
-    },
-    {
-      "date": "2026-02-12",
-      "id": "gryjay",
-      "name": "Canada Jay",
-      "subregion": "New Hampshire"
-    },
-    {
-      "date": "2026-02-13",
-      "id": "shshaw",
-      "name": "Sharp-shinned Hawk",
-      "subregion": "North Dakota"
-    },
-    {
-      "date": "2026-02-14",
-      "id": "amerob",
-      "name": "American Robin",
-      "subregion": "Kentucky"
-    },
-    {
-      "date": "2026-02-15",
-      "id": "pilwoo",
-      "name": "Pileated Woodpecker",
-      "subregion": "Illinois"
-    },
-    {
-      "date": "2026-02-16",
-      "id": "rebnut",
-      "name": "Red-breasted Nuthatch",
-      "subregion": "Colorado"
-    },
-    {
-      "date": "2026-02-17",
-      "id": "amewig",
-      "name": "American Wigeon",
-      "subregion": "South Dakota"
-    },
-    {
-      "date": "2026-02-18",
-      "id": "lessca",
-      "name": "Lesser Scaup",
-      "subregion": "Utah"
-    },
-    {
-      "date": "2026-02-19",
-      "id": "comgol",
-      "name": "Common Goldeneye",
-      "subregion": "North Carolina"
-    },
-    {
-      "date": "2026-02-20",
-      "id": "bklkit",
-      "name": "Black-legged Kittiwake",
-      "subregion": "Maine"
-    },
-    {
-      "date": "2026-02-21",
-      "id": "nswowl",
-      "name": "Northern Saw-whet Owl",
-      "subregion": "South Dakota"
-    },
-    {
-      "date": "2026-02-22",
-      "id": "bacspa",
-      "name": "Bachman's Sparrow",
-      "subregion": "North Carolina"
-    },
-    {
-      "date": "2026-02-23",
-      "id": "lesgol",
-      "name": "Lesser Goldfinch",
-      "subregion": "Washington"
-    },
-    {
-      "date": "2026-02-24",
-      "id": "perfal",
-      "name": "Peregrine Falcon",
-      "subregion": "Washington"
-    },
-    {
-      "date": "2026-02-25",
-      "id": "reshaw",
-      "name": "Red-shouldered Hawk",
-      "subregion": "Oklahoma"
-    },
-    {
-      "date": "2026-02-26",
-      "id": "bushti",
-      "name": "Bushtit",
-      "subregion": "Washington"
-    },
-    {
-      "date": "2026-02-27",
-      "id": "redhea",
-      "name": "Redhead",
-      "subregion": "South Dakota"
-    },
-    {
-      "date": "2026-02-28",
-      "id": "rebmer",
-      "name": "Red-breasted Merganser",
-      "subregion": "Missouri"
-    },
-    {
-      "date": "2026-03-01",
-      "id": "grtgra",
-      "name": "Great-tailed Grackle",
-      "subregion": "Arizona"
-    },
-    {
       "date": "2026-03-02",
       "id": "rengre",
       "name": "Red-necked Grebe",
@@ -719,219 +509,303 @@
       "id": "norcar",
       "name": "Northern Cardinal",
       "subregion": "Kentucky"
-    }
-  ],
-  "us-lower48": [
-    {
-      "date": "2026-01-26",
-      "id": "amerob",
-      "name": "American Robin",
-      "subregion": "North Carolina"
     },
     {
-      "date": "2026-01-27",
-      "id": "amekes",
-      "name": "American Kestrel",
-      "subregion": "Utah"
-    },
-    {
-      "date": "2026-01-28",
-      "id": "doccor",
-      "name": "Double-crested Cormorant",
-      "subregion": "Wisconsin"
-    },
-    {
-      "date": "2026-01-29",
-      "id": "norbob",
-      "name": "Northern Bobwhite",
-      "subregion": "Maryland"
-    },
-    {
-      "date": "2026-01-30",
-      "id": "fiespa",
-      "name": "Field Sparrow",
-      "subregion": "Arkansas"
-    },
-    {
-      "date": "2026-01-31",
-      "id": "ribgul",
-      "name": "Ring-billed Gull",
-      "subregion": "Nebraska"
-    },
-    {
-      "date": "2026-02-01",
-      "id": "moudov",
-      "name": "Mourning Dove",
-      "subregion": "New Jersey"
-    },
-    {
-      "date": "2026-02-02",
-      "id": "buffle",
-      "name": "Bufflehead",
-      "subregion": "Montana"
-    },
-    {
-      "date": "2026-02-03",
-      "id": "rebwoo",
-      "name": "Red-bellied Woodpecker",
-      "subregion": "Iowa"
-    },
-    {
-      "date": "2026-02-04",
-      "id": "brdowl",
-      "name": "Barred Owl",
-      "subregion": "Missouri"
-    },
-    {
-      "date": "2026-02-05",
-      "id": "amegfi",
-      "name": "American Goldfinch",
-      "subregion": "New Hampshire"
-    },
-    {
-      "date": "2026-02-06",
-      "id": "rolhaw",
-      "name": "Rough-legged Hawk",
-      "subregion": "Kentucky"
-    },
-    {
-      "date": "2026-02-07",
-      "id": "wooduc",
-      "name": "Wood Duck",
-      "subregion": "New York"
-    },
-    {
-      "date": "2026-02-08",
-      "id": "swaspa",
-      "name": "Swamp Sparrow",
-      "subregion": "West Virginia"
-    },
-    {
-      "date": "2026-02-09",
-      "id": "nopowl",
-      "name": "Northern Pygmy-Owl",
-      "subregion": "Washington"
-    },
-    {
-      "date": "2026-02-10",
-      "id": "horlar",
-      "name": "Horned Lark",
-      "subregion": "West Virginia"
-    },
-    {
-      "date": "2026-02-11",
-      "id": "dowwoo",
-      "name": "Downy Woodpecker",
-      "subregion": "Rhode Island"
-    },
-    {
-      "date": "2026-02-12",
-      "id": "mutswa",
-      "name": "Mute Swan",
-      "subregion": "Virginia"
-    },
-    {
-      "date": "2026-02-13",
-      "id": "grhowl",
-      "name": "Great Horned Owl",
-      "subregion": "North Dakota"
-    },
-    {
-      "date": "2026-02-14",
-      "id": "sheowl",
-      "name": "Short-eared Owl",
-      "subregion": "Michigan"
-    },
-    {
-      "date": "2026-02-15",
-      "id": "daejun",
-      "name": "Dark-eyed Junco",
-      "subregion": "Illinois"
-    },
-    {
-      "date": "2026-02-16",
-      "id": "perfal",
-      "name": "Peregrine Falcon",
-      "subregion": "Oregon"
-    },
-    {
-      "date": "2026-02-17",
-      "id": "commer",
-      "name": "Common Merganser",
-      "subregion": "Virginia"
-    },
-    {
-      "date": "2026-02-18",
-      "id": "eursta",
-      "name": "European Starling",
-      "subregion": "Utah"
-    },
-    {
-      "date": "2026-02-19",
-      "id": "rocpig",
-      "name": "Rock Pigeon",
-      "subregion": "Mississippi"
-    },
-    {
-      "date": "2026-02-20",
-      "id": "gadwal",
-      "name": "Gadwall",
-      "subregion": "Maine"
-    },
-    {
-      "date": "2026-02-21",
-      "id": "norpin",
-      "name": "Northern Pintail",
-      "subregion": "South Dakota"
-    },
-    {
-      "date": "2026-02-22",
-      "id": "norcar",
-      "name": "Northern Cardinal",
-      "subregion": "Wisconsin"
-    },
-    {
-      "date": "2026-02-23",
-      "id": "rudduc",
-      "name": "Ruddy Duck",
-      "subregion": "Idaho"
-    },
-    {
-      "date": "2026-02-24",
-      "id": "cowscj1",
-      "name": "California Scrub-Jay",
-      "subregion": "Washington"
-    },
-    {
-      "date": "2026-02-25",
-      "id": "towsol",
-      "name": "Townsend's Solitaire",
-      "subregion": "Oregon"
-    },
-    {
-      "date": "2026-02-26",
-      "id": "mouchi",
-      "name": "Mountain Chickadee",
-      "subregion": "Washington"
-    },
-    {
-      "date": "2026-02-27",
-      "id": "blkski",
-      "name": "Black Skimmer",
+      "date": "2026-05-26",
+      "id": "easblu",
+      "name": "Eastern Bluebird",
       "subregion": "Florida"
     },
     {
-      "date": "2026-02-28",
-      "id": "lecspa",
-      "name": "LeConte's Sparrow",
+      "date": "2026-05-27",
+      "id": "buwwar",
+      "name": "Blue-winged Warbler",
+      "subregion": "Illinois"
+    },
+    {
+      "date": "2026-05-28",
+      "id": "scatan",
+      "name": "Scarlet Tanager",
+      "subregion": "New Jersey"
+    },
+    {
+      "date": "2026-05-29",
+      "id": "ribgul",
+      "name": "Ring-billed Gull",
+      "subregion": "District of Columbia"
+    },
+    {
+      "date": "2026-05-30",
+      "id": "virwar",
+      "name": "Virginia's Warbler",
+      "subregion": "Arizona"
+    },
+    {
+      "date": "2026-05-31",
+      "id": "baleag",
+      "name": "Bald Eagle",
+      "subregion": "Illinois"
+    },
+    {
+      "date": "2026-06-01",
+      "id": "brdowl",
+      "name": "Barred Owl",
+      "subregion": "Vermont"
+    },
+    {
+      "date": "2026-06-02",
+      "id": "canwar",
+      "name": "Canada Warbler",
+      "subregion": "Iowa"
+    },
+    {
+      "date": "2026-06-03",
+      "id": "rotbec",
+      "name": "Rose-throated Becard",
+      "subregion": "Arizona"
+    },
+    {
+      "date": "2026-06-03",
+      "id": "canvas",
+      "name": "Canvasback",
+      "subregion": "New York"
+    },
+    {
+      "date": "2026-06-04",
+      "id": "calqua",
+      "name": "California Quail",
+      "subregion": "Nevada"
+    },
+    {
+      "date": "2026-06-04",
+      "id": "mouwar",
+      "name": "Mourning Warbler",
+      "subregion": "Nebraska"
+    },
+    {
+      "date": "2026-06-05",
+      "id": "hoomer",
+      "name": "Hooded Merganser",
+      "subregion": "Wyoming"
+    },
+    {
+      "date": "2026-06-05",
+      "id": "wesfly",
+      "name": "Western Flycatcher",
+      "subregion": "New Mexico"
+    },
+    {
+      "date": "2026-06-06",
+      "id": "amewig",
+      "name": "American Wigeon",
+      "subregion": "Colorado"
+    },
+    {
+      "date": "2026-06-07",
+      "id": "leasan",
+      "name": "Least Sandpiper",
+      "subregion": "District of Columbia"
+    },
+    {
+      "date": "2026-06-08",
+      "id": "mallar3",
+      "name": "Mallard",
+      "subregion": "Washington"
+    },
+    {
+      "date": "2026-06-08",
+      "id": "phivir",
+      "name": "Philadelphia Vireo",
+      "subregion": "Vermont"
+    },
+    {
+      "date": "2026-06-09",
+      "id": "comloo",
+      "name": "Common Loon",
+      "subregion": "New Hampshire"
+    },
+    {
+      "date": "2026-06-10",
+      "id": "comnig",
+      "name": "Common Nighthawk",
+      "subregion": "Arkansas"
+    },
+    {
+      "date": "2026-06-10",
+      "id": "houwre",
+      "name": "Northern House Wren",
+      "subregion": "Iowa"
+    },
+    {
+      "date": "2026-06-11",
+      "id": "budger",
+      "name": "Budgerigar",
+      "subregion": "California"
+    },
+    {
+      "date": "2026-06-11",
+      "id": "amecro",
+      "name": "American Crow",
+      "subregion": "Oklahoma"
+    },
+    {
+      "date": "2026-06-12",
+      "id": "grcfly",
+      "name": "Great Crested Flycatcher",
+      "subregion": "West Virginia"
+    },
+    {
+      "date": "2026-06-12",
+      "id": "yetvir",
+      "name": "Yellow-throated Vireo",
+      "subregion": "Mississippi"
+    },
+    {
+      "date": "2026-06-13",
+      "id": "veery",
+      "name": "Veery",
+      "subregion": "Illinois"
+    },
+    {
+      "date": "2026-06-14",
+      "id": "horlar",
+      "name": "Horned Lark",
+      "subregion": "Arkansas"
+    },
+    {
+      "date": "2026-06-15",
+      "id": "gowwar",
+      "name": "Golden-winged Warbler",
+      "subregion": "West Virginia"
+    },
+    {
+      "date": "2026-06-15",
+      "id": "rebwoo",
+      "name": "Red-bellied Woodpecker",
+      "subregion": "Ohio"
+    },
+    {
+      "date": "2026-06-16",
+      "id": "louwat",
+      "name": "Louisiana Waterthrush",
+      "subregion": "District of Columbia"
+    },
+    {
+      "date": "2026-06-16",
+      "id": "orcori",
+      "name": "Orchard Oriole",
+      "subregion": "Colorado"
+    },
+    {
+      "date": "2026-06-17",
+      "id": "ovenbi1",
+      "name": "Ovenbird",
+      "subregion": "Kentucky"
+    },
+    {
+      "date": "2026-06-17",
+      "id": "wiltur",
+      "name": "Wild Turkey",
+      "subregion": "Pennsylvania"
+    },
+    {
+      "date": "2026-06-18",
+      "id": "logshr",
+      "name": "Loggerhead Shrike",
+      "subregion": "Mississippi"
+    },
+    {
+      "date": "2026-06-18",
+      "id": "bkbcuc",
+      "name": "Black-billed Cuckoo",
+      "subregion": "Minnesota"
+    },
+    {
+      "date": "2026-06-19",
+      "id": "treswa",
+      "name": "Tree Swallow",
+      "subregion": "Idaho"
+    },
+    {
+      "date": "2026-06-19",
+      "id": "sprgro",
+      "name": "Spruce Grouse",
+      "subregion": "New Hampshire"
+    },
+    {
+      "date": "2026-06-20",
+      "id": "moudov",
+      "name": "Mourning Dove",
+      "subregion": "Vermont"
+    },
+    {
+      "date": "2026-06-21",
+      "id": "sposan",
+      "name": "Spotted Sandpiper",
+      "subregion": "New Hampshire"
+    },
+    {
+      "date": "2026-06-22",
+      "id": "daejun",
+      "name": "Dark-eyed Junco",
+      "subregion": "Nebraska"
+    },
+    {
+      "date": "2026-06-22",
+      "id": "brnthr",
+      "name": "Brown Thrasher",
+      "subregion": "Kansas"
+    },
+    {
+      "date": "2026-06-23",
+      "id": "yebcha",
+      "name": "Yellow-breasted Chat",
+      "subregion": "West Virginia"
+    },
+    {
+      "date": "2026-06-24",
+      "id": "purmar",
+      "name": "Purple Martin",
       "subregion": "Missouri"
     },
     {
-      "date": "2026-03-01",
-      "id": "amewig",
-      "name": "American Wigeon",
-      "subregion": "Vermont"
+      "date": "2026-06-25",
+      "id": "prafal",
+      "name": "Prairie Falcon",
+      "subregion": "Colorado"
     },
+    {
+      "date": "2026-06-26",
+      "id": "blksco2",
+      "name": "Black Scoter",
+      "subregion": "New Jersey"
+    },
+    {
+      "date": "2026-06-27",
+      "id": "comter",
+      "name": "Common Tern",
+      "subregion": "Texas"
+    },
+    {
+      "date": "2026-06-28",
+      "id": "lewwoo",
+      "name": "Lewis's Woodpecker",
+      "subregion": "Wyoming"
+    },
+    {
+      "date": "2026-06-29",
+      "id": "dunlin",
+      "name": "Dunlin",
+      "subregion": "Illinois"
+    },
+    {
+      "date": "2026-06-29",
+      "id": "merlin",
+      "name": "Merlin",
+      "subregion": "Wyoming"
+    }
+  ],
+  "us-lower48": [
     {
       "date": "2026-03-02",
       "id": "comgol",
@@ -1441,6 +1315,300 @@
       "id": "buwtea",
       "name": "Blue-winged Teal",
       "subregion": "Kentucky"
+    },
+    {
+      "date": "2026-05-26",
+      "id": "barswa",
+      "name": "Barn Swallow",
+      "subregion": "Florida"
+    },
+    {
+      "date": "2026-05-27",
+      "id": "miskit",
+      "name": "Mississippi Kite",
+      "subregion": "Mississippi"
+    },
+    {
+      "date": "2026-05-28",
+      "id": "brocow",
+      "name": "Bronzed Cowbird",
+      "subregion": "Oklahoma"
+    },
+    {
+      "date": "2026-05-29",
+      "id": "veery",
+      "name": "Veery",
+      "subregion": "District of Columbia"
+    },
+    {
+      "date": "2026-05-30",
+      "id": "houspa",
+      "name": "House Sparrow",
+      "subregion": "Arizona"
+    },
+    {
+      "date": "2026-05-31",
+      "id": "hoowar",
+      "name": "Hooded Warbler",
+      "subregion": "Massachusetts"
+    },
+    {
+      "date": "2026-06-01",
+      "id": "vesspa",
+      "name": "Vesper Sparrow",
+      "subregion": "Vermont"
+    },
+    {
+      "date": "2026-06-02",
+      "id": "amered",
+      "name": "American Redstart",
+      "subregion": "Iowa"
+    },
+    {
+      "date": "2026-06-03",
+      "id": "norbob",
+      "name": "Northern Bobwhite",
+      "subregion": "Delaware"
+    },
+    {
+      "date": "2026-06-03",
+      "id": "mallar3",
+      "name": "Mallard",
+      "subregion": "New York"
+    },
+    {
+      "date": "2026-06-04",
+      "id": "canvas",
+      "name": "Canvasback",
+      "subregion": "Colorado"
+    },
+    {
+      "date": "2026-06-04",
+      "id": "paibun",
+      "name": "Painted Bunting",
+      "subregion": "Nebraska"
+    },
+    {
+      "date": "2026-06-05",
+      "id": "buwwar",
+      "name": "Blue-winged Warbler",
+      "subregion": "Wisconsin"
+    },
+    {
+      "date": "2026-06-05",
+      "id": "subfly",
+      "name": "Sulphur-bellied Flycatcher",
+      "subregion": "New Mexico"
+    },
+    {
+      "date": "2026-06-06",
+      "id": "btnwar",
+      "name": "Black-throated Green Warbler",
+      "subregion": "Vermont"
+    },
+    {
+      "date": "2026-06-07",
+      "id": "norwat",
+      "name": "Northern Waterthrush",
+      "subregion": "District of Columbia"
+    },
+    {
+      "date": "2026-06-08",
+      "id": "acafly",
+      "name": "Acadian Flycatcher",
+      "subregion": "Tennessee"
+    },
+    {
+      "date": "2026-06-08",
+      "id": "chswar",
+      "name": "Chestnut-sided Warbler",
+      "subregion": "Vermont"
+    },
+    {
+      "date": "2026-06-09",
+      "id": "semplo",
+      "name": "Semipalmated Plover",
+      "subregion": "Rhode Island"
+    },
+    {
+      "date": "2026-06-10",
+      "id": "categr1",
+      "name": "Western Cattle-Egret",
+      "subregion": "Wyoming"
+    },
+    {
+      "date": "2026-06-10",
+      "id": "purmar",
+      "name": "Purple Martin",
+      "subregion": "Iowa"
+    },
+    {
+      "date": "2026-06-11",
+      "id": "cantow",
+      "name": "Canyon Towhee",
+      "subregion": "Arizona"
+    },
+    {
+      "date": "2026-06-11",
+      "id": "comgal1",
+      "name": "Common Gallinule",
+      "subregion": "Arizona"
+    },
+    {
+      "date": "2026-06-12",
+      "id": "eursta",
+      "name": "European Starling",
+      "subregion": "West Virginia"
+    },
+    {
+      "date": "2026-06-12",
+      "id": "grekis",
+      "name": "Great Kiskadee",
+      "subregion": "Texas"
+    },
+    {
+      "date": "2026-06-13",
+      "id": "rufgro",
+      "name": "Ruffed Grouse",
+      "subregion": "Michigan"
+    },
+    {
+      "date": "2026-06-14",
+      "id": "prowar",
+      "name": "Prothonotary Warbler",
+      "subregion": "Missouri"
+    },
+    {
+      "date": "2026-06-15",
+      "id": "nrwswa",
+      "name": "Northern Rough-winged Swallow",
+      "subregion": "Iowa"
+    },
+    {
+      "date": "2026-06-15",
+      "id": "eurgol",
+      "name": "European Goldfinch",
+      "subregion": "Illinois"
+    },
+    {
+      "date": "2026-06-16",
+      "id": "whevir",
+      "name": "White-eyed Vireo",
+      "subregion": "District of Columbia"
+    },
+    {
+      "date": "2026-06-16",
+      "id": "easpho",
+      "name": "Eastern Phoebe",
+      "subregion": "Colorado"
+    },
+    {
+      "date": "2026-06-17",
+      "id": "reshaw",
+      "name": "Red-shouldered Hawk",
+      "subregion": "Nevada"
+    },
+    {
+      "date": "2026-06-17",
+      "id": "sancra",
+      "name": "Sandhill Crane",
+      "subregion": "Washington"
+    },
+    {
+      "date": "2026-06-18",
+      "id": "woothr",
+      "name": "Wood Thrush",
+      "subregion": "New Hampshire"
+    },
+    {
+      "date": "2026-06-18",
+      "id": "rebmer",
+      "name": "Red-breasted Merganser",
+      "subregion": "Minnesota"
+    },
+    {
+      "date": "2026-06-19",
+      "id": "herwar",
+      "name": "Hermit Warbler",
+      "subregion": "Oregon"
+    },
+    {
+      "date": "2026-06-19",
+      "id": "yebfly",
+      "name": "Yellow-bellied Flycatcher",
+      "subregion": "New Hampshire"
+    },
+    {
+      "date": "2026-06-20",
+      "id": "grbher3",
+      "name": "Great Blue Heron",
+      "subregion": "Wisconsin"
+    },
+    {
+      "date": "2026-06-21",
+      "id": "sagspa1",
+      "name": "Sagebrush Sparrow",
+      "subregion": "Nevada"
+    },
+    {
+      "date": "2026-06-22",
+      "id": "leabit",
+      "name": "Least Bittern",
+      "subregion": "South Carolina"
+    },
+    {
+      "date": "2026-06-22",
+      "id": "bawwar",
+      "name": "Black-and-white Warbler",
+      "subregion": "Kansas"
+    },
+    {
+      "date": "2026-06-23",
+      "id": "rebwoo",
+      "name": "Red-bellied Woodpecker",
+      "subregion": "West Virginia"
+    },
+    {
+      "date": "2026-06-24",
+      "id": "logshr",
+      "name": "Loggerhead Shrike",
+      "subregion": "Missouri"
+    },
+    {
+      "date": "2026-06-25",
+      "id": "leafly",
+      "name": "Least Flycatcher",
+      "subregion": "Colorado"
+    },
+    {
+      "date": "2026-06-26",
+      "id": "comter",
+      "name": "Common Tern",
+      "subregion": "Virginia"
+    },
+    {
+      "date": "2026-06-27",
+      "id": "wilplo",
+      "name": "Wilson's Plover",
+      "subregion": "Texas"
+    },
+    {
+      "date": "2026-06-28",
+      "id": "horlar",
+      "name": "Horned Lark",
+      "subregion": "Wyoming"
+    },
+    {
+      "date": "2026-06-29",
+      "id": "sora",
+      "name": "Sora",
+      "subregion": "Illinois"
+    },
+    {
+      "date": "2026-06-29",
+      "id": "gresca",
+      "name": "Greater Scaup",
+      "subregion": "Wyoming"
     }
   ]
 }
