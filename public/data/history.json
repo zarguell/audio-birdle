@@ -797,6 +797,12 @@
       "id": "dunlin",
       "name": "Dunlin",
       "subregion": "Illinois"
+    },
+    {
+      "date": "2026-06-29",
+      "id": "merlin",
+      "name": "Merlin",
+      "subregion": "Wyoming"
     }
   ],
   "us-lower48": [
@@ -1597,6 +1603,12 @@
       "id": "sora",
       "name": "Sora",
       "subregion": "Illinois"
+    },
+    {
+      "date": "2026-06-29",
+      "id": "gresca",
+      "name": "Greater Scaup",
+      "subregion": "Wyoming"
     }
   ]
 }
