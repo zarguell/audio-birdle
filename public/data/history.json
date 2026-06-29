@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-03-01",
-      "id": "grtgra",
-      "name": "Great-tailed Grackle",
-      "subregion": "Arizona"
-    },
-    {
       "date": "2026-03-02",
       "id": "rengre",
       "name": "Red-necked Grebe",
@@ -797,15 +791,15 @@
       "id": "lewwoo",
       "name": "Lewis's Woodpecker",
       "subregion": "Wyoming"
+    },
+    {
+      "date": "2026-06-29",
+      "id": "dunlin",
+      "name": "Dunlin",
+      "subregion": "Illinois"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-03-01",
-      "id": "amewig",
-      "name": "American Wigeon",
-      "subregion": "Vermont"
-    },
     {
       "date": "2026-03-02",
       "id": "comgol",
@@ -1597,6 +1591,12 @@
       "id": "horlar",
       "name": "Horned Lark",
       "subregion": "Wyoming"
+    },
+    {
+      "date": "2026-06-29",
+      "id": "sora",
+      "name": "Sora",
+      "subregion": "Illinois"
     }
   ]
 }
