@@ -1,30 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-02-26",
-      "id": "bushti",
-      "name": "Bushtit",
-      "subregion": "Washington"
-    },
-    {
-      "date": "2026-02-27",
-      "id": "redhea",
-      "name": "Redhead",
-      "subregion": "South Dakota"
-    },
-    {
-      "date": "2026-02-28",
-      "id": "rebmer",
-      "name": "Red-breasted Merganser",
-      "subregion": "Missouri"
-    },
-    {
-      "date": "2026-03-01",
-      "id": "grtgra",
-      "name": "Great-tailed Grackle",
-      "subregion": "Arizona"
-    },
-    {
       "date": "2026-03-02",
       "id": "rengre",
       "name": "Red-necked Grebe",
@@ -797,33 +773,39 @@
       "id": "prafal",
       "name": "Prairie Falcon",
       "subregion": "Colorado"
+    },
+    {
+      "date": "2026-06-26",
+      "id": "blksco2",
+      "name": "Black Scoter",
+      "subregion": "New Jersey"
+    },
+    {
+      "date": "2026-06-27",
+      "id": "comter",
+      "name": "Common Tern",
+      "subregion": "Texas"
+    },
+    {
+      "date": "2026-06-28",
+      "id": "lewwoo",
+      "name": "Lewis's Woodpecker",
+      "subregion": "Wyoming"
+    },
+    {
+      "date": "2026-06-29",
+      "id": "dunlin",
+      "name": "Dunlin",
+      "subregion": "Illinois"
+    },
+    {
+      "date": "2026-06-29",
+      "id": "merlin",
+      "name": "Merlin",
+      "subregion": "Wyoming"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-02-26",
-      "id": "mouchi",
-      "name": "Mountain Chickadee",
-      "subregion": "Washington"
-    },
-    {
-      "date": "2026-02-27",
-      "id": "blkski",
-      "name": "Black Skimmer",
-      "subregion": "Florida"
-    },
-    {
-      "date": "2026-02-28",
-      "id": "lecspa",
-      "name": "LeConte's Sparrow",
-      "subregion": "Missouri"
-    },
-    {
-      "date": "2026-03-01",
-      "id": "amewig",
-      "name": "American Wigeon",
-      "subregion": "Vermont"
-    },
     {
       "date": "2026-03-02",
       "id": "comgol",
@@ -1597,6 +1579,36 @@
       "id": "leafly",
       "name": "Least Flycatcher",
       "subregion": "Colorado"
+    },
+    {
+      "date": "2026-06-26",
+      "id": "comter",
+      "name": "Common Tern",
+      "subregion": "Virginia"
+    },
+    {
+      "date": "2026-06-27",
+      "id": "wilplo",
+      "name": "Wilson's Plover",
+      "subregion": "Texas"
+    },
+    {
+      "date": "2026-06-28",
+      "id": "horlar",
+      "name": "Horned Lark",
+      "subregion": "Wyoming"
+    },
+    {
+      "date": "2026-06-29",
+      "id": "sora",
+      "name": "Sora",
+      "subregion": "Illinois"
+    },
+    {
+      "date": "2026-06-29",
+      "id": "gresca",
+      "name": "Greater Scaup",
+      "subregion": "Wyoming"
     }
   ]
 }
