@@ -803,6 +803,12 @@
       "id": "gnwtea",
       "name": "Green-winged Teal",
       "subregion": "Michigan"
+    },
+    {
+      "date": "2026-07-01",
+      "id": "belkin1",
+      "name": "Belted Kingfisher",
+      "subregion": "Washington"
     }
   ],
   "us-lower48": [
@@ -1609,6 +1615,12 @@
       "id": "daejun",
       "name": "Dark-eyed Junco",
       "subregion": "New Jersey"
+    },
+    {
+      "date": "2026-07-01",
+      "id": "borchi2",
+      "name": "Boreal Chickadee",
+      "subregion": "Washington"
     }
   ]
 }
