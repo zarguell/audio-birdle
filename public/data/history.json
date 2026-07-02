@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-03-04",
-      "id": "whocra",
-      "name": "Whooping Crane",
-      "subregion": "Oklahoma"
-    },
-    {
       "date": "2026-03-05",
       "id": "norshr4",
       "name": "Northern Shrike",
@@ -809,15 +803,15 @@
       "id": "belkin1",
       "name": "Belted Kingfisher",
       "subregion": "Washington"
+    },
+    {
+      "date": "2026-07-02",
+      "id": "killde",
+      "name": "Killdeer",
+      "subregion": "Connecticut"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-03-04",
-      "id": "bktgna",
-      "name": "Black-tailed Gnatcatcher",
-      "subregion": "Texas"
-    },
     {
       "date": "2026-03-05",
       "id": "grycat",
@@ -1621,6 +1615,12 @@
       "id": "borchi2",
       "name": "Boreal Chickadee",
       "subregion": "Washington"
+    },
+    {
+      "date": "2026-07-02",
+      "id": "rthhum",
+      "name": "Ruby-throated Hummingbird",
+      "subregion": "Connecticut"
     }
   ]
 }
