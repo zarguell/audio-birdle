@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-03-05",
-      "id": "norshr4",
-      "name": "Northern Shrike",
-      "subregion": "Nebraska"
-    },
-    {
       "date": "2026-03-06",
       "id": "brncre",
       "name": "Brown Creeper",
@@ -809,15 +803,15 @@
       "id": "killde",
       "name": "Killdeer",
       "subregion": "Connecticut"
+    },
+    {
+      "date": "2026-07-03",
+      "id": "eargre",
+      "name": "Eared Grebe",
+      "subregion": "South Dakota"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-03-05",
-      "id": "grycat",
-      "name": "Gray Catbird",
-      "subregion": "Nebraska"
-    },
     {
       "date": "2026-03-06",
       "id": "pinwar",
@@ -1621,6 +1615,12 @@
       "id": "rthhum",
       "name": "Ruby-throated Hummingbird",
       "subregion": "Connecticut"
+    },
+    {
+      "date": "2026-07-03",
+      "id": "osprey",
+      "name": "Osprey",
+      "subregion": "South Dakota"
     }
   ]
 }
