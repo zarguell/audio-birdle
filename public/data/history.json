@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-03-06",
-      "id": "brncre",
-      "name": "Brown Creeper",
-      "subregion": "Louisiana"
-    },
-    {
       "date": "2026-03-07",
       "id": "comgra",
       "name": "Common Grackle",
@@ -809,15 +803,15 @@
       "id": "eargre",
       "name": "Eared Grebe",
       "subregion": "South Dakota"
+    },
+    {
+      "date": "2026-07-04",
+      "id": "cedwax",
+      "name": "Cedar Waxwing",
+      "subregion": "Colorado"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-03-06",
-      "id": "pinwar",
-      "name": "Pine Warbler",
-      "subregion": "Louisiana"
-    },
     {
       "date": "2026-03-07",
       "id": "comgal1",
@@ -1621,6 +1615,12 @@
       "id": "osprey",
       "name": "Osprey",
       "subregion": "South Dakota"
+    },
+    {
+      "date": "2026-07-04",
+      "id": "bkbmag1",
+      "name": "Black-billed Magpie",
+      "subregion": "Colorado"
     }
   ]
 }
