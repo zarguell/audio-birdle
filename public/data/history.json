@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-03-07",
-      "id": "comgra",
-      "name": "Common Grackle",
-      "subregion": "Alabama"
-    },
-    {
       "date": "2026-03-08",
       "id": "comgal1",
       "name": "Common Gallinule",
@@ -809,15 +803,15 @@
       "id": "cedwax",
       "name": "Cedar Waxwing",
       "subregion": "Colorado"
+    },
+    {
+      "date": "2026-07-05",
+      "id": "grbher3",
+      "name": "Great Blue Heron",
+      "subregion": "Alabama"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-03-07",
-      "id": "comgal1",
-      "name": "Common Gallinule",
-      "subregion": "Alabama"
-    },
     {
       "date": "2026-03-08",
       "id": "reshaw",
@@ -1621,6 +1615,12 @@
       "id": "bkbmag1",
       "name": "Black-billed Magpie",
       "subregion": "Colorado"
+    },
+    {
+      "date": "2026-07-05",
+      "id": "treswa",
+      "name": "Tree Swallow",
+      "subregion": "Arkansas"
     }
   ]
 }
