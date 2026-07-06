@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-03-08",
-      "id": "comgal1",
-      "name": "Common Gallinule",
-      "subregion": "Virginia"
-    },
-    {
       "date": "2026-03-09",
       "id": "sancra",
       "name": "Sandhill Crane",
@@ -809,15 +803,15 @@
       "id": "grbher3",
       "name": "Great Blue Heron",
       "subregion": "Alabama"
+    },
+    {
+      "date": "2026-07-06",
+      "id": "barswa",
+      "name": "Barn Swallow",
+      "subregion": "New Mexico"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-03-08",
-      "id": "reshaw",
-      "name": "Red-shouldered Hawk",
-      "subregion": "Michigan"
-    },
     {
       "date": "2026-03-09",
       "id": "pibgre",
@@ -1621,6 +1615,12 @@
       "id": "treswa",
       "name": "Tree Swallow",
       "subregion": "Arkansas"
+    },
+    {
+      "date": "2026-07-06",
+      "id": "graspa",
+      "name": "Grasshopper Sparrow",
+      "subregion": "New Mexico"
     }
   ]
 }
