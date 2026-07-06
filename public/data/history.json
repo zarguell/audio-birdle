@@ -809,6 +809,12 @@
       "id": "barswa",
       "name": "Barn Swallow",
       "subregion": "New Mexico"
+    },
+    {
+      "date": "2026-07-06",
+      "id": "amerob",
+      "name": "American Robin",
+      "subregion": "Louisiana"
     }
   ],
   "us-lower48": [
@@ -1621,6 +1627,12 @@
       "id": "graspa",
       "name": "Grasshopper Sparrow",
       "subregion": "New Mexico"
+    },
+    {
+      "date": "2026-07-06",
+      "id": "snoegr",
+      "name": "Snowy Egret",
+      "subregion": "Louisiana"
     }
   ]
 }
