@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-03-09",
-      "id": "sancra",
-      "name": "Sandhill Crane",
-      "subregion": "Ohio"
-    },
-    {
       "date": "2026-03-10",
       "id": "brdowl",
       "name": "Barred Owl",
@@ -815,15 +809,15 @@
       "id": "amerob",
       "name": "American Robin",
       "subregion": "Louisiana"
+    },
+    {
+      "date": "2026-07-07",
+      "id": "cliswa",
+      "name": "Cliff Swallow",
+      "subregion": "North Dakota"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-03-09",
-      "id": "pibgre",
-      "name": "Pied-billed Grebe",
-      "subregion": "Ohio"
-    },
     {
       "date": "2026-03-10",
       "id": "bohwax",
@@ -1633,6 +1627,12 @@
       "id": "snoegr",
       "name": "Snowy Egret",
       "subregion": "Louisiana"
+    },
+    {
+      "date": "2026-07-07",
+      "id": "wesmea",
+      "name": "Western Meadowlark",
+      "subregion": "South Dakota"
     }
   ]
 }
