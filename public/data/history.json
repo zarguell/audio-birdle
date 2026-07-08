@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-03-10",
-      "id": "brdowl",
-      "name": "Barred Owl",
-      "subregion": "North Dakota"
-    },
-    {
       "date": "2026-03-11",
       "id": "seaspa",
       "name": "Seaside Sparrow",
@@ -815,15 +809,15 @@
       "id": "cliswa",
       "name": "Cliff Swallow",
       "subregion": "North Dakota"
+    },
+    {
+      "date": "2026-07-08",
+      "id": "clagre",
+      "name": "Clark's Grebe",
+      "subregion": "Utah"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-03-10",
-      "id": "bohwax",
-      "name": "Bohemian Waxwing",
-      "subregion": "North Dakota"
-    },
     {
       "date": "2026-03-11",
       "id": "bkbplo",
@@ -1633,6 +1627,12 @@
       "id": "wesmea",
       "name": "Western Meadowlark",
       "subregion": "South Dakota"
+    },
+    {
+      "date": "2026-07-08",
+      "id": "gbbgul",
+      "name": "Great Black-backed Gull",
+      "subregion": "New York"
     }
   ]
 }
