@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-03-11",
-      "id": "seaspa",
-      "name": "Seaside Sparrow",
-      "subregion": "Mississippi"
-    },
-    {
       "date": "2026-03-12",
       "id": "snoowl1",
       "name": "Snowy Owl",
@@ -815,15 +809,15 @@
       "id": "clagre",
       "name": "Clark's Grebe",
       "subregion": "Utah"
+    },
+    {
+      "date": "2026-07-09",
+      "id": "btywar",
+      "name": "Black-throated Gray Warbler",
+      "subregion": "Utah"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-03-11",
-      "id": "bkbplo",
-      "name": "Black-bellied Plover",
-      "subregion": "New Jersey"
-    },
     {
       "date": "2026-03-12",
       "id": "bkbwoo",
@@ -1633,6 +1627,12 @@
       "id": "gbbgul",
       "name": "Great Black-backed Gull",
       "subregion": "New York"
+    },
+    {
+      "date": "2026-07-09",
+      "id": "moublu",
+      "name": "Mountain Bluebird",
+      "subregion": "Wyoming"
     }
   ]
 }
