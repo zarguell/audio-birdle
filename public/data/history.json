@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-03-12",
-      "id": "snoowl1",
-      "name": "Snowy Owl",
-      "subregion": "Minnesota"
-    },
-    {
       "date": "2026-03-13",
       "id": "dunlin",
       "name": "Dunlin",
@@ -815,15 +809,15 @@
       "id": "btywar",
       "name": "Black-throated Gray Warbler",
       "subregion": "Utah"
+    },
+    {
+      "date": "2026-07-10",
+      "id": "laplon",
+      "name": "Lapland Longspur",
+      "subregion": "Alaska"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-03-12",
-      "id": "bkbwoo",
-      "name": "Black-backed Woodpecker",
-      "subregion": "Minnesota"
-    },
     {
       "date": "2026-03-13",
       "id": "pinsis",
@@ -1633,6 +1627,12 @@
       "id": "moublu",
       "name": "Mountain Bluebird",
       "subregion": "Wyoming"
+    },
+    {
+      "date": "2026-07-10",
+      "id": "leater1",
+      "name": "Least Tern",
+      "subregion": "Missouri"
     }
   ]
 }
