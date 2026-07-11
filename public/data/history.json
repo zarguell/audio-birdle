@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-03-13",
-      "id": "dunlin",
-      "name": "Dunlin",
-      "subregion": "Louisiana"
-    },
-    {
       "date": "2026-03-14",
       "id": "cangoo",
       "name": "Canada Goose",
@@ -815,15 +809,15 @@
       "id": "laplon",
       "name": "Lapland Longspur",
       "subregion": "Alaska"
+    },
+    {
+      "date": "2026-07-11",
+      "id": "osprey",
+      "name": "Osprey",
+      "subregion": "Mississippi"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-03-13",
-      "id": "pinsis",
-      "name": "Pine Siskin",
-      "subregion": "Minnesota"
-    },
     {
       "date": "2026-03-14",
       "id": "wilsni1",
@@ -1633,6 +1627,12 @@
       "id": "leater1",
       "name": "Least Tern",
       "subregion": "Missouri"
+    },
+    {
+      "date": "2026-07-11",
+      "id": "grcfly",
+      "name": "Great Crested Flycatcher",
+      "subregion": "District of Columbia"
     }
   ]
 }
