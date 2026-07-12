@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-03-14",
-      "id": "cangoo",
-      "name": "Canada Goose",
-      "subregion": "Missouri"
-    },
-    {
       "date": "2026-03-15",
       "id": "grbher3",
       "name": "Great Blue Heron",
@@ -815,15 +809,15 @@
       "id": "osprey",
       "name": "Osprey",
       "subregion": "Mississippi"
+    },
+    {
+      "date": "2026-07-12",
+      "id": "sancra",
+      "name": "Sandhill Crane",
+      "subregion": "Minnesota"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-03-14",
-      "id": "wilsni1",
-      "name": "Wilson's Snipe",
-      "subregion": "Missouri"
-    },
     {
       "date": "2026-03-15",
       "id": "rewbla",
@@ -1633,6 +1627,12 @@
       "id": "grcfly",
       "name": "Great Crested Flycatcher",
       "subregion": "District of Columbia"
+    },
+    {
+      "date": "2026-07-12",
+      "id": "lecspa",
+      "name": "LeConte's Sparrow",
+      "subregion": "Minnesota"
     }
   ]
 }
