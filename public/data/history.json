@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-03-15",
-      "id": "grbher3",
-      "name": "Great Blue Heron",
-      "subregion": "South Carolina"
-    },
-    {
       "date": "2026-03-16",
       "id": "bkbplo",
       "name": "Black-bellied Plover",
@@ -815,15 +809,15 @@
       "id": "sancra",
       "name": "Sandhill Crane",
       "subregion": "Minnesota"
+    },
+    {
+      "date": "2026-07-13",
+      "id": "bknsti",
+      "name": "Black-necked Stilt",
+      "subregion": "Utah"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-03-15",
-      "id": "rewbla",
-      "name": "Red-winged Blackbird",
-      "subregion": "Iowa"
-    },
     {
       "date": "2026-03-16",
       "id": "whtspa",
@@ -1633,6 +1627,12 @@
       "id": "lecspa",
       "name": "LeConte's Sparrow",
       "subregion": "Minnesota"
+    },
+    {
+      "date": "2026-07-13",
+      "id": "olsfly",
+      "name": "Olive-sided Flycatcher",
+      "subregion": "Utah"
     }
   ]
 }
