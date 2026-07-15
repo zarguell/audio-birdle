@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-03-17",
-      "id": "monpar",
-      "name": "Monk Parakeet",
-      "subregion": "Texas"
-    },
-    {
       "date": "2026-03-18",
       "id": "categr1",
       "name": "Western Cattle-Egret",
@@ -815,15 +809,15 @@
       "id": "miskit",
       "name": "Mississippi Kite",
       "subregion": "Virginia"
+    },
+    {
+      "date": "2026-07-15",
+      "id": "sonspa",
+      "name": "Song Sparrow",
+      "subregion": "Colorado"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-03-17",
-      "id": "sancra",
-      "name": "Sandhill Crane",
-      "subregion": "Texas"
-    },
     {
       "date": "2026-03-18",
       "id": "comloo",
@@ -1633,6 +1627,12 @@
       "id": "cedwax",
       "name": "Cedar Waxwing",
       "subregion": "Maryland"
+    },
+    {
+      "date": "2026-07-15",
+      "id": "perfal",
+      "name": "Peregrine Falcon",
+      "subregion": "Colorado"
     }
   ]
 }
