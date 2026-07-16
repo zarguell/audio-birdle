@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-03-18",
-      "id": "categr1",
-      "name": "Western Cattle-Egret",
-      "subregion": "South Carolina"
-    },
-    {
       "date": "2026-03-19",
       "id": "houfin",
       "name": "House Finch",
@@ -815,15 +809,15 @@
       "id": "sonspa",
       "name": "Song Sparrow",
       "subregion": "Colorado"
+    },
+    {
+      "date": "2026-07-16",
+      "id": "perfal",
+      "name": "Peregrine Falcon",
+      "subregion": "Rhode Island"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-03-18",
-      "id": "comloo",
-      "name": "Common Loon",
-      "subregion": "South Carolina"
-    },
     {
       "date": "2026-03-19",
       "id": "evegro",
@@ -1633,6 +1627,12 @@
       "id": "perfal",
       "name": "Peregrine Falcon",
       "subregion": "Colorado"
+    },
+    {
+      "date": "2026-07-16",
+      "id": "ambduc",
+      "name": "American Black Duck",
+      "subregion": "Maryland"
     }
   ]
 }
