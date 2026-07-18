@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-03-20",
-      "id": "snoplo5",
-      "name": "Snowy Plover",
-      "subregion": "Mississippi"
-    },
-    {
       "date": "2026-03-21",
       "id": "swaspa",
       "name": "Swamp Sparrow",
@@ -815,15 +809,15 @@
       "id": "attwoo1",
       "name": "American Three-toed Woodpecker",
       "subregion": "Wyoming"
+    },
+    {
+      "date": "2026-07-18",
+      "id": "whbnut",
+      "name": "White-breasted Nuthatch",
+      "subregion": "Georgia"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-03-20",
-      "id": "redhea",
-      "name": "Redhead",
-      "subregion": "Mississippi"
-    },
     {
       "date": "2026-03-21",
       "id": "wesmea",
@@ -1633,6 +1627,12 @@
       "id": "chispa",
       "name": "Chipping Sparrow",
       "subregion": "South Dakota"
+    },
+    {
+      "date": "2026-07-18",
+      "id": "goleag",
+      "name": "Golden Eagle",
+      "subregion": "Oregon"
     }
   ]
 }
