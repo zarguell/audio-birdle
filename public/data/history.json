@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-03-22",
-      "id": "tunswa",
-      "name": "Tundra Swan",
-      "subregion": "Maryland"
-    },
-    {
       "date": "2026-03-23",
       "id": "borchi2",
       "name": "Boreal Chickadee",
@@ -815,15 +809,15 @@
       "id": "graspa",
       "name": "Grasshopper Sparrow",
       "subregion": "Georgia"
+    },
+    {
+      "date": "2026-07-20",
+      "id": "grycat",
+      "name": "Gray Catbird",
+      "subregion": "Washington"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-03-22",
-      "id": "libher",
-      "name": "Little Blue Heron",
-      "subregion": "Mississippi"
-    },
     {
       "date": "2026-03-23",
       "id": "fragul",
@@ -1633,6 +1627,12 @@
       "id": "chwwid",
       "name": "Chuck-will's-widow",
       "subregion": "Georgia"
+    },
+    {
+      "date": "2026-07-20",
+      "id": "redhea",
+      "name": "Redhead",
+      "subregion": "Minnesota"
     }
   ]
 }
