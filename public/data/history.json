@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-03-23",
-      "id": "borchi2",
-      "name": "Boreal Chickadee",
-      "subregion": "New Hampshire"
-    },
-    {
       "date": "2026-03-24",
       "id": "rebwoo",
       "name": "Red-bellied Woodpecker",
@@ -815,15 +809,15 @@
       "id": "grycat",
       "name": "Gray Catbird",
       "subregion": "Washington"
+    },
+    {
+      "date": "2026-07-21",
+      "id": "rethaw",
+      "name": "Red-tailed Hawk",
+      "subregion": "District of Columbia"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-03-23",
-      "id": "fragul",
-      "name": "Franklin's Gull",
-      "subregion": "Louisiana"
-    },
     {
       "date": "2026-03-24",
       "id": "houspa",
@@ -1633,6 +1627,12 @@
       "id": "redhea",
       "name": "Redhead",
       "subregion": "Minnesota"
+    },
+    {
+      "date": "2026-07-21",
+      "id": "baleag",
+      "name": "Bald Eagle",
+      "subregion": "District of Columbia"
     }
   ]
 }
