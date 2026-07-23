@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-03-25",
-      "id": "easpho",
-      "name": "Eastern Phoebe",
-      "subregion": "New Jersey"
-    },
-    {
       "date": "2026-03-26",
       "id": "marwre",
       "name": "Marsh Wren",
@@ -815,15 +809,15 @@
       "id": "swawar",
       "name": "Swainson's Warbler",
       "subregion": "Pennsylvania"
+    },
+    {
+      "date": "2026-07-23",
+      "id": "spotow",
+      "name": "Spotted Towhee",
+      "subregion": "Wyoming"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-03-25",
-      "id": "amepip",
-      "name": "American Pipit",
-      "subregion": "New Jersey"
-    },
     {
       "date": "2026-03-26",
       "id": "horgre",
@@ -1633,6 +1627,12 @@
       "id": "grnher",
       "name": "Green Heron",
       "subregion": "District of Columbia"
+    },
+    {
+      "date": "2026-07-23",
+      "id": "brebla",
+      "name": "Brewer's Blackbird",
+      "subregion": "Wyoming"
     }
   ]
 }
