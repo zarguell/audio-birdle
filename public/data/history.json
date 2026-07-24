@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-03-26",
-      "id": "marwre",
-      "name": "Marsh Wren",
-      "subregion": "Connecticut"
-    },
-    {
       "date": "2026-03-27",
       "id": "grpchi",
       "name": "Greater Prairie-Chicken",
@@ -815,15 +809,15 @@
       "id": "spotow",
       "name": "Spotted Towhee",
       "subregion": "Wyoming"
+    },
+    {
+      "date": "2026-07-24",
+      "id": "prowar",
+      "name": "Prothonotary Warbler",
+      "subregion": "Wisconsin"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-03-26",
-      "id": "horgre",
-      "name": "Horned Grebe",
-      "subregion": "Connecticut"
-    },
     {
       "date": "2026-03-27",
       "id": "killde",
@@ -1633,6 +1627,12 @@
       "id": "brebla",
       "name": "Brewer's Blackbird",
       "subregion": "Wyoming"
+    },
+    {
+      "date": "2026-07-24",
+      "id": "amebit",
+      "name": "American Bittern",
+      "subregion": "Wisconsin"
     }
   ]
 }
