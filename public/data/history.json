@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-03-27",
-      "id": "grpchi",
-      "name": "Greater Prairie-Chicken",
-      "subregion": "Nebraska"
-    },
-    {
       "date": "2026-03-28",
       "id": "bknsti",
       "name": "Black-necked Stilt",
@@ -815,15 +809,15 @@
       "id": "prowar",
       "name": "Prothonotary Warbler",
       "subregion": "Wisconsin"
+    },
+    {
+      "date": "2026-07-25",
+      "id": "wesmea",
+      "name": "Western Meadowlark",
+      "subregion": "Oklahoma"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-03-27",
-      "id": "killde",
-      "name": "Killdeer",
-      "subregion": "Nebraska"
-    },
     {
       "date": "2026-03-28",
       "id": "lessca",
@@ -1633,6 +1627,12 @@
       "id": "amebit",
       "name": "American Bittern",
       "subregion": "Wisconsin"
+    },
+    {
+      "date": "2026-07-25",
+      "id": "gadwal",
+      "name": "Gadwall",
+      "subregion": "Oklahoma"
     }
   ]
 }
