@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-03-28",
-      "id": "bknsti",
-      "name": "Black-necked Stilt",
-      "subregion": "Arkansas"
-    },
-    {
       "date": "2026-03-29",
       "id": "canvas",
       "name": "Canvasback",
@@ -815,15 +809,15 @@
       "id": "wesmea",
       "name": "Western Meadowlark",
       "subregion": "Oklahoma"
+    },
+    {
+      "date": "2026-07-26",
+      "id": "willet1",
+      "name": "Willet",
+      "subregion": "Maryland"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-03-28",
-      "id": "lessca",
-      "name": "Lesser Scaup",
-      "subregion": "Kentucky"
-    },
     {
       "date": "2026-03-29",
       "id": "canvas",
@@ -1633,6 +1627,12 @@
       "id": "gadwal",
       "name": "Gadwall",
       "subregion": "Oklahoma"
+    },
+    {
+      "date": "2026-07-26",
+      "id": "cangoo",
+      "name": "Canada Goose",
+      "subregion": "Maryland"
     }
   ]
 }
