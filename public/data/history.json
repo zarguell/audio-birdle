@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-03-30",
-      "id": "clarai11",
-      "name": "Clapper Rail",
-      "subregion": "Alabama"
-    },
-    {
       "date": "2026-03-31",
       "id": "mallar3",
       "name": "Mallard",
@@ -815,15 +809,15 @@
       "id": "carchi",
       "name": "Carolina Chickadee",
       "subregion": "West Virginia"
+    },
+    {
+      "date": "2026-07-28",
+      "id": "yebmag",
+      "name": "Yellow-billed Magpie",
+      "subregion": "California"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-03-30",
-      "id": "nutman",
-      "name": "Scaly-breasted Munia",
-      "subregion": "Alabama"
-    },
     {
       "date": "2026-03-31",
       "id": "marwre",
@@ -1633,6 +1627,12 @@
       "id": "sposan",
       "name": "Spotted Sandpiper",
       "subregion": "District of Columbia"
+    },
+    {
+      "date": "2026-07-28",
+      "id": "hooori",
+      "name": "Hooded Oriole",
+      "subregion": "California"
     }
   ]
 }
