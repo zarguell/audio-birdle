@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-03-31",
-      "id": "mallar3",
-      "name": "Mallard",
-      "subregion": "Alaska"
-    },
-    {
       "date": "2026-04-01",
       "id": "truswa",
       "name": "Trumpeter Swan",
@@ -815,15 +809,15 @@
       "id": "yebmag",
       "name": "Yellow-billed Magpie",
       "subregion": "California"
+    },
+    {
+      "date": "2026-07-29",
+      "id": "blkter",
+      "name": "Black Tern",
+      "subregion": "Maine"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-03-31",
-      "id": "marwre",
-      "name": "Marsh Wren",
-      "subregion": "New Jersey"
-    },
     {
       "date": "2026-04-01",
       "id": "merlin",
@@ -1633,6 +1627,12 @@
       "id": "hooori",
       "name": "Hooded Oriole",
       "subregion": "California"
+    },
+    {
+      "date": "2026-07-29",
+      "id": "comgra",
+      "name": "Common Grackle",
+      "subregion": "Mississippi"
     }
   ]
 }
