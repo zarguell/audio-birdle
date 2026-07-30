@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-04-01",
-      "id": "truswa",
-      "name": "Trumpeter Swan",
-      "subregion": "Ohio"
-    },
-    {
       "date": "2026-04-02",
       "id": "anhing",
       "name": "Anhinga",
@@ -815,15 +809,15 @@
       "id": "blkter",
       "name": "Black Tern",
       "subregion": "Maine"
+    },
+    {
+      "date": "2026-07-30",
+      "id": "norfli",
+      "name": "Northern Flicker",
+      "subregion": "California"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-04-01",
-      "id": "merlin",
-      "name": "Merlin",
-      "subregion": "Georgia"
-    },
     {
       "date": "2026-04-02",
       "id": "btnwar",
@@ -1633,6 +1627,12 @@
       "id": "comgra",
       "name": "Common Grackle",
       "subregion": "Mississippi"
+    },
+    {
+      "date": "2026-07-30",
+      "id": "robgro",
+      "name": "Rose-breasted Grosbeak",
+      "subregion": "California"
     }
   ]
 }
