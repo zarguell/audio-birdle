@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-04-02",
-      "id": "anhing",
-      "name": "Anhinga",
-      "subregion": "North Carolina"
-    },
-    {
       "date": "2026-04-03",
       "id": "rethaw",
       "name": "Red-tailed Hawk",
@@ -815,15 +809,15 @@
       "id": "norfli",
       "name": "Northern Flicker",
       "subregion": "California"
+    },
+    {
+      "date": "2026-07-31",
+      "id": "normoc",
+      "name": "Northern Mockingbird",
+      "subregion": "New Jersey"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-04-02",
-      "id": "btnwar",
-      "name": "Black-throated Green Warbler",
-      "subregion": "Oklahoma"
-    },
     {
       "date": "2026-04-03",
       "id": "winwre3",
@@ -1633,6 +1627,12 @@
       "id": "robgro",
       "name": "Rose-breasted Grosbeak",
       "subregion": "California"
+    },
+    {
+      "date": "2026-07-31",
+      "id": "grawar",
+      "name": "Grace's Warbler",
+      "subregion": "Arizona"
     }
   ]
 }
