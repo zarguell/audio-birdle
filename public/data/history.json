@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-04-03",
-      "id": "rethaw",
-      "name": "Red-tailed Hawk",
-      "subregion": "New Mexico"
-    },
-    {
       "date": "2026-04-04",
       "id": "sagthr",
       "name": "Sage Thrasher",
@@ -815,15 +809,15 @@
       "id": "normoc",
       "name": "Northern Mockingbird",
       "subregion": "New Jersey"
+    },
+    {
+      "date": "2026-08-01",
+      "id": "swaspa",
+      "name": "Swamp Sparrow",
+      "subregion": "Iowa"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-04-03",
-      "id": "winwre3",
-      "name": "Winter Wren",
-      "subregion": "Illinois"
-    },
     {
       "date": "2026-04-04",
       "id": "gcrfin",
@@ -1633,6 +1627,12 @@
       "id": "grawar",
       "name": "Grace's Warbler",
       "subregion": "Arizona"
+    },
+    {
+      "date": "2026-08-01",
+      "id": "evegro",
+      "name": "Evening Grosbeak",
+      "subregion": "Massachusetts"
     }
   ]
 }
