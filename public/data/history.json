@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-04-04",
-      "id": "sagthr",
-      "name": "Sage Thrasher",
-      "subregion": "Wyoming"
-    },
-    {
       "date": "2026-04-05",
       "id": "grhowl",
       "name": "Great Horned Owl",
@@ -815,15 +809,15 @@
       "id": "swaspa",
       "name": "Swamp Sparrow",
       "subregion": "Iowa"
+    },
+    {
+      "date": "2026-08-02",
+      "id": "tuftit",
+      "name": "Tufted Titmouse",
+      "subregion": "Louisiana"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-04-04",
-      "id": "gcrfin",
-      "name": "Gray-crowned Rosy-Finch",
-      "subregion": "Wyoming"
-    },
     {
       "date": "2026-04-05",
       "id": "pilwoo",
@@ -1633,6 +1627,12 @@
       "id": "evegro",
       "name": "Evening Grosbeak",
       "subregion": "Massachusetts"
+    },
+    {
+      "date": "2026-08-02",
+      "id": "houfin",
+      "name": "House Finch",
+      "subregion": "Louisiana"
     }
   ]
 }
