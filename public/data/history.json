@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-04-05",
-      "id": "grhowl",
-      "name": "Great Horned Owl",
-      "subregion": "Idaho"
-    },
-    {
       "date": "2026-04-06",
       "id": "royter1",
       "name": "Royal Tern",
@@ -815,15 +809,15 @@
       "id": "tuftit",
       "name": "Tufted Titmouse",
       "subregion": "Louisiana"
+    },
+    {
+      "date": "2026-08-03",
+      "id": "dickci",
+      "name": "Dickcissel",
+      "subregion": "Delaware"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-04-05",
-      "id": "pilwoo",
-      "name": "Pileated Woodpecker",
-      "subregion": "Idaho"
-    },
     {
       "date": "2026-04-06",
       "id": "grbher3",
@@ -1633,6 +1627,12 @@
       "id": "houfin",
       "name": "House Finch",
       "subregion": "Louisiana"
+    },
+    {
+      "date": "2026-08-03",
+      "id": "barswa",
+      "name": "Barn Swallow",
+      "subregion": "Delaware"
     }
   ]
 }
