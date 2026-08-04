@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-04-06",
-      "id": "royter1",
-      "name": "Royal Tern",
-      "subregion": "Maryland"
-    },
-    {
       "date": "2026-04-07",
       "id": "banswa",
       "name": "Bank Swallow",
@@ -815,15 +809,15 @@
       "id": "dickci",
       "name": "Dickcissel",
       "subregion": "Delaware"
+    },
+    {
+      "date": "2026-08-04",
+      "id": "pipplo",
+      "name": "Piping Plover",
+      "subregion": "North Carolina"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-04-06",
-      "id": "grbher3",
-      "name": "Great Blue Heron",
-      "subregion": "Nevada"
-    },
     {
       "date": "2026-04-07",
       "id": "comgra",
@@ -1633,6 +1627,12 @@
       "id": "barswa",
       "name": "Barn Swallow",
       "subregion": "Delaware"
+    },
+    {
+      "date": "2026-08-04",
+      "id": "houspa",
+      "name": "House Sparrow",
+      "subregion": "South Dakota"
     }
   ]
 }
