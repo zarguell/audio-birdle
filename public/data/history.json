@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-04-07",
-      "id": "banswa",
-      "name": "Bank Swallow",
-      "subregion": "New Jersey"
-    },
-    {
       "date": "2026-04-08",
       "id": "lobdow",
       "name": "Long-billed Dowitcher",
@@ -815,15 +809,15 @@
       "id": "pipplo",
       "name": "Piping Plover",
       "subregion": "North Carolina"
+    },
+    {
+      "date": "2026-08-05",
+      "id": "rthhum",
+      "name": "Ruby-throated Hummingbird",
+      "subregion": "South Dakota"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-04-07",
-      "id": "comgra",
-      "name": "Common Grackle",
-      "subregion": "New Jersey"
-    },
     {
       "date": "2026-04-08",
       "id": "chwwid",
@@ -1632,6 +1626,12 @@
       "date": "2026-08-04",
       "id": "houspa",
       "name": "House Sparrow",
+      "subregion": "South Dakota"
+    },
+    {
+      "date": "2026-08-05",
+      "id": "larbun",
+      "name": "Lark Bunting",
       "subregion": "South Dakota"
     }
   ]
