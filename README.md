@@ -22,7 +22,7 @@ I created this game with inspiration from Mitch's amazing project [Birdle](https
 - Practice Mode: Free-play guessing mode using the full bird list for your region.
 - Regional Focus: Multiple regions including United States and US Lower 48, with subregion support.
 - Local Storage: Progress and stats saved locally in your browser — no login required.
-- Automated Deployment: Daily challenge generation by GitHub Actions; the site is deployed via Cloudflare Pages (auto-build from main).
+- Automated Deployment: Daily challenge generation by GitHub Actions; the site is deployed via Cloudflare Workers (static assets, auto-build from main).
 - Multiple Audio Samples: Up to 10 audio clips per bird to improve variety and challenge.
 - Share Results: Copy and share your game results with a single click.
 - Countdown Timer: See how much time remains until the next daily challenge.

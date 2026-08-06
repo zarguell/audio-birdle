@@ -50,9 +50,9 @@ vi.mock("@/hooks/useGameData", () => ({
 
 vi.mock("@/components/GameView", () => ({
   // GameView is mocked out of the smoke test: it is not part of the coverage
-  // include list, and it currently crashes on render (pre-existing TDZ bug on
-  // main where a useEffect reads `currentBird` before its const declaration).
-  // Mocking keeps this smoke test focused on App.jsx and immune to that.
+  // include list, and it has its own dedicated render regression test
+  // (tests/unit/components/GameView.test.jsx). Mocking keeps this smoke test
+  // focused on App.jsx and its navigation flow.
   default: ({ onBack }) => (
     <div data-testid="game-view">
       <button type="button" onClick={onBack}>

@@ -11,7 +11,7 @@
  *   Python: hash_bird_id(id) from scripts/generate-daily-birds.py
  *
  * Regenerate them with:
- *   /tmp/audit-venv/bin/python -c "import importlib.util; spec = importlib.util.spec_from_file_location('gdb', 'scripts/generate-daily-birds.py'); mod = importlib.util.module_from_spec(spec); spec.loader.exec_module(mod); print(mod.hash_bird_id('amerob'))"
+ *   python -c "import importlib.util; spec = importlib.util.spec_from_file_location('gdb', 'scripts/generate-daily-birds.py'); mod = importlib.util.module_from_spec(spec); spec.loader.exec_module(mod); print(mod.hash_bird_id('amerob'))"
  */
 
 import { describe, it, expect } from "vitest";
