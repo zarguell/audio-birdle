@@ -4,7 +4,10 @@ import pytest
 import json
 import os
 import sys
+import time
 from unittest.mock import patch, MagicMock
+
+import requests
 
 # Import the module
 scripts_dir = os.path.join(os.path.dirname(__file__), "..", "scripts")
@@ -102,10 +105,7 @@ class TestMainFunctionality:
             str(output_file),
         ]
 
-        with (
-            patch("sys.argv", test_args),
-            patch("random.choice", return_value=subregions_data[0]),
-        ):
+        with patch("sys.argv", test_args):
             generate_daily_region_data.main()
 
         # Verify output file was created
@@ -121,6 +121,39 @@ class TestMainFunctionality:
 
     @patch("requests.get")
     @patch.dict(os.environ, {"EBIRD_API_KEY": "test-key"})
+    def test_main_processes_all_subregions(self, mock_get, tmp_path):
+        """Test that ALL subregions in a file are processed (not one random pick)"""
+        subregions_data = [
+            {"code": "US-NY", "name": "New York"},
+            {"code": "US-CA", "name": "California"},
+        ]
+        subregions_file = tmp_path / "us-subregions.json"
+        output_file = tmp_path / "output.json"
+        subregions_file.write_text(json.dumps(subregions_data))
+
+        mock_response = MagicMock()
+        mock_response.status_code = 200
+        mock_response.json.return_value = [{"speciesCode": "amerob"}]
+        mock_get.return_value = mock_response
+
+        test_args = [
+            "generate-daily-region-data.py",
+            str(subregions_file),
+            str(output_file),
+        ]
+
+        with patch("sys.argv", test_args):
+            generate_daily_region_data.main()
+
+        with open(output_file) as f:
+            output_data = json.load(f)
+
+        # Every subregion must be present
+        assert set(output_data["us"].keys()) == {"New York", "California"}
+        assert mock_get.call_count == 2
+
+    @patch("requests.get")
+    @patch.dict(os.environ, {"EBIRD_API_KEY": "test-key"})
     def test_main_handles_api_error(self, mock_get, tmp_path):
         """Test handling of API errors"""
         subregions_data = [{"code": "US-NY", "name": "New York"}]
@@ -128,10 +161,13 @@ class TestMainFunctionality:
         output_file = tmp_path / "output.json"
         subregions_file.write_text(json.dumps(subregions_data))
 
-        # Mock API error response
+        # Mock API error response (HTTPError on every retry attempt)
         mock_response = MagicMock()
         mock_response.status_code = 401
         mock_response.text = "Unauthorized"
+        mock_response.raise_for_status.side_effect = requests.HTTPError(
+            "401 Client Error: Unauthorized"
+        )
         mock_get.return_value = mock_response
 
         test_args = [
@@ -142,12 +178,15 @@ class TestMainFunctionality:
 
         with (
             patch("sys.argv", test_args),
-            patch("random.choice", return_value=subregions_data[0]),
+            patch("time.sleep") as mock_sleep,  # avoid real 1s/2s backoff
         ):
             with pytest.raises(RuntimeError) as exc_info:
                 generate_daily_region_data.main()
 
             assert "Failed to fetch" in str(exc_info.value)
+            # Retried: 3 attempts with backoff
+            assert mock_get.call_count == 3
+            assert mock_sleep.call_count == 2
 
     @patch("requests.get")
     @patch.dict(os.environ, {"EBIRD_API_KEY": "test-key"})
@@ -176,10 +215,7 @@ class TestMainFunctionality:
             str(output_file),
         ]
 
-        with (
-            patch("sys.argv", test_args),
-            patch("random.choice", return_value=subregions_data[0]),
-        ):
+        with patch("sys.argv", test_args):
             generate_daily_region_data.main()
 
         with open(output_file) as f:
@@ -191,7 +227,7 @@ class TestMainFunctionality:
 
 
 class TestRegionInference:
-    """Test region code inference from filename"""
+    """Test region key inference from filename"""
 
     @staticmethod
     def test_infers_region_from_filename(tmp_path):
@@ -201,10 +237,12 @@ class TestRegionInference:
         subregions_file = tmp_path / "us-subregions.json"
         subregions_file.write_text(json.dumps(subregions_data))
 
-        # Extract region prefix using the same logic as the script
-        region_prefix = os.path.basename(subregions_file).split("-")[0].lower()
+        # Extract region key using the same logic as the script
+        region_key = os.path.basename(str(subregions_file)).replace(
+            "-subregions.json", ""
+        )
 
-        assert region_prefix == "us"
+        assert region_key == "us"
 
     @staticmethod
     def test_handles_different_region_formats(tmp_path):
@@ -217,8 +255,52 @@ class TestRegionInference:
 
         for filename, expected_region in test_cases:
             filepath = tmp_path / filename
-            region_prefix = os.path.basename(filepath).split("-")[0].lower()
-            assert region_prefix == expected_region
+            region_key = os.path.basename(str(filepath)).replace(
+                "-subregions.json", ""
+            )
+            assert region_key == expected_region
+
+    @staticmethod
+    def test_distinguishes_prefix_collisions(tmp_path):
+        """Test that 'us' and 'us-lower48' files get distinct keys (no collapse)"""
+        # Previously both files collapsed to 'us' because only the first
+        # dash-separated token was used.
+        assert os.path.basename("us-subregions.json").replace(
+            "-subregions.json", ""
+        ) == "us"
+        assert os.path.basename("us-lower48-subregions.json").replace(
+            "-subregions.json", ""
+        ) == "us-lower48"
+
+    @patch("requests.get")
+    @patch.dict(os.environ, {"EBIRD_API_KEY": "test-key"})
+    def test_lower48_file_writes_distinct_key(self, mock_get, tmp_path):
+        """Test that us-lower48-subregions.json writes under its own key"""
+        subregions_data = [{"code": "US-CA", "name": "California"}]
+        subregions_file = tmp_path / "us-lower48-subregions.json"
+        output_file = tmp_path / "output.json"
+        subregions_file.write_text(json.dumps(subregions_data))
+
+        mock_response = MagicMock()
+        mock_response.status_code = 200
+        mock_response.json.return_value = [{"speciesCode": "amerob"}]
+        mock_get.return_value = mock_response
+
+        test_args = [
+            "generate-daily-region-data.py",
+            str(subregions_file),
+            str(output_file),
+        ]
+
+        with patch("sys.argv", test_args):
+            generate_daily_region_data.main()
+
+        with open(output_file) as f:
+            output_data = json.load(f)
+
+        assert "us-lower48" in output_data
+        assert "us" not in output_data
+        assert "California" in output_data["us-lower48"]
 
 
 class TestMergeExistingData:
@@ -252,10 +334,7 @@ class TestMergeExistingData:
             str(output_file),
         ]
 
-        with (
-            patch("sys.argv", test_args),
-            patch("random.choice", return_value=subregions_data[0]),
-        ):
+        with patch("sys.argv", test_args):
             generate_daily_region_data.main()
 
         with open(output_file) as f:
@@ -272,7 +351,7 @@ class TestMergeExistingData:
     @patch("requests.get")
     @patch.dict(os.environ, {"EBIRD_API_KEY": "test-key"})
     def test_merges_different_regions(self, mock_get, tmp_path):
-        """Test that different region prefixes are merged correctly"""
+        """Test that different region keys are merged correctly"""
         # Create existing output file with us data
         output_file = tmp_path / "output.json"
         existing_data = {"us": {"New York": [{"id": "amerob"}]}}
@@ -294,10 +373,7 @@ class TestMergeExistingData:
             str(output_file),
         ]
 
-        with (
-            patch("sys.argv", test_args),
-            patch("random.choice", return_value=subregions_data[0]),
-        ):
+        with patch("sys.argv", test_args):
             generate_daily_region_data.main()
 
         with open(output_file) as f:
@@ -331,10 +407,7 @@ class TestMergeExistingData:
             str(output_file),
         ]
 
-        with (
-            patch("sys.argv", test_args),
-            patch("random.choice", return_value=subregions_data[0]),
-        ):
+        with patch("sys.argv", test_args):
             generate_daily_region_data.main()
 
         # Should still create valid output
@@ -372,10 +445,7 @@ class TestOutputStructure:
             str(output_file),
         ]
 
-        with (
-            patch("sys.argv", test_args),
-            patch("random.choice", return_value=subregions_data[0]),
-        ):
+        with patch("sys.argv", test_args):
             generate_daily_region_data.main()
 
         with open(output_file) as f:

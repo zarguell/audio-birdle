@@ -1,28 +1,28 @@
 import os
 import json
-import random
 import argparse
 import requests
-from dotenv import load_dotenv
+
+import ebird_api_common
 
 
 def main():
-    # Load API key from .env
-    load_dotenv()
-    api_key = os.getenv("EBIRD_API_KEY")
-    if not api_key:
-        raise ValueError("EBIRD_API_KEY not found in .env")
+    # Load API key from .env (before arg parsing so failures are early)
+    api_key = ebird_api_common.load_api_key()
 
     # Parse CLI arguments
     parser = argparse.ArgumentParser(
-        description="Fetch recent eBird observations for a random subregion."
+        description="Fetch recent eBird observations for every subregion in a subregions file."
     )
     parser.add_argument("subregions_file", help="Path to the subregions JSON file")
     parser.add_argument("output_file", help="Path to save the output JSON file")
     args = parser.parse_args()
 
-    # Infer top-level region from filename
-    region_prefix = os.path.basename(args.subregions_file).split("-")[0].lower()
+    # Derive the top-level region key from the filename (e.g.
+    # "us-subregions.json" -> "us", "us-lower48-subregions.json" -> "us-lower48").
+    # Using the full stem (not just the first dash-separated token) keeps
+    # regions like "us" and "us-lower48" distinct instead of colliding.
+    region_key = os.path.basename(args.subregions_file).replace("-subregions.json", "")
 
     # Load subregions
     with open(args.subregions_file, "r") as f:
@@ -31,29 +31,8 @@ def main():
     if not subregions:
         raise ValueError("Subregions list is empty.")
 
-    # Pick a random subregion
-    selected = random.choice(subregions)
-    region_code = selected["code"]
-    subregion_name = selected["name"]
-
-    print(f"Selected subregion: {subregion_name} ({region_code})")
-
-    # Query eBird API
-    url = f"https://api.ebird.org/v2/data/obs/{region_code}/recent"
-    headers = {"X-eBirdApiToken": api_key}
-    response = requests.get(url, headers=headers)
-
-    if response.status_code != 200:
-        raise RuntimeError(
-            f"Failed to fetch data from eBird API: {response.status_code} {response.text}"
-        )
-
-    observations = response.json()
-
-    # Extract unique species codes
-    unique_ids = sorted({obs["speciesCode"] for obs in observations})
-
-    # Load existing output file if it exists (to merge data)
+    # Load existing output file if it exists (to merge data, preserving other
+    # regions/subregions already present)
     existing_data = {}
     if os.path.exists(args.output_file):
         try:
@@ -64,13 +43,37 @@ def main():
             print(f"Warning: Could not load existing file, starting fresh: {e}")
             existing_data = {}
 
-    # Build new subregion data
-    new_subregion_data = [{"id": species_id} for species_id in unique_ids]
+    # Process ALL subregions in the file (previously only one was picked)
+    if region_key not in existing_data:
+        existing_data[region_key] = {}
 
-    # Merge into existing data structure
-    if region_prefix not in existing_data:
-        existing_data[region_prefix] = {}
-    existing_data[region_prefix][subregion_name] = new_subregion_data
+    for selected in subregions:
+        region_code = selected["code"]
+        subregion_name = selected["name"]
+
+        print(f"Fetching observations for subregion: {subregion_name} ({region_code})")
+
+        # Query eBird API (shared helper: timeout=30, 3 retries with backoff)
+        url = f"https://api.ebird.org/v2/data/obs/{region_code}/recent"
+        try:
+            observations = ebird_api_common.get_json(url, api_key=api_key, timeout=30)
+        except requests.RequestException as e:
+            raise RuntimeError(
+                f"Failed to fetch data from eBird API for {region_code}: {e}"
+            ) from e
+
+        # Extract unique species codes
+        unique_ids = sorted({obs["speciesCode"] for obs in observations})
+
+        # Build new subregion data
+        new_subregion_data = [{"id": species_id} for species_id in unique_ids]
+
+        # Merge into existing data structure (upsert this subregion)
+        existing_data[region_key][subregion_name] = new_subregion_data
+
+        print(
+            f"  {subregion_name}: {len(new_subregion_data)} unique species"
+        )
 
     # Save merged output
     with open(args.output_file, "w") as out_f:

@@ -1,34 +1,26 @@
-import os
-from dotenv import load_dotenv
-import requests
 import argparse
+import sys
+
+import ebird_api_common
+
 
 def fetch_region(region):
     # Get the API key from the environment variable
-    load_dotenv()
-    api_key = os.getenv('EBIRD_API_KEY')
-    if not api_key:
-        raise ValueError("API key not found. Please set the EBIRD_API_KEY environment variable.")
+    api_key = ebird_api_common.load_api_key()
 
-    # Define the URL and headers
-    url = 'https://api.ebird.org/v2/product/spplist/'
-    headers = {
-        'X-eBirdApiToken': api_key
-    }
+    # Define the URL
+    url = 'https://api.ebird.org/v2/product/spplist/' + region
 
-    # Make the request
-    response = requests.get(url + region, headers=headers)
+    # Make the request (shared helper: timeout=30, 3 retries with backoff).
+    # Return raw content for saving (the endpoint returns plain text).
+    return ebird_api_common.get_content(url, api_key=api_key, timeout=30)
 
-    # Check for a successful response
-    if response.status_code == 200:
-        return response.content  # Return raw content for saving
-    else:
-        response.raise_for_status()
 
 def save_to_file(data, output_file):
     with open(output_file, 'wb') as f:
         f.write(data)
     print(f"Data saved to {output_file}")
+
 
 if __name__ == "__main__":
     # Set up command-line argument parsing
@@ -38,7 +30,7 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    # Fetch the taxonomy data
+    # Fetch the data; exit non-zero on API/network failure
     try:
         data = fetch_region(args.region)
 
@@ -48,4 +40,5 @@ if __name__ == "__main__":
         else:
             print(data.decode('utf-8'))  # Print the data if no output file is specified
     except Exception as e:
-        print(f"Error: {e}")
+        print(f"Error: {e}", file=sys.stderr)
+        sys.exit(1)

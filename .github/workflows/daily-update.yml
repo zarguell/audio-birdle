@@ -6,6 +6,13 @@ on:
   schedule:
     - cron: '0 4 * * *'
 
+# Only one daily update at a time: if a new run starts (e.g. a manual
+# re-trigger while the scheduled run is still going), cancel the in-flight one
+# rather than letting two runs race on the same data files.
+concurrency:
+  group: daily-update
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
@@ -14,9 +21,13 @@ jobs:
     permissions:
       contents: write  # for Git to git push
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 15
 
     steps:
+      # Egress policy stays "audit" rather than an allowlist: this job needs
+      # apt (system deps), pip (requirements install), the eBird API (per
+      # subregion), and a git push to GitHub — too many varied endpoints to
+      # enumerate safely, so we audit instead of blocking.
       - name: Harden the runner (Audit all outbound calls)
         uses: step-security/harden-runner@bf7454d06d71f1098171f2acdf0cd4708d7b5920 # v2.20.0
         with:
@@ -47,12 +58,24 @@ jobs:
           EBIRD_API_KEY: ${{ secrets.EBIRD_API_KEY }}
 
 
-      - name: Run daily script to find birds in every subregion available
+      - name: Fetch recent observations for every subregion in every region file
         run: |
           output="./public/data/daily-subregion-birds.json"
-          # Clear existing file to start fresh each day
+          # Clear existing file to start fresh each day; the loop below then
+          # really fills it with ALL subregions (not one random pick per file).
           echo "{}" > "$output"
           for file in ./scripts/data/regions/*-subregions.json; do
+            # Virtual regions (e.g. us-lower48) derive their subregion list
+            # from the parent region minus excludedSubregions, so their
+            # *-subregions.json file is redundant: fetching it costs ~50
+            # duplicate eBird API calls and one failed fetch would abort the
+            # whole run even though no consumer reads that key.
+            case "$file" in
+              *-lower48-*)
+                echo "Skipping virtual-region subregion file: $file"
+                continue
+                ;;
+            esac
             python ./scripts/generate-daily-region-data.py "$file" "$output"
           done
 
@@ -60,6 +83,10 @@ jobs:
         run: |
           current_date=$(date -u +%F)
           python ./scripts/generate-daily-birds.py --days 60 --date "$current_date" --subregions public/data/daily-subregion-birds.json
+
+      - name: Verify generator tests pass on the real data
+        run: |
+          python -m pytest tests/test_generate_daily_birds.py tests/test_generate_daily_region_data.py tests/test_game_data_generator.py -v --no-cov
 
       - name: Commit and push if it changed
         run: |
