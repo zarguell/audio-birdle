@@ -17,10 +17,18 @@ describe('CacheUtils', () => {
   let originalNavigator
   let originalLocalStorage
   let checkDataFileUpdateMock
+  let invalidateDailyBirdCacheSpy
 
   beforeEach(async () => {
     const versionUtils = await import('@/utils/versionUtils')
     checkDataFileUpdateMock = vi.spyOn(versionUtils, 'checkDataFileUpdate')
+
+    const dailyBirdUtils = await import('@/utils/DailyBirdUtils')
+    invalidateDailyBirdCacheSpy = vi.spyOn(dailyBirdUtils, 'invalidateDailyBirdCache')
+
+    // Deterministic clock for all date-sensitive behavior
+    vi.useFakeTimers()
+    vi.setSystemTime(new Date('2025-01-15T12:00:00.000Z'))
 
     originalNavigator = global.navigator
     originalLocalStorage = global.localStorage
@@ -43,6 +51,7 @@ describe('CacheUtils', () => {
   afterEach(() => {
     global.navigator = originalNavigator
     global.localStorage = originalLocalStorage
+    vi.useRealTimers()
   })
 
   describe('getServiceWorker', () => {
@@ -179,10 +188,11 @@ describe('CacheUtils', () => {
         STORAGE_KEYS.DAILY_JSON_ETAG,
         '"0987654321"'
       )
+      // System time is fixed at 2025-01-15T12:00:00Z
       expect(localStorage.setItem).toHaveBeenNthCalledWith(
         4,
         STORAGE_KEYS.LAST_VALIDATED_DATE,
-        expect.stringMatching(/^"\d{4}-\d{2}-\d{2}"$/)
+        '"2025-01-15"'
       )
     })
 
@@ -236,8 +246,6 @@ describe('CacheUtils', () => {
   })
 
   describe('hasDateChanged', () => {
-    const today = new Date().toISOString().split('T')[0]
-
     it('should return true if no last validated date', () => {
       localStorage.getItem.mockReturnValue(null)
 
@@ -255,7 +263,7 @@ describe('CacheUtils', () => {
     })
 
     it('should return false if date is same', () => {
-      localStorage.getItem.mockReturnValue(`"${today}"`)
+      localStorage.getItem.mockReturnValue('"2025-01-15"')
 
       const result = hasDateChanged()
 
@@ -273,6 +281,14 @@ describe('CacheUtils', () => {
       expect(result).toBe(true)
       expect(caches.keys).toHaveBeenCalled()
       expect(caches.delete).toHaveBeenCalledTimes(2)
+    })
+
+    it('should invalidate the daily bird cache', async () => {
+      global.caches.keys.mockResolvedValue([])
+
+      await clearServiceWorkerCache()
+
+      expect(invalidateDailyBirdCacheSpy).toHaveBeenCalled()
     })
 
     it('should return false on error', async () => {
@@ -334,6 +350,51 @@ describe('CacheUtils', () => {
       })
       expect(result.regions).toEqual(mockRegions)
       expect(result.birds).toEqual(mockBirds)
+    })
+
+    it('should record the birds.json version (fixes infinite update loop)', async () => {
+      const mockRegions = { us: [] }
+      const mockBirds = { us: [] }
+      const mockDaily = []
+
+      global.fetch.mockImplementation((url) =>
+        Promise.resolve({
+          ok: true,
+          headers: { get: vi.fn().mockReturnValue(`version-${url}`) },
+          json: async () =>
+            url.includes('regions.json')
+              ? mockRegions
+              : url.includes('birds.json')
+                ? mockBirds
+                : url.includes('daily.json')
+                  ? mockDaily
+                  : {},
+        }),
+      )
+
+      await refreshGameData()
+
+      // birds.json version must be stored so checkBirdsJsonUpdate() sees a match
+      expect(localStorage.setItem).toHaveBeenCalledWith(
+        STORAGE_KEYS.BIRDS_JSON_LAST_MODIFIED,
+        '"version-/data/birds.json"'
+      )
+      expect(localStorage.setItem).toHaveBeenCalledWith(
+        STORAGE_KEYS.BIRDS_JSON_ETAG,
+        '"version-/data/birds.json"'
+      )
+    })
+
+    it('should invalidate the daily bird cache on refresh', async () => {
+      global.fetch.mockResolvedValue({
+        ok: true,
+        headers: { get: vi.fn().mockReturnValue('version') },
+        json: async () => ({}),
+      })
+
+      await refreshGameData()
+
+      expect(invalidateDailyBirdCacheSpy).toHaveBeenCalled()
     })
 
     it('should throw error on failed fetch', async () => {

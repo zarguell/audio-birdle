@@ -1,33 +1,33 @@
 import React, { useEffect, useState } from 'react';
 
+/**
+ * Countdown to the next daily challenge: the puzzle for a local day is fixed
+ * and available at that user's LOCAL midnight (daily.json entries are
+ * generated a day ahead, so entry N exists before any timezone's midnight N).
+ * Pure local Date arithmetic — no locale-string parsing.
+ */
 export default function CountdownToMidnight() {
   const [timeLeft, setTimeLeft] = useState('');
 
   useEffect(() => {
     const updateCountdown = () => {
       const now = new Date();
+      // Next local midnight (local-time constructor, not UTC parsing).
+      const target = new Date(
+        now.getFullYear(),
+        now.getMonth(),
+        now.getDate() + 1,
+        0,
+        0,
+        0,
+        0,
+      );
 
-      // Get current time in EST
-      const nowEST = new Date(now.toLocaleString("en-US", {timeZone: "America/New_York"}));
+      const diff = target - now;
 
-      // Calculate midnight EST for today
-      const midnightEST = new Date(nowEST);
-      midnightEST.setHours(24, 0, 0, 0);
-
-      // If we're past midnight EST, we need tomorrow's midnight
-      const diff = midnightEST - nowEST;
-
-      if (diff <= 0) {
-        // Already past midnight, calculate for next day
-        midnightEST.setDate(midnightEST.getDate() + 1);
-        midnightEST.setHours(0, 0, 0, 0);
-      }
-
-      const finalDiff = midnightEST - nowEST;
-
-      const hours = Math.floor(finalDiff / (1000 * 60 * 60));
-      const minutes = Math.floor((finalDiff % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((finalDiff % (1000 * 60)) / 1000);
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
       setTimeLeft(`${hours}h ${minutes}m ${seconds}s`);
     };

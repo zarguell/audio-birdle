@@ -1,6 +1,9 @@
 // Audio player utilities
 import { STORAGE_KEYS } from "./Constants";
 import { getStorage, setStorage, removeStorage } from "./StorageUtils";
+import { isHttpsUrl } from "./LoadGameData";
+
+export { isHttpsUrl };
 
 // Track dead audio URLs to avoid repeated failed playback attempts
 // Only populated when actual audio playback fails (lazy validation)
@@ -9,6 +12,8 @@ const deadAudioUrls = new Set();
 /**
  * Gets the audio source URL from various audioUrl data formats.
  * Handles backward compatibility for string, array of strings, and array of objects.
+ * Non-https URLs (e.g. javascript:, data:) are refused — defense in depth on
+ * top of LoadGameData's load-time sanitization.
  *
  * @param {string|string[]|Object[]} audioUrlData - The audio URL data in various formats
  * @param {number} index - The index to use when audioUrlData is an array (default: 0)
@@ -17,18 +22,20 @@ const deadAudioUrls = new Set();
 export const getAudioSrc = (audioUrlData, index = 0) => {
   if (!audioUrlData) return "";
   // Backward compatibility for non-array format (single string)
-  if (!Array.isArray(audioUrlData)) return audioUrlData;
+  if (!Array.isArray(audioUrlData)) {
+    return isHttpsUrl(audioUrlData) ? audioUrlData : "";
+  }
 
   const audioItem = audioUrlData[index];
   if (!audioItem) return "";
 
   // New format: array of objects with url property
   if (typeof audioItem === "object" && audioItem.url) {
-    return audioItem.url;
+    return isHttpsUrl(audioItem.url) ? audioItem.url : "";
   }
 
   // Backward compatibility for array of strings
-  return audioItem;
+  return isHttpsUrl(audioItem) ? audioItem : "";
 };
 
 /**

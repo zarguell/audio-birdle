@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
-import { fetchWithRetry } from './RetryUtils';
+import { loadDailyBirdData } from './DailyBirdUtils';
 
 // Hook to fetch subregion data
+// Uses loadDailyBirdData from DailyBirdUtils so the parsed daily.json is
+// fetched once and cached module-level (busted via invalidateDailyBirdCache).
 // eslint-disable-next-line react-refresh/only-export-components
 export const useSubregion = (selectedRegion, today) => {
   const [subregion, setSubregion] = useState('');
@@ -10,8 +12,7 @@ export const useSubregion = (selectedRegion, today) => {
   useEffect(() => {
     const fetchSubregion = async () => {
       try {
-        const response = await fetchWithRetry('/data/daily.json');
-        const data = await response.json();
+        const data = await loadDailyBirdData();
 
         // Find today's entry for the selected region
         const todayEntry = data.find(entry =>

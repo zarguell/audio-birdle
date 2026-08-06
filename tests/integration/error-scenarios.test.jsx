@@ -3,6 +3,7 @@ import {
   loadDailyBirdData,
   findBirdByHash,
   getTodaysBirdFromDaily,
+  invalidateDailyBirdCache,
 } from "@/utils/DailyBirdUtils";
 import { loadGameData } from "@/utils/LoadGameData";
 import { getStorage, setStorage } from "@/utils/StorageUtils";
@@ -27,6 +28,9 @@ describe("Error Scenario Integration", () => {
 
     mockFetch = vi.fn();
     global.fetch = mockFetch;
+
+    // The daily loader caches module-level — bust it for test isolation
+    invalidateDailyBirdCache();
   });
 
   describe("Empty Data Tests", () => {
@@ -345,8 +349,8 @@ describe("Error Scenario Integration", () => {
 
       mockFetch.mockResolvedValueOnce(createMockResponse(dailyData));
 
-      const bird = await getTodaysBirdFromDaily("us", birds, "2025-01-15");
-      expect(bird).toBeNull();
+      const result = await getTodaysBirdFromDaily("us", birds, "2025-01-15");
+      expect(result).toEqual({ success: false, error: "not_found" });
     });
 
     it("should handle daily.json with missing required fields", async () => {
@@ -380,8 +384,8 @@ describe("Error Scenario Integration", () => {
     it("should handle getting bird when daily.json fetch fails", async () => {
       mockFetch.mockRejectedValue(new Error("Network error"));
 
-      const bird = await getTodaysBirdFromDaily("us", [], "2025-01-15");
-      expect(bird).toBeNull();
+      const result = await getTodaysBirdFromDaily("us", [], "2025-01-15");
+      expect(result).toEqual({ success: false, error: "network" });
     });
 
     it("should handle daily.json with non-array data", async () => {

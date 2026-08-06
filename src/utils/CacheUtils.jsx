@@ -9,6 +9,7 @@ import {
   storeDataFileVersion,
 } from "./versionUtils";
 import { isStorageAvailable, setStorage, getStorage } from "./StorageUtils";
+import { invalidateDailyBirdCache } from "./DailyBirdUtils";
 
 const DATA_FILES = [
   "/data/regions.json",
@@ -148,6 +149,8 @@ export const clearServiceWorkerCache = async () => {
   try {
     const cacheNames = await caches.keys();
     await Promise.all(cacheNames.map((cacheName) => caches.delete(cacheName)));
+    // The SW cache is gone; make sure the in-memory daily.json cache is too
+    invalidateDailyBirdCache();
     return true;
   } catch (error) {
     logError("Failed to clear service worker cache", error);
@@ -163,6 +166,9 @@ export const clearServiceWorkerCache = async () => {
  * @throws {Error} If any data file fails to load
  */
 export const refreshGameData = async (onProgress) => {
+  // Data is being re-fetched from the server — any cached parsed data is stale
+  invalidateDailyBirdCache();
+
   const results = {};
 
   for (let i = 0; i < DATA_FILES.length; i++) {
@@ -191,6 +197,10 @@ export const refreshGameData = async (onProgress) => {
       storeVersionInfo(response);
     } else if (file.includes("birds.json")) {
       results.birds = data;
+      // Record the birds.json version too — otherwise the cached version is
+      // stale vs the server after a refresh and checkBirdsJsonUpdate() would
+      // report hasUpdate forever, causing an infinite auto-refresh loop.
+      storeBirdsJsonVersionInfo(response);
     } else if (file.includes("daily.json")) {
       storeDailyJsonVersionInfo(response);
     }

@@ -1,13 +1,21 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { fetchWithRetry, retryWithBackoff } from "@/utils/RetryUtils";
+import {
+  fetchWithRetry,
+  retryWithBackoff,
+  MAX_BACKOFF_DELAY_MS,
+} from "@/utils/RetryUtils";
 
 describe("RetryUtils", () => {
   beforeEach(() => {
     vi.useFakeTimers();
+    // Deterministic jitter: Math.random() = 0.5 gives a jitter factor of
+    // 0.5 + 0.5 = 1.0, so backoff delays are exactly baseDelay * 2^(attempt-1).
+    vi.spyOn(Math, "random").mockReturnValue(0.5);
   });
 
   afterEach(() => {
     vi.restoreAllMocks();
+    vi.useRealTimers();
   });
 
   describe("fetchWithRetry", () => {
@@ -94,8 +102,6 @@ describe("RetryUtils", () => {
 
       await expect(promise).rejects.toThrow("Network error");
       expect(fetch).toHaveBeenCalledTimes(2);
-
-      vi.useFakeTimers();
     });
 
     it("should use custom config for retries and delay", async () => {
@@ -143,6 +149,81 @@ describe("RetryUtils", () => {
       expect(warnCall[0]).toContain("/data/test.json");
       expect(warnCall[0]).toContain("attempt 1/3");
       expect(warnCall[0]).toContain("retrying in 1000ms");
+    });
+  });
+
+  describe("backoff jitter", () => {
+    it("should scale delay by 0.5 when Math.random() returns 0", async () => {
+      Math.random.mockReturnValue(0);
+      const consoleWarnSpy = vi.spyOn(console, "warn");
+      const mockResponse = {
+        ok: true,
+        status: 200,
+        statusText: "OK",
+      };
+      global.fetch = vi
+        .fn()
+        .mockRejectedValueOnce(new Error("Network error"))
+        .mockResolvedValueOnce(mockResponse);
+
+      const promise = fetchWithRetry("/data/test.json");
+      await vi.runAllTimersAsync();
+      await promise;
+
+      const warnCall = consoleWarnSpy.mock.calls[0];
+      // baseDelay 1000 * 2^0 * 0.5 = 500
+      expect(warnCall[0]).toContain("retrying in 500ms");
+    });
+
+    it("should scale delay by 1.5 when Math.random() returns 1", async () => {
+      Math.random.mockReturnValue(1);
+      const consoleWarnSpy = vi.spyOn(console, "warn");
+      const mockResponse = {
+        ok: true,
+        status: 200,
+        statusText: "OK",
+      };
+      global.fetch = vi
+        .fn()
+        .mockRejectedValueOnce(new Error("Network error"))
+        .mockResolvedValueOnce(mockResponse);
+
+      const promise = fetchWithRetry("/data/test.json");
+      await vi.runAllTimersAsync();
+      await promise;
+
+      const warnCall = consoleWarnSpy.mock.calls[0];
+      // baseDelay 1000 * 2^0 * 1.5 = 1500
+      expect(warnCall[0]).toContain("retrying in 1500ms");
+    });
+
+    it("should cap the backoff delay at 30s", async () => {
+      const consoleWarnSpy = vi.spyOn(console, "warn");
+      const mockResponse = {
+        ok: true,
+        status: 200,
+        statusText: "OK",
+      };
+      global.fetch = vi
+        .fn()
+        .mockRejectedValueOnce(new Error("Network error"))
+        .mockRejectedValueOnce(new Error("Network error"))
+        .mockRejectedValueOnce(new Error("Network error"))
+        .mockResolvedValueOnce(mockResponse);
+
+      // baseDelay 10000: delays would be 10000, 20000, then 40000 -> capped
+      const promise = fetchWithRetry(
+        "/data/test.json",
+        {},
+        { maxRetries: 4, baseDelay: 10000 },
+      );
+      await vi.runAllTimersAsync();
+      await promise;
+
+      // attempt 1 -> 10000ms, attempt 2 -> 20000ms, attempt 3 -> capped 30000ms
+      const warnCall = consoleWarnSpy.mock.calls[2];
+      expect(warnCall[0]).toContain("retrying in 30000ms");
+      expect(MAX_BACKOFF_DELAY_MS).toBe(30000);
     });
   });
 
@@ -233,8 +314,6 @@ describe("RetryUtils", () => {
       expect(consoleErrorSpy).toHaveBeenCalled();
       const errorCall = consoleErrorSpy.mock.calls[0];
       expect(errorCall[0]).toContain("operation failed after 2 attempts");
-
-      vi.useFakeTimers();
     });
   });
 });

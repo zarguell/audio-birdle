@@ -7,6 +7,26 @@ const DEFAULT_CONFIG = {
   baseDelay: 1000,
 };
 
+// Hard cap on any single backoff delay (30s) to bound worst-case wait time
+export const MAX_BACKOFF_DELAY_MS = 30000;
+
+/**
+ * Compute the backoff delay for a given attempt with jitter.
+ * Exponential base (baseDelay * 2^(attempt-1)) scaled by a random factor in
+ * [0.5, 1.5], then capped at MAX_BACKOFF_DELAY_MS.
+ * @param {number} baseDelay - Base delay in ms
+ * @param {number} attempt - Failed attempt number (1-based)
+ * @returns {number} Delay in ms
+ */
+const getBackoffDelayMs = (baseDelay, attempt) => {
+  const exponential = baseDelay * Math.pow(2, attempt - 1);
+  const jitterFactor = 0.5 + Math.random();
+  return Math.min(
+    Math.round(exponential * jitterFactor),
+    MAX_BACKOFF_DELAY_MS,
+  );
+};
+
 /**
  * Retry a fetch with exponential backoff
  * @param {string} url - URL to fetch
@@ -55,7 +75,7 @@ export async function retryWithBackoff(
       return await operation();
     } catch (error) {
       if (attempt < maxRetries) {
-        const delayMs = baseDelay * Math.pow(2, attempt - 1);
+        const delayMs = getBackoffDelayMs(baseDelay, attempt);
         console.warn(
           `${context} failed (attempt ${attempt}/${maxRetries}), retrying in ${delayMs}ms:`,
           error.message
