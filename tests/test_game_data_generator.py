@@ -355,3 +355,121 @@ class TestSaveJsonFile:
 
             # Check for indentation (should have newlines and spaces)
             assert "\n" in content or "  " in content
+
+
+class TestMain:
+    """End-to-end tests for main()"""
+
+    @staticmethod
+    def test_main_end_to_end(tmp_path, monkeypatch, capsys):
+        """Test that main() builds birds.json from taxonomy and urls files"""
+        taxonomy = [
+            {
+                "speciesCode": "amerob",
+                "comName": "American Robin",
+                "sciName": "Turdus migratorius",
+                "order": "Passeriformes",
+                "familyComName": "Turdidae",
+                "familySciName": "Turdidae",
+            },
+            {
+                "speciesCode": "nobird",
+                "comName": "No Audio Bird",
+                "sciName": "No Audio",
+                "order": "Passeriformes",
+                "familyComName": "Test",
+                "familySciName": "Test",
+            },
+        ]
+        urls = [
+            {"code": "amerob", "audio Url": "http://example.com/robin1.mp3"},
+            {"code": "amerob", "audio Url": "http://example.com/robin2.mp3"},
+        ]
+        taxonomy_file = tmp_path / "taxonomy.json"
+        urls_file = tmp_path / "urls.json"
+        output_file = tmp_path / "birds.json"
+        taxonomy_file.write_text(json.dumps(taxonomy))
+        urls_file.write_text(json.dumps(urls))
+
+        monkeypatch.setattr(
+            sys,
+            "argv",
+            [
+                "game-data-generator.py",
+                "--region",
+                "US",
+                "--taxonomy",
+                str(taxonomy_file),
+                "--urls",
+                str(urls_file),
+                "--output",
+                str(output_file),
+            ],
+        )
+
+        game_data_generator.main()
+
+        output_data = json.loads(output_file.read_text())
+        assert "us" in output_data
+        # Only the bird with audio URLs is included, with all its URLs
+        assert len(output_data["us"]) == 1
+        assert output_data["us"][0]["id"] == "amerob"
+        assert output_data["us"][0]["name"] == "American Robin"
+        assert len(output_data["us"][0]["audioUrl"]) == 2
+
+        captured = capsys.readouterr()
+        assert "Processing complete" in captured.out
+
+    @staticmethod
+    def test_main_preserves_existing_regions(tmp_path, monkeypatch):
+        """Test that main() merges into an existing output file without clobbering"""
+        taxonomy = [
+            {
+                "speciesCode": "amerob",
+                "comName": "American Robin",
+                "sciName": "Turdus migratorius",
+                "order": "Passeriformes",
+                "familyComName": "Turdidae",
+                "familySciName": "Turdidae",
+            }
+        ]
+        urls = [{"code": "amerob", "audio Url": "http://example.com/robin.mp3"}]
+        taxonomy_file = tmp_path / "taxonomy.json"
+        urls_file = tmp_path / "urls.json"
+        output_file = tmp_path / "birds.json"
+        taxonomy_file.write_text(json.dumps(taxonomy))
+        urls_file.write_text(json.dumps(urls))
+        output_file.write_text(json.dumps({"eu": [{"id": "eursta"}]}))
+
+        monkeypatch.setattr(
+            sys,
+            "argv",
+            [
+                "game-data-generator.py",
+                "--region",
+                "US",
+                "--taxonomy",
+                str(taxonomy_file),
+                "--urls",
+                str(urls_file),
+                "--output",
+                str(output_file),
+            ],
+        )
+
+        game_data_generator.main()
+
+        output_data = json.loads(output_file.read_text())
+        # Existing EU data preserved, US added
+        assert "eu" in output_data
+        assert output_data["eu"] == [{"id": "eursta"}]
+        assert "us" in output_data
+        assert output_data["us"][0]["id"] == "amerob"
+
+    @staticmethod
+    def test_main_fails_without_required_args(tmp_path, monkeypatch):
+        """Test that main() exits when required args are missing"""
+        monkeypatch.setattr(sys, "argv", ["game-data-generator.py", "--region", "US"])
+
+        with pytest.raises(SystemExit):
+            game_data_generator.main()

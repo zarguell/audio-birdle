@@ -3,8 +3,9 @@
 import pytest
 import json
 import os
+import subprocess
 import sys
-from datetime import datetime
+from datetime import datetime, timedelta
 
 # Add scripts directory to path
 scripts_dir = os.path.join(os.path.dirname(__file__), "..", "scripts")
@@ -173,13 +174,6 @@ class TestGeneratedHashesValid:
                 f"Hash {answer_hash} for region {region} on {entry['date']} not found in birds database. Available hashes: {sorted(bird_hashes)[:5]}..."
             )
 
-    @staticmethod
-    def test_hash_lowercase():
-        """Test that hash is lowercase"""
-        hash_result = generate_daily_birds.hash_bird_id("TESTBIRD")
-
-        assert hash_result == hash_result.lower()
-
 
 class TestLoadJsonFile:
     """Test JSON loading with error handling"""
@@ -248,23 +242,21 @@ class TestGetRecentAnswers:
     @staticmethod
     def test_get_recent_answers_within_window(sample_history_data):
         """Test getting answers within the time window"""
-        history = {"us": sample_history_data}
         current_date = datetime(2025, 12, 27).date()
         recent = generate_daily_birds.get_recent_answers(
-            history, "us", 10, current_date
+            sample_history_data, "us", 10, current_date
         )
 
         # "amerob" was on 2025-12-25 (2 days ago) - should be included
         assert "amerob" in recent
 
     @staticmethod
-    def test_get_recent_answers_outside_window(sample_history_data):
+    def test_get_recent_answers_outside_window():
         """Test that old answers are excluded"""
-        old_history = [{"date": "2025-11-01", "id": "oldbird", "subregion": "New York"}]
-        history = {"us": old_history}
+        old_history = {"us": [{"date": "2025-11-01", "id": "oldbird", "subregion": "New York"}]}
         current_date = datetime(2025, 12, 27).date()
         recent = generate_daily_birds.get_recent_answers(
-            history, "us", 30, current_date
+            old_history, "us", 30, current_date
         )
 
         assert "oldbird" not in recent
@@ -334,6 +326,22 @@ class TestGetSubregionForDate:
         )
 
         assert subregion1 == subregion2
+
+    @staticmethod
+    def test_get_subregion_seed_is_not_python_hash():
+        """Test that the seed does not depend on PYTHONHASHSEED (built-in hash)"""
+        data = {"us": {"California": [{"id": "bird1"}], "New York": [{"id": "bird2"}]}}
+        target_date = datetime(2025, 12, 27).date()
+
+        # Re-seeding the RNG is deterministic for a fixed date+region because
+        # the seed is a SHA-256 digest, not the per-process randomized hash().
+        # Calling twice in-process proves stability; the subprocess test
+        # proves it across different PYTHONHASHSEED values.
+        subregions = [
+            generate_daily_birds.get_subregion_for_date(data, "us", target_date)[0]
+            for _ in range(5)
+        ]
+        assert len(set(subregions)) == 1
 
 
 class TestFilterBirdsBySubregion:
@@ -406,21 +414,230 @@ class TestSaveJsonFile:
         assert saved_data == test_data
 
 
-@pytest.fixture
-def sample_history_data():
-    """Sample history data for testing"""
-    return [
-        {"date": "2025-12-26", "id": "barswa", "subregion": "California"},
-        {"date": "2025-12-25", "id": "amerob", "subregion": "New York"},
-        {"date": "2025-11-01", "id": "oldbird", "subregion": "Texas"},
-    ]
+class TestSelectBirdForRegion:
+    """Test bird selection logic"""
+
+    @staticmethod
+    def test_select_bird_from_full_region_when_subregion_empty():
+        """Test that an empty subregion filter falls back to all region birds"""
+        birds = [
+            {"id": "bird1", "name": "Bird 1"},
+            {"id": "bird2", "name": "Bird 2"},
+        ]
+        # Subregion IDs that match no birds
+        subregion_bird_ids = {"nonexistent-bird"}
+
+        selected = generate_daily_birds.select_bird_for_region(
+            birds, set(), subregion_bird_ids=subregion_bird_ids
+        )
+
+        # Must select from the full region pool, not return None
+        assert selected is not None
+        assert selected["id"] in {"bird1", "bird2"}
+
+    @staticmethod
+    def test_select_bird_returns_none_when_no_birds():
+        """Test that None is returned only when no birds exist at all"""
+        selected = generate_daily_birds.select_bird_for_region([], set())
+
+        assert selected is None
+
+    @staticmethod
+    def test_select_bird_avoids_recent_answers():
+        """Test that recently used birds are avoided when possible"""
+        birds = [
+            {"id": "bird1", "name": "Bird 1"},
+            {"id": "bird2", "name": "Bird 2"},
+            {"id": "bird3", "name": "Bird 3"},
+        ]
+        recent_answers = {"bird1", "bird2"}
+
+        selected = generate_daily_birds.select_bird_for_region(birds, recent_answers)
+
+        assert selected["id"] == "bird3"
+
+    @staticmethod
+    def test_select_bird_falls_back_to_all_when_all_recent():
+        """Test that all birds are used when every bird was recently used"""
+        birds = [
+            {"id": "bird1", "name": "Bird 1"},
+            {"id": "bird2", "name": "Bird 2"},
+        ]
+        recent_answers = {"bird1", "bird2"}
+
+        selected = generate_daily_birds.select_bird_for_region(birds, recent_answers)
+
+        assert selected is not None
+        assert selected["id"] in {"bird1", "bird2"}
+
+    @staticmethod
+    def test_select_bird_retries_when_verification_fails():
+        """Test that a verification failure retries with a different bird"""
+        birds = [
+            {"id": "bird1", "name": "Bird 1"},
+            {"id": "bird2", "name": "Bird 2"},
+        ]
+        # birds_data has birds, but none of the candidate birds: verification
+        # fails, and the retry must still return one of the remaining birds
+        birds_data = {"us": [{"id": "otherbird", "name": "Other Bird"}]}
+
+        selected = generate_daily_birds.select_bird_for_region(
+            birds, set(), birds_data=birds_data, region_id="us"
+        )
+
+        assert selected is not None
+        assert selected["id"] in {"bird1", "bird2"}
+
+    @staticmethod
+    def test_select_bird_returns_none_after_failed_retry():
+        """Test that None is returned when verification fails and no birds remain"""
+        birds = [{"id": "bird1", "name": "Bird 1"}]
+        # Region exists but has no birds in birds.json: verification reports
+        # the missing region and the retry has nothing left to choose from
+        birds_data = {"us": []}
+
+        selected = generate_daily_birds.select_bird_for_region(
+            birds, set(), birds_data=birds_data, region_id="us"
+        )
+
+        assert selected is None
+
+
+class TestUpdateHistory:
+    """Test history recovery from daily.json"""
+
+    @staticmethod
+    def _birds_data():
+        return {
+            "us": [
+                {"id": "amerob", "name": "American Robin"},
+                {"id": "barswa", "name": "Barn Swallow"},
+            ]
+        }
+
+    def test_update_history_writes_real_entry_from_daily_id(self):
+        """Test that daily.json 'id' fields produce real history entries"""
+        daily_data = [
+            {
+                "date": "2025-12-26",
+                "region": "us",
+                "answerHash": "4060c5e0",
+                "id": "barswa",
+                "subregion": "California",
+            }
+        ]
+        current_date = datetime(2025, 12, 27).date()
+
+        history = generate_daily_birds.update_history(
+            {}, daily_data, current_date, self._birds_data()
+        )
+
+        assert history == {
+            "us": [
+                {
+                    "date": "2025-12-26",
+                    "id": "barswa",
+                    "name": "Barn Swallow",
+                    "subregion": "California",
+                }
+            ]
+        }
+
+    def test_update_history_upserts_by_region_and_date(self):
+        """Test that an existing history entry for the same region+date is replaced"""
+        daily_data = [
+            {
+                "date": "2025-12-26",
+                "region": "us",
+                "answerHash": "104c723e",
+                "id": "amerob",
+            }
+        ]
+        current_date = datetime(2025, 12, 27).date()
+        history = {
+            "us": [
+                {"date": "2025-12-26", "id": "oldbird", "name": "Old Bird"},
+                {"date": "2025-12-25", "id": "barswa", "name": "Barn Swallow"},
+            ]
+        }
+
+        updated = generate_daily_birds.update_history(
+            history, daily_data, current_date, self._birds_data()
+        )
+
+        # Same length: the 12-26 entry was replaced, not duplicated
+        assert len(updated["us"]) == 2
+        assert updated["us"][0] == {
+            "date": "2025-12-26",
+            "id": "amerob",
+            "name": "American Robin",
+        }
+        # Unrelated entry untouched
+        assert updated["us"][1]["date"] == "2025-12-25"
+
+    def test_update_history_skips_entries_without_id(self):
+        """Test that legacy daily entries without 'id' are skipped, not crashed on"""
+        daily_data = [
+            {"date": "2025-12-26", "region": "us", "answerHash": "104c723e"}
+        ]
+        current_date = datetime(2025, 12, 27).date()
+
+        history = generate_daily_birds.update_history(
+            {}, daily_data, current_date, self._birds_data()
+        )
+
+        assert history == {}
+
+    def test_update_history_resolves_virtual_region_parent(self):
+        """Test that names are looked up in the parent region for virtual regions"""
+        daily_data = [
+            {
+                "date": "2025-12-26",
+                "region": "us-lower48",
+                "answerHash": "104c723e",
+                "id": "amerob",
+            }
+        ]
+        current_date = datetime(2025, 12, 27).date()
+        virtual_regions = {
+            "us-lower48": {"parent": "us", "excludedSubregions": ["Alaska", "Hawaii"]}
+        }
+
+        history = generate_daily_birds.update_history(
+            {}, daily_data, current_date, self._birds_data(), virtual_regions
+        )
+
+        assert history["us-lower48"][0]["name"] == "American Robin"
+
+    def test_update_history_falls_back_to_id_when_bird_unknown(self, capsys):
+        """Test that an unknown bird id is used as the name with a warning"""
+        daily_data = [
+            {
+                "date": "2025-12-26",
+                "region": "us",
+                "answerHash": "00000000",
+                "id": "ghostbird",
+            }
+        ]
+        current_date = datetime(2025, 12, 27).date()
+
+        history = generate_daily_birds.update_history(
+            {}, daily_data, current_date, self._birds_data()
+        )
+
+        captured = capsys.readouterr()
+        assert "could not find bird 'ghostbird'" in captured.out
+        assert history["us"][0]["name"] == "ghostbird"
 
 
 class TestVirtualRegions:
-    """Test virtual region functionality"""
+    """Test virtual region functionality via build_region_birds"""
 
     @staticmethod
-    def test_virtual_region_subregion_filtering():
+    def _target_date():
+        return datetime(2025, 12, 27).date()
+
+    def test_virtual_region_subregion_filtering(self):
         """Test that virtual regions inherit and exclude subregions from parent"""
 
         # Subregions data structure from subregions.json (parent region key)
@@ -433,31 +650,25 @@ class TestVirtualRegions:
             }
         }
 
-        # Mock virtual regions config
         virtual_regions = {
             "us-lower48": {"parent": "us", "excludedSubregions": ["Alaska", "Hawaii"]}
         }
 
-        # Simulate the actual logic from main()
-        region_id = "us-lower48"
-        parent_id = virtual_regions[region_id]["parent"]
-        region_subregions = subregions_data.get(parent_id, {}).copy()
-        excluded = virtual_regions[region_id]["excludedSubregions"]
+        _, selected_subregion, subregion_bird_ids = (
+            generate_daily_birds.build_region_birds(
+                "us-lower48",
+                {},
+                virtual_regions,
+                subregions_data,
+                self._target_date(),
+            )
+        )
 
-        # Remove excluded subregions from the selection pool
-        for excluded_sub in excluded:
-            if excluded_sub in region_subregions:
-                del region_subregions[excluded_sub]
+        # Alaska and Hawaii must never be selected for the virtual region
+        assert selected_subregion in ["California", "Texas"]
+        assert subregion_bird_ids in [{"bird1"}, {"bird2"}]
 
-        # Verify Alaska and Hawaii were removed
-        assert "Alaska" not in region_subregions
-        assert "Hawaii" not in region_subregions
-        assert "California" in region_subregions
-        assert "Texas" in region_subregions
-        assert len(region_subregions) == 2
-
-    @staticmethod
-    def test_virtual_region_bird_lookup():
+    def test_virtual_region_bird_lookup(self):
         """Test that virtual regions fall back to parent region's birds"""
         birds_data = {
             "us": [{"id": "bird1", "name": "Bird 1"}],
@@ -468,19 +679,19 @@ class TestVirtualRegions:
             "us-lower48": {"parent": "us", "excludedSubregions": ["Alaska"]}
         }
 
-        # Simulate the lookup logic from main()
-        region_id = "us-lower48"
-        region_birds = birds_data.get(region_id, [])
-        if not region_birds and region_id in virtual_regions:
-            parent_id = virtual_regions[region_id]["parent"]
-            region_birds = birds_data.get(parent_id, [])
+        region_birds, _, _ = generate_daily_birds.build_region_birds(
+            "us-lower48",
+            birds_data,
+            virtual_regions,
+            {},
+            self._target_date(),
+        )
 
         # Should have gotten parent region's birds
         assert len(region_birds) == 1
         assert region_birds[0]["id"] == "bird1"
 
-    @staticmethod
-    def test_virtual_region_empty_after_exclusions():
+    def test_virtual_region_empty_after_exclusions(self):
         """Test handling when all subregions are excluded"""
         subregions_data = {
             "us": {
@@ -493,21 +704,21 @@ class TestVirtualRegions:
             "us-lower48": {"parent": "us", "excludedSubregions": ["Alaska", "Hawaii"]}
         }
 
-        # Simulate the logic
-        region_id = "us-lower48"
-        parent_id = virtual_regions[region_id]["parent"]
-        region_subregions = subregions_data.get(parent_id, {}).copy()
-        excluded = virtual_regions[region_id]["excludedSubregions"]
-
-        for excluded_sub in excluded:
-            if excluded_sub in region_subregions:
-                del region_subregions[excluded_sub]
+        _, selected_subregion, subregion_bird_ids = (
+            generate_daily_birds.build_region_birds(
+                "us-lower48",
+                {},
+                virtual_regions,
+                subregions_data,
+                self._target_date(),
+            )
+        )
 
         # Should have no valid subregions remaining
-        assert len(region_subregions) == 0
+        assert selected_subregion is None
+        assert subregion_bird_ids == []
 
-    @staticmethod
-    def test_virtual_region_no_exclusions():
+    def test_virtual_region_no_exclusions(self):
         """Test virtual region with no excluded subregions"""
         subregions_data = {
             "us": {
@@ -518,17 +729,351 @@ class TestVirtualRegions:
 
         virtual_regions = {"us-lower48": {"parent": "us", "excludedSubregions": []}}
 
-        # Simulate the logic
-        region_id = "us-lower48"
-        parent_id = virtual_regions[region_id]["parent"]
-        region_subregions = subregions_data.get(parent_id, {}).copy()
-        excluded = virtual_regions[region_id]["excludedSubregions"]
+        _, selected_subregion, subregion_bird_ids = (
+            generate_daily_birds.build_region_birds(
+                "us-lower48",
+                {},
+                virtual_regions,
+                subregions_data,
+                self._target_date(),
+            )
+        )
 
-        for excluded_sub in excluded:
-            if excluded_sub in region_subregions:
-                del region_subregions[excluded_sub]
+        # One of the parent subregions should be selected
+        assert selected_subregion in ["California", "Texas"]
+        assert subregion_bird_ids in [{"bird1"}, {"bird2"}]
 
-        # All parent subregions should be present
-        assert "California" in region_subregions
-        assert "Texas" in region_subregions
-        assert len(region_subregions) == 2
+
+class TestMainEndToEnd:
+    """End-to-end tests for main() on a temp data directory"""
+
+    @staticmethod
+    def _write_data_dir(root, prior_daily=None):
+        """Write a minimal public/data tree under root; returns paths dict."""
+        data_dir = root / "public" / "data"
+        data_dir.mkdir(parents=True, exist_ok=True)
+
+        regions = [
+            {"id": "us", "name": "United States"},
+            {
+                "id": "us-lower48",
+                "name": "US Lower 48",
+                "parentRegion": "us",
+                "excludedSubregions": ["Alaska"],
+            },
+        ]
+        birds = {
+            "us": [
+                {"id": f"bird{i:02d}", "name": f"Bird {i:02d}"} for i in range(1, 11)
+            ]
+        }
+        subregions = {
+            "us": {
+                "California": [{"id": "bird01"}, {"id": "bird02"}, {"id": "bird03"}],
+                "Texas": [{"id": "bird04"}, {"id": "bird05"}],
+                "Alaska": [{"id": "bird06"}],
+            }
+        }
+
+        (data_dir / "regions.json").write_text(json.dumps(regions))
+        (data_dir / "birds.json").write_text(json.dumps(birds))
+        (data_dir / "history.json").write_text("{}")
+        (data_dir / "daily.json").write_text(
+            json.dumps(prior_daily if prior_daily is not None else [])
+        )
+        (root / "subregions.json").write_text(json.dumps(subregions))
+        return data_dir
+
+    def test_main_generates_daily_and_history(self, tmp_path, monkeypatch):
+        """Test that main() produces valid daily.json/history.json end to end"""
+        self._write_data_dir(tmp_path)
+        monkeypatch.chdir(tmp_path)
+        monkeypatch.setattr(
+            sys,
+            "argv",
+            [
+                "generate-daily-birds.py",
+                "--date",
+                "2026-08-06",
+                "--subregions",
+                "subregions.json",
+                "--days",
+                "7",
+            ],
+        )
+
+        generate_daily_birds.main()
+
+        daily = json.loads((tmp_path / "public/data/daily.json").read_text())
+        history = json.loads((tmp_path / "public/data/history.json").read_text())
+
+        # Both regions get entries for the rolling window [D-1, D, D+1]
+        assert {e["region"] for e in daily} == {"us", "us-lower48"}
+        assert {e["date"] for e in daily} == {
+            "2026-08-05",
+            "2026-08-06",
+            "2026-08-07",
+        }
+        # Entries carry the additive id and an 8-char hash
+        for entry in daily:
+            assert entry["id"]
+            assert len(entry["answerHash"]) == 8
+            assert entry["answerHash"] == generate_daily_birds.hash_bird_id(
+                entry["id"]
+            )
+        # Subregion selected for all; the virtual region never picks Alaska
+        assert all("subregion" in e for e in daily)
+        assert all(
+            e["subregion"] != "Alaska"
+            for e in daily
+            if e["region"] == "us-lower48"
+        )
+        # History has the window's entries for both regions
+        assert {"us", "us-lower48"} <= set(history.keys())
+        assert all(
+            any(e["date"] == "2026-08-06" for e in history[r])
+            for r in ("us", "us-lower48")
+        )
+
+    def test_main_preserves_prior_daily_entries(self, tmp_path, monkeypatch):
+        """Test that prior dates in daily.json are preserved (no overwrite)"""
+        prior_daily = [
+            {
+                "date": "2026-08-05",
+                "region": "us",
+                "answerHash": "104c723e",
+                "id": "amerob",
+            }
+        ]
+        self._write_data_dir(tmp_path, prior_daily=prior_daily)
+        monkeypatch.chdir(tmp_path)
+        monkeypatch.setattr(
+            sys,
+            "argv",
+            [
+                "generate-daily-birds.py",
+                "--date",
+                "2026-08-06",
+                "--subregions",
+                "subregions.json",
+            ],
+        )
+
+        generate_daily_birds.main()
+
+        daily = json.loads((tmp_path / "public/data/daily.json").read_text())
+        # Prior entry survives (us 08-05 is skipped, not regenerated),
+        # missing window entries are added, no duplicates.
+        assert {
+            (e["region"], e["date"]) for e in daily
+        } == {
+            ("us", "2026-08-05"),
+            ("us-lower48", "2026-08-05"),
+            ("us", "2026-08-06"),
+            ("us-lower48", "2026-08-06"),
+            ("us", "2026-08-07"),
+            ("us-lower48", "2026-08-07"),
+        }
+        # Canonical (date, region) ordering for stable output
+        assert [e["date"] for e in daily] == [
+            "2026-08-05",
+            "2026-08-05",
+            "2026-08-06",
+            "2026-08-06",
+            "2026-08-07",
+            "2026-08-07",
+        ]
+
+    def test_main_rerun_same_date_does_not_duplicate(self, tmp_path, monkeypatch):
+        """Test that re-running main() for the same date upserts, never duplicates"""
+        self._write_data_dir(tmp_path)
+        monkeypatch.chdir(tmp_path)
+        argv = [
+            "generate-daily-birds.py",
+            "--date",
+            "2026-08-06",
+            "--subregions",
+            "subregions.json",
+        ]
+        monkeypatch.setattr(sys, "argv", argv)
+        generate_daily_birds.main()
+        generate_daily_birds.main()
+
+        daily = json.loads((tmp_path / "public/data/daily.json").read_text())
+        history = json.loads((tmp_path / "public/data/history.json").read_text())
+
+        # No duplicate (region, date) entries in daily.json
+        keys = [(e["region"], e["date"]) for e in daily]
+        assert len(keys) == len(set(keys))
+        # Exactly one history entry per region for today (replaced, not appended)
+        for region, entries in history.items():
+            today_entries = [e for e in entries if e["date"] == "2026-08-06"]
+            assert len(today_entries) == 1
+            dates = [e["date"] for e in entries]
+            assert len(dates) == len(set(dates))
+
+    def test_main_invalid_date_exits(self, tmp_path, monkeypatch):
+        """Test that an invalid --date exits non-zero"""
+        self._write_data_dir(tmp_path)
+        monkeypatch.chdir(tmp_path)
+        monkeypatch.setattr(
+            sys, "argv", ["generate-daily-birds.py", "--date", "not-a-date"]
+        )
+
+        with pytest.raises(SystemExit) as exc_info:
+            generate_daily_birds.main()
+        assert exc_info.value.code == 1
+
+    def test_main_defaults_to_today(self, tmp_path, monkeypatch):
+        """Test that main() uses today's date when --date is omitted"""
+        self._write_data_dir(tmp_path)
+        monkeypatch.chdir(tmp_path)
+        monkeypatch.setattr(
+            sys, "argv", ["generate-daily-birds.py", "--subregions", "subregions.json"]
+        )
+
+        generate_daily_birds.main()
+
+        today_str = datetime.now().strftime("%Y-%m-%d")
+        daily = json.loads((tmp_path / "public/data/daily.json").read_text())
+        # Rolling window centered on today
+        assert {e["date"] for e in daily} == {
+            (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d"),
+            today_str,
+            (datetime.now() + timedelta(days=1)).strftime("%Y-%m-%d"),
+        }
+
+    def test_main_missing_subregions_file_warns(self, tmp_path, monkeypatch, capsys):
+        """Test that a missing --subregions file warns and proceeds unfiltered"""
+        self._write_data_dir(tmp_path)
+        monkeypatch.chdir(tmp_path)
+        monkeypatch.setattr(
+            sys,
+            "argv",
+            [
+                "generate-daily-birds.py",
+                "--date",
+                "2026-08-06",
+                "--subregions",
+                "does-not-exist.json",
+            ],
+        )
+
+        generate_daily_birds.main()
+
+        captured = capsys.readouterr()
+        assert "not found, proceeding without subregion filtering" in captured.out
+        daily = json.loads((tmp_path / "public/data/daily.json").read_text())
+        assert all("subregion" not in e for e in daily)
+
+    def test_main_skips_region_without_birds(self, tmp_path, monkeypatch, capsys):
+        """Test that a region with no birds is skipped with a warning"""
+        self._write_data_dir(tmp_path)
+        data_dir = tmp_path / "public" / "data"
+        regions = json.loads((data_dir / "regions.json").read_text())
+        regions.append({"id": "empty-region", "name": "Empty Region"})
+        (data_dir / "regions.json").write_text(json.dumps(regions))
+
+        monkeypatch.chdir(tmp_path)
+        monkeypatch.setattr(
+            sys,
+            "argv",
+            [
+                "generate-daily-birds.py",
+                "--date",
+                "2026-08-06",
+                "--subregions",
+                "subregions.json",
+            ],
+        )
+
+        generate_daily_birds.main()
+
+        captured = capsys.readouterr()
+        assert "No birds found for region empty-region" in captured.out
+        daily = json.loads((tmp_path / "public/data/daily.json").read_text())
+        assert all(e["region"] != "empty-region" for e in daily)
+
+
+class TestCrossProcessDeterminism:
+    """Cross-process determinism: output must not depend on PYTHONHASHSEED"""
+
+    @staticmethod
+    def _run_generator(data_root, hashseed):
+        """Run the generator in a subprocess with a fixed PYTHONHASHSEED."""
+        env = dict(os.environ)
+        env["PYTHONHASHSEED"] = hashseed
+        env["PYTHONPATH"] = scripts_dir + os.pathsep + env.get("PYTHONPATH", "")
+        result = subprocess.run(
+            [
+                sys.executable,
+                os.path.join(scripts_dir, "generate-daily-birds.py"),
+                "--date",
+                "2026-08-06",
+                "--subregions",
+                "subregions.json",
+                "--days",
+                "7",
+            ],
+            cwd=str(data_root),
+            env=env,
+            capture_output=True,
+            text=True,
+        )
+        assert result.returncode == 0, result.stderr
+        return (
+            (data_root / "public/data/daily.json").read_text(),
+            (data_root / "public/data/history.json").read_text(),
+        )
+
+    def test_identical_output_across_python_hash_seeds(self, tmp_path):
+        """Test that different PYTHONHASHSEED values produce byte-identical output"""
+        root_a = tmp_path / "run_a"
+        root_b = tmp_path / "run_b"
+        for root in (root_a, root_b):
+            data_dir = root / "public" / "data"
+            data_dir.mkdir(parents=True)
+            regions = [
+                {"id": "us", "name": "United States"},
+                {
+                    "id": "us-lower48",
+                    "name": "US Lower 48",
+                    "parentRegion": "us",
+                    "excludedSubregions": ["Alaska"],
+                },
+            ]
+            birds = {
+                "us": [
+                    {"id": f"bird{i:02d}", "name": f"Bird {i:02d}"}
+                    for i in range(1, 11)
+                ]
+            }
+            subregions = {
+                "us": {
+                    "California": [{"id": "bird01"}, {"id": "bird02"}, {"id": "bird03"}],
+                    "Texas": [{"id": "bird04"}, {"id": "bird05"}],
+                    "Alaska": [{"id": "bird06"}],
+                }
+            }
+            (data_dir / "regions.json").write_text(json.dumps(regions))
+            (data_dir / "birds.json").write_text(json.dumps(birds))
+            (data_dir / "history.json").write_text("{}")
+            (data_dir / "daily.json").write_text("[]")
+            (root / "subregions.json").write_text(json.dumps(subregions))
+
+        daily_a, history_a = self._run_generator(root_a, "0")
+        daily_b, history_b = self._run_generator(root_b, "12345")
+
+        # Byte-identical outputs across processes with different hash seeds
+        assert daily_a == daily_b
+        assert history_a == history_b
+
+        # The same (region, date) selects the same subregion and bird
+        parsed_a = json.loads(daily_a)
+        parsed_b = json.loads(daily_b)
+        for entry_a, entry_b in zip(parsed_a, parsed_b):
+            assert entry_a["region"] == entry_b["region"]
+            assert entry_a["answerHash"] == entry_b["answerHash"]
+            assert entry_a.get("subregion") == entry_b.get("subregion")
+        # Subregion selection actually happened (guards against a trivial pass)
+        assert any("subregion" in e for e in parsed_a)

@@ -3,7 +3,8 @@
 Generate hash values for testing Python-JavaScript hash consistency.
 
 This script outputs hash values for common bird IDs that can be used
-to populate the JavaScript integration tests.
+to populate the JavaScript integration tests (KNOWN_HASHES in
+tests/integration/hash-consistency.test.js).
 
 Usage:
     python scripts/verify_hash_consistency.py
@@ -11,18 +12,32 @@ Usage:
 Output format: bird_id:hash (one per line)
 """
 
-import sys
+import importlib.util
 import os
+import sys
 
-# Add scripts directory to path to import from generate_daily_birds
-sys.path.insert(0, os.path.join(os.path.dirname(__file__)))
+# The generator lives in a dashed filename (generate-daily-birds.py), which is
+# not a valid Python module name, so load it explicitly via importlib — the
+# same approach the test suite uses.
+SCRIPT_PATH = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), "generate-daily-birds.py"
+)
+
+
+def load_hash_bird_id():
+    """Load hash_bird_id from generate-daily-birds.py via importlib."""
+    spec = importlib.util.spec_from_file_location("generate_daily_birds", SCRIPT_PATH)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module.hash_bird_id
+
 
 def generate_test_hashes():
     """Generate hashes for common bird IDs to verify consistency."""
     try:
-        from generate_daily_birds import hash_bird_id
-    except ImportError:
-        print("ERROR: Could not import hash_bird_id from generate_daily_birds.py")
+        hash_bird_id = load_hash_bird_id()
+    except Exception as e:
+        print(f"ERROR: Could not load hash_bird_id from generate-daily-birds.py: {e}")
         print("Make sure generate-daily-birds.py exists and exports hash_bird_id()")
         sys.exit(1)
 
@@ -54,7 +69,7 @@ def generate_test_hashes():
 
     print("=" * 60)
     print("HASH VALUES FOR COMMON BIRD IDS")
-    print("Copy these into PYTHON_HASH_OUTPUTS in hash-consistency.test.js")
+    print("Copy these into KNOWN_HASHES in hash-consistency.test.js")
     print("=" * 60)
     print()
 
@@ -81,6 +96,7 @@ def generate_test_hashes():
     print()
 
     return test_bird_ids, edge_cases
+
 
 if __name__ == '__main__':
     generate_test_hashes()

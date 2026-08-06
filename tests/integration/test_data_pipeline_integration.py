@@ -8,9 +8,26 @@ These tests verify that:
 4. Data files can be loaded by JavaScript LoadGameData module
 """
 
+import importlib.util
 import json
-import pytest
+import os
+import sys
 from pathlib import Path
+
+import pytest
+
+pytestmark = pytest.mark.integration
+
+# Load hash_bird_id from generate-daily-birds.py (dashed filename, so we use
+# importlib — the same approach the other Python tests use).
+scripts_dir = os.path.join(
+    Path(__file__).parent.parent.parent, "scripts"
+)
+spec = importlib.util.spec_from_file_location(
+    "generate_daily_birds", os.path.join(scripts_dir, "generate-daily-birds.py")
+)
+generate_daily_birds = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(generate_daily_birds)
 
 
 class TestDataPipelineIntegration:
@@ -140,23 +157,36 @@ class TestDataPipelineIntegration:
                 assert len(entry) > 0
 
     @staticmethod
-    def test_cross_reference_birds_in_daily(birds_json, daily_json):
-        """Test that daily.json bird hashes can be found in birds.json."""
-        # Get all bird IDs for a region
-        region = daily_json[0]["region"] if daily_json else "us"
-        birds_in_region = birds_json.get(region, [])
+    def test_cross_reference_birds_in_daily(birds_json, daily_json, regions_json):
+        """Test that every daily.json answerHash corresponds to a bird in birds.json."""
+        # Build region -> bird ids, resolving virtual regions to their parent
+        virtual_regions = {
+            r["id"]: r["parentRegion"]
+            for r in regions_json
+            if "parentRegion" in r
+        }
+        region_birds = {}
+        for region, birds in birds_json.items():
+            region_birds[region] = {bird["id"] for bird in birds}
+        for region, parent in virtual_regions.items():
+            region_birds.setdefault(region, region_birds.get(parent, set()))
 
-        # Get all bird IDs
-        bird_ids = {bird["id"] for bird in birds_in_region}
+        for entry in daily_json:
+            region = entry["region"]
+            bird_ids = region_birds.get(region, set())
+            assert len(bird_ids) > 0, (
+                f"Region {region} should have at least one bird"
+            )
 
-        # Verify we have birds in the region
-        assert len(bird_ids) > 0, f"Region {region} should have at least one bird"
-
-        # Note: We can't directly verify hashes match without importing hash function
-        # but we can verify the region exists and has birds
-        assert region in birds_json, (
-            f"Region {region} from daily.json should exist in birds.json"
-        )
+            # Compute the canonical hash for every bird in the region and make
+            # sure the daily answerHash is one of them.
+            valid_hashes = {
+                generate_daily_birds.hash_bird_id(bird_id) for bird_id in bird_ids
+            }
+            assert entry["answerHash"] in valid_hashes, (
+                f"Hash {entry['answerHash']} for region {region} on {entry['date']} "
+                f"does not match any bird in birds.json"
+            )
 
     @staticmethod
     def test_regions_match_birds_regions(regions_json, birds_json):

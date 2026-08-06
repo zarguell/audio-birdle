@@ -1,20 +1,15 @@
-import os
-from dotenv import load_dotenv
-import requests
 import argparse
+import sys
+
+import ebird_api_common
+
 
 def fetch_taxonomy(version, category='all', fmt='json', species=None):
     # Get the API key from the environment variable
-    load_dotenv()
-    api_key = os.getenv('EBIRD_API_KEY')
-    if not api_key:
-        raise ValueError("API key not found. Please set the EBIRD_API_KEY environment variable.")
+    api_key = ebird_api_common.load_api_key()
 
     # Define the URL and headers
     url = 'https://api.ebird.org/v2/ref/taxonomy/ebird'
-    headers = {
-        'X-eBirdApiToken': api_key
-    }
 
     # Prepare parameters, only include if specified
     params = {}
@@ -28,19 +23,16 @@ def fetch_taxonomy(version, category='all', fmt='json', species=None):
     if species:
         params['species'] = species
 
-    # Make the request
-    response = requests.get(url, headers=headers, params=params)
+    # Make the request (shared helper: timeout=30, 3 retries with backoff).
+    # Return raw content for saving (fmt may be csv or json).
+    return ebird_api_common.get_content(url, api_key=api_key, timeout=30, params=params)
 
-    # Check for a successful response
-    if response.status_code == 200:
-        return response.content  # Return raw content for saving
-    else:
-        response.raise_for_status()
 
 def save_to_file(data, output_file):
     with open(output_file, 'wb') as f:
         f.write(data)
     print(f"Data saved to {output_file}")
+
 
 if __name__ == "__main__":
     # Set up command-line argument parsing
@@ -54,7 +46,7 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    # Fetch the taxonomy data
+    # Fetch the taxonomy data; exit non-zero on API/network failure
     try:
         data = fetch_taxonomy(args.version, args.category, args.fmt, args.species)
 
@@ -64,4 +56,5 @@ if __name__ == "__main__":
         else:
             print(data.decode('utf-8'))  # Print the data if no output file is specified
     except Exception as e:
-        print(f"Error: {e}")
+        print(f"Error: {e}", file=sys.stderr)
+        sys.exit(1)

@@ -69,7 +69,7 @@ def GetSpeciesAudioUrls(driver, reqUrls, speciesCodes):
 def DownloadAudio(speciesCode, url):
   filename = f'{speciesCode}_ML' + url.split('/')[6] + '.mp3'
   filePath = Path.cwd().joinpath('audio', 'eBird', f'{filename}')
-  res = requests.get(url)
+  res = requests.get(url, timeout=30)
   with open(filePath, 'wb') as f:
     for data in res.iter_content(1024):
       f.write(data)

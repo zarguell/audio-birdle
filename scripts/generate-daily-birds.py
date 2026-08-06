@@ -5,11 +5,26 @@ Daily Bird Generator Script
 Generates daily bird answers for each region, ensuring no repeats within X days.
 Optionally filters by subregion (e.g., US states) if subregions file is provided.
 
-Usage: python generate_daily_birds.py [--days X] [--date YYYY-MM-DD] [--subregions subregions.json]
+Determinism invariant:
+    For a fixed input set (birds.json, regions.json, subregions data, --date),
+    running this script MUST produce byte-identical daily.json and history.json
+    outputs on every run, regardless of PYTHONHASHSEED or any other
+    process-local randomness. This is guaranteed by:
+
+      * seeding the RNG with a SHA-256 digest of (date, region) instead of the
+        per-process randomized built-in hash()
+      * never re-seeding from system time afterwards, so the subsequent
+        random.choice() for bird selection continues from the same
+        deterministic stream
+      * upserting (never reordering) history and daily entries, and emitting
+        daily.json in canonical (date, region) order
+
+Usage: python generate-daily-birds.py [--days X] [--date YYYY-MM-DD] [--subregions subregions.json]
 """
 
 import json
 import argparse
+import hashlib
 import random
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -96,8 +111,10 @@ def get_recent_answers(history, region, days, current_date):
 def get_subregion_for_date(subregions_data, region_id, target_date):
     """
     Select a subregion for the given date and region.
-    This could be random or based on some deterministic logic.
-    For now, using a simple hash-based selection for consistency.
+
+    Deterministic: seeds the RNG from a SHA-256 digest of (date, region) so
+    the chosen subregion is stable across runs and processes — unlike Python's
+    built-in hash(), which is randomized per process via PYTHONHASHSEED.
     """
     region_subregions = subregions_data.get(region_id, {})
     if not region_subregions:
@@ -108,13 +125,14 @@ def get_subregion_for_date(subregions_data, region_id, target_date):
     if not subregion_names:
         return None, []
 
-    # Use date as seed for consistent daily selection
+    # Seed from a stable SHA-256 digest, NOT hash() (per-process randomized).
+    # Do NOT re-seed from system time afterwards: select_bird_for_region's
+    # random.choice() must continue from this same stream so the whole run is
+    # deterministic for a given (region, date).
     date_seed = target_date.strftime("%Y-%m-%d") + region_id
-    random.seed(hash(date_seed))
+    seed_int = int(hashlib.sha256(date_seed.encode()).hexdigest()[:16], 16)
+    random.seed(seed_int)
     selected_subregion = random.choice(subregion_names)
-
-    # Reset random seed to system time for other randomness
-    random.seed()
 
     # Get bird IDs for this subregion
     subregion_bird_ids = set()
@@ -181,10 +199,14 @@ def select_bird_for_region(
     Now includes verification that the selected bird exists in birds.json.
     """
     if subregion_bird_ids:
-        birds = filter_birds_by_subregion(birds, subregion_bird_ids)
-        if not birds:
+        filtered = filter_birds_by_subregion(birds, subregion_bird_ids)
+        if not filtered:
+            # The printed message promises a fallback to the full region pool,
+            # so honor it: keep the unfiltered birds. None is returned only
+            # when no birds exist at all (checked below).
             print("Warning: No birds available in subregion. Using all region birds.")
-            return None
+        else:
+            birds = filtered
 
     available_birds = [bird for bird in birds if bird["id"] not in recent_answers]
 
@@ -214,23 +236,127 @@ def select_bird_for_region(
     return selected_bird
 
 
-def update_history(history, daily_data, current_date):
-    """Update history with yesterday's answers from daily.json"""
+def update_history(history, daily_data, current_date, birds_data, virtual_regions=None):
+    """
+    Update history with yesterday's answers from daily.json.
+
+    daily.json entries carry an additive "id" field (the bird id), which lets
+    us recover the bird's name from birds_data (the answerHash alone cannot be
+    reversed). Entries are upserted by (region, date): an existing entry for
+    the same region+date is replaced in place, otherwise it is appended.
+    """
+    virtual_regions = virtual_regions or {}
     yesterday = current_date - timedelta(days=1)
     yesterday_str = yesterday.strftime("%Y-%m-%d")
 
-    # Find yesterday's entries in daily_data
     for entry in daily_data:
-        if entry["date"] == yesterday_str:
-            region = entry["region"]
-            # We need to find the bird ID from the hash - this is a limitation
-            # In practice, you might want to store the bird ID directly in daily.json
-            # For now, we'll skip this step as we can't reverse the hash
+        if entry.get("date") != yesterday_str:
+            continue
+
+        region = entry["region"]
+        bird_id = entry.get("id")
+        if not bird_id:
             print(
-                f"Note: Cannot reverse hash to update history for {region} on {yesterday_str}"
+                f"Note: daily.json entry for {region} on {yesterday_str} "
+                f"has no 'id'; cannot update history"
             )
+            continue
+
+        # Resolve the bird's display name from birds_data, following virtual
+        # regions to their parent region's bird list.
+        lookup_region = region
+        if region in virtual_regions:
+            lookup_region = virtual_regions[region]["parent"]
+        name = None
+        for bird in birds_data.get(lookup_region, []):
+            if bird["id"] == bird_id:
+                name = bird.get("name")
+                break
+        if name is None:
+            print(
+                f"Warning: could not find bird '{bird_id}' in birds_data "
+                f"for region {region}; using id as name"
+            )
+            name = bird_id
+
+        history_entry = {"date": yesterday_str, "id": bird_id, "name": name}
+        if "subregion" in entry:
+            history_entry["subregion"] = entry["subregion"]
+
+        if region not in history:
+            history[region] = []
+
+        # Upsert by (region, date): replace an existing entry, else append.
+        for idx, existing in enumerate(history[region]):
+            if existing.get("date") == yesterday_str:
+                history[region][idx] = history_entry
+                break
+        else:
+            history[region].append(history_entry)
 
     return history
+
+
+def build_region_birds(
+    region_id, birds_data, virtual_regions, subregions_data, target_date
+):
+    """
+    Determine the bird pool and optional subregion filter for one region.
+
+    Handles virtual regions: falls back to the parent region's birds and
+    removes excluded subregions from the selection pool.
+
+    Returns:
+        (region_birds, selected_subregion, subregion_bird_ids)
+    """
+    region_birds = birds_data.get(region_id, [])
+    if not region_birds and region_id in virtual_regions:
+        # Virtual region - use parent region's birds
+        parent_id = virtual_regions[region_id]["parent"]
+        region_birds = birds_data.get(parent_id, [])
+        print(
+            f"Using parent region '{parent_id}' birds for virtual region '{region_id}'"
+        )
+
+    selected_subregion = None
+    subregion_bird_ids = set()
+
+    if subregions_data:
+        # For virtual regions, filter out excluded subregions from available list
+        modified_subregions_data = subregions_data
+        if region_id in virtual_regions:
+            # Get subregions from parent region, not from virtual region itself
+            parent_id = virtual_regions[region_id]["parent"]
+            region_subregions = subregions_data.get(parent_id, {}).copy()
+            excluded = virtual_regions[region_id]["excludedSubregions"]
+
+            # Remove excluded subregions from the selection pool
+            for excluded_sub in excluded:
+                if excluded_sub in region_subregions:
+                    print(
+                        f"Excluding subregion '{excluded_sub}' for virtual region '{region_id}'"
+                    )
+                    del region_subregions[excluded_sub]
+
+            if region_subregions:
+                modified_subregions_data = {region_id: region_subregions}
+            else:
+                print(
+                    f"No valid subregions remaining after exclusions for {region_id}"
+                )
+                modified_subregions_data = {}
+
+        selected_subregion, subregion_bird_ids = get_subregion_for_date(
+            modified_subregions_data, region_id, target_date
+        )
+
+        if selected_subregion:
+            print(f"Selected subregion: {selected_subregion}")
+            print(f"Subregion has {len(subregion_bird_ids)} bird species")
+        else:
+            print("No subregion data available for this region")
+
+    return region_birds, selected_subregion, subregion_bird_ids
 
 
 def main():
@@ -271,6 +397,15 @@ def main():
 
     target_date_str = target_date.strftime("%Y-%m-%d")
 
+    # Seed the RNG unconditionally from the target date so output is
+    # reproducible across processes even when no region has subregion data
+    # (get_subregion_for_date re-seeds per (region, date) when subregions
+    # exist; this seed covers the subregion-less path). Never re-seed from
+    # system time afterwards.
+    random.seed(
+        int(hashlib.sha256(f"audio-birdle:{target_date_str}".encode()).hexdigest()[:16], 16)
+    )
+
     print(f"Generating daily birds for {target_date_str}")
     print(f"Avoiding repeats within {args.days} days")
 
@@ -308,12 +443,30 @@ def main():
             f"Detected virtual region: {region_id} -> parent: {region_info['parent']}"
         )
 
-    # Update history with yesterday's data (if we can determine the bird IDs)
-    # Note: This is simplified - in practice you might want to store bird IDs in daily.json
-    history = update_history(history, current_daily, target_date)
+    # Recover yesterday's answers into history from the persisted daily.json
+    # before regenerating today's entries (daily entries carry the bird id).
+    history = update_history(
+        history, current_daily, target_date, birds_data, virtual_regions
+    )
 
-    # Generate new daily answers
-    new_daily = []
+    # Upsert today's entries into the existing daily list so prior dates are
+    # preserved: missed runs are recoverable and past dates replayable.
+    daily_by_key = {}
+    for entry in current_daily:
+        daily_by_key[(entry.get("region"), entry.get("date"))] = entry
+
+    # A local day N anywhere on Earth starts as early as 10:00 UTC of day N-1
+    # (UTC+14), while entries are published at ~04:00 UTC. Generating a
+    # rolling window of [D-1, D, D+1] guarantees entry N already exists at
+    # every user's local midnight, so the frontend's "latest entry <= local
+    # today" lookup serves exactly the local date's puzzle everywhere. Only
+    # MISSING dates are generated (skip-existing): re-runs are idempotent,
+    # and a missed run is healed by the next run's D-1 backfill. Selection is
+    # deterministic per (region, date), so a healed entry is identical to
+    # what the missed run would have produced.
+    generation_dates = [
+        target_date + timedelta(days=offset) for offset in (-1, 0, 1)
+    ]
 
     for region in regions:
         region_id = region["id"]
@@ -321,121 +474,107 @@ def main():
 
         print(f"\nProcessing region: {region_name} ({region_id})")
 
-        # Get birds for this region (handle virtual regions)
-        region_birds = birds_data.get(region_id, [])
-        if not region_birds and region_id in virtual_regions:
-            # Virtual region - use parent region's birds
-            parent_id = virtual_regions[region_id]["parent"]
-            region_birds = birds_data.get(parent_id, [])
-            print(
-                f"Using parent region '{parent_id}' birds for virtual region '{region_id}'"
+        if region_id not in history:
+            history[region_id] = []
+
+        for generation_date in generation_dates:
+            generation_date_str = generation_date.strftime("%Y-%m-%d")
+
+            # Skip dates that already have an entry: re-runs are idempotent
+            # and an existing answer is never changed after the fact.
+            if (region_id, generation_date_str) in daily_by_key:
+                print(
+                    f"  {generation_date_str}: entry already exists, keeping existing"
+                )
+                continue
+
+            # Get birds for this region (handle virtual regions) and the
+            # subregion filter for this date (deterministic per region+date).
+            region_birds, selected_subregion, subregion_bird_ids = build_region_birds(
+                region_id,
+                birds_data,
+                virtual_regions,
+                subregions_data,
+                generation_date,
             )
 
-        if not region_birds:
-            print(f"Warning: No birds found for region {region_id}")
-            continue
-
-        print(f"Found {len(region_birds)} birds in {region_name}")
-
-        # Get subregion filtering if available
-        selected_subregion = None
-        subregion_bird_ids = set()
-
-        if subregions_data:
-            # For virtual regions, filter out excluded subregions from available list
-            modified_subregions_data = subregions_data
-            if region_id in virtual_regions:
-                # Get subregions from parent region, not from virtual region itself
-                parent_id = virtual_regions[region_id]["parent"]
-                region_subregions = subregions_data.get(parent_id, {}).copy()
-                excluded = virtual_regions[region_id]["excludedSubregions"]
-
-                # Remove excluded subregions from the selection pool
-                for excluded_sub in excluded:
-                    if excluded_sub in region_subregions:
-                        print(
-                            f"Excluding subregion '{excluded_sub}' for virtual region '{region_id}'"
-                        )
-                        del region_subregions[excluded_sub]
-
-                if region_subregions:
-                    modified_subregions_data = {region_id: region_subregions}
-                else:
-                    print(
-                        f"No valid subregions remaining after exclusions for {region_id}"
-                    )
-                    modified_subregions_data = {}
-
-            selected_subregion, subregion_bird_ids = get_subregion_for_date(
-                modified_subregions_data, region_id, target_date
-            )
+            if not region_birds:
+                print(
+                    f"  {generation_date_str}: No birds found for region {region_id}"
+                )
+                continue
 
             if selected_subregion:
-                print(f"Selected subregion: {selected_subregion}")
-                print(f"Subregion has {len(subregion_bird_ids)} bird species")
-
                 # Filter region birds by subregion
                 subregion_filtered_birds = filter_birds_by_subregion(
                     region_birds, subregion_bird_ids
                 )
                 print(
-                    f"After subregion filtering: {len(subregion_filtered_birds)} birds available"
+                    f"  {generation_date_str}: After subregion filtering: "
+                    f"{len(subregion_filtered_birds)} birds available"
                 )
+
+            # Get recent answers for this region up to this date
+            recent_answers = get_recent_answers(
+                history, region_id, args.days, generation_date
+            )
+
+            # Select a bird
+            selected_bird = select_bird_for_region(
+                region_birds,
+                recent_answers,
+                subregion_bird_ids if selected_subregion else None,
+                birds_data,
+                region_id,
+                virtual_regions,
+            )
+
+            if not selected_bird:
+                print(
+                    f"  {generation_date_str}: Could not select a bird for region {region_id}"
+                )
+                continue
+
+            bird_hash = hash_bird_id(selected_bird["id"])
+
+            print(
+                f"  {generation_date_str}: Selected {selected_bird['name']} "
+                f"({selected_bird['id']}) -> {bird_hash}"
+            )
+
+            # Add to daily data. "id" is an additive field the frontend
+            # ignores; it lets update_history recover the bird on later runs.
+            daily_entry = {
+                "date": generation_date_str,
+                "region": region_id,
+                "answerHash": bird_hash,
+                "id": selected_bird["id"],
+            }
+
+            # Add subregion info if available
+            if selected_subregion:
+                daily_entry["subregion"] = selected_subregion
+
+            daily_by_key[(region_id, generation_date_str)] = daily_entry
+
+            # Add this date's selection to history, upserting by (region,
+            # date) so re-running for the same date replaces rather than
+            # duplicates.
+            history_entry = {
+                "date": generation_date_str,
+                "id": selected_bird["id"],
+                "name": selected_bird["name"],
+            }
+
+            if selected_subregion:
+                history_entry["subregion"] = selected_subregion
+
+            for idx, existing in enumerate(history[region_id]):
+                if existing.get("date") == generation_date_str:
+                    history[region_id][idx] = history_entry
+                    break
             else:
-                print("No subregion data available for this region")
-
-        # Get recent answers for this region
-        recent_answers = get_recent_answers(history, region_id, args.days, target_date)
-        print(f"Recent answers to avoid: {recent_answers}")
-
-        # Select a bird
-        selected_bird = select_bird_for_region(
-            region_birds,
-            recent_answers,
-            subregion_bird_ids if selected_subregion else None,
-            birds_data,
-            region_id,
-            virtual_regions,
-        )
-
-        if not selected_bird:
-            print(f"Error: Could not select a bird for region {region_id}")
-            continue
-
-        bird_hash = hash_bird_id(selected_bird["id"])
-
-        print(
-            f"Selected: {selected_bird['name']} ({selected_bird['id']}) -> {bird_hash}"
-        )
-
-        # Add to daily data
-        daily_entry = {
-            "date": target_date_str,
-            "region": region_id,
-            "answerHash": bird_hash,
-        }
-
-        # Add subregion info if available
-        if selected_subregion:
-            daily_entry["subregion"] = selected_subregion
-
-        new_daily.append(daily_entry)
-
-        # Update history for future runs
-        if region_id not in history:
-            history[region_id] = []
-
-        # Add today's selection to history (for future reference)
-        history_entry = {
-            "date": target_date_str,
-            "id": selected_bird["id"],
-            "name": selected_bird["name"],
-        }
-
-        if selected_subregion:
-            history_entry["subregion"] = selected_subregion
-
-        history[region_id].append(history_entry)
+                history[region_id].append(history_entry)
 
         # Keep only recent history (optional cleanup)
         cutoff_date = target_date - timedelta(
@@ -446,6 +585,17 @@ def main():
             for entry in history[region_id]
             if datetime.strptime(entry["date"], "%Y-%m-%d").date() > cutoff_date
         ]
+
+    # Keep daily.json bounded: prune entries older than 120 days before the
+    # target date, then emit in canonical (date, region) order for stable,
+    # byte-identical output.
+    prune_cutoff = target_date - timedelta(days=120)
+    new_daily = [
+        entry
+        for entry in daily_by_key.values()
+        if datetime.strptime(entry["date"], "%Y-%m-%d").date() >= prune_cutoff
+    ]
+    new_daily.sort(key=lambda entry: (entry["date"], entry["region"]))
 
     # Save updated files
     save_json_file(daily_path, new_daily)
