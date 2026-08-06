@@ -394,8 +394,8 @@ describe("Data Loading Integration", () => {
             order: "Passeriformes",
             family: "Testidae (Testidae)",
             audioUrl: [
-              "http://example.com/audio1.mp3",
-              "http://example.com/audio2.mp3",
+              "https://example.com/audio1.mp3",
+              "https://example.com/audio2.mp3",
             ],
           },
         ],

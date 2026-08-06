@@ -1,9 +1,10 @@
-import { describe, it, expect, beforeEach } from 'vitest'
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import {
   getDailyGameState,
   hasPlayedRegionDate,
   processGuess,
   getDailyBird,
+  getDailyBirdWithFallback,
   generateAnswerOptions,
   getUserPerformanceSummary,
   createRegionDateKey,
@@ -14,9 +15,15 @@ import {
   hasCompletedNormalMode,
   hasCompletedHardMode
 } from '@/utils/GameLogic'
+import { getTodaysBirdFromDaily } from '@/utils/DailyBirdUtils'
 import { sampleBirds } from '../fixtures/sampleBirds'
 import { useGameStore } from '@/stores/gameStore'
 import { GAME_CONFIG } from '@/utils/Constants'
+
+// getDailyBirdWithFallback depends on the daily.json lookup — mock it out
+vi.mock('@/utils/DailyBirdUtils', () => ({
+  getTodaysBirdFromDaily: vi.fn(),
+}))
 
 const createInitialGameState = () => ({
   dailyGames: {},
@@ -339,6 +346,89 @@ describe('GameLogic', () => {
       // Just verify both are valid birds
       expect(sampleBirds.us).toContain(bird1)
       expect(sampleBirds.us).toContain(bird2)
+    })
+  })
+
+  describe('getDailyBirdWithFallback', () => {
+    beforeEach(() => {
+      vi.clearAllMocks()
+    })
+
+    it('should return the daily bird when daily lookup succeeds', async () => {
+      const bird = sampleBirds.us[0]
+      getTodaysBirdFromDaily.mockResolvedValue({ success: true, bird })
+
+      const result = await getDailyBirdWithFallback('us', sampleBirds.us, '2025-12-27')
+
+      expect(result).toEqual({
+        bird,
+        success: true,
+        error: null,
+        message: null,
+        usedFallback: false,
+      })
+    })
+
+    it('should fall back to hash selection on network failure (offline mode)', async () => {
+      getTodaysBirdFromDaily.mockResolvedValue({ success: false, error: 'network' })
+
+      const result = await getDailyBirdWithFallback('us', sampleBirds.us, '2025-12-27')
+
+      expect(result.success).toBe(true)
+      expect(result.usedFallback).toBe(true)
+      expect(result.message).toBe('Offline mode: using hash-based selection')
+      expect(sampleBirds.us).toContain(result.bird)
+      // Fallback must be the same bird the deterministic selector would pick
+      expect(result.bird.id).toBe(getDailyBird('us', sampleBirds.us, '2025-12-27').id)
+    })
+
+    it('should fall back to hash selection when daily data is out of sync', async () => {
+      getTodaysBirdFromDaily.mockResolvedValue({ success: false, error: 'not_found' })
+
+      const result = await getDailyBirdWithFallback('us', sampleBirds.us, '2025-12-27')
+
+      expect(result.success).toBe(true)
+      expect(result.usedFallback).toBe(true)
+      expect(result.message).toBe('Daily data out of sync — using hash-based selection')
+      expect(sampleBirds.us).toContain(result.bird)
+    })
+
+    it('should report failure when neither daily lookup nor fallback yields a bird', async () => {
+      getTodaysBirdFromDaily.mockResolvedValue({ success: false, error: 'not_found' })
+
+      const result = await getDailyBirdWithFallback('us', [], '2025-12-27')
+
+      expect(result.success).toBe(false)
+      expect(result.error).toBe('not_found')
+      expect(result.usedFallback).toBe(false)
+      expect(result.bird).toBeNull()
+      expect(result.message).toBe(
+        'Daily challenge data is out of sync. A refresh is needed.',
+      )
+    })
+
+    it('should surface network wording when fallback is impossible offline', async () => {
+      getTodaysBirdFromDaily.mockResolvedValue({ success: false, error: 'network' })
+
+      const result = await getDailyBirdWithFallback('us', [], '2025-12-27')
+
+      expect(result.success).toBe(false)
+      expect(result.error).toBe('network')
+      expect(result.message).toBe(
+        'Failed to load daily challenge. Please check your connection.',
+      )
+    })
+
+    it('should handle unexpected errors from the daily lookup', async () => {
+      const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+      getTodaysBirdFromDaily.mockRejectedValue(new Error('boom'))
+
+      const result = await getDailyBirdWithFallback('us', sampleBirds.us, '2025-12-27')
+
+      expect(result.success).toBe(false)
+      expect(result.error).toBe('fetch_failed')
+      expect(result.usedFallback).toBe(false)
+      consoleErrorSpy.mockRestore()
     })
   })
 

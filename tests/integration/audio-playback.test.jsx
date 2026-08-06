@@ -83,29 +83,35 @@ describe("Audio Playback Integration", () => {
     });
 
     it("should return single string for non-array format", () => {
-      const url = "http://example.com/audio.mp3";
+      const url = "https://example.com/audio.mp3";
       expect(getAudioSrc(url)).toBe(url);
+    });
+
+    it("should refuse non-https single-string URLs", () => {
+      expect(getAudioSrc("http://example.com/audio.mp3")).toBe("");
+      expect(getAudioSrc("javascript:alert(1)")).toBe("");
+      expect(getAudioSrc("data:audio/wav;base64,UklGR")).toBe("");
     });
 
     it("should return first URL from array of strings", () => {
       const urls = [
-        "http://example.com/audio1.mp3",
-        "http://example.com/audio2.mp3",
+        "https://example.com/audio1.mp3",
+        "https://example.com/audio2.mp3",
       ];
-      expect(getAudioSrc(urls)).toBe("http://example.com/audio1.mp3");
+      expect(getAudioSrc(urls)).toBe("https://example.com/audio1.mp3");
     });
 
     it("should return URL from array of objects", () => {
-      const urls = [{ url: "http://example.com/audio.mp3" }];
-      expect(getAudioSrc(urls)).toBe("http://example.com/audio.mp3");
+      const urls = [{ url: "https://example.com/audio.mp3" }];
+      expect(getAudioSrc(urls)).toBe("https://example.com/audio.mp3");
     });
 
     it("should return second URL when index is specified", () => {
       const urls = [
-        "http://example.com/audio1.mp3",
-        "http://example.com/audio2.mp3",
+        "https://example.com/audio1.mp3",
+        "https://example.com/audio2.mp3",
       ];
-      expect(getAudioSrc(urls, 1)).toBe("http://example.com/audio2.mp3");
+      expect(getAudioSrc(urls, 1)).toBe("https://example.com/audio2.mp3");
     });
 
     it("should return empty string for undefined index in array", () => {

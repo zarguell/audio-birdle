@@ -5,6 +5,7 @@ import {
   loadDailyBirdData,
   getTodaysBirdFromDaily,
   generateDailyEntry,
+  invalidateDailyBirdCache,
 } from "@/utils/DailyBirdUtils";
 import { fetchWithRetry } from "@/utils/RetryUtils";
 import { sampleBirds, sampleDailyData } from "../fixtures/sampleBirds";
@@ -17,6 +18,8 @@ vi.mock("@/utils/RetryUtils", () => ({
 describe("DailyBirdUtils", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    // Module-level daily cache persists across tests — bust it for isolation
+    invalidateDailyBirdCache();
   });
 
   describe("hashBirdId", () => {
@@ -127,11 +130,6 @@ describe("DailyBirdUtils", () => {
     });
 
     it("should handle HTTP errors", async () => {
-      const UNUSED_ERROR_RESPONSE = {
-        ok: false,
-        status: 404,
-        statusText: "Not Found",
-      };
       const error = new Error("HTTP 404: Not Found for /data/daily.json");
       fetchWithRetry.mockRejectedValueOnce(error);
 
@@ -176,6 +174,41 @@ describe("DailyBirdUtils", () => {
 
       await expect(loadDailyBirdData()).rejects.toThrow();
     });
+
+    it("should cache parsed data and not refetch until invalidated", async () => {
+      fetchWithRetry.mockResolvedValue({
+        ok: true,
+        json: async () => sampleDailyData,
+      });
+
+      const first = await loadDailyBirdData();
+      const second = await loadDailyBirdData();
+
+      expect(first).toEqual(sampleDailyData);
+      expect(second).toBe(first);
+      expect(fetchWithRetry).toHaveBeenCalledTimes(1);
+
+      invalidateDailyBirdCache();
+
+      await loadDailyBirdData();
+      expect(fetchWithRetry).toHaveBeenCalledTimes(2);
+    });
+
+    it("should not cache non-array data", async () => {
+      fetchWithRetry.mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ not: "an array" }),
+      });
+
+      await expect(loadDailyBirdData()).rejects.toThrow();
+      // A later valid load must not be served from a partial cache
+      fetchWithRetry.mockResolvedValueOnce({
+        ok: true,
+        json: async () => sampleDailyData,
+      });
+      const data = await loadDailyBirdData();
+      expect(data).toEqual(sampleDailyData);
+    });
   });
 
   describe("getTodaysBirdFromDaily", () => {
@@ -197,12 +230,12 @@ describe("DailyBirdUtils", () => {
         "2025-12-27",
       );
 
-      expect(found).toBeDefined();
-      expect(found.id).toBe(bird.id);
-      expect(found.name).toBe(bird.name);
+      expect(found.success).toBe(true);
+      expect(found.bird.id).toBe(bird.id);
+      expect(found.bird.name).toBe(bird.name);
     });
 
-    it("should return null if no entry for date", async () => {
+    it("should return not_found if no entry on or before date", async () => {
       fetchWithRetry.mockResolvedValueOnce({
         ok: true,
         json: async () => [],
@@ -214,10 +247,10 @@ describe("DailyBirdUtils", () => {
         "2025-12-27",
       );
 
-      expect(found).toBeNull();
+      expect(found).toEqual({ success: false, error: "not_found" });
     });
 
-    it("should return null if no entry for region", async () => {
+    it("should return not_found if no entry for region", async () => {
       const bird = sampleBirds.us[0];
       const hash = hashBirdId(bird.id);
       const dailyData = [
@@ -235,11 +268,11 @@ describe("DailyBirdUtils", () => {
         "2025-12-27",
       );
 
-      expect(found).toBeNull();
+      expect(found).toEqual({ success: false, error: "not_found" });
     });
 
-    it("should handle errors gracefully", async () => {
-      global.fetch.mockRejectedValueOnce(new Error("Network error"));
+    it("should return network error when daily data fetch fails", async () => {
+      fetchWithRetry.mockRejectedValueOnce(new Error("Network error"));
 
       const found = await getTodaysBirdFromDaily(
         "us",
@@ -247,10 +280,10 @@ describe("DailyBirdUtils", () => {
         "2025-12-27",
       );
 
-      expect(found).toBeNull();
+      expect(found).toEqual({ success: false, error: "network" });
     });
 
-    it("should handle non-array daily data", async () => {
+    it("should return network error for non-array daily data", async () => {
       fetchWithRetry.mockResolvedValueOnce({
         ok: true,
         json: async () => ({ not: "an array" }),
@@ -262,10 +295,10 @@ describe("DailyBirdUtils", () => {
         "2025-12-27",
       );
 
-      expect(found).toBeNull();
+      expect(found).toEqual({ success: false, error: "network" });
     });
 
-    it("should return null if bird hash not found", async () => {
+    it("should return not_found if bird hash not found", async () => {
       const dailyData = [
         { date: "2025-12-27", region: "us", answerHash: "invalidhash" },
       ];
@@ -281,10 +314,10 @@ describe("DailyBirdUtils", () => {
         "2025-12-27",
       );
 
-      expect(found).toBeNull();
+      expect(found).toEqual({ success: false, error: "not_found" });
     });
 
-    it("should match date and region exactly", async () => {
+    it("should match date and region", async () => {
       const bird1 = sampleBirds.us[0];
       const bird2 = sampleBirds.us[1];
       const hash1 = hashBirdId(bird1.id);
@@ -307,8 +340,82 @@ describe("DailyBirdUtils", () => {
         "2025-12-27",
       );
 
-      expect(found).toBeDefined();
-      expect(found.id).toBe(bird1.id);
+      expect(found.success).toBe(true);
+      expect(found.bird.id).toBe(bird1.id);
+    });
+
+    it("should pick the latest entry on or before the requested date (UTC-stamped daily vs local today)", async () => {
+      const bird1 = sampleBirds.us[0];
+      const bird2 = sampleBirds.us[1];
+      const hash1 = hashBirdId(bird1.id);
+      const hash2 = hashBirdId(bird2.id);
+
+      const dailyData = [
+        { date: "2025-12-27", region: "us", answerHash: hash1 },
+        { date: "2025-12-26", region: "us", answerHash: hash2 },
+      ];
+
+      fetchWithRetry.mockResolvedValueOnce({
+        ok: true,
+        json: async () => dailyData,
+      });
+
+      // Querying a date with no exact entry falls back to the latest <= date
+      const found = await getTodaysBirdFromDaily(
+        "us",
+        sampleBirds.us,
+        "2025-12-28",
+      );
+
+      expect(found.success).toBe(true);
+      expect(found.bird.id).toBe(bird1.id);
+    });
+
+    it("should pick an earlier entry when no entry exists for the exact date", async () => {
+      const bird1 = sampleBirds.us[0];
+      const bird2 = sampleBirds.us[1];
+      const hash1 = hashBirdId(bird1.id);
+      const hash2 = hashBirdId(bird2.id);
+
+      const dailyData = [
+        { date: "2025-12-26", region: "us", answerHash: hash2 },
+        { date: "2025-12-25", region: "us", answerHash: hash1 },
+      ];
+
+      fetchWithRetry.mockResolvedValueOnce({
+        ok: true,
+        json: async () => dailyData,
+      });
+
+      const found = await getTodaysBirdFromDaily(
+        "us",
+        sampleBirds.us,
+        "2025-12-27",
+      );
+
+      expect(found.success).toBe(true);
+      expect(found.bird.id).toBe(bird2.id);
+    });
+
+    it("should return not_found when all entries are after the requested date", async () => {
+      const bird = sampleBirds.us[0];
+      const hash = hashBirdId(bird.id);
+      const dailyData = [
+        { date: "2025-12-28", region: "us", answerHash: hash },
+      ];
+
+      fetchWithRetry.mockResolvedValueOnce({
+        ok: true,
+        json: async () => dailyData,
+      });
+
+      const found = await getTodaysBirdFromDaily(
+        "us",
+        sampleBirds.us,
+        "2025-12-27",
+      );
+
+      expect(found).toEqual({ success: false, error: "not_found" });
     });
   });
 

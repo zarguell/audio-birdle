@@ -7,11 +7,22 @@ import { GAME_CONFIG } from "./Constants";
 import { compareTaxonomy } from "./TaxonomyUtils";
 import { useGameStore } from "../stores/gameStore";
 
+/**
+ * @deprecated The app uses the Zustand store (useGameStore) with its own key
+ * scheme. Kept exported only because tests exercise it.
+ * @param {string} region - Region identifier
+ * @param {string} date - Date string (YYYY-MM-DD)
+ * @returns {string} `${region}-${date}` composite key
+ */
 export const createRegionDateKey = (region, date) => {
   return `${region}-${date}`;
 };
 
 
+/**
+ * @deprecated The app uses the Zustand store (useGameStore). Kept exported
+ * only because tests exercise it.
+ */
 export const getDailyGameState = (gameState, region, date) => {
   const key = `${region}-${date}-normal`;
   const storeGame = useGameStore.getState().getDailyGame(key);
@@ -34,6 +45,10 @@ export const getDailyGameState = (gameState, region, date) => {
   return initialGame;
 };
 
+/**
+ * @deprecated The app uses the Zustand store (useGameStore). Kept exported
+ * only because tests exercise it.
+ */
 export const hasPlayedRegionDate = (gameState, region, date) => {
   const key = `${region}-${date}-normal`;
 
@@ -45,6 +60,10 @@ export const hasPlayedRegionDate = (gameState, region, date) => {
   return gameState?.dailyGames?.[key]?.guesses?.length > 0;
 };
 
+/**
+ * @deprecated The app uses the Zustand store (useGameStore). Kept exported
+ * only because tests exercise it.
+ */
 export const processGuess = (
   gameState,
   region,
@@ -90,6 +109,15 @@ export const processGuess = (
 };
 
 
+/**
+ * Deterministic hash-based daily bird selection.
+ * Public and documented: this is the offline/out-of-sync fallback for
+ * getDailyBirdWithFallback and is used for practice/preview modes.
+ * @param {string} region - The selected region
+ * @param {Array} birds - Array of birds for the region
+ * @param {string} date - Current date string (YYYY-MM-DD)
+ * @returns {Object|null} A bird from the array, or null if birds is empty
+ */
 export const getDailyBird = (region, birds, date) => {
   if (!birds || birds.length === 0) return null;
 
@@ -99,21 +127,54 @@ export const getDailyBird = (region, birds, date) => {
   return birds[index];
 };
 
+/**
+ * Get today's bird, preferring the daily.json entry and falling back to
+ * deterministic hash selection (getDailyBird) when daily data is unavailable
+ * (offline) or out of sync (no matching entry).
+ * @param {string} region - The selected region
+ * @param {Array} birds - Array of birds for the region
+ * @param {string} date - Current date string (YYYY-MM-DD)
+ * @returns {Promise<{bird: Object|null, success: boolean, error: string|null, message: string|null, usedFallback: boolean}>}
+ */
 export const getDailyBirdWithFallback = async (region, birds, date) => {
   try {
-    const bird = await getTodaysBirdFromDaily(region, birds, date);
-    if (bird) {
-      return { bird, success: true, error: null, message: null };
+    const result = await getTodaysBirdFromDaily(region, birds, date);
+
+    if (result.success && result.bird) {
+      return {
+        bird: result.bird,
+        success: true,
+        error: null,
+        message: null,
+        usedFallback: false,
+      };
     }
 
-    console.error(
-      `Daily bird lookup failed for ${region} on ${date} - no matching bird found`,
-    );
+    // Daily data unavailable (network) or out of sync (not_found):
+    // fall back to deterministic hash-based selection so the game still works.
+    const fallbackBird = getDailyBird(region, birds, date);
+    if (fallbackBird) {
+      const isNetwork = result.error === "network";
+      return {
+        bird: fallbackBird,
+        success: true,
+        error: null,
+        message: isNetwork
+          ? "Offline mode: using hash-based selection"
+          : "Daily data out of sync — using hash-based selection",
+        usedFallback: true,
+      };
+    }
+
+    const isNetwork = result.error === "network";
     return {
       bird: null,
       success: false,
-      error: "hash_not_found",
-      message: "Daily challenge data is out of sync. A refresh is needed.",
+      error: isNetwork ? "network" : "not_found",
+      message: isNetwork
+        ? "Failed to load daily challenge. Please check your connection."
+        : "Daily challenge data is out of sync. A refresh is needed.",
+      usedFallback: false,
     };
   } catch (error) {
     console.error("Error in getDailyBirdWithFallback:", error);
@@ -122,6 +183,7 @@ export const getDailyBirdWithFallback = async (region, birds, date) => {
       success: false,
       error: "fetch_failed",
       message: "Failed to load daily challenge. Please check your connection.",
+      usedFallback: false,
     };
   }
 };
@@ -194,6 +256,10 @@ export const createInitialHardModeGameState = (region, date) => {
   };
 };
 
+/**
+ * @deprecated The app uses the Zustand store (useGameStore). Kept exported
+ * only because tests exercise it.
+ */
 export const getHardModeGameState = (gameState, region, date) => {
   const key = `${region}-${date}-hard`;
   const storeGame = useGameStore.getState().getDailyGame(key);
@@ -216,6 +282,10 @@ export const getHardModeGameState = (gameState, region, date) => {
   return initialGame;
 };
 
+/**
+ * @deprecated The app uses the Zustand store (useGameStore). Kept exported
+ * only because tests exercise it.
+ */
 export const processHardModeGuess = (
   gameState,
   region,
@@ -267,6 +337,10 @@ export const processHardModeGuess = (
   };
 };
 
+/**
+ * @deprecated The app uses the Zustand store (useGameStore). Kept exported
+ * only because tests exercise it.
+ */
 export const hasPlayedHardModeRegionDate = (gameState, region, date) => {
   const key = `${region}-${date}-hard`;
 
@@ -281,6 +355,10 @@ export const hasPlayedHardModeRegionDate = (gameState, region, date) => {
   return gameState.dailyGames[key]?.guesses.length > 0;
 };
 
+/**
+ * @deprecated The app uses the Zustand store (useGameStore). Kept exported
+ * only because tests exercise it.
+ */
 export const hasCompletedNormalMode = (gameState, region, date) => {
   const key = `${region}-${date}-normal`;
 
@@ -292,6 +370,10 @@ export const hasCompletedNormalMode = (gameState, region, date) => {
   return gameState?.dailyGames?.[key]?.completed === true;
 };
 
+/**
+ * @deprecated The app uses the Zustand store (useGameStore). Kept exported
+ * only because tests exercise it.
+ */
 export const hasCompletedHardMode = (gameState, region, date) => {
   const key = `${region}-${date}-hard`;
 
@@ -306,6 +388,10 @@ export const hasCompletedHardMode = (gameState, region, date) => {
   return gameState.dailyGames[key]?.completed === true;
 };
 
+/**
+ * @deprecated The app uses the Zustand store (useGameStore). Kept exported
+ * only because tests exercise it.
+ */
 export const getUserPerformanceSummary = (gameState) => {
   const stats = gameState?.stats || useGameStore.getState().stats;
 

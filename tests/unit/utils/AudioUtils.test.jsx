@@ -5,7 +5,8 @@ import {
   isAudioUrlDead,
   markAudioUrlDead,
   loadDeadAudioUrlsCache,
-  clearDeadAudioUrlsCache
+  clearDeadAudioUrlsCache,
+  isHttpsUrl,
 } from '@/utils/AudioUtils'
 
 describe('AudioUtils', () => {
@@ -214,6 +215,49 @@ describe('AudioUtils', () => {
     it('should return empty string for out-of-bounds index', () => {
       const urls = ['https://example.com/a.mp3']
       expect(getAudioSrc(urls, 5)).toBe('')
+    })
+
+    it('should refuse non-https single-string URLs', () => {
+      expect(getAudioSrc('javascript:alert(1)')).toBe('')
+      expect(getAudioSrc('data:audio/wav;base64,UklGR')).toBe('')
+      expect(getAudioSrc('http://example.com/a.mp3')).toBe('')
+    })
+
+    it('should refuse non-https URLs inside string arrays', () => {
+      const urls = [
+        'https://example.com/a.mp3',
+        'javascript:alert(1)',
+        'data:audio/wav;base64,UklGR',
+        'http://example.com/b.mp3',
+      ]
+      expect(getAudioSrc(urls, 0)).toBe('https://example.com/a.mp3')
+      expect(getAudioSrc(urls, 1)).toBe('')
+      expect(getAudioSrc(urls, 2)).toBe('')
+      expect(getAudioSrc(urls, 3)).toBe('')
+    })
+
+    it('should refuse non-https URLs inside object arrays', () => {
+      const urls = [
+        { url: 'https://example.com/a.mp3' },
+        { url: 'javascript:alert(1)' },
+      ]
+      expect(getAudioSrc(urls, 0)).toBe('https://example.com/a.mp3')
+      expect(getAudioSrc(urls, 1)).toBe('')
+    })
+  })
+
+  describe('isHttpsUrl (re-exported from LoadGameData)', () => {
+    it('should accept https URLs', () => {
+      expect(isHttpsUrl('https://example.com/a.mp3')).toBe(true)
+    })
+
+    it('should reject javascript:, data:, http: and non-strings', () => {
+      expect(isHttpsUrl('javascript:alert(1)')).toBe(false)
+      expect(isHttpsUrl('data:audio/wav;base64,UklGR')).toBe(false)
+      expect(isHttpsUrl('http://example.com/a.mp3')).toBe(false)
+      expect(isHttpsUrl(null)).toBe(false)
+      expect(isHttpsUrl(undefined)).toBe(false)
+      expect(isHttpsUrl('')).toBe(false)
     })
   })
 

@@ -7,6 +7,17 @@ import { fetchWithRetry } from "./RetryUtils";
 // In production, this could come from an API endpoint or be embedded differently
 const SECRET_SALT = "birdle-salt-2025";
 
+// Module-level cache for parsed daily.json — avoids refetching on every lookup
+let dailyBirdDataCache = null;
+
+/**
+ * Invalidate the cached daily.json data.
+ * Call after any refresh so the next lookup fetches fresh data from the server.
+ */
+export const invalidateDailyBirdCache = () => {
+  dailyBirdDataCache = null;
+};
+
 /**
  * Hash a bird ID with the secret salt
  * @param {string} birdId - The bird's unique identifier
@@ -38,10 +49,15 @@ export const findBirdByHash = (birds, answerHash) => {
 
 /**
  * Load daily bird data from daily.json with retry logic
- * Tracks version info for cache consistency validation
+ * Tracks version info for cache consistency validation.
+ * Results are cached module-level; use invalidateDailyBirdCache() to bust.
  * @returns {Promise<Array>} - Promise resolving to daily bird data array
  */
 export const loadDailyBirdData = async () => {
+  if (dailyBirdDataCache) {
+    return dailyBirdDataCache;
+  }
+
   const response = await fetchWithRetry("/data/daily.json", {}, { maxRetries: 3, baseDelay: 500 });
   const data = await response.json();
 
@@ -55,52 +71,54 @@ export const loadDailyBirdData = async () => {
   // This allows us to detect when daily.json has been updated
   await storeDailyJsonVersionInfo(response);
 
+  dailyBirdDataCache = data;
   return data;
 };
 
 /**
- * Get today's bird using the daily.json approach
+ * Get today's bird using the daily.json approach.
+ * Picks the LATEST entry for the region with entry.date <= date (YYYY-MM-DD
+ * strings compare lexicographically), so a UTC-stamped daily.json still
+ * matches a local 'today' after the daily publish time.
  * @param {string} region - The selected region
  * @param {Array} birds - Array of birds for the region
  * @param {string} date - Current date string (YYYY-MM-DD)
- * @returns {Promise<Object|null>} - Promise resolving to today's bird or null
+ * @returns {Promise<{success: boolean, bird?: Object, error?: string}>} -
+ *   { success: true, bird } on success,
+ *   { success: false, error: "network" } on fetch failure,
+ *   { success: false, error: "not_found" } when no matching entry/bird exists.
  */
 export const getTodaysBirdFromDaily = async (region, birds, date) => {
+  let dailyData;
   try {
-    const dailyData = await loadDailyBirdData();
-
-    // Additional safety check
-    if (!Array.isArray(dailyData)) {
-      console.error("Daily data is not an array, cannot proceed");
-      return null;
-    }
-
-    // Find the entry for today's date and region
-    const todaysEntry = dailyData.find(
-      (entry) => entry.date === date && entry.region === region,
-    );
-
-    if (!todaysEntry) {
-      console.warn(`No daily bird entry found for ${region} on ${date}`);
-      return null;
-    }
-
-    // Find the bird that matches the hash
-    const bird = findBirdByHash(birds, todaysEntry.answerHash);
-    if (!bird) {
-      console.warn(
-        `No bird found matching hash ${todaysEntry.answerHash} for ${region} on ${date}`,
-      );
-      return null;
-    } else {
-      // console.log(`Today's bird for ${region} on ${date}: ${bird.name} (${bird.id})`);
-    }
-
-    return bird;
+    dailyData = await loadDailyBirdData();
   } catch (error) {
-    console.error("Error getting today's bird from daily data:", error);
-    return null;
+    console.error("Error loading daily data:", error);
+    return { success: false, error: "network" };
   }
+
+  // Find the latest entry for today's region with date <= requested date
+  const regionEntries = dailyData.filter(
+    (entry) => entry.region === region && entry.date <= date,
+  );
+  regionEntries.sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
+  const todaysEntry = regionEntries[0];
+
+  if (!todaysEntry) {
+    console.warn(`No daily bird entry found for ${region} on or before ${date}`);
+    return { success: false, error: "not_found" };
+  }
+
+  // Find the bird that matches the hash
+  const bird = findBirdByHash(birds, todaysEntry.answerHash);
+  if (!bird) {
+    console.warn(
+      `No bird found matching hash ${todaysEntry.answerHash} for ${region} on ${date}`,
+    );
+    return { success: false, error: "not_found" };
+  }
+
+  return { success: true, bird };
 };
 
 /**

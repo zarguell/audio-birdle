@@ -26,10 +26,15 @@ describe("Network Failure Integration", () => {
       setTimeoutCalls.push({ delay, fn });
       return realSetTimeout(fn, 0);
     });
+
+    // Deterministic jitter: Math.random() = 0.5 gives factor 1.0 so backoff
+    // delays are exactly baseDelay * 2^(attempt-1)
+    vi.spyOn(Math, "random").mockReturnValue(0.5);
   });
 
   afterEach(() => {
     global.setTimeout = realSetTimeout;
+    vi.restoreAllMocks();
   });
 
   describe("Retry Logic Tests", () => {
