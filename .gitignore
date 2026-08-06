@@ -23,8 +23,15 @@ dist-ssr
 *.sln
 *.sw?
 
+# Environment files (keep the example)
+**/.env*
+!.env.example
 .env
 venv/
+.venv/
+
+# Playwright MCP debug artifacts
+.playwright-mcp/
 
 repomix-output.*
 
@@ -45,5 +52,4 @@ coverage.json
 .vitest/
 
 # Test results
-test-results/
 test-results/

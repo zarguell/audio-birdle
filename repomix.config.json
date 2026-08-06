@@ -7,7 +7,7 @@
     "showLineNumbers": false,
     "topFilesLength": 20
   },
-  "include": ["src/App.jsx", "src/utils/PracticeGame.jsx", "src/utils/Constants.jsx", "demo-data/**"],
+  "include": ["src/App.jsx", "src/utils/Constants.jsx", "demo-data/**"],
   "ignore": {
     "customPatterns": ["**/*.svg"]
   }
