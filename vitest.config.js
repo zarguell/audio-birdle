@@ -28,10 +28,14 @@ export default defineConfig({
         statements: 70,
         perFile: true,
       },
-      // Only track critical files
+      // Only track critical files: utils, stores, App, and now the
+      // component/hook layer (every included file has a test file; the
+      // per-file gate keeps regressions that delete tests from passing).
       include: [
-        'src/utils/**/*.jsx',
+        'src/utils/**/*.{js,jsx}',
         'src/stores/**/*.ts',
+        'src/components/**/*.jsx',
+        'src/hooks/**/*.js',
         'src/App.jsx',
       ],
     },
