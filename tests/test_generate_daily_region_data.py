@@ -255,9 +255,7 @@ class TestRegionInference:
 
         for filename, expected_region in test_cases:
             filepath = tmp_path / filename
-            region_key = os.path.basename(str(filepath)).replace(
-                "-subregions.json", ""
-            )
+            region_key = os.path.basename(str(filepath)).replace("-subregions.json", "")
             assert region_key == expected_region
 
     @staticmethod
@@ -265,12 +263,16 @@ class TestRegionInference:
         """Test that 'us' and 'us-lower48' files get distinct keys (no collapse)"""
         # Previously both files collapsed to 'us' because only the first
         # dash-separated token was used.
-        assert os.path.basename("us-subregions.json").replace(
-            "-subregions.json", ""
-        ) == "us"
-        assert os.path.basename("us-lower48-subregions.json").replace(
-            "-subregions.json", ""
-        ) == "us-lower48"
+        assert (
+            os.path.basename("us-subregions.json").replace("-subregions.json", "")
+            == "us"
+        )
+        assert (
+            os.path.basename("us-lower48-subregions.json").replace(
+                "-subregions.json", ""
+            )
+            == "us-lower48"
+        )
 
     @patch("requests.get")
     @patch.dict(os.environ, {"EBIRD_API_KEY": "test-key"})

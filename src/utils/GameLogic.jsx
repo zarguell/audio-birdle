@@ -18,7 +18,6 @@ export const createRegionDateKey = (region, date) => {
   return `${region}-${date}`;
 };
 
-
 /**
  * @deprecated The app uses the Zustand store (useGameStore). Kept exported
  * only because tests exercise it.
@@ -34,7 +33,7 @@ export const getDailyGameState = (gameState, region, date) => {
   const initialGame = {
     region,
     date,
-    mode: 'normal',
+    mode: "normal",
     guesses: [],
     completed: false,
     won: false,
@@ -82,7 +81,7 @@ export const processGuess = (
       const initialGame = {
         region,
         date,
-        mode: 'normal',
+        mode: "normal",
         guesses: [],
         completed: false,
         won: false,
@@ -107,7 +106,6 @@ export const processGuess = (
     version: 2,
   };
 };
-
 
 /**
  * Deterministic hash-based daily bird selection.

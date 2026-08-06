@@ -8,9 +8,9 @@
  * - ArrowDown/ArrowUp move the active option, Enter selects it, Escape closes
  */
 
-import { useState, useEffect, useRef } from 'react';
-import { Search, X } from 'lucide-react';
-import { filterBirdsByQuery } from './TaxonomyUtils';
+import { useState, useEffect, useRef } from "react";
+import { Search, X } from "lucide-react";
+import { filterBirdsByQuery } from "./TaxonomyUtils";
 
 export default function HardModeInput({
   birds,
@@ -20,7 +20,7 @@ export default function HardModeInput({
   inputId = "hard-mode-input",
   listboxId = "hard-mode-suggestions",
 }) {
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
@@ -47,21 +47,25 @@ export default function HardModeInput({
   // Close suggestions when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (suggestionsRef.current && !suggestionsRef.current.contains(event.target) &&
-          inputRef.current && !inputRef.current.contains(event.target)) {
+      if (
+        suggestionsRef.current &&
+        !suggestionsRef.current.contains(event.target) &&
+        inputRef.current &&
+        !inputRef.current.contains(event.target)
+      ) {
         setShowSuggestions(false);
         setActiveIndex(-1);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const handleSubmit = (bird) => {
     if (bird) {
       onGuess(bird);
-      setInputValue('');
+      setInputValue("");
       setSuggestions([]);
       setShowSuggestions(false);
       setActiveIndex(-1);
@@ -69,24 +73,22 @@ export default function HardModeInput({
   };
 
   const handleKeyDown = (e) => {
-    if (e.key === 'ArrowDown') {
+    if (e.key === "ArrowDown") {
       e.preventDefault();
       if (!showSuggestions || suggestions.length === 0) return;
       setActiveIndex((prev) => (prev + 1) % suggestions.length);
-    } else if (e.key === 'ArrowUp') {
+    } else if (e.key === "ArrowUp") {
       e.preventDefault();
       if (!showSuggestions || suggestions.length === 0) return;
-      setActiveIndex((prev) =>
-        prev <= 0 ? suggestions.length - 1 : prev - 1,
-      );
-    } else if (e.key === 'Enter') {
+      setActiveIndex((prev) => (prev <= 0 ? suggestions.length - 1 : prev - 1));
+    } else if (e.key === "Enter") {
       if (!showSuggestions || suggestions.length === 0) return;
       e.preventDefault();
       // Select the active suggestion when one was navigated to, otherwise
       // fall back to the first suggestion (previous behavior).
       const index = activeIndex >= 0 ? activeIndex : 0;
       handleSubmit(suggestions[index]);
-    } else if (e.key === 'Escape') {
+    } else if (e.key === "Escape") {
       setShowSuggestions(false);
       setActiveIndex(-1);
     }
@@ -125,7 +127,7 @@ export default function HardModeInput({
         {inputValue && (
           <button
             onClick={() => {
-              setInputValue('');
+              setInputValue("");
               setSuggestions([]);
               setShowSuggestions(false);
               setActiveIndex(-1);
@@ -157,23 +159,27 @@ export default function HardModeInput({
               onClick={() => handleSubmit(bird)}
               onMouseEnter={() => setActiveIndex(index)}
               className={`w-full text-left px-4 py-3 transition-colors border-b border-gray-100 last:border-b-0 ${
-                index === activeIndex ? 'bg-red-100' : 'hover:bg-red-50'
+                index === activeIndex ? "bg-red-100" : "hover:bg-red-50"
               }`}
               type="button"
             >
               <div className="font-medium text-gray-900">{bird.name}</div>
-              <div className="text-sm text-gray-500 italic">{bird.scientificName}</div>
+              <div className="text-sm text-gray-500 italic">
+                {bird.scientificName}
+              </div>
             </button>
           ))}
         </div>
       )}
 
       {/* No results message */}
-      {showSuggestions && inputValue.length >= 2 && suggestions.length === 0 && (
-        <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg px-4 py-3 text-gray-500">
-          No birds found matching "{inputValue}"
-        </div>
-      )}
+      {showSuggestions &&
+        inputValue.length >= 2 &&
+        suggestions.length === 0 && (
+          <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg px-4 py-3 text-gray-500">
+            No birds found matching "{inputValue}"
+          </div>
+        )}
     </div>
   );
 }

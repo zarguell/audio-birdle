@@ -17,7 +17,8 @@ export default function StatsView({ stats, regions, onBack }) {
     (sum, [, rs]) => sum + (rs?.totalGuesses || 0),
     0,
   );
-  const avgGuesses = regionGames > 0 ? (totalGuesses / regionGames).toFixed(1) : 0;
+  const avgGuesses =
+    regionGames > 0 ? (totalGuesses / regionGames).toFixed(1) : 0;
   const maxStreak = stats?.maxStreak || 0;
 
   const regionBreakdown = Object.entries(stats?.regionStats || {}).map(

@@ -1,27 +1,27 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { renderHook, act } from '@testing-library/react';
-import { useGameData } from '@/hooks/useGameData';
-import { loadGameData } from '@/utils/LoadGameData';
-import { getDailyBirdWithFallback } from '@/utils/GameLogic';
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import { renderHook, act } from "@testing-library/react";
+import { useGameData } from "@/hooks/useGameData";
+import { loadGameData } from "@/utils/LoadGameData";
+import { getDailyBirdWithFallback } from "@/utils/GameLogic";
 import {
   checkForUpdates,
   checkBirdsJsonUpdate,
   hasDateChanged,
   refreshGameData,
   clearServiceWorkerCache,
-} from '@/utils/CacheUtils';
-import { loadDeadAudioUrlsCache } from '@/utils/AudioUtils';
-import { toast } from 'sonner';
+} from "@/utils/CacheUtils";
+import { loadDeadAudioUrlsCache } from "@/utils/AudioUtils";
+import { toast } from "sonner";
 
-vi.mock('@/utils/LoadGameData', () => ({
+vi.mock("@/utils/LoadGameData", () => ({
   loadGameData: vi.fn(),
 }));
 
-vi.mock('@/utils/GameLogic', () => ({
+vi.mock("@/utils/GameLogic", () => ({
   getDailyBirdWithFallback: vi.fn(),
 }));
 
-vi.mock('@/utils/CacheUtils', () => ({
+vi.mock("@/utils/CacheUtils", () => ({
   checkForUpdates: vi.fn(),
   checkBirdsJsonUpdate: vi.fn(),
   hasDateChanged: vi.fn(),
@@ -30,30 +30,30 @@ vi.mock('@/utils/CacheUtils', () => ({
   clearDeadAudioUrlsCache: vi.fn(),
 }));
 
-vi.mock('@/utils/AudioUtils', () => ({
+vi.mock("@/utils/AudioUtils", () => ({
   loadDeadAudioUrlsCache: vi.fn(),
   clearDeadAudioUrlsCache: vi.fn(),
 }));
 
-vi.mock('sonner', () => ({
+vi.mock("sonner", () => ({
   toast: { success: vi.fn(), error: vi.fn() },
 }));
 
 const BIRD_1 = {
-  id: 'amerob',
-  name: 'American Robin',
-  scientificName: 'Turdus migratorius',
-  audioUrl: ['/audio/amerob.mp3'],
+  id: "amerob",
+  name: "American Robin",
+  scientificName: "Turdus migratorius",
+  audioUrl: ["/audio/amerob.mp3"],
 };
 const BIRD_2 = {
-  id: 'norcar',
-  name: 'Northern Cardinal',
-  scientificName: 'Cardinalis cardinalis',
-  audioUrl: ['/audio/norcar.mp3'],
+  id: "norcar",
+  name: "Northern Cardinal",
+  scientificName: "Cardinalis cardinalis",
+  audioUrl: ["/audio/norcar.mp3"],
 };
 
 const REGION_DATA = {
-  regions: [{ id: 'us', name: 'United States' }],
+  regions: [{ id: "us", name: "United States" }],
   birds: { us: [BIRD_1] },
 };
 
@@ -64,12 +64,15 @@ const flush = async () => {
   await act(async () => {});
 };
 
-describe('useGameData', () => {
+describe("useGameData", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     loadGameData.mockResolvedValue(REGION_DATA);
     getDailyBirdWithFallback.mockResolvedValue({ success: true, bird: BIRD_1 });
-    checkForUpdates.mockResolvedValue({ hasUpdate: false, dailyJsonUpdate: false });
+    checkForUpdates.mockResolvedValue({
+      hasUpdate: false,
+      dailyJsonUpdate: false,
+    });
     checkBirdsJsonUpdate.mockResolvedValue({ hasUpdate: false });
     hasDateChanged.mockReturnValue(false);
     clearServiceWorkerCache.mockResolvedValue(undefined);
@@ -80,8 +83,8 @@ describe('useGameData', () => {
     vi.useRealTimers();
   });
 
-  it('should load regions, birds and today\'s bird on mount', async () => {
-    const { result } = renderHook(() => useGameData('us'));
+  it("should load regions, birds and today's bird on mount", async () => {
+    const { result } = renderHook(() => useGameData("us"));
     await flush();
 
     expect(loadGameData).toHaveBeenCalledTimes(1);
@@ -92,25 +95,25 @@ describe('useGameData', () => {
     expect(result.current.loadingBird).toBe(false);
   });
 
-  it('should surface the offline fallback message when usedFallback is true', async () => {
+  it("should surface the offline fallback message when usedFallback is true", async () => {
     getDailyBirdWithFallback.mockResolvedValue({
       success: true,
       bird: BIRD_1,
       usedFallback: true,
-      message: 'Offline mode: using hash-based selection',
+      message: "Offline mode: using hash-based selection",
     });
 
-    const { result } = renderHook(() => useGameData('us'));
+    const { result } = renderHook(() => useGameData("us"));
     await flush();
 
     expect(result.current.todaysBird).toEqual(BIRD_1);
     expect(result.current.dataConsistencyError).toBe(
-      'Offline mode: using hash-based selection',
+      "Offline mode: using hash-based selection",
     );
   });
 
-  it('should not re-run the update-check effect across re-renders', async () => {
-    const { rerender } = renderHook(() => useGameData('us'));
+  it("should not re-run the update-check effect across re-renders", async () => {
+    const { rerender } = renderHook(() => useGameData("us"));
     await flush();
 
     expect(checkForUpdates).toHaveBeenCalledTimes(1);
@@ -119,11 +122,11 @@ describe('useGameData', () => {
     // Re-render several times: identities of handleAutoRefresh/loadAndSetBird
     // must be stable, so the update-check effect does NOT re-fire (which used
     // to issue repeated HEAD requests and loop refresh calls).
-    rerender(() => useGameData('us'));
+    rerender(() => useGameData("us"));
     await flush();
-    rerender(() => useGameData('us'));
+    rerender(() => useGameData("us"));
     await flush();
-    rerender(() => useGameData('us'));
+    rerender(() => useGameData("us"));
     await flush();
 
     expect(checkForUpdates).toHaveBeenCalledTimes(1);
@@ -133,22 +136,22 @@ describe('useGameData', () => {
     expect(refreshGameData).not.toHaveBeenCalled();
   });
 
-  it('should auto-refresh when stale data is detected', async () => {
+  it("should auto-refresh when stale data is detected", async () => {
     hasDateChanged.mockReturnValue(true);
 
-    renderHook(() => useGameData('us'));
+    renderHook(() => useGameData("us"));
     await flush();
 
     expect(refreshGameData).toHaveBeenCalledTimes(1);
     expect(clearServiceWorkerCache).toHaveBeenCalledTimes(1);
   });
 
-  it('should schedule a refresh at local midnight', async () => {
+  it("should schedule a refresh at local midnight", async () => {
     vi.useFakeTimers();
     const now = new Date(2026, 7, 6, 10, 30, 0); // Aug 6 2026 10:30 local
     vi.setSystemTime(now);
 
-    const { result } = renderHook(() => useGameData('us'));
+    const { result } = renderHook(() => useGameData("us"));
     await act(async () => {});
     await act(async () => {});
     expect(result.current.todaysBird).toEqual(BIRD_1);
@@ -162,7 +165,10 @@ describe('useGameData', () => {
       now.getFullYear(),
       now.getMonth(),
       now.getDate() + 1,
-      0, 0, 0, 0,
+      0,
+      0,
+      0,
+      0,
     );
     await act(async () => {
       await vi.advanceTimersByTimeAsync(
@@ -176,17 +182,17 @@ describe('useGameData', () => {
     expect(result.current.todaysBird).toEqual(BIRD_2);
   });
 
-  it('should cancel the midnight timer when the region changes', async () => {
+  it("should cancel the midnight timer when the region changes", async () => {
     vi.useFakeTimers();
     const now = new Date(2026, 7, 6, 10, 30, 0);
     vi.setSystemTime(now);
 
-    const { rerender } = renderHook(() => useGameData('us'));
+    const { rerender } = renderHook(() => useGameData("us"));
     await act(async () => {});
     await act(async () => {});
 
     // Region change clears and reschedules the timer
-    rerender(() => useGameData('eu'));
+    rerender(() => useGameData("eu"));
     await act(async () => {});
 
     // Advance far past the original midnight: the eu harness's timer is
@@ -201,78 +207,78 @@ describe('useGameData', () => {
     expect(refreshGameData).not.toHaveBeenCalled();
   });
 
-  it('should clear the error state when the bird loads normally', async () => {
+  it("should clear the error state when the bird loads normally", async () => {
     // getDailyBirdWithFallback resolves success WITHOUT usedFallback
-    const { result } = renderHook(() => useGameData('us'));
+    const { result } = renderHook(() => useGameData("us"));
     await flush();
 
     expect(result.current.todaysBird).toEqual(BIRD_1);
     expect(result.current.dataConsistencyError).toBeNull();
   });
 
-  it('should surface a non-success result as an error with toast', async () => {
+  it("should surface a non-success result as an error with toast", async () => {
     getDailyBirdWithFallback.mockResolvedValue({
       success: false,
-      message: 'Daily challenge data is out of sync',
+      message: "Daily challenge data is out of sync",
     });
-    const toastError = vi.spyOn(toast, 'error').mockImplementation(() => {});
+    const toastError = vi.spyOn(toast, "error").mockImplementation(() => {});
 
-    const { result } = renderHook(() => useGameData('us'));
+    const { result } = renderHook(() => useGameData("us"));
     await flush();
 
     expect(result.current.todaysBird).toBeNull();
     expect(result.current.dataConsistencyError).toBe(
-      'Daily challenge data is out of sync',
+      "Daily challenge data is out of sync",
     );
     expect(toastError).toHaveBeenCalled();
   });
 
-  it('should handle a rejected bird lookup with an error message', async () => {
-    getDailyBirdWithFallback.mockRejectedValue(new Error('boom'));
-    vi.spyOn(console, 'error').mockImplementation(() => {});
-    const toastError = vi.spyOn(toast, 'error').mockImplementation(() => {});
+  it("should handle a rejected bird lookup with an error message", async () => {
+    getDailyBirdWithFallback.mockRejectedValue(new Error("boom"));
+    vi.spyOn(console, "error").mockImplementation(() => {});
+    const toastError = vi.spyOn(toast, "error").mockImplementation(() => {});
 
-    const { result } = renderHook(() => useGameData('us'));
+    const { result } = renderHook(() => useGameData("us"));
     await flush();
 
     expect(result.current.todaysBird).toBeNull();
-    expect(result.current.dataConsistencyError).toContain('Failed to load');
+    expect(result.current.dataConsistencyError).toContain("Failed to load");
     expect(toastError).toHaveBeenCalled();
   });
 
-  it('should toast when the initial game data load fails', async () => {
-    loadGameData.mockRejectedValue(new Error('network down'));
-    vi.spyOn(console, 'error').mockImplementation(() => {});
-    const toastError = vi.spyOn(toast, 'error').mockImplementation(() => {});
+  it("should toast when the initial game data load fails", async () => {
+    loadGameData.mockRejectedValue(new Error("network down"));
+    vi.spyOn(console, "error").mockImplementation(() => {});
+    const toastError = vi.spyOn(toast, "error").mockImplementation(() => {});
 
-    renderHook(() => useGameData('us'));
+    renderHook(() => useGameData("us"));
     await flush();
 
     expect(toastError).toHaveBeenCalledWith(
-      'Failed to load game data. Please refresh the page.',
+      "Failed to load game data. Please refresh the page.",
     );
   });
 
-  it('should set hasUpdate when an update is detected', async () => {
+  it("should set hasUpdate when an update is detected", async () => {
     checkForUpdates.mockResolvedValue({
       hasUpdate: true,
       dailyJsonUpdate: false,
     });
 
-    const { result } = renderHook(() => useGameData('us'));
+    const { result } = renderHook(() => useGameData("us"));
     await flush();
 
     expect(result.current.hasUpdate).toBe(true);
   });
 
-  it('should force-refresh game data on demand', async () => {
+  it("should force-refresh game data on demand", async () => {
     refreshGameData.mockResolvedValue(REGION_DATA);
     getDailyBirdWithFallback.mockResolvedValue({
       success: true,
       bird: BIRD_2,
     });
 
-    const { result } = renderHook(() => useGameData('us'));
+    const { result } = renderHook(() => useGameData("us"));
     await flush();
 
     await act(async () => {
@@ -284,15 +290,17 @@ describe('useGameData', () => {
     expect(result.current.todaysBird).toEqual(BIRD_2);
   });
 
-  it('should refresh data manually when online', async () => {
-    Object.defineProperty(navigator, 'onLine', {
+  it("should refresh data manually when online", async () => {
+    Object.defineProperty(navigator, "onLine", {
       value: true,
       configurable: true,
     });
     refreshGameData.mockResolvedValue(REGION_DATA);
-    const toastSuccess = vi.spyOn(toast, 'success').mockImplementation(() => {});
+    const toastSuccess = vi
+      .spyOn(toast, "success")
+      .mockImplementation(() => {});
 
-    const { result } = renderHook(() => useGameData('us'));
+    const { result } = renderHook(() => useGameData("us"));
     await flush();
 
     await act(async () => {
@@ -302,17 +310,17 @@ describe('useGameData', () => {
     expect(refreshGameData).toHaveBeenCalledTimes(1);
     expect(result.current.refreshingData).toBe(false);
     expect(result.current.hasUpdate).toBe(false);
-    expect(toastSuccess).toHaveBeenCalledWith('Data refreshed successfully!');
+    expect(toastSuccess).toHaveBeenCalledWith("Data refreshed successfully!");
   });
 
-  it('should refuse to refresh while offline', async () => {
-    Object.defineProperty(navigator, 'onLine', {
+  it("should refuse to refresh while offline", async () => {
+    Object.defineProperty(navigator, "onLine", {
       value: false,
       configurable: true,
     });
-    const toastError = vi.spyOn(toast, 'error').mockImplementation(() => {});
+    const toastError = vi.spyOn(toast, "error").mockImplementation(() => {});
 
-    const { result } = renderHook(() => useGameData('us'));
+    const { result } = renderHook(() => useGameData("us"));
     await flush();
 
     await act(async () => {
@@ -321,20 +329,20 @@ describe('useGameData', () => {
 
     expect(refreshGameData).not.toHaveBeenCalled();
     expect(toastError).toHaveBeenCalledWith(
-      'Cannot refresh data while offline.',
+      "Cannot refresh data while offline.",
     );
   });
 
-  it('should toast when a manual refresh fails', async () => {
-    Object.defineProperty(navigator, 'onLine', {
+  it("should toast when a manual refresh fails", async () => {
+    Object.defineProperty(navigator, "onLine", {
       value: true,
       configurable: true,
     });
-    refreshGameData.mockRejectedValue(new Error('boom'));
-    vi.spyOn(console, 'error').mockImplementation(() => {});
-    const toastError = vi.spyOn(toast, 'error').mockImplementation(() => {});
+    refreshGameData.mockRejectedValue(new Error("boom"));
+    vi.spyOn(console, "error").mockImplementation(() => {});
+    const toastError = vi.spyOn(toast, "error").mockImplementation(() => {});
 
-    const { result } = renderHook(() => useGameData('us'));
+    const { result } = renderHook(() => useGameData("us"));
     await flush();
 
     await act(async () => {
@@ -342,7 +350,7 @@ describe('useGameData', () => {
     });
 
     expect(toastError).toHaveBeenCalledWith(
-      'Failed to refresh data. Please try again.',
+      "Failed to refresh data. Please try again.",
     );
     expect(result.current.refreshingData).toBe(false);
   });

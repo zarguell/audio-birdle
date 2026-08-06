@@ -4,10 +4,7 @@
  */
 
 import { STORAGE_KEYS } from "./Constants";
-import {
-  checkDataFileUpdate,
-  storeDataFileVersion,
-} from "./versionUtils";
+import { checkDataFileUpdate, storeDataFileVersion } from "./versionUtils";
 import { isStorageAvailable, setStorage, getStorage } from "./StorageUtils";
 import { invalidateDailyBirdCache } from "./DailyBirdUtils";
 
@@ -86,7 +83,11 @@ export const checkForUpdates = async () => {
  * @param {Response} response - Fetch response from data file
  */
 export const storeVersionInfo = (response) =>
-  storeDataFileVersion(response, STORAGE_KEYS.CACHE_LAST_MODIFIED, STORAGE_KEYS.CACHE_ETAG);
+  storeDataFileVersion(
+    response,
+    STORAGE_KEYS.CACHE_LAST_MODIFIED,
+    STORAGE_KEYS.CACHE_ETAG,
+  );
 
 /**
  * Store daily.json version information after successful load
@@ -94,7 +95,11 @@ export const storeVersionInfo = (response) =>
  * @param {Response} response - Fetch response from daily.json
  */
 export const storeDailyJsonVersionInfo = (response) => {
-  storeDataFileVersion(response, STORAGE_KEYS.DAILY_JSON_LAST_MODIFIED, STORAGE_KEYS.DAILY_JSON_ETAG);
+  storeDataFileVersion(
+    response,
+    STORAGE_KEYS.DAILY_JSON_LAST_MODIFIED,
+    STORAGE_KEYS.DAILY_JSON_ETAG,
+  );
 
   if (isStorageAvailable()) {
     const today = new Date().toISOString().split("T")[0];
@@ -108,7 +113,11 @@ export const storeDailyJsonVersionInfo = (response) => {
  * @param {Response} response - Fetch response from birds.json
  */
 export const storeBirdsJsonVersionInfo = (response) =>
-  storeDataFileVersion(response, STORAGE_KEYS.BIRDS_JSON_LAST_MODIFIED, STORAGE_KEYS.BIRDS_JSON_ETAG);
+  storeDataFileVersion(
+    response,
+    STORAGE_KEYS.BIRDS_JSON_LAST_MODIFIED,
+    STORAGE_KEYS.BIRDS_JSON_ETAG,
+  );
 
 /**
  * Check if birds.json (audio URLs) has been updated

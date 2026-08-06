@@ -51,21 +51,27 @@ def get(url, api_key=None, retries=3, timeout=30, params=None):
     last_error = None
     for attempt in range(retries):
         try:
-            response = requests.get(url, headers=headers, params=params, timeout=timeout)
+            response = requests.get(
+                url, headers=headers, params=params, timeout=timeout
+            )
             response.raise_for_status()
             return response
         except requests.RequestException as e:
             last_error = e
             if attempt < retries - 1:
-                time.sleep(2 ** attempt)
+                time.sleep(2**attempt)
     raise last_error
 
 
 def get_json(url, api_key=None, retries=3, timeout=30, params=None):
     """GET a URL and parse the response body as JSON (retries + backoff)."""
-    return get(url, api_key=api_key, retries=retries, timeout=timeout, params=params).json()
+    return get(
+        url, api_key=api_key, retries=retries, timeout=timeout, params=params
+    ).json()
 
 
 def get_content(url, api_key=None, retries=3, timeout=30, params=None):
     """GET a URL and return the raw response body bytes (retries + backoff)."""
-    return get(url, api_key=api_key, retries=retries, timeout=timeout, params=params).content
+    return get(
+        url, api_key=api_key, retries=retries, timeout=timeout, params=params
+    ).content
