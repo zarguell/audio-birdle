@@ -19,6 +19,16 @@ export default function BirdCompletionCard({
 }) {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
+  // Reset the image carousel when the displayed bird changes (e.g. "Next
+  // Bird" in practice mode), otherwise a stale index shows a wrong/missing
+  // image for the new bird. Adjust state during render (React-sanctioned
+  // "adjusting state when props change" pattern) to avoid a cascade.
+  const [prevBirdId, setPrevBirdId] = useState(bird?.id);
+  if (bird?.id !== prevBirdId) {
+    setPrevBirdId(bird?.id);
+    setSelectedImageIndex(0);
+  }
+
   if (!bird) {
     return null;
   }

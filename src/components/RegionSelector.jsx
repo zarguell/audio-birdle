@@ -2,6 +2,10 @@ import { MapPin } from "lucide-react";
 import { useGameStore } from "../stores/gameStore";
 
 export default function RegionSelector({ regions, today, onRegionSelect }) {
+  // Subscribe to dailyGames so the "Played Today" badge stays in sync
+  // (reading useGameStore.getState() during render never re-renders).
+  const dailyGames = useGameStore((state) => state.dailyGames);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 p-4">
       <div className="max-w-md mx-auto pt-16">
@@ -20,8 +24,11 @@ export default function RegionSelector({ regions, today, onRegionSelect }) {
 
           <div className="space-y-2">
             {regions.map((region) => {
-              const key = `${region.id}-${today}-normal`;
-              const hasPlayedToday = useGameStore.getState().getDailyGame(key)?.guesses.length > 0;
+              const hasPlayedToday =
+                (dailyGames[`${region.id}-${today}-normal`]?.guesses
+                  ?.length || 0) > 0 ||
+                (dailyGames[`${region.id}-${today}-hard`]?.guesses
+                  ?.length || 0) > 0;
               return (
                 <button
                   key={region.id}

@@ -1,9 +1,17 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
+import { toast } from 'sonner'
 import {
   generateShareText,
   generateHardModeShareText,
   shareResult
 } from '@/utils/ShareUtils'
+
+vi.mock('sonner', () => ({
+  toast: {
+    success: vi.fn(),
+    error: vi.fn(),
+  },
+}))
 
 describe('ShareUtils', () => {
   describe('generateShareText', () => {
@@ -326,7 +334,27 @@ describe('ShareUtils', () => {
       const result = await shareResult(shareText)
 
       expect(navigator.clipboard.writeText).toHaveBeenCalledWith(shareText)
+      expect(toast.success).toHaveBeenCalledWith('Result copied to clipboard!')
       expect(result).toBe(true)
+    })
+
+    it('should not mutate document.activeElement for clipboard feedback', async () => {
+      Object.defineProperty(navigator, 'userAgent', {
+        value: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
+        writable: true
+      })
+
+      const button = document.createElement('button')
+      button.textContent = 'Share'
+      document.body.appendChild(button)
+      button.focus()
+
+      await shareResult(shareText)
+
+      // Feedback goes through the toast system, the focused element is untouched
+      expect(button.textContent).toBe('Share')
+      expect(toast.success).toHaveBeenCalled()
+      document.body.removeChild(button)
     })
 
     it('should handle clipboard write errors gracefully', async () => {
