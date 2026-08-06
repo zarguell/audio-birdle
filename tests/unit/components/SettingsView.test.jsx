@@ -1,12 +1,12 @@
-import { describe, it, expect, vi } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
-import SettingsView from '@/components/SettingsView';
+import { describe, it, expect, vi } from "vitest";
+import { render, screen, fireEvent } from "@testing-library/react";
+import SettingsView from "@/components/SettingsView";
 
 const DEFAULT_PROPS = {
-  selectedRegion: 'us',
+  selectedRegion: "us",
   regions: [
-    { id: 'us', name: 'United States' },
-    { id: 'eu', name: 'Europe' },
+    { id: "us", name: "United States" },
+    { id: "eu", name: "Europe" },
   ],
   onBack: vi.fn(),
   onChangeRegion: vi.fn(),
@@ -18,13 +18,13 @@ const DEFAULT_PROPS = {
   hasUpdate: false,
 };
 
-describe('SettingsView', () => {
-  it('shows the current region name', () => {
+describe("SettingsView", () => {
+  it("shows the current region name", () => {
     render(<SettingsView {...DEFAULT_PROPS} />);
-    expect(screen.getByText('United States')).toBeInTheDocument();
+    expect(screen.getByText("United States")).toBeInTheDocument();
   });
 
-  it('fires every action handler', () => {
+  it("fires every action handler", () => {
     const props = {
       ...DEFAULT_PROPS,
       onBack: vi.fn(),
@@ -36,12 +36,12 @@ describe('SettingsView', () => {
     };
     render(<SettingsView {...props} />);
 
-    fireEvent.click(screen.getByText('← Back'));
-    fireEvent.click(screen.getByText('Change Region'));
-    fireEvent.click(screen.getByText('View Stats'));
+    fireEvent.click(screen.getByText("← Back"));
+    fireEvent.click(screen.getByText("Change Region"));
+    fireEvent.click(screen.getByText("View Stats"));
     fireEvent.click(screen.getByText("Reset Today's Game"));
-    fireEvent.click(screen.getByText('Reset All Data'));
-    fireEvent.click(screen.getByText('Refresh Game Data'));
+    fireEvent.click(screen.getByText("Reset All Data"));
+    fireEvent.click(screen.getByText("Refresh Game Data"));
 
     expect(props.onBack).toHaveBeenCalledTimes(1);
     expect(props.onChangeRegion).toHaveBeenCalledTimes(1);
@@ -51,7 +51,7 @@ describe('SettingsView', () => {
     expect(props.onRefreshData).toHaveBeenCalledTimes(1);
   });
 
-  it('disables refresh while refreshing and shows the update banner', () => {
+  it("disables refresh while refreshing and shows the update banner", () => {
     render(
       <SettingsView
         {...DEFAULT_PROPS}
@@ -61,11 +61,9 @@ describe('SettingsView', () => {
     );
 
     const refreshButton = screen
-      .getByText('Refreshing Data...')
-      .closest('button');
+      .getByText("Refreshing Data...")
+      .closest("button");
     expect(refreshButton).toBeDisabled();
-    expect(
-      screen.getByText(/New data available/i),
-    ).toBeInTheDocument();
+    expect(screen.getByText(/New data available/i)).toBeInTheDocument();
   });
 });

@@ -20,9 +20,7 @@ pytestmark = pytest.mark.integration
 
 # Load hash_bird_id from generate-daily-birds.py (dashed filename, so we use
 # importlib — the same approach the other Python tests use).
-scripts_dir = os.path.join(
-    Path(__file__).parent.parent.parent, "scripts"
-)
+scripts_dir = os.path.join(Path(__file__).parent.parent.parent, "scripts")
 spec = importlib.util.spec_from_file_location(
     "generate_daily_birds", os.path.join(scripts_dir, "generate-daily-birds.py")
 )
@@ -161,9 +159,7 @@ class TestDataPipelineIntegration:
         """Test that every daily.json answerHash corresponds to a bird in birds.json."""
         # Build region -> bird ids, resolving virtual regions to their parent
         virtual_regions = {
-            r["id"]: r["parentRegion"]
-            for r in regions_json
-            if "parentRegion" in r
+            r["id"]: r["parentRegion"] for r in regions_json if "parentRegion" in r
         }
         region_birds = {}
         for region, birds in birds_json.items():
@@ -174,9 +170,7 @@ class TestDataPipelineIntegration:
         for entry in daily_json:
             region = entry["region"]
             bird_ids = region_birds.get(region, set())
-            assert len(bird_ids) > 0, (
-                f"Region {region} should have at least one bird"
-            )
+            assert len(bird_ids) > 0, f"Region {region} should have at least one bird"
 
             # Compute the canonical hash for every bird in the region and make
             # sure the daily answerHash is one of them.

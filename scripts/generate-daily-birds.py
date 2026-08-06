@@ -341,9 +341,7 @@ def build_region_birds(
             if region_subregions:
                 modified_subregions_data = {region_id: region_subregions}
             else:
-                print(
-                    f"No valid subregions remaining after exclusions for {region_id}"
-                )
+                print(f"No valid subregions remaining after exclusions for {region_id}")
                 modified_subregions_data = {}
 
         selected_subregion, subregion_bird_ids = get_subregion_for_date(
@@ -403,7 +401,10 @@ def main():
     # exist; this seed covers the subregion-less path). Never re-seed from
     # system time afterwards.
     random.seed(
-        int(hashlib.sha256(f"audio-birdle:{target_date_str}".encode()).hexdigest()[:16], 16)
+        int(
+            hashlib.sha256(f"audio-birdle:{target_date_str}".encode()).hexdigest()[:16],
+            16,
+        )
     )
 
     print(f"Generating daily birds for {target_date_str}")
@@ -464,9 +465,7 @@ def main():
     # and a missed run is healed by the next run's D-1 backfill. Selection is
     # deterministic per (region, date), so a healed entry is identical to
     # what the missed run would have produced.
-    generation_dates = [
-        target_date + timedelta(days=offset) for offset in (-1, 0, 1)
-    ]
+    generation_dates = [target_date + timedelta(days=offset) for offset in (-1, 0, 1)]
 
     for region in regions:
         region_id = region["id"]
@@ -499,9 +498,7 @@ def main():
             )
 
             if not region_birds:
-                print(
-                    f"  {generation_date_str}: No birds found for region {region_id}"
-                )
+                print(f"  {generation_date_str}: No birds found for region {region_id}")
                 continue
 
             if selected_subregion:

@@ -21,10 +21,7 @@ export const MAX_BACKOFF_DELAY_MS = 30000;
 const getBackoffDelayMs = (baseDelay, attempt) => {
   const exponential = baseDelay * Math.pow(2, attempt - 1);
   const jitterFactor = 0.5 + Math.random();
-  return Math.min(
-    Math.round(exponential * jitterFactor),
-    MAX_BACKOFF_DELAY_MS,
-  );
+  return Math.min(Math.round(exponential * jitterFactor), MAX_BACKOFF_DELAY_MS);
 };
 
 /**
@@ -37,7 +34,7 @@ const getBackoffDelayMs = (baseDelay, attempt) => {
 export async function fetchWithRetry(
   url,
   options = {},
-  config = DEFAULT_CONFIG
+  config = DEFAULT_CONFIG,
 ) {
   const { maxRetries, baseDelay } = { ...DEFAULT_CONFIG, ...config };
 
@@ -46,12 +43,12 @@ export async function fetchWithRetry(
       const response = await fetch(url, options);
       if (!response.ok) {
         throw new Error(
-          `HTTP ${response.status}: ${response.statusText} for ${url}`
+          `HTTP ${response.status}: ${response.statusText} for ${url}`,
         );
       }
       return response;
     },
-    { maxRetries, baseDelay, context: url }
+    { maxRetries, baseDelay, context: url },
   );
 }
 
@@ -61,11 +58,12 @@ export async function fetchWithRetry(
  * @param {object} config - Retry configuration
  * @returns {Promise<any>} - Result of the operation
  */
-export async function retryWithBackoff(
-  operation,
-  config = DEFAULT_CONFIG
-) {
-  const { maxRetries, baseDelay, context = "operation" } = {
+export async function retryWithBackoff(operation, config = DEFAULT_CONFIG) {
+  const {
+    maxRetries,
+    baseDelay,
+    context = "operation",
+  } = {
     ...DEFAULT_CONFIG,
     ...config,
   };
@@ -78,14 +76,11 @@ export async function retryWithBackoff(
         const delayMs = getBackoffDelayMs(baseDelay, attempt);
         console.warn(
           `${context} failed (attempt ${attempt}/${maxRetries}), retrying in ${delayMs}ms:`,
-          error.message
+          error.message,
         );
         await new Promise((resolve) => setTimeout(resolve, delayMs));
       } else {
-        console.error(
-          `${context} failed after ${maxRetries} attempts:`,
-          error
-        );
+        console.error(`${context} failed after ${maxRetries} attempts:`, error);
         throw error;
       }
     }

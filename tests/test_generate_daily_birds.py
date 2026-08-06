@@ -253,7 +253,9 @@ class TestGetRecentAnswers:
     @staticmethod
     def test_get_recent_answers_outside_window():
         """Test that old answers are excluded"""
-        old_history = {"us": [{"date": "2025-11-01", "id": "oldbird", "subregion": "New York"}]}
+        old_history = {
+            "us": [{"date": "2025-11-01", "id": "oldbird", "subregion": "New York"}]
+        }
         current_date = datetime(2025, 12, 27).date()
         recent = generate_daily_birds.get_recent_answers(
             old_history, "us", 30, current_date
@@ -577,9 +579,7 @@ class TestUpdateHistory:
 
     def test_update_history_skips_entries_without_id(self):
         """Test that legacy daily entries without 'id' are skipped, not crashed on"""
-        daily_data = [
-            {"date": "2025-12-26", "region": "us", "answerHash": "104c723e"}
-        ]
+        daily_data = [{"date": "2025-12-26", "region": "us", "answerHash": "104c723e"}]
         current_date = datetime(2025, 12, 27).date()
 
         history = generate_daily_birds.update_history(
@@ -818,15 +818,11 @@ class TestMainEndToEnd:
         for entry in daily:
             assert entry["id"]
             assert len(entry["answerHash"]) == 8
-            assert entry["answerHash"] == generate_daily_birds.hash_bird_id(
-                entry["id"]
-            )
+            assert entry["answerHash"] == generate_daily_birds.hash_bird_id(entry["id"])
         # Subregion selected for all; the virtual region never picks Alaska
         assert all("subregion" in e for e in daily)
         assert all(
-            e["subregion"] != "Alaska"
-            for e in daily
-            if e["region"] == "us-lower48"
+            e["subregion"] != "Alaska" for e in daily if e["region"] == "us-lower48"
         )
         # History has the window's entries for both regions
         assert {"us", "us-lower48"} <= set(history.keys())
@@ -864,9 +860,7 @@ class TestMainEndToEnd:
         daily = json.loads((tmp_path / "public/data/daily.json").read_text())
         # Prior entry survives (us 08-05 is skipped, not regenerated),
         # missing window entries are added, no duplicates.
-        assert {
-            (e["region"], e["date"]) for e in daily
-        } == {
+        assert {(e["region"], e["date"]) for e in daily} == {
             ("us", "2026-08-05"),
             ("us-lower48", "2026-08-05"),
             ("us", "2026-08-06"),
@@ -1050,7 +1044,11 @@ class TestCrossProcessDeterminism:
             }
             subregions = {
                 "us": {
-                    "California": [{"id": "bird01"}, {"id": "bird02"}, {"id": "bird03"}],
+                    "California": [
+                        {"id": "bird01"},
+                        {"id": "bird02"},
+                        {"id": "bird03"},
+                    ],
                     "Texas": [{"id": "bird04"}, {"id": "bird05"}],
                     "Alaska": [{"id": "bird06"}],
                 }

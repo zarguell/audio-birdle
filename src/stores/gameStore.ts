@@ -1,6 +1,6 @@
-import { create } from 'zustand';
-import { persist, createJSONStorage } from 'zustand/middleware';
-import { getStorage, removeStorage } from '../utils/StorageUtils';
+import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
+import { getStorage, removeStorage } from "../utils/StorageUtils";
 
 export interface TaxonomicScore {
   order: boolean;
@@ -20,7 +20,7 @@ export interface Guess {
 export interface DailyGame {
   region: string;
   date: string;
-  mode: 'normal' | 'hard';
+  mode: "normal" | "hard";
   guesses: Guess[];
   completed: boolean;
   won: boolean;
@@ -72,9 +72,9 @@ const createInitialStats = (): GameStats => ({
  * - 'audio-birdle-normal-game': former normalGameStore persist key
  * - 'audio-birdle-hard-mode': former hardModeStore persist key
  */
-const LEGACY_STORAGE_KEY = 'audio-birdle-game-state';
-const OLD_NORMAL_STORAGE_KEY = 'audio-birdle-normal-game';
-const OLD_HARD_STORAGE_KEY = 'audio-birdle-hard-mode';
+const LEGACY_STORAGE_KEY = "audio-birdle-game-state";
+const OLD_NORMAL_STORAGE_KEY = "audio-birdle-normal-game";
+const OLD_HARD_STORAGE_KEY = "audio-birdle-hard-mode";
 
 interface LegacyImportTarget {
   dailyGames: Record<string, DailyGame>;
@@ -90,9 +90,9 @@ function normalizeGameStats(raw: unknown): GameStats {
   const regionStats: Record<string, RegionStats> = {};
   for (const [region, rs] of Object.entries(s.regionStats || {})) {
     if (
-      region === '__proto__' ||
-      region === 'constructor' ||
-      region === 'prototype'
+      region === "__proto__" ||
+      region === "constructor" ||
+      region === "prototype"
     ) {
       continue;
     }
@@ -130,7 +130,7 @@ function normalizeGameStats(raw: unknown): GameStats {
 function importLegacyStore(
   target: LegacyImportTarget,
   storageKey: string,
-  defaultMode: 'normal' | 'hard',
+  defaultMode: "normal" | "hard",
   mergeStats = true,
 ): void {
   const raw = getStorage(storageKey, null);
@@ -140,7 +140,7 @@ function importLegacyStore(
   const parsed =
     (raw as { state?: Record<string, unknown> }).state ||
     (raw as Record<string, unknown>);
-  if (!parsed || typeof parsed !== 'object') return;
+  if (!parsed || typeof parsed !== "object") return;
 
   if (
     parsed.region &&
@@ -150,7 +150,7 @@ function importLegacyStore(
   ) {
     // v0 single-game shape
     const mode =
-      parsed.mode === 'hard' || parsed.mode === 'normal'
+      parsed.mode === "hard" || parsed.mode === "normal"
         ? parsed.mode
         : defaultMode;
     const key = `${parsed.region}-${parsed.lastPlayed}-${mode}`;
@@ -161,7 +161,7 @@ function importLegacyStore(
       guesses: (parsed.guesses as Guess[]) || [],
       completed: Boolean(parsed.completed),
       won: Boolean(parsed.won),
-      maxGuesses: (parsed.maxGuesses as number) || (mode === 'hard' ? 6 : 4),
+      maxGuesses: (parsed.maxGuesses as number) || (mode === "hard" ? 6 : 4),
     };
     if (parsed.startTime) game.startTime = parsed.startTime as string;
     if (parsed.endTime) game.endTime = parsed.endTime as string;
@@ -172,7 +172,7 @@ function importLegacyStore(
       parsed.dailyGames ||
       {}) as Record<string, DailyGame>;
     for (const [key, game] of Object.entries(gamesMap)) {
-      const hasModeSuffix = key.endsWith('-normal') || key.endsWith('-hard');
+      const hasModeSuffix = key.endsWith("-normal") || key.endsWith("-hard");
       const newKey = hasModeSuffix ? key : `${key}-${defaultMode}`;
       target.dailyGames[newKey] = {
         ...(game as Record<string, unknown>),
@@ -251,9 +251,9 @@ function combineStats(a: GameStats, b: GameStats): GameStats {
     // Never treat prototype-chain keys as regions: a hostile legacy payload
     // could otherwise pollute regionStats via '__proto__'.
     if (
-      region === '__proto__' ||
-      region === 'constructor' ||
-      region === 'prototype'
+      region === "__proto__" ||
+      region === "constructor" ||
+      region === "prototype"
     ) {
       continue;
     }
@@ -338,8 +338,7 @@ export const useGameStore = create<GameState & GameActions>()(
         set((state) => ({ stats: buildStats(state, region, won, guesses) }));
       },
 
-      reset: () =>
-        set({ dailyGames: {}, stats: createInitialStats() }),
+      reset: () => set({ dailyGames: {}, stats: createInitialStats() }),
 
       migrateFromOldStores: () => {
         try {
@@ -353,16 +352,16 @@ export const useGameStore = create<GameState & GameActions>()(
             // the key as a backup) — merging it again would double-count.
             const hasOldZustandStores = Boolean(
               getStorage(OLD_NORMAL_STORAGE_KEY, null) ||
-                getStorage(OLD_HARD_STORAGE_KEY, null),
+              getStorage(OLD_HARD_STORAGE_KEY, null),
             );
             importLegacyStore(
               merged,
               LEGACY_STORAGE_KEY,
-              'normal',
+              "normal",
               !hasOldZustandStores,
             );
-            importLegacyStore(merged, OLD_NORMAL_STORAGE_KEY, 'normal');
-            importLegacyStore(merged, OLD_HARD_STORAGE_KEY, 'hard');
+            importLegacyStore(merged, OLD_NORMAL_STORAGE_KEY, "normal");
+            importLegacyStore(merged, OLD_HARD_STORAGE_KEY, "hard");
             return { dailyGames: merged.dailyGames, stats: merged.stats };
           });
 
@@ -370,12 +369,12 @@ export const useGameStore = create<GameState & GameActions>()(
           removeStorage(OLD_NORMAL_STORAGE_KEY);
           removeStorage(OLD_HARD_STORAGE_KEY);
         } catch (e) {
-          console.error('Failed to migrate old stores:', e);
+          console.error("Failed to migrate old stores:", e);
         }
       },
     }),
     {
-      name: 'audio-birdle-game',
+      name: "audio-birdle-game",
       storage: createJSONStorage(() => localStorage),
       version: 2,
       migrate: (persistedState, version) => {
@@ -395,23 +394,23 @@ export const useGameStore = create<GameState & GameActions>()(
         // stores already absorbed the legacy key's stats when they migrated.
         const hasOldZustandStores = Boolean(
           getStorage(OLD_NORMAL_STORAGE_KEY, null) ||
-            getStorage(OLD_HARD_STORAGE_KEY, null),
+          getStorage(OLD_HARD_STORAGE_KEY, null),
         );
         importLegacyStore(
           merged,
           LEGACY_STORAGE_KEY,
-          'normal',
+          "normal",
           !hasOldZustandStores,
         );
-        importLegacyStore(merged, OLD_NORMAL_STORAGE_KEY, 'normal');
-        importLegacyStore(merged, OLD_HARD_STORAGE_KEY, 'hard');
+        importLegacyStore(merged, OLD_NORMAL_STORAGE_KEY, "normal");
+        importLegacyStore(merged, OLD_HARD_STORAGE_KEY, "hard");
         removeStorage(LEGACY_STORAGE_KEY);
         removeStorage(OLD_NORMAL_STORAGE_KEY);
         removeStorage(OLD_HARD_STORAGE_KEY);
         return merged;
       },
       onRehydrateStorage: () => (state) => {
-        console.log('Game store rehydrated');
+        console.log("Game store rehydrated");
         if (state && Object.keys(state.dailyGames).length === 0) {
           setTimeout(() => {
             useGameStore.getState().migrateFromOldStores();

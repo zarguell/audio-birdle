@@ -25,10 +25,10 @@ export default function RegionSelector({ regions, today, onRegionSelect }) {
           <div className="space-y-2">
             {regions.map((region) => {
               const hasPlayedToday =
-                (dailyGames[`${region.id}-${today}-normal`]?.guesses
-                  ?.length || 0) > 0 ||
-                (dailyGames[`${region.id}-${today}-hard`]?.guesses
-                  ?.length || 0) > 0;
+                (dailyGames[`${region.id}-${today}-normal`]?.guesses?.length ||
+                  0) > 0 ||
+                (dailyGames[`${region.id}-${today}-hard`]?.guesses?.length ||
+                  0) > 0;
               return (
                 <button
                   key={region.id}

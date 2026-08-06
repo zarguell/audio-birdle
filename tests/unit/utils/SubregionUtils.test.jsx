@@ -25,8 +25,18 @@ describe("useSubregion", () => {
 
   it("should load the subregion via loadDailyBirdData (cached loader)", async () => {
     loadDailyBirdData.mockResolvedValue([
-      { date: "2026-08-06", region: "us", answerHash: "abc", subregion: "New York" },
-      { date: "2026-08-05", region: "us", answerHash: "def", subregion: "South Dakota" },
+      {
+        date: "2026-08-06",
+        region: "us",
+        answerHash: "abc",
+        subregion: "New York",
+      },
+      {
+        date: "2026-08-05",
+        region: "us",
+        answerHash: "def",
+        subregion: "South Dakota",
+      },
     ]);
 
     const { result } = renderHook(() => useSubregion("us", "2026-08-06"));
@@ -35,13 +45,21 @@ describe("useSubregion", () => {
 
     expect(result.current.subregion).toBe("New York");
     // Must NOT fetch daily.json directly — the loader is cached
-    expect(fetchWithRetry).not.toHaveBeenCalledWith("/data/daily.json", expect.anything());
+    expect(fetchWithRetry).not.toHaveBeenCalledWith(
+      "/data/daily.json",
+      expect.anything(),
+    );
     expect(fetchWithRetry).not.toHaveBeenCalled();
   });
 
   it("should leave subregion empty when no entry matches today", async () => {
     loadDailyBirdData.mockResolvedValue([
-      { date: "2026-08-05", region: "us", answerHash: "def", subregion: "South Dakota" },
+      {
+        date: "2026-08-05",
+        region: "us",
+        answerHash: "def",
+        subregion: "South Dakota",
+      },
     ]);
 
     const { result } = renderHook(() => useSubregion("us", "2026-08-06"));
@@ -52,7 +70,9 @@ describe("useSubregion", () => {
   });
 
   it("should handle loader failures gracefully", async () => {
-    const consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+    const consoleErrorSpy = vi
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
     loadDailyBirdData.mockRejectedValue(new Error("Network error"));
 
     const { result } = renderHook(() => useSubregion("us", "2026-08-06"));
@@ -66,8 +86,18 @@ describe("useSubregion", () => {
 
   it("should refetch when region or today changes", async () => {
     loadDailyBirdData.mockResolvedValue([
-      { date: "2026-08-06", region: "us", answerHash: "abc", subregion: "New York" },
-      { date: "2026-08-06", region: "eu", answerHash: "xyz", subregion: "Bavaria" },
+      {
+        date: "2026-08-06",
+        region: "us",
+        answerHash: "abc",
+        subregion: "New York",
+      },
+      {
+        date: "2026-08-06",
+        region: "eu",
+        answerHash: "xyz",
+        subregion: "Bavaria",
+      },
     ]);
 
     const { result, rerender } = renderHook(

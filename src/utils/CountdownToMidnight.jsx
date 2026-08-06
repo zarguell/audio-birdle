@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
 /**
  * Countdown to the next daily challenge: the puzzle for a local day is fixed
@@ -7,7 +7,7 @@ import React, { useEffect, useState } from 'react';
  * Pure local Date arithmetic — no locale-string parsing.
  */
 export default function CountdownToMidnight() {
-  const [timeLeft, setTimeLeft] = useState('');
+  const [timeLeft, setTimeLeft] = useState("");
 
   useEffect(() => {
     const updateCountdown = () => {

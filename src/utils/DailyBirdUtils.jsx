@@ -58,7 +58,11 @@ export const loadDailyBirdData = async () => {
     return dailyBirdDataCache;
   }
 
-  const response = await fetchWithRetry("/data/daily.json", {}, { maxRetries: 3, baseDelay: 500 });
+  const response = await fetchWithRetry(
+    "/data/daily.json",
+    {},
+    { maxRetries: 3, baseDelay: 500 },
+  );
   const data = await response.json();
 
   // Validate that data is an array
@@ -101,11 +105,15 @@ export const getTodaysBirdFromDaily = async (region, birds, date) => {
   const regionEntries = dailyData.filter(
     (entry) => entry.region === region && entry.date <= date,
   );
-  regionEntries.sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
+  regionEntries.sort((a, b) =>
+    a.date < b.date ? 1 : a.date > b.date ? -1 : 0,
+  );
   const todaysEntry = regionEntries[0];
 
   if (!todaysEntry) {
-    console.warn(`No daily bird entry found for ${region} on or before ${date}`);
+    console.warn(
+      `No daily bird entry found for ${region} on or before ${date}`,
+    );
     return { success: false, error: "not_found" };
   }
 

@@ -141,9 +141,7 @@ export default function GameView({
   }, [isPractice, region, birds]);
 
   const gameKey = `${region}-${today}-${mode}`;
-  const rawDailyGame = useGameStore((state) =>
-    state.getDailyGame(gameKey),
-  );
+  const rawDailyGame = useGameStore((state) => state.getDailyGame(gameKey));
   const dailyGame = isPractice ? null : rawDailyGame;
 
   useEffect(() => {
@@ -179,7 +177,15 @@ export default function GameView({
       todaysBird,
       GAME_CONFIG.ANSWER_OPTIONS_COUNT,
     );
-  }, [isPractice, mode, region, birds, today, todaysBird, practiceState?.answerOptions]);
+  }, [
+    isPractice,
+    mode,
+    region,
+    birds,
+    today,
+    todaysBird,
+    practiceState?.answerOptions,
+  ]);
 
   const currentBird = isPractice ? practiceState?.currentBird : todaysBird;
 
@@ -306,8 +312,7 @@ export default function GameView({
   const completed = game?.completed || false;
   const won = game?.won || false;
 
-  const regionName =
-    regions.find((r) => r.id === region)?.name || region;
+  const regionName = regions.find((r) => r.id === region)?.name || region;
 
   const isLoading =
     isPractice && (!practiceState || !practiceState.currentBird);
@@ -317,10 +322,7 @@ export default function GameView({
       <div className={`min-h-screen bg-gradient-to-br ${c.gradient} p-4`}>
         <div className="max-w-md mx-auto pt-8">
           <div className="flex items-center gap-2 mb-6">
-            <button
-              onClick={onBack}
-              className={`${c.text} hover:opacity-80`}
-            >
+            <button onClick={onBack} className={`${c.text} hover:opacity-80`}>
               {"\u2190"} Back
             </button>
             <h1 className="text-2xl font-bold text-gray-800">
@@ -332,9 +334,7 @@ export default function GameView({
             </h1>
           </div>
           <div className="bg-white rounded-xl shadow-lg p-6 text-center">
-            <p className="text-gray-600">
-              Loading practice session...
-            </p>
+            <p className="text-gray-600">Loading practice session...</p>
           </div>
         </div>
       </div>
@@ -365,10 +365,7 @@ export default function GameView({
       return (
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-2">
-            <button
-              onClick={onBack}
-              className={`${c.text} hover:opacity-80`}
-            >
+            <button onClick={onBack} className={`${c.text} hover:opacity-80`}>
               {"\u2190"} Back
             </button>
             <h1 className="text-2xl font-bold text-gray-800">
@@ -491,9 +488,7 @@ export default function GameView({
                     <RefreshCw
                       className={`w-4 h-4 ${refreshingData ? "animate-spin" : ""}`}
                     />
-                    {refreshingData
-                      ? "Refreshing..."
-                      : "Force Refresh Data"}
+                    {refreshingData ? "Refreshing..." : "Force Refresh Data"}
                   </button>
                   <button
                     onClick={() => window.location.reload()}
@@ -509,8 +504,8 @@ export default function GameView({
           {!isPractice && mode === "hard" && normalModeCompleted && (
             <div className="bg-yellow-50 border border-yellow-300 rounded-lg p-4 mb-4">
               <p className="text-sm text-yellow-800 text-center">
-                {"\u26A0\uFE0F"} You've already completed Normal Mode
-                today. You can't play Hard Mode on the same day.
+                {"\u26A0\uFE0F"} You've already completed Normal Mode today. You
+                can't play Hard Mode on the same day.
               </p>
             </div>
           )}
@@ -520,8 +515,7 @@ export default function GameView({
               <>
                 <p className="text-gray-600 mb-2">{regionName}</p>
                 <p className="text-sm text-gray-500">
-                  Daily Bird Challenge {"\u2022"}{" "}
-                  {formatDateForDisplay(today)}
+                  Daily Bird Challenge {"\u2022"} {formatDateForDisplay(today)}
                 </p>
               </>
             )}
@@ -529,8 +523,7 @@ export default function GameView({
               <div className="text-center mb-6">
                 <p className="text-gray-600 mb-2">{regionName}</p>
                 <p className="text-sm text-gray-500">
-                  Practice Round #
-                  {(practiceState?.practiceIndex || 0) + 1}
+                  Practice Round #{(practiceState?.practiceIndex || 0) + 1}
                 </p>
               </div>
             )}
@@ -538,18 +531,13 @@ export default function GameView({
 
           <div className="mb-6">
             <div className={`${c.bgLight} rounded-lg p-6 text-center`}>
-              <Volume2
-                className={`w-12 h-12 mx-auto mb-4 ${c.text}`}
-              />
+              <Volume2 className={`w-12 h-12 mx-auto mb-4 ${c.text}`} />
 
               {currentBird &&
                 Array.isArray(currentBird.audioUrl) &&
                 currentBird.audioUrl.length > 1 && (
                   <div className="mb-4">
-                    <label
-                      htmlFor="audio-recording-select"
-                      className="sr-only"
-                    >
+                    <label htmlFor="audio-recording-select" className="sr-only">
                       Select audio recording
                     </label>
                     <select
@@ -578,10 +566,7 @@ export default function GameView({
                 ref={audioRef}
                 src={
                   currentBird
-                    ? getAudioSrc(
-                        currentBird.audioUrl,
-                        selectedAudioIndex,
-                      )
+                    ? getAudioSrc(currentBird.audioUrl, selectedAudioIndex)
                     : ""
                 }
                 onEnded={handleAudioEnded}
@@ -619,8 +604,8 @@ export default function GameView({
               className={`${c.bgLight} rounded-lg p-3 mb-4 border ${c.border}`}
             >
               <p className="text-sm text-gray-700">
-                {"\uD83D\uDCA1"} This bird was observed in the last 14
-                days on eBird in{" "}
+                {"\uD83D\uDCA1"} This bird was observed in the last 14 days on
+                eBird in{" "}
                 <span className={`font-semibold ${c.textDark}`}>
                   <SubregionDisplay
                     selectedRegion={region}
@@ -639,9 +624,7 @@ export default function GameView({
                 {guesses.map((guess, index) => {
                   if (guess.taxonomicScore) {
                     const guessedBird = guess.birdId
-                      ? birds[region]?.find(
-                          (b) => b.id === guess.birdId,
-                        )
+                      ? birds[region]?.find((b) => b.id === guess.birdId)
                       : null;
                     const genus = guessedBird
                       ? extractGenus(guessedBird.scientificName)
@@ -653,9 +636,7 @@ export default function GameView({
                       >
                         <div className="flex justify-between items-start mb-2">
                           <div>
-                            <div className="font-medium">
-                              {guess.textInput}
-                            </div>
+                            <div className="font-medium">{guess.textInput}</div>
                             {guessedBird && (
                               <div className="text-sm text-gray-500 italic">
                                 {guessedBird.scientificName}
@@ -723,17 +704,15 @@ export default function GameView({
             </div>
           )}
 
-          {!completed &&
-            (mode === "hard" || practiceState?.isHardMode) && (
-              <div className="text-center mb-4 text-gray-600">
-                {GAME_CONFIG.HARD_MODE_MAX_GUESSES - guesses.length}{" "}
-                {GAME_CONFIG.HARD_MODE_MAX_GUESSES - guesses.length ===
-                1
-                  ? "guess"
-                  : "guesses"}{" "}
-                remaining
-              </div>
-            )}
+          {!completed && (mode === "hard" || practiceState?.isHardMode) && (
+            <div className="text-center mb-4 text-gray-600">
+              {GAME_CONFIG.HARD_MODE_MAX_GUESSES - guesses.length}{" "}
+              {GAME_CONFIG.HARD_MODE_MAX_GUESSES - guesses.length === 1
+                ? "guess"
+                : "guesses"}{" "}
+              remaining
+            </div>
+          )}
 
           {!completed &&
             (mode === "hard" || practiceState?.isHardMode) &&
@@ -742,22 +721,19 @@ export default function GameView({
                 <h4 className="font-semibold text-yellow-800 mb-2">
                   {"\uD83D\uDD0D"} Taxonomic Hints:
                 </h4>
-                {guesses.length >=
-                  GAME_CONFIG.HARD_MODE_HINT_TIMING.ORDER && (
+                {guesses.length >= GAME_CONFIG.HARD_MODE_HINT_TIMING.ORDER && (
                   <div className="text-sm">
                     <span className="font-medium">Order:</span>{" "}
                     {currentBird?.order}
                   </div>
                 )}
-                {guesses.length >=
-                  GAME_CONFIG.HARD_MODE_HINT_TIMING.FAMILY && (
+                {guesses.length >= GAME_CONFIG.HARD_MODE_HINT_TIMING.FAMILY && (
                   <div className="text-sm mt-1">
                     <span className="font-medium">Family:</span>{" "}
                     {currentBird?.family}
                   </div>
                 )}
-                {guesses.length >=
-                  GAME_CONFIG.HARD_MODE_HINT_TIMING.GENUS && (
+                {guesses.length >= GAME_CONFIG.HARD_MODE_HINT_TIMING.GENUS && (
                   <div className="text-sm mt-1">
                     <span className="font-medium">Genus:</span>{" "}
                     {currentBird
@@ -773,8 +749,8 @@ export default function GameView({
               (isPractice && !practiceState?.isHardMode)) && (
               <div className="space-y-2">
                 <h3 className="font-semibold mb-2">
-                  Choose the bird ({guesses.length + 1}/
-                  {game?.maxGuesses || 4}):
+                  Choose the bird ({guesses.length + 1}/{game?.maxGuesses || 4}
+                  ):
                 </h3>
                 {answerOptions.map((bird) => (
                   <button
@@ -791,14 +767,13 @@ export default function GameView({
               </div>
             )}
 
-          {!completed &&
-            (mode === "hard" || practiceState?.isHardMode) && (
-              <HardModeInput
-                birds={birds[region] || []}
-                onGuess={handleHardGuess}
-                placeholder="Type bird name or scientific name..."
-              />
-            )}
+          {!completed && (mode === "hard" || practiceState?.isHardMode) && (
+            <HardModeInput
+              birds={birds[region] || []}
+              onGuess={handleHardGuess}
+              placeholder="Type bird name or scientific name..."
+            />
+          )}
 
           {completed && (
             <div className="text-center">
@@ -817,11 +792,7 @@ export default function GameView({
                 selectedAudioIndex={selectedAudioIndex}
                 onShare={!isPractice ? handleShare : undefined}
                 variant={
-                  mode === "hard"
-                    ? "hard"
-                    : isPractice
-                      ? "practice"
-                      : "normal"
+                  mode === "hard" ? "hard" : isPractice ? "practice" : "normal"
                 }
               />
 
@@ -850,10 +821,7 @@ export default function GameView({
         {isPractice ? (
           <div className="text-center text-sm text-gray-500">
             <p>Practice Mode {"\u2022"} Stats not saved</p>
-            <p>
-              Keep practicing to improve your bird identification
-              skills!
-            </p>
+            <p>Keep practicing to improve your bird identification skills!</p>
           </div>
         ) : (
           <div className="text-center text-sm text-gray-500">

@@ -71,9 +71,7 @@ def main():
         # Merge into existing data structure (upsert this subregion)
         existing_data[region_key][subregion_name] = new_subregion_data
 
-        print(
-            f"  {subregion_name}: {len(new_subregion_data)} unique species"
-        )
+        print(f"  {subregion_name}: {len(new_subregion_data)} unique species")
 
     # Save merged output
     with open(args.output_file, "w") as out_f:

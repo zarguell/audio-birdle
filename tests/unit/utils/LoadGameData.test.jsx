@@ -405,7 +405,9 @@ describe("LoadGameData", () => {
 
     it("should fall back to the parent list when the subregion fetch fails", async () => {
       vi.useFakeTimers();
-      const consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+      const consoleErrorSpy = vi
+        .spyOn(console, "error")
+        .mockImplementation(() => {});
       const mockRegions = [
         { id: "us", name: "United States", country: "US" },
         US_LOWER48_REGION,
