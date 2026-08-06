@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-04-08",
-      "id": "lobdow",
-      "name": "Long-billed Dowitcher",
-      "subregion": "Tennessee"
-    },
-    {
       "date": "2026-04-09",
       "id": "sposan",
       "name": "Spotted Sandpiper",
@@ -815,15 +809,15 @@
       "id": "rthhum",
       "name": "Ruby-throated Hummingbird",
       "subregion": "South Dakota"
+    },
+    {
+      "date": "2026-08-06",
+      "id": "rocpig",
+      "name": "Rock Pigeon",
+      "subregion": "Oklahoma"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-04-08",
-      "id": "chwwid",
-      "name": "Chuck-will's-widow",
-      "subregion": "Tennessee"
-    },
     {
       "date": "2026-04-09",
       "id": "brespa",
@@ -1633,6 +1627,12 @@
       "id": "larbun",
       "name": "Lark Bunting",
       "subregion": "South Dakota"
+    },
+    {
+      "date": "2026-08-06",
+      "id": "grhowl",
+      "name": "Great Horned Owl",
+      "subregion": "Oklahoma"
     }
   ]
 }
