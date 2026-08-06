@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import {
   getStorage,
   setStorage,
@@ -15,6 +15,11 @@ describe('StorageUtils', () => {
     global.localStorage.getItem.mockClear()
     global.localStorage.setItem.mockClear()
     global.localStorage.removeItem.mockClear()
+  })
+
+  afterEach(() => {
+    // Restore any Object.keys spies so later tests see the real implementation
+    vi.restoreAllMocks()
   })
 
   describe('isStorageAvailable', () => {
@@ -137,7 +142,7 @@ describe('StorageUtils', () => {
 
   describe('getStorageKeys', () => {
     it('should return all localStorage keys', () => {
-      Object.keys = vi.fn().mockReturnValue(['key1', 'key2', 'key3'])
+      vi.spyOn(Object, 'keys').mockReturnValue(['key1', 'key2', 'key3'])
 
       const keys = getStorageKeys()
 
@@ -148,7 +153,7 @@ describe('StorageUtils', () => {
 
   describe('clearStorage', () => {
     it('should clear all app-specific keys', () => {
-      Object.keys = vi.fn().mockReturnValue([
+      vi.spyOn(Object, 'keys').mockReturnValue([
         'audio-birdle-region',
         'audio-birdle-game-state',
         'other-app-key'
@@ -163,7 +168,7 @@ describe('StorageUtils', () => {
     })
 
     it('should use custom prefix when provided', () => {
-      Object.keys = vi.fn().mockReturnValue([
+      vi.spyOn(Object, 'keys').mockReturnValue([
         'custom-prefix-key1',
         'custom-prefix-key2',
         'audio-birdle-key'
@@ -176,7 +181,7 @@ describe('StorageUtils', () => {
     })
 
     it('should return 0 when getStorageKeys fails', () => {
-      Object.keys = vi.fn().mockReturnValue([])
+      vi.spyOn(Object, 'keys').mockReturnValue([])
 
       const cleared = clearStorage()
 

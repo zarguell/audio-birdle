@@ -544,14 +544,18 @@ describe("PracticeGameLogic", () => {
     });
 
     it("should reset startTime", () => {
+      // Window is measured around the call, so it is immune to scheduling
+      // stalls: startTime must fall between the instant before the call and
+      // the instant after it (previously a fixed 1s wall-clock window that
+      // flaked on slow/loaded CI runners).
+      const before = Date.now();
       const newState = startNewPracticeRound(currentState, sampleBirds);
+      const after = Date.now();
 
       expect(newState.startTime).toBeDefined();
-      // The new startTime should be recent (within last second)
       const newTime = new Date(newState.startTime).getTime();
-      const now = Date.now();
-      expect(newTime).toBeLessThanOrEqual(now);
-      expect(newTime).toBeGreaterThan(now - 1000);
+      expect(newTime).toBeGreaterThanOrEqual(before);
+      expect(newTime).toBeLessThanOrEqual(after);
     });
 
     it("should return same state if no bird found", () => {
