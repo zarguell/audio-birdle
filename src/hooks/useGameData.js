@@ -55,7 +55,12 @@ export function useGameData(initialRegion = null) {
       .then((result) => {
         if (result.success && result.bird) {
           setTodaysBird(result.bird);
-          setDataConsistencyError(null);
+          // When the fallback (hash-based) bird is served — e.g. offline or
+          // daily data out of sync — surface it instead of hiding it: the
+          // substituted bird may differ from the official daily answer.
+          setDataConsistencyError(
+            result.usedFallback ? result.message || null : null,
+          );
         } else {
           setTodaysBird(null);
           setDataConsistencyError(
@@ -86,19 +91,30 @@ export function useGameData(initialRegion = null) {
     }
   }, [initialRegion, birds, today, loadTodaysBird]);
 
-  const loadAndSetBird = async (newBirds) => {
-    if (!initialRegion || !newBirds[initialRegion]) return;
-    setLoadingBird(true);
-    const result = await getDailyBirdWithFallback(initialRegion, newBirds[initialRegion], today);
-    if (result.success && result.bird) {
-      setTodaysBird(result.bird);
-      setDataConsistencyError(null);
-    } else {
-      setTodaysBird(null);
-      setDataConsistencyError(result.message || "Failed to load daily challenge");
-    }
-    setLoadingBird(false);
-  };
+  const loadAndSetBird = useCallback(
+    async (newBirds) => {
+      if (!initialRegion || !newBirds[initialRegion]) return;
+      setLoadingBird(true);
+      const result = await getDailyBirdWithFallback(
+        initialRegion,
+        newBirds[initialRegion],
+        today,
+      );
+      if (result.success && result.bird) {
+        setTodaysBird(result.bird);
+        setDataConsistencyError(
+          result.usedFallback ? result.message || null : null,
+        );
+      } else {
+        setTodaysBird(null);
+        setDataConsistencyError(
+          result.message || "Failed to load daily challenge",
+        );
+      }
+      setLoadingBird(false);
+    },
+    [initialRegion, today],
+  );
 
   // Auto refresh
   const handleAutoRefresh = useCallback(async () => {
@@ -138,6 +154,29 @@ export function useGameData(initialRegion = null) {
         }
       },
     );
+  }, [initialRegion, handleAutoRefresh]);
+
+  // Roll over at local midnight so an idle tab shows the new day's bird
+  // without requiring interaction. handleAutoRefresh is stable (see above),
+  // so this timer is only (re)created when the region changes.
+  useEffect(() => {
+    if (!initialRegion) return;
+
+    const now = new Date();
+    const nextMidnight = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate() + 1,
+      0,
+      0,
+      0,
+      0,
+    );
+    const timer = setTimeout(() => {
+      handleAutoRefresh();
+    }, nextMidnight.getTime() - now.getTime());
+
+    return () => clearTimeout(timer);
   }, [initialRegion, handleAutoRefresh]);
 
   // Force refresh (user triggered)

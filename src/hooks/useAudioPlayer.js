@@ -45,6 +45,12 @@ export function useAudioPlayer(initialAudioIndex = 0) {
     setIsPlaying(false);
   }, []);
 
+  // Natural playback end must NOT be treated as an error: just clear the
+  // playing state so the Play button re-enables without an error message.
+  const handleAudioEnded = useCallback(() => {
+    setIsPlaying(false);
+  }, []);
+
   const resetAudio = useCallback(() => {
     setSelectedAudioIndex(0);
     setAudioError(false);
@@ -60,6 +66,7 @@ export function useAudioPlayer(initialAudioIndex = 0) {
     audioRef,
     toggleAudio,
     handleAudioError,
+    handleAudioEnded,
     resetAudio,
   };
 }

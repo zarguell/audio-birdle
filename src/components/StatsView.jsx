@@ -6,7 +6,18 @@ export default function StatsView({ stats, regions, onBack }) {
   const totalWins = stats?.totalGamesWon || 0;
   const winRate =
     totalGames > 0 ? ((totalWins / totalGames) * 100).toFixed(1) : 0;
-  const avgGuesses = stats?.averageGuesses || 0;
+  // GameStats has no top-level averageGuesses field; the store tracks
+  // per-region totals, so compute the global average from those.
+  const regionEntries = Object.entries(stats?.regionStats || {});
+  const regionGames = regionEntries.reduce(
+    (sum, [, rs]) => sum + (rs?.gamesPlayed || 0),
+    0,
+  );
+  const totalGuesses = regionEntries.reduce(
+    (sum, [, rs]) => sum + (rs?.totalGuesses || 0),
+    0,
+  );
+  const avgGuesses = regionGames > 0 ? (totalGuesses / regionGames).toFixed(1) : 0;
   const maxStreak = stats?.maxStreak || 0;
 
   const regionBreakdown = Object.entries(stats?.regionStats || {}).map(

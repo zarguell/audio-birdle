@@ -471,6 +471,36 @@ describe('useGameStore', () => {
       expect(state.stats.maxStreak).toBe(3);
     });
 
+    it('should not double-count stats when legacy key and old zustand stores coexist', () => {
+      useGameStore.getState().reset();
+
+      // v1 multi-game shape under the original pre-Zustand key. The former
+      // normalGameStore already absorbed these stats when it migrated (and
+      // kept the legacy key as a backup), so the import must not add them
+      // again: total must stay 5, not 5 + 2.
+      localStorage.setItem('audio-birdle-game-state', JSON.stringify({
+        dailyGames: {
+          [GAME_KEY.replace('-normal', '')]: { region: GAME_REGION, date: GAME_DATE, mode: 'normal', guesses: [], completed: true, won: true, maxGuesses: 4 },
+        },
+        stats: { totalGamesPlayed: 2, totalGamesWon: 2, currentStreak: 2, maxStreak: 2, regionStats: {} },
+      }));
+      localStorage.setItem('audio-birdle-normal-game', JSON.stringify({
+        state: {
+          dailyGames: { [GAME_KEY.replace('-normal', '')]: { region: GAME_REGION, date: GAME_DATE, mode: 'normal', guesses: [], completed: true, won: true, maxGuesses: 4 } },
+          stats: { totalGamesPlayed: 5, totalGamesWon: 3, currentStreak: 1, maxStreak: 3, regionStats: {} },
+        },
+        version: 2,
+      }));
+
+      useGameStore.getState().migrateFromOldStores();
+
+      const state = useGameStore.getState();
+      expect(state.stats.totalGamesPlayed).toBe(5);
+      expect(state.stats.totalGamesWon).toBe(3);
+      // The legacy key was consumed and removed.
+      expect(localStorage.getItem('audio-birdle-game-state')).toBeNull();
+    });
+
     it('should be idempotent', () => {
       useGameStore.getState().reset();
 
@@ -490,6 +520,134 @@ describe('useGameStore', () => {
 
       expect(state2.dailyGames).toEqual(state1.dailyGames);
       expect(state2.stats).toEqual(state1.stats);
+    });
+
+    it('should migrate legacy v0 single-game state from audio-birdle-game-state', () => {
+      useGameStore.getState().reset();
+
+      localStorage.setItem('audio-birdle-game-state', JSON.stringify({
+        region: GAME_REGION,
+        lastPlayed: GAME_DATE,
+        guesses: [{ birdId: 'amerob', correct: true, timestamp: 123 }],
+        completed: true,
+        won: true,
+        maxGuesses: 4,
+      }));
+
+      useGameStore.getState().migrateFromOldStores();
+
+      const state = useGameStore.getState();
+      expect(state.dailyGames[GAME_KEY]).toBeDefined();
+      expect(state.dailyGames[GAME_KEY].mode).toBe('normal');
+      expect(state.dailyGames[GAME_KEY].date).toBe(GAME_DATE);
+      expect(state.dailyGames[GAME_KEY].guesses).toHaveLength(1);
+      expect(state.dailyGames[GAME_KEY].won).toBe(true);
+      expect(localStorage.getItem('audio-birdle-game-state')).toBeNull();
+    });
+
+    it('should map legacy v0 hard-mode games to the -hard key', () => {
+      useGameStore.getState().reset();
+
+      localStorage.setItem('audio-birdle-game-state', JSON.stringify({
+        region: GAME_REGION,
+        lastPlayed: GAME_DATE,
+        mode: 'hard',
+        guesses: [],
+        completed: true,
+        won: true,
+        maxGuesses: 6,
+      }));
+
+      useGameStore.getState().migrateFromOldStores();
+
+      const state = useGameStore.getState();
+      expect(state.dailyGames[HARD_KEY]).toBeDefined();
+      expect(state.dailyGames[HARD_KEY].mode).toBe('hard');
+      expect(state.dailyGames[GAME_KEY]).toBeUndefined();
+    });
+
+    it('should migrate legacy v1 multi-game state from audio-birdle-game-state', () => {
+      useGameStore.getState().reset();
+
+      localStorage.setItem('audio-birdle-game-state', JSON.stringify({
+        dailyGames: {
+          [GAME_KEY.replace('-normal', '')]: {
+            region: GAME_REGION,
+            date: GAME_DATE,
+            guesses: [],
+            completed: true,
+            won: true,
+            maxGuesses: 4,
+          },
+        },
+        stats: {
+          totalGamesPlayed: 2,
+          totalGamesWon: 2,
+          currentStreak: 2,
+          maxStreak: 4,
+          regionStats: {
+            [GAME_REGION]: { gamesPlayed: 2, gamesWon: 2, totalGuesses: 4, averageGuesses: 2 },
+          },
+        },
+      }));
+
+      useGameStore.getState().migrateFromOldStores();
+
+      const state = useGameStore.getState();
+      expect(state.dailyGames[GAME_KEY]).toBeDefined();
+      expect(state.dailyGames[GAME_KEY].mode).toBe('normal');
+      expect(state.stats.totalGamesPlayed).toBe(2);
+      expect(state.stats.totalGamesWon).toBe(2);
+    });
+
+    it('should preserve currentStreak from legacy stats', () => {
+      useGameStore.getState().reset();
+
+      localStorage.setItem('audio-birdle-game-state', JSON.stringify({
+        dailyGames: {},
+        stats: {
+          totalGamesPlayed: 5,
+          totalGamesWon: 4,
+          currentStreak: 3,
+          maxStreak: 5,
+          regionStats: {},
+        },
+      }));
+
+      useGameStore.getState().migrateFromOldStores();
+
+      const state = useGameStore.getState();
+      expect(state.stats.currentStreak).toBe(3);
+      expect(state.stats.maxStreak).toBe(5);
+    });
+
+    it('should merge legacy state with existing store state', () => {
+      useGameStore.getState().reset();
+      useGameStore.getState().setDailyGame(GAME_KEY, {
+        region: GAME_REGION,
+        date: GAME_DATE,
+        mode: 'normal',
+        guesses: [],
+        completed: false,
+        won: false,
+        maxGuesses: 4,
+      });
+
+      localStorage.setItem('audio-birdle-game-state', JSON.stringify({
+        region: 'eu',
+        lastPlayed: '2025-01-15',
+        guesses: [],
+        completed: true,
+        won: true,
+        maxGuesses: 4,
+      }));
+
+      useGameStore.getState().migrateFromOldStores();
+
+      const state = useGameStore.getState();
+      // Existing games are preserved, legacy games are added
+      expect(state.dailyGames[GAME_KEY]).toBeDefined();
+      expect(state.dailyGames['eu-2025-01-15-normal']).toBeDefined();
     });
   });
 });

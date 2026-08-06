@@ -102,16 +102,9 @@ export const shareResult = async (shareText) => {
     if (navigator.clipboard && navigator.clipboard.writeText) {
       await navigator.clipboard.writeText(shareText);
 
-      // Show feedback to user
-      const originalButton = document.activeElement;
-      if (originalButton) {
-        const originalText = originalButton.textContent;
-        originalButton.textContent = "Copied!";
-        setTimeout(() => {
-          originalButton.textContent = originalText;
-        }, 2000);
-      }
-
+      // Surface feedback via the toast system instead of mutating
+      // document.activeElement (which could clobber the wrong element).
+      toast.success("Result copied to clipboard!");
       return true;
     }
 

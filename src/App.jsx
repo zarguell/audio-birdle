@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { getTodayString } from "./utils/DateUtils";
-import { VIEWS } from "./utils/Constants";
+import { VIEWS, GAME_CONFIG } from "./utils/Constants";
 import RegionSelector from "./components/RegionSelector";
 import ModeSelector from "./components/ModeSelector";
 import StatsView from "./components/StatsView";
@@ -152,18 +152,37 @@ export default function AudioBirdle() {
         onViewStats={() => setCurrentView(VIEWS.STATS)}
         onResetTodaysGame={() => {
           if (!selectedRegion) return;
-          const key = `${selectedRegion}-${today}-normal`;
-          useGameStore.getState().setDailyGame(key, {
+          const resetGame = (mode) => ({
             region: selectedRegion,
             date: today,
-            mode: "normal",
+            mode,
             guesses: [],
             completed: false,
             won: false,
-            maxGuesses: 4,
+            maxGuesses:
+              mode === "hard"
+                ? GAME_CONFIG.HARD_MODE_MAX_GUESSES
+                : GAME_CONFIG.MAX_GUESSES,
           });
+          const store = useGameStore.getState();
+          store.setDailyGame(
+            `${selectedRegion}-${today}-normal`,
+            resetGame("normal"),
+          );
+          store.setDailyGame(
+            `${selectedRegion}-${today}-hard`,
+            resetGame("hard"),
+          );
         }}
-        onResetAllData={() => useGameStore.getState().reset()}
+        onResetAllData={() => {
+          if (
+            window.confirm(
+              "Reset all data? This will erase all games and stats.",
+            )
+          ) {
+            useGameStore.getState().reset();
+          }
+        }}
         onRefreshData={handleRefreshData}
         refreshingData={refreshingData}
         hasUpdate={hasUpdate}

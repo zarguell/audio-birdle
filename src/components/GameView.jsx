@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import {
   ArrowLeft,
   Settings,
@@ -100,27 +100,28 @@ export default function GameView({
     audioRef,
     toggleAudio,
     handleAudioError,
+    handleAudioEnded,
   } = useAudioPlayer();
-
-  const handleAudioEnded = useCallback(() => {
-    if (isPlaying) {
-      handleAudioError();
-    }
-  }, [isPlaying, handleAudioError]);
 
   const [practiceState, setPracticeState] = useState(null);
   const [practiceIsHardMode, setPracticeIsHardMode] = useState(false);
+  // Mirrors practiceIsHardMode so the init effect (which must NOT depend on
+  // practiceIsHardMode, otherwise toggling re-runs it and wipes the round)
+  // can still read the current mode when (re)creating the session.
+  const practiceIsHardModeRef = useRef(practiceIsHardMode);
+
+  useEffect(() => {
+    practiceIsHardModeRef.current = practiceIsHardMode;
+  }, [practiceIsHardMode]);
 
   useEffect(() => {
     if (isPractice && region && birds[region]) {
-      const initialState = createInitialPracticeState(
-        region,
-        practiceIsHardMode,
-      );
+      const isHard = practiceIsHardModeRef.current;
+      const initialState = createInitialPracticeState(region, isHard);
       const firstBird = getPracticeBird(region, birds, 0);
       if (firstBird) {
         let answerOptions = [];
-        if (!practiceIsHardMode) {
+        if (!isHard) {
           answerOptions = generatePracticeAnswerOptions(
             region,
             birds,
@@ -136,14 +137,8 @@ export default function GameView({
         });
       }
     }
-  }, [isPractice, region, birds, practiceIsHardMode]);
-
-  useEffect(() => {
-    if (currentBird) {
-      setSelectedAudioIndex(0);
-      setAudioError(false);
-    }
-  }, [currentBird, setSelectedAudioIndex, setAudioError]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- deliberate: init only on session start / region / birds change; toggling hard/normal must preserve the current round
+  }, [isPractice, region, birds]);
 
   const gameKey = `${region}-${today}-${mode}`;
   const rawDailyGame = useGameStore((state) =>
@@ -187,6 +182,15 @@ export default function GameView({
   }, [isPractice, mode, region, birds, today, todaysBird, practiceState?.answerOptions]);
 
   const currentBird = isPractice ? practiceState?.currentBird : todaysBird;
+
+  // Reset audio selection when the displayed bird changes. Must come after the
+  // currentBird declaration: the deps array is evaluated during render.
+  useEffect(() => {
+    if (currentBird) {
+      setSelectedAudioIndex(0);
+      setAudioError(false);
+    }
+  }, [currentBird, setSelectedAudioIndex, setAudioError]);
 
   const theme = isPractice
     ? practiceIsHardMode
@@ -271,6 +275,19 @@ export default function GameView({
 
   const togglePracticeMode = useCallback(() => {
     setPracticeIsHardMode((prev) => !prev);
+    // Preserve the current round (bird / index / guesses); only the mode for
+    // the current and future rounds changes.
+    setPracticeState((prev) => {
+      if (!prev) return prev;
+      const nextIsHard = !prev.isHardMode;
+      return {
+        ...prev,
+        isHardMode: nextIsHard,
+        maxGuesses: nextIsHard
+          ? GAME_CONFIG.HARD_MODE_MAX_GUESSES
+          : GAME_CONFIG.MAX_GUESSES,
+      };
+    });
   }, []);
 
   const handleShare = useCallback(async () => {
@@ -328,7 +345,11 @@ export default function GameView({
     return (
       <div className={`min-h-screen bg-gradient-to-br ${c.gradient} p-4`}>
         <div className="max-w-md mx-auto pt-8">
-          <button onClick={onBack} className="text-gray-600 hover:text-gray-800 mb-4">
+          <button
+            onClick={onBack}
+            aria-label="Back"
+            className="text-gray-600 hover:text-gray-800 mb-4"
+          >
             <ArrowLeft className="w-6 h-6" />
           </button>
           <div className="bg-white rounded-xl shadow-lg p-6 text-center">
@@ -372,6 +393,7 @@ export default function GameView({
         <div className="flex items-center justify-between mb-4">
           <button
             onClick={onBack}
+            aria-label="Back"
             className="text-gray-600 hover:text-gray-800"
           >
             <ArrowLeft className="w-6 h-6" />
@@ -434,6 +456,7 @@ export default function GameView({
           {onNavigateSettings && (
             <button
               onClick={onNavigateSettings}
+              aria-label="Settings"
               className="p-2 text-gray-600 hover:text-gray-800 transition-colors"
             >
               <Settings className="w-5 h-5" />
@@ -523,7 +546,15 @@ export default function GameView({
                 Array.isArray(currentBird.audioUrl) &&
                 currentBird.audioUrl.length > 1 && (
                   <div className="mb-4">
+                    <label
+                      htmlFor="audio-recording-select"
+                      className="sr-only"
+                    >
+                      Select audio recording
+                    </label>
                     <select
+                      id="audio-recording-select"
+                      aria-label="Select audio recording"
                       value={selectedAudioIndex}
                       onChange={(e) => {
                         const newIndex = parseInt(e.target.value);
