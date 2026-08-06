@@ -19,5 +19,5 @@ repos:
    rev: v3.3.2
    hooks:
    - id: pylint
-     args: ['--disable=all']
+     args: ['--errors-only']
      verbose: false
