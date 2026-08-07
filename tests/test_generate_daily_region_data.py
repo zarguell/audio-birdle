@@ -49,8 +49,15 @@ class TestMainFunctionality:
         output_file = tmp_path / "output.json"
         subregions_file.write_text(json.dumps([]))
 
-        # Mock environment to not have API key
-        with patch.dict(os.environ, {}, clear=True):
+        # Mock environment to not have API key. load_api_key() also reads a
+        # .env file from the working directory (load_dotenv), so patch that
+        # too: the daily-update workflow writes a real .env before running
+        # pytest, and a key leaking back in would change ValueError into an
+        # argparse SystemExit on pytest's argv.
+        with (
+            patch.dict(os.environ, {}, clear=True),
+            patch("ebird_api_common.load_dotenv"),
+        ):
             with pytest.raises(ValueError) as exc_info:
                 generate_daily_region_data.main()
 
