@@ -10,5 +10,33 @@
     "region": "us-lower48",
     "answerHash": "f7fdef83",
     "subregion": "Oklahoma"
+  },
+  {
+    "date": "2026-08-07",
+    "region": "us",
+    "answerHash": "e74b1d8f",
+    "id": "wooduc",
+    "subregion": "North Dakota"
+  },
+  {
+    "date": "2026-08-07",
+    "region": "us-lower48",
+    "answerHash": "24fb0140",
+    "id": "bkcspa",
+    "subregion": "New Mexico"
+  },
+  {
+    "date": "2026-08-08",
+    "region": "us",
+    "answerHash": "f4d33aa5",
+    "id": "blugrb1",
+    "subregion": "Delaware"
+  },
+  {
+    "date": "2026-08-08",
+    "region": "us-lower48",
+    "answerHash": "a4203b5f",
+    "id": "comloo",
+    "subregion": "New Hampshire"
   }
 ]

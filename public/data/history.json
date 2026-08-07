@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-04-09",
-      "id": "sposan",
-      "name": "Spotted Sandpiper",
-      "subregion": "Missouri"
-    },
-    {
       "date": "2026-04-10",
       "id": "belkin1",
       "name": "Belted Kingfisher",
@@ -815,15 +809,21 @@
       "id": "rocpig",
       "name": "Rock Pigeon",
       "subregion": "Oklahoma"
+    },
+    {
+      "date": "2026-08-07",
+      "id": "wooduc",
+      "name": "Wood Duck",
+      "subregion": "North Dakota"
+    },
+    {
+      "date": "2026-08-08",
+      "id": "blugrb1",
+      "name": "Blue Grosbeak",
+      "subregion": "Delaware"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-04-09",
-      "id": "brespa",
-      "name": "Brewer's Sparrow",
-      "subregion": "California"
-    },
     {
       "date": "2026-04-10",
       "id": "amewoo",
@@ -1633,6 +1633,18 @@
       "id": "grhowl",
       "name": "Great Horned Owl",
       "subregion": "Oklahoma"
+    },
+    {
+      "date": "2026-08-07",
+      "id": "bkcspa",
+      "name": "Black-chinned Sparrow",
+      "subregion": "New Mexico"
+    },
+    {
+      "date": "2026-08-08",
+      "id": "comloo",
+      "name": "Common Loon",
+      "subregion": "New Hampshire"
     }
   ]
 }
