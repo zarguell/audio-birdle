@@ -38,5 +38,19 @@
     "answerHash": "a4203b5f",
     "id": "comloo",
     "subregion": "New Hampshire"
+  },
+  {
+    "date": "2026-08-09",
+    "region": "us",
+    "answerHash": "370d5854",
+    "id": "carwre",
+    "subregion": "Oklahoma"
+  },
+  {
+    "date": "2026-08-09",
+    "region": "us-lower48",
+    "answerHash": "171c35f6",
+    "id": "towsol",
+    "subregion": "Utah"
   }
 ]

@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-04-10",
-      "id": "belkin1",
-      "name": "Belted Kingfisher",
-      "subregion": "District of Columbia"
-    },
-    {
       "date": "2026-04-11",
       "id": "greyel",
       "name": "Greater Yellowlegs",
@@ -821,15 +815,15 @@
       "id": "blugrb1",
       "name": "Blue Grosbeak",
       "subregion": "Delaware"
+    },
+    {
+      "date": "2026-08-09",
+      "id": "carwre",
+      "name": "Carolina Wren",
+      "subregion": "Oklahoma"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-04-10",
-      "id": "amewoo",
-      "name": "American Woodcock",
-      "subregion": "Connecticut"
-    },
     {
       "date": "2026-04-11",
       "id": "truswa",
@@ -1645,6 +1639,12 @@
       "id": "comloo",
       "name": "Common Loon",
       "subregion": "New Hampshire"
+    },
+    {
+      "date": "2026-08-09",
+      "id": "towsol",
+      "name": "Townsend's Solitaire",
+      "subregion": "Utah"
     }
   ]
 }
