@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-04-11",
-      "id": "greyel",
-      "name": "Greater Yellowlegs",
-      "subregion": "Kansas"
-    },
-    {
       "date": "2026-04-12",
       "id": "blkvul",
       "name": "Black Vulture",
@@ -821,15 +815,15 @@
       "id": "carwre",
       "name": "Carolina Wren",
       "subregion": "Oklahoma"
+    },
+    {
+      "date": "2026-08-10",
+      "id": "caster1",
+      "name": "Caspian Tern",
+      "subregion": "Georgia"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-04-11",
-      "id": "truswa",
-      "name": "Trumpeter Swan",
-      "subregion": "Iowa"
-    },
     {
       "date": "2026-04-12",
       "id": "wiltur",
@@ -1645,6 +1639,12 @@
       "id": "towsol",
       "name": "Townsend's Solitaire",
       "subregion": "Utah"
+    },
+    {
+      "date": "2026-08-10",
+      "id": "dowwoo",
+      "name": "Downy Woodpecker",
+      "subregion": "Texas"
     }
   ]
 }

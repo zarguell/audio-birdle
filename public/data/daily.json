@@ -52,5 +52,19 @@
     "answerHash": "171c35f6",
     "id": "towsol",
     "subregion": "Utah"
+  },
+  {
+    "date": "2026-08-10",
+    "region": "us",
+    "answerHash": "6eda6f45",
+    "id": "caster1",
+    "subregion": "Georgia"
+  },
+  {
+    "date": "2026-08-10",
+    "region": "us-lower48",
+    "answerHash": "603fa1bf",
+    "id": "dowwoo",
+    "subregion": "Texas"
   }
 ]
