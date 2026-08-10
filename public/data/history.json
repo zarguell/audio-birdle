@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-04-12",
-      "id": "blkvul",
-      "name": "Black Vulture",
-      "subregion": "Vermont"
-    },
-    {
       "date": "2026-04-13",
       "id": "laugul",
       "name": "Laughing Gull",
@@ -821,15 +815,15 @@
       "id": "caster1",
       "name": "Caspian Tern",
       "subregion": "Georgia"
+    },
+    {
+      "date": "2026-08-11",
+      "id": "bcnher",
+      "name": "Black-crowned Night Heron",
+      "subregion": "Maryland"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-04-12",
-      "id": "wiltur",
-      "name": "Wild Turkey",
-      "subregion": "Vermont"
-    },
     {
       "date": "2026-04-13",
       "id": "rengre",
@@ -1645,6 +1639,12 @@
       "id": "dowwoo",
       "name": "Downy Woodpecker",
       "subregion": "Texas"
+    },
+    {
+      "date": "2026-08-11",
+      "id": "norpar",
+      "name": "Northern Parula",
+      "subregion": "Kentucky"
     }
   ]
 }

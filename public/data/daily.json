@@ -66,5 +66,19 @@
     "answerHash": "603fa1bf",
     "id": "dowwoo",
     "subregion": "Texas"
+  },
+  {
+    "date": "2026-08-11",
+    "region": "us",
+    "answerHash": "bec95382",
+    "id": "bcnher",
+    "subregion": "Maryland"
+  },
+  {
+    "date": "2026-08-11",
+    "region": "us-lower48",
+    "answerHash": "c02a43fa",
+    "id": "norpar",
+    "subregion": "Kentucky"
   }
 ]
