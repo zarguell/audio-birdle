@@ -80,5 +80,19 @@
     "answerHash": "c02a43fa",
     "id": "norpar",
     "subregion": "Kentucky"
+  },
+  {
+    "date": "2026-08-12",
+    "region": "us",
+    "answerHash": "4097ca0f",
+    "id": "rinduc",
+    "subregion": "Minnesota"
+  },
+  {
+    "date": "2026-08-12",
+    "region": "us-lower48",
+    "answerHash": "f67f868b",
+    "id": "shbdow",
+    "subregion": "Missouri"
   }
 ]

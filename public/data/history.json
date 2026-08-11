@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-04-13",
-      "id": "laugul",
-      "name": "Laughing Gull",
-      "subregion": "New York"
-    },
-    {
       "date": "2026-04-14",
       "id": "chispa",
       "name": "Chipping Sparrow",
@@ -821,15 +815,15 @@
       "id": "bcnher",
       "name": "Black-crowned Night Heron",
       "subregion": "Maryland"
+    },
+    {
+      "date": "2026-08-12",
+      "id": "rinduc",
+      "name": "Ring-necked Duck",
+      "subregion": "Minnesota"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-04-13",
-      "id": "rengre",
-      "name": "Red-necked Grebe",
-      "subregion": "Rhode Island"
-    },
     {
       "date": "2026-04-14",
       "id": "soogro1",
@@ -1645,6 +1639,12 @@
       "id": "norpar",
       "name": "Northern Parula",
       "subregion": "Kentucky"
+    },
+    {
+      "date": "2026-08-12",
+      "id": "shbdow",
+      "name": "Short-billed Dowitcher",
+      "subregion": "Missouri"
     }
   ]
 }
