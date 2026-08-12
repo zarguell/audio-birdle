@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-04-14",
-      "id": "chispa",
-      "name": "Chipping Sparrow",
-      "subregion": "Rhode Island"
-    },
-    {
       "date": "2026-04-15",
       "id": "orcwar",
       "name": "Orange-crowned Warbler",
@@ -821,15 +815,15 @@
       "id": "rinduc",
       "name": "Ring-necked Duck",
       "subregion": "Minnesota"
+    },
+    {
+      "date": "2026-08-13",
+      "id": "snoegr",
+      "name": "Snowy Egret",
+      "subregion": "North Carolina"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-04-14",
-      "id": "soogro1",
-      "name": "Sooty Grouse",
-      "subregion": "California"
-    },
     {
       "date": "2026-04-15",
       "id": "bktspa",
@@ -1645,6 +1639,12 @@
       "id": "shbdow",
       "name": "Short-billed Dowitcher",
       "subregion": "Missouri"
+    },
+    {
+      "date": "2026-08-13",
+      "id": "wilfly",
+      "name": "Willow Flycatcher",
+      "subregion": "Indiana"
     }
   ]
 }

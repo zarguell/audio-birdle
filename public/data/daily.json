@@ -94,5 +94,19 @@
     "answerHash": "f67f868b",
     "id": "shbdow",
     "subregion": "Missouri"
+  },
+  {
+    "date": "2026-08-13",
+    "region": "us",
+    "answerHash": "64dbbb8e",
+    "id": "snoegr",
+    "subregion": "North Carolina"
+  },
+  {
+    "date": "2026-08-13",
+    "region": "us-lower48",
+    "answerHash": "132d88f1",
+    "id": "wilfly",
+    "subregion": "Indiana"
   }
 ]
