@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-04-15",
-      "id": "orcwar",
-      "name": "Orange-crowned Warbler",
-      "subregion": "Maine"
-    },
-    {
       "date": "2026-04-16",
       "id": "towwar",
       "name": "Townsend's Warbler",
@@ -821,15 +815,15 @@
       "id": "snoegr",
       "name": "Snowy Egret",
       "subregion": "North Carolina"
+    },
+    {
+      "date": "2026-08-14",
+      "id": "haiwoo",
+      "name": "Hairy Woodpecker",
+      "subregion": "North Dakota"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-04-15",
-      "id": "bktspa",
-      "name": "Black-throated Sparrow",
-      "subregion": "Texas"
-    },
     {
       "date": "2026-04-16",
       "id": "willet1",
@@ -1645,6 +1639,12 @@
       "id": "wilfly",
       "name": "Willow Flycatcher",
       "subregion": "Indiana"
+    },
+    {
+      "date": "2026-08-14",
+      "id": "norhar2",
+      "name": "Northern Harrier",
+      "subregion": "Pennsylvania"
     }
   ]
 }

@@ -108,5 +108,19 @@
     "answerHash": "132d88f1",
     "id": "wilfly",
     "subregion": "Indiana"
+  },
+  {
+    "date": "2026-08-14",
+    "region": "us",
+    "answerHash": "7d586503",
+    "id": "haiwoo",
+    "subregion": "North Dakota"
+  },
+  {
+    "date": "2026-08-14",
+    "region": "us-lower48",
+    "answerHash": "59fb4060",
+    "id": "norhar2",
+    "subregion": "Pennsylvania"
   }
 ]
