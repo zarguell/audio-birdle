@@ -122,5 +122,19 @@
     "answerHash": "59fb4060",
     "id": "norhar2",
     "subregion": "Pennsylvania"
+  },
+  {
+    "date": "2026-08-15",
+    "region": "us",
+    "answerHash": "58ddce91",
+    "id": "harduc",
+    "subregion": "Wyoming"
+  },
+  {
+    "date": "2026-08-15",
+    "region": "us-lower48",
+    "answerHash": "47c8a158",
+    "id": "easmea",
+    "subregion": "Pennsylvania"
   }
 ]

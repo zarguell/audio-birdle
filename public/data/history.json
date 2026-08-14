@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-04-16",
-      "id": "towwar",
-      "name": "Townsend's Warbler",
-      "subregion": "Arizona"
-    },
-    {
       "date": "2026-04-17",
       "id": "coohaw",
       "name": "Cooper's Hawk",
@@ -821,15 +815,15 @@
       "id": "haiwoo",
       "name": "Hairy Woodpecker",
       "subregion": "North Dakota"
+    },
+    {
+      "date": "2026-08-15",
+      "id": "harduc",
+      "name": "Harlequin Duck",
+      "subregion": "Wyoming"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-04-16",
-      "id": "willet1",
-      "name": "Willet",
-      "subregion": "Arizona"
-    },
     {
       "date": "2026-04-17",
       "id": "buffle",
@@ -1644,6 +1638,12 @@
       "date": "2026-08-14",
       "id": "norhar2",
       "name": "Northern Harrier",
+      "subregion": "Pennsylvania"
+    },
+    {
+      "date": "2026-08-15",
+      "id": "easmea",
+      "name": "Eastern Meadowlark",
       "subregion": "Pennsylvania"
     }
   ]
