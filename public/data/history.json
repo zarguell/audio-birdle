@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-04-17",
-      "id": "coohaw",
-      "name": "Cooper's Hawk",
-      "subregion": "Rhode Island"
-    },
-    {
       "date": "2026-04-18",
       "id": "mutswa",
       "name": "Mute Swan",
@@ -821,15 +815,15 @@
       "id": "harduc",
       "name": "Harlequin Duck",
       "subregion": "Wyoming"
+    },
+    {
+      "date": "2026-08-16",
+      "id": "lcspet",
+      "name": "Leach's Storm-Petrel",
+      "subregion": "Oregon"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-04-17",
-      "id": "buffle",
-      "name": "Bufflehead",
-      "subregion": "Rhode Island"
-    },
     {
       "date": "2026-04-18",
       "id": "cangoo",
@@ -1645,6 +1639,12 @@
       "id": "easmea",
       "name": "Eastern Meadowlark",
       "subregion": "Pennsylvania"
+    },
+    {
+      "date": "2026-08-16",
+      "id": "plsvir",
+      "name": "Plumbeous Vireo",
+      "subregion": "South Dakota"
     }
   ]
 }

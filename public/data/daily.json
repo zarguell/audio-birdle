@@ -136,5 +136,19 @@
     "answerHash": "47c8a158",
     "id": "easmea",
     "subregion": "Pennsylvania"
+  },
+  {
+    "date": "2026-08-16",
+    "region": "us",
+    "answerHash": "a9e892c7",
+    "id": "lcspet",
+    "subregion": "Oregon"
+  },
+  {
+    "date": "2026-08-16",
+    "region": "us-lower48",
+    "answerHash": "a8b35062",
+    "id": "plsvir",
+    "subregion": "South Dakota"
   }
 ]
