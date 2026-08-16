@@ -150,5 +150,19 @@
     "answerHash": "a8b35062",
     "id": "plsvir",
     "subregion": "South Dakota"
+  },
+  {
+    "date": "2026-08-17",
+    "region": "us",
+    "answerHash": "446665f0",
+    "id": "chswar",
+    "subregion": "Tennessee"
+  },
+  {
+    "date": "2026-08-17",
+    "region": "us-lower48",
+    "answerHash": "b22fc7f3",
+    "id": "brwhaw",
+    "subregion": "Michigan"
   }
 ]

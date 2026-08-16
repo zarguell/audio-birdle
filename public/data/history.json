@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-04-18",
-      "id": "mutswa",
-      "name": "Mute Swan",
-      "subregion": "West Virginia"
-    },
-    {
       "date": "2026-04-19",
       "id": "brnowl",
       "name": "American Barn Owl",
@@ -821,15 +815,15 @@
       "id": "lcspet",
       "name": "Leach's Storm-Petrel",
       "subregion": "Oregon"
+    },
+    {
+      "date": "2026-08-17",
+      "id": "chswar",
+      "name": "Chestnut-sided Warbler",
+      "subregion": "Tennessee"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-04-18",
-      "id": "cangoo",
-      "name": "Canada Goose",
-      "subregion": "West Virginia"
-    },
     {
       "date": "2026-04-19",
       "id": "chispa",
@@ -1645,6 +1639,12 @@
       "id": "plsvir",
       "name": "Plumbeous Vireo",
       "subregion": "South Dakota"
+    },
+    {
+      "date": "2026-08-17",
+      "id": "brwhaw",
+      "name": "Broad-winged Hawk",
+      "subregion": "Michigan"
     }
   ]
 }
