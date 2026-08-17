@@ -164,5 +164,19 @@
     "answerHash": "b22fc7f3",
     "id": "brwhaw",
     "subregion": "Michigan"
+  },
+  {
+    "date": "2026-08-18",
+    "region": "us",
+    "answerHash": "defcc654",
+    "id": "houspa",
+    "subregion": "Tennessee"
+  },
+  {
+    "date": "2026-08-18",
+    "region": "us-lower48",
+    "answerHash": "b8845ee4",
+    "id": "orcori",
+    "subregion": "Michigan"
   }
 ]

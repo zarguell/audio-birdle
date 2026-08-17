@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-04-19",
-      "id": "brnowl",
-      "name": "American Barn Owl",
-      "subregion": "Louisiana"
-    },
-    {
       "date": "2026-04-20",
       "id": "nrwswa",
       "name": "Northern Rough-winged Swallow",
@@ -821,15 +815,15 @@
       "id": "chswar",
       "name": "Chestnut-sided Warbler",
       "subregion": "Tennessee"
+    },
+    {
+      "date": "2026-08-18",
+      "id": "houspa",
+      "name": "House Sparrow",
+      "subregion": "Tennessee"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-04-19",
-      "id": "chispa",
-      "name": "Chipping Sparrow",
-      "subregion": "Louisiana"
-    },
     {
       "date": "2026-04-20",
       "id": "rocpig",
@@ -1644,6 +1638,12 @@
       "date": "2026-08-17",
       "id": "brwhaw",
       "name": "Broad-winged Hawk",
+      "subregion": "Michigan"
+    },
+    {
+      "date": "2026-08-18",
+      "id": "orcori",
+      "name": "Orchard Oriole",
       "subregion": "Michigan"
     }
   ]
