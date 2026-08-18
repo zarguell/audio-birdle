@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-04-20",
-      "id": "nrwswa",
-      "name": "Northern Rough-winged Swallow",
-      "subregion": "Vermont"
-    },
-    {
       "date": "2026-04-21",
       "id": "gockin",
       "name": "Golden-crowned Kinglet",
@@ -821,15 +815,15 @@
       "id": "houspa",
       "name": "House Sparrow",
       "subregion": "Tennessee"
+    },
+    {
+      "date": "2026-08-19",
+      "id": "sumtan",
+      "name": "Summer Tanager",
+      "subregion": "Georgia"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-04-20",
-      "id": "rocpig",
-      "name": "Rock Pigeon",
-      "subregion": "Kentucky"
-    },
     {
       "date": "2026-04-21",
       "id": "blkvul",
@@ -1645,6 +1639,12 @@
       "id": "orcori",
       "name": "Orchard Oriole",
       "subregion": "Michigan"
+    },
+    {
+      "date": "2026-08-19",
+      "id": "orabis1",
+      "name": "Northern Red Bishop",
+      "subregion": "California"
     }
   ]
 }

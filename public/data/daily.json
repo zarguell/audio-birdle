@@ -178,5 +178,19 @@
     "answerHash": "b8845ee4",
     "id": "orcori",
     "subregion": "Michigan"
+  },
+  {
+    "date": "2026-08-19",
+    "region": "us",
+    "answerHash": "a787a774",
+    "id": "sumtan",
+    "subregion": "Georgia"
+  },
+  {
+    "date": "2026-08-19",
+    "region": "us-lower48",
+    "answerHash": "4041a807",
+    "id": "orabis1",
+    "subregion": "California"
   }
 ]
