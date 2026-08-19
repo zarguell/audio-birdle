@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-04-21",
-      "id": "gockin",
-      "name": "Golden-crowned Kinglet",
-      "subregion": "Illinois"
-    },
-    {
       "date": "2026-04-22",
       "id": "brnthr",
       "name": "Brown Thrasher",
@@ -821,15 +815,15 @@
       "id": "sumtan",
       "name": "Summer Tanager",
       "subregion": "Georgia"
+    },
+    {
+      "date": "2026-08-20",
+      "id": "lobdow",
+      "name": "Long-billed Dowitcher",
+      "subregion": "Massachusetts"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-04-21",
-      "id": "blkvul",
-      "name": "Black Vulture",
-      "subregion": "Mississippi"
-    },
     {
       "date": "2026-04-22",
       "id": "gadwal",
@@ -1645,6 +1639,12 @@
       "id": "orabis1",
       "name": "Northern Red Bishop",
       "subregion": "California"
+    },
+    {
+      "date": "2026-08-20",
+      "id": "categr1",
+      "name": "Western Cattle-Egret",
+      "subregion": "Kansas"
     }
   ]
 }

@@ -192,5 +192,19 @@
     "answerHash": "4041a807",
     "id": "orabis1",
     "subregion": "California"
+  },
+  {
+    "date": "2026-08-20",
+    "region": "us",
+    "answerHash": "9ccc701d",
+    "id": "lobdow",
+    "subregion": "Massachusetts"
+  },
+  {
+    "date": "2026-08-20",
+    "region": "us-lower48",
+    "answerHash": "07ad7413",
+    "id": "categr1",
+    "subregion": "Kansas"
   }
 ]
