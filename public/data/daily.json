@@ -206,5 +206,19 @@
     "answerHash": "07ad7413",
     "id": "categr1",
     "subregion": "Kansas"
+  },
+  {
+    "date": "2026-08-21",
+    "region": "us",
+    "answerHash": "a3628ed3",
+    "id": "yetvir",
+    "subregion": "Missouri"
+  },
+  {
+    "date": "2026-08-21",
+    "region": "us-lower48",
+    "answerHash": "097cc09e",
+    "id": "btnwar",
+    "subregion": "Maine"
   }
 ]

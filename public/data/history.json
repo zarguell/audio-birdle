@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-04-22",
-      "id": "brnthr",
-      "name": "Brown Thrasher",
-      "subregion": "Maine"
-    },
-    {
       "date": "2026-04-23",
       "id": "tribla",
       "name": "Tricolored Blackbird",
@@ -821,15 +815,15 @@
       "id": "lobdow",
       "name": "Long-billed Dowitcher",
       "subregion": "Massachusetts"
+    },
+    {
+      "date": "2026-08-21",
+      "id": "yetvir",
+      "name": "Yellow-throated Vireo",
+      "subregion": "Missouri"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-04-22",
-      "id": "gadwal",
-      "name": "Gadwall",
-      "subregion": "Maine"
-    },
     {
       "date": "2026-04-23",
       "id": "eargre",
@@ -1645,6 +1639,12 @@
       "id": "categr1",
       "name": "Western Cattle-Egret",
       "subregion": "Kansas"
+    },
+    {
+      "date": "2026-08-21",
+      "id": "btnwar",
+      "name": "Black-throated Green Warbler",
+      "subregion": "Maine"
     }
   ]
 }
