@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-04-23",
-      "id": "tribla",
-      "name": "Tricolored Blackbird",
-      "subregion": "Nevada"
-    },
-    {
       "date": "2026-04-24",
       "id": "wesblu",
       "name": "Western Bluebird",
@@ -821,15 +815,15 @@
       "id": "yetvir",
       "name": "Yellow-throated Vireo",
       "subregion": "Missouri"
+    },
+    {
+      "date": "2026-08-22",
+      "id": "buwwar",
+      "name": "Blue-winged Warbler",
+      "subregion": "Delaware"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-04-23",
-      "id": "eargre",
-      "name": "Eared Grebe",
-      "subregion": "Nevada"
-    },
     {
       "date": "2026-04-24",
       "id": "solsan",
@@ -1645,6 +1639,12 @@
       "id": "btnwar",
       "name": "Black-throated Green Warbler",
       "subregion": "Maine"
+    },
+    {
+      "date": "2026-08-22",
+      "id": "easpho",
+      "name": "Eastern Phoebe",
+      "subregion": "Massachusetts"
     }
   ]
 }

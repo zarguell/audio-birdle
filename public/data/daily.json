@@ -220,5 +220,19 @@
     "answerHash": "097cc09e",
     "id": "btnwar",
     "subregion": "Maine"
+  },
+  {
+    "date": "2026-08-22",
+    "region": "us",
+    "answerHash": "01631cc6",
+    "id": "buwwar",
+    "subregion": "Delaware"
+  },
+  {
+    "date": "2026-08-22",
+    "region": "us-lower48",
+    "answerHash": "27a7a76a",
+    "id": "easpho",
+    "subregion": "Massachusetts"
   }
 ]
