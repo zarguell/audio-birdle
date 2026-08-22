@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-04-24",
-      "id": "wesblu",
-      "name": "Western Bluebird",
-      "subregion": "Nevada"
-    },
-    {
       "date": "2026-04-25",
       "id": "mouchi",
       "name": "Mountain Chickadee",
@@ -821,15 +815,15 @@
       "id": "buwwar",
       "name": "Blue-winged Warbler",
       "subregion": "Delaware"
+    },
+    {
+      "date": "2026-08-23",
+      "id": "norpar",
+      "name": "Northern Parula",
+      "subregion": "Massachusetts"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-04-24",
-      "id": "solsan",
-      "name": "Solitary Sandpiper",
-      "subregion": "Utah"
-    },
     {
       "date": "2026-04-25",
       "id": "snobun",
@@ -1645,6 +1639,12 @@
       "id": "easpho",
       "name": "Eastern Phoebe",
       "subregion": "Massachusetts"
+    },
+    {
+      "date": "2026-08-23",
+      "id": "rewbla",
+      "name": "Red-winged Blackbird",
+      "subregion": "Iowa"
     }
   ]
 }

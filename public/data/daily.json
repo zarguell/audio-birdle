@@ -234,5 +234,19 @@
     "answerHash": "27a7a76a",
     "id": "easpho",
     "subregion": "Massachusetts"
+  },
+  {
+    "date": "2026-08-23",
+    "region": "us",
+    "answerHash": "c02a43fa",
+    "id": "norpar",
+    "subregion": "Massachusetts"
+  },
+  {
+    "date": "2026-08-23",
+    "region": "us-lower48",
+    "answerHash": "047ca057",
+    "id": "rewbla",
+    "subregion": "Iowa"
   }
 ]
