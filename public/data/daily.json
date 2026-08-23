@@ -248,5 +248,19 @@
     "answerHash": "047ca057",
     "id": "rewbla",
     "subregion": "Iowa"
+  },
+  {
+    "date": "2026-08-24",
+    "region": "us",
+    "answerHash": "c902cd01",
+    "id": "norsho",
+    "subregion": "Maryland"
+  },
+  {
+    "date": "2026-08-24",
+    "region": "us-lower48",
+    "answerHash": "944aa39b",
+    "id": "bnhcow",
+    "subregion": "Massachusetts"
   }
 ]

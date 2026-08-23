@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-04-25",
-      "id": "mouchi",
-      "name": "Mountain Chickadee",
-      "subregion": "Washington"
-    },
-    {
       "date": "2026-04-26",
       "id": "pibgre",
       "name": "Pied-billed Grebe",
@@ -821,15 +815,15 @@
       "id": "norpar",
       "name": "Northern Parula",
       "subregion": "Massachusetts"
+    },
+    {
+      "date": "2026-08-24",
+      "id": "norsho",
+      "name": "Northern Shoveler",
+      "subregion": "Maryland"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-04-25",
-      "id": "snobun",
-      "name": "Snow Bunting",
-      "subregion": "Minnesota"
-    },
     {
       "date": "2026-04-26",
       "id": "harduc",
@@ -1645,6 +1639,12 @@
       "id": "rewbla",
       "name": "Red-winged Blackbird",
       "subregion": "Iowa"
+    },
+    {
+      "date": "2026-08-24",
+      "id": "bnhcow",
+      "name": "Brown-headed Cowbird",
+      "subregion": "Massachusetts"
     }
   ]
 }
