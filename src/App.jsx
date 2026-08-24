@@ -5,6 +5,7 @@ import RegionSelector from "./components/RegionSelector";
 import ModeSelector from "./components/ModeSelector";
 import StatsView from "./components/StatsView";
 import SettingsView from "./components/SettingsView";
+import HistoryView from "./components/HistoryView";
 import GameView from "./components/GameView";
 import { useGameData } from "./hooks/useGameData";
 import { usePersistence } from "./hooks/usePersistence";
@@ -150,6 +151,7 @@ export default function AudioBirdle() {
         onBack={() => setCurrentView(VIEWS.MODE_SELECTOR)}
         onChangeRegion={() => setSelectedRegion(null)}
         onViewStats={() => setCurrentView(VIEWS.STATS)}
+        onViewHistory={() => setCurrentView(VIEWS.HISTORY)}
         onResetTodaysGame={() => {
           if (!selectedRegion) return;
           const resetGame = (mode) => ({
@@ -195,6 +197,18 @@ export default function AudioBirdle() {
       <StatsView
         stats={stats}
         regions={regions}
+        onBack={() => setCurrentView(VIEWS.SETTINGS)}
+      />
+    );
+  }
+
+  if (currentView === VIEWS.HISTORY) {
+    return (
+      <HistoryView
+        region={selectedRegion}
+        regions={regions}
+        birds={birds}
+        today={today}
         onBack={() => setCurrentView(VIEWS.SETTINGS)}
       />
     );

@@ -35,4 +35,5 @@ export const VIEWS = {
   REGION_SELECTOR: "region-selector",
   MODE_SELECTOR: "mode-selector",
   STATS: "stats",
+  HISTORY: "history",
 };

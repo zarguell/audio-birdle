@@ -1,4 +1,4 @@
-import { BarChart3, RefreshCw } from "lucide-react";
+import { BarChart3, RefreshCw, CalendarDays } from "lucide-react";
 
 export default function SettingsView({
   selectedRegion,
@@ -6,6 +6,7 @@ export default function SettingsView({
   onBack,
   onChangeRegion,
   onViewStats,
+  onViewHistory,
   onResetTodaysGame,
   onResetAllData,
   onRefreshData,
@@ -49,6 +50,14 @@ export default function SettingsView({
           >
             <BarChart3 className="w-4 h-4" />
             View Stats
+          </button>
+
+          <button
+            onClick={onViewHistory}
+            className="w-full bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-indigo-600 transition-colors flex items-center justify-center gap-2"
+          >
+            <CalendarDays className="w-4 h-4" />
+            Challenge Archive
           </button>
 
           <button
