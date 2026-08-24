@@ -40,10 +40,21 @@ export function useAudioPlayer(initialAudioIndex = 0) {
     }
   }, [isPlaying, audioControls]);
 
-  const handleAudioError = useCallback(() => {
-    setAudioError(true);
-    setIsPlaying(false);
-  }, []);
+  const handleAudioError = useCallback(
+    (maxIndex) => {
+      // Auto-advance to the next recording on load failure — a single dead
+      // or slow CDN URL must not disable playback for the whole challenge
+      // (e.g. transient failures on a cold PWA launch). Exhausted list ->
+      // surface the error as before.
+      if (typeof maxIndex === "number" && selectedAudioIndex < maxIndex) {
+        setSelectedAudioIndex((i) => i + 1);
+        return;
+      }
+      setAudioError(true);
+      setIsPlaying(false);
+    },
+    [selectedAudioIndex],
+  );
 
   // Natural playback end must NOT be treated as an error: just clear the
   // playing state so the Play button re-enables without an error message.

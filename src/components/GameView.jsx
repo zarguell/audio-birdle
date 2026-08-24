@@ -570,7 +570,9 @@ export default function GameView({
                     : ""
                 }
                 onEnded={handleAudioEnded}
-                onError={handleAudioError}
+                onError={() =>
+                  handleAudioError((currentBird?.audioUrl?.length || 1) - 1)
+                }
                 onLoadStart={() => setAudioError(false)}
                 preload="none"
                 key={`${currentBird?.id || "bird"}-${selectedAudioIndex}`}
@@ -578,7 +580,7 @@ export default function GameView({
 
               <button
                 onClick={toggleAudio}
-                disabled={!currentBird || audioError}
+                disabled={!currentBird}
                 className={`${c.bg} ${c.hover} text-white px-6 py-3 rounded-lg flex items-center gap-2 mx-auto transition-colors disabled:bg-gray-300`}
               >
                 {isPlaying ? (
