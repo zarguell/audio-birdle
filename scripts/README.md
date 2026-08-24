@@ -75,11 +75,15 @@ python3 generate-daily-region-data.py \
 
 # 7b. OPTIONAL: enhance the shipped birds.json in place instead of
 #     regenerating from scratch (keeps existing species + ML clips,
-#     adds learn-more links, and merges xc-audio-fetch.py clips with
-#     attribution where coverage is thin)
+#     adds learn-more links + fun facts from local data, and merges
+#     xc-audio-fetch.py clips with attribution where coverage is thin)
 python3 enhance-bird-data.py ../public/data/birds.json \
+  --subregions ../public/data/daily-subregion-birds.json \
   --xc-urls data/regions/us-taxonomy-urls.json
-#     Use --dry-run first to preview the summary.
+#     Facts combine subregion prevalence with family context
+#     ("Recorded in 31 of 51 US states/provinces - a member of the
+#     thrush family (Turdidae)."). Use --dry-run first to preview
+#     the summary. Guarded by tests/integration/test_data_pipeline_integration.py.
 
 # 8. Generate daily challenges (automated via GitHub Actions)
 python3 generate-daily-birds.py --days 7 \

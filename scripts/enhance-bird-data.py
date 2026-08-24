@@ -37,6 +37,7 @@ Usage:
 import argparse
 import importlib.util
 import json
+import re
 import sys
 from collections import Counter
 from pathlib import Path
@@ -51,6 +52,10 @@ _gen_spec.loader.exec_module(game_data_generator)
 
 ML_CDN_HOST = "cdn.download.ams.birds.cornell.edu"
 EBIRD_SPECIES_URL = "https://ebird.org/species/{code}"
+SUBREGION_LABEL = "US states/provinces"
+
+# Family strings look like "Turdidae (Thrushes)" or just "Turdidae".
+FAMILY_RE = re.compile(r"^\s*([A-Za-z][A-Za-z-]*)(?:\s*\(([^)]+)\))?\s*$")
 
 
 def is_https_url(url):
@@ -116,6 +121,110 @@ def quality_rank(quality):
     )
 
 
+def parse_family(family):
+    """Split a family string into (scientific, common) parts.
+
+    "Turdidae (Thrushes)" -> ("Turdidae", "Thrushes"); a missing or
+    unparseable family yields (None, None).
+    """
+    match = FAMILY_RE.match(family or "")
+    if not match:
+        return None, None
+    return match.group(1), match.group(2)
+
+
+def singularize_family_name(name):
+    """Best-effort singular form of a simple family common name.
+
+    "Thrushes" -> "thrush", "Flycatchers" -> "flycatcher". Compound
+    names (commas / "and", e.g. "Ducks, Geese, and Waterfowl") cannot be
+    singularized safely and return None so callers use the fallback form.
+    """
+    lowered = name.strip().lower()
+    if not lowered or "," in lowered or " and " in lowered:
+        return None
+    if lowered.endswith("ss") or not lowered.endswith("s"):
+        return None if lowered.endswith("ss") else lowered
+    # -es after sibilants ("Thrushes") or vowel+es gets the -es dropped;
+    # everything else ("Flycatchers", "Owls", "Vireos") just loses the s.
+    if lowered.endswith("es") and len(lowered) > 4:
+        stem = lowered[:-2]
+        if lowered[-4:-2] in ("sh", "ch") or lowered[-3] in "sxz":
+            return stem
+    return lowered[:-1]
+
+
+def build_fact(bird, prevalence=None, total_subregions=None):
+    """Build a one-sentence fact for a bird from local data.
+
+    Combines subregion prevalence ("Recorded in 31 of 51 US
+    states/provinces") with family context ("a member of the thrush
+    family (Turdidae)") when each source is available.
+
+    Returns:
+        str: The fact sentence, or "" when neither part is available.
+    """
+    sci, com = parse_family(bird.get("family"))
+
+    parts = []
+    if prevalence and total_subregions:
+        parts.append(
+            f"Recorded in {prevalence} of {total_subregions} {SUBREGION_LABEL}"
+        )
+
+    if sci and com:
+        singular = singularize_family_name(com)
+        if singular:
+            parts.append(f"a member of the {singular} family ({sci})")
+        else:
+            parts.append(f"a member of the family {sci} ({com})")
+    elif sci:
+        parts.append(f"a member of the family {sci}")
+
+    if not parts:
+        return ""
+    if len(parts) == 1:
+        # Family-only reads better capitalized as a sentence start.
+        return parts[0][0].upper() + parts[0][1:] + "."
+    return " \u2014 ".join(parts) + "."
+
+
+def backfill_facts(bird, prevalence, total_subregions):
+    """Set bird.facts when empty, using local prevalence + taxonomy.
+
+    Returns:
+        bool: True when a fact was added.
+    """
+    if bird.get("facts") or not bird.get("id"):
+        return False
+    fact = build_fact(bird, prevalence, total_subregions)
+    if not fact:
+        return False
+    bird["facts"] = fact
+    return True
+
+
+def compute_prevalence(subregions_by_region):
+    """Count, per species, how many subregions report it.
+
+    Args:
+        subregions_by_region: e.g. daily-subregion-birds.json's
+            {"us": {"Alabama": [{"id": ...}, ...], ...}} mapping.
+
+    Returns:
+        tuple: (prevalence_by_id, total_subregions)
+    """
+    prevalence = Counter()
+    total = 0
+    for subregion, birds in subregions_by_region.items():
+        total += 1
+        for bird in birds or []:
+            bird_id = bird.get("id")
+            if bird_id:
+                prevalence[bird_id] += 1
+    return prevalence, total
+
+
 def merge_xc_clips(bird, xc_entries, max_clips=10):
     """Append Xeno-canto clips to a bird's audioUrl list in place.
 
@@ -169,13 +278,27 @@ def load_xc_entries(xc_urls_path):
     return grouped
 
 
-def enhance_region(birds, xc_by_code=None, max_clips=10, learn_more=True):
+def enhance_region(
+    birds,
+    xc_by_code=None,
+    max_clips=10,
+    learn_more=True,
+    prevalence=None,
+    total_subregions=0,
+    facts=True,
+):
     """Apply all enhancements to one region's bird list in place.
+
+    Args:
+        prevalence: Optional Counter of species -> subregion count.
+        total_subregions: Total subregions behind ``prevalence``.
+        facts: Whether to backfill empty ``facts`` fields.
 
     Returns:
         dict: summary statistics.
     """
     xc_by_code = xc_by_code or {}
+    prevalence = prevalence or Counter()
     stats = Counter()
     clip_counts_before = [len(b.get("audioUrl") or []) for b in birds]
 
@@ -183,6 +306,10 @@ def enhance_region(birds, xc_by_code=None, max_clips=10, learn_more=True):
         stats["clips_normalized"] += normalize_audio_urls(bird)
         if learn_more and backfill_learn_more(bird):
             stats["learn_more_added"] += 1
+        if facts and backfill_facts(
+            bird, prevalence.get(bird.get("id")), total_subregions
+        ):
+            stats["facts_added"] += 1
 
         entries = xc_by_code.get(bird.get("id"), [])
         if entries:
@@ -232,6 +359,19 @@ def main():
         help="Skip learnMoreUrl backfill",
     )
     parser.add_argument(
+        "--subregions",
+        type=Path,
+        default=None,
+        help="daily-subregion-birds.json path; enables fact generation "
+        "(prevalence + family context)",
+    )
+    parser.add_argument(
+        "--no-facts",
+        action="store_true",
+        help="Skip fact backfill (facts are generated when --subregions "
+        "is provided)",
+    )
+    parser.add_argument(
         "--dry-run",
         action="store_true",
         help="Print the summary without writing the file",
@@ -247,6 +387,23 @@ def main():
 
     regions = [args.region] if args.region else list(data.keys())
     xc_by_code = load_xc_entries(args.xc_urls) if args.xc_urls else {}
+
+    prevalence, total_subregions = Counter(), 0
+    if args.subregions:
+        try:
+            with open(args.subregions, "r", encoding="utf-8") as file:
+                subregions_data = json.load(file)
+            # Facts describe species, which are region-shared; use the
+            # first (parent) region's subregion lists for prevalence.
+            parent_lists = next(iter(subregions_data.values()), {})
+            prevalence, total_subregions = compute_prevalence(parent_lists)
+            print(
+                f"📊 Fact source: {len(prevalence)} species across "
+                f"{total_subregions} subregions in {args.subregions.name}"
+            )
+        except (OSError, json.JSONDecodeError, StopIteration) as error:
+            print(f"❌ Error loading {args.subregions}: {error}")
+            sys.exit(1)
     matched_codes = set()
 
     total_stats = Counter()
@@ -260,6 +417,9 @@ def main():
             xc_by_code=xc_by_code,
             max_clips=args.max_clips,
             learn_more=not args.no_learn_more,
+            prevalence=prevalence,
+            total_subregions=total_subregions,
+            facts=not args.no_facts,
         )
         matched_codes.update(b.get("id") for b in birds if b.get("id") in xc_by_code)
         print(f"🌍 Region '{region}':")

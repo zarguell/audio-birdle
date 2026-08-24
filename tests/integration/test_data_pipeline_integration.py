@@ -59,6 +59,13 @@ class TestDataPipelineIntegration:
             return json.load(f)
 
     @pytest.fixture
+    def daily_subregion_json(self, data_dir):
+        """Load daily-subregion-birds.json."""
+        path = data_dir / "daily-subregion-birds.json"
+        with open(path, "r", encoding="utf-8") as f:
+            return json.load(f)
+
+    @pytest.fixture
     def history_json(self, data_dir):
         """Load history.json."""
         path = data_dir / "history.json"
@@ -232,6 +239,101 @@ class TestDataPipelineIntegration:
                     )
                     if isinstance(entry, dict):
                         assert isinstance(entry.get("attribution", {}), dict)
+
+    @staticmethod
+    def test_bird_audio_urls_unique_and_https(birds_json):
+        """Clip URLs must be unique globally and served over https."""
+        seen = {}
+        for region, birds in birds_json.items():
+            for bird in birds:
+                for entry in bird["audioUrl"]:
+                    url = entry if isinstance(entry, str) else entry.get("url")
+                    assert url.startswith("https"), f"Non-https URL: {url}"
+                    if url in seen:
+                        pytest.fail(
+                            f"Duplicate clip URL {url} in "
+                            f"{seen[url]} and {region}/{bird['id']}"
+                        )
+                    seen[url] = f"{region}/{bird['id']}"
+
+    @staticmethod
+    def test_daily_entries_have_consistent_ids(birds_json, daily_json):
+        """Every daily entry must carry an id whose canonical hash matches
+        answerHash (frontend bird lookup hashes ids, not names)."""
+        hash_fn = generate_daily_birds.hash_bird_id
+        for entry in daily_json:
+            assert entry.get("id"), f"daily.json entry missing id: {entry}"
+            assert hash_fn(entry["id"]) == entry["answerHash"], (
+                f"id/answerHash mismatch for {entry['date']}/{entry['region']}: "
+                f"{entry['id']} vs {entry['answerHash']}"
+            )
+
+    @staticmethod
+    def test_daily_answer_hashes_resolve(birds_json, regions_json, daily_json):
+        """Every answerHash must resolve to a bird in the region pool
+        (virtual regions resolve against their parent's pool)."""
+        parents = {
+            r["id"]: r.get("parentRegion", r["id"])
+            for r in regions_json
+        }
+        pools = {}
+        for region, birds in birds_json.items():
+            pools[region] = {
+                generate_daily_birds.hash_bird_id(b["id"]) for b in birds
+            }
+        for entry in daily_json:
+            pool = pools.get(parents.get(entry["region"], entry["region"]), set())
+            assert entry["answerHash"] in pool, (
+                f"Unresolved answerHash {entry['answerHash']} for "
+                f"{entry['date']}/{entry['region']}"
+            )
+
+    @staticmethod
+    def test_lower48_daily_excludes_ak_hi_only_species(
+        birds_json, regions_json, daily_json, daily_subregion_json
+    ):
+        """us-lower48 daily entries must never use Alaska/Hawaii-only species
+        or subregions (regions.json excludedSubregions must be honored)."""
+        us_lists = daily_subregion_json.get("us", {})
+        ak_hi = {"Alaska", "Hawaii"}
+        other_ids = {
+            b["id"]
+            for name, birds in us_lists.items()
+            if name not in ak_hi
+            for b in (birds or [])
+        }
+        excluded_only = {
+            b["id"]
+            for name in ak_hi
+            for b in (us_lists.get(name) or [])
+            if b["id"] not in other_ids
+        }
+        assert excluded_only, "expected some Alaska/Hawaii-only species"
+
+        for entry in daily_json:
+            if entry["region"] != "us-lower48":
+                continue
+            assert entry.get("subregion") not in ak_hi, (
+                f"lower48 entry used excluded subregion: {entry}"
+            )
+            assert entry.get("id") not in excluded_only, (
+                f"lower48 entry used AK/HI-only species: {entry}"
+            )
+
+    @staticmethod
+    def test_birds_have_facts_and_learn_more(birds_json):
+        """Offline enhancements must survive regeneration: every bird ships
+        with a non-empty fact and learnMoreUrl (enhance-bird-data.py)."""
+        missing_facts = []
+        missing_learn = []
+        for region, birds in birds_json.items():
+            for bird in birds:
+                if not bird.get("facts"):
+                    missing_facts.append(f"{region}/{bird['id']}")
+                if not bird.get("learnMoreUrl"):
+                    missing_learn.append(f"{region}/{bird['id']}")
+        assert not missing_facts, f"Birds missing facts: {missing_facts[:5]}"
+        assert not missing_learn, f"Birds missing learnMoreUrl: {missing_learn[:5]}"
 
     @staticmethod
     def test_daily_subregion_references(birds_json, daily_json, regions_json):

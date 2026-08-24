@@ -242,6 +242,98 @@ class TestLoadXcEntries:
         assert entry["attribution"]["quality"] == "A"
 
 
+class TestFacts:
+    """Test fact generation from local prevalence + taxonomy"""
+
+    @staticmethod
+    def test_prevalence_and_family():
+        bird = make_bird(family="Turdidae (Thrushes)")
+        fact = enhance_bird_data.build_fact(bird, prevalence=31, total_subregions=51)
+        assert fact == (
+            "Recorded in 31 of 51 US states/provinces \u2014 "
+            "a member of the thrush family (Turdidae)."
+        )
+
+    @staticmethod
+    def test_compound_family_uses_fallback_form():
+        bird = make_bird(family="Anatidae (Ducks, Geese, and Waterfowl)")
+        fact = enhance_bird_data.build_fact(bird, prevalence=40, total_subregions=51)
+        assert fact == (
+            "Recorded in 40 of 51 US states/provinces \u2014 "
+            "a member of the family Anatidae (Ducks, Geese, and Waterfowl)."
+        )
+
+    @staticmethod
+    def test_plural_families_singularized():
+        cases = {
+            "Tyrannidae (Tyrant Flycatchers)": "tyrant flycatcher",
+            "Strigidae (Owls)": "owl",
+            "Vireonidae (Vireos)": "vireo",
+        }
+        for family, singular in cases.items():
+            bird = make_bird(family=family)
+            fact = enhance_bird_data.build_fact(bird, prevalence=5, total_subregions=51)
+            assert f"a member of the {singular} family" in fact, fact
+
+    @staticmethod
+    def test_no_prevalence_family_only():
+        bird = make_bird(family="Turdidae (Thrushes)")
+        fact = enhance_bird_data.build_fact(bird)
+        assert fact == "A member of the thrush family (Turdidae)."
+
+    @staticmethod
+    def test_zero_prevalence_is_family_only():
+        bird = make_bird(family="Turdidae (Thrushes)")
+        fact = enhance_bird_data.build_fact(bird, prevalence=0, total_subregions=51)
+        assert fact == "A member of the thrush family (Turdidae)."
+
+    @staticmethod
+    def test_prevalence_only_when_no_family():
+        bird = make_bird(family="")
+        fact = enhance_bird_data.build_fact(bird, prevalence=10, total_subregions=51)
+        assert fact == "Recorded in 10 of 51 US states/provinces."
+
+    @staticmethod
+    def test_no_data_no_fact():
+        bird = make_bird(family="")
+        assert enhance_bird_data.build_fact(bird, prevalence=0, total_subregions=0) == ""
+        assert enhance_bird_data.build_fact(bird) == ""
+
+    @staticmethod
+    def test_backfill_facts_respects_existing():
+        bird = make_bird(family="Turdidae (Thrushes)", facts="Custom fact.")
+        assert enhance_bird_data.backfill_facts(bird, 5, 51) is False
+        assert bird["facts"] == "Custom fact."
+
+    @staticmethod
+    def test_backfill_facts_fills_empty():
+        bird = make_bird(family="Turdidae (Thrushes)")
+        assert enhance_bird_data.backfill_facts(bird, 31, 51) is True
+        assert bird["facts"].startswith("Recorded in 31 of 51")
+
+
+class TestComputePrevalence:
+    """Test subregion prevalence counting"""
+
+    @staticmethod
+    def test_counts_and_totals():
+        data = {
+            "Alabama": [{"id": "amerob"}, {"id": "barswa"}],
+            "Alaska": [{"id": "amerob"}],
+        }
+        prevalence, total = enhance_bird_data.compute_prevalence(data)
+        assert total == 2
+        assert prevalence["amerob"] == 2
+        assert prevalence["barswa"] == 1
+
+    @staticmethod
+    def test_handles_none_and_missing_ids():
+        data = {"Alabama": None, "Alaska": [{"id": ""}, {"id": "amerob"}]}
+        prevalence, total = enhance_bird_data.compute_prevalence(data)
+        assert total == 2
+        assert prevalence["amerob"] == 1
+
+
 class TestEndToEndMain:
     """Test main() CLI flow"""
 
@@ -331,6 +423,65 @@ class TestEndToEndMain:
         out = capsys.readouterr().out
         assert "xc_clips_added: 1" in out
         assert "unmatched (not in birds.json): 1" in out
+
+    @staticmethod
+    def test_facts_end_to_end(monkeypatch, tmp_path, capsys):
+        birds_file = tmp_path / "birds.json"
+        birds_file.write_text(json.dumps({"us": [make_bird()]}))
+        subs_file = tmp_path / "subs.json"
+        subs_file.write_text(
+            json.dumps(
+                {
+                    "us": {
+                        "Alabama": [{"id": "amerob"}],
+                        "Georgia": [{"id": "amerob"}],
+                        "Alaska": [],
+                    }
+                }
+            )
+        )
+        monkeypatch.setattr(
+            sys,
+            "argv",
+            [
+                "enhance-bird-data.py",
+                str(birds_file),
+                "--subregions",
+                str(subs_file),
+            ],
+        )
+        enhance_bird_data.main()
+
+        bird = json.loads(birds_file.read_text())["us"][0]
+        assert bird["facts"] == (
+            "Recorded in 2 of 3 US states/provinces \u2014 "
+            "a member of the thrush family (Turdidae)."
+        )
+        out = capsys.readouterr().out
+        assert "facts_added: 1" in out
+        assert "Fact source: " in out
+
+    @staticmethod
+    def test_no_facts_flag(monkeypatch, tmp_path, capsys):
+        birds_file = tmp_path / "birds.json"
+        birds_file.write_text(json.dumps({"us": [make_bird()]}))
+        subs_file = tmp_path / "subs.json"
+        subs_file.write_text(json.dumps({"us": {"Alabama": [{"id": "amerob"}]}}))
+        monkeypatch.setattr(
+            sys,
+            "argv",
+            [
+                "enhance-bird-data.py",
+                str(birds_file),
+                "--subregions",
+                str(subs_file),
+                "--no-facts",
+            ],
+        )
+        enhance_bird_data.main()
+        bird = json.loads(birds_file.read_text())["us"][0]
+        assert bird["facts"] == ""
+        assert "facts_added" not in capsys.readouterr().out
 
     @staticmethod
     def test_missing_file_exits(monkeypatch, tmp_path, capsys):
