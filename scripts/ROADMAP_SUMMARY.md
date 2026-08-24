@@ -2,7 +2,15 @@
 
 ## Executive Summary
 
-The Audio-Birdle scripts provide a pipeline for transforming eBird data into game content. The current workflow is **70% automated** but has a **critical manual bottleneck** in audio URL scraping that prevents easy scaling to new regions.
+The Audio-Birdle scripts provide a pipeline for transforming eBird data into game content. The workflow is now **fully automated**: the audio bottleneck was resolved by switching to the Xeno-canto API v3 (`xc-audio-fetch.py`), which also delivers per-clip metadata (quality, recordist, license, background species) that flows into `birds.json` attribution objects via `game-data-generator.py`.
+
+> **Resolution note (August 2026):** the originally-planned fix — replacing the
+> Selenium scraper with direct calls to the eBird/Macaulay media search API
+> (`media.ebird.org/api/v2/search`) — is no longer possible: the catalog and its
+> API now require CAS login (anonymous sessions get empty results), behind
+> Anubis proof-of-work bot protection. Xeno-canto is the maintained, documented,
+> key-gated public API for this data. Set `XC_API_KEY` (free key from
+> https://xeno-canto.org/account) to use the fetcher.
 
 ---
 

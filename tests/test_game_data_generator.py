@@ -275,6 +275,132 @@ class TestProcessTaxonomyData:
         ]
 
 
+class TestBuildAudioEntry:
+    """Test attribution-aware audioUrl entry construction"""
+
+    @staticmethod
+    def test_plain_string_legacy():
+        """Legacy plain URL strings get an empty attribution"""
+        entry = game_data_generator.build_audio_entry("http://x.com/a.mp3")
+        assert entry == {"url": "http://x.com/a.mp3", "attribution": {}}
+
+    @staticmethod
+    def test_record_with_metadata():
+        """URL records with metadata become attribution objects"""
+        record = {
+            "code": "amerob",
+            "page Url": "https://xeno-canto.org/694038",
+            "audio Url": "https://xeno-canto.org/694038/download",
+            "quality": "A",
+            "recordist": "Jacobo Ramil",
+            "license": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+            "recordedOn": "2021-12-23",
+            "location": "Ithaca, New York",
+            "country": "United States",
+            "soundType": "song",
+            "backgroundSpecies": ["Turdus viscivorus"],
+            "source": "xeno-canto",
+            "xcId": 694038,
+        }
+        entry = game_data_generator.build_audio_entry(record)
+        assert entry["url"] == "https://xeno-canto.org/694038/download"
+        assert entry["attribution"] == {
+            "quality": "A",
+            "recordist": "Jacobo Ramil",
+            "license": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+            "date": "2021-12-23",
+            "location": "Ithaca, New York",
+            "country": "United States",
+            "soundType": "song",
+            "backgroundSpecies": ["Turdus viscivorus"],
+            "source": "xeno-canto",
+            "xcId": 694038,
+            "sourceUrl": "https://xeno-canto.org/694038",
+        }
+
+    @staticmethod
+    def test_record_without_metadata():
+        """Records with only the legacy keys get an empty attribution"""
+        record = {"code": "amerob", "audio Url": "http://x.com/a.mp3"}
+        entry = game_data_generator.build_audio_entry(record)
+        assert entry == {"url": "http://x.com/a.mp3", "attribution": {}}
+
+    @staticmethod
+    def test_empty_metadata_values_skipped():
+        """Empty/None metadata values are omitted from attribution"""
+        record = {
+            "audio Url": "http://x.com/a.mp3",
+            "recordist": "",
+            "location": None,
+            "backgroundSpecies": [],
+        }
+        entry = game_data_generator.build_audio_entry(record)
+        assert entry["attribution"] == {}
+
+
+class TestGroupEntriesByCode:
+    """Test grouping of raw URL records by species code"""
+
+    @staticmethod
+    def test_groups_records_with_metadata():
+        data = [
+            {"code": "amerob", "audio Url": "http://a1.mp3", "quality": "A"},
+            {"code": "amerob", "audio Url": "http://a2.mp3", "quality": "B"},
+            {"code": "barswa", "audio Url": "http://b1.mp3"},
+        ]
+        result = game_data_generator.group_entries_by_code(data)
+        assert len(result["amerob"]) == 2
+        assert result["amerob"][0]["audio Url"] == "http://a1.mp3"
+        assert result["amerob"][0]["quality"] == "A"
+        assert len(result["barswa"]) == 1
+
+    @staticmethod
+    def test_skips_empty_entries():
+        data = [
+            {"code": "", "audio Url": "http://a.mp3"},
+            {"code": "amerob", "audio Url": ""},
+            {"code": "amerob", "audio Url": "http://ok.mp3"},
+        ]
+        result = game_data_generator.group_entries_by_code(data)
+        assert list(result.keys()) == ["amerob"]
+        assert len(result["amerob"]) == 1
+
+
+class TestProcessTaxonomyWithMetadata:
+    """Test process_taxonomy_data with metadata-rich URL groups"""
+
+    @staticmethod
+    def test_attribution_flows_into_birds():
+        taxonomy_data = [
+            {
+                "speciesCode": "amerob",
+                "comName": "American Robin",
+                "sciName": "Turdus migratorius",
+                "order": "Passeriformes",
+                "familyComName": "Thrushes",
+                "familySciName": "Turdidae",
+            }
+        ]
+        url_groups = {
+            "amerob": [
+                {
+                    "audio Url": "http://a1.mp3",
+                    "recordist": "Jacobo Ramil",
+                    "quality": "A",
+                }
+            ]
+        }
+        birds = game_data_generator.process_taxonomy_data(
+            taxonomy_data, url_groups
+        )
+        assert len(birds) == 1
+        assert birds[0]["audioUrl"][0]["url"] == "http://a1.mp3"
+        assert birds[0]["audioUrl"][0]["attribution"]["recordist"] == (
+            "Jacobo Ramil"
+        )
+        assert birds[0]["audioUrl"][0]["attribution"]["quality"] == "A"
+
+
 class TestLoadExistingOutput:
     """Test loading existing output files"""
 

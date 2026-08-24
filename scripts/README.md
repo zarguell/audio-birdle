@@ -29,6 +29,10 @@ pip install pandas requests beautifulsoup4 selenium python-dotenv
 
 # Get eBird API key from https://ebird.org/api/keygen
 echo "EBIRD_API_KEY=your_key_here" > .env
+
+# Get a free Xeno-canto API key (register at https://xeno-canto.org,
+# verify your email, then copy the key from https://xeno-canto.org/account)
+echo "XC_API_KEY=your_xc_key" >> .env
 ```
 
 ### Basic Workflow
@@ -46,10 +50,13 @@ python3 ebird-filter-region.py data/regions/us.json data/ebird-taxonomy.json --e
 # 4. Get subregions (states/provinces)
 python3 ebird-generate-subregions.py --region US --output data/regions/us-subregions.json
 
-# 5. ⚠️ SCRAPE AUDIO URLS (2-4 hours, opens Chrome browser)
-python3 ebird-songdownload.py data/regions/us-taxonomy.json --region US --tag song --max-urls 10
+# 5. FETCH AUDIO URLS + METADATA (Xeno-canto API v3, ~15 min for 700 species)
+#    The old Selenium scraper (ebird-songdownload.py) no longer works:
+#    eBird/Macaulay media search now requires CAS login.
+python3 xc-audio-fetch.py data/regions/us-taxonomy.json --country US --tag song --max-urls 10
 
-# 6. Generate game data
+# 6. Generate game data (URL records from xc-audio-fetch.py become
+#    per-clip attribution objects: recordist, license, quality, ...)
 python3 game-data-generator.py --region US \
   --taxonomy data/regions/us-taxonomy.json \
   --urls data/regions/us-taxonomy-urls.json \
@@ -65,6 +72,14 @@ python3 game-data-generator.py --region US \
 python3 generate-daily-region-data.py \
   data/regions/us-subregions.json \
   ../public/data/daily-subregion-birds.json
+
+# 7b. OPTIONAL: enhance the shipped birds.json in place instead of
+#     regenerating from scratch (keeps existing species + ML clips,
+#     adds learn-more links, and merges xc-audio-fetch.py clips with
+#     attribution where coverage is thin)
+python3 enhance-bird-data.py ../public/data/birds.json \
+  --xc-urls data/regions/us-taxonomy-urls.json
+#     Use --dry-run first to preview the summary.
 
 # 8. Generate daily challenges (automated via GitHub Actions)
 python3 generate-daily-birds.py --days 7 \
@@ -90,11 +105,12 @@ python3 generate-daily-birds.py --days 7 \
 | [generate-daily-region-data.py](./generate-daily-region-data.py) | Subregion birds  | 10s  |
 | [generate-daily-birds.py](./generate-daily-birds.py)             | Daily challenges | 30s  |
 
-### Audio Scraping ⚠️ (Manual bottleneck)
+### Audio Fetching (API-based)
 
-| Script                                           | Purpose           | Time          |
-| ------------------------------------------------ | ----------------- | ------------- |
-| [ebird-songdownload.py](./ebird-songdownload.py) | Scrape audio URLs | **2-4 hours** |
+| Script                                           | Purpose                      | Time    |
+| ------------------------------------------------ | ---------------------------- | ------- |
+| [xc-audio-fetch.py](./xc-audio-fetch.py)         | Fetch audio URLs + metadata  | ~15 min |
+| [ebird-songdownload.py](./ebird-songdownload.py) | **Deprecated** (login-gated) | —       |
 
 ### Utilities
 
@@ -104,9 +120,17 @@ python3 generate-daily-birds.py --days 7 \
 
 ## ⚠️ Important Notes
 
-### Manual Bottleneck
+### Audio Source
 
-Audio URL scraping requires browser automation and takes 2-4 hours per region. This is the primary limitation preventing easy expansion to new regions.
+Audio URLs and metadata come from the [Xeno-canto API v3](https://xeno-canto.org/explore/api)
+(free key required, set `XC_API_KEY`). Quality rating, recordist, license, date
+and background species flow into `birds.json` per clip via
+`game-data-generator.py`.
+
+The previous approach (`ebird-songdownload.py`, Selenium scraping of the
+eBird/Macaulay catalog) stopped working: media search results are now gated
+behind CAS login for anonymous clients, and the site sits behind Anubis
+proof-of-work bot protection. The script is kept for reference only.
 
 ### Current Status
 
@@ -197,10 +221,10 @@ python ebird-filter-region.py data/regions/us.json data/ebird-taxonomy.json --ex
 
 ```bash
 # Songs for US region
-python3 ebird-songdownload.py data/regions/us-taxonomy.json --region US --tag song --max-urls 10
+python3 xc-audio-fetch.py data/regions/us-taxonomy.json --country US --tag song --max-urls 10
 
 # Calls for EU region
-python3 ebird-songdownload.py data/regions/eu-taxonomy.json --region EU --tag call --max-urls 10
+python3 xc-audio-fetch.py data/regions/eu-taxonomy.json --country "United Kingdom" --tag call --max-urls 10
 ```
 
 ### Generate Game Data

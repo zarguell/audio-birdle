@@ -145,7 +145,7 @@ public/data/
 └─────────────────────────────────────────────────────────────────┘
 
   5. Scrape Audio URLs
-     ebird-songdownload.py regions/us-taxonomy.json --tag song --region US
+     xc-audio-fetch.py regions/us-taxonomy.json --tag song --country US
      ↓
      [Selenium opens Chrome browser]
      [Navigates eBird media catalog for each species]
@@ -307,14 +307,14 @@ python3 ebird-generate-subregions.py --region EU --output data/regions/eu-subreg
 # This step will open a visible Chrome window and may take several hours
 
 # For songs
-python3 ebird-songdownload.py \
+python3 xc-audio-fetch.py \
   data/regions/eu-taxonomy.json \
   --region EU \
   --tag song \
   --max-urls 10
 
 # For calls (optional)
-python3 ebird-songdownload.py \
+python3 xc-audio-fetch.py \
   data/regions/eu-taxonomy.json \
   --region EU \
   --tag call \
@@ -665,14 +665,14 @@ python3 game-data-generator.py \
 
 ### Audio Scraping Scripts
 
-#### `ebird-songdownload.py` ⚠️ MANUAL BOTTLENECK
+#### `xc-audio-fetch.py` (API-based; ebird-songdownload.py deprecated: ML login-gated)
 
 Scrapes audio URLs from eBird website using Selenium browser automation.
 
 **Usage**:
 
 ```bash
-python3 ebird-songdownload.py \
+python3 xc-audio-fetch.py \
   data/regions/us-taxonomy.json \
   --region US \
   --tag song \

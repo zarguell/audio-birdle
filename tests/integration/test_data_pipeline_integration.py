@@ -213,16 +213,25 @@ class TestDataPipelineIntegration:
 
     @staticmethod
     def test_bird_audio_urls_valid(birds_json):
-        """Test that audio URLs are properly formatted."""
+        """Test that audio URLs are properly formatted.
+
+        Supports both the legacy format (array of URL strings) and the
+        attributed format (array of {url, attribution} objects) that
+        enhance-bird-data.py / game-data-generator.py emit and the
+        frontend's getAudioSrc + sanitizeBird consume.
+        """
         for region, birds in birds_json.items():
             for bird in birds:
-                for url in bird["audioUrl"]:
+                for entry in bird["audioUrl"]:
+                    url = entry if isinstance(entry, str) else entry.get("url")
                     assert isinstance(url, str), (
                         f"Audio URL should be string, got {type(url)}"
                     )
                     assert url.startswith("http"), (
                         f"Audio URL should start with http/https: {url}"
                     )
+                    if isinstance(entry, dict):
+                        assert isinstance(entry.get("attribution", {}), dict)
 
     @staticmethod
     def test_daily_subregion_references(birds_json, daily_json, regions_json):

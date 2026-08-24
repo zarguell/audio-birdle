@@ -37,7 +37,7 @@
 └────────┬────────┘
          │
          ▼
-  ebird-songdownload.py → us-taxonomy-urls.json (Chrome automation)
+  xc-audio-fetch.py → us-taxonomy-urls.json (Xeno-canto API v3)
          │
          ▼
 ┌─────────────────┐
@@ -81,7 +81,7 @@
 
 | Script                     | Purpose           | Input    | Output             | Time          |
 | -------------------------- | ----------------- | -------- | ------------------ | ------------- |
-| `ebird-songdownload.py` ⚠️ | Scrape audio URLs | taxonomy | taxonomy-urls.json | **2-4 hours** |
+| `xc-audio-fetch.py` | Fetch audio URLs + metadata (XC API v3) | taxonomy | taxonomy-urls.json | ~15 min |
 
 ---
 
@@ -98,7 +98,7 @@ python3 ebird-filter-region.py data/regions/eu.json data/ebird-taxonomy.json --e
 python3 ebird-generate-subregions.py --region EU --output data/regions/eu-subregions.json
 
 # 4. ⚠️ SCRAPE AUDIO URLS - 2-4 hours, opens Chrome browser
-python3 ebird-songdownload.py data/regions/eu-taxonomy.json --region EU --tag song --max-urls 10
+python3 xc-audio-fetch.py data/regions/eu-taxonomy.json --country "United Kingdom" --tag song --max-urls 10
 
 # 5. Generate game data (30 seconds)
 python3 game-data-generator.py --region EU \
@@ -152,7 +152,7 @@ python3 verify_hash_consistency.py
 python3 validate-data.py --region US
 
 # Test with small dataset
-python3 ebird-songdownload.py data/regions/us-taxonomy-demo.json --max-urls 5
+python3 xc-audio-fetch.py data/regions/us-taxonomy-demo.json --max-urls 5
 ```
 
 ---

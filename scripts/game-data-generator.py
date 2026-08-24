@@ -73,6 +73,56 @@ def load_existing_output(filepath: str) -> Dict[str, Any]:
     return {}
 
 
+# Metadata keys copied from xc-audio-fetch.py URL records into the
+# per-clip attribution object (BirdCompletionCard renders recordist and
+# location; the rest is kept for future UI and filtering).
+ATTRIBUTION_FIELDS = {
+    "quality": "quality",
+    "recordist": "recordist",
+    "license": "license",
+    "recordedOn": "date",
+    "location": "location",
+    "country": "country",
+    "soundType": "soundType",
+    "backgroundSpecies": "backgroundSpecies",
+    "source": "source",
+    "xcId": "xcId",
+    "page Url": "sourceUrl",
+}
+
+
+def build_audio_entry(url_entry):
+    """Build an ``audioUrl`` entry (``{url, attribution}``) from a URL record.
+
+    Accepts either a plain URL string (legacy scraped data) or a record
+    dict with the ``audio Url`` key plus optional metadata keys.
+    """
+    if isinstance(url_entry, str):
+        return {"url": url_entry, "attribution": {}}
+
+    url = url_entry.get("audio Url", "")
+    attribution = {}
+    for source_key, target_key in ATTRIBUTION_FIELDS.items():
+        value = url_entry.get(source_key)
+        if value not in (None, "", []):
+            attribution[target_key] = value
+    return {"url": url, "attribution": attribution}
+
+
+def group_entries_by_code(urls_data: List[Dict[str, Any]]) -> Dict[str, List[Dict[str, Any]]]:
+    """Group raw URL records (with metadata) by species code."""
+    url_groups = defaultdict(list)
+
+    for entry in urls_data:
+        code = entry.get("code", "")
+        audio_url = entry.get("audio Url", "")
+
+        if code and audio_url:
+            url_groups[code].append(entry)
+
+    return dict(url_groups)
+
+
 def group_urls_by_code(urls_data: List[Dict[str, Any]]) -> Dict[str, List[str]]:
     """Group audio URLs by species code."""
     url_groups = defaultdict(list)
@@ -88,9 +138,14 @@ def group_urls_by_code(urls_data: List[Dict[str, Any]]) -> Dict[str, List[str]]:
 
 
 def process_taxonomy_data(
-    taxonomy_data: List[Dict[str, Any]], url_groups: Dict[str, List[str]]
+    taxonomy_data: List[Dict[str, Any]], url_groups: Dict[str, List[Any]]
 ) -> List[Dict[str, Any]]:
-    """Process taxonomy data and match with audio URLs."""
+    """Process taxonomy data and match with audio URLs.
+
+    ``url_groups`` maps species code to a list of either plain URL
+    strings (legacy format) or URL records with metadata (see
+    ``build_audio_entry``).
+    """
     birds = []
 
     for bird in taxonomy_data:
@@ -111,7 +166,10 @@ def process_taxonomy_data(
             continue
 
         # Get audio URLs for this species
-        audio_urls = url_groups.get(species_code, [])
+        audio_urls = [
+            build_audio_entry(entry)
+            for entry in url_groups.get(species_code, [])
+        ]
 
         # Only include birds that have audio URLs
         if audio_urls:
@@ -121,7 +179,7 @@ def process_taxonomy_data(
                 "scientificName": sci_name,
                 "order": order,
                 "family": family,
-                "audioUrl": [{"url": url, "attribution": {}} for url in audio_urls],
+                "audioUrl": audio_urls,
                 "images": [],
                 "facts": "",
                 "learnMoreUrl": "",
@@ -164,9 +222,10 @@ def main():
     print(f"Checking for existing output file '{args.output}'...")
     output_data = load_existing_output(args.output)
 
-    # Group URLs by species code
+    # Group URL records by species code (keeping metadata for
+    # attribution; falls back to plain URLs for legacy scraped data)
     print("Processing URL data...")
-    url_groups = group_urls_by_code(urls_data)
+    url_groups = group_entries_by_code(urls_data)
 
     # Process taxonomy data and match with URLs
     print("Processing taxonomy data and matching with audio URLs...")
