@@ -352,13 +352,16 @@ describe("CacheUtils", () => {
 
       const result = await refreshGameData();
 
-      expect(global.fetch).toHaveBeenCalledWith("/data/regions.json", {
-        cache: "no-store",
-        headers: {
-          "Cache-Control": "no-cache",
-          Pragma: "no-cache",
+      expect(global.fetch).toHaveBeenCalledWith(
+        expect.stringMatching(/^\/data\/regions\.json\?t=/),
+        {
+          cache: "no-store",
+          headers: {
+            "Cache-Control": "no-cache",
+            Pragma: "no-cache",
+          },
         },
-      });
+      );
       expect(result.regions).toEqual(mockRegions);
       expect(result.birds).toEqual(mockBirds);
     });
@@ -371,7 +374,7 @@ describe("CacheUtils", () => {
       global.fetch.mockImplementation((url) =>
         Promise.resolve({
           ok: true,
-          headers: { get: vi.fn().mockReturnValue(`version-${url}`) },
+          headers: { get: vi.fn().mockReturnValue(`version-${url.split("?")[0]}`) },
           json: async () =>
             url.includes("regions.json")
               ? mockRegions
@@ -394,6 +397,34 @@ describe("CacheUtils", () => {
         STORAGE_KEYS.BIRDS_JSON_ETAG,
         '"version-/data/birds.json"',
       );
+    });
+
+    it("must not let daily-subregion-birds.json overwrite results.birds (regression)", async () => {
+      // Regression: file matching used .includes(), and
+      // "/data/daily-subregion-birds.json".includes("birds.json") is true,
+      // so the subregion map REPLACED the real bird list after every refresh,
+      // breaking the daily challenge (no options / empty autocomplete).
+      const mockBirds = { us: [{ id: "amerob", name: "American Robin" }] };
+      const subregionMap = { us: { Alabama: ["amerob"], Alaska: [] } };
+      global.fetch.mockImplementation((url) => {
+        const path = url.split("?")[0];
+        const body =
+          path === "/data/birds.json"
+            ? mockBirds
+            : path === "/data/daily-subregion-birds.json"
+              ? subregionMap
+              : [];
+        return Promise.resolve({
+          ok: true,
+          headers: { get: vi.fn().mockReturnValue("version") },
+          json: async () => body,
+        });
+      });
+
+      const result = await refreshGameData();
+
+      expect(result.birds).toEqual(mockBirds);
+      expect(result.birds).not.toEqual(subregionMap);
     });
 
     it("should invalidate the daily bird cache on refresh", async () => {

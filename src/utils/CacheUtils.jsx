@@ -17,6 +17,20 @@ const DATA_FILES = [
 ];
 
 /**
+ * Append a cache-busting query parameter to a URL.
+ * A unique URL defeats the browser HTTP cache and CDN edge caches
+ * (e.g. Cloudflare's `cf-cache-status: HIT`), guaranteeing the request
+ * reaches the origin. Without this, a returning user can be served stale
+ * data files that `cache: "no-store"` alone cannot bypass, leaving the
+ * daily challenge broken (no answer choices / empty autocomplete) until
+ * the cache expires.
+ * @param {string} url - URL to bust
+ * @returns {string} URL with a unique `t` query parameter
+ */
+const cacheBustUrl = (url) =>
+  `${url}${url.includes("?") ? "&" : "?"}t=${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+
+/**
  * Log error with context prefix
  * @param {string} prefix - Error context
  * @param {Error} error - Error object
@@ -156,6 +170,13 @@ export const hasDateChanged = () => {
  */
 export const clearServiceWorkerCache = async () => {
   try {
+    // The Cache Storage API is unavailable in some environments (older
+    // browsers, non-secure contexts, headless browsers) — nothing to clear.
+    if (typeof caches === "undefined") {
+      // The SW cache is gone; make sure the in-memory daily.json cache is too
+      invalidateDailyBirdCache();
+      return true;
+    }
     const cacheNames = await caches.keys();
     await Promise.all(cacheNames.map((cacheName) => caches.delete(cacheName)));
     // The SW cache is gone; make sure the in-memory daily.json cache is too
@@ -187,7 +208,10 @@ export const refreshGameData = async (onProgress) => {
       onProgress(i + 1, DATA_FILES.length, file);
     }
 
-    const response = await fetch(file, {
+    // Cache-bust: a unique URL guarantees the request bypasses the browser
+    // HTTP cache and any CDN edge cache, so a forced refresh always reaches
+    // the origin (see cacheBustUrl).
+    const response = await fetch(cacheBustUrl(file), {
       cache: "no-store",
       headers: {
         "Cache-Control": "no-cache",
@@ -201,16 +225,21 @@ export const refreshGameData = async (onProgress) => {
 
     const data = await response.json();
 
-    if (file.includes("regions.json")) {
+    // Match on the exact file path — substring matching is unsafe here:
+    // "/data/daily-subregion-birds.json".includes("birds.json") is true, which
+    // previously made the subregion file OVERWRITE results.birds with the
+    // subregion map. That broke the daily challenge after any refresh (no
+    // answer options, empty autocomplete) until the page was reloaded.
+    if (file === "/data/regions.json") {
       results.regions = data;
       storeVersionInfo(response);
-    } else if (file.includes("birds.json")) {
+    } else if (file === "/data/birds.json") {
       results.birds = data;
       // Record the birds.json version too — otherwise the cached version is
       // stale vs the server after a refresh and checkBirdsJsonUpdate() would
       // report hasUpdate forever, causing an infinite auto-refresh loop.
       storeBirdsJsonVersionInfo(response);
-    } else if (file.includes("daily.json")) {
+    } else if (file === "/data/daily.json") {
       storeDailyJsonVersionInfo(response);
     }
   }

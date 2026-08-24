@@ -58,8 +58,12 @@ export const loadDailyBirdData = async () => {
     return dailyBirdDataCache;
   }
 
+  // Cache-bust: guarantees the request bypasses the browser HTTP cache and
+  // CDN edge caches, so a stale cached daily.json (e.g. from a previous day)
+  // can never break the daily challenge lookup after a refresh.
+  const cacheBustedUrl = `/data/daily.json?t=${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
   const response = await fetchWithRetry(
-    "/data/daily.json",
+    cacheBustedUrl,
     {},
     { maxRetries: 3, baseDelay: 500 },
   );

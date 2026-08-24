@@ -127,6 +127,10 @@ export function useGameData(initialRegion = null) {
       setBirds(newBirds);
 
       await loadAndSetBird(newBirds);
+      // The refresh fetched fresh data and stored its version info — clear
+      // the "Update Available" flag, otherwise the banner stays stuck for
+      // the whole session (it is only ever set in the update-check effect).
+      setHasUpdate(false);
     } catch (error) {
       console.error("Auto-refresh failed:", error);
     }
@@ -190,6 +194,7 @@ export function useGameData(initialRegion = null) {
       setBirds(newBirds);
 
       await loadAndSetBird(newBirds);
+      setHasUpdate(false);
     } catch (error) {
       console.error("Force refresh failed:", error);
     }

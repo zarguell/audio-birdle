@@ -53,6 +53,16 @@ export const hasVersionChanged = (serverVersion, cachedVersion) =>
   (serverVersion.etag && serverVersion.etag !== cachedVersion.etag);
 
 /**
+ * Append a cache-busting query parameter so the check cannot be served from
+ * the browser HTTP cache or a CDN edge cache — otherwise a stale daily.json
+ * could go undetected (same cached ETag on both sides of the comparison).
+ * @param {string} url - URL to bust
+ * @returns {string} URL with a unique `t` query parameter
+ */
+const cacheBustUrl = (url) =>
+  `${url}${url.includes("?") ? "&" : "?"}t=${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+
+/**
  * Check if a data file has been updated
  * @param {string} url - URL of the data file to check
  * @param {string} lastModifiedKey - localStorage key for lastModified
@@ -61,7 +71,10 @@ export const hasVersionChanged = (serverVersion, cachedVersion) =>
  */
 export const checkDataFileUpdate = async (url, lastModifiedKey, etagKey) => {
   try {
-    const response = await fetch(url, { method: "HEAD", cache: "no-store" });
+    const response = await fetch(cacheBustUrl(url), {
+      method: "HEAD",
+      cache: "no-store",
+    });
     const serverVersion = getVersionFromResponse(response);
     const cachedVersion = getCachedVersion(lastModifiedKey, etagKey);
 

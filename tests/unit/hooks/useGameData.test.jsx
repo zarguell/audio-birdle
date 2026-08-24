@@ -146,6 +146,25 @@ describe("useGameData", () => {
     expect(clearServiceWorkerCache).toHaveBeenCalledTimes(1);
   });
 
+  it("should clear the Update Available flag after a successful auto-refresh", async () => {
+    // Stale daily.json detected -> hasUpdate true + auto-refresh fires.
+    checkForUpdates.mockResolvedValue({
+      hasUpdate: true,
+      dailyJsonUpdate: true,
+    });
+    hasDateChanged.mockReturnValue(true);
+    refreshGameData.mockResolvedValue(REGION_DATA);
+
+    const { result } = renderHook(() => useGameData("us"));
+    await flush();
+
+    // The update check raised the flag and the auto-refresh ran ...
+    expect(refreshGameData).toHaveBeenCalledTimes(1);
+    // ... and completed: the banner must clear, otherwise "Update Available"
+    // stays stuck for the whole session.
+    expect(result.current.hasUpdate).toBe(false);
+  });
+
   it("should schedule a refresh at local midnight", async () => {
     vi.useFakeTimers();
     const now = new Date(2026, 7, 6, 10, 30, 0); // Aug 6 2026 10:30 local

@@ -168,7 +168,7 @@ describe("versionUtils", () => {
       );
 
       expect(global.fetch).toHaveBeenCalledWith(
-        "https://example.com/birds.json",
+        expect.stringMatching(/^https:\/\/example\.com\/birds\.json\?t=/),
         { method: "HEAD", cache: "no-store" },
       );
       expect(result).toEqual({

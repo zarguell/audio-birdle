@@ -123,7 +123,7 @@ describe("DailyBirdUtils", () => {
 
       expect(data).toEqual(sampleDailyData);
       expect(fetchWithRetry).toHaveBeenCalledWith(
-        "/data/daily.json",
+        expect.stringMatching(/^\/data\/daily\.json\?t=/),
         {},
         { maxRetries: 3, baseDelay: 500 },
       );
