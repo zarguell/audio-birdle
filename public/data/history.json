@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-04-26",
-      "id": "pibgre",
-      "name": "Pied-billed Grebe",
-      "subregion": "New Jersey"
-    },
-    {
       "date": "2026-04-27",
       "id": "normoc",
       "name": "Northern Mockingbird",
@@ -821,15 +815,15 @@
       "id": "norsho",
       "name": "Northern Shoveler",
       "subregion": "Maryland"
+    },
+    {
+      "date": "2026-08-25",
+      "id": "treswa",
+      "name": "Tree Swallow",
+      "subregion": "District of Columbia"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-04-26",
-      "id": "harduc",
-      "name": "Harlequin Duck",
-      "subregion": "Maine"
-    },
     {
       "date": "2026-04-27",
       "id": "zothaw",
@@ -1645,6 +1639,12 @@
       "id": "bnhcow",
       "name": "Brown-headed Cowbird",
       "subregion": "Massachusetts"
+    },
+    {
+      "date": "2026-08-25",
+      "id": "pinwar",
+      "name": "Pine Warbler",
+      "subregion": "Louisiana"
     }
   ]
 }

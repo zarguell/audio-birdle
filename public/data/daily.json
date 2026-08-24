@@ -262,5 +262,19 @@
     "answerHash": "944aa39b",
     "id": "bnhcow",
     "subregion": "Massachusetts"
+  },
+  {
+    "date": "2026-08-25",
+    "region": "us",
+    "answerHash": "c2fa7974",
+    "id": "treswa",
+    "subregion": "District of Columbia"
+  },
+  {
+    "date": "2026-08-25",
+    "region": "us-lower48",
+    "answerHash": "50741d57",
+    "id": "pinwar",
+    "subregion": "Louisiana"
   }
 ]
