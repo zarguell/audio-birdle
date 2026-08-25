@@ -45,6 +45,11 @@ jobs:
             api.github.com
             codeload.github.com
             oss-fuzz.com
+            fulcio.sigstore.dev:443
+            api.deps.dev:443
+            api.osv.dev:443
+            pypi.org:443
+            oss-fuzz-build-logs.storage.googleapis.com:443
 
       - name: "Checkout code"
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
