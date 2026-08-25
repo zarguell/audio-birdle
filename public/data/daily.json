@@ -278,5 +278,19 @@
     "answerHash": "50741d57",
     "id": "pinwar",
     "subregion": "Louisiana"
+  },
+  {
+    "date": "2026-08-26",
+    "region": "us",
+    "answerHash": "d0b767ef",
+    "id": "virrai",
+    "subregion": "Wyoming"
+  },
+  {
+    "date": "2026-08-26",
+    "region": "us-lower48",
+    "answerHash": "302292d2",
+    "id": "louwat",
+    "subregion": "Connecticut"
   }
 ]

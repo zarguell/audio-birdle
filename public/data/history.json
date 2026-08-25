@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-04-27",
-      "id": "normoc",
-      "name": "Northern Mockingbird",
-      "subregion": "South Carolina"
-    },
-    {
       "date": "2026-04-28",
       "id": "grnher",
       "name": "Green Heron",
@@ -821,15 +815,15 @@
       "id": "treswa",
       "name": "Tree Swallow",
       "subregion": "District of Columbia"
+    },
+    {
+      "date": "2026-08-26",
+      "id": "virrai",
+      "name": "Virginia Rail",
+      "subregion": "Wyoming"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-04-27",
-      "id": "zothaw",
-      "name": "Zone-tailed Hawk",
-      "subregion": "California"
-    },
     {
       "date": "2026-04-28",
       "id": "orcwar",
@@ -1645,6 +1639,12 @@
       "id": "pinwar",
       "name": "Pine Warbler",
       "subregion": "Louisiana"
+    },
+    {
+      "date": "2026-08-26",
+      "id": "louwat",
+      "name": "Louisiana Waterthrush",
+      "subregion": "Connecticut"
     }
   ]
 }
