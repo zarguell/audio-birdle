@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-04-28",
-      "id": "grnher",
-      "name": "Green Heron",
-      "subregion": "Oklahoma"
-    },
-    {
       "date": "2026-04-29",
       "id": "sheowl",
       "name": "Short-eared Owl",
@@ -821,15 +815,15 @@
       "id": "virrai",
       "name": "Virginia Rail",
       "subregion": "Wyoming"
+    },
+    {
+      "date": "2026-08-27",
+      "id": "robgro",
+      "name": "Rose-breasted Grosbeak",
+      "subregion": "Florida"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-04-28",
-      "id": "orcwar",
-      "name": "Orange-crowned Warbler",
-      "subregion": "Alabama"
-    },
     {
       "date": "2026-04-29",
       "id": "rudduc",
@@ -1645,6 +1639,12 @@
       "id": "louwat",
       "name": "Louisiana Waterthrush",
       "subregion": "Connecticut"
+    },
+    {
+      "date": "2026-08-27",
+      "id": "redkno",
+      "name": "Red Knot",
+      "subregion": "Ohio"
     }
   ]
 }

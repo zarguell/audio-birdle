@@ -292,5 +292,19 @@
     "answerHash": "302292d2",
     "id": "louwat",
     "subregion": "Connecticut"
+  },
+  {
+    "date": "2026-08-27",
+    "region": "us",
+    "answerHash": "554b9f0b",
+    "id": "robgro",
+    "subregion": "Florida"
+  },
+  {
+    "date": "2026-08-27",
+    "region": "us-lower48",
+    "answerHash": "9522124f",
+    "id": "redkno",
+    "subregion": "Ohio"
   }
 ]
