@@ -306,5 +306,19 @@
     "answerHash": "9522124f",
     "id": "redkno",
     "subregion": "Ohio"
+  },
+  {
+    "date": "2026-08-28",
+    "region": "us",
+    "answerHash": "cbe64d2f",
+    "id": "wessan",
+    "subregion": "Louisiana"
+  },
+  {
+    "date": "2026-08-28",
+    "region": "us-lower48",
+    "answerHash": "4157fb39",
+    "id": "amegfi",
+    "subregion": "Kentucky"
   }
 ]

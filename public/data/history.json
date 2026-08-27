@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-04-29",
-      "id": "sheowl",
-      "name": "Short-eared Owl",
-      "subregion": "Idaho"
-    },
-    {
       "date": "2026-04-30",
       "id": "shshaw",
       "name": "Sharp-shinned Hawk",
@@ -821,15 +815,15 @@
       "id": "robgro",
       "name": "Rose-breasted Grosbeak",
       "subregion": "Florida"
+    },
+    {
+      "date": "2026-08-28",
+      "id": "wessan",
+      "name": "Western Sandpiper",
+      "subregion": "Louisiana"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-04-29",
-      "id": "rudduc",
-      "name": "Ruddy Duck",
-      "subregion": "Idaho"
-    },
     {
       "date": "2026-04-30",
       "id": "amtspa",
@@ -1645,6 +1639,12 @@
       "id": "redkno",
       "name": "Red Knot",
       "subregion": "Ohio"
+    },
+    {
+      "date": "2026-08-28",
+      "id": "amegfi",
+      "name": "American Goldfinch",
+      "subregion": "Kentucky"
     }
   ]
 }
