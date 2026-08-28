@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-04-30",
-      "id": "shshaw",
-      "name": "Sharp-shinned Hawk",
-      "subregion": "North Dakota"
-    },
-    {
       "date": "2026-05-01",
       "id": "osprey",
       "name": "Osprey",
@@ -821,15 +815,15 @@
       "id": "wessan",
       "name": "Western Sandpiper",
       "subregion": "Louisiana"
+    },
+    {
+      "date": "2026-08-29",
+      "id": "reevir1",
+      "name": "Red-eyed Vireo",
+      "subregion": "Missouri"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-04-30",
-      "id": "amtspa",
-      "name": "American Tree Sparrow",
-      "subregion": "North Dakota"
-    },
     {
       "date": "2026-05-01",
       "id": "louwat",
@@ -1645,6 +1639,12 @@
       "id": "amegfi",
       "name": "American Goldfinch",
       "subregion": "Kentucky"
+    },
+    {
+      "date": "2026-08-29",
+      "id": "bnhnut",
+      "name": "Brown-headed Nuthatch",
+      "subregion": "Alabama"
     }
   ]
 }

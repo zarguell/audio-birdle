@@ -320,5 +320,19 @@
     "answerHash": "4157fb39",
     "id": "amegfi",
     "subregion": "Kentucky"
+  },
+  {
+    "date": "2026-08-29",
+    "region": "us",
+    "answerHash": "b8214326",
+    "id": "reevir1",
+    "subregion": "Missouri"
+  },
+  {
+    "date": "2026-08-29",
+    "region": "us-lower48",
+    "answerHash": "0c877dd9",
+    "id": "bnhnut",
+    "subregion": "Alabama"
   }
 ]
