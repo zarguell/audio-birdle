@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-05-01",
-      "id": "osprey",
-      "name": "Osprey",
-      "subregion": "Arkansas"
-    },
-    {
       "date": "2026-05-02",
       "id": "weskin",
       "name": "Western Kingbird",
@@ -821,15 +815,15 @@
       "id": "reevir1",
       "name": "Red-eyed Vireo",
       "subregion": "Missouri"
+    },
+    {
+      "date": "2026-08-30",
+      "id": "linspa",
+      "name": "Lincoln's Sparrow",
+      "subregion": "Idaho"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-05-01",
-      "id": "louwat",
-      "name": "Louisiana Waterthrush",
-      "subregion": "Arkansas"
-    },
     {
       "date": "2026-05-02",
       "id": "plsvir",
@@ -1645,6 +1639,12 @@
       "id": "bnhnut",
       "name": "Brown-headed Nuthatch",
       "subregion": "Alabama"
+    },
+    {
+      "date": "2026-08-30",
+      "id": "grbher3",
+      "name": "Great Blue Heron",
+      "subregion": "Nebraska"
     }
   ]
 }

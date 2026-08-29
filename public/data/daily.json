@@ -334,5 +334,19 @@
     "answerHash": "0c877dd9",
     "id": "bnhnut",
     "subregion": "Alabama"
+  },
+  {
+    "date": "2026-08-30",
+    "region": "us",
+    "answerHash": "88721517",
+    "id": "linspa",
+    "subregion": "Idaho"
+  },
+  {
+    "date": "2026-08-30",
+    "region": "us-lower48",
+    "answerHash": "4f42b5b5",
+    "id": "grbher3",
+    "subregion": "Nebraska"
   }
 ]
