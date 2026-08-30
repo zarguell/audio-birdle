@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-05-02",
-      "id": "weskin",
-      "name": "Western Kingbird",
-      "subregion": "Arizona"
-    },
-    {
       "date": "2026-05-03",
       "id": "camwar",
       "name": "Cape May Warbler",
@@ -821,15 +815,15 @@
       "id": "linspa",
       "name": "Lincoln's Sparrow",
       "subregion": "Idaho"
+    },
+    {
+      "date": "2026-08-31",
+      "id": "gadwal",
+      "name": "Gadwall",
+      "subregion": "Connecticut"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-05-02",
-      "id": "plsvir",
-      "name": "Plumbeous Vireo",
-      "subregion": "Arizona"
-    },
     {
       "date": "2026-05-03",
       "id": "varthr",
@@ -1645,6 +1639,12 @@
       "id": "grbher3",
       "name": "Great Blue Heron",
       "subregion": "Nebraska"
+    },
+    {
+      "date": "2026-08-31",
+      "id": "normoc",
+      "name": "Northern Mockingbird",
+      "subregion": "Massachusetts"
     }
   ]
 }

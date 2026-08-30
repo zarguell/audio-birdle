@@ -348,5 +348,19 @@
     "answerHash": "4f42b5b5",
     "id": "grbher3",
     "subregion": "Nebraska"
+  },
+  {
+    "date": "2026-08-31",
+    "region": "us",
+    "answerHash": "67230152",
+    "id": "gadwal",
+    "subregion": "Connecticut"
+  },
+  {
+    "date": "2026-08-31",
+    "region": "us-lower48",
+    "answerHash": "c409d99a",
+    "id": "normoc",
+    "subregion": "Massachusetts"
   }
 ]
