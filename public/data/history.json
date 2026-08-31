@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-05-03",
-      "id": "camwar",
-      "name": "Cape May Warbler",
-      "subregion": "Louisiana"
-    },
-    {
       "date": "2026-05-04",
       "id": "caster1",
       "name": "Caspian Tern",
@@ -821,15 +815,15 @@
       "id": "gadwal",
       "name": "Gadwall",
       "subregion": "Connecticut"
+    },
+    {
+      "date": "2026-09-01",
+      "id": "rebnut",
+      "name": "Red-breasted Nuthatch",
+      "subregion": "Rhode Island"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-05-03",
-      "id": "varthr",
-      "name": "Varied Thrush",
-      "subregion": "California"
-    },
     {
       "date": "2026-05-04",
       "id": "botgra",
@@ -1645,6 +1639,12 @@
       "id": "normoc",
       "name": "Northern Mockingbird",
       "subregion": "Massachusetts"
+    },
+    {
+      "date": "2026-09-01",
+      "id": "brdowl",
+      "name": "Barred Owl",
+      "subregion": "Illinois"
     }
   ]
 }

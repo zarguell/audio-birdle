@@ -362,5 +362,19 @@
     "answerHash": "c409d99a",
     "id": "normoc",
     "subregion": "Massachusetts"
+  },
+  {
+    "date": "2026-09-01",
+    "region": "us",
+    "answerHash": "a957c14c",
+    "id": "rebnut",
+    "subregion": "Rhode Island"
+  },
+  {
+    "date": "2026-09-01",
+    "region": "us-lower48",
+    "answerHash": "52a21b3a",
+    "id": "brdowl",
+    "subregion": "Illinois"
   }
 ]
