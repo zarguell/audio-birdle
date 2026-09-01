@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-05-04",
-      "id": "caster1",
-      "name": "Caspian Tern",
-      "subregion": "Mississippi"
-    },
-    {
       "date": "2026-05-05",
       "id": "shbdow",
       "name": "Short-billed Dowitcher",
@@ -821,15 +815,15 @@
       "id": "rebnut",
       "name": "Red-breasted Nuthatch",
       "subregion": "Rhode Island"
+    },
+    {
+      "date": "2026-09-02",
+      "id": "astfly",
+      "name": "Ash-throated Flycatcher",
+      "subregion": "Arizona"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-05-04",
-      "id": "botgra",
-      "name": "Boat-tailed Grackle",
-      "subregion": "Mississippi"
-    },
     {
       "date": "2026-05-05",
       "id": "snoegr",
@@ -1644,6 +1638,12 @@
       "date": "2026-09-01",
       "id": "brdowl",
       "name": "Barred Owl",
+      "subregion": "Illinois"
+    },
+    {
+      "date": "2026-09-02",
+      "id": "savspa",
+      "name": "Savannah Sparrow",
       "subregion": "Illinois"
     }
   ]

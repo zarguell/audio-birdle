@@ -376,5 +376,19 @@
     "answerHash": "52a21b3a",
     "id": "brdowl",
     "subregion": "Illinois"
+  },
+  {
+    "date": "2026-09-02",
+    "region": "us",
+    "answerHash": "58eb5399",
+    "id": "astfly",
+    "subregion": "Arizona"
+  },
+  {
+    "date": "2026-09-02",
+    "region": "us-lower48",
+    "answerHash": "c0671cee",
+    "id": "savspa",
+    "subregion": "Illinois"
   }
 ]
