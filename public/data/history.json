@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-05-05",
-      "id": "shbdow",
-      "name": "Short-billed Dowitcher",
-      "subregion": "New Jersey"
-    },
-    {
       "date": "2026-05-06",
       "id": "indbun",
       "name": "Indigo Bunting",
@@ -821,15 +815,15 @@
       "id": "astfly",
       "name": "Ash-throated Flycatcher",
       "subregion": "Arizona"
+    },
+    {
+      "date": "2026-09-03",
+      "id": "saffin",
+      "name": "Saffron Finch",
+      "subregion": "Hawaii"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-05-05",
-      "id": "snoegr",
-      "name": "Snowy Egret",
-      "subregion": "Ohio"
-    },
     {
       "date": "2026-05-06",
       "id": "wooduc",
@@ -1645,6 +1639,12 @@
       "id": "savspa",
       "name": "Savannah Sparrow",
       "subregion": "Illinois"
+    },
+    {
+      "date": "2026-09-03",
+      "id": "amewig",
+      "name": "American Wigeon",
+      "subregion": "New Hampshire"
     }
   ]
 }

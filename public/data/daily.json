@@ -390,5 +390,19 @@
     "answerHash": "c0671cee",
     "id": "savspa",
     "subregion": "Illinois"
+  },
+  {
+    "date": "2026-09-03",
+    "region": "us",
+    "answerHash": "8f5fb157",
+    "id": "saffin",
+    "subregion": "Hawaii"
+  },
+  {
+    "date": "2026-09-03",
+    "region": "us-lower48",
+    "answerHash": "9b50c22e",
+    "id": "amewig",
+    "subregion": "New Hampshire"
   }
 ]
