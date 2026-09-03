@@ -404,5 +404,19 @@
     "answerHash": "9b50c22e",
     "id": "amewig",
     "subregion": "New Hampshire"
+  },
+  {
+    "date": "2026-09-04",
+    "region": "us",
+    "answerHash": "7b42009d",
+    "id": "gycthr",
+    "subregion": "North Dakota"
+  },
+  {
+    "date": "2026-09-04",
+    "region": "us-lower48",
+    "answerHash": "e582c615",
+    "id": "magwar",
+    "subregion": "Kansas"
   }
 ]

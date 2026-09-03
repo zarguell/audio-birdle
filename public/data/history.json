@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-05-06",
-      "id": "indbun",
-      "name": "Indigo Bunting",
-      "subregion": "Arizona"
-    },
-    {
       "date": "2026-05-07",
       "id": "dowwoo",
       "name": "Downy Woodpecker",
@@ -821,15 +815,15 @@
       "id": "saffin",
       "name": "Saffron Finch",
       "subregion": "Hawaii"
+    },
+    {
+      "date": "2026-09-04",
+      "id": "gycthr",
+      "name": "Gray-cheeked Thrush",
+      "subregion": "North Dakota"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-05-06",
-      "id": "wooduc",
-      "name": "Wood Duck",
-      "subregion": "Arizona"
-    },
     {
       "date": "2026-05-07",
       "id": "grycat",
@@ -1645,6 +1639,12 @@
       "id": "amewig",
       "name": "American Wigeon",
       "subregion": "New Hampshire"
+    },
+    {
+      "date": "2026-09-04",
+      "id": "magwar",
+      "name": "Magnolia Warbler",
+      "subregion": "Kansas"
     }
   ]
 }
