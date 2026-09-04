@@ -418,5 +418,19 @@
     "answerHash": "e582c615",
     "id": "magwar",
     "subregion": "Kansas"
+  },
+  {
+    "date": "2026-09-05",
+    "region": "us",
+    "answerHash": "47c8a158",
+    "id": "easmea",
+    "subregion": "West Virginia"
+  },
+  {
+    "date": "2026-09-05",
+    "region": "us-lower48",
+    "answerHash": "b706c01e",
+    "id": "cantow",
+    "subregion": "Oklahoma"
   }
 ]

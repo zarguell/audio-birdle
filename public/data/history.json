@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-05-07",
-      "id": "dowwoo",
-      "name": "Downy Woodpecker",
-      "subregion": "Minnesota"
-    },
-    {
       "date": "2026-05-08",
       "id": "easowl1",
       "name": "Eastern Screech-Owl",
@@ -821,15 +815,15 @@
       "id": "gycthr",
       "name": "Gray-cheeked Thrush",
       "subregion": "North Dakota"
+    },
+    {
+      "date": "2026-09-05",
+      "id": "easmea",
+      "name": "Eastern Meadowlark",
+      "subregion": "West Virginia"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-05-07",
-      "id": "grycat",
-      "name": "Gray Catbird",
-      "subregion": "Minnesota"
-    },
     {
       "date": "2026-05-08",
       "id": "cerwar",
@@ -1645,6 +1639,12 @@
       "id": "magwar",
       "name": "Magnolia Warbler",
       "subregion": "Kansas"
+    },
+    {
+      "date": "2026-09-05",
+      "id": "cantow",
+      "name": "Canyon Towhee",
+      "subregion": "Oklahoma"
     }
   ]
 }
