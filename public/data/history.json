@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-05-08",
-      "id": "easowl1",
-      "name": "Eastern Screech-Owl",
-      "subregion": "Ohio"
-    },
-    {
       "date": "2026-05-09",
       "id": "forter",
       "name": "Forster's Tern",
@@ -821,15 +815,15 @@
       "id": "easmea",
       "name": "Eastern Meadowlark",
       "subregion": "West Virginia"
+    },
+    {
+      "date": "2026-09-06",
+      "id": "eucdov",
+      "name": "Eurasian Collared-Dove",
+      "subregion": "Arkansas"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-05-08",
-      "id": "cerwar",
-      "name": "Cerulean Warbler",
-      "subregion": "Ohio"
-    },
     {
       "date": "2026-05-09",
       "id": "caster1",
@@ -1645,6 +1639,12 @@
       "id": "cantow",
       "name": "Canyon Towhee",
       "subregion": "Oklahoma"
+    },
+    {
+      "date": "2026-09-06",
+      "id": "belkin1",
+      "name": "Belted Kingfisher",
+      "subregion": "Louisiana"
     }
   ]
 }

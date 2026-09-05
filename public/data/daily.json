@@ -432,5 +432,19 @@
     "answerHash": "b706c01e",
     "id": "cantow",
     "subregion": "Oklahoma"
+  },
+  {
+    "date": "2026-09-06",
+    "region": "us",
+    "answerHash": "049ab272",
+    "id": "eucdov",
+    "subregion": "Arkansas"
+  },
+  {
+    "date": "2026-09-06",
+    "region": "us-lower48",
+    "answerHash": "e4745c00",
+    "id": "belkin1",
+    "subregion": "Louisiana"
   }
 ]
