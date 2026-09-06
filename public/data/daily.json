@@ -446,5 +446,19 @@
     "answerHash": "e4745c00",
     "id": "belkin1",
     "subregion": "Louisiana"
+  },
+  {
+    "date": "2026-09-07",
+    "region": "us",
+    "answerHash": "d0416527",
+    "id": "comgol",
+    "subregion": "California"
+  },
+  {
+    "date": "2026-09-07",
+    "region": "us-lower48",
+    "answerHash": "b7158064",
+    "id": "lesyel",
+    "subregion": "Rhode Island"
   }
 ]

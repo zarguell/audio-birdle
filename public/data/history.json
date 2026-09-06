@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-05-09",
-      "id": "forter",
-      "name": "Forster's Tern",
-      "subregion": "Wyoming"
-    },
-    {
       "date": "2026-05-10",
       "id": "norsho",
       "name": "Northern Shoveler",
@@ -821,15 +815,15 @@
       "id": "eucdov",
       "name": "Eurasian Collared-Dove",
       "subregion": "Arkansas"
+    },
+    {
+      "date": "2026-09-07",
+      "id": "comgol",
+      "name": "Common Goldeneye",
+      "subregion": "California"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-05-09",
-      "id": "caster1",
-      "name": "Caspian Tern",
-      "subregion": "Pennsylvania"
-    },
     {
       "date": "2026-05-10",
       "id": "rinphe1",
@@ -1645,6 +1639,12 @@
       "id": "belkin1",
       "name": "Belted Kingfisher",
       "subregion": "Louisiana"
+    },
+    {
+      "date": "2026-09-07",
+      "id": "lesyel",
+      "name": "Lesser Yellowlegs",
+      "subregion": "Rhode Island"
     }
   ]
 }
