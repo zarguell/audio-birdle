@@ -460,5 +460,19 @@
     "answerHash": "b7158064",
     "id": "lesyel",
     "subregion": "Rhode Island"
+  },
+  {
+    "date": "2026-09-08",
+    "region": "us",
+    "answerHash": "50741d57",
+    "id": "pinwar",
+    "subregion": "Georgia"
+  },
+  {
+    "date": "2026-09-08",
+    "region": "us-lower48",
+    "answerHash": "d0416527",
+    "id": "comgol",
+    "subregion": "Colorado"
   }
 ]

@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-05-10",
-      "id": "norsho",
-      "name": "Northern Shoveler",
-      "subregion": "Arizona"
-    },
-    {
       "date": "2026-05-11",
       "id": "ameavo",
       "name": "American Avocet",
@@ -821,15 +815,15 @@
       "id": "comgol",
       "name": "Common Goldeneye",
       "subregion": "California"
+    },
+    {
+      "date": "2026-09-08",
+      "id": "pinwar",
+      "name": "Pine Warbler",
+      "subregion": "Georgia"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-05-10",
-      "id": "rinphe1",
-      "name": "Ring-necked Pheasant",
-      "subregion": "Arizona"
-    },
     {
       "date": "2026-05-11",
       "id": "grnher",
@@ -1645,6 +1639,12 @@
       "id": "lesyel",
       "name": "Lesser Yellowlegs",
       "subregion": "Rhode Island"
+    },
+    {
+      "date": "2026-09-08",
+      "id": "comgol",
+      "name": "Common Goldeneye",
+      "subregion": "Colorado"
     }
   ]
 }
