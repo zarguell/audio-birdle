@@ -474,5 +474,19 @@
     "answerHash": "d0416527",
     "id": "comgol",
     "subregion": "Colorado"
+  },
+  {
+    "date": "2026-09-09",
+    "region": "us",
+    "answerHash": "4394d4b5",
+    "id": "monpar",
+    "subregion": "New Jersey"
+  },
+  {
+    "date": "2026-09-09",
+    "region": "us-lower48",
+    "answerHash": "2f04d8ac",
+    "id": "amepip",
+    "subregion": "Michigan"
   }
 ]

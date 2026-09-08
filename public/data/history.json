@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-05-11",
-      "id": "ameavo",
-      "name": "American Avocet",
-      "subregion": "Louisiana"
-    },
-    {
       "date": "2026-05-12",
       "id": "varthr",
       "name": "Varied Thrush",
@@ -821,15 +815,15 @@
       "id": "pinwar",
       "name": "Pine Warbler",
       "subregion": "Georgia"
+    },
+    {
+      "date": "2026-09-09",
+      "id": "monpar",
+      "name": "Monk Parakeet",
+      "subregion": "New Jersey"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-05-11",
-      "id": "grnher",
-      "name": "Green Heron",
-      "subregion": "Louisiana"
-    },
     {
       "date": "2026-05-12",
       "id": "shshaw",
@@ -1645,6 +1639,12 @@
       "id": "comgol",
       "name": "Common Goldeneye",
       "subregion": "Colorado"
+    },
+    {
+      "date": "2026-09-09",
+      "id": "amepip",
+      "name": "American Pipit",
+      "subregion": "Michigan"
     }
   ]
 }
