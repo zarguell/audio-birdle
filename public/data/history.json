@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-05-12",
-      "id": "varthr",
-      "name": "Varied Thrush",
-      "subregion": "California"
-    },
-    {
       "date": "2026-05-13",
       "id": "rocpig",
       "name": "Rock Pigeon",
@@ -821,15 +815,15 @@
       "id": "monpar",
       "name": "Monk Parakeet",
       "subregion": "New Jersey"
+    },
+    {
+      "date": "2026-09-10",
+      "id": "wlswar",
+      "name": "Wilson's Warbler",
+      "subregion": "Illinois"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-05-12",
-      "id": "shshaw",
-      "name": "Sharp-shinned Hawk",
-      "subregion": "North Dakota"
-    },
     {
       "date": "2026-05-13",
       "id": "comyel",
@@ -1645,6 +1639,12 @@
       "id": "amepip",
       "name": "American Pipit",
       "subregion": "Michigan"
+    },
+    {
+      "date": "2026-09-10",
+      "id": "leabit",
+      "name": "Least Bittern",
+      "subregion": "New Jersey"
     }
   ]
 }

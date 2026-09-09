@@ -488,5 +488,19 @@
     "answerHash": "2f04d8ac",
     "id": "amepip",
     "subregion": "Michigan"
+  },
+  {
+    "date": "2026-09-10",
+    "region": "us",
+    "answerHash": "2a5d4980",
+    "id": "wlswar",
+    "subregion": "Illinois"
+  },
+  {
+    "date": "2026-09-10",
+    "region": "us-lower48",
+    "answerHash": "600292c5",
+    "id": "leabit",
+    "subregion": "New Jersey"
   }
 ]
