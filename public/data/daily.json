@@ -502,5 +502,19 @@
     "answerHash": "600292c5",
     "id": "leabit",
     "subregion": "New Jersey"
+  },
+  {
+    "date": "2026-09-11",
+    "region": "us",
+    "answerHash": "ca68fc0c",
+    "id": "purfin",
+    "subregion": "Illinois"
+  },
+  {
+    "date": "2026-09-11",
+    "region": "us-lower48",
+    "answerHash": "3b88b972",
+    "id": "semplo",
+    "subregion": "Michigan"
   }
 ]

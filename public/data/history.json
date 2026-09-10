@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-05-13",
-      "id": "rocpig",
-      "name": "Rock Pigeon",
-      "subregion": "New Hampshire"
-    },
-    {
       "date": "2026-05-14",
       "id": "whbnut",
       "name": "White-breasted Nuthatch",
@@ -821,15 +815,15 @@
       "id": "wlswar",
       "name": "Wilson's Warbler",
       "subregion": "Illinois"
+    },
+    {
+      "date": "2026-09-11",
+      "id": "purfin",
+      "name": "Purple Finch",
+      "subregion": "Illinois"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-05-13",
-      "id": "comyel",
-      "name": "Common Yellowthroat",
-      "subregion": "New Hampshire"
-    },
     {
       "date": "2026-05-14",
       "id": "bknsti",
@@ -1645,6 +1639,12 @@
       "id": "leabit",
       "name": "Least Bittern",
       "subregion": "New Jersey"
+    },
+    {
+      "date": "2026-09-11",
+      "id": "semplo",
+      "name": "Semipalmated Plover",
+      "subregion": "Michigan"
     }
   ]
 }
