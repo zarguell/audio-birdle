@@ -516,5 +516,19 @@
     "answerHash": "3b88b972",
     "id": "semplo",
     "subregion": "Michigan"
+  },
+  {
+    "date": "2026-09-12",
+    "region": "us",
+    "answerHash": "ed3f9f71",
+    "id": "sedwre1",
+    "subregion": "Missouri"
+  },
+  {
+    "date": "2026-09-12",
+    "region": "us-lower48",
+    "answerHash": "d0bb0655",
+    "id": "gockin",
+    "subregion": "Massachusetts"
   }
 ]

@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-05-14",
-      "id": "whbnut",
-      "name": "White-breasted Nuthatch",
-      "subregion": "Georgia"
-    },
-    {
       "date": "2026-05-15",
       "id": "bkhgro",
       "name": "Black-headed Grosbeak",
@@ -821,15 +815,15 @@
       "id": "purfin",
       "name": "Purple Finch",
       "subregion": "Illinois"
+    },
+    {
+      "date": "2026-09-12",
+      "id": "sedwre1",
+      "name": "Sedge Wren",
+      "subregion": "Missouri"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-05-14",
-      "id": "bknsti",
-      "name": "Black-necked Stilt",
-      "subregion": "Georgia"
-    },
     {
       "date": "2026-05-15",
       "id": "yerwar",
@@ -1645,6 +1639,12 @@
       "id": "semplo",
       "name": "Semipalmated Plover",
       "subregion": "Michigan"
+    },
+    {
+      "date": "2026-09-12",
+      "id": "gockin",
+      "name": "Golden-crowned Kinglet",
+      "subregion": "Massachusetts"
     }
   ]
 }
