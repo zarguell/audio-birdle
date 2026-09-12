@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-05-15",
-      "id": "bkhgro",
-      "name": "Black-headed Grosbeak",
-      "subregion": "Oklahoma"
-    },
-    {
       "date": "2026-05-16",
       "id": "glwgul",
       "name": "Glaucous-winged Gull",
@@ -821,15 +815,15 @@
       "id": "sedwre1",
       "name": "Sedge Wren",
       "subregion": "Missouri"
+    },
+    {
+      "date": "2026-09-13",
+      "id": "wilplo",
+      "name": "Wilson's Plover",
+      "subregion": "Louisiana"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-05-15",
-      "id": "yerwar",
-      "name": "Yellow-rumped Warbler",
-      "subregion": "Maine"
-    },
     {
       "date": "2026-05-16",
       "id": "baleag",
@@ -1645,6 +1639,12 @@
       "id": "gockin",
       "name": "Golden-crowned Kinglet",
       "subregion": "Massachusetts"
+    },
+    {
+      "date": "2026-09-13",
+      "id": "haiwoo",
+      "name": "Hairy Woodpecker",
+      "subregion": "Wyoming"
     }
   ]
 }

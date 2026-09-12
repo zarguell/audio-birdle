@@ -530,5 +530,19 @@
     "answerHash": "d0bb0655",
     "id": "gockin",
     "subregion": "Massachusetts"
+  },
+  {
+    "date": "2026-09-13",
+    "region": "us",
+    "answerHash": "71cd1371",
+    "id": "wilplo",
+    "subregion": "Louisiana"
+  },
+  {
+    "date": "2026-09-13",
+    "region": "us-lower48",
+    "answerHash": "7d586503",
+    "id": "haiwoo",
+    "subregion": "Wyoming"
   }
 ]
