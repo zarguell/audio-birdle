@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-05-16",
-      "id": "glwgul",
-      "name": "Glaucous-winged Gull",
-      "subregion": "Washington"
-    },
-    {
       "date": "2026-05-17",
       "id": "fragul",
       "name": "Franklin's Gull",
@@ -821,15 +815,15 @@
       "id": "wilplo",
       "name": "Wilson's Plover",
       "subregion": "Louisiana"
+    },
+    {
+      "date": "2026-09-14",
+      "id": "lazbun",
+      "name": "Lazuli Bunting",
+      "subregion": "Wyoming"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-05-16",
-      "id": "baleag",
-      "name": "Bald Eagle",
-      "subregion": "Washington"
-    },
     {
       "date": "2026-05-17",
       "id": "bkcchi",
@@ -1645,6 +1639,12 @@
       "id": "haiwoo",
       "name": "Hairy Woodpecker",
       "subregion": "Wyoming"
+    },
+    {
+      "date": "2026-09-14",
+      "id": "caster1",
+      "name": "Caspian Tern",
+      "subregion": "Arkansas"
     }
   ]
 }

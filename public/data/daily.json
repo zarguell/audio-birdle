@@ -544,5 +544,19 @@
     "answerHash": "7d586503",
     "id": "haiwoo",
     "subregion": "Wyoming"
+  },
+  {
+    "date": "2026-09-14",
+    "region": "us",
+    "answerHash": "896cea34",
+    "id": "lazbun",
+    "subregion": "Wyoming"
+  },
+  {
+    "date": "2026-09-14",
+    "region": "us-lower48",
+    "answerHash": "6eda6f45",
+    "id": "caster1",
+    "subregion": "Arkansas"
   }
 ]
