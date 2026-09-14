@@ -558,5 +558,19 @@
     "answerHash": "6eda6f45",
     "id": "caster1",
     "subregion": "Arkansas"
+  },
+  {
+    "date": "2026-09-15",
+    "region": "us",
+    "answerHash": "4157fb39",
+    "id": "amegfi",
+    "subregion": "Kansas"
+  },
+  {
+    "date": "2026-09-15",
+    "region": "us-lower48",
+    "answerHash": "b79daefb",
+    "id": "bkbwar",
+    "subregion": "New Hampshire"
   }
 ]

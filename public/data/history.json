@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-05-17",
-      "id": "fragul",
-      "name": "Franklin's Gull",
-      "subregion": "Missouri"
-    },
-    {
       "date": "2026-05-18",
       "id": "gadwal",
       "name": "Gadwall",
@@ -821,15 +815,15 @@
       "id": "lazbun",
       "name": "Lazuli Bunting",
       "subregion": "Wyoming"
+    },
+    {
+      "date": "2026-09-15",
+      "id": "amegfi",
+      "name": "American Goldfinch",
+      "subregion": "Kansas"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-05-17",
-      "id": "bkcchi",
-      "name": "Black-capped Chickadee",
-      "subregion": "Missouri"
-    },
     {
       "date": "2026-05-18",
       "id": "rehwoo",
@@ -1645,6 +1639,12 @@
       "id": "caster1",
       "name": "Caspian Tern",
       "subregion": "Arkansas"
+    },
+    {
+      "date": "2026-09-15",
+      "id": "bkbwar",
+      "name": "Blackburnian Warbler",
+      "subregion": "New Hampshire"
     }
   ]
 }
