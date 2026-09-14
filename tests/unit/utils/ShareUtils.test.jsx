@@ -320,7 +320,7 @@ describe("ShareUtils", () => {
 
     beforeEach(() => {
       // Mock navigator.clipboard
-      Object.defineProperty(global, 'navigator', {
+      Object.defineProperty(global, "navigator", {
         value: {
           clipboard: {
             writeText: vi.fn().mockResolvedValue(undefined),
