@@ -36,16 +36,20 @@ describe("CacheUtils", () => {
     originalNavigator = global.navigator;
     originalLocalStorage = global.localStorage;
 
-    global.localStorage = {
-      getItem: vi.fn(),
-      setItem: vi.fn(),
-      removeItem: vi.fn(),
-      clear: vi.fn(),
-      get length() {
-        return 0;
+    Object.defineProperty(global, "localStorage", {
+      value: {
+        getItem: vi.fn(),
+        setItem: vi.fn(),
+        removeItem: vi.fn(),
+        clear: vi.fn(),
+        get length() {
+          return 0;
+        },
+        key: vi.fn(),
       },
-      key: vi.fn(),
-    };
+      writable: true,
+      configurable: true,
+    });
 
     global.caches = {
       keys: vi.fn(),
@@ -54,14 +58,26 @@ describe("CacheUtils", () => {
   });
 
   afterEach(() => {
-    global.navigator = originalNavigator;
-    global.localStorage = originalLocalStorage;
+    Object.defineProperty(global, "navigator", {
+      value: originalNavigator,
+      writable: true,
+      configurable: true,
+    });
+    Object.defineProperty(global, "localStorage", {
+      value: originalLocalStorage,
+      writable: true,
+      configurable: true,
+    });
     vi.useRealTimers();
   });
 
   describe("getServiceWorker", () => {
     it("should return null if serviceWorker not supported", async () => {
-      global.navigator = { serviceWorker: undefined };
+      Object.defineProperty(global, "navigator", {
+        value: { serviceWorker: undefined },
+        writable: true,
+        configurable: true,
+      });
 
       const result = await getServiceWorker();
 
@@ -374,7 +390,9 @@ describe("CacheUtils", () => {
       global.fetch.mockImplementation((url) =>
         Promise.resolve({
           ok: true,
-          headers: { get: vi.fn().mockReturnValue(`version-${url.split("?")[0]}`) },
+          headers: {
+            get: vi.fn().mockReturnValue(`version-${url.split("?")[0]}`),
+          },
           json: async () =>
             url.includes("regions.json")
               ? mockRegions
