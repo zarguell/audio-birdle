@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-05-18",
-      "id": "gadwal",
-      "name": "Gadwall",
-      "subregion": "Maine"
-    },
-    {
       "date": "2026-05-19",
       "id": "norpar",
       "name": "Northern Parula",
@@ -821,15 +815,15 @@
       "id": "amegfi",
       "name": "American Goldfinch",
       "subregion": "Kansas"
+    },
+    {
+      "date": "2026-09-16",
+      "id": "larbun",
+      "name": "Lark Bunting",
+      "subregion": "Montana"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-05-18",
-      "id": "rehwoo",
-      "name": "Red-headed Woodpecker",
-      "subregion": "Maine"
-    },
     {
       "date": "2026-05-19",
       "id": "comloo",
@@ -1645,6 +1639,12 @@
       "id": "bkbwar",
       "name": "Blackburnian Warbler",
       "subregion": "New Hampshire"
+    },
+    {
+      "date": "2026-09-16",
+      "id": "wlswar",
+      "name": "Wilson's Warbler",
+      "subregion": "Maine"
     }
   ]
 }

@@ -572,5 +572,19 @@
     "answerHash": "b79daefb",
     "id": "bkbwar",
     "subregion": "New Hampshire"
+  },
+  {
+    "date": "2026-09-16",
+    "region": "us",
+    "answerHash": "24a53e2c",
+    "id": "larbun",
+    "subregion": "Montana"
+  },
+  {
+    "date": "2026-09-16",
+    "region": "us-lower48",
+    "answerHash": "2a5d4980",
+    "id": "wlswar",
+    "subregion": "Maine"
   }
 ]
