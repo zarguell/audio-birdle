@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-05-19",
-      "id": "norpar",
-      "name": "Northern Parula",
-      "subregion": "Kentucky"
-    },
-    {
       "date": "2026-05-20",
       "id": "babwar",
       "name": "Bay-breasted Warbler",
@@ -821,15 +815,15 @@
       "id": "larbun",
       "name": "Lark Bunting",
       "subregion": "Montana"
+    },
+    {
+      "date": "2026-09-17",
+      "id": "amebit",
+      "name": "American Bittern",
+      "subregion": "Minnesota"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-05-19",
-      "id": "comloo",
-      "name": "Common Loon",
-      "subregion": "Wisconsin"
-    },
     {
       "date": "2026-05-20",
       "id": "snogoo",
@@ -1645,6 +1639,12 @@
       "id": "wlswar",
       "name": "Wilson's Warbler",
       "subregion": "Maine"
+    },
+    {
+      "date": "2026-09-17",
+      "id": "phivir",
+      "name": "Philadelphia Vireo",
+      "subregion": "Alabama"
     }
   ]
 }

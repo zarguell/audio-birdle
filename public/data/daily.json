@@ -586,5 +586,19 @@
     "answerHash": "2a5d4980",
     "id": "wlswar",
     "subregion": "Maine"
+  },
+  {
+    "date": "2026-09-17",
+    "region": "us",
+    "answerHash": "9672a7f6",
+    "id": "amebit",
+    "subregion": "Minnesota"
+  },
+  {
+    "date": "2026-09-17",
+    "region": "us-lower48",
+    "answerHash": "10a2cedc",
+    "id": "phivir",
+    "subregion": "Alabama"
   }
 ]
