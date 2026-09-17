@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-05-20",
-      "id": "babwar",
-      "name": "Bay-breasted Warbler",
-      "subregion": "Louisiana"
-    },
-    {
       "date": "2026-05-21",
       "id": "btbwar",
       "name": "Black-throated Blue Warbler",
@@ -821,15 +815,15 @@
       "id": "amebit",
       "name": "American Bittern",
       "subregion": "Minnesota"
+    },
+    {
+      "date": "2026-09-18",
+      "id": "aldfly",
+      "name": "Alder Flycatcher",
+      "subregion": "Iowa"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-05-20",
-      "id": "snogoo",
-      "name": "Snow Goose",
-      "subregion": "Louisiana"
-    },
     {
       "date": "2026-05-21",
       "id": "brwhaw",
@@ -1645,6 +1639,12 @@
       "id": "phivir",
       "name": "Philadelphia Vireo",
       "subregion": "Alabama"
+    },
+    {
+      "date": "2026-09-18",
+      "id": "leater1",
+      "name": "Least Tern",
+      "subregion": "South Carolina"
     }
   ]
 }

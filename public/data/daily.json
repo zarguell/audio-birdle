@@ -600,5 +600,19 @@
     "answerHash": "10a2cedc",
     "id": "phivir",
     "subregion": "Alabama"
+  },
+  {
+    "date": "2026-09-18",
+    "region": "us",
+    "answerHash": "e1b3e130",
+    "id": "aldfly",
+    "subregion": "Iowa"
+  },
+  {
+    "date": "2026-09-18",
+    "region": "us-lower48",
+    "answerHash": "fe47baf2",
+    "id": "leater1",
+    "subregion": "South Carolina"
   }
 ]
