@@ -320,11 +320,15 @@ describe("ShareUtils", () => {
 
     beforeEach(() => {
       // Mock navigator.clipboard
-      global.navigator = {
-        clipboard: {
-          writeText: vi.fn().mockResolvedValue(undefined),
+      Object.defineProperty(global, 'navigator', {
+        value: {
+          clipboard: {
+            writeText: vi.fn().mockResolvedValue(undefined),
+          },
         },
-      };
+        writable: true,
+        configurable: true,
+      });
     });
 
     it("should use Web Share API on mobile devices", async () => {
