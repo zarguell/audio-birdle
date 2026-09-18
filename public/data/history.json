@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-05-21",
-      "id": "btbwar",
-      "name": "Black-throated Blue Warbler",
-      "subregion": "Massachusetts"
-    },
-    {
       "date": "2026-05-22",
       "id": "reevir1",
       "name": "Red-eyed Vireo",
@@ -821,15 +815,15 @@
       "id": "aldfly",
       "name": "Alder Flycatcher",
       "subregion": "Iowa"
+    },
+    {
+      "date": "2026-09-19",
+      "id": "hoowar",
+      "name": "Hooded Warbler",
+      "subregion": "North Carolina"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-05-21",
-      "id": "brwhaw",
-      "name": "Broad-winged Hawk",
-      "subregion": "West Virginia"
-    },
     {
       "date": "2026-05-22",
       "id": "amekes",
@@ -1645,6 +1639,12 @@
       "id": "leater1",
       "name": "Least Tern",
       "subregion": "South Carolina"
+    },
+    {
+      "date": "2026-09-19",
+      "id": "whtswi",
+      "name": "White-throated Swift",
+      "subregion": "Oregon"
     }
   ]
 }

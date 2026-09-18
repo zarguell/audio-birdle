@@ -614,5 +614,19 @@
     "answerHash": "fe47baf2",
     "id": "leater1",
     "subregion": "South Carolina"
+  },
+  {
+    "date": "2026-09-19",
+    "region": "us",
+    "answerHash": "32a2a88a",
+    "id": "hoowar",
+    "subregion": "North Carolina"
+  },
+  {
+    "date": "2026-09-19",
+    "region": "us-lower48",
+    "answerHash": "41db6e88",
+    "id": "whtswi",
+    "subregion": "Oregon"
   }
 ]
