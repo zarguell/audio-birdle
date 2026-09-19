@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-05-22",
-      "id": "reevir1",
-      "name": "Red-eyed Vireo",
-      "subregion": "Minnesota"
-    },
-    {
       "date": "2026-05-23",
       "id": "rebmer",
       "name": "Red-breasted Merganser",
@@ -821,15 +815,15 @@
       "id": "hoowar",
       "name": "Hooded Warbler",
       "subregion": "North Carolina"
+    },
+    {
+      "date": "2026-09-20",
+      "id": "mallar3",
+      "name": "Mallard",
+      "subregion": "New Hampshire"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-05-22",
-      "id": "amekes",
-      "name": "American Kestrel",
-      "subregion": "Minnesota"
-    },
     {
       "date": "2026-05-23",
       "id": "comnig",
@@ -1645,6 +1639,12 @@
       "id": "whtswi",
       "name": "White-throated Swift",
       "subregion": "Oregon"
+    },
+    {
+      "date": "2026-09-20",
+      "id": "carwre",
+      "name": "Carolina Wren",
+      "subregion": "South Carolina"
     }
   ]
 }

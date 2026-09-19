@@ -628,5 +628,19 @@
     "answerHash": "41db6e88",
     "id": "whtswi",
     "subregion": "Oregon"
+  },
+  {
+    "date": "2026-09-20",
+    "region": "us",
+    "answerHash": "1f16a85c",
+    "id": "mallar3",
+    "subregion": "New Hampshire"
+  },
+  {
+    "date": "2026-09-20",
+    "region": "us-lower48",
+    "answerHash": "370d5854",
+    "id": "carwre",
+    "subregion": "South Carolina"
   }
 ]
