@@ -642,5 +642,19 @@
     "answerHash": "370d5854",
     "id": "carwre",
     "subregion": "South Carolina"
+  },
+  {
+    "date": "2026-09-21",
+    "region": "us",
+    "answerHash": "e344c1b7",
+    "id": "redhea",
+    "subregion": "Alabama"
+  },
+  {
+    "date": "2026-09-21",
+    "region": "us-lower48",
+    "answerHash": "b966e2ef",
+    "id": "grcfly",
+    "subregion": "Louisiana"
   }
 ]

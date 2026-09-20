@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-05-23",
-      "id": "rebmer",
-      "name": "Red-breasted Merganser",
-      "subregion": "Illinois"
-    },
-    {
       "date": "2026-05-24",
       "id": "brthum",
       "name": "Broad-tailed Hummingbird",
@@ -821,15 +815,15 @@
       "id": "mallar3",
       "name": "Mallard",
       "subregion": "New Hampshire"
+    },
+    {
+      "date": "2026-09-21",
+      "id": "redhea",
+      "name": "Redhead",
+      "subregion": "Alabama"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-05-23",
-      "id": "comnig",
-      "name": "Common Nighthawk",
-      "subregion": "Delaware"
-    },
     {
       "date": "2026-05-24",
       "id": "chiswi",
@@ -1645,6 +1639,12 @@
       "id": "carwre",
       "name": "Carolina Wren",
       "subregion": "South Carolina"
+    },
+    {
+      "date": "2026-09-21",
+      "id": "grcfly",
+      "name": "Great Crested Flycatcher",
+      "subregion": "Louisiana"
     }
   ]
 }
