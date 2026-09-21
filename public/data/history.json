@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-05-24",
-      "id": "brthum",
-      "name": "Broad-tailed Hummingbird",
-      "subregion": "Montana"
-    },
-    {
       "date": "2026-05-25",
       "id": "norcar",
       "name": "Northern Cardinal",
@@ -821,15 +815,15 @@
       "id": "redhea",
       "name": "Redhead",
       "subregion": "Alabama"
+    },
+    {
+      "date": "2026-09-22",
+      "id": "bkcchi",
+      "name": "Black-capped Chickadee",
+      "subregion": "Utah"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-05-24",
-      "id": "chiswi",
-      "name": "Chimney Swift",
-      "subregion": "Montana"
-    },
     {
       "date": "2026-05-25",
       "id": "buwtea",
@@ -1645,6 +1639,12 @@
       "id": "grcfly",
       "name": "Great Crested Flycatcher",
       "subregion": "Louisiana"
+    },
+    {
+      "date": "2026-09-22",
+      "id": "rocpig",
+      "name": "Rock Pigeon",
+      "subregion": "Oklahoma"
     }
   ]
 }

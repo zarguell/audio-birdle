@@ -656,5 +656,19 @@
     "answerHash": "b966e2ef",
     "id": "grcfly",
     "subregion": "Louisiana"
+  },
+  {
+    "date": "2026-09-22",
+    "region": "us",
+    "answerHash": "62199e40",
+    "id": "bkcchi",
+    "subregion": "Utah"
+  },
+  {
+    "date": "2026-09-22",
+    "region": "us-lower48",
+    "answerHash": "27089d22",
+    "id": "rocpig",
+    "subregion": "Oklahoma"
   }
 ]
