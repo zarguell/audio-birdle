@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-05-25",
-      "id": "norcar",
-      "name": "Northern Cardinal",
-      "subregion": "Kentucky"
-    },
-    {
       "date": "2026-05-26",
       "id": "easblu",
       "name": "Eastern Bluebird",
@@ -821,15 +815,15 @@
       "id": "bkcchi",
       "name": "Black-capped Chickadee",
       "subregion": "Utah"
+    },
+    {
+      "date": "2026-09-23",
+      "id": "snoplo5",
+      "name": "Snowy Plover",
+      "subregion": "Alabama"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-05-25",
-      "id": "buwtea",
-      "name": "Blue-winged Teal",
-      "subregion": "Kentucky"
-    },
     {
       "date": "2026-05-26",
       "id": "barswa",
@@ -1645,6 +1639,12 @@
       "id": "rocpig",
       "name": "Rock Pigeon",
       "subregion": "Oklahoma"
+    },
+    {
+      "date": "2026-09-23",
+      "id": "whrsan",
+      "name": "White-rumped Sandpiper",
+      "subregion": "Delaware"
     }
   ]
 }

@@ -670,5 +670,19 @@
     "answerHash": "27089d22",
     "id": "rocpig",
     "subregion": "Oklahoma"
+  },
+  {
+    "date": "2026-09-23",
+    "region": "us",
+    "answerHash": "a5b2a4d4",
+    "id": "snoplo5",
+    "subregion": "Alabama"
+  },
+  {
+    "date": "2026-09-23",
+    "region": "us-lower48",
+    "answerHash": "52de878b",
+    "id": "whrsan",
+    "subregion": "Delaware"
   }
 ]
