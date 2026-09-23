@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-05-26",
-      "id": "easblu",
-      "name": "Eastern Bluebird",
-      "subregion": "Florida"
-    },
-    {
       "date": "2026-05-27",
       "id": "buwwar",
       "name": "Blue-winged Warbler",
@@ -821,15 +815,15 @@
       "id": "snoplo5",
       "name": "Snowy Plover",
       "subregion": "Alabama"
+    },
+    {
+      "date": "2026-09-24",
+      "id": "grhowl",
+      "name": "Great Horned Owl",
+      "subregion": "Rhode Island"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-05-26",
-      "id": "barswa",
-      "name": "Barn Swallow",
-      "subregion": "Florida"
-    },
     {
       "date": "2026-05-27",
       "id": "miskit",
@@ -1645,6 +1639,12 @@
       "id": "whrsan",
       "name": "White-rumped Sandpiper",
       "subregion": "Delaware"
+    },
+    {
+      "date": "2026-09-24",
+      "id": "norfli",
+      "name": "Northern Flicker",
+      "subregion": "Missouri"
     }
   ]
 }

@@ -684,5 +684,19 @@
     "answerHash": "52de878b",
     "id": "whrsan",
     "subregion": "Delaware"
+  },
+  {
+    "date": "2026-09-24",
+    "region": "us",
+    "answerHash": "f7fdef83",
+    "id": "grhowl",
+    "subregion": "Rhode Island"
+  },
+  {
+    "date": "2026-09-24",
+    "region": "us-lower48",
+    "answerHash": "a1092478",
+    "id": "norfli",
+    "subregion": "Missouri"
   }
 ]
