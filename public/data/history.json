@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-05-27",
-      "id": "buwwar",
-      "name": "Blue-winged Warbler",
-      "subregion": "Illinois"
-    },
-    {
       "date": "2026-05-28",
       "id": "scatan",
       "name": "Scarlet Tanager",
@@ -821,15 +815,15 @@
       "id": "grhowl",
       "name": "Great Horned Owl",
       "subregion": "Rhode Island"
+    },
+    {
+      "date": "2026-09-25",
+      "id": "veery",
+      "name": "Veery",
+      "subregion": "Pennsylvania"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-05-27",
-      "id": "miskit",
-      "name": "Mississippi Kite",
-      "subregion": "Mississippi"
-    },
     {
       "date": "2026-05-28",
       "id": "brocow",
@@ -1645,6 +1639,12 @@
       "id": "norfli",
       "name": "Northern Flicker",
       "subregion": "Missouri"
+    },
+    {
+      "date": "2026-09-25",
+      "id": "rethaw",
+      "name": "Red-tailed Hawk",
+      "subregion": "Louisiana"
     }
   ]
 }

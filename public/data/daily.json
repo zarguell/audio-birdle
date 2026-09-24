@@ -698,5 +698,19 @@
     "answerHash": "a1092478",
     "id": "norfli",
     "subregion": "Missouri"
+  },
+  {
+    "date": "2026-09-25",
+    "region": "us",
+    "answerHash": "fd17836d",
+    "id": "veery",
+    "subregion": "Pennsylvania"
+  },
+  {
+    "date": "2026-09-25",
+    "region": "us-lower48",
+    "answerHash": "5ab4016d",
+    "id": "rethaw",
+    "subregion": "Louisiana"
   }
 ]
