@@ -712,5 +712,19 @@
     "answerHash": "5ab4016d",
     "id": "rethaw",
     "subregion": "Louisiana"
+  },
+  {
+    "date": "2026-09-26",
+    "region": "us",
+    "answerHash": "f21c2d00",
+    "id": "yecpar",
+    "subregion": "Florida"
+  },
+  {
+    "date": "2026-09-26",
+    "region": "us-lower48",
+    "answerHash": "0c26db19",
+    "id": "mutswa",
+    "subregion": "Tennessee"
   }
 ]

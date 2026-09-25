@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-05-28",
-      "id": "scatan",
-      "name": "Scarlet Tanager",
-      "subregion": "New Jersey"
-    },
-    {
       "date": "2026-05-29",
       "id": "ribgul",
       "name": "Ring-billed Gull",
@@ -821,15 +815,15 @@
       "id": "veery",
       "name": "Veery",
       "subregion": "Pennsylvania"
+    },
+    {
+      "date": "2026-09-26",
+      "id": "yecpar",
+      "name": "Yellow-chevroned Parakeet",
+      "subregion": "Florida"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-05-28",
-      "id": "brocow",
-      "name": "Bronzed Cowbird",
-      "subregion": "Oklahoma"
-    },
     {
       "date": "2026-05-29",
       "id": "veery",
@@ -1645,6 +1639,12 @@
       "id": "rethaw",
       "name": "Red-tailed Hawk",
       "subregion": "Louisiana"
+    },
+    {
+      "date": "2026-09-26",
+      "id": "mutswa",
+      "name": "Mute Swan",
+      "subregion": "Tennessee"
     }
   ]
 }
