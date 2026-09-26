@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-05-29",
-      "id": "ribgul",
-      "name": "Ring-billed Gull",
-      "subregion": "District of Columbia"
-    },
-    {
       "date": "2026-05-30",
       "id": "virwar",
       "name": "Virginia's Warbler",
@@ -821,15 +815,15 @@
       "id": "yecpar",
       "name": "Yellow-chevroned Parakeet",
       "subregion": "Florida"
+    },
+    {
+      "date": "2026-09-27",
+      "id": "tenwar",
+      "name": "Tennessee Warbler",
+      "subregion": "Louisiana"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-05-29",
-      "id": "veery",
-      "name": "Veery",
-      "subregion": "District of Columbia"
-    },
     {
       "date": "2026-05-30",
       "id": "houspa",
@@ -1645,6 +1639,12 @@
       "id": "mutswa",
       "name": "Mute Swan",
       "subregion": "Tennessee"
+    },
+    {
+      "date": "2026-09-27",
+      "id": "purfin",
+      "name": "Purple Finch",
+      "subregion": "Rhode Island"
     }
   ]
 }

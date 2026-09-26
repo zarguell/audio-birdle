@@ -726,5 +726,19 @@
     "answerHash": "0c26db19",
     "id": "mutswa",
     "subregion": "Tennessee"
+  },
+  {
+    "date": "2026-09-27",
+    "region": "us",
+    "answerHash": "5f2397df",
+    "id": "tenwar",
+    "subregion": "Louisiana"
+  },
+  {
+    "date": "2026-09-27",
+    "region": "us-lower48",
+    "answerHash": "ca68fc0c",
+    "id": "purfin",
+    "subregion": "Rhode Island"
   }
 ]
