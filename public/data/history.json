@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-05-30",
-      "id": "virwar",
-      "name": "Virginia's Warbler",
-      "subregion": "Arizona"
-    },
-    {
       "date": "2026-05-31",
       "id": "baleag",
       "name": "Bald Eagle",
@@ -821,15 +815,15 @@
       "id": "tenwar",
       "name": "Tennessee Warbler",
       "subregion": "Louisiana"
+    },
+    {
+      "date": "2026-09-28",
+      "id": "recpar",
+      "name": "Red-crowned Amazon",
+      "subregion": "Hawaii"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-05-30",
-      "id": "houspa",
-      "name": "House Sparrow",
-      "subregion": "Arizona"
-    },
     {
       "date": "2026-05-31",
       "id": "hoowar",
@@ -1645,6 +1639,12 @@
       "id": "purfin",
       "name": "Purple Finch",
       "subregion": "Rhode Island"
+    },
+    {
+      "date": "2026-09-28",
+      "id": "robgro",
+      "name": "Rose-breasted Grosbeak",
+      "subregion": "Tennessee"
     }
   ]
 }

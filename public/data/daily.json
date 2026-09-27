@@ -740,5 +740,19 @@
     "answerHash": "ca68fc0c",
     "id": "purfin",
     "subregion": "Rhode Island"
+  },
+  {
+    "date": "2026-09-28",
+    "region": "us",
+    "answerHash": "eac0fc39",
+    "id": "recpar",
+    "subregion": "Hawaii"
+  },
+  {
+    "date": "2026-09-28",
+    "region": "us-lower48",
+    "answerHash": "554b9f0b",
+    "id": "robgro",
+    "subregion": "Tennessee"
   }
 ]
