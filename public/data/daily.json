@@ -754,5 +754,33 @@
     "answerHash": "554b9f0b",
     "id": "robgro",
     "subregion": "Tennessee"
+  },
+  {
+    "date": "2026-09-29",
+    "region": "us",
+    "answerHash": "7da3b149",
+    "id": "whtspa",
+    "subregion": "Oklahoma"
+  },
+  {
+    "date": "2026-09-29",
+    "region": "us-lower48",
+    "answerHash": "f5b25520",
+    "id": "clcspa",
+    "subregion": "Montana"
+  },
+  {
+    "date": "2026-09-30",
+    "region": "us",
+    "answerHash": "767ed391",
+    "id": "balori",
+    "subregion": "Oklahoma"
+  },
+  {
+    "date": "2026-09-30",
+    "region": "us-lower48",
+    "answerHash": "2f480f0a",
+    "id": "blkter",
+    "subregion": "Kansas"
   }
 ]

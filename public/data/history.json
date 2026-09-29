@@ -1,18 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-05-31",
-      "id": "baleag",
-      "name": "Bald Eagle",
-      "subregion": "Illinois"
-    },
-    {
-      "date": "2026-06-01",
-      "id": "brdowl",
-      "name": "Barred Owl",
-      "subregion": "Vermont"
-    },
-    {
       "date": "2026-06-02",
       "id": "canwar",
       "name": "Canada Warbler",
@@ -821,21 +809,21 @@
       "id": "recpar",
       "name": "Red-crowned Amazon",
       "subregion": "Hawaii"
+    },
+    {
+      "date": "2026-09-29",
+      "id": "whtspa",
+      "name": "White-throated Sparrow",
+      "subregion": "Oklahoma"
+    },
+    {
+      "date": "2026-09-30",
+      "id": "balori",
+      "name": "Baltimore Oriole",
+      "subregion": "Oklahoma"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-05-31",
-      "id": "hoowar",
-      "name": "Hooded Warbler",
-      "subregion": "Massachusetts"
-    },
-    {
-      "date": "2026-06-01",
-      "id": "vesspa",
-      "name": "Vesper Sparrow",
-      "subregion": "Vermont"
-    },
     {
       "date": "2026-06-02",
       "id": "amered",
@@ -1645,6 +1633,18 @@
       "id": "robgro",
       "name": "Rose-breasted Grosbeak",
       "subregion": "Tennessee"
+    },
+    {
+      "date": "2026-09-29",
+      "id": "clcspa",
+      "name": "Clay-colored Sparrow",
+      "subregion": "Montana"
+    },
+    {
+      "date": "2026-09-30",
+      "id": "blkter",
+      "name": "Black Tern",
+      "subregion": "Kansas"
     }
   ]
 }
