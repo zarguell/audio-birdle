@@ -782,5 +782,19 @@
     "answerHash": "2f480f0a",
     "id": "blkter",
     "subregion": "Kansas"
+  },
+  {
+    "date": "2026-10-01",
+    "region": "us",
+    "answerHash": "3e627c1f",
+    "id": "leafly",
+    "subregion": "North Carolina"
+  },
+  {
+    "date": "2026-10-01",
+    "region": "us-lower48",
+    "answerHash": "72513e92",
+    "id": "btbwar",
+    "subregion": "South Dakota"
   }
 ]

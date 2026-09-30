@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-06-02",
-      "id": "canwar",
-      "name": "Canada Warbler",
-      "subregion": "Iowa"
-    },
-    {
       "date": "2026-06-03",
       "id": "rotbec",
       "name": "Rose-throated Becard",
@@ -821,15 +815,15 @@
       "id": "balori",
       "name": "Baltimore Oriole",
       "subregion": "Oklahoma"
+    },
+    {
+      "date": "2026-10-01",
+      "id": "leafly",
+      "name": "Least Flycatcher",
+      "subregion": "North Carolina"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-06-02",
-      "id": "amered",
-      "name": "American Redstart",
-      "subregion": "Iowa"
-    },
     {
       "date": "2026-06-03",
       "id": "norbob",
@@ -1645,6 +1639,12 @@
       "id": "blkter",
       "name": "Black Tern",
       "subregion": "Kansas"
+    },
+    {
+      "date": "2026-10-01",
+      "id": "btbwar",
+      "name": "Black-throated Blue Warbler",
+      "subregion": "South Dakota"
     }
   ]
 }
