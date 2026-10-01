@@ -1,18 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-06-03",
-      "id": "rotbec",
-      "name": "Rose-throated Becard",
-      "subregion": "Arizona"
-    },
-    {
-      "date": "2026-06-03",
-      "id": "canvas",
-      "name": "Canvasback",
-      "subregion": "New York"
-    },
-    {
       "date": "2026-06-04",
       "id": "calqua",
       "name": "California Quail",
@@ -821,21 +809,15 @@
       "id": "leafly",
       "name": "Least Flycatcher",
       "subregion": "North Carolina"
+    },
+    {
+      "date": "2026-10-02",
+      "id": "cedwax",
+      "name": "Cedar Waxwing",
+      "subregion": "New Mexico"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-06-03",
-      "id": "norbob",
-      "name": "Northern Bobwhite",
-      "subregion": "Delaware"
-    },
-    {
-      "date": "2026-06-03",
-      "id": "mallar3",
-      "name": "Mallard",
-      "subregion": "New York"
-    },
     {
       "date": "2026-06-04",
       "id": "canvas",
@@ -1645,6 +1627,12 @@
       "id": "btbwar",
       "name": "Black-throated Blue Warbler",
       "subregion": "South Dakota"
+    },
+    {
+      "date": "2026-10-02",
+      "id": "ovenbi1",
+      "name": "Ovenbird",
+      "subregion": "Illinois"
     }
   ]
 }

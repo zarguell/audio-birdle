@@ -796,5 +796,19 @@
     "answerHash": "72513e92",
     "id": "btbwar",
     "subregion": "South Dakota"
+  },
+  {
+    "date": "2026-10-02",
+    "region": "us",
+    "answerHash": "8f4a203e",
+    "id": "cedwax",
+    "subregion": "New Mexico"
+  },
+  {
+    "date": "2026-10-02",
+    "region": "us-lower48",
+    "answerHash": "bc35cb70",
+    "id": "ovenbi1",
+    "subregion": "Illinois"
   }
 ]
