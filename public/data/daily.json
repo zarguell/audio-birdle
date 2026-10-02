@@ -810,5 +810,19 @@
     "answerHash": "bc35cb70",
     "id": "ovenbi1",
     "subregion": "Illinois"
+  },
+  {
+    "date": "2026-10-03",
+    "region": "us",
+    "answerHash": "bc35cb70",
+    "id": "ovenbi1",
+    "subregion": "Mississippi"
+  },
+  {
+    "date": "2026-10-03",
+    "region": "us-lower48",
+    "answerHash": "f0694246",
+    "id": "crithr",
+    "subregion": "New Mexico"
   }
 ]

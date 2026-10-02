@@ -1,18 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-06-04",
-      "id": "calqua",
-      "name": "California Quail",
-      "subregion": "Nevada"
-    },
-    {
-      "date": "2026-06-04",
-      "id": "mouwar",
-      "name": "Mourning Warbler",
-      "subregion": "Nebraska"
-    },
-    {
       "date": "2026-06-05",
       "id": "hoomer",
       "name": "Hooded Merganser",
@@ -815,21 +803,15 @@
       "id": "cedwax",
       "name": "Cedar Waxwing",
       "subregion": "New Mexico"
+    },
+    {
+      "date": "2026-10-03",
+      "id": "ovenbi1",
+      "name": "Ovenbird",
+      "subregion": "Mississippi"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-06-04",
-      "id": "canvas",
-      "name": "Canvasback",
-      "subregion": "Colorado"
-    },
-    {
-      "date": "2026-06-04",
-      "id": "paibun",
-      "name": "Painted Bunting",
-      "subregion": "Nebraska"
-    },
     {
       "date": "2026-06-05",
       "id": "buwwar",
@@ -1633,6 +1615,12 @@
       "id": "ovenbi1",
       "name": "Ovenbird",
       "subregion": "Illinois"
+    },
+    {
+      "date": "2026-10-03",
+      "id": "crithr",
+      "name": "Crissal Thrasher",
+      "subregion": "New Mexico"
     }
   ]
 }
