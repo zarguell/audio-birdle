@@ -1,18 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-06-05",
-      "id": "hoomer",
-      "name": "Hooded Merganser",
-      "subregion": "Wyoming"
-    },
-    {
-      "date": "2026-06-05",
-      "id": "wesfly",
-      "name": "Western Flycatcher",
-      "subregion": "New Mexico"
-    },
-    {
       "date": "2026-06-06",
       "id": "amewig",
       "name": "American Wigeon",
@@ -809,21 +797,15 @@
       "id": "ovenbi1",
       "name": "Ovenbird",
       "subregion": "Mississippi"
+    },
+    {
+      "date": "2026-10-04",
+      "id": "whbnut",
+      "name": "White-breasted Nuthatch",
+      "subregion": "Florida"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-06-05",
-      "id": "buwwar",
-      "name": "Blue-winged Warbler",
-      "subregion": "Wisconsin"
-    },
-    {
-      "date": "2026-06-05",
-      "id": "subfly",
-      "name": "Sulphur-bellied Flycatcher",
-      "subregion": "New Mexico"
-    },
     {
       "date": "2026-06-06",
       "id": "btnwar",
@@ -1621,6 +1603,12 @@
       "id": "crithr",
       "name": "Crissal Thrasher",
       "subregion": "New Mexico"
+    },
+    {
+      "date": "2026-10-04",
+      "id": "perfal",
+      "name": "Peregrine Falcon",
+      "subregion": "Wyoming"
     }
   ]
 }

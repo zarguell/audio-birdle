@@ -824,5 +824,19 @@
     "answerHash": "f0694246",
     "id": "crithr",
     "subregion": "New Mexico"
+  },
+  {
+    "date": "2026-10-04",
+    "region": "us",
+    "answerHash": "afe0ef6e",
+    "id": "whbnut",
+    "subregion": "Florida"
+  },
+  {
+    "date": "2026-10-04",
+    "region": "us-lower48",
+    "answerHash": "6b967fd6",
+    "id": "perfal",
+    "subregion": "Wyoming"
   }
 ]
