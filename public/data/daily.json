@@ -838,5 +838,19 @@
     "answerHash": "6b967fd6",
     "id": "perfal",
     "subregion": "Wyoming"
+  },
+  {
+    "date": "2026-10-05",
+    "region": "us",
+    "answerHash": "ae86a9a8",
+    "id": "clagre",
+    "subregion": "Nevada"
+  },
+  {
+    "date": "2026-10-05",
+    "region": "us-lower48",
+    "answerHash": "4972be37",
+    "id": "ribgul",
+    "subregion": "Virginia"
   }
 ]
