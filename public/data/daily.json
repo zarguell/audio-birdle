@@ -852,5 +852,19 @@
     "answerHash": "4972be37",
     "id": "ribgul",
     "subregion": "Virginia"
+  },
+  {
+    "date": "2026-10-06",
+    "region": "us",
+    "answerHash": "c6dfe162",
+    "id": "naswar",
+    "subregion": "Maine"
+  },
+  {
+    "date": "2026-10-06",
+    "region": "us-lower48",
+    "answerHash": "62199e40",
+    "id": "bkcchi",
+    "subregion": "West Virginia"
   }
 ]

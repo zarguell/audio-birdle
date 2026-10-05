@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-06-07",
-      "id": "leasan",
-      "name": "Least Sandpiper",
-      "subregion": "District of Columbia"
-    },
-    {
       "date": "2026-06-08",
       "id": "mallar3",
       "name": "Mallard",
@@ -803,15 +797,15 @@
       "id": "clagre",
       "name": "Clark's Grebe",
       "subregion": "Nevada"
+    },
+    {
+      "date": "2026-10-06",
+      "id": "naswar",
+      "name": "Nashville Warbler",
+      "subregion": "Maine"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-06-07",
-      "id": "norwat",
-      "name": "Northern Waterthrush",
-      "subregion": "District of Columbia"
-    },
     {
       "date": "2026-06-08",
       "id": "acafly",
@@ -1609,6 +1603,12 @@
       "id": "ribgul",
       "name": "Ring-billed Gull",
       "subregion": "Virginia"
+    },
+    {
+      "date": "2026-10-06",
+      "id": "bkcchi",
+      "name": "Black-capped Chickadee",
+      "subregion": "West Virginia"
     }
   ]
 }
