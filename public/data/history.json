@@ -1,18 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-06-08",
-      "id": "mallar3",
-      "name": "Mallard",
-      "subregion": "Washington"
-    },
-    {
-      "date": "2026-06-08",
-      "id": "phivir",
-      "name": "Philadelphia Vireo",
-      "subregion": "Vermont"
-    },
-    {
       "date": "2026-06-09",
       "id": "comloo",
       "name": "Common Loon",
@@ -803,21 +791,15 @@
       "id": "naswar",
       "name": "Nashville Warbler",
       "subregion": "Maine"
+    },
+    {
+      "date": "2026-10-07",
+      "id": "bkbcuc",
+      "name": "Black-billed Cuckoo",
+      "subregion": "Georgia"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-06-08",
-      "id": "acafly",
-      "name": "Acadian Flycatcher",
-      "subregion": "Tennessee"
-    },
-    {
-      "date": "2026-06-08",
-      "id": "chswar",
-      "name": "Chestnut-sided Warbler",
-      "subregion": "Vermont"
-    },
     {
       "date": "2026-06-09",
       "id": "semplo",
@@ -1609,6 +1591,12 @@
       "id": "bkcchi",
       "name": "Black-capped Chickadee",
       "subregion": "West Virginia"
+    },
+    {
+      "date": "2026-10-07",
+      "id": "leasan",
+      "name": "Least Sandpiper",
+      "subregion": "New Hampshire"
     }
   ]
 }

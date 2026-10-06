@@ -866,5 +866,19 @@
     "answerHash": "62199e40",
     "id": "bkcchi",
     "subregion": "West Virginia"
+  },
+  {
+    "date": "2026-10-07",
+    "region": "us",
+    "answerHash": "2bbc52d2",
+    "id": "bkbcuc",
+    "subregion": "Georgia"
+  },
+  {
+    "date": "2026-10-07",
+    "region": "us-lower48",
+    "answerHash": "b9037452",
+    "id": "leasan",
+    "subregion": "New Hampshire"
   }
 ]
