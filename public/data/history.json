@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-06-09",
-      "id": "comloo",
-      "name": "Common Loon",
-      "subregion": "New Hampshire"
-    },
-    {
       "date": "2026-06-10",
       "id": "comnig",
       "name": "Common Nighthawk",
@@ -797,15 +791,15 @@
       "id": "bkbcuc",
       "name": "Black-billed Cuckoo",
       "subregion": "Georgia"
+    },
+    {
+      "date": "2026-10-08",
+      "id": "stisan",
+      "name": "Stilt Sandpiper",
+      "subregion": "Kentucky"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-06-09",
-      "id": "semplo",
-      "name": "Semipalmated Plover",
-      "subregion": "Rhode Island"
-    },
     {
       "date": "2026-06-10",
       "id": "categr1",
@@ -1597,6 +1591,12 @@
       "id": "leasan",
       "name": "Least Sandpiper",
       "subregion": "New Hampshire"
+    },
+    {
+      "date": "2026-10-08",
+      "id": "houwre",
+      "name": "Northern House Wren",
+      "subregion": "Connecticut"
     }
   ]
 }

@@ -880,5 +880,19 @@
     "answerHash": "b9037452",
     "id": "leasan",
     "subregion": "New Hampshire"
+  },
+  {
+    "date": "2026-10-08",
+    "region": "us",
+    "answerHash": "06fc4072",
+    "id": "stisan",
+    "subregion": "Kentucky"
+  },
+  {
+    "date": "2026-10-08",
+    "region": "us-lower48",
+    "answerHash": "2b206bce",
+    "id": "houwre",
+    "subregion": "Connecticut"
   }
 ]
