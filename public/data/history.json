@@ -1,18 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-06-10",
-      "id": "comnig",
-      "name": "Common Nighthawk",
-      "subregion": "Arkansas"
-    },
-    {
-      "date": "2026-06-10",
-      "id": "houwre",
-      "name": "Northern House Wren",
-      "subregion": "Iowa"
-    },
-    {
       "date": "2026-06-11",
       "id": "budger",
       "name": "Budgerigar",
@@ -797,21 +785,15 @@
       "id": "stisan",
       "name": "Stilt Sandpiper",
       "subregion": "Kentucky"
+    },
+    {
+      "date": "2026-10-09",
+      "id": "comloo",
+      "name": "Common Loon",
+      "subregion": "Vermont"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-06-10",
-      "id": "categr1",
-      "name": "Western Cattle-Egret",
-      "subregion": "Wyoming"
-    },
-    {
-      "date": "2026-06-10",
-      "id": "purmar",
-      "name": "Purple Martin",
-      "subregion": "Iowa"
-    },
     {
       "date": "2026-06-11",
       "id": "cantow",
@@ -1597,6 +1579,12 @@
       "id": "houwre",
       "name": "Northern House Wren",
       "subregion": "Connecticut"
+    },
+    {
+      "date": "2026-10-09",
+      "id": "saggro",
+      "name": "Greater Sage-Grouse",
+      "subregion": "Oregon"
     }
   ]
 }

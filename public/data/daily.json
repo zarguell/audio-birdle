@@ -894,5 +894,19 @@
     "answerHash": "2b206bce",
     "id": "houwre",
     "subregion": "Connecticut"
+  },
+  {
+    "date": "2026-10-09",
+    "region": "us",
+    "answerHash": "a4203b5f",
+    "id": "comloo",
+    "subregion": "Vermont"
+  },
+  {
+    "date": "2026-10-09",
+    "region": "us-lower48",
+    "answerHash": "8329cf1f",
+    "id": "saggro",
+    "subregion": "Oregon"
   }
 ]
