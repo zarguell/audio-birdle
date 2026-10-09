@@ -1,18 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-06-11",
-      "id": "budger",
-      "name": "Budgerigar",
-      "subregion": "California"
-    },
-    {
-      "date": "2026-06-11",
-      "id": "amecro",
-      "name": "American Crow",
-      "subregion": "Oklahoma"
-    },
-    {
       "date": "2026-06-12",
       "id": "grcfly",
       "name": "Great Crested Flycatcher",
@@ -791,21 +779,15 @@
       "id": "comloo",
       "name": "Common Loon",
       "subregion": "Vermont"
+    },
+    {
+      "date": "2026-10-10",
+      "id": "orcwar",
+      "name": "Orange-crowned Warbler",
+      "subregion": "Colorado"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-06-11",
-      "id": "cantow",
-      "name": "Canyon Towhee",
-      "subregion": "Arizona"
-    },
-    {
-      "date": "2026-06-11",
-      "id": "comgal1",
-      "name": "Common Gallinule",
-      "subregion": "Arizona"
-    },
     {
       "date": "2026-06-12",
       "id": "eursta",
@@ -1585,6 +1567,12 @@
       "id": "saggro",
       "name": "Greater Sage-Grouse",
       "subregion": "Oregon"
+    },
+    {
+      "date": "2026-10-10",
+      "id": "rensap",
+      "name": "Red-naped Sapsucker",
+      "subregion": "California"
     }
   ]
 }

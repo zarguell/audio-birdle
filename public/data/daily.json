@@ -908,5 +908,19 @@
     "answerHash": "8329cf1f",
     "id": "saggro",
     "subregion": "Oregon"
+  },
+  {
+    "date": "2026-10-10",
+    "region": "us",
+    "answerHash": "36638722",
+    "id": "orcwar",
+    "subregion": "Colorado"
+  },
+  {
+    "date": "2026-10-10",
+    "region": "us-lower48",
+    "answerHash": "a31547a3",
+    "id": "rensap",
+    "subregion": "California"
   }
 ]
