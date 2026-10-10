@@ -922,5 +922,19 @@
     "answerHash": "a31547a3",
     "id": "rensap",
     "subregion": "California"
+  },
+  {
+    "date": "2026-10-11",
+    "region": "us",
+    "answerHash": "d0694e65",
+    "id": "winwre3",
+    "subregion": "Iowa"
+  },
+  {
+    "date": "2026-10-11",
+    "region": "us-lower48",
+    "answerHash": "e2388383",
+    "id": "amecro",
+    "subregion": "Connecticut"
   }
 ]

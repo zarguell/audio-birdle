@@ -1,18 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-06-12",
-      "id": "grcfly",
-      "name": "Great Crested Flycatcher",
-      "subregion": "West Virginia"
-    },
-    {
-      "date": "2026-06-12",
-      "id": "yetvir",
-      "name": "Yellow-throated Vireo",
-      "subregion": "Mississippi"
-    },
-    {
       "date": "2026-06-13",
       "id": "veery",
       "name": "Veery",
@@ -785,21 +773,15 @@
       "id": "orcwar",
       "name": "Orange-crowned Warbler",
       "subregion": "Colorado"
+    },
+    {
+      "date": "2026-10-11",
+      "id": "winwre3",
+      "name": "Winter Wren",
+      "subregion": "Iowa"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-06-12",
-      "id": "eursta",
-      "name": "European Starling",
-      "subregion": "West Virginia"
-    },
-    {
-      "date": "2026-06-12",
-      "id": "grekis",
-      "name": "Great Kiskadee",
-      "subregion": "Texas"
-    },
     {
       "date": "2026-06-13",
       "id": "rufgro",
@@ -1573,6 +1555,12 @@
       "id": "rensap",
       "name": "Red-naped Sapsucker",
       "subregion": "California"
+    },
+    {
+      "date": "2026-10-11",
+      "id": "amecro",
+      "name": "American Crow",
+      "subregion": "Connecticut"
     }
   ]
 }
