@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-06-13",
-      "id": "veery",
-      "name": "Veery",
-      "subregion": "Illinois"
-    },
-    {
       "date": "2026-06-14",
       "id": "horlar",
       "name": "Horned Lark",
@@ -779,15 +773,15 @@
       "id": "winwre3",
       "name": "Winter Wren",
       "subregion": "Iowa"
+    },
+    {
+      "date": "2026-10-12",
+      "id": "gockin",
+      "name": "Golden-crowned Kinglet",
+      "subregion": "Nebraska"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-06-13",
-      "id": "rufgro",
-      "name": "Ruffed Grouse",
-      "subregion": "Michigan"
-    },
     {
       "date": "2026-06-14",
       "id": "prowar",
@@ -1561,6 +1555,12 @@
       "id": "amecro",
       "name": "American Crow",
       "subregion": "Connecticut"
+    },
+    {
+      "date": "2026-10-12",
+      "id": "olsfly",
+      "name": "Olive-sided Flycatcher",
+      "subregion": "Indiana"
     }
   ]
 }
