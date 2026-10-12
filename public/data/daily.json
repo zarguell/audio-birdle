@@ -950,5 +950,19 @@
     "answerHash": "ad60a54d",
     "id": "olsfly",
     "subregion": "Indiana"
+  },
+  {
+    "date": "2026-10-13",
+    "region": "us",
+    "answerHash": "8b7cfd36",
+    "id": "dunlin",
+    "subregion": "Idaho"
+  },
+  {
+    "date": "2026-10-13",
+    "region": "us-lower48",
+    "answerHash": "f1438c93",
+    "id": "merlin",
+    "subregion": "North Dakota"
   }
 ]

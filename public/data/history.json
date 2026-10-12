@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-06-14",
-      "id": "horlar",
-      "name": "Horned Lark",
-      "subregion": "Arkansas"
-    },
-    {
       "date": "2026-06-15",
       "id": "gowwar",
       "name": "Golden-winged Warbler",
@@ -779,15 +773,15 @@
       "id": "gockin",
       "name": "Golden-crowned Kinglet",
       "subregion": "Nebraska"
+    },
+    {
+      "date": "2026-10-13",
+      "id": "dunlin",
+      "name": "Dunlin",
+      "subregion": "Idaho"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-06-14",
-      "id": "prowar",
-      "name": "Prothonotary Warbler",
-      "subregion": "Missouri"
-    },
     {
       "date": "2026-06-15",
       "id": "nrwswa",
@@ -1561,6 +1555,12 @@
       "id": "olsfly",
       "name": "Olive-sided Flycatcher",
       "subregion": "Indiana"
+    },
+    {
+      "date": "2026-10-13",
+      "id": "merlin",
+      "name": "Merlin",
+      "subregion": "North Dakota"
     }
   ]
 }
