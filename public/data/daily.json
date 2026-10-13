@@ -964,5 +964,19 @@
     "answerHash": "f1438c93",
     "id": "merlin",
     "subregion": "North Dakota"
+  },
+  {
+    "date": "2026-10-14",
+    "region": "us",
+    "answerHash": "7d586503",
+    "id": "haiwoo",
+    "subregion": "Connecticut"
+  },
+  {
+    "date": "2026-10-14",
+    "region": "us-lower48",
+    "answerHash": "cbe64d2f",
+    "id": "wessan",
+    "subregion": "Utah"
   }
 ]

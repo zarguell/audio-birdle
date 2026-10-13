@@ -1,18 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-06-15",
-      "id": "gowwar",
-      "name": "Golden-winged Warbler",
-      "subregion": "West Virginia"
-    },
-    {
-      "date": "2026-06-15",
-      "id": "rebwoo",
-      "name": "Red-bellied Woodpecker",
-      "subregion": "Ohio"
-    },
-    {
       "date": "2026-06-16",
       "id": "louwat",
       "name": "Louisiana Waterthrush",
@@ -779,21 +767,15 @@
       "id": "dunlin",
       "name": "Dunlin",
       "subregion": "Idaho"
+    },
+    {
+      "date": "2026-10-14",
+      "id": "haiwoo",
+      "name": "Hairy Woodpecker",
+      "subregion": "Connecticut"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-06-15",
-      "id": "nrwswa",
-      "name": "Northern Rough-winged Swallow",
-      "subregion": "Iowa"
-    },
-    {
-      "date": "2026-06-15",
-      "id": "eurgol",
-      "name": "European Goldfinch",
-      "subregion": "Illinois"
-    },
     {
       "date": "2026-06-16",
       "id": "whevir",
@@ -1561,6 +1543,12 @@
       "id": "merlin",
       "name": "Merlin",
       "subregion": "North Dakota"
+    },
+    {
+      "date": "2026-10-14",
+      "id": "wessan",
+      "name": "Western Sandpiper",
+      "subregion": "Utah"
     }
   ]
 }
