@@ -978,5 +978,19 @@
     "answerHash": "cbe64d2f",
     "id": "wessan",
     "subregion": "Utah"
+  },
+  {
+    "date": "2026-10-15",
+    "region": "us",
+    "answerHash": "8c2a7bda",
+    "id": "solsan",
+    "subregion": "Louisiana"
+  },
+  {
+    "date": "2026-10-15",
+    "region": "us-lower48",
+    "answerHash": "43ce5a72",
+    "id": "forter",
+    "subregion": "Connecticut"
   }
 ]
