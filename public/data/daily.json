@@ -992,5 +992,19 @@
     "answerHash": "43ce5a72",
     "id": "forter",
     "subregion": "Connecticut"
+  },
+  {
+    "date": "2026-10-16",
+    "region": "us",
+    "answerHash": "8f2feb32",
+    "id": "batpig1",
+    "subregion": "Washington"
+  },
+  {
+    "date": "2026-10-16",
+    "region": "us-lower48",
+    "answerHash": "995c5266",
+    "id": "wesmea",
+    "subregion": "Colorado"
   }
 ]

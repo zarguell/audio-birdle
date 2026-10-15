@@ -1,18 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-06-17",
-      "id": "ovenbi1",
-      "name": "Ovenbird",
-      "subregion": "Kentucky"
-    },
-    {
-      "date": "2026-06-17",
-      "id": "wiltur",
-      "name": "Wild Turkey",
-      "subregion": "Pennsylvania"
-    },
-    {
       "date": "2026-06-18",
       "id": "logshr",
       "name": "Loggerhead Shrike",
@@ -767,21 +755,15 @@
       "id": "solsan",
       "name": "Solitary Sandpiper",
       "subregion": "Louisiana"
+    },
+    {
+      "date": "2026-10-16",
+      "id": "batpig1",
+      "name": "Band-tailed Pigeon",
+      "subregion": "Washington"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-06-17",
-      "id": "reshaw",
-      "name": "Red-shouldered Hawk",
-      "subregion": "Nevada"
-    },
-    {
-      "date": "2026-06-17",
-      "id": "sancra",
-      "name": "Sandhill Crane",
-      "subregion": "Washington"
-    },
     {
       "date": "2026-06-18",
       "id": "woothr",
@@ -1537,6 +1519,12 @@
       "id": "forter",
       "name": "Forster's Tern",
       "subregion": "Connecticut"
+    },
+    {
+      "date": "2026-10-16",
+      "id": "wesmea",
+      "name": "Western Meadowlark",
+      "subregion": "Colorado"
     }
   ]
 }
