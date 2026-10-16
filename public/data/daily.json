@@ -1006,5 +1006,19 @@
     "answerHash": "995c5266",
     "id": "wesmea",
     "subregion": "Colorado"
+  },
+  {
+    "date": "2026-10-17",
+    "region": "us",
+    "answerHash": "7b78f63a",
+    "id": "cogdov",
+    "subregion": "Alabama"
+  },
+  {
+    "date": "2026-10-17",
+    "region": "us-lower48",
+    "answerHash": "049ab272",
+    "id": "eucdov",
+    "subregion": "Kentucky"
   }
 ]
