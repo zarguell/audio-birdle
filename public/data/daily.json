@@ -1020,5 +1020,19 @@
     "answerHash": "049ab272",
     "id": "eucdov",
     "subregion": "Kentucky"
+  },
+  {
+    "date": "2026-10-18",
+    "region": "us",
+    "answerHash": "57c18012",
+    "id": "canwar",
+    "subregion": "Kentucky"
+  },
+  {
+    "date": "2026-10-18",
+    "region": "us-lower48",
+    "answerHash": "d0cfe691",
+    "id": "commer",
+    "subregion": "North Carolina"
   }
 ]
