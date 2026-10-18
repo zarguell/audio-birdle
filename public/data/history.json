@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-06-20",
-      "id": "moudov",
-      "name": "Mourning Dove",
-      "subregion": "Vermont"
-    },
-    {
       "date": "2026-06-21",
       "id": "sposan",
       "name": "Spotted Sandpiper",
@@ -749,15 +743,15 @@
       "id": "canwar",
       "name": "Canada Warbler",
       "subregion": "Kentucky"
+    },
+    {
+      "date": "2026-10-19",
+      "id": "grtgra",
+      "name": "Great-tailed Grackle",
+      "subregion": "New Mexico"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-06-20",
-      "id": "grbher3",
-      "name": "Great Blue Heron",
-      "subregion": "Wisconsin"
-    },
     {
       "date": "2026-06-21",
       "id": "sagspa1",
@@ -1501,6 +1495,12 @@
       "id": "commer",
       "name": "Common Merganser",
       "subregion": "North Carolina"
+    },
+    {
+      "date": "2026-10-19",
+      "id": "ameavo",
+      "name": "American Avocet",
+      "subregion": "Idaho"
     }
   ]
 }

@@ -1034,5 +1034,19 @@
     "answerHash": "d0cfe691",
     "id": "commer",
     "subregion": "North Carolina"
+  },
+  {
+    "date": "2026-10-19",
+    "region": "us",
+    "answerHash": "db821e7d",
+    "id": "grtgra",
+    "subregion": "New Mexico"
+  },
+  {
+    "date": "2026-10-19",
+    "region": "us-lower48",
+    "answerHash": "499e5dc9",
+    "id": "ameavo",
+    "subregion": "Idaho"
   }
 ]
