@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-06-21",
-      "id": "sposan",
-      "name": "Spotted Sandpiper",
-      "subregion": "New Hampshire"
-    },
-    {
       "date": "2026-06-22",
       "id": "daejun",
       "name": "Dark-eyed Junco",
@@ -749,15 +743,15 @@
       "id": "grtgra",
       "name": "Great-tailed Grackle",
       "subregion": "New Mexico"
+    },
+    {
+      "date": "2026-10-20",
+      "id": "grbher3",
+      "name": "Great Blue Heron",
+      "subregion": "Connecticut"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-06-21",
-      "id": "sagspa1",
-      "name": "Sagebrush Sparrow",
-      "subregion": "Nevada"
-    },
     {
       "date": "2026-06-22",
       "id": "leabit",
@@ -1500,6 +1494,12 @@
       "date": "2026-10-19",
       "id": "ameavo",
       "name": "American Avocet",
+      "subregion": "Idaho"
+    },
+    {
+      "date": "2026-10-20",
+      "id": "pygnut",
+      "name": "Pygmy Nuthatch",
       "subregion": "Idaho"
     }
   ]
