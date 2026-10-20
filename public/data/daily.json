@@ -1062,5 +1062,19 @@
     "answerHash": "d663eebb",
     "id": "pygnut",
     "subregion": "Idaho"
+  },
+  {
+    "date": "2026-10-21",
+    "region": "us",
+    "answerHash": "4224558a",
+    "id": "comgal1",
+    "subregion": "Michigan"
+  },
+  {
+    "date": "2026-10-21",
+    "region": "us-lower48",
+    "answerHash": "3deca7ab",
+    "id": "killde",
+    "subregion": "Maine"
   }
 ]

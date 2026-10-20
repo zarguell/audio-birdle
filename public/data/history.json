@@ -1,18 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-06-22",
-      "id": "daejun",
-      "name": "Dark-eyed Junco",
-      "subregion": "Nebraska"
-    },
-    {
-      "date": "2026-06-22",
-      "id": "brnthr",
-      "name": "Brown Thrasher",
-      "subregion": "Kansas"
-    },
-    {
       "date": "2026-06-23",
       "id": "yebcha",
       "name": "Yellow-breasted Chat",
@@ -749,21 +737,15 @@
       "id": "grbher3",
       "name": "Great Blue Heron",
       "subregion": "Connecticut"
+    },
+    {
+      "date": "2026-10-21",
+      "id": "comgal1",
+      "name": "Common Gallinule",
+      "subregion": "Michigan"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-06-22",
-      "id": "leabit",
-      "name": "Least Bittern",
-      "subregion": "South Carolina"
-    },
-    {
-      "date": "2026-06-22",
-      "id": "bawwar",
-      "name": "Black-and-white Warbler",
-      "subregion": "Kansas"
-    },
     {
       "date": "2026-06-23",
       "id": "rebwoo",
@@ -1501,6 +1483,12 @@
       "id": "pygnut",
       "name": "Pygmy Nuthatch",
       "subregion": "Idaho"
+    },
+    {
+      "date": "2026-10-21",
+      "id": "killde",
+      "name": "Killdeer",
+      "subregion": "Maine"
     }
   ]
 }
