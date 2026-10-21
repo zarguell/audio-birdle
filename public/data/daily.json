@@ -1076,5 +1076,19 @@
     "answerHash": "3deca7ab",
     "id": "killde",
     "subregion": "Maine"
+  },
+  {
+    "date": "2026-10-22",
+    "region": "us",
+    "answerHash": "a656b0dd",
+    "id": "piggui",
+    "subregion": "Alaska"
+  },
+  {
+    "date": "2026-10-22",
+    "region": "us-lower48",
+    "answerHash": "c6fbd315",
+    "id": "comgra",
+    "subregion": "Ohio"
   }
 ]
