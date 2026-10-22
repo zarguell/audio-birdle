@@ -1090,5 +1090,19 @@
     "answerHash": "c6fbd315",
     "id": "comgra",
     "subregion": "Ohio"
+  },
+  {
+    "date": "2026-10-23",
+    "region": "us",
+    "answerHash": "a939612c",
+    "id": "bkbwoo",
+    "subregion": "New York"
+  },
+  {
+    "date": "2026-10-23",
+    "region": "us-lower48",
+    "answerHash": "96c12236",
+    "id": "gryjay",
+    "subregion": "Utah"
   }
 ]
