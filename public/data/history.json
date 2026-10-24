@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-06-26",
-      "id": "blksco2",
-      "name": "Black Scoter",
-      "subregion": "New Jersey"
-    },
-    {
       "date": "2026-06-27",
       "id": "comter",
       "name": "Common Tern",
@@ -743,15 +737,15 @@
       "id": "cangoo",
       "name": "Canada Goose",
       "subregion": "Oregon"
+    },
+    {
+      "date": "2026-10-25",
+      "id": "wooduc",
+      "name": "Wood Duck",
+      "subregion": "New Mexico"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-06-26",
-      "id": "comter",
-      "name": "Common Tern",
-      "subregion": "Virginia"
-    },
     {
       "date": "2026-06-27",
       "id": "wilplo",
@@ -1489,6 +1483,12 @@
       "id": "spotow",
       "name": "Spotted Towhee",
       "subregion": "Iowa"
+    },
+    {
+      "date": "2026-10-25",
+      "id": "brncre",
+      "name": "Brown Creeper",
+      "subregion": "Mississippi"
     }
   ]
 }

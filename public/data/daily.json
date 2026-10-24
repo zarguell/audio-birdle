@@ -1118,5 +1118,19 @@
     "answerHash": "488f3900",
     "id": "spotow",
     "subregion": "Iowa"
+  },
+  {
+    "date": "2026-10-25",
+    "region": "us",
+    "answerHash": "e74b1d8f",
+    "id": "wooduc",
+    "subregion": "New Mexico"
+  },
+  {
+    "date": "2026-10-25",
+    "region": "us-lower48",
+    "answerHash": "90b48e32",
+    "id": "brncre",
+    "subregion": "Mississippi"
   }
 ]
