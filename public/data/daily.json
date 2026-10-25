@@ -1132,5 +1132,19 @@
     "answerHash": "90b48e32",
     "id": "brncre",
     "subregion": "Mississippi"
+  },
+  {
+    "date": "2026-10-26",
+    "region": "us",
+    "answerHash": "78db5f25",
+    "id": "grbani",
+    "subregion": "West Virginia"
+  },
+  {
+    "date": "2026-10-26",
+    "region": "us-lower48",
+    "answerHash": "6136bd2f",
+    "id": "bbwduc",
+    "subregion": "Arizona"
   }
 ]

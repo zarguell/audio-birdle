@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-06-27",
-      "id": "comter",
-      "name": "Common Tern",
-      "subregion": "Texas"
-    },
-    {
       "date": "2026-06-28",
       "id": "lewwoo",
       "name": "Lewis's Woodpecker",
@@ -743,15 +737,15 @@
       "id": "wooduc",
       "name": "Wood Duck",
       "subregion": "New Mexico"
+    },
+    {
+      "date": "2026-10-26",
+      "id": "grbani",
+      "name": "Groove-billed Ani",
+      "subregion": "West Virginia"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-06-27",
-      "id": "wilplo",
-      "name": "Wilson's Plover",
-      "subregion": "Texas"
-    },
     {
       "date": "2026-06-28",
       "id": "horlar",
@@ -1489,6 +1483,12 @@
       "id": "brncre",
       "name": "Brown Creeper",
       "subregion": "Mississippi"
+    },
+    {
+      "date": "2026-10-26",
+      "id": "bbwduc",
+      "name": "Black-bellied Whistling-Duck",
+      "subregion": "Arizona"
     }
   ]
 }
