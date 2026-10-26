@@ -1146,5 +1146,19 @@
     "answerHash": "6136bd2f",
     "id": "bbwduc",
     "subregion": "Arizona"
+  },
+  {
+    "date": "2026-10-27",
+    "region": "us",
+    "answerHash": "a1092478",
+    "id": "norfli",
+    "subregion": "Colorado"
+  },
+  {
+    "date": "2026-10-27",
+    "region": "us-lower48",
+    "answerHash": "647952f8",
+    "id": "horlar",
+    "subregion": "District of Columbia"
   }
 ]
