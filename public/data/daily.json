@@ -1160,5 +1160,19 @@
     "answerHash": "647952f8",
     "id": "horlar",
     "subregion": "District of Columbia"
+  },
+  {
+    "date": "2026-10-28",
+    "region": "us",
+    "answerHash": "30f18edb",
+    "id": "pingro",
+    "subregion": "Alaska"
+  },
+  {
+    "date": "2026-10-28",
+    "region": "us-lower48",
+    "answerHash": "e534748a",
+    "id": "brnthr",
+    "subregion": "Minnesota"
   }
 ]

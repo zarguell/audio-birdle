@@ -1,18 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-06-29",
-      "id": "dunlin",
-      "name": "Dunlin",
-      "subregion": "Illinois"
-    },
-    {
-      "date": "2026-06-29",
-      "id": "merlin",
-      "name": "Merlin",
-      "subregion": "Wyoming"
-    },
-    {
       "date": "2026-06-30",
       "id": "grhowl",
       "name": "Great Horned Owl",
@@ -743,21 +731,15 @@
       "id": "norfli",
       "name": "Northern Flicker",
       "subregion": "Colorado"
+    },
+    {
+      "date": "2026-10-28",
+      "id": "pingro",
+      "name": "Pine Grosbeak",
+      "subregion": "Alaska"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-06-29",
-      "id": "sora",
-      "name": "Sora",
-      "subregion": "Illinois"
-    },
-    {
-      "date": "2026-06-29",
-      "id": "gresca",
-      "name": "Greater Scaup",
-      "subregion": "Wyoming"
-    },
     {
       "date": "2026-06-30",
       "id": "scatan",
@@ -1489,6 +1471,12 @@
       "id": "horlar",
       "name": "Horned Lark",
       "subregion": "District of Columbia"
+    },
+    {
+      "date": "2026-10-28",
+      "id": "brnthr",
+      "name": "Brown Thrasher",
+      "subregion": "Minnesota"
     }
   ]
 }
