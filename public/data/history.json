@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-06-30",
-      "id": "grhowl",
-      "name": "Great Horned Owl",
-      "subregion": "Massachusetts"
-    },
-    {
       "date": "2026-07-01",
       "id": "gnwtea",
       "name": "Green-winged Teal",
@@ -737,15 +731,15 @@
       "id": "pingro",
       "name": "Pine Grosbeak",
       "subregion": "Alaska"
+    },
+    {
+      "date": "2026-10-29",
+      "id": "coohaw",
+      "name": "Cooper's Hawk",
+      "subregion": "North Dakota"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-06-30",
-      "id": "scatan",
-      "name": "Scarlet Tanager",
-      "subregion": "Massachusetts"
-    },
     {
       "date": "2026-07-01",
       "id": "daejun",
@@ -1477,6 +1471,12 @@
       "id": "brnthr",
       "name": "Brown Thrasher",
       "subregion": "Minnesota"
+    },
+    {
+      "date": "2026-10-29",
+      "id": "buwtea",
+      "name": "Blue-winged Teal",
+      "subregion": "Nevada"
     }
   ]
 }

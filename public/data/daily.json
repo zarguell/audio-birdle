@@ -1174,5 +1174,19 @@
     "answerHash": "e534748a",
     "id": "brnthr",
     "subregion": "Minnesota"
+  },
+  {
+    "date": "2026-10-29",
+    "region": "us",
+    "answerHash": "0408854f",
+    "id": "coohaw",
+    "subregion": "North Dakota"
+  },
+  {
+    "date": "2026-10-29",
+    "region": "us-lower48",
+    "answerHash": "73771c9e",
+    "id": "buwtea",
+    "subregion": "Nevada"
   }
 ]
