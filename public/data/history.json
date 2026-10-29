@@ -1,18 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-07-01",
-      "id": "gnwtea",
-      "name": "Green-winged Teal",
-      "subregion": "Michigan"
-    },
-    {
-      "date": "2026-07-01",
-      "id": "belkin1",
-      "name": "Belted Kingfisher",
-      "subregion": "Washington"
-    },
-    {
       "date": "2026-07-02",
       "id": "killde",
       "name": "Killdeer",
@@ -737,21 +725,15 @@
       "id": "coohaw",
       "name": "Cooper's Hawk",
       "subregion": "North Dakota"
+    },
+    {
+      "date": "2026-10-30",
+      "id": "easblu",
+      "name": "Eastern Bluebird",
+      "subregion": "Colorado"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-07-01",
-      "id": "daejun",
-      "name": "Dark-eyed Junco",
-      "subregion": "New Jersey"
-    },
-    {
-      "date": "2026-07-01",
-      "id": "borchi2",
-      "name": "Boreal Chickadee",
-      "subregion": "Washington"
-    },
     {
       "date": "2026-07-02",
       "id": "rthhum",
@@ -1477,6 +1459,12 @@
       "id": "buwtea",
       "name": "Blue-winged Teal",
       "subregion": "Nevada"
+    },
+    {
+      "date": "2026-10-30",
+      "id": "leafly",
+      "name": "Least Flycatcher",
+      "subregion": "Michigan"
     }
   ]
 }

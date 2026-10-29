@@ -1188,5 +1188,19 @@
     "answerHash": "73771c9e",
     "id": "buwtea",
     "subregion": "Nevada"
+  },
+  {
+    "date": "2026-10-30",
+    "region": "us",
+    "answerHash": "4ee2c1f6",
+    "id": "easblu",
+    "subregion": "Colorado"
+  },
+  {
+    "date": "2026-10-30",
+    "region": "us-lower48",
+    "answerHash": "3e627c1f",
+    "id": "leafly",
+    "subregion": "Michigan"
   }
 ]
