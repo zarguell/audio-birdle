@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-07-03",
-      "id": "eargre",
-      "name": "Eared Grebe",
-      "subregion": "South Dakota"
-    },
-    {
       "date": "2026-07-04",
       "id": "cedwax",
       "name": "Cedar Waxwing",
@@ -731,15 +725,15 @@
       "id": "rinduc",
       "name": "Ring-necked Duck",
       "subregion": "Mississippi"
+    },
+    {
+      "date": "2026-11-01",
+      "id": "rewbla",
+      "name": "Red-winged Blackbird",
+      "subregion": "Maine"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-07-03",
-      "id": "osprey",
-      "name": "Osprey",
-      "subregion": "South Dakota"
-    },
     {
       "date": "2026-07-04",
       "id": "bkbmag1",
@@ -1465,6 +1459,12 @@
       "id": "amhgul1",
       "name": "American Herring Gull",
       "subregion": "Mississippi"
+    },
+    {
+      "date": "2026-11-01",
+      "id": "comloo",
+      "name": "Common Loon",
+      "subregion": "Maine"
     }
   ]
 }

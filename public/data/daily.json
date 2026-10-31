@@ -1216,5 +1216,19 @@
     "answerHash": "2dc61f9b",
     "id": "amhgul1",
     "subregion": "Mississippi"
+  },
+  {
+    "date": "2026-11-01",
+    "region": "us",
+    "answerHash": "047ca057",
+    "id": "rewbla",
+    "subregion": "Maine"
+  },
+  {
+    "date": "2026-11-01",
+    "region": "us-lower48",
+    "answerHash": "a4203b5f",
+    "id": "comloo",
+    "subregion": "Maine"
   }
 ]
