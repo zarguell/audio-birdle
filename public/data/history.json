@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-07-04",
-      "id": "cedwax",
-      "name": "Cedar Waxwing",
-      "subregion": "Colorado"
-    },
-    {
       "date": "2026-07-05",
       "id": "grbher3",
       "name": "Great Blue Heron",
@@ -731,15 +725,15 @@
       "id": "rewbla",
       "name": "Red-winged Blackbird",
       "subregion": "Maine"
+    },
+    {
+      "date": "2026-11-02",
+      "id": "rufhum",
+      "name": "Rufous Hummingbird",
+      "subregion": "Kansas"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-07-04",
-      "id": "bkbmag1",
-      "name": "Black-billed Magpie",
-      "subregion": "Colorado"
-    },
     {
       "date": "2026-07-05",
       "id": "treswa",
@@ -1465,6 +1459,12 @@
       "id": "comloo",
       "name": "Common Loon",
       "subregion": "Maine"
+    },
+    {
+      "date": "2026-11-02",
+      "id": "juntit1",
+      "name": "Juniper Titmouse",
+      "subregion": "Idaho"
     }
   ]
 }
