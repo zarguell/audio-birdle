@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-07-05",
-      "id": "grbher3",
-      "name": "Great Blue Heron",
-      "subregion": "Alabama"
-    },
-    {
       "date": "2026-07-06",
       "id": "barswa",
       "name": "Barn Swallow",
@@ -731,15 +725,15 @@
       "id": "rufhum",
       "name": "Rufous Hummingbird",
       "subregion": "Kansas"
+    },
+    {
+      "date": "2026-11-03",
+      "id": "clcspa",
+      "name": "Clay-colored Sparrow",
+      "subregion": "North Carolina"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-07-05",
-      "id": "treswa",
-      "name": "Tree Swallow",
-      "subregion": "Arkansas"
-    },
     {
       "date": "2026-07-06",
       "id": "graspa",
@@ -1465,6 +1459,12 @@
       "id": "juntit1",
       "name": "Juniper Titmouse",
       "subregion": "Idaho"
+    },
+    {
+      "date": "2026-11-03",
+      "id": "norhar2",
+      "name": "Northern Harrier",
+      "subregion": "Kentucky"
     }
   ]
 }
