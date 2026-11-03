@@ -1,18 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-07-06",
-      "id": "barswa",
-      "name": "Barn Swallow",
-      "subregion": "New Mexico"
-    },
-    {
-      "date": "2026-07-06",
-      "id": "amerob",
-      "name": "American Robin",
-      "subregion": "Louisiana"
-    },
-    {
       "date": "2026-07-07",
       "id": "cliswa",
       "name": "Cliff Swallow",
@@ -731,21 +719,15 @@
       "id": "clcspa",
       "name": "Clay-colored Sparrow",
       "subregion": "North Carolina"
+    },
+    {
+      "date": "2026-11-04",
+      "id": "greyel",
+      "name": "Greater Yellowlegs",
+      "subregion": "Kansas"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-07-06",
-      "id": "graspa",
-      "name": "Grasshopper Sparrow",
-      "subregion": "New Mexico"
-    },
-    {
-      "date": "2026-07-06",
-      "id": "snoegr",
-      "name": "Snowy Egret",
-      "subregion": "Louisiana"
-    },
     {
       "date": "2026-07-07",
       "id": "wesmea",
@@ -1465,6 +1447,12 @@
       "id": "norhar2",
       "name": "Northern Harrier",
       "subregion": "Kentucky"
+    },
+    {
+      "date": "2026-11-04",
+      "id": "sonspa",
+      "name": "Song Sparrow",
+      "subregion": "Arizona"
     }
   ]
 }

@@ -1258,5 +1258,19 @@
     "answerHash": "59fb4060",
     "id": "norhar2",
     "subregion": "Kentucky"
+  },
+  {
+    "date": "2026-11-04",
+    "region": "us",
+    "answerHash": "688a8f24",
+    "id": "greyel",
+    "subregion": "Kansas"
+  },
+  {
+    "date": "2026-11-04",
+    "region": "us-lower48",
+    "answerHash": "b6efa598",
+    "id": "sonspa",
+    "subregion": "Arizona"
   }
 ]
