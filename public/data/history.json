@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-07-07",
-      "id": "cliswa",
-      "name": "Cliff Swallow",
-      "subregion": "North Dakota"
-    },
-    {
       "date": "2026-07-08",
       "id": "clagre",
       "name": "Clark's Grebe",
@@ -725,15 +719,15 @@
       "id": "greyel",
       "name": "Greater Yellowlegs",
       "subregion": "Kansas"
+    },
+    {
+      "date": "2026-11-05",
+      "id": "amhgul1",
+      "name": "American Herring Gull",
+      "subregion": "Washington"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-07-07",
-      "id": "wesmea",
-      "name": "Western Meadowlark",
-      "subregion": "South Dakota"
-    },
     {
       "date": "2026-07-08",
       "id": "gbbgul",
@@ -1453,6 +1447,12 @@
       "id": "sonspa",
       "name": "Song Sparrow",
       "subregion": "Arizona"
+    },
+    {
+      "date": "2026-11-05",
+      "id": "dunlin",
+      "name": "Dunlin",
+      "subregion": "Oklahoma"
     }
   ]
 }

@@ -1272,5 +1272,19 @@
     "answerHash": "b6efa598",
     "id": "sonspa",
     "subregion": "Arizona"
+  },
+  {
+    "date": "2026-11-05",
+    "region": "us",
+    "answerHash": "2dc61f9b",
+    "id": "amhgul1",
+    "subregion": "Washington"
+  },
+  {
+    "date": "2026-11-05",
+    "region": "us-lower48",
+    "answerHash": "8b7cfd36",
+    "id": "dunlin",
+    "subregion": "Oklahoma"
   }
 ]
