@@ -1286,5 +1286,19 @@
     "answerHash": "8b7cfd36",
     "id": "dunlin",
     "subregion": "Oklahoma"
+  },
+  {
+    "date": "2026-11-06",
+    "region": "us",
+    "answerHash": "c6fbd315",
+    "id": "comgra",
+    "subregion": "Oklahoma"
+  },
+  {
+    "date": "2026-11-06",
+    "region": "us-lower48",
+    "answerHash": "9ccc701d",
+    "id": "lobdow",
+    "subregion": "Michigan"
   }
 ]

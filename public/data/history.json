@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-07-08",
-      "id": "clagre",
-      "name": "Clark's Grebe",
-      "subregion": "Utah"
-    },
-    {
       "date": "2026-07-09",
       "id": "btywar",
       "name": "Black-throated Gray Warbler",
@@ -725,15 +719,15 @@
       "id": "amhgul1",
       "name": "American Herring Gull",
       "subregion": "Washington"
+    },
+    {
+      "date": "2026-11-06",
+      "id": "comgra",
+      "name": "Common Grackle",
+      "subregion": "Oklahoma"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-07-08",
-      "id": "gbbgul",
-      "name": "Great Black-backed Gull",
-      "subregion": "New York"
-    },
     {
       "date": "2026-07-09",
       "id": "moublu",
@@ -1453,6 +1447,12 @@
       "id": "dunlin",
       "name": "Dunlin",
       "subregion": "Oklahoma"
+    },
+    {
+      "date": "2026-11-06",
+      "id": "lobdow",
+      "name": "Long-billed Dowitcher",
+      "subregion": "Michigan"
     }
   ]
 }
