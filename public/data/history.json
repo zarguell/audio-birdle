@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-07-09",
-      "id": "btywar",
-      "name": "Black-throated Gray Warbler",
-      "subregion": "Utah"
-    },
-    {
       "date": "2026-07-10",
       "id": "laplon",
       "name": "Lapland Longspur",
@@ -725,15 +719,15 @@
       "id": "comgra",
       "name": "Common Grackle",
       "subregion": "Oklahoma"
+    },
+    {
+      "date": "2026-11-07",
+      "id": "evegro",
+      "name": "Evening Grosbeak",
+      "subregion": "Kansas"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-07-09",
-      "id": "moublu",
-      "name": "Mountain Bluebird",
-      "subregion": "Wyoming"
-    },
     {
       "date": "2026-07-10",
       "id": "leater1",
@@ -1453,6 +1447,12 @@
       "id": "lobdow",
       "name": "Long-billed Dowitcher",
       "subregion": "Michigan"
+    },
+    {
+      "date": "2026-11-07",
+      "id": "sedwre1",
+      "name": "Sedge Wren",
+      "subregion": "Delaware"
     }
   ]
 }

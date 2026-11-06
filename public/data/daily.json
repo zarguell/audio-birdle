@@ -1300,5 +1300,19 @@
     "answerHash": "9ccc701d",
     "id": "lobdow",
     "subregion": "Michigan"
+  },
+  {
+    "date": "2026-11-07",
+    "region": "us",
+    "answerHash": "6439d19a",
+    "id": "evegro",
+    "subregion": "Kansas"
+  },
+  {
+    "date": "2026-11-07",
+    "region": "us-lower48",
+    "answerHash": "ed3f9f71",
+    "id": "sedwre1",
+    "subregion": "Delaware"
   }
 ]
