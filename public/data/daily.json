@@ -1314,5 +1314,19 @@
     "answerHash": "ed3f9f71",
     "id": "sedwre1",
     "subregion": "Delaware"
+  },
+  {
+    "date": "2026-11-08",
+    "region": "us",
+    "answerHash": "59fb4060",
+    "id": "norhar2",
+    "subregion": "Tennessee"
+  },
+  {
+    "date": "2026-11-08",
+    "region": "us-lower48",
+    "answerHash": "99078313",
+    "id": "wiltur",
+    "subregion": "Nevada"
   }
 ]

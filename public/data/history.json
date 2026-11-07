@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-07-10",
-      "id": "laplon",
-      "name": "Lapland Longspur",
-      "subregion": "Alaska"
-    },
-    {
       "date": "2026-07-11",
       "id": "osprey",
       "name": "Osprey",
@@ -725,15 +719,15 @@
       "id": "evegro",
       "name": "Evening Grosbeak",
       "subregion": "Kansas"
+    },
+    {
+      "date": "2026-11-08",
+      "id": "norhar2",
+      "name": "Northern Harrier",
+      "subregion": "Tennessee"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-07-10",
-      "id": "leater1",
-      "name": "Least Tern",
-      "subregion": "Missouri"
-    },
     {
       "date": "2026-07-11",
       "id": "grcfly",
@@ -1453,6 +1447,12 @@
       "id": "sedwre1",
       "name": "Sedge Wren",
       "subregion": "Delaware"
+    },
+    {
+      "date": "2026-11-08",
+      "id": "wiltur",
+      "name": "Wild Turkey",
+      "subregion": "Nevada"
     }
   ]
 }
