@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-07-12",
-      "id": "sancra",
-      "name": "Sandhill Crane",
-      "subregion": "Minnesota"
-    },
-    {
       "date": "2026-07-13",
       "id": "bknsti",
       "name": "Black-necked Stilt",
@@ -725,15 +719,15 @@
       "id": "hoomer",
       "name": "Hooded Merganser",
       "subregion": "Washington"
+    },
+    {
+      "date": "2026-11-10",
+      "id": "gcrfin",
+      "name": "Gray-crowned Rosy-Finch",
+      "subregion": "South Dakota"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-07-12",
-      "id": "lecspa",
-      "name": "LeConte's Sparrow",
-      "subregion": "Minnesota"
-    },
     {
       "date": "2026-07-13",
       "id": "olsfly",
@@ -1453,6 +1447,12 @@
       "id": "nswowl",
       "name": "Northern Saw-whet Owl",
       "subregion": "Washington"
+    },
+    {
+      "date": "2026-11-10",
+      "id": "yebcha",
+      "name": "Yellow-breasted Chat",
+      "subregion": "Massachusetts"
     }
   ]
 }

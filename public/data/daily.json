@@ -1342,5 +1342,19 @@
     "answerHash": "42d53d78",
     "id": "nswowl",
     "subregion": "Washington"
+  },
+  {
+    "date": "2026-11-10",
+    "region": "us",
+    "answerHash": "b9437995",
+    "id": "gcrfin",
+    "subregion": "South Dakota"
+  },
+  {
+    "date": "2026-11-10",
+    "region": "us-lower48",
+    "answerHash": "b443fce4",
+    "id": "yebcha",
+    "subregion": "Massachusetts"
   }
 ]
