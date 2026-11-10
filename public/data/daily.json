@@ -1356,5 +1356,19 @@
     "answerHash": "b443fce4",
     "id": "yebcha",
     "subregion": "Massachusetts"
+  },
+  {
+    "date": "2026-11-11",
+    "region": "us",
+    "answerHash": "f7c2b451",
+    "id": "logshr",
+    "subregion": "Tennessee"
+  },
+  {
+    "date": "2026-11-11",
+    "region": "us-lower48",
+    "answerHash": "27fefbda",
+    "id": "ruckin",
+    "subregion": "Virginia"
   }
 ]

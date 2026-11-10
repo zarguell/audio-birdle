@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-07-13",
-      "id": "bknsti",
-      "name": "Black-necked Stilt",
-      "subregion": "Utah"
-    },
-    {
       "date": "2026-07-14",
       "id": "miskit",
       "name": "Mississippi Kite",
@@ -725,15 +719,15 @@
       "id": "gcrfin",
       "name": "Gray-crowned Rosy-Finch",
       "subregion": "South Dakota"
+    },
+    {
+      "date": "2026-11-11",
+      "id": "logshr",
+      "name": "Loggerhead Shrike",
+      "subregion": "Tennessee"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-07-13",
-      "id": "olsfly",
-      "name": "Olive-sided Flycatcher",
-      "subregion": "Utah"
-    },
     {
       "date": "2026-07-14",
       "id": "cedwax",
@@ -1453,6 +1447,12 @@
       "id": "yebcha",
       "name": "Yellow-breasted Chat",
       "subregion": "Massachusetts"
+    },
+    {
+      "date": "2026-11-11",
+      "id": "ruckin",
+      "name": "Ruby-crowned Kinglet",
+      "subregion": "Virginia"
     }
   ]
 }
