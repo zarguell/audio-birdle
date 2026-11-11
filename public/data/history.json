@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-07-14",
-      "id": "miskit",
-      "name": "Mississippi Kite",
-      "subregion": "Virginia"
-    },
-    {
       "date": "2026-07-15",
       "id": "sonspa",
       "name": "Song Sparrow",
@@ -725,15 +719,15 @@
       "id": "logshr",
       "name": "Loggerhead Shrike",
       "subregion": "Tennessee"
+    },
+    {
+      "date": "2026-11-12",
+      "id": "norpin",
+      "name": "Northern Pintail",
+      "subregion": "Massachusetts"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-07-14",
-      "id": "cedwax",
-      "name": "Cedar Waxwing",
-      "subregion": "Maryland"
-    },
     {
       "date": "2026-07-15",
       "id": "perfal",
@@ -1453,6 +1447,12 @@
       "id": "ruckin",
       "name": "Ruby-crowned Kinglet",
       "subregion": "Virginia"
+    },
+    {
+      "date": "2026-11-12",
+      "id": "amtspa",
+      "name": "American Tree Sparrow",
+      "subregion": "Illinois"
     }
   ]
 }

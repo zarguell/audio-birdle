@@ -1370,5 +1370,19 @@
     "answerHash": "27fefbda",
     "id": "ruckin",
     "subregion": "Virginia"
+  },
+  {
+    "date": "2026-11-12",
+    "region": "us",
+    "answerHash": "1b35c986",
+    "id": "norpin",
+    "subregion": "Massachusetts"
+  },
+  {
+    "date": "2026-11-12",
+    "region": "us-lower48",
+    "answerHash": "bdfd2ace",
+    "id": "amtspa",
+    "subregion": "Illinois"
   }
 ]
