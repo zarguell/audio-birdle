@@ -1384,5 +1384,19 @@
     "answerHash": "bdfd2ace",
     "id": "amtspa",
     "subregion": "Illinois"
+  },
+  {
+    "date": "2026-11-13",
+    "region": "us",
+    "answerHash": "b906ab68",
+    "id": "swiwhe1",
+    "subregion": "Washington"
+  },
+  {
+    "date": "2026-11-13",
+    "region": "us-lower48",
+    "answerHash": "2e4f2546",
+    "id": "rocwre",
+    "subregion": "Missouri"
   }
 ]

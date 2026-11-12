@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-07-15",
-      "id": "sonspa",
-      "name": "Song Sparrow",
-      "subregion": "Colorado"
-    },
-    {
       "date": "2026-07-16",
       "id": "perfal",
       "name": "Peregrine Falcon",
@@ -725,15 +719,15 @@
       "id": "norpin",
       "name": "Northern Pintail",
       "subregion": "Massachusetts"
+    },
+    {
+      "date": "2026-11-13",
+      "id": "swiwhe1",
+      "name": "Swinhoe's White-eye",
+      "subregion": "Washington"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-07-15",
-      "id": "perfal",
-      "name": "Peregrine Falcon",
-      "subregion": "Colorado"
-    },
     {
       "date": "2026-07-16",
       "id": "ambduc",
@@ -1453,6 +1447,12 @@
       "id": "amtspa",
       "name": "American Tree Sparrow",
       "subregion": "Illinois"
+    },
+    {
+      "date": "2026-11-13",
+      "id": "rocwre",
+      "name": "Rock Wren",
+      "subregion": "Missouri"
     }
   ]
 }
