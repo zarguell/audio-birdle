@@ -1398,5 +1398,19 @@
     "answerHash": "2e4f2546",
     "id": "rocwre",
     "subregion": "Missouri"
+  },
+  {
+    "date": "2026-11-14",
+    "region": "us",
+    "answerHash": "515324e6",
+    "id": "eargre",
+    "subregion": "Arkansas"
+  },
+  {
+    "date": "2026-11-14",
+    "region": "us-lower48",
+    "answerHash": "3a747443",
+    "id": "rusbla",
+    "subregion": "North Dakota"
   }
 ]

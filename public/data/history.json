@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-07-16",
-      "id": "perfal",
-      "name": "Peregrine Falcon",
-      "subregion": "Rhode Island"
-    },
-    {
       "date": "2026-07-17",
       "id": "attwoo1",
       "name": "American Three-toed Woodpecker",
@@ -725,15 +719,15 @@
       "id": "swiwhe1",
       "name": "Swinhoe's White-eye",
       "subregion": "Washington"
+    },
+    {
+      "date": "2026-11-14",
+      "id": "eargre",
+      "name": "Eared Grebe",
+      "subregion": "Arkansas"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-07-16",
-      "id": "ambduc",
-      "name": "American Black Duck",
-      "subregion": "Maryland"
-    },
     {
       "date": "2026-07-17",
       "id": "chispa",
@@ -1453,6 +1447,12 @@
       "id": "rocwre",
       "name": "Rock Wren",
       "subregion": "Missouri"
+    },
+    {
+      "date": "2026-11-14",
+      "id": "rusbla",
+      "name": "Rusty Blackbird",
+      "subregion": "North Dakota"
     }
   ]
 }
