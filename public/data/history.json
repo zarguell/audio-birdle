@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-07-17",
-      "id": "attwoo1",
-      "name": "American Three-toed Woodpecker",
-      "subregion": "Wyoming"
-    },
-    {
       "date": "2026-07-18",
       "id": "whbnut",
       "name": "White-breasted Nuthatch",
@@ -725,15 +719,15 @@
       "id": "eargre",
       "name": "Eared Grebe",
       "subregion": "Arkansas"
+    },
+    {
+      "date": "2026-11-15",
+      "id": "gocspa",
+      "name": "Golden-crowned Sparrow",
+      "subregion": "Nevada"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-07-17",
-      "id": "chispa",
-      "name": "Chipping Sparrow",
-      "subregion": "South Dakota"
-    },
     {
       "date": "2026-07-18",
       "id": "goleag",
@@ -1453,6 +1447,12 @@
       "id": "rusbla",
       "name": "Rusty Blackbird",
       "subregion": "North Dakota"
+    },
+    {
+      "date": "2026-11-15",
+      "id": "wilsni1",
+      "name": "Wilson's Snipe",
+      "subregion": "Nevada"
     }
   ]
 }

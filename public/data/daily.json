@@ -1412,5 +1412,19 @@
     "answerHash": "3a747443",
     "id": "rusbla",
     "subregion": "North Dakota"
+  },
+  {
+    "date": "2026-11-15",
+    "region": "us",
+    "answerHash": "b209ea01",
+    "id": "gocspa",
+    "subregion": "Nevada"
+  },
+  {
+    "date": "2026-11-15",
+    "region": "us-lower48",
+    "answerHash": "9ff86c6d",
+    "id": "wilsni1",
+    "subregion": "Nevada"
   }
 ]
