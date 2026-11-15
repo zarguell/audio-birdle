@@ -1426,5 +1426,19 @@
     "answerHash": "9ff86c6d",
     "id": "wilsni1",
     "subregion": "Nevada"
+  },
+  {
+    "date": "2026-11-16",
+    "region": "us",
+    "answerHash": "0c26db19",
+    "id": "mutswa",
+    "subregion": "Michigan"
+  },
+  {
+    "date": "2026-11-16",
+    "region": "us-lower48",
+    "answerHash": "047ca057",
+    "id": "rewbla",
+    "subregion": "Arizona"
   }
 ]

@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-07-18",
-      "id": "whbnut",
-      "name": "White-breasted Nuthatch",
-      "subregion": "Georgia"
-    },
-    {
       "date": "2026-07-19",
       "id": "graspa",
       "name": "Grasshopper Sparrow",
@@ -725,15 +719,15 @@
       "id": "gocspa",
       "name": "Golden-crowned Sparrow",
       "subregion": "Nevada"
+    },
+    {
+      "date": "2026-11-16",
+      "id": "mutswa",
+      "name": "Mute Swan",
+      "subregion": "Michigan"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-07-18",
-      "id": "goleag",
-      "name": "Golden Eagle",
-      "subregion": "Oregon"
-    },
     {
       "date": "2026-07-19",
       "id": "chwwid",
@@ -1453,6 +1447,12 @@
       "id": "wilsni1",
       "name": "Wilson's Snipe",
       "subregion": "Nevada"
+    },
+    {
+      "date": "2026-11-16",
+      "id": "rewbla",
+      "name": "Red-winged Blackbird",
+      "subregion": "Arizona"
     }
   ]
 }
