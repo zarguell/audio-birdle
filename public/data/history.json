@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-07-19",
-      "id": "graspa",
-      "name": "Grasshopper Sparrow",
-      "subregion": "Georgia"
-    },
-    {
       "date": "2026-07-20",
       "id": "grycat",
       "name": "Gray Catbird",
@@ -725,15 +719,15 @@
       "id": "mutswa",
       "name": "Mute Swan",
       "subregion": "Michigan"
+    },
+    {
+      "date": "2026-11-17",
+      "id": "yerwar",
+      "name": "Yellow-rumped Warbler",
+      "subregion": "Kentucky"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-07-19",
-      "id": "chwwid",
-      "name": "Chuck-will's-widow",
-      "subregion": "Georgia"
-    },
     {
       "date": "2026-07-20",
       "id": "redhea",
@@ -1453,6 +1447,12 @@
       "id": "rewbla",
       "name": "Red-winged Blackbird",
       "subregion": "Arizona"
+    },
+    {
+      "date": "2026-11-17",
+      "id": "coohaw",
+      "name": "Cooper's Hawk",
+      "subregion": "Nebraska"
     }
   ]
 }

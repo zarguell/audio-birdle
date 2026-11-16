@@ -1440,5 +1440,19 @@
     "answerHash": "047ca057",
     "id": "rewbla",
     "subregion": "Arizona"
+  },
+  {
+    "date": "2026-11-17",
+    "region": "us",
+    "answerHash": "047f6c28",
+    "id": "yerwar",
+    "subregion": "Kentucky"
+  },
+  {
+    "date": "2026-11-17",
+    "region": "us-lower48",
+    "answerHash": "0408854f",
+    "id": "coohaw",
+    "subregion": "Nebraska"
   }
 ]
