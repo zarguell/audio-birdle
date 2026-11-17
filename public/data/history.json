@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-07-20",
-      "id": "grycat",
-      "name": "Gray Catbird",
-      "subregion": "Washington"
-    },
-    {
       "date": "2026-07-21",
       "id": "rethaw",
       "name": "Red-tailed Hawk",
@@ -725,15 +719,15 @@
       "id": "yerwar",
       "name": "Yellow-rumped Warbler",
       "subregion": "Kentucky"
+    },
+    {
+      "date": "2026-11-18",
+      "id": "norsho",
+      "name": "Northern Shoveler",
+      "subregion": "Maine"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-07-20",
-      "id": "redhea",
-      "name": "Redhead",
-      "subregion": "Minnesota"
-    },
     {
       "date": "2026-07-21",
       "id": "baleag",
@@ -1453,6 +1447,12 @@
       "id": "coohaw",
       "name": "Cooper's Hawk",
       "subregion": "Nebraska"
+    },
+    {
+      "date": "2026-11-18",
+      "id": "lessca",
+      "name": "Lesser Scaup",
+      "subregion": "New Hampshire"
     }
   ]
 }

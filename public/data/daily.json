@@ -1454,5 +1454,19 @@
     "answerHash": "0408854f",
     "id": "coohaw",
     "subregion": "Nebraska"
+  },
+  {
+    "date": "2026-11-18",
+    "region": "us",
+    "answerHash": "c902cd01",
+    "id": "norsho",
+    "subregion": "Maine"
+  },
+  {
+    "date": "2026-11-18",
+    "region": "us-lower48",
+    "answerHash": "3bb0ff53",
+    "id": "lessca",
+    "subregion": "New Hampshire"
   }
 ]
