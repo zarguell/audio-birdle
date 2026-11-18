@@ -1468,5 +1468,19 @@
     "answerHash": "3bb0ff53",
     "id": "lessca",
     "subregion": "New Hampshire"
+  },
+  {
+    "date": "2026-11-19",
+    "region": "us",
+    "answerHash": "6c62af8f",
+    "id": "daejun",
+    "subregion": "Virginia"
+  },
+  {
+    "date": "2026-11-19",
+    "region": "us-lower48",
+    "answerHash": "8ebce65b",
+    "id": "redcro",
+    "subregion": "Connecticut"
   }
 ]

@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-07-21",
-      "id": "rethaw",
-      "name": "Red-tailed Hawk",
-      "subregion": "District of Columbia"
-    },
-    {
       "date": "2026-07-22",
       "id": "swawar",
       "name": "Swainson's Warbler",
@@ -725,15 +719,15 @@
       "id": "norsho",
       "name": "Northern Shoveler",
       "subregion": "Maine"
+    },
+    {
+      "date": "2026-11-19",
+      "id": "daejun",
+      "name": "Dark-eyed Junco",
+      "subregion": "Virginia"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-07-21",
-      "id": "baleag",
-      "name": "Bald Eagle",
-      "subregion": "District of Columbia"
-    },
     {
       "date": "2026-07-22",
       "id": "grnher",
@@ -1453,6 +1447,12 @@
       "id": "lessca",
       "name": "Lesser Scaup",
       "subregion": "New Hampshire"
+    },
+    {
+      "date": "2026-11-19",
+      "id": "redcro",
+      "name": "Red Crossbill",
+      "subregion": "Connecticut"
     }
   ]
 }
