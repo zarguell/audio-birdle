@@ -1482,5 +1482,19 @@
     "answerHash": "8ebce65b",
     "id": "redcro",
     "subregion": "Connecticut"
+  },
+  {
+    "date": "2026-11-20",
+    "region": "us",
+    "answerHash": "59fad0c8",
+    "id": "clarai11",
+    "subregion": "Delaware"
+  },
+  {
+    "date": "2026-11-20",
+    "region": "us-lower48",
+    "answerHash": "e3c89e10",
+    "id": "lecspa",
+    "subregion": "Wisconsin"
   }
 ]

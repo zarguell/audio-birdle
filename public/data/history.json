@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-07-22",
-      "id": "swawar",
-      "name": "Swainson's Warbler",
-      "subregion": "Pennsylvania"
-    },
-    {
       "date": "2026-07-23",
       "id": "spotow",
       "name": "Spotted Towhee",
@@ -725,15 +719,15 @@
       "id": "daejun",
       "name": "Dark-eyed Junco",
       "subregion": "Virginia"
+    },
+    {
+      "date": "2026-11-20",
+      "id": "clarai11",
+      "name": "Clapper Rail",
+      "subregion": "Delaware"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-07-22",
-      "id": "grnher",
-      "name": "Green Heron",
-      "subregion": "District of Columbia"
-    },
     {
       "date": "2026-07-23",
       "id": "brebla",
@@ -1453,6 +1447,12 @@
       "id": "redcro",
       "name": "Red Crossbill",
       "subregion": "Connecticut"
+    },
+    {
+      "date": "2026-11-20",
+      "id": "lecspa",
+      "name": "LeConte's Sparrow",
+      "subregion": "Wisconsin"
     }
   ]
 }
