@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-07-23",
-      "id": "spotow",
-      "name": "Spotted Towhee",
-      "subregion": "Wyoming"
-    },
-    {
       "date": "2026-07-24",
       "id": "prowar",
       "name": "Prothonotary Warbler",
@@ -725,15 +719,15 @@
       "id": "clarai11",
       "name": "Clapper Rail",
       "subregion": "Delaware"
+    },
+    {
+      "date": "2026-11-21",
+      "id": "rufgro",
+      "name": "Ruffed Grouse",
+      "subregion": "New York"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-07-23",
-      "id": "brebla",
-      "name": "Brewer's Blackbird",
-      "subregion": "Wyoming"
-    },
     {
       "date": "2026-07-24",
       "id": "amebit",
@@ -1453,6 +1447,12 @@
       "id": "lecspa",
       "name": "LeConte's Sparrow",
       "subregion": "Wisconsin"
+    },
+    {
+      "date": "2026-11-21",
+      "id": "belkin1",
+      "name": "Belted Kingfisher",
+      "subregion": "Missouri"
     }
   ]
 }

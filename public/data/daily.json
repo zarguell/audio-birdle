@@ -1496,5 +1496,19 @@
     "answerHash": "e3c89e10",
     "id": "lecspa",
     "subregion": "Wisconsin"
+  },
+  {
+    "date": "2026-11-21",
+    "region": "us",
+    "answerHash": "aed1d4c9",
+    "id": "rufgro",
+    "subregion": "New York"
+  },
+  {
+    "date": "2026-11-21",
+    "region": "us-lower48",
+    "answerHash": "e4745c00",
+    "id": "belkin1",
+    "subregion": "Missouri"
   }
 ]
