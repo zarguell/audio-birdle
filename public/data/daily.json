@@ -1510,5 +1510,19 @@
     "answerHash": "e4745c00",
     "id": "belkin1",
     "subregion": "Missouri"
+  },
+  {
+    "date": "2026-11-22",
+    "region": "us",
+    "answerHash": "8a66be25",
+    "id": "eastow",
+    "subregion": "Maine"
+  },
+  {
+    "date": "2026-11-22",
+    "region": "us-lower48",
+    "answerHash": "fff76801",
+    "id": "herthr",
+    "subregion": "Wisconsin"
   }
 ]

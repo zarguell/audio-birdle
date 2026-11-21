@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-07-24",
-      "id": "prowar",
-      "name": "Prothonotary Warbler",
-      "subregion": "Wisconsin"
-    },
-    {
       "date": "2026-07-25",
       "id": "wesmea",
       "name": "Western Meadowlark",
@@ -725,15 +719,15 @@
       "id": "rufgro",
       "name": "Ruffed Grouse",
       "subregion": "New York"
+    },
+    {
+      "date": "2026-11-22",
+      "id": "eastow",
+      "name": "Eastern Towhee",
+      "subregion": "Maine"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-07-24",
-      "id": "amebit",
-      "name": "American Bittern",
-      "subregion": "Wisconsin"
-    },
     {
       "date": "2026-07-25",
       "id": "gadwal",
@@ -1453,6 +1447,12 @@
       "id": "belkin1",
       "name": "Belted Kingfisher",
       "subregion": "Missouri"
+    },
+    {
+      "date": "2026-11-22",
+      "id": "herthr",
+      "name": "Hermit Thrush",
+      "subregion": "Wisconsin"
     }
   ]
 }
