@@ -1524,5 +1524,19 @@
     "answerHash": "fff76801",
     "id": "herthr",
     "subregion": "Wisconsin"
+  },
+  {
+    "date": "2026-11-23",
+    "region": "us",
+    "answerHash": "99078313",
+    "id": "wiltur",
+    "subregion": "District of Columbia"
+  },
+  {
+    "date": "2026-11-23",
+    "region": "us-lower48",
+    "answerHash": "67230152",
+    "id": "gadwal",
+    "subregion": "North Dakota"
   }
 ]

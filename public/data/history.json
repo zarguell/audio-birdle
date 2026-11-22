@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-07-25",
-      "id": "wesmea",
-      "name": "Western Meadowlark",
-      "subregion": "Oklahoma"
-    },
-    {
       "date": "2026-07-26",
       "id": "willet1",
       "name": "Willet",
@@ -725,15 +719,15 @@
       "id": "eastow",
       "name": "Eastern Towhee",
       "subregion": "Maine"
+    },
+    {
+      "date": "2026-11-23",
+      "id": "wiltur",
+      "name": "Wild Turkey",
+      "subregion": "District of Columbia"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-07-25",
-      "id": "gadwal",
-      "name": "Gadwall",
-      "subregion": "Oklahoma"
-    },
     {
       "date": "2026-07-26",
       "id": "cangoo",
@@ -1453,6 +1447,12 @@
       "id": "herthr",
       "name": "Hermit Thrush",
       "subregion": "Wisconsin"
+    },
+    {
+      "date": "2026-11-23",
+      "id": "gadwal",
+      "name": "Gadwall",
+      "subregion": "North Dakota"
     }
   ]
 }
