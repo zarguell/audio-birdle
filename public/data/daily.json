@@ -1538,5 +1538,19 @@
     "answerHash": "67230152",
     "id": "gadwal",
     "subregion": "North Dakota"
+  },
+  {
+    "date": "2026-11-24",
+    "region": "us",
+    "answerHash": "25309582",
+    "id": "rebwoo",
+    "subregion": "Connecticut"
+  },
+  {
+    "date": "2026-11-24",
+    "region": "us-lower48",
+    "answerHash": "c409d99a",
+    "id": "normoc",
+    "subregion": "New Jersey"
   }
 ]

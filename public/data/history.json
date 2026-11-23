@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-07-26",
-      "id": "willet1",
-      "name": "Willet",
-      "subregion": "Maryland"
-    },
-    {
       "date": "2026-07-27",
       "id": "carchi",
       "name": "Carolina Chickadee",
@@ -725,15 +719,15 @@
       "id": "wiltur",
       "name": "Wild Turkey",
       "subregion": "District of Columbia"
+    },
+    {
+      "date": "2026-11-24",
+      "id": "rebwoo",
+      "name": "Red-bellied Woodpecker",
+      "subregion": "Connecticut"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-07-26",
-      "id": "cangoo",
-      "name": "Canada Goose",
-      "subregion": "Maryland"
-    },
     {
       "date": "2026-07-27",
       "id": "sposan",
@@ -1453,6 +1447,12 @@
       "id": "gadwal",
       "name": "Gadwall",
       "subregion": "North Dakota"
+    },
+    {
+      "date": "2026-11-24",
+      "id": "normoc",
+      "name": "Northern Mockingbird",
+      "subregion": "New Jersey"
     }
   ]
 }
