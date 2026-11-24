@@ -54,6 +54,10 @@
 /version.json
   Cache-Control: no-cache
 
+/site.webmanifest
+  Content-Type: application/manifest+json
+  Cache-Control: no-cache
+
 /build-summary.json
   Cache-Control: no-cache
 

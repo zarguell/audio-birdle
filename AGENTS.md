@@ -66,7 +66,10 @@ sitegen/
 public/
 ├── data/                    Generated game data + manifest.json
 ├── _headers                 CSP and Cloudflare cache rules
-└── audio-birdle.svg
+├── favicon.ico              Browser favicon
+├── favicon-*.png            PNG favicon sizes
+├── apple-touch-icon.png     iOS home-screen bookmark icon
+└── site.webmanifest         Web app manifest
 
 scripts/                     Data acquisition and generation pipeline
 tests/
