@@ -13,6 +13,14 @@ def test_home_lists_regions_and_primary_navigation(page, base_url, console_error
     assert page.locator(".tabbar__link").count() == 5
     assert page.locator(".skip-link").count() == 1
     assert page.locator("[data-continue]").is_hidden()
+    assert (
+        page.locator('link[rel="apple-touch-icon"]').get_attribute("href")
+        == "/apple-touch-icon.png"
+    )
+    assert (
+        page.locator('link[rel="manifest"]').get_attribute("href")
+        == "/site.webmanifest"
+    )
 
     assert not console_errors
 

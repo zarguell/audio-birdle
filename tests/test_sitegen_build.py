@@ -16,6 +16,13 @@ from sitegen.data_manifest import build_manifest
 
 ROOT = Path(__file__).resolve().parents[1]
 PUBLIC = ROOT / "public"
+ROOT_ICON_ASSETS = {
+    "/favicon.ico",
+    "/favicon-16x16.png",
+    "/favicon-32x32.png",
+    "/favicon-48x48.png",
+    "/apple-touch-icon.png",
+}
 
 
 class AssetCollector(HTMLParser):
@@ -129,8 +136,10 @@ def test_pages_reference_only_hashed_external_assets(
         for asset in parser.assets:
             if not asset.startswith("/"):
                 continue
-            if asset == "/audio-birdle.svg":
-                assert (output / "audio-birdle.svg").is_file()
+            if asset in ROOT_ICON_ASSETS:
+                assert (output / asset.lstrip("/")).is_file(), (
+                    f"missing icon {asset} referenced by {html_path}"
+                )
                 continue
             assert asset.startswith("/assets/"), (
                 f"unhashed asset {asset} in {html_path}"
@@ -195,9 +204,21 @@ def test_manifest_generation_is_stable() -> None:
 
 def test_public_assets_are_copied(built_site: tuple[Path, dict]) -> None:
     output, _ = built_site
-    assert (output / "audio-birdle.svg").is_file()
+    for asset in ROOT_ICON_ASSETS:
+        assert (output / asset.lstrip("/")).is_file(), asset
+    assert (output / "site.webmanifest").is_file()
     assert (output / "_headers").is_file()
     assert (output / "data" / "daily.json").is_file()
+
+
+def test_web_app_manifest_references_real_icons(built_site: tuple[Path, dict]) -> None:
+    output, _ = built_site
+    manifest = json.loads((output / "site.webmanifest").read_text(encoding="utf-8"))
+    assert manifest["name"] == "Audio-Birdle"
+    assert manifest["start_url"] == "/"
+    assert manifest["icons"]
+    for icon in manifest["icons"]:
+        assert (output / icon["src"].lstrip("/")).is_file(), icon["src"]
 
 
 def test_templates_and_static_tree_are_the_source(

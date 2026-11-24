@@ -20,7 +20,7 @@ SITE = {
         "A daily bird song identification game inspired by Wordle. "
         "Listen to bird songs and guess the species."
     ),
-    "theme_color": "#0284c7",
+    "theme_color": "#2f6b4f",
     "repo_url": "https://github.com/zarguell/audio-birdle",
     "live_url": "https://audio-birdle.sechostlab.com",
 }
