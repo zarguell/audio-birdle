@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% from "macros.html" import icon, back_link %}
+{% block title %}Settings — Audio-Birdle{% endblock %}
+{% block content %}
+  <div class="page-shell">
+    {{ back_link('/play/', 'Back to play') }}
+    <header class="page-heading">
+      <p class="eyebrow">Preferences</p>
+      <h1>Settings</h1>
+    </header>
+    <section class="card settings-group" aria-labelledby="region-settings-title">
+      <h2 id="region-settings-title" class="section-title">Region</h2>
+      <div class="settings-row">
+        <div>
+          <p class="field-label">Current region</p>
+          <p class="settings-value" data-region-label>Loading…</p>
+        </div>
+        <button class="button button--ghost button--small"
+                type="button"
+                data-change-region>Change</button>
+      </div>
+    </section>
+    <section class="card settings-group" aria-labelledby="data-settings-title">
+      <h2 id="data-settings-title" class="section-title">Your data</h2>
+      <a class="settings-link"
+         href="/stats/">{{ icon("stats") }}<span>View stats</span>{{ icon("chevron-right") }}</a>
+      <a class="settings-link"
+         href="/archive/">{{ icon("archive") }}<span>Challenge archive</span>{{ icon("chevron-right") }}</a>
+      <button class="settings-link"
+              type="button"
+              data-reset-today>{{ icon("refresh") }}<span>Reset today's games</span></button>
+      <button class="settings-link settings-link--danger"
+              type="button"
+              data-reset-all>{{ icon("trash") }}<span>Reset all games and stats</span></button>
+    </section>
+    <section class="card settings-group" aria-labelledby="cache-settings-title">
+      <h2 id="cache-settings-title" class="section-title">Game data</h2>
+      <p class="muted small">Data is versioned with content hashes, so a refresh is rarely needed. Use this if a new daily bird does not appear.</p>
+      <button class="button button--secondary button--wide"
+              type="button"
+              data-refresh-data>{{ icon("refresh") }} Refresh game data</button>
+    </section>
+    <section class="card settings-group about" aria-labelledby="about-title">
+      <h2 id="about-title" class="section-title">About</h2>
+      <p class="muted small">Audio-Birdle is a static site generated with Python and Jinja. Bird observations come from <a href="https://ebird.org" target="_blank" rel="noopener noreferrer">eBird</a>; recordings come from the Macaulay Library and Xeno-canto.</p>
+      <p class="muted small">Release <code>{{ release_id }}</code></p>
+      <p class="muted small"><a href="{{ site.repo_url }}"
+                                target="_blank"
+                                rel="noopener noreferrer">Source code</a></p>
+    </section>
+    <dialog class="dialog" data-confirm-dialog aria-labelledby="confirm-title">
+      <form method="dialog" class="dialog__form">
+        <h2 id="confirm-title" class="dialog__title">Reset all data?</h2>
+        <p class="muted">This erases every daily game, streak, and region stat stored in this browser. It cannot be undone.</p>
+        <div class="dialog__actions">
+          <button class="button button--ghost" value="cancel" type="submit">Cancel</button>
+          <button class="button button--danger"
+                  value="confirm"
+                  type="submit">Reset everything</button>
+        </div>
+      </form>
+    </dialog>
+  </div>
+{% endblock %}

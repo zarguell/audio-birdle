@@ -5,7 +5,7 @@ These tests verify that:
 1. Generated JSON files are valid and properly structured
 2. Cross-references between files are correct (e.g., bird IDs exist in birds.json)
 3. Python scripts produce output that matches expected schemas
-4. Data files can be loaded by JavaScript LoadGameData module
+4. Data files can be loaded by the static client data manifest
 """
 
 import importlib.util
@@ -272,15 +272,10 @@ class TestDataPipelineIntegration:
     def test_daily_answer_hashes_resolve(birds_json, regions_json, daily_json):
         """Every answerHash must resolve to a bird in the region pool
         (virtual regions resolve against their parent's pool)."""
-        parents = {
-            r["id"]: r.get("parentRegion", r["id"])
-            for r in regions_json
-        }
+        parents = {r["id"]: r.get("parentRegion", r["id"]) for r in regions_json}
         pools = {}
         for region, birds in birds_json.items():
-            pools[region] = {
-                generate_daily_birds.hash_bird_id(b["id"]) for b in birds
-            }
+            pools[region] = {generate_daily_birds.hash_bird_id(b["id"]) for b in birds}
         for entry in daily_json:
             pool = pools.get(parents.get(entry["region"], entry["region"]), set())
             assert entry["answerHash"] in pool, (

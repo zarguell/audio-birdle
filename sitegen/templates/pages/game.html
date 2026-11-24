@@ -1,0 +1,248 @@
+{% extends "base.html" %}
+{% from "macros.html" import icon %}
+{% block title %}{% if game_mode == "hard" %}Hard mode{% elif game_mode == "practice" %}Practice{% else %}Normal mode{% endif %} — Audio-Birdle{% endblock %}
+{% block content %}
+  <div class="page-shell page-shell--game">
+    <div class="game-topbar">
+      <a class="back-link"
+         href="/play/"
+         data-back-link>{{ icon('back', 'back-link__icon') }}<span>Modes</span></a>
+      <h1 class="game-topbar__title">
+        {% if game_mode == "hard" %}{{ icon("flame") }} Hard mode{% elif game_mode == "practice" %}{{ icon("gamepad") }} Practice{% else %}{{ icon("target") }} Normal mode{% endif %}
+      </h1>
+      {% if game_mode == "practice" %}
+        <button class="button button--small button--ghost"
+                type="button"
+                data-practice-toggle>Switch to hard</button>
+      {% else %}
+        <a class="icon-button" href="/settings/" aria-label="Settings">{{ icon("settings") }}</a>
+      {% endif %}
+    </div>
+    <div class="game-banner" aria-hidden="true">
+      <img class="game-banner__art"
+           src="{{ asset_base }}/img/forest-scene.svg"
+           alt="">
+    </div>
+    <section id="game"
+             class="card game-card"
+             data-game-root
+             data-mode="{{ game_mode }}">
+      <div class="alert" data-alert hidden>
+        <span class="alert__icon" aria-hidden="true">!</span>
+        <p data-alert-text></p>
+        <button class="alert__action" type="button" data-alert-action hidden></button>
+      </div>
+      <p class="loading-note" data-game-loading>Loading today's bird…</p>
+      <div class="game-meta">
+        <p class="game-meta__region"><span data-region-label>Loading region…</span></p>
+        <p class="game-meta__date">
+          <span data-date-label></span>
+        </p>
+      </div>
+      <div class="audio-panel">
+        <div class="audio-panel__heading">
+          <span class="audio-panel__kicker">{{ icon("audio") }} Song signal</span>
+          <span class="audio-panel__status">Field recording</span>
+        </div>
+        <img class="audio-panel__bird"
+             src="{{ asset_base }}/img/bird-mark.svg"
+             alt=""
+             aria-hidden="true">
+        <div class="equalizer equalizer--player" data-equalizer aria-hidden="true">
+          <span class="equalizer__bar"></span>
+          <span class="equalizer__bar"></span>
+          <span class="equalizer__bar"></span>
+          <span class="equalizer__bar"></span>
+          <span class="equalizer__bar"></span>
+          <span class="equalizer__bar"></span>
+          <span class="equalizer__bar"></span>
+        </div>
+        <div class="recording-picker" data-recording-picker hidden>
+          <label class="field-label" for="recording-select">Recording</label>
+          <select id="recording-select" class="select" data-recording-select></select>
+        </div>
+        <audio data-audio preload="none"></audio>
+        <button class="button button--primary button--jelly button--wide"
+                type="button"
+                data-play-button
+                disabled>
+          {{ icon("volume") }}<span data-play-label>Play bird call</span>
+        </button>
+        <p class="field-note" data-audio-error hidden></p>
+      </div>
+      <p class="observation-note" data-observation hidden>
+        {{ icon("map-pin") }}
+        <span>This bird was observed in the last 14 days on eBird in <strong data-subregion></strong>.</span>
+      </p>
+      <section class="game-section" data-guesses-section hidden>
+        <h2 class="section-title">Your guesses</h2>
+        <ol class="guess-list" data-guess-list>
+        </ol>
+      </section>
+      <p class="remaining" data-remaining hidden></p>
+      <aside class="hints" data-hints hidden>
+        <h2 class="hints__title">{{ icon("info") }} Taxonomic hints</h2>
+        <dl class="hints__list">
+          <div class="hints__row" data-hint-order hidden>
+            <dt>Order</dt>
+            <dd data-hint-order-value>
+            </dd>
+          </div>
+          <div class="hints__row" data-hint-family hidden>
+            <dt>Family</dt>
+            <dd data-hint-family-value>
+            </dd>
+          </div>
+          <div class="hints__row" data-hint-genus hidden>
+            <dt>Genus</dt>
+            <dd data-hint-genus-value>
+            </dd>
+          </div>
+        </dl>
+      </aside>
+      <section class="game-section" data-options-section hidden>
+        <h2 class="section-title" data-options-title>Choose the bird</h2>
+        <div class="answer-options" data-answer-options></div>
+      </section>
+      <section class="game-section" data-hard-section hidden>
+        <label class="field-label" for="hard-input">Type a bird name</label>
+        <div class="combobox" data-combobox>
+          <span class="combobox__search">{{ icon("search") }}</span>
+          <input class="input combobox__input"
+                 id="hard-input"
+                 type="text"
+                 role="combobox"
+                 aria-autocomplete="list"
+                 aria-expanded="false"
+                 aria-controls="hard-suggestions"
+                 aria-label="Search for a bird"
+                 autocomplete="off"
+                 spellcheck="false"
+                 data-hard-input
+                 disabled>
+          <button class="combobox__clear"
+                  type="button"
+                  aria-label="Clear search"
+                  data-hard-clear
+                  hidden>{{ icon("x") }}</button>
+          <ul class="suggestions"
+              id="hard-suggestions"
+              role="listbox"
+              aria-label="Bird suggestions"
+              data-hard-suggestions
+              hidden>
+          </ul>
+        </div>
+        <p class="field-note" data-hard-empty hidden>No birds found matching that search.</p>
+      </section>
+      <section class="completion" data-completion hidden>
+        <div class="result" aria-live="polite">
+          <div class="result__icon result__icon--win" data-result-win hidden>
+            <svg viewBox="0 0 240 240"
+                 class="success-check"
+                 aria-hidden="true"
+                 focusable="false">
+              <circle class="success-check__halo" cx="120" cy="120" r="62"></circle>
+              <circle class="success-check__core" cx="120" cy="120" r="60"></circle>
+              <circle class="success-check__ring" cx="120" cy="120" r="60"></circle>
+              <path class="success-check__tick" d="M92 122 L112 143 L152 99"></path>
+            </svg>
+          </div>
+          <div class="result__icon result__icon--lose"
+               data-result-lose
+               hidden
+               aria-hidden="true">😔</div>
+          <h2 class="result__title" data-result-title></h2>
+          <p class="result__text" data-result-text></p>
+        </div>
+        <article class="bird-card">
+          <div class="bird-card__media" data-image-carousel hidden>
+            <img class="bird-card__image" data-bird-image alt="" loading="lazy">
+            <button class="bird-card__nav bird-card__nav--prev"
+                    type="button"
+                    aria-label="Previous image"
+                    data-image-prev>{{ icon("chevron-left") }}</button>
+            <button class="bird-card__nav bird-card__nav--next"
+                    type="button"
+                    aria-label="Next image"
+                    data-image-next>{{ icon("chevron-right") }}</button>
+            <span class="bird-card__counter" data-image-counter></span>
+          </div>
+          <div class="bird-card__body">
+            <p class="eyebrow" data-bird-label>Today's bird</p>
+            <h3 class="bird-card__name" data-bird-name></h3>
+            <p class="scientific" data-bird-scientific></p>
+          </div>
+          <div class="bird-card__facts" data-bird-facts hidden>
+            <h4>Fun fact</h4>
+            <p data-bird-fact></p>
+          </div>
+          <div class="bird-card__actions">
+            <button class="button button--success button--jelly"
+                    type="button"
+                    data-share
+                    hidden>{{ icon("share") }} Share result</button>
+            <a class="button button--secondary"
+               data-learn-more
+               hidden
+               target="_blank"
+               rel="noopener noreferrer">{{ icon("external") }} Learn more</a>
+          </div>
+          <p class="attribution" data-attribution hidden></p>
+        </article>
+        <div class="practice-actions" data-practice-actions hidden>
+          <button class="button button--ghost"
+                  type="button"
+                  data-practice-retry>{{ icon("refresh") }} Try again</button>
+          <button class="button button--primary"
+                  type="button"
+                  data-practice-next>Next bird {{ icon("next") }}</button>
+        </div>
+      </section>
+    </section>
+    <p class="countdown"
+       data-countdown
+       hidden>Next bird in <span data-countdown-value>--:--:--</span></p>
+  </div>
+{% endblock %}
+{% block templates %}
+  <template id="tpl-answer-option">
+    <button class="answer-option" type="button">
+      <span class="answer-option__name" data-name></span>
+      <span class="answer-option__scientific" data-scientific></span>
+    </button>
+  </template>
+  <template id="tpl-normal-guess">
+    <li class="guess">
+      <span class="guess__name" data-name></span>
+      <span class="guess__status" data-status aria-hidden="true"></span>
+    </li>
+  </template>
+  <template id="tpl-hard-guess">
+    <li class="guess guess--hard">
+      <div class="guess__heading">
+        <div>
+          <span class="guess__name" data-name></span>
+          <span class="guess__scientific" data-scientific></span>
+        </div>
+        <span class="guess__status" data-status aria-hidden="true"></span>
+      </div>
+      <ul class="badge-list" data-badges>
+      </ul>
+    </li>
+  </template>
+  <template id="tpl-taxonomic-badge">
+    <li class="badge">
+      <span data-label></span>
+    </li>
+  </template>
+  <template id="tpl-suggestion">
+    <li class="suggestion" role="option" id="">
+      <span class="suggestion__name" data-name></span>
+      <span class="suggestion__scientific" data-scientific></span>
+    </li>
+  </template>
+  <template id="tpl-recording-option">
+    <option value=""></option>
+  </template>
+{% endblock %}

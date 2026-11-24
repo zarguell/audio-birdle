@@ -1,0 +1,69 @@
+{% from "macros.html" import icon, nav_item %}
+<!DOCTYPE html>
+<html lang="en" data-release="{{ release_id }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="{{ site.theme_color }}">
+    <meta name="description"
+          content="{% block description %}{{ site.description }}{% endblock %}">
+    <title>{% block title %}{{ site.name }}{% endblock %}</title>
+    <link rel="icon" type="image/svg+xml" href="/audio-birdle.svg">
+    <link rel="apple-touch-icon" href="/audio-birdle.svg">
+    <link rel="stylesheet" href="{{ asset_base }}/css/tokens.css">
+    <link rel="stylesheet" href="{{ asset_base }}/css/base.css">
+    <link rel="stylesheet" href="{{ asset_base }}/css/layout.css">
+    <link rel="stylesheet" href="{{ asset_base }}/css/components.css">
+    <link rel="stylesheet" href="{{ asset_base }}/css/game.css">
+    <link rel="stylesheet" href="{{ asset_base }}/css/pages.css">
+    <link rel="stylesheet" href="{{ asset_base }}/css/animations.css">
+    <script type="module" src="{{ asset_base }}/js/{{ page_script }}"></script>
+  </head>
+  <body class="page page--{% if game_mode %}game{% else %}{{ page }}{% endif %}{% if game_mode %}
+               page--game-{{ game_mode }}{% endif %}"
+        data-page="{{ page }}">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="app-header">
+      <a class="brand" href="/" aria-label="Audio-Birdle home">
+        <img class="brand__mark"
+             src="{{ asset_base }}/img/bird-mark.svg"
+             alt=""
+             aria-hidden="true">
+        <span class="brand__name">Audio-Birdle</span>
+      </a>
+      <a class="region-chip" data-region-chip href="/" hidden>
+        {{ icon('map-pin', 'region-chip__icon') }}
+        <span data-region-name></span>
+      </a>
+    </header>
+    <main id="main" class="app-main" tabindex="-1">
+      {% block content %}{% endblock %}
+    </main>
+    <nav class="tabbar" aria-label="Primary navigation">
+      {{ nav_item("/", "Home", "home", ["home"], page) }}
+      {{ nav_item("/play/", "Play", "play", ["play", "game"], page) }}
+      {{ nav_item("/archive/", "Archive", "archive", ["archive"], page) }}
+      {{ nav_item("/stats/", "Stats", "stats", ["stats"], page) }}
+      {{ nav_item("/settings/", "Settings", "settings", ["settings"], page) }}
+    </nav>
+    <div id="toast-region"
+         class="toast-region"
+         aria-live="polite"
+         aria-atomic="false"></div>
+    <template id="tpl-toast">
+      <div class="toast" data-type="info">
+        <span class="toast__dot" aria-hidden="true"></span>
+        <p class="toast__message" data-toast-message></p>
+        <button class="toast__close"
+                type="button"
+                aria-label="Dismiss notification"
+                data-toast-close>{{ icon('x', 'toast__close-icon') }}</button>
+      </div>
+    </template>
+    {% block templates %}{% endblock %}
+    <noscript>
+      <p class="noscript">Audio-Birdle needs JavaScript for audio playback and saved progress. Please enable JavaScript.</p>
+    </noscript>
+  </body>
+</html>

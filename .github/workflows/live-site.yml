@@ -1,0 +1,50 @@
+name: Live site integration
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Run after the daily-data workflow and the Cloudflare deploy have had time
+    # to settle. The site URL can be overridden with the LIVE_SITE_URL variable.
+    - cron: '30 5 * * *'
+
+concurrency:
+  group: live-site
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  live:
+    name: Verify deployed site
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      LIVE_SITE_URL: ${{ vars.LIVE_SITE_URL || 'https://audio-birdle.sechostlab.com' }}
+    steps:
+      - name: Harden the runner (audit outbound calls)
+        uses: step-security/harden-runner@1d88384fd173af6ecb012dfd0264a306b711241a # v2.22.4
+        with:
+          # The test needs the deployed site plus the Playwright CDN. Audit
+          # rather than block so a future CDN host change cannot silently
+          # break the live check.
+          egress-policy: audit
+
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - name: Setup Python
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
+        with:
+          python-version: '3.x'
+          cache: 'pip'
+
+      - name: Install test dependencies
+        run: |
+          pip install -r requirements-dev.txt
+          python -m playwright install --with-deps chromium
+
+      - name: Run live integration tests
+        run: python -m pytest tests/e2e/test_live_site.py -m live -v --no-cov

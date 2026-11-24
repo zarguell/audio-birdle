@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% from "macros.html" import icon, back_link %}
+{% block title %}Play — Audio-Birdle{% endblock %}
+{% block content %}
+  <div class="page-shell">
+    {{ back_link('/', 'Change region') }}
+    <header class="page-heading">
+      <p class="eyebrow">Today's challenge</p>
+      <h1>Choose a station</h1>
+      <p class="page-heading__meta">
+        <span class="inline-icon">{{ icon("map-pin") }}</span>
+        <span data-region-label>Loading region…</span>
+      </p>
+    </header>
+    <section class="mode-list" aria-label="Game modes">
+      <a class="mode-card mode-card--normal"
+         href="/normal/"
+         data-mode-card="normal">
+        <span class="mode-card__body">
+          <span class="mode-card__top">
+            <span class="mode-card__icon">{{ icon("target") }}</span>
+            <span class="mode-card__badge" data-mode-status="normal"></span>
+          </span>
+          <span class="mode-card__title">Normal mode</span>
+          <span class="mode-card__text">Daily challenge · 4 guesses · Multiple choice</span>
+        </span>
+        {{ icon('chevron-right', 'mode-card__chevron') }}
+      </a>
+      <a class="mode-card mode-card--hard" href="/hard/" data-mode-card="hard">
+        <span class="mode-card__body">
+          <span class="mode-card__top">
+            <span class="mode-card__icon">{{ icon("flame") }}</span>
+            <span class="mode-card__badge" data-mode-status="hard"></span>
+          </span>
+          <span class="mode-card__title">Hard mode</span>
+          <span class="mode-card__text">Daily challenge · 6 guesses · Free text · Taxonomic hints</span>
+        </span>
+        {{ icon('chevron-right', 'mode-card__chevron') }}
+      </a>
+      <a class="mode-card mode-card--practice"
+         href="/practice/"
+         data-mode-card="practice">
+        <span class="mode-card__body">
+          <span class="mode-card__top">
+            <span class="mode-card__icon">{{ icon("gamepad") }}</span>
+            <span class="mode-card__badge" data-mode-status="practice"></span>
+          </span>
+          <span class="mode-card__title">Practice mode</span>
+          <span class="mode-card__text">Unlimited play · No daily limit · Stats not saved</span>
+        </span>
+        {{ icon('chevron-right', 'mode-card__chevron') }}
+      </a>
+    </section>
+    <p class="note" data-mode-note hidden></p>
+    <p class="muted small">Normal and hard mode share a daily slot: completing one closes the other for the day. Practice is always open.</p>
+  </div>
+{% endblock %}

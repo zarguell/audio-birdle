@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% from "macros.html" import icon, back_link %}
+{% block title %}Challenge archive — Audio-Birdle{% endblock %}
+{% block content %}
+  <div class="page-shell">
+    {{ back_link('/play/', 'Back to play') }}
+    <header class="page-heading">
+      <p class="eyebrow">Listen again</p>
+      <h1>Challenge archive</h1>
+      <p class="page-heading__meta">Past answers for <span data-region-label>your region</span></p>
+      <p class="page-heading__meta">Today and future birds stay hidden.</p>
+    </header>
+    <section class="card" aria-labelledby="archive-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Your region</p>
+          <h2 id="archive-title">Past challenges</h2>
+        </div>
+        <span class="pill" data-archive-count></span>
+      </div>
+      <p class="loading-note" data-archive-loading>Loading archive…</p>
+      <div class="empty-state empty-state--compact" data-archive-error hidden>
+        {{ icon('calendar', 'empty-state__icon') }}
+        <h2>Couldn't load the archive</h2>
+        <p>Check your connection and try again.</p>
+        <button class="button button--primary" type="button" data-archive-retry>Retry</button>
+      </div>
+      <div class="empty-state empty-state--compact" data-archive-empty hidden>
+        {{ icon('calendar', 'empty-state__icon') }}
+        <h2>No past challenges yet</h2>
+        <p>Come back tomorrow to revisit today's bird.</p>
+      </div>
+      <ol class="archive-list" data-archive-list>
+      </ol>
+      <button class="button button--ghost button--wide"
+              type="button"
+              data-archive-more
+              hidden>Show more</button>
+    </section>
+  </div>
+{% endblock %}
+{% block templates %}
+  <template id="tpl-archive-entry">
+    <li class="archive-entry">
+      <button class="archive-entry__play" type="button" data-archive-play>
+        <span class="archive-entry__icon archive-entry__icon--play">{{ icon("play") }}</span>
+        <span class="archive-entry__icon archive-entry__icon--pause">{{ icon("pause") }}</span>
+      </button>
+      <div class="archive-entry__body">
+        <span class="archive-entry__name" data-archive-name></span>
+        <span class="archive-entry__meta">
+          <span data-archive-date></span>
+          <span class="archive-entry__subregion"
+                data-archive-subregion
+                hidden>{{ icon("map-pin") }}<span data-archive-subregion-name></span></span>
+        </span>
+      </div>
+    </li>
+  </template>
+{% endblock %}

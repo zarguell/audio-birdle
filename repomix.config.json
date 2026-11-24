@@ -7,8 +7,17 @@
     "showLineNumbers": false,
     "topFilesLength": 20
   },
-  "include": ["src/App.jsx", "src/utils/Constants.jsx", "demo-data/**"],
+  "include": [
+    "sitegen/**",
+    "tests/**",
+    "public/_headers",
+    "README.md",
+    "AGENTS.md",
+    "demo-data/**"
+  ],
   "ignore": {
-    "customPatterns": ["**/*.svg"]
+    "customPatterns": [
+      "**/*.svg"
+    ]
   }
 }

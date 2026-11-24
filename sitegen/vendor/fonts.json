@@ -1,0 +1,9 @@
+{
+  "VT323": {
+    "file": "sitegen/static/fonts/vt323-latin.woff2",
+    "source": "https://fonts.gstatic.com/s/vt323/v18/pxiKyp0ihIEF2isfFJU.woff2",
+    "sha256": "8ddbebcc1048154132e1d78eb9b1f7850bca1b7d857035ccf1cb4318ebc615b6",
+    "license": "SIL Open Font License 1.1",
+    "licenseFile": "sitegen/vendor/vt323.OFL.txt"
+  }
+}

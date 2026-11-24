@@ -115,7 +115,7 @@ python3 generate-daily-region-data.py \
   ../public/data/daily-subregion-birds.json
 
 # 8. Test and deploy
-npm run dev  # Test in browser
+make serve  # from the repo root; test in browser
 git add public/data/
 git commit -m "feat: Add Europe region"
 git push

@@ -1,56 +1,49 @@
-import js from '@eslint/js'
-import globals from 'globals'
-import reactHooks from 'eslint-plugin-react-hooks'
-import reactRefresh from 'eslint-plugin-react-refresh'
+import js from "@eslint/js";
+import globals from "globals";
 
 export default [
   {
     ignores: [
-      'dist',
-      'htmlcov/**',
-      'coverage/**',
-      '.venv/**',
+      "dist/**",
+      "node_modules/**",
+      "htmlcov/**",
+      "coverage/**",
+      ".venv/**",
+      "sitegen/vendor/**",
     ],
   },
   {
-    files: ['**/*.{js,jsx}'],
+    files: ["sitegen/static/js/**/*.js"],
     languageOptions: {
-      ecmaVersion: 2020,
-      globals: globals.browser,
-      parserOptions: {
-        ecmaVersion: 'latest',
-        ecmaFeatures: { jsx: true },
-        sourceType: 'module',
+      ecmaVersion: 2022,
+      sourceType: "module",
+      globals: {
+        ...globals.browser,
       },
-    },
-    plugins: {
-      'react-hooks': reactHooks,
-      'react-refresh': reactRefresh,
     },
     rules: {
       ...js.configs.recommended.rules,
-      ...reactHooks.configs.recommended.rules,
-      'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
-      'react-refresh/only-export-components': [
-        'warn',
-        { allowConstantExport: true },
-      ],
+      eqeqeq: "error",
+      "no-console": ["warn", { allow: ["warn", "error", "info"] }],
+      "no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
+      "prefer-const": "error",
     },
   },
   {
-    files: ['tests/**/*.{js,jsx}', '**/*.test.{js,jsx}', '**/*.spec.{js,jsx}'],
+    files: ["tests/js/**/*.js"],
     languageOptions: {
+      ecmaVersion: 2022,
+      sourceType: "module",
       globals: {
         ...globals.browser,
         ...globals.node,
-        ...globals.vitest,
       },
     },
-  },
-  {
-    files: ['vitest.config.js', 'vite.config.js'],
-    languageOptions: {
-      globals: globals.node,
+    rules: {
+      ...js.configs.recommended.rules,
+      eqeqeq: "error",
+      "no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
+      "prefer-const": "error",
     },
   },
-]
+];

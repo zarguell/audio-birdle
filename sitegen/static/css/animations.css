@@ -1,0 +1,93 @@
+/* Motion adapted from Forever AI Components (MIT):
+ * - loaders/08-equalizer-bars.html (equalizer bounce)
+ * - feedback-states/01-success-check.html (ring/tick confirmation)
+ * - buttons/06-jelly-press.html (press feedback, reworked as a pixel press)
+ * Source commit is pinned in sitegen/vendor/forever-components.json.
+ * All idle/auto-replay behaviour was removed for production use.
+ */
+
+@keyframes equalizer-bounce {
+  0%,
+  100% {
+    transform: scaleY(0.28);
+  }
+
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes pixel-press {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(2px, 2px);
+  }
+}
+
+@keyframes success-ring {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes success-tick {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes success-halo {
+  0% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.9);
+  }
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(-0.5rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes toast-out {
+  to {
+    opacity: 0;
+    transform: translateY(-0.35rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .equalizer.is-playing .equalizer__bar {
+    animation: none;
+  }
+
+  .button--jelly.is-squish {
+    animation: none;
+  }
+
+  .result__icon--win:not([hidden]) .success-check__ring,
+  .result__icon--win:not([hidden]) .success-check__tick {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+
+  .result__icon--win:not([hidden]) .success-check__halo {
+    animation: none;
+    opacity: 0;
+  }
+}
