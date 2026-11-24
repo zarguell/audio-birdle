@@ -1552,5 +1552,19 @@
     "answerHash": "c409d99a",
     "id": "normoc",
     "subregion": "New Jersey"
+  },
+  {
+    "date": "2026-11-25",
+    "region": "us",
+    "answerHash": "73771c9e",
+    "id": "buwtea",
+    "subregion": "South Carolina"
+  },
+  {
+    "date": "2026-11-25",
+    "region": "us-lower48",
+    "answerHash": "104c723e",
+    "id": "amerob",
+    "subregion": "North Dakota"
   }
 ]

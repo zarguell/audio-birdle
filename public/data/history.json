@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-07-27",
-      "id": "carchi",
-      "name": "Carolina Chickadee",
-      "subregion": "West Virginia"
-    },
-    {
       "date": "2026-07-28",
       "id": "yebmag",
       "name": "Yellow-billed Magpie",
@@ -725,15 +719,15 @@
       "id": "rebwoo",
       "name": "Red-bellied Woodpecker",
       "subregion": "Connecticut"
+    },
+    {
+      "date": "2026-11-25",
+      "id": "buwtea",
+      "name": "Blue-winged Teal",
+      "subregion": "South Carolina"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-07-27",
-      "id": "sposan",
-      "name": "Spotted Sandpiper",
-      "subregion": "District of Columbia"
-    },
     {
       "date": "2026-07-28",
       "id": "hooori",
@@ -1453,6 +1447,12 @@
       "id": "normoc",
       "name": "Northern Mockingbird",
       "subregion": "New Jersey"
+    },
+    {
+      "date": "2026-11-25",
+      "id": "amerob",
+      "name": "American Robin",
+      "subregion": "North Dakota"
     }
   ]
 }
