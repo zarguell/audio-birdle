@@ -1,20 +1,53 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended"],
-  "lockFileMaintenance": { "enabled": true },
+  "extends": [
+    "config:recommended"
+  ],
+  "lockFileMaintenance": {
+    "enabled": true
+  },
   "minimumReleaseAge": "7 days",
   "separateMajorMinor": true,
   "automerge": true,
   "automergeType": "pr",
   "packageRules": [
     {
-      "matchUpdateTypes": ["minor", "patch", "pin", "digest", "lockFileMaintenance"],
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "pin",
+        "digest",
+        "lockFileMaintenance"
+      ],
       "automerge": true,
       "minimumReleaseAge": "7 days"
     },
     {
-      "matchUpdateTypes": ["major"],
+      "matchUpdateTypes": [
+        "major"
+      ],
       "automerge": false
+    },
+    {
+      "matchPackageNames": [
+        "isas1/forever-ai-components"
+      ],
+      "automerge": false
+    }
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "fileMatch": [
+        "^sitegen/vendor/forever-components\\.json$"
+      ],
+      "matchStrings": [
+        "\"commit\":\\s*\"(?<currentDigest>[a-f0-9]{40})\""
+      ],
+      "currentValueTemplate": "main",
+      "depNameTemplate": "isas1/forever-ai-components",
+      "packageNameTemplate": "https://github.com/isas1/forever-ai-components",
+      "datasourceTemplate": "git-refs"
     }
   ]
 }

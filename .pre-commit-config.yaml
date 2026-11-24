@@ -7,16 +7,29 @@ repos:
     hooks:
       - id: eslint
         name: ESLint
-        entry: npm run lint --
+        entry: npm run lint:js
         language: system
-        types: [javascript, jsx]
+        types: [javascript]
+        pass_filenames: false
+      - id: stylelint
+        name: Stylelint
+        entry: npm run lint:css
+        language: system
+        types: [css]
+        pass_filenames: false
+      - id: djlint
+        name: djlint
+        entry: djlint sitegen/templates --check --lint
+        language: system
+        types: [html]
+        pass_filenames: false
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.4.0
     hooks:
       - id: end-of-file-fixer
       - id: trailing-whitespace
   - repo: https://github.com/pylint-dev/pylint
-    rev: v3.3.2
+    rev: v4.1.4
     hooks:
       - id: pylint
         args: ["--errors-only"]

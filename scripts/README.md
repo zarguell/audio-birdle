@@ -17,6 +17,16 @@ This directory contains scripts for fetching and processing bird data from eBird
   - Quick troubleshooting
   - Performance tips
 
+
+> **Cache-safety step:** after any change under `public/data/`, regenerate the
+> SHA-256 manifest so browsers never mix old and new data:
+>
+> ```bash
+> python3 -m sitegen manifest --data-dir public/data
+> ```
+>
+> The daily-update workflow does this automatically.
+
 ## 🚀 Quick Start
 
 ### Prerequisites

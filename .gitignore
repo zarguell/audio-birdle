@@ -8,6 +8,8 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
+build/
+*.egg-info/
 dist
 dist-ssr
 *.local
@@ -29,6 +31,7 @@ dist-ssr
 .env
 venv/
 .venv/
+.build-deps/
 
 # Playwright MCP debug artifacts
 .playwright-mcp/
@@ -51,5 +54,7 @@ coverage.json
 .pytest_cache/
 .vitest/
 
-# Test results
+# Test results and browser reports
 test-results/
+playwright-report/
+blob-report/

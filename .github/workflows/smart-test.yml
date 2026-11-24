@@ -1,4 +1,4 @@
-name: Smart Test Suite
+name: Test Suite
 
 on:
   push:
@@ -13,34 +13,30 @@ permissions:
 
 jobs:
   detect-changes:
-    name: Detect Changes
+    name: Detect changes
     runs-on: ubuntu-latest
     outputs:
       commit-type: ${{ steps.analyze-commit.outputs.type }}
       js-changed: ${{ steps.filter.outputs.js }}
       python-changed: ${{ steps.filter.outputs.python }}
-      test-category: ${{ steps.analyze-commit.outputs.test-category }}
+      templates-changed: ${{ steps.filter.outputs.templates }}
+      site-changed: ${{ steps.filter.outputs.site }}
+      data-changed: ${{ steps.filter.outputs.data }}
     steps:
-      - name: Harden the runner (Block egress)
+      - name: Harden the runner (block egress)
         uses: step-security/harden-runner@1d88384fd173af6ecb012dfd0264a306b711241a # v2.22.4
         with:
           egress-policy: block
           allowed-endpoints: >
-            registry.npmjs.org
             api.github.com
             github.com
             objects.githubusercontent.com
-            nodejs.org
             raw.githubusercontent.com
-            pypi.org
-            files.pythonhosted.org
 
       - name: Checkout code
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           fetch-depth: 0
-          # On PR runs HEAD is the synthetic merge-ref commit; analyze the PR head commit instead.
-          # Empty on push -> defaults to the triggering ref (safe).
           ref: ${{ github.event.pull_request.head.sha }}
           persist-credentials: false
 
@@ -50,89 +46,70 @@ jobs:
         with:
           filters: |
             js:
-              - 'src/**/*.{js,jsx}'
+              - 'sitegen/static/js/**'
+              - 'sitegen/static/css/**'
+              - 'tests/js/**'
+              - 'eslint.config.js'
+              - 'stylelint.config.js'
               - 'package.json'
               - 'package-lock.json'
-              - '**/*.{test,spec}.{js,jsx}'
             python:
+              - 'sitegen/**/*.py'
               - 'scripts/**/*.py'
-              - 'scripts/requirements.txt'
-              - '**/*.{test,spec}.py'
+              - 'tests/**/*.py'
+              - 'requirements*.txt'
+              - 'pyproject.toml'
+            templates:
+              - 'sitegen/templates/**'
+              - '.djlintrc'
+            site:
+              - 'sitegen/**'
+              - 'public/**'
+              - 'tests/e2e/**'
+              - 'tests/test_sitegen*.py'
+              - 'requirements*.txt'
+              - 'package.json'
+              - 'package-lock.json'
+              - 'pyproject.toml'
+              - 'wrangler.jsonc'
+            data:
+              - 'public/data/**'
 
       - name: Analyze commit message
         id: analyze-commit
         env:
-          # Passed via env, never interpolated into the script body, so PR
-          # titles cannot inject shell code.
           PR_TITLE: ${{ github.event.pull_request.title }}
         run: |
-          # Classify PR runs by the PR title (the checkout is the PR head
-          # commit, whose message may be a trivial 'chore' that does not
-          # represent the PR); push runs use the actual commit message.
           if [ -n "$PR_TITLE" ]; then
             commit_msg="$PR_TITLE"
           else
             commit_msg=$(git log -1 --pretty=%B HEAD)
           fi
 
-          # Validate that commit_msg is not empty
           if [ -z "$commit_msg" ]; then
-            echo "type=other" >> $GITHUB_OUTPUT
-            echo "test-category=standard" >> $GITHUB_OUTPUT
+            echo "type=other" >> "$GITHUB_OUTPUT"
             exit 0
           fi
 
-          # Determine commit type using patterns
-          # Using printf and case statement instead of echo/grep for safer handling
           commit_type="other"
-          test_category="standard"
-
           case "$commit_msg" in
-            "Update challenge:"*)
-              commit_type="daily"
-              test_category="game-logic"
-              ;;
-            "Update dependency"*)
-              # Renovate squash commits: 'Update dependency X to Y (#N)' (95 of them)
-              commit_type="dependency"
-              test_category="linting-build"
-              ;;
-            "chore(deps):"*)
-              commit_type="dependency"
-              test_category="linting-build"
-              ;;
-            "fix:"*)
-              commit_type="fix"
-              test_category="affected"
-              ;;
-            "feat:"*)
-              commit_type="feature"
-              test_category="full"
-              ;;
-            "chore:"*)
-              commit_type="chore"
-              test_category="minimal"
-              ;;
-            "Merge "*)
-              # Merge commits / PR titles like 'Merge pull request #N ...' — build-test covers them
-              commit_type="other"
-              test_category="standard"
-              ;;
+            "Update challenge:"*) commit_type="daily" ;;
+            "Update dependency"*) commit_type="dependency" ;;
+            "chore(deps):"*) commit_type="dependency" ;;
+            "fix:"*) commit_type="fix" ;;
+            "feat:"*) commit_type="feature" ;;
+            "chore:"*) commit_type="chore" ;;
           esac
-
-          echo "type=$commit_type" >> $GITHUB_OUTPUT
-          echo "test-category=$test_category" >> $GITHUB_OUTPUT
-
+          echo "type=$commit_type" >> "$GITHUB_OUTPUT"
           echo "Commit type: $commit_type"
-          echo "Test category: $test_category"
 
   lint:
-    name: Linting
+    name: Lint
     runs-on: ubuntu-latest
     needs: detect-changes
-    if: needs.detect-changes.outputs.js-changed == 'true' || needs.detect-changes.outputs.python-changed == 'true'
+    if: needs.detect-changes.outputs.js-changed == 'true' || needs.detect-changes.outputs.python-changed == 'true' || needs.detect-changes.outputs.templates-changed == 'true'
     steps:
-      - name: Harden the runner (Block egress)
+      - name: Harden the runner (block egress)
         uses: step-security/harden-runner@1d88384fd173af6ecb012dfd0264a306b711241a # v2.22.4
         with:
           egress-policy: block
@@ -155,41 +132,206 @@ jobs:
         if: needs.detect-changes.outputs.js-changed == 'true'
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
         with:
-          node-version: '26'
+          node-version: '24'
           cache: 'npm'
 
-      - name: Install dependencies
+      - name: Install Node tooling
         if: needs.detect-changes.outputs.js-changed == 'true'
         run: npm ci
 
-      - name: Run ESLint
+      - name: Run JavaScript and CSS lint
         if: needs.detect-changes.outputs.js-changed == 'true'
         run: npm run lint
 
       - name: Setup Python
-        if: needs.detect-changes.outputs.python-changed == 'true'
+        if: needs.detect-changes.outputs.python-changed == 'true' || needs.detect-changes.outputs.templates-changed == 'true'
         uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
         with:
           python-version: '3.x'
           cache: 'pip'
 
-      - name: Install Python dependencies
-        if: needs.detect-changes.outputs.python-changed == 'true'
+      - name: Install Python linting tools
+        if: needs.detect-changes.outputs.python-changed == 'true' || needs.detect-changes.outputs.templates-changed == 'true'
         run: |
-          pip install pylint
-          pip install -r scripts/requirements.txt
+          pip install pylint==4.1.4 djlint==1.54.0 -r scripts/requirements.txt
+          pip install Jinja2==3.1.6 MarkupSafe==3.0.4
 
       - name: Run Pylint
         if: needs.detect-changes.outputs.python-changed == 'true'
-        run: pylint scripts/*.py --errors-only
+        run: pylint scripts/*.py sitegen/*.py --errors-only
 
-  dependency-tests:
-    name: Dependency Resolution
+      - name: Run djlint
+        if: needs.detect-changes.outputs.templates-changed == 'true'
+        run: djlint sitegen/templates --check --lint
+
+  python-tests:
+    name: Python tests
+    runs-on: ubuntu-latest
+    needs: detect-changes
+    if: needs.detect-changes.outputs.python-changed == 'true' || needs.detect-changes.outputs.site-changed == 'true' || needs.detect-changes.outputs.data-changed == 'true'
+    steps:
+      - name: Harden the runner (block egress)
+        uses: step-security/harden-runner@1d88384fd173af6ecb012dfd0264a306b711241a # v2.22.4
+        with:
+          egress-policy: block
+          allowed-endpoints: >
+            api.github.com
+            github.com
+            objects.githubusercontent.com
+            pypi.org
+            files.pythonhosted.org
+            raw.githubusercontent.com
+
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - name: Setup Python
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
+        with:
+          python-version: '3.x'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install -r requirements-dev.txt
+
+      - name: Run Python unit and integration tests
+        run: python -m pytest tests/ -m "not e2e and not live" -v
+
+  js-tests:
+    name: JavaScript tests
+    runs-on: ubuntu-latest
+    needs: detect-changes
+    if: needs.detect-changes.outputs.js-changed == 'true'
+    steps:
+      - name: Harden the runner (block egress)
+        uses: step-security/harden-runner@1d88384fd173af6ecb012dfd0264a306b711241a # v2.22.4
+        with:
+          egress-policy: block
+          allowed-endpoints: >
+            registry.npmjs.org
+            api.github.com
+            github.com
+            objects.githubusercontent.com
+            nodejs.org
+            raw.githubusercontent.com
+
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: Install Node tooling
+        run: npm ci
+
+      - name: Run Node unit tests
+        run: npm run test:js
+
+  build:
+    name: Build static site
+    runs-on: ubuntu-latest
+    needs: detect-changes
+    if: needs.detect-changes.outputs.site-changed == 'true' || needs.detect-changes.outputs.data-changed == 'true' || needs.detect-changes.outputs.commit-type == 'feature' || needs.detect-changes.outputs.commit-type == 'fix' || needs.detect-changes.outputs.commit-type == 'dependency' || needs.detect-changes.outputs.commit-type == 'other'
+    steps:
+      - name: Harden the runner (block egress)
+        uses: step-security/harden-runner@1d88384fd173af6ecb012dfd0264a306b711241a # v2.22.4
+        with:
+          egress-policy: block
+          allowed-endpoints: >
+            api.github.com
+            github.com
+            objects.githubusercontent.com
+            pypi.org
+            files.pythonhosted.org
+            raw.githubusercontent.com
+
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - name: Setup Python
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
+        with:
+          python-version: '3.x'
+          cache: 'pip'
+
+      - name: Build (deployment command)
+        run: bash scripts/build-site.sh
+
+      - name: Verify build output
+        run: |
+          test -f dist/index.html
+          test -f dist/404.html
+          test -f dist/data/manifest.json
+          test -d dist/assets
+          grep -q '/assets/' dist/index.html
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          manifest = json.loads(Path("dist/data/manifest.json").read_text())
+          assert manifest["schemaVersion"] == 1
+          assert "birds.json" in manifest["files"]
+          assert "daily.json" in manifest["files"]
+          print("Build manifest verified:", len(manifest["files"]), "files")
+          PY
+
+  e2e:
+    name: Browser end-to-end tests
+    runs-on: ubuntu-latest
+    needs: detect-changes
+    if: needs.detect-changes.outputs.site-changed == 'true' || needs.detect-changes.outputs.js-changed == 'true' || needs.detect-changes.outputs.templates-changed == 'true' || needs.detect-changes.outputs.commit-type == 'feature' || needs.detect-changes.outputs.commit-type == 'fix' || needs.detect-changes.outputs.commit-type == 'daily'
+    steps:
+      - name: Harden the runner (block egress)
+        uses: step-security/harden-runner@1d88384fd173af6ecb012dfd0264a306b711241a # v2.22.4
+        with:
+          egress-policy: block
+          allowed-endpoints: >
+            api.github.com
+            github.com
+            objects.githubusercontent.com
+            pypi.org
+            files.pythonhosted.org
+            raw.githubusercontent.com
+            cdn.playwright.dev
+            playwright.azureedge.net
+            playwright.download.prss.microsoft.com
+            storage.googleapis.com
+
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - name: Setup Python
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
+        with:
+          python-version: '3.x'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install -r requirements-dev.txt
+
+      - name: Install Chromium
+        run: python -m playwright install chromium
+
+      - name: Run browser tests
+        run: python -m pytest tests/e2e -m "not live" -v --no-cov
+
+  dependency-checks:
+    name: Dependency checks
     runs-on: ubuntu-latest
     needs: detect-changes
     if: needs.detect-changes.outputs.commit-type == 'dependency'
     steps:
-      - name: Harden the runner (Block egress)
+      - name: Harden the runner (block egress)
         uses: step-security/harden-runner@1d88384fd173af6ecb012dfd0264a306b711241a # v2.22.4
         with:
           egress-policy: block
@@ -211,162 +353,34 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
         with:
-          node-version: '26'
+          node-version: '24'
           cache: 'npm'
 
-      - name: Verify npm dependencies
-        run: npm ci
-
-      - name: Build project
-        run: npm run build
+      - name: Verify npm dependencies and tooling
+        run: |
+          npm ci
+          npm run lint
+          npm run test:js
 
       - name: Setup Python
         uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
+        with:
+          python-version: '3.x'
+          cache: 'pip'
 
-      - name: Verify Python dependencies
+      - name: Verify Python dependencies and site build
         run: |
-          pip install -r scripts/requirements.txt
+          pip install -r scripts/requirements.txt -r requirements-site.txt
           pip check
+          python -m sitegen build
 
-  js-unit-tests:
-    name: JS Unit Tests
-    runs-on: ubuntu-latest
-    needs: detect-changes
-    if: needs.detect-changes.outputs.js-changed == 'true'
-    strategy:
-      matrix:
-        shard: [1, 2, 3]
-    steps:
-      - name: Harden the runner (Block egress)
-        uses: step-security/harden-runner@1d88384fd173af6ecb012dfd0264a306b711241a # v2.22.4
-        with:
-          egress-policy: block
-          allowed-endpoints: >
-            registry.npmjs.org
-            api.github.com
-            github.com
-            objects.githubusercontent.com
-            nodejs.org
-            raw.githubusercontent.com
-            pypi.org
-            files.pythonhosted.org
-
-      - name: Checkout code
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-        with:
-          persist-credentials: false
-
-      - name: Setup Node.js
-        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
-        with:
-          node-version: '26'
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Run unit tests (shard ${{ matrix.shard }})
-        run: npx vitest run --config=vitest.config.js --shard=${{ matrix.shard }}/3 tests/unit
-
-  python-unit-tests:
-    name: Python Unit Tests
-    runs-on: ubuntu-latest
-    needs: detect-changes
-    if: needs.detect-changes.outputs.python-changed == 'true'
-    steps:
-      - name: Harden the runner (Block egress)
-        uses: step-security/harden-runner@1d88384fd173af6ecb012dfd0264a306b711241a # v2.22.4
-        with:
-          egress-policy: block
-          allowed-endpoints: >
-            registry.npmjs.org
-            api.github.com
-            github.com
-            objects.githubusercontent.com
-            nodejs.org
-            raw.githubusercontent.com
-            pypi.org
-            files.pythonhosted.org
-
-      - name: Checkout code
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-        with:
-          persist-credentials: false
-
-      - name: Setup Python
-        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
-        with:
-          python-version: '3.x'
-          cache: 'pip'
-
-      - name: Install dependencies
-        run: |
-          pip install pytest pytest-cov python-dotenv requests
-
-      - name: Run unit tests
-        run: pytest tests/ -v --no-cov
-
-  integration-tests:
-    name: Integration Tests
-    runs-on: ubuntu-latest
-    needs: detect-changes
-    if: |
-      needs.detect-changes.outputs.commit-type == 'daily' ||
-      needs.detect-changes.outputs.commit-type == 'fix' ||
-      needs.detect-changes.outputs.commit-type == 'feature' ||
-      needs.detect-changes.outputs.test-category == 'full'
-    steps:
-      - name: Harden the runner (Block egress)
-        uses: step-security/harden-runner@1d88384fd173af6ecb012dfd0264a306b711241a # v2.22.4
-        with:
-          egress-policy: block
-          allowed-endpoints: >
-            registry.npmjs.org
-            api.github.com
-            github.com
-            objects.githubusercontent.com
-            nodejs.org
-            raw.githubusercontent.com
-            pypi.org
-            files.pythonhosted.org
-
-      - name: Checkout code
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-        with:
-          persist-credentials: false
-
-      - name: Setup Node.js
-        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
-        with:
-          node-version: '26'
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Run JS integration tests
-        run: npx vitest run --config=vitest.config.js tests/integration
-
-      - name: Setup Python
-        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
-        with:
-          python-version: '3.x'
-          cache: 'pip'
-
-      - name: Install Python dependencies
-        run: |
-          pip install pytest pytest-cov
-
-      - name: Run Python integration tests
-        run: pytest tests/integration/test_data_pipeline_integration.py -v --no-cov
-
-  game-logic-tests:
-    name: Game Logic Tests
+  game-logic:
+    name: Daily game logic
     runs-on: ubuntu-latest
     needs: detect-changes
     if: needs.detect-changes.outputs.commit-type == 'daily'
     steps:
-      - name: Harden the runner (Block egress)
+      - name: Harden the runner (block egress)
         uses: step-security/harden-runner@1d88384fd173af6ecb012dfd0264a306b711241a # v2.22.4
         with:
           egress-policy: block
@@ -384,75 +398,25 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false
-
-      - name: Setup Node.js
-        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
-        with:
-          node-version: '26'
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Run GameLogic tests
-        run: npx vitest run --config=vitest.config.js tests/unit/utils/GameLogic.test.jsx
-
-      - name: Run DailyBirdUtils tests
-        run: npx vitest run --config=vitest.config.js tests/unit/utils/DailyBirdUtils.test.jsx
 
       - name: Setup Python
         uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
+        with:
+          python-version: '3.x'
+          cache: 'pip'
 
-      - name: Run Python daily generation tests
+      - name: Run daily generation and data manifest tests
         run: |
-          pip install pytest python-dotenv
-          pytest tests/test_generate_daily_birds.py -v --no-cov
-
-  build-test:
-    name: Build Verification
-    runs-on: ubuntu-latest
-    needs: detect-changes
-    # Gate: linting-build (dependency commits), full (features), affected (fixes —
-    # integration-tests already runs for fix:, this adds build verification), standard
-    # (other commits incl. Merge/PR titles). 'minimal' (chore:) intentionally skips build.
-    if: |
-      needs.detect-changes.outputs.test-category == 'linting-build' ||
-      needs.detect-changes.outputs.test-category == 'full' ||
-      needs.detect-changes.outputs.test-category == 'affected' ||
-      needs.detect-changes.outputs.test-category == 'standard'
-    steps:
-      - name: Harden the runner (Block egress)
-        uses: step-security/harden-runner@1d88384fd173af6ecb012dfd0264a306b711241a # v2.22.4
-        with:
-          egress-policy: block
-          allowed-endpoints: >
-            registry.npmjs.org
-            api.github.com
-            github.com
-            objects.githubusercontent.com
-            nodejs.org
-            raw.githubusercontent.com
-            pypi.org
-            files.pythonhosted.org
-
-      - name: Checkout code
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-        with:
-          persist-credentials: false
+          pip install pytest python-dotenv Jinja2
+          pytest tests/test_generate_daily_birds.py tests/test_sitegen_build.py -v --no-cov
 
       - name: Setup Node.js
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
         with:
-          node-version: '26'
+          node-version: '24'
           cache: 'npm'
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build project
-        run: npm run build
-
-      - name: Verify build output
+      - name: Run browser game logic unit tests
         run: |
-          test -d dist
-          test -f dist/index.html
+          npm ci
+          npm run test:js

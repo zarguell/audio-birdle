@@ -84,6 +84,12 @@ jobs:
           current_date=$(date -u +%F)
           python ./scripts/generate-daily-birds.py --days 60 --date "$current_date" --subregions public/data/daily-subregion-birds.json
 
+      - name: Regenerate the data manifest
+        # The browser loads every data file through a SHA-256 manifest so a
+        # deploy can never pair yesterday's bird list with today's answer.
+        run: |
+          python -m sitegen manifest --data-dir public/data
+
       - name: Verify generator tests pass on the real data
         run: |
           python -m pytest tests/test_generate_daily_birds.py tests/test_generate_daily_region_data.py tests/test_game_data_generator.py -v --no-cov

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% from "macros.html" import icon %}
+{% block title %}Page not found — Audio-Birdle{% endblock %}
+{% block content %}
+  <div class="page-shell">
+    <div class="empty-state empty-state--full">
+      <p class="eyebrow">404</p>
+      <h1>We couldn't find that bird</h1>
+      <p>The page may have moved, or the link may be mistyped.</p>
+      <a class="button button--primary button--jelly"
+         href="/">{{ icon("home") }} Back to Audio-Birdle</a>
+    </div>
+  </div>
+{% endblock %}

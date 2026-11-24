@@ -1,0 +1,10 @@
+-r scripts/requirements.txt
+
+# Site generator
+Jinja2==3.1.6
+MarkupSafe==3.0.4
+
+# Tests and linting
+djlint==1.54.0
+playwright==1.65.2
+pylint==4.1.4

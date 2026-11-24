@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Pixel bird">
+  <g shape-rendering="crispEdges">
+    <rect x="20" y="16" width="28" height="24" fill="#2f6b8f"/>
+    <rect x="16" y="24" width="36" height="16" fill="#3f86a8"/>
+    <rect x="32" y="8" width="16" height="16" fill="#2f6b8f"/>
+    <rect x="44" y="4" width="8" height="8" fill="#2f6b8f"/>
+    <rect x="48" y="12" width="12" height="6" fill="#e4b44c"/>
+    <rect x="36" y="12" width="6" height="6" fill="#1b1b18"/>
+    <rect x="20" y="40" width="8" height="10" fill="#2a2a26"/>
+    <rect x="36" y="40" width="8" height="10" fill="#2a2a26"/>
+    <rect x="24" y="24" width="16" height="12" fill="#b8474f"/>
+    <rect x="48" y="26" width="10" height="6" fill="#2f6b8f"/>
+    <rect x="8" y="28" width="10" height="6" fill="#2f6b8f"/>
+    <rect x="28" y="44" width="16" height="4" fill="#4e3220"/>
+    <rect x="16" y="48" width="40" height="4" fill="#4e3220"/>
+  </g>
+</svg>

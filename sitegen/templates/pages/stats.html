@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% from "macros.html" import icon, back_link %}
+{% block title %}Your stats — Audio-Birdle{% endblock %}
+{% block content %}
+  <div class="page-shell">
+    {{ back_link('/play/', 'Back to play') }}
+    <header class="page-heading">
+      <p class="eyebrow">Progress</p>
+      <h1>Your stats</h1>
+      <p class="page-heading__meta">Saved in this browser. Practice rounds are not counted.</p>
+    </header>
+    <section class="card" aria-labelledby="overall-title">
+      <h2 id="overall-title" class="section-title">Overall performance</h2>
+      <div class="stat-grid" data-stats-summary></div>
+    </section>
+    <section class="card"
+             data-region-breakdown
+             hidden
+             aria-labelledby="regions-title">
+      <h2 id="regions-title" class="section-title">By region</h2>
+      <div class="region-stats" data-region-stats></div>
+    </section>
+    <div class="empty-state" data-stats-empty hidden>
+      {{ icon('stats', 'empty-state__icon') }}
+      <h2>No games played yet</h2>
+      <p>Finish a daily challenge and your streaks, win rate, and average guesses will appear here.</p>
+      <a class="button button--primary" href="/play/">Play today's bird</a>
+    </div>
+  </div>
+{% endblock %}
+{% block templates %}
+  <template id="tpl-stat-card">
+    <div class="stat-card" data-tone="blue">
+      <span class="stat-card__value" data-stat-value></span>
+      <span class="stat-card__label" data-stat-label></span>
+    </div>
+  </template>
+  <template id="tpl-region-stat">
+    <article class="region-stat">
+      <div class="region-stat__heading">
+        <h3 class="region-stat__name" data-region-name></h3>
+        <span class="region-stat__games" data-region-games></span>
+      </div>
+      <dl class="region-stat__details">
+        <div>
+          <dt>Win rate</dt>
+          <dd data-region-winrate>
+          </dd>
+        </div>
+        <div>
+          <dt>Avg guesses</dt>
+          <dd data-region-average>
+          </dd>
+        </div>
+      </dl>
+    </article>
+  </template>
+{% endblock %}

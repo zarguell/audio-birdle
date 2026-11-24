@@ -1,0 +1,126 @@
+@font-face {
+  font-family: "VT323";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/vt323-latin.woff2") format("woff2");
+}
+
+:root {
+  color-scheme: light;
+
+  /* Parchment, ink, and forest */
+  --color-bg-top: #f8e9c8;
+  --color-bg-bottom: #ead6aa;
+  --color-surface: #fbf3df;
+  --color-surface-soft: #f3e3c3;
+  --color-surface-raised: #fff8e8;
+  --color-border: #cdb083;
+  --color-border-strong: #8b5e3c;
+  --color-ink: #33261b;
+  --color-text: #33261b;
+  --color-text-muted: #6b5745;
+  --color-text-faint: #8d7861;
+
+  /* Forest and field accents */
+  --color-primary: #2f6b4f;
+  --color-primary-strong: #23533c;
+  --color-primary-soft: #dce9cf;
+  --color-success: #3f7d3b;
+  --color-success-strong: #2c5a2b;
+  --color-success-soft: #dfeccd;
+  --color-danger: #a53f3a;
+  --color-danger-strong: #832e2a;
+  --color-danger-soft: #f3d5c8;
+  --color-warning: #9a641f;
+  --color-warning-soft: #f6e2b8;
+  --color-purple: #6b4a7a;
+  --color-purple-soft: #eadcf0;
+  --color-blue: #346a7a;
+  --color-blue-soft: #d8e8e4;
+  --color-red: #a53f3a;
+  --color-red-soft: #f3d5c8;
+  --color-green: #2f6b4f;
+  --color-green-soft: #dce9cf;
+  --color-orange: #b56232;
+  --color-orange-soft: #f5dcc2;
+
+  /* Wood, gold, sky */
+  --color-wood: #6b4328;
+  --color-wood-dark: #3d2a1c;
+  --color-wood-light: #a9794d;
+  --color-gold: #e4b44c;
+  --color-gold-soft: #f7e6b3;
+  --color-sky: #8ec4bd;
+  --color-berry: #b8474f;
+
+  /* Gradients */
+  --gradient-page: linear-gradient(180deg, var(--color-bg-top), var(--color-bg-bottom));
+  --gradient-primary: linear-gradient(180deg, #4f8a5f, #2f6b4f);
+  --gradient-hard: linear-gradient(180deg, #c96b3f, #a53f3a);
+  --gradient-practice: linear-gradient(180deg, #8a6b9a, #6b4a7a);
+  --gradient-success: linear-gradient(180deg, #6fa25a, #3f7d3b);
+  --gradient-wood: linear-gradient(180deg, #8a5a35, #5c3822);
+
+  /* Shape and depth */
+  --radius-sm: 0;
+  --radius-md: 0.2rem;
+  --radius-lg: 0.35rem;
+  --radius-pill: 999px;
+  --shadow-card: 0 4px 0 #b58a5c, 0 10px 22px -16px rgba(51, 38, 27, 0.65);
+  --shadow-lift: 0 6px 0 #9c7047, 0 16px 28px -18px rgba(51, 38, 27, 0.7);
+  --shadow-focus: 0 0 0 3px rgba(228, 180, 76, 0.75);
+
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+
+  /* Type */
+  --font-body: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  --font-display: "VT323", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  --text-xs: 0.72rem;
+  --text-sm: 0.82rem;
+  --text-base: 0.95rem;
+  --text-lg: 1.1rem;
+  --text-xl: 1.6rem;
+  --text-2xl: 2.2rem;
+  --text-3xl: 3.2rem;
+
+  /* Layout */
+  --content-width: 34rem;
+  --tabbar-height: 4.5rem;
+  --header-height: 3.75rem;
+  --tap-target: 2.75rem;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-pixel: steps(3, end);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-fast: 120ms;
+  --duration-base: 220ms;
+
+  --tone-color: var(--color-primary);
+  --tone-soft: var(--color-primary-soft);
+}
+
+@media (min-width: 48rem) {
+  :root {
+    --content-width: 42rem;
+    --text-3xl: 4rem;
+  }
+}
+
+@media (min-width: 64rem) {
+  :root {
+    --content-width: 46rem;
+    --text-3xl: 4.6rem;
+  }
+}

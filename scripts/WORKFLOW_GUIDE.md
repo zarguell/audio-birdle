@@ -476,7 +476,7 @@ python3 generate-daily-region-data.py \
 ```bash
 # Start development server
 cd ..
-npm run dev
+make serve
 
 # In browser, test the EU region
 # - Check that birds load correctly

@@ -13,15 +13,10 @@ name = "python"
 name = "javascript"
 
   [analyzers.meta]
-  plugins = ["react"]
   environment = [
-    "vitest",
-    "nodejs",
-    "browser"
+    "browser",
+    "nodejs"
   ]
-
-[[code_formatters]]
-name = "prettier"
 
 [[code_formatters]]
 name = "ruff"

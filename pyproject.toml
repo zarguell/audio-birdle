@@ -1,5 +1,33 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "audio-birdle"
+version = "1.0.0"
+description = "Python/Jinja static site generator for the Audio-Birdle game"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+dependencies = [
+    "Jinja2==3.1.6",
+    "MarkupSafe==3.0.4",
+]
+
+[tool.setuptools]
+packages = ["sitegen"]
+include-package-data = true
+
+[tool.setuptools.package-data]
+sitegen = [
+    "templates/**/*.html",
+    "static/**/*",
+    "vendor/*",
+]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = ["."]
 python_files = ["test_*.py", "*_test.py"]
 python_classes = ["Test*"]
 python_functions = ["test_*"]
@@ -17,6 +45,8 @@ addopts = [
 markers = [
     "unit: Unit tests",
     "integration: Integration tests",
+    "e2e: Browser end-to-end tests that build and serve the site",
+    "live: Integration tests against the deployed live site",
     "slow: Slow running tests",
     "network: Tests that require network access",
 ]
@@ -25,17 +55,14 @@ filterwarnings = [
 ]
 
 [tool.coverage.run]
-# Only the production pipeline scripts (generate-daily-birds.py,
-# generate-daily-region-data.py, game-data-generator.py — plus the shared
-# ebird_api_common.py helper they import) are covered by the test suite and
-# gated by --cov-fail-under. The ebird-* dev/data-fetch scripts and
-# verify_hash_consistency.py are one-off developer tools with no tests of
-# their own; including them would drag the gate below the threshold without
-# adding protection, so they stay out of the gate.
-source = ["scripts"]
+# Coverage gates the production data pipeline scripts and the Python static
+# site generator. One-off ebird-* developer tools and
+# verify_hash_consistency.py have no dedicated tests and stay out of the gate.
+source = ["scripts", "sitegen"]
 omit = [
     "*/ebird-*.py",
     "*/verify_hash_consistency.py",
+    "sitegen/__main__.py",
 ]
 
 [tool.coverage.report]

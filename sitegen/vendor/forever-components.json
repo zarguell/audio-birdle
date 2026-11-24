@@ -1,0 +1,27 @@
+{
+  "repository": "https://github.com/isas1/forever-ai-components",
+  "commit": "ae685e51644be5a793cce5b4becfd31009593f00",
+  "license": "MIT",
+  "adapted": [
+    {
+      "file": "infinite/loaders/08-equalizer-bars.html",
+      "usedIn": "sitegen/static/css/animations.css",
+      "notes": "CSS equalizer bounce; idle replay and theme hook removed."
+    },
+    {
+      "file": "infinite/feedback-states/01-success-check.html",
+      "usedIn": "sitegen/templates/pages/game.html + sitegen/static/css/game.css",
+      "notes": "One-shot SVG ring/tick confirmation; auto-replay loop removed."
+    },
+    {
+      "file": "infinite/buttons/06-jelly-press.html",
+      "usedIn": "sitegen/static/css/animations.css",
+      "notes": "Press squash adapted to :active plus a one-shot class; idle loop removed."
+    },
+    {
+      "file": "infinite/navigation/09-morphing-bottom-nav.html",
+      "usedIn": "sitegen/static/css/layout.css",
+      "notes": "Floating bottom-nav surface and active state; auto-hop blob removed."
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% from "macros.html" import icon %}
+{% block title %}Audio-Birdle{% endblock %}
+{% block content %}
+  <section class="home-scene">
+    <img class="home-scene__art"
+         src="{{ asset_base }}/img/forest-scene.svg"
+         alt=""
+         aria-hidden="true">
+    <div class="home-scene__content">
+      <h1 class="home-title">Audio-Birdle</h1>
+      <p class="home-tagline">Listen close. Name the bird.</p>
+      <p class="home-scene__meta">A new bird each day · eBird observations</p>
+    </div>
+  </section>
+  <div class="home-journal">
+    <section class="paper-panel paper-panel--tape continue-card"
+             data-continue
+             hidden
+             aria-labelledby="continue-title">
+      <div>
+        <h2 id="continue-title" class="continue-card__title">Resume playing</h2>
+        <p class="muted small">Current region: <span data-continue-name></span></p>
+      </div>
+      <a class="button button--primary button--jelly"
+         data-continue-link
+         href="/play/">Open game</a>
+    </section>
+    <section class="paper-panel paper-panel--tape region-card"
+             aria-labelledby="region-title">
+      <div class="section-heading">
+        <div>
+          <h2 id="region-title">Choose your region</h2>
+        </div>
+        {{ icon('map-pin', 'section-heading__icon') }}
+      </div>
+      <p class="muted">Bird lists and daily answers are tailored to your region. You can change this at any time.</p>
+      <div class="region-list">
+        {% for region in regions %}
+          <a class="region-option"
+             href="/play/?region={{ region.id }}"
+             data-region-link="{{ region.id }}">
+            <span class="region-option__body">
+              <span class="region-option__name">{{ region.name }}</span>
+              {% if region.parentRegion %}
+                <span class="region-option__hint">Virtual region · based on {{ region.parentRegion|upper }}</span>
+              {% endif %}
+            </span>
+            <span class="region-option__status" data-region-status="{{ region.id }}"></span>
+            {{ icon('chevron-right', 'region-option__chevron') }}
+          </a>
+        {% endfor %}
+      </div>
+    </section>
+    <section class="paper-panel how-card" aria-labelledby="how-title">
+      <div class="section-heading">
+        <div>
+          <h2 id="how-title">Three ways to listen</h2>
+        </div>
+        {{ icon('info', 'section-heading__icon') }}
+      </div>
+      <ol class="how-list">
+        <li>
+          <span class="how-list__icon how-list__icon--blue">{{ icon("target") }}</span>
+          <div><strong>Normal</strong><span>Four choices, four guesses.</span></div>
+        </li>
+        <li>
+          <span class="how-list__icon how-list__icon--red">{{ icon("flame") }}</span>
+          <div><strong>Hard</strong><span>Type the species. Six guesses and taxonomic hints.</span></div>
+        </li>
+        <li>
+          <span class="how-list__icon how-list__icon--purple">{{ icon("gamepad") }}</span>
+          <div><strong>Practice</strong><span>Unlimited birds. Nothing is saved to your stats.</span></div>
+        </li>
+      </ol>
+      <p class="muted small">Progress and stats live in this browser only. No account, no tracking.</p>
+    </section>
+  </div>
+{% endblock %}
