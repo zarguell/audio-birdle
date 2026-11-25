@@ -59,6 +59,40 @@ def month_windows(today: date, months: int, window_days: int) -> list[list[date]
     return windows
 
 
+def _fetch_one_day(
+    code: str, day: date, *, api_key: str
+) -> tuple[list[Any] | None, str | None]:
+    url = f"{EBIRD_BASE}/data/obs/{code}/historic/{day.year}/{day.month}/{day.day}"
+    try:
+        payload = ebird_api_common.get_json(url, api_key=api_key, timeout=20)
+    except (requests.RequestException, ValueError) as error:
+        return None, f"{day}: {error}"
+    if not isinstance(payload, list):
+        return None, f"{day}: response was not an array"
+    return payload, None
+
+
+def _record_observations(
+    payload: Sequence[Any],
+    day: date,
+    counts: Counter[str],
+    seen_days: defaultdict[str, set[date]],
+) -> None:
+    for observation in payload:
+        if not isinstance(observation, dict):
+            continue
+        if observation.get("obsValid") is False:
+            continue
+        species = observation.get("speciesCode")
+        if isinstance(species, str):
+            counts[species] += 1
+            seen_days[species].add(day)
+
+
+def _should_stop(successful_days: set[date], errors: list[str]) -> bool:
+    return not successful_days and len(errors) >= 3
+
+
 def fetch_observation_counts(
     code: str,
     dates: Sequence[date],
@@ -72,35 +106,18 @@ def fetch_observation_counts(
     errors: list[str] = []
 
     for day in dates:
-        url = f"{EBIRD_BASE}/data/obs/{code}/historic/{day.year}/{day.month}/{day.day}"
-        try:
-            payload = ebird_api_common.get_json(url, api_key=api_key, timeout=20)
-        except (requests.RequestException, ValueError) as error:
+        payload, error = _fetch_one_day(code, day, api_key=api_key)
+        if error:
             # eBird's historic endpoint times out on some high-volume days.
             # Keep the days that do work rather than losing the whole month.
-            errors.append(f"{day}: {error}")
-            if not successful_days and len(errors) >= 3:
-                errors.append("skipped remaining dates after 3 early failures")
-                break
-            continue
-        if not isinstance(payload, list):
-            errors.append(f"{day}: response was not an array")
-            if not successful_days and len(errors) >= 3:
+            errors.append(error)
+            if _should_stop(successful_days, errors):
                 errors.append("skipped remaining dates after 3 early failures")
                 break
             continue
 
         successful_days.add(day)
-        for observation in payload:
-            if not isinstance(observation, dict):
-                continue
-            if observation.get("obsValid") is False:
-                continue
-            species = observation.get("speciesCode")
-            if isinstance(species, str):
-                counts[species] += 1
-                seen_days[species].add(day)
-
+        _record_observations(payload or [], day, counts, seen_days)
         if delay > 0:
             time.sleep(delay)
 
