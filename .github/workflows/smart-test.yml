@@ -24,7 +24,7 @@ jobs:
       data-changed: ${{ steps.filter.outputs.data }}
     steps:
       - name: Harden the runner (block egress)
-        uses: step-security/harden-runner@1d88384fd173af6ecb012dfd0264a306b711241a # v2.22.4
+        uses: step-security/harden-runner@aebdcf6156ab6691adf63218240e476564a1ed4c # v2.23.0
         with:
           egress-policy: block
           allowed-endpoints: >
@@ -110,7 +110,7 @@ jobs:
     if: needs.detect-changes.outputs.js-changed == 'true' || needs.detect-changes.outputs.python-changed == 'true' || needs.detect-changes.outputs.templates-changed == 'true'
     steps:
       - name: Harden the runner (block egress)
-        uses: step-security/harden-runner@1d88384fd173af6ecb012dfd0264a306b711241a # v2.22.4
+        uses: step-security/harden-runner@aebdcf6156ab6691adf63218240e476564a1ed4c # v2.23.0
         with:
           egress-policy: block
           allowed-endpoints: >
@@ -171,7 +171,7 @@ jobs:
     if: needs.detect-changes.outputs.python-changed == 'true' || needs.detect-changes.outputs.site-changed == 'true' || needs.detect-changes.outputs.data-changed == 'true'
     steps:
       - name: Harden the runner (block egress)
-        uses: step-security/harden-runner@1d88384fd173af6ecb012dfd0264a306b711241a # v2.22.4
+        uses: step-security/harden-runner@aebdcf6156ab6691adf63218240e476564a1ed4c # v2.23.0
         with:
           egress-policy: block
           allowed-endpoints: >
@@ -206,7 +206,7 @@ jobs:
     if: needs.detect-changes.outputs.js-changed == 'true'
     steps:
       - name: Harden the runner (block egress)
-        uses: step-security/harden-runner@1d88384fd173af6ecb012dfd0264a306b711241a # v2.22.4
+        uses: step-security/harden-runner@aebdcf6156ab6691adf63218240e476564a1ed4c # v2.23.0
         with:
           egress-policy: block
           allowed-endpoints: >
@@ -241,7 +241,7 @@ jobs:
     if: needs.detect-changes.outputs.site-changed == 'true' || needs.detect-changes.outputs.data-changed == 'true' || needs.detect-changes.outputs.commit-type == 'feature' || needs.detect-changes.outputs.commit-type == 'fix' || needs.detect-changes.outputs.commit-type == 'dependency' || needs.detect-changes.outputs.commit-type == 'other'
     steps:
       - name: Harden the runner (block egress)
-        uses: step-security/harden-runner@1d88384fd173af6ecb012dfd0264a306b711241a # v2.22.4
+        uses: step-security/harden-runner@aebdcf6156ab6691adf63218240e476564a1ed4c # v2.23.0
         with:
           egress-policy: block
           allowed-endpoints: >
@@ -290,7 +290,7 @@ jobs:
     if: needs.detect-changes.outputs.site-changed == 'true' || needs.detect-changes.outputs.js-changed == 'true' || needs.detect-changes.outputs.templates-changed == 'true' || needs.detect-changes.outputs.commit-type == 'feature' || needs.detect-changes.outputs.commit-type == 'fix' || needs.detect-changes.outputs.commit-type == 'daily'
     steps:
       - name: Harden the runner (block egress)
-        uses: step-security/harden-runner@1d88384fd173af6ecb012dfd0264a306b711241a # v2.22.4
+        uses: step-security/harden-runner@aebdcf6156ab6691adf63218240e476564a1ed4c # v2.23.0
         with:
           egress-policy: block
           allowed-endpoints: >
@@ -332,7 +332,7 @@ jobs:
     if: needs.detect-changes.outputs.commit-type == 'dependency'
     steps:
       - name: Harden the runner (block egress)
-        uses: step-security/harden-runner@1d88384fd173af6ecb012dfd0264a306b711241a # v2.22.4
+        uses: step-security/harden-runner@aebdcf6156ab6691adf63218240e476564a1ed4c # v2.23.0
         with:
           egress-policy: block
           allowed-endpoints: >
@@ -381,7 +381,7 @@ jobs:
     if: needs.detect-changes.outputs.commit-type == 'daily'
     steps:
       - name: Harden the runner (block egress)
-        uses: step-security/harden-runner@1d88384fd173af6ecb012dfd0264a306b711241a # v2.22.4
+        uses: step-security/harden-runner@aebdcf6156ab6691adf63218240e476564a1ed4c # v2.23.0
         with:
           egress-policy: block
           allowed-endpoints: >
