@@ -154,7 +154,12 @@ def singularize_family_name(name):
     return lowered[:-1]
 
 
-def build_fact(bird, prevalence=None, total_subregions=None):
+def build_fact(
+    bird,
+    prevalence=None,
+    total_subregions=None,
+    subregion_label=SUBREGION_LABEL,
+):
     """Build a one-sentence fact for a bird from local data.
 
     Combines subregion prevalence ("Recorded in 31 of 51 US
@@ -169,7 +174,7 @@ def build_fact(bird, prevalence=None, total_subregions=None):
     parts = []
     if prevalence and total_subregions:
         parts.append(
-            f"Recorded in {prevalence} of {total_subregions} {SUBREGION_LABEL}"
+            f"Recorded in {prevalence} of {total_subregions} {subregion_label}"
         )
 
     if sci and com:
@@ -189,7 +194,9 @@ def build_fact(bird, prevalence=None, total_subregions=None):
     return " \u2014 ".join(parts) + "."
 
 
-def backfill_facts(bird, prevalence, total_subregions):
+def backfill_facts(
+    bird, prevalence, total_subregions, subregion_label=SUBREGION_LABEL
+):
     """Set bird.facts when empty, using local prevalence + taxonomy.
 
     Returns:
@@ -197,7 +204,7 @@ def backfill_facts(bird, prevalence, total_subregions):
     """
     if bird.get("facts") or not bird.get("id"):
         return False
-    fact = build_fact(bird, prevalence, total_subregions)
+    fact = build_fact(bird, prevalence, total_subregions, subregion_label)
     if not fact:
         return False
     bird["facts"] = fact
@@ -286,6 +293,7 @@ def enhance_region(
     prevalence=None,
     total_subregions=0,
     facts=True,
+    subregion_label=SUBREGION_LABEL,
 ):
     """Apply all enhancements to one region's bird list in place.
 
@@ -307,7 +315,10 @@ def enhance_region(
         if learn_more and backfill_learn_more(bird):
             stats["learn_more_added"] += 1
         if facts and backfill_facts(
-            bird, prevalence.get(bird.get("id")), total_subregions
+            bird,
+            prevalence.get(bird.get("id")),
+            total_subregions,
+            subregion_label,
         ):
             stats["facts_added"] += 1
 
@@ -366,6 +377,11 @@ def main():
         "(prevalence + family context)",
     )
     parser.add_argument(
+        "--subregion-label",
+        default=SUBREGION_LABEL,
+        help=f"Label used in prevalence facts (default: {SUBREGION_LABEL})",
+    )
+    parser.add_argument(
         "--no-facts",
         action="store_true",
         help="Skip fact backfill (facts are generated when --subregions "
@@ -394,8 +410,14 @@ def main():
             with open(args.subregions, "r", encoding="utf-8") as file:
                 subregions_data = json.load(file)
             # Facts describe species, which are region-shared; use the
-            # first (parent) region's subregion lists for prevalence.
-            parent_lists = next(iter(subregions_data.values()), {})
+            # requested region when present, otherwise the first (parent)
+            # region's subregion lists.
+            source_region = (
+                args.region
+                if args.region in subregions_data
+                else next(iter(subregions_data))
+            )
+            parent_lists = subregions_data[source_region]
             prevalence, total_subregions = compute_prevalence(parent_lists)
             print(
                 f"📊 Fact source: {len(prevalence)} species across "
@@ -420,6 +442,7 @@ def main():
             prevalence=prevalence,
             total_subregions=total_subregions,
             facts=not args.no_facts,
+            subregion_label=args.subregion_label,
         )
         matched_codes.update(b.get("id") for b in birds if b.get("id") in xc_by_code)
         print(f"🌍 Region '{region}':")

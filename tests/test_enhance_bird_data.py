@@ -300,6 +300,20 @@ class TestFacts:
         assert enhance_bird_data.build_fact(bird) == ""
 
     @staticmethod
+    def test_fact_uses_custom_subregion_label():
+        bird = {
+            "id": "eurrob",
+            "family": "Turdidae (Thrushes)",
+        }
+        fact = enhance_bird_data.build_fact(
+            bird,
+            prevalence=4,
+            total_subregions=4,
+            subregion_label="UK nations",
+        )
+        assert "4 of 4 UK nations" in fact
+
+    @staticmethod
     def test_backfill_facts_respects_existing():
         bird = make_bird(family="Turdidae (Thrushes)", facts="Custom fact.")
         assert enhance_bird_data.backfill_facts(bird, 5, 51) is False

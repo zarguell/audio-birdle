@@ -1,0 +1,235 @@
+#!/usr/bin/env python3
+"""Build a year-round regular-species pool for a region.
+
+The daily play pool must include summer migrants and winter visitors, not
+just whatever is present during a single 14-day audit window. This script
+samples a short window in each of the last N months (default 12), keeps
+species that meet the observation threshold in any one month, and writes a
+subregion -> species-list mapping.
+
+The output is consumed by generate-daily-region-data.py through its sibling
+``<region>-regular-species.json`` convention.
+
+Example:
+    python scripts/build-regular-pool.py \
+        --region GB \
+        --subregions-file scripts/data/regions/gb-subregions.json \
+        --output scripts/data/regions/gb-regular-species.json
+"""
+
+from __future__ import annotations
+
+import argparse
+import calendar
+import json
+import time
+from collections import Counter, defaultdict
+from datetime import date, datetime, timedelta, timezone
+from pathlib import Path
+from typing import Any, Sequence
+
+import requests
+
+import ebird_api_common
+
+EBIRD_BASE = "https://api.ebird.org/v2"
+
+
+def month_windows(today: date, months: int, window_days: int) -> list[list[date]]:
+    """Return one short, past-only sampling window per month."""
+    end = today - timedelta(days=1)
+    year, month = end.year, end.month
+    windows: list[list[date]] = []
+
+    for _ in range(months):
+        month_end = date(year, month, calendar.monthrange(year, month)[1])
+        anchor = min(month_end, date(year, month, 21), end)
+        start = max(anchor - timedelta(days=window_days - 1), date(year, month, 1))
+        windows.append(
+            [
+                start + timedelta(days=offset)
+                for offset in range((anchor - start).days + 1)
+            ]
+        )
+        month -= 1
+        if month == 0:
+            month = 12
+            year -= 1
+
+    return windows
+
+
+def fetch_observation_counts(
+    code: str,
+    dates: Sequence[date],
+    *,
+    api_key: str,
+    delay: float,
+) -> tuple[Counter[str], defaultdict[str, set[date]], set[date], list[str]]:
+    counts: Counter[str] = Counter()
+    seen_days: defaultdict[str, set[date]] = defaultdict(set)
+    successful_days: set[date] = set()
+    errors: list[str] = []
+
+    for day in dates:
+        url = f"{EBIRD_BASE}/data/obs/{code}/historic/{day.year}/{day.month}/{day.day}"
+        try:
+            payload = ebird_api_common.get_json(url, api_key=api_key, timeout=20)
+        except (requests.RequestException, ValueError) as error:
+            # eBird's historic endpoint times out on some high-volume days.
+            # Keep the days that do work rather than losing the whole month.
+            errors.append(f"{day}: {error}")
+            if not successful_days and len(errors) >= 3:
+                errors.append("skipped remaining dates after 3 early failures")
+                break
+            continue
+        if not isinstance(payload, list):
+            errors.append(f"{day}: response was not an array")
+            if not successful_days and len(errors) >= 3:
+                errors.append("skipped remaining dates after 3 early failures")
+                break
+            continue
+
+        successful_days.add(day)
+        for observation in payload:
+            if not isinstance(observation, dict):
+                continue
+            if observation.get("obsValid") is False:
+                continue
+            species = observation.get("speciesCode")
+            if isinstance(species, str):
+                counts[species] += 1
+                seen_days[species].add(day)
+
+        if delay > 0:
+            time.sleep(delay)
+
+    return counts, seen_days, successful_days, errors
+
+
+def regular_from_counts(
+    counts: Counter[str],
+    seen_days: defaultdict[str, set[date]],
+    *,
+    min_observations: int,
+    min_days: int,
+) -> list[str]:
+    return sorted(
+        species
+        for species, count in counts.items()
+        if count >= min_observations and len(seen_days[species]) >= min_days
+    )
+
+
+def build_pool(
+    subregions: list[dict[str, str]],
+    windows: list[list[date]],
+    *,
+    api_key: str,
+    min_observations: int,
+    min_days: int,
+    delay: float,
+) -> dict[str, list[str]]:
+    """Union each subregion's regular species across the sampled months."""
+    pool: dict[str, set[str]] = {sub["name"]: set() for sub in subregions}
+
+    for window in windows:
+        label = f"{window[0]:%Y-%m-%d}..{window[-1]:%Y-%m-%d}"
+        for subregion in subregions:
+            code = subregion["code"]
+            name = subregion["name"]
+            print(f"  {label} {name} ({code})", flush=True)
+            counts, seen_days, successful_days, errors = fetch_observation_counts(
+                code, window, api_key=api_key, delay=delay
+            )
+            if errors:
+                print(
+                    f"  Warning: {name} {label}: {len(errors)} day(s) failed; "
+                    f"using {len(successful_days)} successful day(s)"
+                )
+            if len(successful_days) < min_days:
+                print(f"  Skipping {name} {label}: not enough successful days")
+                continue
+            pool[name].update(
+                regular_from_counts(
+                    counts,
+                    seen_days,
+                    min_observations=min_observations,
+                    min_days=min_days,
+                )
+            )
+
+    return {name: sorted(species) for name, species in pool.items()}
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(
+        description="Build a year-round regular-species pool for one region."
+    )
+    parser.add_argument("--region", required=True, help="eBird country code, e.g. GB")
+    parser.add_argument(
+        "--subregions-file",
+        type=Path,
+        required=True,
+        help="Subregion list (same shape as *-subregions.json)",
+    )
+    parser.add_argument("--months", type=int, default=12)
+    parser.add_argument("--window-days", type=int, default=7)
+    parser.add_argument("--min-observations", type=int, default=5)
+    parser.add_argument("--min-days", type=int, default=3)
+    parser.add_argument("--delay", type=float, default=0.2)
+    parser.add_argument("--min-species", type=int, default=1)
+    parser.add_argument("--output", type=Path, required=True)
+    args = parser.parse_args()
+
+    try:
+        subregions = json.loads(args.subregions_file.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as error:
+        print(f"Could not read subregions: {error}")
+        return 2
+    if not isinstance(subregions, list) or not subregions:
+        print("Subregions file must contain a non-empty array")
+        return 2
+
+    api_key = ebird_api_common.load_api_key()
+    windows = month_windows(
+        datetime.now(timezone.utc).date(), args.months, args.window_days
+    )
+    print(
+        f"Sampling {len(windows)} monthly windows for "
+        f"{len(subregions)} subregions in {args.region.upper()}"
+    )
+
+    try:
+        pool = build_pool(
+            subregions,
+            windows,
+            api_key=api_key,
+            min_observations=args.min_observations,
+            min_days=args.min_days,
+            delay=args.delay,
+        )
+    except RuntimeError as error:
+        print(f"Pool build failed: {error}")
+        return 2
+
+    thin = [name for name, species in pool.items() if len(species) < args.min_species]
+    if thin:
+        print(f"Refusing to write: too few species in {', '.join(thin)}")
+        return 2
+
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    args.output.write_text(
+        json.dumps(pool, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+    )
+    print(f"Wrote {args.output}")
+    for name, species in pool.items():
+        print(f"  {name}: {len(species)} species")
+
+    union = set().union(*(set(species) for species in pool.values()))
+    print(f"Union: {len(union)} species")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

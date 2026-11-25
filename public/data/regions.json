@@ -1,10 +1,22 @@
 [
-  { "id": "us", "name": "United States", "country": "US" },
+  {
+    "id": "us",
+    "name": "United States",
+    "country": "US"
+  },
   {
     "id": "us-lower48",
     "name": "US Lower 48",
     "country": "US",
     "parentRegion": "us",
-    "excludedSubregions": ["Alaska", "Hawaii"]
+    "excludedSubregions": [
+      "Alaska",
+      "Hawaii"
+    ]
+  },
+  {
+    "id": "gb",
+    "name": "United Kingdom",
+    "country": "GB"
   }
 ]

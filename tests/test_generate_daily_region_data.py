@@ -233,6 +233,72 @@ class TestMainFunctionality:
         assert species_ids == sorted(species_ids)  # Should be sorted
 
 
+class TestRegularSpeciesFilter:
+    """Test the sibling regular-species filter."""
+
+    @patch("requests.get")
+    @patch.dict(os.environ, {"EBIRD_API_KEY": "test-key"})
+    def test_filters_observed_species_to_regular_pool(self, mock_get, tmp_path):
+        subregions_data = [{"code": "US-NY", "name": "New York"}]
+        subregions_file = tmp_path / "us-subregions.json"
+        regular_file = tmp_path / "us-regular-species.json"
+        output_file = tmp_path / "output.json"
+        subregions_file.write_text(json.dumps(subregions_data))
+        regular_file.write_text(json.dumps({"New York": ["amerob"]}))
+
+        mock_response = MagicMock()
+        mock_response.status_code = 200
+        mock_response.json.return_value = [
+            {"speciesCode": "amerob"},
+            {"speciesCode": "vagrant"},
+            {"speciesCode": "barswa"},
+        ]
+        mock_get.return_value = mock_response
+
+        with patch(
+            "sys.argv",
+            [
+                "generate-daily-region-data.py",
+                str(subregions_file),
+                str(output_file),
+            ],
+        ):
+            generate_daily_region_data.main()
+
+        output_data = json.loads(output_file.read_text(encoding="utf-8"))
+        assert output_data["us"]["New York"] == [{"id": "amerob"}]
+
+    @patch("requests.get")
+    @patch.dict(os.environ, {"EBIRD_API_KEY": "test-key"})
+    def test_missing_subregion_in_filter_warns_and_drops_species(
+        self, mock_get, tmp_path, capsys
+    ):
+        subregions_file = tmp_path / "us-subregions.json"
+        regular_file = tmp_path / "us-regular-species.json"
+        output_file = tmp_path / "output.json"
+        subregions_file.write_text(json.dumps([{"code": "US-NY", "name": "New York"}]))
+        regular_file.write_text(json.dumps({"California": ["calqua"]}))
+
+        mock_response = MagicMock()
+        mock_response.status_code = 200
+        mock_response.json.return_value = [{"speciesCode": "amerob"}]
+        mock_get.return_value = mock_response
+
+        with patch(
+            "sys.argv",
+            [
+                "generate-daily-region-data.py",
+                str(subregions_file),
+                str(output_file),
+            ],
+        ):
+            generate_daily_region_data.main()
+
+        output_data = json.loads(output_file.read_text(encoding="utf-8"))
+        assert output_data["us"]["New York"] == []
+        assert "no regular-species entry" in capsys.readouterr().out
+
+
 class TestRegionInference:
     """Test region key inference from filename"""
 

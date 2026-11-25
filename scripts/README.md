@@ -293,10 +293,22 @@ python3 region-audit.py --region CA --output region-audits/ca.json
 
 By default the candidate pool is limited to species reported in the last 14
 days with **at least 5 valid observations on at least 5 distinct days** in a
-subregion. This keeps one-day twitches and rare vagrants out of the challenge
-set. The filtered list is in `regular.by_subregion` in the JSON report. Use
-`--regular-days 0` to audit every eBird species instead, or tune
-`--regular-min-observations` / `--regular-min-days`.
+subregion. This keeps one-day twitches and rare vagrants out of the audio
+readiness check. Use `--regular-days 0` to audit every eBird species instead,
+or tune `--regular-min-observations` / `--regular-min-days`.
+
+That 14-day pool is seasonal. Before shipping a region, build its year-round
+filter so summer migrants and winter visitors are not lost:
+
+```bash
+python3 build-regular-pool.py --region GB \
+  --subregions-file data/regions/gb-subregions.json \
+  --output data/regions/gb-regular-species.json
+```
+
+It samples a short window in each of the last 12 months. The daily generator
+automatically reads `<region>-regular-species.json` from the same directory as
+the subregion file and keeps only its species.
 
 The default gate is **50% audio coverage of the regular pool**, **at least 150
 playable species**, and at least 10 playable regular species in every
