@@ -179,7 +179,7 @@ def build_pool(
     return {name: sorted(species) for name, species in pool.items()}
 
 
-def main() -> int:
+def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Build a year-round regular-species pool for one region."
     )
@@ -197,18 +197,45 @@ def main() -> int:
     parser.add_argument("--delay", type=float, default=0.2)
     parser.add_argument("--min-species", type=int, default=1)
     parser.add_argument("--output", type=Path, required=True)
-    args = parser.parse_args()
+    return parser.parse_args(argv)
 
+
+def load_subregions(path: Path) -> list[dict[str, str]] | None:
     try:
-        subregions = json.loads(args.subregions_file.read_text(encoding="utf-8"))
+        subregions = json.loads(path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError) as error:
         print(f"Could not read subregions: {error}")
-        return 2
+        return None
     if not isinstance(subregions, list) or not subregions:
         print("Subregions file must contain a non-empty array")
+        return None
+    return subregions
+
+
+def write_pool(pool: dict[str, list[str]], output: Path, min_species: int) -> bool:
+    thin = [name for name, species in pool.items() if len(species) < min_species]
+    if thin:
+        print(f"Refusing to write: too few species in {', '.join(thin)}")
+        return False
+
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text(
+        json.dumps(pool, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+    )
+    print(f"Wrote {output}")
+    for name, species in pool.items():
+        print(f"  {name}: {len(species)} species")
+
+    union = set().union(*(set(species) for species in pool.values()))
+    print(f"Union: {len(union)} species")
+    return True
+
+
+def run(args: argparse.Namespace) -> int:
+    subregions = load_subregions(args.subregions_file)
+    if subregions is None:
         return 2
 
-    api_key = ebird_api_common.load_api_key()
     windows = month_windows(
         datetime.now(timezone.utc).date(), args.months, args.window_days
     )
@@ -221,7 +248,7 @@ def main() -> int:
         pool = build_pool(
             subregions,
             windows,
-            api_key=api_key,
+            api_key=ebird_api_common.load_api_key(),
             min_observations=args.min_observations,
             min_days=args.min_days,
             delay=args.delay,
@@ -230,22 +257,11 @@ def main() -> int:
         print(f"Pool build failed: {error}")
         return 2
 
-    thin = [name for name, species in pool.items() if len(species) < args.min_species]
-    if thin:
-        print(f"Refusing to write: too few species in {', '.join(thin)}")
-        return 2
+    return 0 if write_pool(pool, args.output, args.min_species) else 2
 
-    args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(
-        json.dumps(pool, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
-    )
-    print(f"Wrote {args.output}")
-    for name, species in pool.items():
-        print(f"  {name}: {len(species)} species")
 
-    union = set().union(*(set(species) for species in pool.values()))
-    print(f"Union: {len(union)} species")
-    return 0
+def main(argv: Sequence[str] | None = None) -> int:
+    return run(parse_args(argv))
 
 
 if __name__ == "__main__":

@@ -55,8 +55,7 @@ def test_build_pool_unions_months_and_drops_single_day_species(monkeypatch):
         [date(2026, 6, 15), date(2026, 6, 16), date(2026, 6, 17)],
     ]
 
-    def fake_fetch(code, dates, *, api_key, delay):
-        del code, api_key, delay
+    def fake_fetch(_code, dates, **_kwargs):
         counts = Counter()
         seen = defaultdict(set)
         for day in dates:
@@ -87,8 +86,7 @@ def test_build_pool_unions_months_and_drops_single_day_species(monkeypatch):
 def test_fetch_observation_counts_keeps_successful_days(monkeypatch):
     dates = [date(2026, 1, 1), date(2026, 1, 2), date(2026, 1, 3)]
 
-    def fake_get_json(url, **kwargs):
-        del kwargs
+    def fake_get_json(url, **_kwargs):
         if "2026/1/2" in url:
             raise requests.RequestException("timeout")
         return [
