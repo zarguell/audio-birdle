@@ -70,7 +70,9 @@ class TestNormalizeAudioUrls:
         bird = make_bird(audioUrl=["https://example.com/clip.mp3"])
         converted = enhance_bird_data.normalize_audio_urls(bird)
         assert converted == 1
-        assert bird["audioUrl"] == [{"url": "https://example.com/clip.mp3", "attribution": {}}]
+        assert bird["audioUrl"] == [
+            {"url": "https://example.com/clip.mp3", "attribution": {}}
+        ]
 
     @staticmethod
     def test_objects_pass_through_unchanged():
@@ -83,8 +85,7 @@ class TestNormalizeAudioUrls:
     @staticmethod
     def test_non_https_and_garbage_dropped():
         bird = make_bird(
-            audioUrl=["http://insecure.mp3", "not a url", 42,
-                      "https://ok.mp3"]
+            audioUrl=["http://insecure.mp3", "not a url", 42, "https://ok.mp3"]
         )
         enhance_bird_data.normalize_audio_urls(bird)
         assert [e["url"] for e in bird["audioUrl"]] == ["https://ok.mp3"]
@@ -133,7 +134,9 @@ class TestMergeXcClips:
 
     @staticmethod
     def test_duplicates_skipped():
-        bird = make_bird(audioUrl=[{"url": "https://xc.example/1.mp3", "attribution": {}}])
+        bird = make_bird(
+            audioUrl=[{"url": "https://xc.example/1.mp3", "attribution": {}}]
+        )
         entries = [make_xc_entry("https://xc.example/1.mp3")]
         assert enhance_bird_data.merge_xc_clips(bird, entries) == 0
 
@@ -177,9 +180,7 @@ class TestEnhanceRegion:
         stats = enhance_bird_data.enhance_region(birds)
         assert stats["clips_normalized"] == 1
         assert stats["learn_more_added"] == 2
-        assert all(
-            isinstance(entry, dict) for b in birds for entry in b["audioUrl"]
-        )
+        assert all(isinstance(entry, dict) for b in birds for entry in b["audioUrl"])
         assert birds[0]["learnMoreUrl"] == "https://ebird.org/species/amerob"
         assert birds[1]["learnMoreUrl"] == "https://ebird.org/species/barswa"
 
@@ -296,7 +297,9 @@ class TestFacts:
     @staticmethod
     def test_no_data_no_fact():
         bird = make_bird(family="")
-        assert enhance_bird_data.build_fact(bird, prevalence=0, total_subregions=0) == ""
+        assert (
+            enhance_bird_data.build_fact(bird, prevalence=0, total_subregions=0) == ""
+        )
         assert enhance_bird_data.build_fact(bird) == ""
 
     @staticmethod
@@ -361,15 +364,15 @@ class TestEndToEndMain:
                         make_bird(),
                         make_bird(
                             id="barswa",
-                            audioUrl=["https://cdn.download.ams.birds.cornell.edu/api/v2/asset/2/mp3"],
+                            audioUrl=[
+                                "https://cdn.download.ams.birds.cornell.edu/api/v2/asset/2/mp3"
+                            ],
                         ),
                     ]
                 }
             )
         )
-        monkeypatch.setattr(
-            sys, "argv", ["enhance-bird-data.py", str(birds_file)]
-        )
+        monkeypatch.setattr(sys, "argv", ["enhance-bird-data.py", str(birds_file)])
         enhance_bird_data.main()
 
         data = json.loads(birds_file.read_text())

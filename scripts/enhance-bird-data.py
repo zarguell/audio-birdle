@@ -116,9 +116,7 @@ def backfill_learn_more(bird):
 
 def quality_rank(quality):
     """Map an XC quality letter to a sortable rank (A best)."""
-    return {"A": 5, "B": 4, "C": 3, "D": 2, "E": 1}.get(
-        str(quality).strip().upper(), 0
-    )
+    return {"A": 5, "B": 4, "C": 3, "D": 2, "E": 1}.get(str(quality).strip().upper(), 0)
 
 
 def parse_family(family):
@@ -194,9 +192,7 @@ def build_fact(
     return " \u2014 ".join(parts) + "."
 
 
-def backfill_facts(
-    bird, prevalence, total_subregions, subregion_label=SUBREGION_LABEL
-):
+def backfill_facts(bird, prevalence, total_subregions, subregion_label=SUBREGION_LABEL):
     """Set bird.facts when empty, using local prevalence + taxonomy.
 
     Returns:
@@ -384,8 +380,7 @@ def main():
     parser.add_argument(
         "--no-facts",
         action="store_true",
-        help="Skip fact backfill (facts are generated when --subregions "
-        "is provided)",
+        help="Skip fact backfill (facts are generated when --subregions is provided)",
     )
     parser.add_argument(
         "--dry-run",
@@ -452,8 +447,10 @@ def main():
 
     unmatched = set(xc_by_code) - matched_codes
     if xc_by_code:
-        print(f"ℹ️  XC species matched: {len(matched_codes)}, "
-              f"unmatched (not in birds.json): {len(unmatched)}")
+        print(
+            f"ℹ️  XC species matched: {len(matched_codes)}, "
+            f"unmatched (not in birds.json): {len(unmatched)}"
+        )
 
     if args.dry_run:
         print("🔍 Dry run: no changes written")
