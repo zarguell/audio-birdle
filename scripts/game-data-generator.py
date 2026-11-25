@@ -192,13 +192,16 @@ def process_taxonomy_data(
 
 
 def save_json_file(data: Dict[str, Any], filepath: str) -> None:
-    """Save data to JSON file with proper formatting."""
+    """Save data to a JSON file, creating parent directories as needed."""
+    path = Path(filepath)
     try:
-        with open(filepath, "w", encoding="utf-8") as f:
-            json.dump(data, f, indent=2, ensure_ascii=False)
-        print(f"Successfully saved data to '{filepath}'")
-    except IOError as e:
-        print(f"Error: Could not write to file '{filepath}': {e}")
+        path.parent.mkdir(parents=True, exist_ok=True)
+        with path.open("w", encoding="utf-8") as handle:
+            json.dump(data, handle, indent=2, ensure_ascii=False)
+            handle.write("\n")
+        print(f"Successfully saved data to '{path}'")
+    except OSError as error:
+        print(f"Error: Could not write to file '{path}': {error}")
         exit(1)
 
 
@@ -245,11 +248,7 @@ def main():
         save_json_file(output_data, args.output)
     else:
         output_path.mkdir(parents=True, exist_ok=True)
-        shard_path = output_path / f"{region_key}.json"
-        with shard_path.open("w", encoding="utf-8") as handle:
-            json.dump(birds, handle, indent=2, ensure_ascii=False)
-            handle.write("\n")
-        print(f"Successfully saved region shard to '{shard_path}'")
+        save_json_file(birds, str(output_path / f"{region_key}.json"))
 
     print("Processing complete!")
 
