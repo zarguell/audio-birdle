@@ -194,10 +194,14 @@ def process_taxonomy_data(
 def save_json_file(data: Dict[str, Any], filepath: str) -> None:
     """Save data to a JSON file, creating parent directories as needed."""
     path = Path(filepath)
-    path.parent.mkdir(parents=True, exist_ok=True)
-    text = json.dumps(data, indent=2, ensure_ascii=False) + "\n"
-    path.write_text(text, encoding="utf-8")
-    print(f"Successfully saved data to '{path}'")
+    try:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        text = json.dumps(data, indent=2, ensure_ascii=False) + "\n"
+        path.write_text(text, encoding="utf-8")
+        print(f"Successfully saved data to '{path}'")
+    except OSError as error:
+        print(f"Error: Could not write to file '{path}': {error}")
+        exit(1)
 
 
 def main():
