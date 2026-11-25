@@ -1,0 +1,124 @@
+# Region roadmap
+
+Audio-Birdle is expanding one country at a time. The goal is **12–15
+well-covered regions**, not global completeness. Each region must be playable
+with its own daily challenge, audio, and regular-species filter.
+
+Tracking issue: [#676](https://github.com/zarguell/audio-birdle/issues/676).
+
+## Status
+
+### Live
+
+| Region | Playable species | Notes |
+|---|---:|---|
+| United States | 704 | Includes the `us-lower48` virtual region |
+| United Kingdom | 235 | England, Northern Ireland, Scotland, Wales |
+| Canada | 344 | Country-level pool |
+| Australia | 525 | Country-level pool |
+
+### Phase 0 — sharding
+
+The current `public/data/birds.json` is a single file with every region
+(~6.1 MB raw / ~455 KB gzip). Every game loads all of it. Before adding more
+countries:
+
+- [#669](https://github.com/zarguell/audio-birdle/issues/669) — shard birds by
+  region and load only the selected shard.
+
+The client, manifest, generators, validation, and tests all need to move
+together. This keeps the game payload roughly constant as the region count
+grows.
+
+## Candidate data
+
+These are preliminary eBird country lists and Xeno-canto species with at least
+one recording. **XC species is not playable species**: the audit still filters
+regularity, quality, length, and licensing.
+
+| Country | eBird species | XC species | XC/eBird | Status |
+|---|---:|---:|---:|---|
+| Ireland | 505 | 264 | 52% | Next — [#670](https://github.com/zarguell/audio-birdle/issues/670) |
+| South Africa | 903 | 619 | 69% | Next — [#671](https://github.com/zarguell/audio-birdle/issues/671) |
+| Costa Rica | 973 | 657 | 68% | Audit — [#672](https://github.com/zarguell/audio-birdle/issues/672) |
+| France | 722 | 631 | 87% | Audit — [#673](https://github.com/zarguell/audio-birdle/issues/673) |
+| Japan | 693 | 254 | 37% | Audit — [#674](https://github.com/zarguell/audio-birdle/issues/674) |
+| New Zealand | 410 | 173 | 42% | Audit — [#675](https://github.com/zarguell/audio-birdle/issues/675) |
+| Germany | 669 | 342 | 51% | Backlog |
+| Spain | 876 | 392 | 45% | Backlog |
+| Italy | 607 | 358 | 59% | Backlog |
+| Netherlands | 637 | 384 | 60% | Backlog |
+| Portugal | 709 | 330 | 47% | Backlog |
+| Mexico | 1,240 | 853 | 69% | Backlog |
+| Argentina | 1,104 | 888 | 80% | Backlog |
+| Thailand | 1,161 | 736 | 63% | Backlog |
+| Malaysia | 885 | 598 | 68% | Backlog |
+| Kenya | 1,150 | 736 | 64% | Backlog |
+| Taiwan | 778 | 359 | 46% | Backlog |
+| Singapore | 618 | 255 | 41% | Backlog |
+| South Korea | 556 | 144 | 26% | Deferred |
+| Morocco | 510 | 194 | 38% | Deferred |
+| Israel | 596 | 165 | 28% | Deferred |
+
+Deferred means the recording coverage is too thin relative to the eBird list;
+revisit if Xeno-canto coverage improves.
+
+## Waves
+
+One country is onboarded at a time, even when a wave lists several.
+
+### Wave 1 — high-confidence, low-risk
+1. **Ireland** — small, clean, close to GB.
+2. **South Africa** — high coverage and a distinct avifauna.
+
+### Wave 2 — flagship coverage
+3. **Costa Rica** — strong Neotropical coverage.
+4. **France** — highest XC coverage among the large European candidates.
+
+### Wave 3 — unique/large
+5. **Japan** — distinct East Asian avifauna; audit first.
+6. **New Zealand** — small and unique; audit first.
+
+### Backlog
+Germany, Spain, Italy, Netherlands, Portugal, Mexico, Argentina, Thailand,
+Malaysia, Kenya, Taiwan, Singapore.
+
+### Deferred
+South Korea, Morocco, Israel.
+
+## Onboarding gate
+
+A region is ready when the full audit reports:
+
+- country-level play, no subregions required
+- at least **150 playable species**
+- at least **50% audio coverage** of the regular pool
+- no unresolved taxonomy gaps
+- no Xeno-canto errors
+- a reasonable per-region data size after sharding
+
+The regional taxonomy must be built from a current eBird snapshot; do not
+refresh the global taxonomy just to add a country. Existing region IDs stay
+pinned.
+
+## Definition of done
+
+Each country issue has the same checklist:
+
+- [ ] eBird/XC audit
+- [ ] region taxonomy snapshot
+- [ ] annual regular pool and current seasonal filter
+- [ ] XC audio with attribution
+- [ ] country-level birds and daily pool
+- [ ] region metadata and manifest
+- [ ] data invariants and browser coverage
+- [ ] deployed and verified
+
+## Burn-down
+
+GitHub issues with the `region` and `region:*` labels are the source of truth.
+Move an issue between `region:next`, `region:audit`, and `region:live` as it
+progresses. The umbrella issue links the current wave.
+
+A GitHub Project can mirror these issues when the token has project scope; the
+issue labels are sufficient for the roadmap today.
