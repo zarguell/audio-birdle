@@ -23,10 +23,12 @@ def test_manifest_hashes_every_json_file_and_excludes_itself(tmp_path: Path) -> 
     (tmp_path / "a.json").write_text('{"a": 1}\n', encoding="utf-8")
     (tmp_path / "b.json").write_text('{"b": 2}\n', encoding="utf-8")
     (tmp_path / "notes.txt").write_text("ignored", encoding="utf-8")
+    (tmp_path / "birds").mkdir()
+    (tmp_path / "birds" / "us.json").write_text("[]\n", encoding="utf-8")
 
     manifest = build_manifest(tmp_path)
 
-    assert set(manifest["files"]) == {"a.json", "b.json"}
+    assert set(manifest["files"]) == {"a.json", "b.json", "birds/us.json"}
     assert manifest["schemaVersion"] == 1
     for name, entry in manifest["files"].items():
         content = (tmp_path / name).read_bytes()

@@ -187,7 +187,7 @@ def test_data_manifest_matches_copied_files(built_site: tuple[Path, dict]) -> No
         assert entry["sha256"] == hashlib.sha256(data).hexdigest()
         assert entry["bytes"] == len(data)
         assert entry["path"] == f"/data/{name}"
-    assert summary["data_files"] == len(manifest["files"]) == 5
+    assert summary["data_files"] == len(manifest["files"]) == 8
 
 
 def test_cloudflare_headers_pin_cache_behaviour(built_site: tuple[Path, dict]) -> None:

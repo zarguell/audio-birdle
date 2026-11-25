@@ -6,7 +6,7 @@ Generates daily bird answers for each region, ensuring no repeats within X days.
 Optionally filters by subregion (e.g., US states) if subregions file is provided.
 
 Determinism invariant:
-    For a fixed input set (birds.json, regions.json, subregions data, --date),
+    For a fixed input set (bird shards, regions.json, subregions data, --date),
     running this script MUST produce byte-identical daily.json and history.json
     outputs on every run, regardless of PYTHONHASHSEED or any other
     process-local randomness. This is guaranteed by:
@@ -357,6 +357,20 @@ def build_region_birds(
     return region_birds, selected_subregion, subregion_bird_ids
 
 
+def load_birds_data(base_path, regions):
+    """Load per-region bird shards, falling back to the legacy birds.json."""
+    shard_dir = base_path / "birds"
+    if shard_dir.is_dir():
+        data = {}
+        for region in regions:
+            parent_id = region.get("parentRegion") or region["id"]
+            if parent_id in data:
+                continue
+            data[parent_id] = load_json_file(str(shard_dir / f"{parent_id}.json"))
+        return data
+    return load_json_file(str(base_path / "birds.json"))
+
+
 def main():
     parser = argparse.ArgumentParser(description="Generate daily bird answers")
     parser.add_argument(
@@ -379,7 +393,6 @@ def main():
     # Set up paths
     base_path = Path("./public/data")
     regions_path = base_path / "regions.json"
-    birds_path = base_path / "birds.json"
     history_path = base_path / "history.json"
     daily_path = base_path / "daily.json"
 
@@ -422,9 +435,10 @@ def main():
                 f"Warning: Subregions file {args.subregions} not found, proceeding without subregion filtering"
             )
 
-    # Load data files
+    # Load data files. Bird shards are preferred; the legacy aggregate is
+    # still accepted by synthetic tests.
     regions = load_json_file(regions_path)
-    birds_data = load_json_file(birds_path)
+    birds_data = load_birds_data(base_path, regions)
     history = load_json_file(history_path)
     current_daily = load_json_file(daily_path)
 

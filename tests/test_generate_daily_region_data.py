@@ -302,6 +302,39 @@ class TestRegularSpeciesFilter:
 
     @patch("requests.get")
     @patch.dict(os.environ, {"EBIRD_API_KEY": "test-key"})
+    def test_filters_to_playable_bird_shard(self, mock_get, tmp_path):
+        subregions_file = tmp_path / "us-subregions.json"
+        regular_file = tmp_path / "us-regular-species.json"
+        output_file = tmp_path / "output.json"
+        shard_dir = tmp_path / "birds"
+        shard_dir.mkdir()
+        subregions_file.write_text(json.dumps([{"code": "US-NY", "name": "New York"}]))
+        regular_file.write_text(json.dumps({"New York": ["amerob", "barswa"]}))
+        (shard_dir / "us.json").write_text(json.dumps([{"id": "amerob"}]))
+
+        mock_response = MagicMock()
+        mock_response.status_code = 200
+        mock_response.json.return_value = [
+            {"speciesCode": "amerob"},
+            {"speciesCode": "barswa"},
+        ]
+        mock_get.return_value = mock_response
+
+        with patch(
+            "sys.argv",
+            [
+                "generate-daily-region-data.py",
+                str(subregions_file),
+                str(output_file),
+            ],
+        ):
+            generate_daily_region_data.main()
+
+        output_data = json.loads(output_file.read_text(encoding="utf-8"))
+        assert output_data["us"]["New York"] == [{"id": "amerob"}]
+
+    @patch("requests.get")
+    @patch.dict(os.environ, {"EBIRD_API_KEY": "test-key"})
     def test_daily_regular_file_takes_priority(self, mock_get, tmp_path):
         subregions_file = tmp_path / "us-subregions.json"
         annual_file = tmp_path / "us-regular-species.json"

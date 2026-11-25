@@ -6,7 +6,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-from .config import REQUIRED_DATA_FILES
+from .config import BIRDS_SUBDIR, REQUIRED_DATA_FILES
 
 
 class DataValidationError(ValueError):
@@ -69,30 +69,43 @@ def load_regions(data_dir: Path) -> list[dict[str, Any]]:
 
 def _validate_bird(bird: Any, region_id: str) -> None:
     _require(
-        isinstance(bird, dict), f"birds.json[{region_id!r}] entry must be an object"
+        isinstance(bird, dict), f"bird shard[{region_id!r}] entry must be an object"
     )
     _require(
         bool(bird.get("id")) and bool(bird.get("name")),
-        f"birds.json[{region_id!r}] contains a bird without id/name",
+        f"bird shard[{region_id!r}] contains a bird without id/name",
     )
 
 
 def _validate_bird_list(bird_list: Any, region_id: str) -> None:
     _require(
         isinstance(bird_list, list),
-        f"birds.json[{region_id!r}] must be an array",
+        f"bird shard[{region_id!r}] must be an array",
     )
     for bird in bird_list:
         _validate_bird(bird, region_id)
 
 
-def _validate_birds(birds: Any) -> None:
-    _require(
-        isinstance(birds, dict) and bool(birds),
-        "birds.json must be a non-empty object",
-    )
-    for region_id, bird_list in birds.items():
-        _validate_bird_list(bird_list, region_id)
+def _validate_birds_dir(
+    data_dir: Path, regions: list[dict[str, Any]]
+) -> dict[str, list[Any]]:
+    """Validate one bird shard for every parent region."""
+    birds_dir = Path(data_dir) / BIRDS_SUBDIR
+    _require(birds_dir.is_dir(), f"Missing bird shard directory: {birds_dir}")
+
+    parent_ids = {region.get("parentRegion") or region["id"] for region in regions}
+    loaded: dict[str, list[Any]] = {}
+    for parent_id in sorted(parent_ids):
+        path = birds_dir / f"{parent_id}.json"
+        _require(path.is_file(), f"Missing bird shard: {path}")
+        birds = load_json(path)
+        _require(
+            isinstance(birds, list) and bool(birds),
+            f"{path} must be a non-empty array",
+        )
+        _validate_bird_list(birds, parent_id)
+        loaded[parent_id] = birds
+    return loaded
 
 
 def _validate_daily_entry(entry: Any, region_ids: set[str]) -> None:
@@ -170,7 +183,7 @@ def validate_data(data_dir: Path) -> list[dict[str, Any]]:
     regions = load_regions(data_dir)
     region_ids = {region["id"] for region in regions}
 
-    _validate_birds(load_json(data_dir / "birds.json"))
+    _validate_birds_dir(data_dir, regions)
     _validate_daily(load_json(data_dir / "daily.json"), region_ids)
     _validate_history(load_json(data_dir / "history.json"), region_ids)
     _validate_subregions(load_json(data_dir / "daily-subregion-birds.json"))

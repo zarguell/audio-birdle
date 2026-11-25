@@ -1,6 +1,6 @@
 """Content-hash manifests for game data files.
 
-Cloudflare can serve an old birds.json next to a new daily.json while a deploy
+Cloudflare can serve an old bird shard next to a new daily.json while a deploy
 propagates, and browsers may keep either file in cache. The site therefore
 loads every data file through a manifest that pins each file to its SHA-256.
 The manifest itself is served with ``Cache-Control: no-store`` and is fetched
@@ -41,11 +41,12 @@ def build_manifest(data_dir: Path) -> dict[str, Any]:
         raise FileNotFoundError(f"Data directory not found: {data_dir}")
 
     files: dict[str, dict[str, Any]] = {}
-    for path in sorted(data_dir.glob("*.json")):
+    for path in sorted(data_dir.rglob("*.json")):
         if path.name == MANIFEST_FILENAME:
             continue
-        files[path.name] = {
-            "path": f"/data/{path.name}",
+        relative = path.relative_to(data_dir).as_posix()
+        files[relative] = {
+            "path": f"/data/{relative}",
             "sha256": sha256_file(path),
             "bytes": path.stat().st_size,
         }

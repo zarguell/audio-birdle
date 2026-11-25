@@ -70,7 +70,7 @@ python3 xc-audio-fetch.py data/regions/us-taxonomy.json --country US --tag song 
 python3 game-data-generator.py --region US \
   --taxonomy data/regions/us-taxonomy.json \
   --urls data/regions/us-taxonomy-urls.json \
-  --output ../public/data/birds.json
+  --output ../public/data/birds
 
 # Output includes placeholder fields for:
 # - images: Bird photos with attribution
@@ -83,11 +83,11 @@ python3 generate-daily-region-data.py \
   data/regions/us-subregions.json \
   ../public/data/daily-subregion-birds.json
 
-# 7b. OPTIONAL: enhance the shipped birds.json in place instead of
+# 7b. OPTIONAL: enhance the shipped bird shards in place instead of
 #     regenerating from scratch (keeps existing species + ML clips,
 #     adds learn-more links + fun facts from local data, and merges
 #     xc-audio-fetch.py clips with attribution where coverage is thin)
-python3 enhance-bird-data.py ../public/data/birds.json \
+python3 enhance-bird-data.py ../public/data/birds \
   --subregions ../public/data/daily-subregion-birds.json \
   --xc-urls data/regions/us-taxonomy-urls.json
 #     Facts combine subregion prevalence with family context
@@ -138,7 +138,7 @@ python3 generate-daily-birds.py --days 7 \
 
 Audio URLs and metadata come from the [Xeno-canto API v3](https://xeno-canto.org/explore/api)
 (free key required, set `XC_API_KEY`). Quality rating, recordist, license, date
-and background species flow into `birds.json` per clip via
+and background species flow into the region bird shard per clip via
 `game-data-generator.py`.
 
 The previous approach (`ebird-songdownload.py`, Selenium scraping of the
@@ -248,7 +248,7 @@ python3 game-data-generator.py \
   --region US \
   --taxonomy data/regions/us-taxonomy.json \
   --urls data/regions/us-taxonomy-urls.json \
-  --output ../public/data/birds.json
+  --output ../public/data/birds
 ```
 
 ### Generate Subregions

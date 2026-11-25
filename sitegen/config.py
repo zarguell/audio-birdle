@@ -29,8 +29,9 @@ SITE = {
 # separately because it describes these files.
 REQUIRED_DATA_FILES = (
     "regions.json",
-    "birds.json",
     "daily.json",
     "history.json",
     "daily-subregion-birds.json",
 )
+
+BIRDS_SUBDIR = "birds"

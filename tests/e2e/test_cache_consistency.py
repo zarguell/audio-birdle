@@ -15,7 +15,7 @@ def test_every_data_request_is_pinned_to_the_manifest(page, base_url):
     page.wait_for_selector(".answer-option")
 
     assert any("/data/manifest.json?t=" in url for url in requests)
-    assert any("/data/birds.json?v=" in url for url in requests)
+    assert any("/data/birds/us.json?v=" in url for url in requests)
     assert any("/data/daily.json?v=" in url for url in requests)
 
 
@@ -85,7 +85,7 @@ def test_manifest_failure_uses_cache_busted_fallback(page, base_url):
     page.wait_for_selector(".answer-option")
 
     assert any("/data/daily.json?t=" in url for url in requests)
-    assert any("/data/birds.json?t=" in url for url in requests)
+    assert any("/data/birds/us.json?t=" in url for url in requests)
     assert not any("/data/daily.json?v=" in url for url in requests)
 
 

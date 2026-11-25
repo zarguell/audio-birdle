@@ -386,6 +386,25 @@ class TestEndToEndMain:
         assert "Enhanced data written" in out
 
     @staticmethod
+    def test_shard_directory_mode(monkeypatch, tmp_path, capsys):
+        birds_dir = tmp_path / "birds"
+        birds_dir.mkdir()
+        (birds_dir / "us.json").write_text(json.dumps([make_bird()]))
+        (birds_dir / "ca.json").write_text(json.dumps([make_bird(id="caamerob")]))
+        monkeypatch.setattr(
+            sys,
+            "argv",
+            ["enhance-bird-data.py", str(birds_dir), "--region", "us"],
+        )
+        enhance_bird_data.main()
+
+        us = json.loads((birds_dir / "us.json").read_text())
+        ca = json.loads((birds_dir / "ca.json").read_text())
+        assert us[0]["learnMoreUrl"].startswith("https://ebird.org/species/")
+        assert ca[0]["learnMoreUrl"] == ""
+        assert "Enhanced shards written" in capsys.readouterr().out
+
+    @staticmethod
     def test_dry_run_leaves_file_untouched(monkeypatch, tmp_path, capsys):
         birds_file = tmp_path / "birds.json"
         original = json.dumps({"us": [make_bird()]})

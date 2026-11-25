@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-Enhance an existing birds.json game data file in place.
+Enhance existing per-region bird shards (or a legacy aggregate) in place.
 
 Unlike the full regeneration path (ebird-taxonomy.py -> ... ->
-game-data-generator.py), this tool edits the *shipped* birds.json so
+game-data-generator.py), this tool edits the *shipped* bird shards so
 existing species and their proven-live Macaulay Library clips are never
 dropped. Three enhancements:
 
@@ -24,14 +24,14 @@ existing ML clips at their current indices.
 
 Usage:
     # Offline enhancements only (no API key needed):
-    python3 enhance-bird-data.py ../public/data/birds.json
+    python3 enhance-bird-data.py ../public/data/birds
 
     # After fetching Xeno-canto clips (see xc-audio-fetch.py):
-    python3 enhance-bird-data.py ../public/data/birds.json \\
+    python3 enhance-bird-data.py ../public/data/birds \\
         --xc-urls data/regions/us-taxonomy-urls.json
 
     # Preview changes without writing:
-    python3 enhance-bird-data.py ../public/data/birds.json --dry-run
+    python3 enhance-bird-data.py ../public/data/birds --dry-run
 """
 
 import argparse
@@ -334,13 +334,14 @@ def enhance_region(
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Enhance an existing birds.json with attribution, "
+        description="Enhance existing bird shards with attribution, "
         "learn-more links and (optionally) Xeno-canto clips."
     )
     parser.add_argument(
         "birds_json",
         type=Path,
-        help="Path to birds.json (e.g., ../public/data/birds.json)",
+        help="Path to the birds/ shard directory (preferred) or a legacy "
+        "aggregate birds.json",
     )
     parser.add_argument(
         "--xc-urls",
@@ -389,11 +390,18 @@ def main():
     )
     args = parser.parse_args()
 
+    input_path = Path(args.birds_json)
+    shard_mode = input_path.is_dir()
     try:
-        with open(args.birds_json, "r", encoding="utf-8") as file:
-            data = json.load(file)
+        if shard_mode:
+            data = {}
+            for path in sorted(input_path.glob("*.json")):
+                data[path.stem] = json.loads(path.read_text(encoding="utf-8"))
+        else:
+            with input_path.open(encoding="utf-8") as file:
+                data = json.load(file)
     except (OSError, json.JSONDecodeError) as error:
-        print(f"❌ Error loading {args.birds_json}: {error}")
+        print(f"❌ Error loading {input_path}: {error}")
         sys.exit(1)
 
     regions = [args.region] if args.region else list(data.keys())
@@ -456,9 +464,18 @@ def main():
         print("🔍 Dry run: no changes written")
         return
 
-    with open(args.birds_json, "w", encoding="utf-8") as file:
-        json.dump(data, file, indent=2, ensure_ascii=False)
-    print(f"✅ Enhanced data written to {args.birds_json}")
+    if shard_mode:
+        for region in regions:
+            shard_path = input_path / f"{region}.json"
+            shard_path.write_text(
+                json.dumps(data[region], indent=2, ensure_ascii=False) + "\n",
+                encoding="utf-8",
+            )
+        print(f"✅ Enhanced shards written to {input_path}")
+    else:
+        with input_path.open("w", encoding="utf-8") as file:
+            json.dump(data, file, indent=2, ensure_ascii=False)
+        print(f"✅ Enhanced data written to {input_path}")
 
 
 if __name__ == "__main__":

@@ -1,6 +1,6 @@
 import { initPage, resolveRegion } from "../app.js";
 import { getAudioSrc } from "../core/audio.js";
-import { getBirdList, loadBirds, loadHistory, loadRegions } from "../core/data.js";
+import { loadHistory, loadRegionBirds, loadRegions } from "../core/data.js";
 import { formatDateShort, getTodayString } from "../core/dates.js";
 import { fromTemplate, qs, qsa, setText, show } from "../core/dom.js";
 import { notify } from "../ui/toast.js";
@@ -155,11 +155,11 @@ const loadData = async ({ force = false } = {}) => {
       return;
     }
 
-    const [birds, history] = await Promise.all([
-      loadBirds({ force }),
+    const [regionBirdsResult, history] = await Promise.all([
+      loadRegionBirds(region.id, regions, { force }),
       loadHistory({ force }),
     ]);
-    regionBirds = getBirdList(region.id, regions, birds);
+    regionBirds = regionBirdsResult;
 
     const byId = new Map(regionBirds.map((bird) => [bird.id, bird]));
     const today = getTodayString();

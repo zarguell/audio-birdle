@@ -390,14 +390,10 @@ class TestProcessTaxonomyWithMetadata:
                 }
             ]
         }
-        birds = game_data_generator.process_taxonomy_data(
-            taxonomy_data, url_groups
-        )
+        birds = game_data_generator.process_taxonomy_data(taxonomy_data, url_groups)
         assert len(birds) == 1
         assert birds[0]["audioUrl"][0]["url"] == "http://a1.mp3"
-        assert birds[0]["audioUrl"][0]["attribution"]["recordist"] == (
-            "Jacobo Ramil"
-        )
+        assert birds[0]["audioUrl"][0]["attribution"]["recordist"] == ("Jacobo Ramil")
         assert birds[0]["audioUrl"][0]["attribution"]["quality"] == "A"
 
 
@@ -545,6 +541,48 @@ class TestMain:
 
         captured = capsys.readouterr()
         assert "Processing complete" in captured.out
+
+    @staticmethod
+    def test_main_writes_region_shard_directory(tmp_path, monkeypatch):
+        """Test that a directory --output writes a per-region shard"""
+        taxonomy = [
+            {
+                "speciesCode": "amerob",
+                "comName": "American Robin",
+                "sciName": "Turdus migratorius",
+                "order": "Passeriformes",
+                "familyComName": "Turdidae",
+                "familySciName": "Turdidae",
+            }
+        ]
+        urls = [{"code": "amerob", "audio Url": "http://example.com/robin.mp3"}]
+        taxonomy_file = tmp_path / "taxonomy.json"
+        urls_file = tmp_path / "urls.json"
+        output_dir = tmp_path / "birds"
+        taxonomy_file.write_text(json.dumps(taxonomy))
+        urls_file.write_text(json.dumps(urls))
+
+        monkeypatch.setattr(
+            sys,
+            "argv",
+            [
+                "game-data-generator.py",
+                "--region",
+                "US",
+                "--taxonomy",
+                str(taxonomy_file),
+                "--urls",
+                str(urls_file),
+                "--output",
+                str(output_dir),
+            ],
+        )
+
+        game_data_generator.main()
+
+        shard = json.loads((output_dir / "us.json").read_text())
+        assert [bird["id"] for bird in shard] == ["amerob"]
+        assert not (output_dir / "birds.json").exists()
 
     @staticmethod
     def test_main_preserves_existing_regions(tmp_path, monkeypatch):

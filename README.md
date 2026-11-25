@@ -84,7 +84,7 @@ scripts, inline styles, or HTML strings in Python.
 
 ### Cache consistency
 
-Cloudflare and browser caches can otherwise serve an old `birds.json` next to a
+Cloudflare and browser caches can otherwise serve an old bird shard next to a
 new `daily.json`. The site handles this in three layers:
 
 1. **Hashed static assets.** CSS/JS live under `/assets/<content-hash>/` and are

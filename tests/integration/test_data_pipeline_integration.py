@@ -39,10 +39,12 @@ class TestDataPipelineIntegration:
 
     @pytest.fixture
     def birds_json(self, data_dir):
-        """Load birds.json."""
-        path = data_dir / "birds.json"
-        with open(path, "r", encoding="utf-8") as f:
-            return json.load(f)
+        """Load and aggregate the per-region bird shards."""
+        birds = {}
+        for path in sorted((data_dir / "birds").glob("*.json")):
+            with open(path, "r", encoding="utf-8") as f:
+                birds[path.stem] = json.load(f)
+        return birds
 
     @pytest.fixture
     def regions_json(self, data_dir):
@@ -386,11 +388,12 @@ class TestDataPipelineIntegration:
     @staticmethod
     def test_json_files_are_valid_json(data_dir):
         """Test that all JSON files in data/ are valid JSON."""
-        json_files = ["birds.json", "regions.json", "daily.json", "history.json"]
+        json_files = ["regions.json", "daily.json", "history.json"]
+        paths = [data_dir / filename for filename in json_files]
+        paths.extend(sorted((data_dir / "birds").glob("*.json")))
 
-        for filename in json_files:
-            path = data_dir / filename
-            assert path.exists(), f"Required data file {filename} does not exist"
+        for path in paths:
+            assert path.exists(), f"Required data file {path.name} does not exist"
 
             # Try to load it - will raise exception if invalid
             with open(path, "r", encoding="utf-8") as f:

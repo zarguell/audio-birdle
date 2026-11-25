@@ -1,9 +1,24 @@
 {
   "files": {
-    "birds.json": {
-      "bytes": 6348212,
-      "path": "/data/birds.json",
-      "sha256": "81f067b2a699ac112a02583a8b4d95ae4d8598ec51eba2e62d195e77060dd101"
+    "birds/au.json": {
+      "bytes": 2239129,
+      "path": "/data/birds/au.json",
+      "sha256": "e384eedbb5d649dcbeb6f0a00e4b804a8eb1e6b84a2f4d4b0b16340447f0253f"
+    },
+    "birds/ca.json": {
+      "bytes": 1433970,
+      "path": "/data/birds/ca.json",
+      "sha256": "8e8035d70c555f42832d6fe9b007e732db08f5eeb5709b7a3e8fd8b618068c1c"
+    },
+    "birds/gb.json": {
+      "bytes": 1054837,
+      "path": "/data/birds/gb.json",
+      "sha256": "83fa492874de7bf684a7b803d63c4419ca26002eb9c3e93a1bd104f77fdc88e8"
+    },
+    "birds/us.json": {
+      "bytes": 1265408,
+      "path": "/data/birds/us.json",
+      "sha256": "6367051d731ed79611f92ac4cfac9acdbb38ffd7be8349c8ce9475185c4d6ee5"
     },
     "daily-subregion-birds.json": {
       "bytes": 473510,
@@ -26,6 +41,6 @@
       "sha256": "f9290bb977f4c341e0a128359315f806cde5264661d96cba3a3045c3041fb4bc"
     }
   },
-  "generatedAt": "2026-11-25T18:46:18Z",
+  "generatedAt": "2026-11-25T21:51:18Z",
   "schemaVersion": 1
 }

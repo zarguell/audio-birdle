@@ -26,8 +26,6 @@ export const STORAGE_KEYS = Object.freeze({
 
 export const DATA_FILES = Object.freeze({
   regions: "regions.json",
-  birds: "birds.json",
   daily: "daily.json",
   history: "history.json",
 });
-

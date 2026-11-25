@@ -37,12 +37,13 @@ Bird Data Schema:
 }
 
 Usage:
-    python bird_json_generator.py --region US --taxonomy taxonomy.json --urls urls.json --output birds.json
+    python game-data-generator.py --region US --taxonomy taxonomy.json --urls urls.json --output public/data/birds
 """
 
 import json
 import argparse
 import os
+from pathlib import Path
 from typing import Dict, List, Any
 from collections import defaultdict
 
@@ -109,7 +110,9 @@ def build_audio_entry(url_entry):
     return {"url": url, "attribution": attribution}
 
 
-def group_entries_by_code(urls_data: List[Dict[str, Any]]) -> Dict[str, List[Dict[str, Any]]]:
+def group_entries_by_code(
+    urls_data: List[Dict[str, Any]],
+) -> Dict[str, List[Dict[str, Any]]]:
     """Group raw URL records (with metadata) by species code."""
     url_groups = defaultdict(list)
 
@@ -167,8 +170,7 @@ def process_taxonomy_data(
 
         # Get audio URLs for this species
         audio_urls = [
-            build_audio_entry(entry)
-            for entry in url_groups.get(species_code, [])
+            build_audio_entry(entry) for entry in url_groups.get(species_code, [])
         ]
 
         # Only include birds that have audio URLs
@@ -190,13 +192,15 @@ def process_taxonomy_data(
 
 
 def save_json_file(data: Dict[str, Any], filepath: str) -> None:
-    """Save data to JSON file with proper formatting."""
+    """Save data to a JSON file, creating parent directories as needed."""
+    path = Path(filepath)
     try:
-        with open(filepath, "w", encoding="utf-8") as f:
-            json.dump(data, f, indent=2, ensure_ascii=False)
-        print(f"Successfully saved data to '{filepath}'")
-    except IOError as e:
-        print(f"Error: Could not write to file '{filepath}': {e}")
+        path.parent.mkdir(parents=True, exist_ok=True)
+        text = json.dumps(data, indent=2, ensure_ascii=False) + "\n"
+        path.write_text(text, encoding="utf-8")
+        print(f"Successfully saved data to '{path}'")
+    except OSError as error:
+        print(f"Error: Could not write to file '{path}': {error}")
         exit(1)
 
 
@@ -207,7 +211,12 @@ def main():
     parser.add_argument("--region", required=True, help="Region code (e.g., US, EU)")
     parser.add_argument("--taxonomy", required=True, help="Path to taxonomy JSON file")
     parser.add_argument("--urls", required=True, help="Path to URLs JSON file")
-    parser.add_argument("--output", required=True, help="Output JSON file path")
+    parser.add_argument(
+        "--output",
+        required=True,
+        help="Output directory for per-region shards (preferred), or a legacy "
+        "aggregate JSON file",
+    )
 
     args = parser.parse_args()
 
@@ -218,10 +227,6 @@ def main():
     print(f"Loading URLs data from '{args.urls}'...")
     urls_data = load_json_file(args.urls)
 
-    # Load existing output file if it exists
-    print(f"Checking for existing output file '{args.output}'...")
-    output_data = load_existing_output(args.output)
-
     # Group URL records by species code (keeping metadata for
     # attribution; falls back to plain URLs for legacy scraped data)
     print("Processing URL data...")
@@ -231,14 +236,17 @@ def main():
     print("Processing taxonomy data and matching with audio URLs...")
     birds = process_taxonomy_data(taxonomy_data, url_groups)
 
-    # Update the output data for the specified region
     region_key = args.region.lower()
-    output_data[region_key] = birds
-
+    output_path = Path(args.output)
     print(f"Found {len(birds)} birds with audio URLs for region '{args.region}'")
 
-    # Save the updated data
-    save_json_file(output_data, args.output)
+    if output_path.suffix == ".json":
+        print(f"Checking for existing aggregate output '{args.output}'...")
+        output_data = load_existing_output(args.output)
+        output_data[region_key] = birds
+        save_json_file(output_data, args.output)
+    else:
+        save_json_file(birds, str(output_path / f"{region_key}.json"))
 
     print("Processing complete!")
 

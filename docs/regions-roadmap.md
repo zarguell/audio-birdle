@@ -19,16 +19,12 @@ Tracking issue: [#676](https://github.com/zarguell/audio-birdle/issues/676).
 
 ### Phase 0 — sharding
 
-The current `public/data/birds.json` is a single file with every region
-(~6.1 MB raw / ~455 KB gzip). Every game loads all of it. Before adding more
-countries:
+Bird data is sharded per region under `public/data/birds/`. The client loads
+only the selected region's shard; the manifest includes every shard. This keeps
+the game payload roughly constant as the region count grows.
 
-- [#669](https://github.com/zarguell/audio-birdle/issues/669) — shard birds by
-  region and load only the selected shard.
-
-The client, manifest, generators, validation, and tests all need to move
-together. This keeps the game payload roughly constant as the region count
-grows.
+- [#669](https://github.com/zarguell/audio-birdle/issues/669) — Phase 0
+  sharding work.
 
 ## Candidate data
 

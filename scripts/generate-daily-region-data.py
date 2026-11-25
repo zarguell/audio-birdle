@@ -47,10 +47,17 @@ def filter_regular_species(
 
 def load_playable_ids(output_file: str, region_key: str) -> set[str] | None:
     """Load the shipped bird IDs so filtered data never references no-audio birds."""
-    birds_path = Path(output_file).with_name("birds.json")
-    if not birds_path.exists():
+    output_path = Path(output_file)
+    shard_path = output_path.with_name("birds") / f"{region_key}.json"
+    if shard_path.exists():
+        with shard_path.open(encoding="utf-8") as handle:
+            birds = json.load(handle)
+        return {bird["id"] for bird in birds}
+
+    legacy_path = output_path.with_name("birds.json")
+    if not legacy_path.exists():
         return None
-    with birds_path.open(encoding="utf-8") as handle:
+    with legacy_path.open(encoding="utf-8") as handle:
         birds = json.load(handle)
     return {bird["id"] for bird in birds.get(region_key, [])}
 
