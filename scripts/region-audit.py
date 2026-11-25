@@ -441,7 +441,7 @@ def main(argv: Sequence[str] | None = None) -> int:
                 any_type_fallback=args.any_type_fallback,
                 limit=args.limit,
             )
-    except (ValueError, OSError, json.JSONDecodeError) as error:
+    except (ValueError, OSError) as error:
         print(f"Audit failed: {error}", file=sys.stderr)
         return 2
 
