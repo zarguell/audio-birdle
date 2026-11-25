@@ -93,7 +93,7 @@ class TestNormalizeAudioUrls:
     @staticmethod
     def test_missing_audio_url_safe():
         bird = make_bird()
-        del bird["audioUrl"]
+        bird.pop("audioUrl", None)
         assert enhance_bird_data.normalize_audio_urls(bird) == 0
 
 
@@ -115,7 +115,7 @@ class TestBackfillLearnMore:
     @staticmethod
     def test_missing_id_skipped():
         bird = make_bird()
-        del bird["id"]
+        bird.pop("id", None)
         assert enhance_bird_data.backfill_learn_more(bird) is False
 
 
