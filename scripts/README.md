@@ -279,3 +279,38 @@ python3 generate-daily-birds.py --date 2025-01-05 --days 7
 ---
 
 For detailed documentation, see [WORKFLOW_GUIDE.md](./WORKFLOW_GUIDE.md) and [QUICK_REFERENCE.md](./QUICK_REFERENCE.md).
+
+## Auditing a candidate country
+
+Before adding a country, run the read-only audit. It fetches the eBird species
+and subregion lists, filters the local taxonomy, and checks Xeno-canto audio
+coverage with the same quality/length rules as the production pipeline.
+
+```bash
+python3 region-audit.py --region CA --output region-audits/ca.json
+```
+
+The default gate is deliberately modest: **at least 50% of species-level eBird
+species** and **at least 300 playable species**. Override it for a stricter
+pilot:
+
+```bash
+python3 region-audit.py --region GB \
+  --min-quality B \
+  --target-coverage 60 \
+  --min-playable-species 400 \
+  --output region-audits/gb.json
+```
+
+For a quick structural check without calling Xeno-canto:
+
+```bash
+python3 region-audit.py --region CA --skip-audio \
+  --species-file path/to/ca-species.json \
+  --subregions-file path/to/ca-subregions.json
+```
+
+The JSON report includes missing-audio species, quality/license counts,
+subregion counts, and a `ready` flag. It does not modify `public/data/`.
+
+Requires `EBIRD_API_KEY` and `XC_API_KEY` in `.env` for the full audio audit.

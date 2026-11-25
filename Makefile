@@ -1,5 +1,5 @@
 # Developer commands. The deployed site is built by Python only.
-.PHONY: build serve lint test test-js test-python test-e2e test-live manifest
+.PHONY: build serve lint test test-js test-python test-e2e test-live manifest audit-region
 
 PYTHON ?= python3
 
@@ -12,6 +12,10 @@ serve:
 
 manifest:
 	$(PYTHON) -m sitegen manifest --data-dir public/data
+
+REGION ?= CA
+audit-region:
+	$(PYTHON) scripts/region-audit.py --region $(REGION) --output region-audits/$(REGION)-audit.json
 
 lint:
 	npm run lint
