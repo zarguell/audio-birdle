@@ -283,7 +283,7 @@ jobs:
           from pathlib import Path
           manifest = json.loads(Path("dist/data/manifest.json").read_text())
           assert manifest["schemaVersion"] == 1
-          assert "birds.json" in manifest["files"]
+          assert "birds/us.json" in manifest["files"]
           assert "daily.json" in manifest["files"]
           print("Build manifest verified:", len(manifest["files"]), "files")
           PY
