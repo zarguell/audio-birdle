@@ -342,6 +342,33 @@ class TestDataPipelineIntegration:
         assert "litshr31" in au_ids
 
     @staticmethod
+    def test_ie_subregions_are_subset_of_playable_birds(
+        birds_json, daily_subregion_json
+    ):
+        """The country-level Ireland pool must reference shipped IE birds."""
+        ie_ids = {bird["id"] for bird in birds_json["ie"]}
+        entries = daily_subregion_json["ie"]["Ireland"]
+        refs = {entry["id"] for entry in entries}
+        assert refs <= ie_ids, "Ireland pool references unplayable IE birds"
+        assert len(refs) >= 10
+
+    @staticmethod
+    def test_ie_daily_entries_come_from_seasonal_pool(daily_json):
+        """IE daily answers must be on the current seasonal filter."""
+        path = (
+            Path(__file__).parent.parent.parent
+            / "scripts"
+            / "data"
+            / "regions"
+            / "ie-daily-regular-species.json"
+        )
+        regular = json.loads(path.read_text(encoding="utf-8"))
+        for entry in (item for item in daily_json if item["region"] == "ie"):
+            assert entry["id"] in regular["Ireland"], (
+                f"IE answer {entry['id']} is not in the seasonal pool"
+            )
+
+    @staticmethod
     def test_birds_have_facts_and_learn_more(birds_json):
         """Offline enhancements must survive regeneration: every bird ships
         with a non-empty fact and learnMoreUrl (enhance-bird-data.py)."""

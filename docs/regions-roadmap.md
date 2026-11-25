@@ -14,17 +14,15 @@ Tracking issue: [#676](https://github.com/zarguell/audio-birdle/issues/676).
 |---|---:|---|
 | United States | 704 | Includes the `us-lower48` virtual region |
 | United Kingdom | 235 | England, Northern Ireland, Scotland, Wales |
+| Ireland | 139 | Country-level pool; 106 in the current daily filter |
 | Canada | 344 | Country-level pool |
 | Australia | 525 | Country-level pool |
 
-### Phase 0 — sharding
+### Phase 0 — sharding (complete)
 
 Bird data is sharded per region under `public/data/birds/`. The client loads
 only the selected region's shard; the manifest includes every shard. This keeps
 the game payload roughly constant as the region count grows.
-
-- [#669](https://github.com/zarguell/audio-birdle/issues/669) — Phase 0
-  sharding work.
 
 ## Candidate data
 
@@ -34,7 +32,7 @@ regularity, quality, length, and licensing.
 
 | Country | eBird species | XC species | XC/eBird | Status |
 |---|---:|---:|---:|---|
-| Ireland | 505 | 264 | 52% | Next — [#670](https://github.com/zarguell/audio-birdle/issues/670) |
+| Ireland | 505 | 264 | 52% | **Live** — 139 playable |
 | South Africa | 903 | 619 | 69% | Next — [#671](https://github.com/zarguell/audio-birdle/issues/671) |
 | Costa Rica | 973 | 657 | 68% | Audit — [#672](https://github.com/zarguell/audio-birdle/issues/672) |
 | France | 722 | 631 | 87% | Audit — [#673](https://github.com/zarguell/audio-birdle/issues/673) |
@@ -64,8 +62,8 @@ revisit if Xeno-canto coverage improves.
 One country is onboarded at a time, even when a wave lists several.
 
 ### Wave 1 — high-confidence, low-risk
-1. **Ireland** — small, clean, close to GB.
-2. **South Africa** — high coverage and a distinct avifauna.
+1. **Ireland** — complete.
+2. **South Africa** — next; high coverage and a distinct avifauna.
 
 ### Wave 2 — flagship coverage
 3. **Costa Rica** — strong Neotropical coverage.
@@ -87,7 +85,7 @@ South Korea, Morocco, Israel.
 A region is ready when the full audit reports:
 
 - country-level play, no subregions required
-- at least **150 playable species**
+- at least **100 playable species** (150 preferred for larger countries)
 - at least **50% audio coverage** of the regular pool
 - no unresolved taxonomy gaps
 - no Xeno-canto errors

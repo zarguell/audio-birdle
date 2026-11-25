@@ -28,7 +28,7 @@ def test_home_lists_regions_and_primary_navigation(page, base_url, console_error
 
 def test_region_directory_search_filter_and_pin(page, base_url, console_errors):
     page.goto(f"{base_url}/regions/", wait_until="networkidle")
-    assert page.locator("[data-region-row]").count() == 5
+    assert page.locator("[data-region-row]").count() == 6
 
     page.locator("[data-region-search]").fill("australia")
     assert page.locator("[data-region-row]:visible").count() == 1
@@ -36,7 +36,7 @@ def test_region_directory_search_filter_and_pin(page, base_url, console_errors):
 
     page.locator("[data-region-search]").fill("")
     page.locator('[data-continent-filter="europe"]').click()
-    assert page.locator("[data-region-row]:visible").count() == 1
+    assert page.locator("[data-region-row]:visible").count() == 2
     assert (
         page.locator('[data-continent-filter="europe"]').get_attribute("aria-pressed")
         == "true"
@@ -116,6 +116,19 @@ def test_au_country_pool_opens_normal_game(page, base_url, console_errors):
 
     page.locator('[data-mode-card="normal"]').click()
     page.wait_for_url(re.compile(r"/normal/\?region=au$"))
+    page.wait_for_selector(".answer-option")
+
+    assert page.locator(".answer-option").count() == 4
+    assert page.locator("[data-audio]").get_attribute("src").startswith("https://")
+    assert not console_errors
+
+
+def test_ie_country_pool_opens_normal_game(page, base_url, console_errors):
+    page.goto(f"{base_url}/play/?region=ie", wait_until="networkidle")
+    assert page.locator("[data-region-label]").first.inner_text() == "Ireland"
+
+    page.locator('[data-mode-card="normal"]').click()
+    page.wait_for_url(re.compile(r"/normal/\?region=ie$"))
     page.wait_for_selector(".answer-option")
 
     assert page.locator(".answer-option").count() == 4

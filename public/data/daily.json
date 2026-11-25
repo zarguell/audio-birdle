@@ -1562,6 +1562,13 @@
   },
   {
     "date": "2026-11-24",
+    "region": "ie",
+    "answerHash": "8baefd94",
+    "id": "stonec4",
+    "subregion": "Ireland"
+  },
+  {
+    "date": "2026-11-24",
     "region": "us",
     "answerHash": "25309582",
     "id": "rebwoo",
@@ -1597,6 +1604,13 @@
   },
   {
     "date": "2026-11-25",
+    "region": "ie",
+    "answerHash": "538a2120",
+    "id": "euroys1",
+    "subregion": "Ireland"
+  },
+  {
+    "date": "2026-11-25",
     "region": "us",
     "answerHash": "73771c9e",
     "id": "buwtea",
@@ -1629,6 +1643,13 @@
     "answerHash": "2ab6b943",
     "id": "commoo3",
     "subregion": "Wales"
+  },
+  {
+    "date": "2026-11-26",
+    "region": "ie",
+    "answerHash": "18a53b1d",
+    "id": "corplo",
+    "subregion": "Ireland"
   },
   {
     "date": "2026-11-26",

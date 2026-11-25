@@ -20,6 +20,13 @@
     "variantLabel": "Contiguous US"
   },
   {
+    "id": "ie",
+    "name": "Ireland",
+    "country": "IE",
+    "continent": "Europe",
+    "status": "live"
+  },
+  {
     "id": "gb",
     "name": "United Kingdom",
     "country": "GB",
