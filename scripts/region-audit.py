@@ -386,8 +386,6 @@ def _is_ready(
     regular_errors: list[dict[str, str]],
     regular_filter_used: bool,
     regular_species_count: int | None,
-    thin_subregions: list[str],
-    subregion_error: str | None,
 ) -> bool:
     if not audio:
         return False
@@ -400,8 +398,6 @@ def _is_ready(
         and not taxonomy_missing
         and not regular_errors
         and not (regular_filter_used and regular_species_count == 0)
-        and not thin_subregions
-        and not subregion_error
     )
 
 
@@ -413,8 +409,6 @@ def _recommendation(
     regular_filter_used: bool,
     regular_species_count: int | None,
     taxonomy_missing: list[str],
-    thin_subregions: list[str],
-    min_playable_per_subregion: int,
     target_coverage: float,
 ) -> str:
     if regular_errors:
@@ -432,11 +426,6 @@ def _recommendation(
         return "Xeno-canto errors occurred; rerun before enabling the region."
     if taxonomy_missing:
         return "Some regular eBird species are absent from the local taxonomy."
-    if thin_subregions:
-        return (
-            f"{len(thin_subregions)} subregion(s) have fewer than "
-            f"{min_playable_per_subregion} playable regular species."
-        )
     if audio["coverage_pct"] >= target_coverage:
         return "Coverage meets the target. Review missing species and proceed."
     return "Coverage is below target; improve audio coverage first."
@@ -475,8 +464,6 @@ def build_report(
         regular_errors=regular_errors,
         regular_filter_used=regular_filter_used,
         regular_species_count=regular_species_count,
-        thin_subregions=thin_subregions,
-        subregion_error=subregion_error,
     )
     recommendation = _recommendation(
         audio=audio,
@@ -485,8 +472,6 @@ def build_report(
         regular_filter_used=regular_filter_used,
         regular_species_count=regular_species_count,
         taxonomy_missing=taxonomy_missing,
-        thin_subregions=thin_subregions,
-        min_playable_per_subregion=min_playable_per_subregion,
         target_coverage=target_coverage,
     )
 
@@ -506,6 +491,7 @@ def build_report(
             "subregion_count": len(enriched_subregions),
             "subregions": enriched_subregions,
             "subregion_error": subregion_error,
+            "thin_subregions": thin_subregions,
         },
         "regular": {
             "enabled": regular_filter_used,
@@ -575,6 +561,8 @@ def format_summary(report: dict[str, Any]) -> str:
     ]
     if thin:
         lines.append(f"Thin subregions: {len(thin)}")
+    if report.get("ebird", {}).get("subregion_error"):
+        lines.append("Subregion list unavailable; country-level play is still valid.")
     lines.append(f"Ready: {'yes' if report['ready'] else 'no'}")
     lines.append(f"Next: {report['recommendation']}")
     return "\n".join(lines)
@@ -666,8 +654,9 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument(
         "--min-playable-per-subregion",
         type=int,
-        default=10,
-        help="Minimum playable regular species in every subregion (default: 10)",
+        default=1,
+        help="Advisory minimum playable regular species per subregion "
+        "(default: 1; does not block country readiness)",
     )
     parser.add_argument("--output", type=Path, help="Write the full JSON report")
     parser.add_argument("--country-name", help="Override the XC country filter")
