@@ -104,6 +104,7 @@ def test_fetch_observation_counts_keeps_successful_days(monkeypatch):
     )
 
     assert successful == {dates[0], dates[2]}
+    assert seen["amerob"] == {dates[0], dates[2]}
     assert counts["amerob"] == 2
     assert "invalid" not in counts
     assert len(errors) == 1
