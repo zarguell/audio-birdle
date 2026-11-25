@@ -117,6 +117,38 @@ def _normalize_subregions(payload: list[Any]) -> list[dict[str, str]]:
     return subregions
 
 
+def _fetch_observations_for_day(
+    code: str, date: Any, *, api_key: str
+) -> tuple[list[Any] | None, str | None]:
+    url = f"{EBIRD_BASE}/data/obs/{code}/historic/{date.year}/{date.month}/{date.day}"
+    try:
+        payload = ebird_api_common.get_json(url, api_key=api_key)
+    except (requests.RequestException, ValueError) as error:
+        return None, str(error)
+    if not isinstance(payload, list):
+        return None, "observation response was not an array"
+    return payload, None
+
+
+def _count_observations(
+    payload: Sequence[Any],
+    date: Any,
+    counts: Counter[str],
+    seen_days: defaultdict[str, set[Any]],
+) -> None:
+    for observation in payload:
+        if not isinstance(observation, dict):
+            continue
+        # eBird marks uncertain records with obsValid=false. They are exactly
+        # the kind of one-off rarity this filter should drop.
+        if observation.get("obsValid") is False:
+            continue
+        species = observation.get("speciesCode")
+        if isinstance(species, str):
+            counts[species] += 1
+            seen_days[species].add(date)
+
+
 def _count_regular_observations(
     code: str,
     dates: Sequence[Any],
@@ -129,29 +161,10 @@ def _count_regular_observations(
     seen_days: defaultdict[str, set[Any]] = defaultdict(set)
 
     for date in dates:
-        url = (
-            f"{EBIRD_BASE}/data/obs/{code}/historic/{date.year}/{date.month}/{date.day}"
-        )
-        try:
-            payload = ebird_api_common.get_json(url, api_key=api_key)
-        except (requests.RequestException, ValueError) as error:
-            return counts, seen_days, str(error)
-
-        if not isinstance(payload, list):
-            return counts, seen_days, "observation response was not an array"
-
-        for observation in payload:
-            if not isinstance(observation, dict):
-                continue
-            # eBird marks uncertain records with obsValid=false. They are
-            # exactly the kind of one-off rarity this filter should drop.
-            if observation.get("obsValid") is False:
-                continue
-            species = observation.get("speciesCode")
-            if isinstance(species, str):
-                counts[species] += 1
-                seen_days[species].add(date)
-
+        payload, error = _fetch_observations_for_day(code, date, api_key=api_key)
+        if error:
+            return counts, seen_days, error
+        _count_observations(payload or [], date, counts, seen_days)
         if delay > 0:
             time.sleep(delay)
 
