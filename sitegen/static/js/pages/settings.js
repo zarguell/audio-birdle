@@ -1,4 +1,4 @@
-import { clearRegion, initPage, resolveRegion } from "../app.js";
+import { initPage, resolveRegion } from "../app.js";
 import { clearDeadAudioUrls } from "../core/audio.js";
 import { loadRegions } from "../core/data.js";
 import { getTodayString } from "../core/dates.js";
@@ -34,8 +34,7 @@ const init = async () => {
   }
 
   qs("[data-change-region]")?.addEventListener("click", () => {
-    clearRegion();
-    window.location.href = "/";
+    window.location.href = "/regions/";
   });
 
   qs("[data-reset-today]")?.addEventListener("click", () => {

@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+{% from "macros.html" import icon, back_link %}
+{% block title %}Find your region — Audio-Birdle{% endblock %}
+{% block content %}
+  <div class="page-shell regions-page">
+    {{ back_link('/', 'Home') }}
+    <header class="page-heading">
+      <p class="eyebrow">Field guide</p>
+      <h1>Find your region</h1>
+      <p class="page-heading__meta">
+        Bird lists and daily answers are tailored to where you listen.
+      </p>
+    </header>
+    <section class="regions-toolbar" aria-label="Filter regions">
+      <label class="search-field">
+        <span class="sr-only">Search regions</span>
+        {{ icon('search', 'search-field__icon') }}
+        <input class="input search-field__input"
+               type="search"
+               placeholder="Search countries or regions"
+               autocomplete="off"
+               data-region-search>
+      </label>
+      <p class="regions-count" data-region-count aria-live="polite"></p>
+      <div class="region-filters" data-region-filters>
+        <button class="filter-chip is-active"
+                type="button"
+                data-continent-filter="all"
+                aria-pressed="true">All</button>
+        {% for group in region_groups %}
+          <button class="filter-chip"
+                  type="button"
+                  data-continent-filter="{{ group.id }}"
+                  aria-pressed="false">{{ group.name }}</button>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="paper-panel region-suggested"
+             data-region-suggested
+             hidden
+             aria-labelledby="suggested-title">
+      <div>
+        <p class="eyebrow">Suggested for you</p>
+        <h2 id="suggested-title" class="region-suggested__title">
+          <span data-region-suggested-name></span>
+        </h2>
+        <p class="muted small">Based on your browser settings. You can choose anywhere.</p>
+      </div>
+      <div class="region-suggested__actions">
+        <a class="button button--primary button--small"
+           data-region-suggested-link
+           href="/regions/">Open</a>
+        <button class="button button--ghost button--small"
+                type="button"
+                data-region-suggested-dismiss>Not now</button>
+      </div>
+    </section>
+
+    <section class="region-shortcuts" data-region-recent hidden aria-labelledby="recent-title">
+      <div class="region-shortcuts__heading">
+        <h2 id="recent-title" class="section-title">Recent</h2>
+      </div>
+      <div class="region-shortcut-list" data-region-recent-list></div>
+    </section>
+
+    <section class="region-shortcuts" data-region-favorites hidden aria-labelledby="favorites-title">
+      <div class="region-shortcuts__heading">
+        <h2 id="favorites-title" class="section-title">Pinned</h2>
+      </div>
+      <div class="region-shortcut-list" data-region-favorites-list></div>
+    </section>
+
+    <div class="region-groups" data-region-groups>
+      {% for group in region_groups %}
+        <section class="region-group" data-region-group="{{ group.id }}">
+          <div class="region-group__heading">
+            <h2>{{ group.name }}</h2>
+            <span class="region-group__rule" aria-hidden="true"></span>
+          </div>
+          <ul class="region-list">
+            {% for region in group.regions %}
+              <li class="region-row"
+                  data-region-row
+                  data-region-id="{{ region.id }}"
+                  data-region-name="{{ region.name }}"
+                  data-region-continent="{{ group.id }}"
+                  data-region-text="{{ region.name|lower }} {{ region.country|default('', true)|lower }} {{ region.variantLabel|default('', true)|lower }} {{ group.name|lower }}">
+                {% if region.status|default('live') == 'live' %}
+                  <a class="region-option"
+                     href="/play/?region={{ region.id }}"
+                     data-region-link="{{ region.id }}">
+                    <span class="region-option__body">
+                      <span class="region-option__name">{{ region.name }}</span>
+                      {% if region.variantLabel %}
+                        <span class="region-option__hint">{{ region.variantLabel }}</span>
+                      {% elif region.parentRegion %}
+                        <span class="region-option__hint">Based on {{ region.parentRegion|upper }}</span>
+                      {% endif %}
+                    </span>
+                    <span class="region-option__status" data-region-status="{{ region.id }}"></span>
+                    {{ icon('chevron-right', 'region-option__chevron') }}
+                  </a>
+                  <button class="region-favorite"
+                          type="button"
+                          data-region-favorite="{{ region.id }}"
+                          aria-label="Pin {{ region.name }}"
+                          aria-pressed="false">
+                    {{ icon('star', 'region-favorite__icon region-favorite__off') }}
+                    {{ icon('star-filled', 'region-favorite__icon region-favorite__on') }}
+                  </button>
+                {% else %}
+                  <div class="region-option region-option--disabled" aria-disabled="true">
+                    <span class="region-option__body">
+                      <span class="region-option__name">{{ region.name }}</span>
+                      <span class="region-option__hint">Coming soon</span>
+                    </span>
+                    <span class="region-option__status">Soon</span>
+                  </div>
+                {% endif %}
+              </li>
+            {% endfor %}
+          </ul>
+        </section>
+      {% endfor %}
+    </div>
+
+    <div class="empty-state empty-state--compact" data-region-empty hidden>
+      {{ icon('search', 'empty-state__icon') }}
+      <h2>No regions found</h2>
+      <p>Try a country name, continent, or shorter search.</p>
+    </div>
+  </div>
+{% endblock %}

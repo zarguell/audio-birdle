@@ -21,11 +21,11 @@
       "sha256": "de2c87d9ece2f7c57c9f5247cd6738d833480d1a86123e24076b0590a6fd402a"
     },
     "regions.json": {
-      "bytes": 461,
+      "bytes": 765,
       "path": "/data/regions.json",
-      "sha256": "fbe044950f1e411e2ef5c6b8e9b0e2ec8725111adb2ff266e1486d532a2fd1c6"
+      "sha256": "f9290bb977f4c341e0a128359315f806cde5264661d96cba3a3045c3041fb4bc"
     }
   },
-  "generatedAt": "2026-11-25T18:29:55Z",
+  "generatedAt": "2026-11-25T18:46:18Z",
   "schemaVersion": 1
 }
