@@ -37,12 +37,18 @@ def test_region_directory_search_filter_and_pin(page, base_url, console_errors):
     page.locator("[data-region-search]").fill("")
     page.locator('[data-continent-filter="europe"]').click()
     assert page.locator("[data-region-row]:visible").count() == 1
-    assert page.locator('[data-continent-filter="europe"]').get_attribute("aria-pressed") == "true"
+    assert (
+        page.locator('[data-continent-filter="europe"]').get_attribute("aria-pressed")
+        == "true"
+    )
 
     page.locator('[data-continent-filter="all"]').click()
     page.locator('[data-region-favorite="gb"]').click()
     assert page.locator("[data-region-favorites] [data-region-link='gb']").count() == 1
-    assert page.locator('[data-region-favorite="gb"]').get_attribute("aria-pressed") == "true"
+    assert (
+        page.locator('[data-region-favorite="gb"]').get_attribute("aria-pressed")
+        == "true"
+    )
 
     assert not console_errors
 

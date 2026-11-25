@@ -163,6 +163,7 @@ def region_groups(regions: list[dict[str, Any]]) -> list[dict[str, Any]]:
 
     groups = []
     for name in names:
+
         def sort_key(region: dict[str, Any]) -> tuple[int, int, int]:
             region_id = region.get("id")
             parent_id = region.get("parentRegion")
@@ -174,9 +175,7 @@ def region_groups(regions: list[dict[str, Any]]) -> list[dict[str, Any]]:
             )
 
         entries = sorted(grouped[name], key=sort_key)
-        groups.append(
-            {"id": _continent_id(name), "name": name, "regions": entries}
-        )
+        groups.append({"id": _continent_id(name), "name": name, "regions": entries})
     return groups
 
 
