@@ -334,11 +334,18 @@ schedule.
 make serve                  # Build + serve at 127.0.0.1:8000
 make build                  # Render dist/ via scripts/build-site.sh
 make manifest               # Regenerate public/data/manifest.json
-make lint                   # ESLint + Stylelint
+make lint                   # ESLint + Stylelint + djlint + pylint
+make check                  # lint + Python/JS tests + build
+make check-all              # make check + browser tests
+make hooks                  # Install pre-commit and pre-push hooks
 npm run test:js             # Node unit tests
 pytest tests/ -m "not e2e and not live" -v
 pytest tests/e2e -m "not live" -v --no-cov
 ```
+
+Run `make hooks` once per checkout. Commits then run the ESLint, Stylelint,
+djlint, pylint, gitleaks, and whitespace hooks; pushes run `make check`.
+Use `pre-commit run --all-files` for an explicit full pass.
 
 Python lint: `pylint scripts/*.py sitegen/*.py --errors-only`.
 Template lint: `djlint sitegen/templates --check --lint`.

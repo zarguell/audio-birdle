@@ -23,6 +23,12 @@ repos:
         language: system
         types: [html]
         pass_filenames: false
+      - id: make-check
+        name: make check
+        entry: make check
+        language: system
+        stages: [pre-push]
+        pass_filenames: false
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.4.0
     hooks:
