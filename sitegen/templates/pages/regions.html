@@ -35,7 +35,6 @@
         {% endfor %}
       </div>
     </section>
-
     <section class="paper-panel region-suggested"
              data-region-suggested
              hidden
@@ -56,21 +55,24 @@
                 data-region-suggested-dismiss>Not now</button>
       </div>
     </section>
-
-    <section class="region-shortcuts" data-region-recent hidden aria-labelledby="recent-title">
+    <section class="region-shortcuts"
+             data-region-recent
+             hidden
+             aria-labelledby="recent-title">
       <div class="region-shortcuts__heading">
         <h2 id="recent-title" class="section-title">Recent</h2>
       </div>
       <div class="region-shortcut-list" data-region-recent-list></div>
     </section>
-
-    <section class="region-shortcuts" data-region-favorites hidden aria-labelledby="favorites-title">
+    <section class="region-shortcuts"
+             data-region-favorites
+             hidden
+             aria-labelledby="favorites-title">
       <div class="region-shortcuts__heading">
         <h2 id="favorites-title" class="section-title">Pinned</h2>
       </div>
       <div class="region-shortcut-list" data-region-favorites-list></div>
     </section>
-
     <div class="region-groups" data-region-groups>
       {% for group in region_groups %}
         <section class="region-group" data-region-group="{{ group.id }}">
@@ -86,7 +88,7 @@
                   data-region-name="{{ region.name }}"
                   data-region-continent="{{ group.id }}"
                   data-region-text="{{ region.name|lower }} {{ region.country|default('', true)|lower }} {{ region.variantLabel|default('', true)|lower }} {{ group.name|lower }}">
-                {% if region.status|default('live') == 'live' %}
+                {% if region.status|default("live") == "live" %}
                   <a class="region-option"
                      href="/play/?region={{ region.id }}"
                      data-region-link="{{ region.id }}">
@@ -124,7 +126,6 @@
         </section>
       {% endfor %}
     </div>
-
     <div class="empty-state empty-state--compact" data-region-empty hidden>
       {{ icon('search', 'empty-state__icon') }}
       <h2>No regions found</h2>
