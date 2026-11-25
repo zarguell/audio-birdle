@@ -41,6 +41,16 @@ def filter_regular_species(
     return [species_id for species_id in unique_ids if species_id in allowed]
 
 
+def load_playable_ids(output_file: str, region_key: str) -> set[str] | None:
+    """Load the shipped bird IDs so filtered data never references no-audio birds."""
+    birds_path = Path(output_file).with_name("birds.json")
+    if not birds_path.exists():
+        return None
+    with birds_path.open(encoding="utf-8") as handle:
+        birds = json.load(handle)
+    return {bird["id"] for bird in birds.get(region_key, [])}
+
+
 def main():
     # Load API key from .env (before arg parsing so failures are early)
     api_key = ebird_api_common.load_api_key()
@@ -67,6 +77,9 @@ def main():
         raise ValueError("Subregions list is empty.")
 
     regular_map = load_regular_species(args.subregions_file, region_key)
+    playable_ids = (
+        load_playable_ids(args.output_file, region_key) if regular_map else None
+    )
     if regular_map:
         print(f"Using regular-species filter for {region_key}")
 
@@ -105,6 +118,10 @@ def main():
         # one is configured for this region.
         observed_ids = sorted({obs["speciesCode"] for obs in observations})
         unique_ids = filter_regular_species(observed_ids, regular_map, subregion_name)
+        if playable_ids is not None:
+            unique_ids = [
+                species_id for species_id in unique_ids if species_id in playable_ids
+            ]
 
         # Build new subregion data
         new_subregion_data = [{"id": species_id} for species_id in unique_ids]
