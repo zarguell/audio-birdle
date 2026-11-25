@@ -9,7 +9,7 @@ def test_home_lists_regions_and_primary_navigation(page, base_url, console_error
     assert page.title() == "Audio-Birdle"
     assert page.locator("h1").inner_text() == "Audio-Birdle"
     assert "Listen close" in page.locator(".home-tagline").text_content()
-    assert page.locator(".region-option").count() == 4
+    assert page.locator(".region-option").count() == 5
     assert page.locator(".tabbar__link").count() == 5
     assert page.locator(".skip-link").count() == 1
     assert page.locator("[data-continue]").is_hidden()
@@ -75,6 +75,19 @@ def test_ca_country_pool_opens_normal_game(page, base_url, console_errors):
 
     page.locator('[data-mode-card="normal"]').click()
     page.wait_for_url(re.compile(r"/normal/\?region=ca$"))
+    page.wait_for_selector(".answer-option")
+
+    assert page.locator(".answer-option").count() == 4
+    assert page.locator("[data-audio]").get_attribute("src").startswith("https://")
+    assert not console_errors
+
+
+def test_au_country_pool_opens_normal_game(page, base_url, console_errors):
+    page.goto(f"{base_url}/play/?region=au", wait_until="networkidle")
+    assert page.locator("[data-region-label]").first.inner_text() == "Australia"
+
+    page.locator('[data-mode-card="normal"]').click()
+    page.wait_for_url(re.compile(r"/normal/\?region=au$"))
     page.wait_for_selector(".answer-option")
 
     assert page.locator(".answer-option").count() == 4

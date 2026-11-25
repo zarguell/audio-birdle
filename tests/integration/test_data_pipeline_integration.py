@@ -300,6 +300,39 @@ class TestDataPipelineIntegration:
             )
 
     @staticmethod
+    def test_au_subregions_are_subset_of_playable_birds(
+        birds_json, daily_subregion_json
+    ):
+        """The country-level Australia pool must reference shipped AU birds."""
+        au_ids = {bird["id"] for bird in birds_json["au"]}
+        entries = daily_subregion_json["au"]["Australia"]
+        refs = {entry["id"] for entry in entries}
+        assert refs <= au_ids, "Australia pool references unplayable AU birds"
+        assert len(refs) >= 10
+
+    @staticmethod
+    def test_au_daily_entries_come_from_seasonal_pool(daily_json):
+        """AU daily answers must be on the current seasonal filter."""
+        path = (
+            Path(__file__).parent.parent.parent
+            / "scripts"
+            / "data"
+            / "regions"
+            / "au-daily-regular-species.json"
+        )
+        regular = json.loads(path.read_text(encoding="utf-8"))
+        for entry in (item for item in daily_json if item["region"] == "au"):
+            assert entry["id"] in regular["Australia"], (
+                f"AU answer {entry['id']} is not in the seasonal pool"
+            )
+
+    @staticmethod
+    def test_au_uses_current_taxonomy_split(birds_json):
+        """AU should use the current eBird split code, not a legacy entry."""
+        au_ids = {bird["id"] for bird in birds_json["au"]}
+        assert "litshr31" in au_ids
+
+    @staticmethod
     def test_birds_have_facts_and_learn_more(birds_json):
         """Offline enhancements must survive regeneration: every bird ships
         with a non-empty fact and learnMoreUrl (enhance-bird-data.py)."""

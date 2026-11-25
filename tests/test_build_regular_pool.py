@@ -34,6 +34,14 @@ def test_month_windows_are_past_only_and_ordered():
     assert all(day < date(2026, 11, 25) for window in windows for day in window)
 
 
+def test_month_windows_can_sample_every_other_month():
+    windows = build_regular_pool.month_windows(
+        date(2026, 11, 25), months=6, window_days=7, step=2
+    )
+    starts = [window[0].month for window in windows]
+    assert starts == [11, 9, 7, 5, 3, 1]
+
+
 def test_regular_from_counts_requires_both_thresholds():
     counts = Counter({"resident": 5, "oneday": 5, "rare": 1})
     seen = defaultdict(set)

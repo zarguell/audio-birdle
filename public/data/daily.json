@@ -1541,6 +1541,13 @@
   },
   {
     "date": "2026-11-24",
+    "region": "au",
+    "answerHash": "a0704f2c",
+    "id": "resfly1",
+    "subregion": "Australia"
+  },
+  {
+    "date": "2026-11-24",
     "region": "ca",
     "answerHash": "89323227",
     "id": "norgan",
@@ -1569,6 +1576,13 @@
   },
   {
     "date": "2026-11-25",
+    "region": "au",
+    "answerHash": "4231608d",
+    "id": "dobfin1",
+    "subregion": "Australia"
+  },
+  {
+    "date": "2026-11-25",
     "region": "ca",
     "answerHash": "647952f8",
     "id": "horlar",
@@ -1594,6 +1608,13 @@
     "answerHash": "104c723e",
     "id": "amerob",
     "subregion": "North Dakota"
+  },
+  {
+    "date": "2026-11-26",
+    "region": "au",
+    "answerHash": "c96afa7a",
+    "id": "olbori1",
+    "subregion": "Australia"
   },
   {
     "date": "2026-11-26",
