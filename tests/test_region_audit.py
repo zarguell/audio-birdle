@@ -264,8 +264,7 @@ def test_regular_filter_excludes_single_day_vagrant(
 
     calls = {"count": 0}
 
-    def fake_get_json(url, api_key=None, **kwargs):
-        del url, api_key, kwargs
+    def fake_get_json(*_args, **_kwargs):
         calls["count"] += 1
         observations = [
             {"speciesCode": "amerob", "obsValid": True},
