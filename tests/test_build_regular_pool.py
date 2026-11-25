@@ -18,6 +18,7 @@ spec = importlib.util.spec_from_file_location(
     "build_regular_pool", SCRIPTS / "build-regular-pool.py"
 )
 build_regular_pool = importlib.util.module_from_spec(spec)
+sys.modules[spec.name] = build_regular_pool
 spec.loader.exec_module(build_regular_pool)
 
 
@@ -74,10 +75,12 @@ def test_build_pool_unions_months_and_drops_single_day_species(monkeypatch):
     pool = build_regular_pool.build_pool(
         subregions,
         windows,
-        api_key="test-key",
-        min_observations=3,
-        min_days=3,
-        delay=0,
+        build_regular_pool.PoolOptions(
+            api_key="test-key",
+            min_observations=3,
+            min_days=3,
+            delay=0,
+        ),
     )
 
     assert pool == {"England": ["summer", "winter"]}

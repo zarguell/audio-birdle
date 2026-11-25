@@ -23,6 +23,7 @@ import argparse
 import calendar
 import json
 import time
+from dataclasses import dataclass
 from collections import Counter, defaultdict
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
@@ -33,6 +34,14 @@ import requests
 import ebird_api_common
 
 EBIRD_BASE = "https://api.ebird.org/v2"
+
+
+@dataclass(frozen=True)
+class PoolOptions:
+    api_key: str
+    min_observations: int
+    min_days: int
+    delay: float
 
 
 def month_windows(today: date, months: int, window_days: int) -> list[list[date]]:
@@ -141,11 +150,7 @@ def regular_from_counts(
 def build_pool(
     subregions: list[dict[str, str]],
     windows: list[list[date]],
-    *,
-    api_key: str,
-    min_observations: int,
-    min_days: int,
-    delay: float,
+    options: PoolOptions,
 ) -> dict[str, list[str]]:
     """Union each subregion's regular species across the sampled months."""
     pool: dict[str, set[str]] = {sub["name"]: set() for sub in subregions}
@@ -157,22 +162,25 @@ def build_pool(
             name = subregion["name"]
             print(f"  {label} {name} ({code})", flush=True)
             counts, seen_days, successful_days, errors = fetch_observation_counts(
-                code, window, api_key=api_key, delay=delay
+                code,
+                window,
+                api_key=options.api_key,
+                delay=options.delay,
             )
             if errors:
                 print(
                     f"  Warning: {name} {label}: {len(errors)} day(s) failed; "
                     f"using {len(successful_days)} successful day(s)"
                 )
-            if len(successful_days) < min_days:
+            if len(successful_days) < options.min_days:
                 print(f"  Skipping {name} {label}: not enough successful days")
                 continue
             pool[name].update(
                 regular_from_counts(
                     counts,
                     seen_days,
-                    min_observations=min_observations,
-                    min_days=min_days,
+                    min_observations=options.min_observations,
+                    min_days=options.min_days,
                 )
             )
 
@@ -248,10 +256,12 @@ def run(args: argparse.Namespace) -> int:
         pool = build_pool(
             subregions,
             windows,
-            api_key=ebird_api_common.load_api_key(),
-            min_observations=args.min_observations,
-            min_days=args.min_days,
-            delay=args.delay,
+            PoolOptions(
+                api_key=ebird_api_common.load_api_key(),
+                min_observations=args.min_observations,
+                min_days=args.min_days,
+                delay=args.delay,
+            ),
         )
     except RuntimeError as error:
         print(f"Pool build failed: {error}")
