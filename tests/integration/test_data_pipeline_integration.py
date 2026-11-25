@@ -311,19 +311,26 @@ class TestDataPipelineIntegration:
         assert len(refs) >= 10
 
     @staticmethod
-    def test_au_daily_entries_come_from_seasonal_pool(daily_json):
-        """AU daily answers must be on the current seasonal filter."""
-        path = (
-            Path(__file__).parent.parent.parent
-            / "scripts"
-            / "data"
-            / "regions"
-            / "au-daily-regular-species.json"
+    def test_au_daily_entries_come_from_regular_pool(daily_json):
+        """AU daily answers must come from the year-round regular pool.
+
+        AU deliberately ships no ``au-daily-regular-species.json``: that
+        sibling file replaces the year-round pool for *every* season (no
+        month key, no expiry, nothing regenerates it), which would retire a
+        large share of the playable species from the daily rotation for good.
+        Seasonality is handled by intersecting with today's eBird
+        observations, so the annual pool is the correct filter.
+        """
+        regions_dir = Path(__file__).parent.parent.parent / "scripts" / "data"
+        assert not (regions_dir / "regions" / "au-daily-regular-species.json").exists()
+        regular = json.loads(
+            (regions_dir / "regions" / "au-regular-species.json").read_text(
+                encoding="utf-8"
+            )
         )
-        regular = json.loads(path.read_text(encoding="utf-8"))
         for entry in (item for item in daily_json if item["region"] == "au"):
             assert entry["id"] in regular["Australia"], (
-                f"AU answer {entry['id']} is not in the seasonal pool"
+                f"AU answer {entry['id']} is not in the regular pool"
             )
 
     @staticmethod

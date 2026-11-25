@@ -223,7 +223,12 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--delay", type=float, default=0.2)
     parser.add_argument("--min-species", type=int, default=1)
     parser.add_argument("--output", type=Path, required=True)
-    return parser.parse_args(argv)
+    args = parser.parse_args(argv)
+    if args.months < 1:
+        parser.error("--months must be at least 1")
+    if args.month_step < 1:
+        parser.error("--month-step must be at least 1")
+    return args
 
 
 def load_subregions(path: Path) -> list[dict[str, str]] | None:

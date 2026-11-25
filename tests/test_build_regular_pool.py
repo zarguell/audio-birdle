@@ -9,6 +9,7 @@ from collections import Counter, defaultdict
 from datetime import date
 from pathlib import Path
 
+import pytest
 import requests
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -40,6 +41,20 @@ def test_month_windows_can_sample_every_other_month():
     )
     starts = [window[0].month for window in windows]
     assert starts == [11, 9, 7, 5, 3, 1]
+
+
+def test_parse_args_rejects_non_positive_months_and_step():
+    base = ["--region", "AU", "--subregions-file", "x.json", "--output", "y.json"]
+
+    with pytest.raises(SystemExit):
+        build_regular_pool.parse_args([*base, "--months", "0"])
+    with pytest.raises(SystemExit):
+        build_regular_pool.parse_args([*base, "--month-step", "0"])
+    with pytest.raises(SystemExit):
+        build_regular_pool.parse_args([*base, "--month-step", "-2"])
+
+    args = build_regular_pool.parse_args([*base, "--months", "6", "--month-step", "2"])
+    assert (args.months, args.month_step) == (6, 2)
 
 
 def test_regular_from_counts_requires_both_thresholds():

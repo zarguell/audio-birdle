@@ -6,9 +6,9 @@
       "sha256": "81f067b2a699ac112a02583a8b4d95ae4d8598ec51eba2e62d195e77060dd101"
     },
     "daily-subregion-birds.json": {
-      "bytes": 467085,
+      "bytes": 473510,
       "path": "/data/daily-subregion-birds.json",
-      "sha256": "f20fc0afe9ea83f2007d5da35b4b8186e906bafb37ca7512eff5eaca82767a92"
+      "sha256": "4d6d0844f4010977c7830a64cd804cc5027a8008460f91bfba6d5fbd4cb630b5"
     },
     "daily.json": {
       "bytes": 32363,
@@ -26,6 +26,6 @@
       "sha256": "fbe044950f1e411e2ef5c6b8e9b0e2ec8725111adb2ff266e1486d532a2fd1c6"
     }
   },
-  "generatedAt": "2026-11-25T18:15:47Z",
+  "generatedAt": "2026-11-25T18:29:55Z",
   "schemaVersion": 1
 }
