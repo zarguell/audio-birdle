@@ -264,17 +264,17 @@ intersects the current eBird observations with it; no workflow change is
 needed, and regions without a filter file keep their old behavior.
 
 The pilot gate is **50% audio coverage of the regular pool** and **at least 150
-playable species**, with at least 10 playable regular species in every
-subregion. Override with `--target-coverage`, `--min-playable-species`, and
-`--min-playable-per-subregion`. Review missing-audio species, Xeno-canto errors,
-and per-subregion counts before generating production data; a subregion with a
-tiny regular pool (for example a northern territory) should be grouped with a
-neighbour or left out rather than shipped as its own daily pool.
+playable species** for the country. Subregions are optional: their playable
+counts are advisory, and `--min-playable-per-subregion` only controls a warning
+— it never blocks a country. A subregion with no playable species should be
+excluded or grouped, but a country with one thin territory is still playable at
+the country level. Override the gate with `--target-coverage` and
+`--min-playable-species`.
 
 After a country passes:
 
-1. Generate its taxonomy, subregions, year-round regular-species filter, and
-   Xeno-canto URL records.
+1. Generate its taxonomy, optional subregions, year-round regular-species
+   filter, and Xeno-canto URL records.
 2. Generate `birds.json` for the region.
 3. Add its subregion file so the daily workflow fetches it.
 4. Generate its daily subregion lists through the filtered generator.

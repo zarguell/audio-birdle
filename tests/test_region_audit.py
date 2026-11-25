@@ -310,7 +310,7 @@ def test_regular_filter_excludes_single_day_vagrant(
             "--min-playable-species",
             "2",
             "--min-playable-per-subregion",
-            "1",
+            "10",
             "--output",
             str(tmp_path / "report.json"),
         ]
@@ -324,6 +324,7 @@ def test_regular_filter_excludes_single_day_vagrant(
     assert report["taxonomy"]["matched_species"] == 2
     assert report["audio"]["species_checked"] == 2
     assert report["audio"]["playable_ids"] == ["amerob", "barswa"]
+    assert report["ebird"]["thin_subregions"] == ["Ontario"]
     assert report["ready"] is True
 
 

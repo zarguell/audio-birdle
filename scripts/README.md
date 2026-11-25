@@ -310,16 +310,16 @@ It samples a short window in each of the last 12 months. The daily generator
 automatically reads `<region>-regular-species.json` from the same directory as
 the subregion file and keeps only its species.
 
-The default gate is **50% audio coverage of the regular pool**, **at least 150
-playable species**, and at least 10 playable regular species in every
-subregion. Override it for a stricter pilot:
+The country gate is **50% audio coverage of the regular pool** and **at least
+150 playable species**. Subregions are optional; their counts are advisory and
+`--min-playable-per-subregion` never blocks a country. Override the gate for a
+stricter pilot:
 
 ```bash
 python3 region-audit.py --region GB \
   --min-quality B \
   --target-coverage 60 \
   --min-playable-species 250 \
-  --min-playable-per-subregion 30 \
   --output region-audits/gb.json
 ```
 
