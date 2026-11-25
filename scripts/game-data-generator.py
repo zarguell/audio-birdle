@@ -196,9 +196,8 @@ def save_json_file(data: Dict[str, Any], filepath: str) -> None:
     path = Path(filepath)
     try:
         path.parent.mkdir(parents=True, exist_ok=True)
-        with path.open("w", encoding="utf-8") as handle:
-            json.dump(data, handle, indent=2, ensure_ascii=False)
-            handle.write("\n")
+        text = json.dumps(data, indent=2, ensure_ascii=False) + "\n"
+        path.write_text(text, encoding="utf-8")
         print(f"Successfully saved data to '{path}'")
     except OSError as error:
         print(f"Error: Could not write to file '{path}': {error}")
@@ -247,7 +246,6 @@ def main():
         output_data[region_key] = birds
         save_json_file(output_data, args.output)
     else:
-        output_path.mkdir(parents=True, exist_ok=True)
         save_json_file(birds, str(output_path / f"{region_key}.json"))
 
     print("Processing complete!")
