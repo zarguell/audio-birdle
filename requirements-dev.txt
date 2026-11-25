@@ -8,3 +8,4 @@ MarkupSafe==3.0.4
 djlint==1.54.0
 playwright==1.65.2
 pylint==4.1.4
+pre-commit==4.7.0

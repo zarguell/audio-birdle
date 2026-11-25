@@ -1,5 +1,5 @@
 # Developer commands. The deployed site is built by Python only.
-.PHONY: build serve lint test test-js test-python test-e2e test-live manifest audit-region
+.PHONY: build serve lint hooks check check-all test test-js test-python test-e2e test-live manifest audit-region
 
 PYTHON ?= python3
 
@@ -21,6 +21,14 @@ lint:
 	npm run lint
 	djlint sitegen/templates --check --lint
 	pylint scripts/*.py sitegen/*.py --errors-only
+
+hooks:
+	pre-commit install
+	pre-commit install --hook-type pre-push
+
+check: lint test-python test-js build
+
+check-all: check test-e2e
 
 test-js:
 	npm run test:js

@@ -115,6 +115,7 @@ source .venv/bin/activate
 pip install -r requirements-dev.txt
 npm ci
 python -m playwright install chromium
+make hooks               # install pre-commit and pre-push hooks
 ```
 
 ### Commands
@@ -122,12 +123,18 @@ python -m playwright install chromium
 ```bash
 make serve              # Build and serve at http://127.0.0.1:8000
 make build              # Render dist/ (installs Jinja into .build-deps)
-make lint               # ESLint + Stylelint + djlint (see Makefile)
+make lint               # ESLint + Stylelint + djlint + pylint
+make check              # lint + Python/JS tests + build (pre-push)
+make hooks              # Install pre-commit and pre-push hooks
 make test-python        # pytest, excluding browser/live tests
 make test-js            # Node unit tests
 make test-e2e           # Build + Playwright against a local server
 make test-live          # Playwright against LIVE_SITE_URL
+make check-all          # make check + browser tests
 ```
+
+Commits run the linters through pre-commit. Pushes run `make check`.
+Use `pre-commit run --all-files` for a full lint pass without committing.
 
 Equivalent direct commands:
 
