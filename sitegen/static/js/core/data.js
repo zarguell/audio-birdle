@@ -9,7 +9,6 @@
 import { DATA_FILES } from "./constants.js";
 
 const parsedCache = new Map();
-const birdListCache = new Map();
 let manifestPromise = null;
 
 export class DataVersionError extends Error {}
@@ -55,15 +54,11 @@ const sanitizeBird = (bird) => {
   return bird;
 };
 
-const sanitizeBirds = (birds) => {
-  if (!birds || typeof birds !== "object") {
+const sanitizeBirdList = (birds) => {
+  if (!Array.isArray(birds)) {
     return birds;
   }
-  for (const regionBirds of Object.values(birds)) {
-    if (Array.isArray(regionBirds)) {
-      regionBirds.forEach(sanitizeBird);
-    }
-  }
+  birds.forEach(sanitizeBird);
   return birds;
 };
 
@@ -211,12 +206,21 @@ export async function loadRegions({ force = false } = {}) {
   return regions;
 }
 
-export async function loadBirds({ force = false } = {}) {
-  const birds = await fetchData(DATA_FILES.birds, { force });
-  if (!birds || typeof birds !== "object" || Array.isArray(birds)) {
-    throw new Error("birds.json must be an object");
+export async function loadBirds(regionId, { force = false } = {}) {
+  if (!regionId) {
+    throw new Error("A region id is required to load birds");
   }
-  return sanitizeBirds(birds);
+  const birds = await fetchData(`birds/${regionId}.json`, { force });
+  if (!Array.isArray(birds)) {
+    throw new Error(`birds/${regionId}.json must be an array`);
+  }
+  return sanitizeBirdList(birds);
+}
+
+export async function loadRegionBirds(regionId, regions, { force = false } = {}) {
+  const region = regions.find((entry) => entry.id === regionId);
+  const shardId = region?.parentRegion || regionId;
+  return loadBirds(shardId, { force });
 }
 
 export async function loadDaily({ force = false } = {}) {
@@ -234,26 +238,3 @@ export async function loadHistory({ force = false } = {}) {
   }
   return history;
 }
-
-export function getBirdList(regionId, regions, birds) {
-  if (birdListCache.has(regionId)) {
-    return birdListCache.get(regionId);
-  }
-
-  if (Array.isArray(birds[regionId])) {
-    birdListCache.set(regionId, birds[regionId]);
-    return birds[regionId];
-  }
-
-  // Virtual regions (for example us-lower48) use the parent region's pool.
-  // The daily generator filters *subregion selection* separately; subtracting
-  // every species observed in an excluded subregion removed birds that also
-  // live elsewhere (for example Northern Mockingbird) and could make the
-  // daily answer impossible to find.
-  const region = regions.find((entry) => entry.id === regionId);
-  const parentBirds = region?.parentRegion ? birds[region.parentRegion] : null;
-  const result = Array.isArray(parentBirds) ? parentBirds : [];
-  birdListCache.set(regionId, result);
-  return result;
-}
-

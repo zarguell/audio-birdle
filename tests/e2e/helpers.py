@@ -58,23 +58,26 @@ def _find_answer(bird_list: list[dict], answer_hash: str) -> dict | None:
     )
 
 
+def load_region_birds(region: str) -> list[dict]:
+    regions = load_json("regions.json")
+    return load_json(f"birds/{_lookup_region(region, regions)}.json")
+
+
 def answer_for(region: str, day: str | None = None) -> tuple[dict, dict]:
     """Return the latest daily bird and entry for a region on/before *day*."""
     day = day or today_iso()
     daily = load_json("daily.json")
     entry = _latest_daily_entry(daily, region, day)
-    birds = load_json("birds.json")
-    regions = load_json("regions.json")
-    lookup_region = _lookup_region(region, regions)
-    bird = _find_answer(birds[lookup_region], entry["answerHash"])
+    birds = load_region_birds(region)
+    bird = _find_answer(birds, entry["answerHash"])
     if not bird:
-        raise AssertionError(f"Daily answer for {region} is not in birds.json")
+        raise AssertionError(f"Daily answer for {region} is not in its bird shard")
     return bird, entry
 
 
 def other_bird(bird_id: str, region: str = "us") -> dict:
-    birds = load_json("birds.json")
-    result = next((bird for bird in birds[region] if bird["id"] != bird_id), None)
+    birds = load_region_birds(region)
+    result = next((bird for bird in birds if bird["id"] != bird_id), None)
     if not result:
         raise AssertionError(f"No alternative bird found in {region}")
     return result

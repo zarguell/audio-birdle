@@ -37,12 +37,13 @@ Bird Data Schema:
 }
 
 Usage:
-    python bird_json_generator.py --region US --taxonomy taxonomy.json --urls urls.json --output birds.json
+    python game-data-generator.py --region US --taxonomy taxonomy.json --urls urls.json --output public/data/birds
 """
 
 import json
 import argparse
 import os
+from pathlib import Path
 from typing import Dict, List, Any
 from collections import defaultdict
 
@@ -207,7 +208,12 @@ def main():
     parser.add_argument("--region", required=True, help="Region code (e.g., US, EU)")
     parser.add_argument("--taxonomy", required=True, help="Path to taxonomy JSON file")
     parser.add_argument("--urls", required=True, help="Path to URLs JSON file")
-    parser.add_argument("--output", required=True, help="Output JSON file path")
+    parser.add_argument(
+        "--output",
+        required=True,
+        help="Output directory for per-region shards (preferred), or a legacy "
+        "aggregate JSON file",
+    )
 
     args = parser.parse_args()
 
@@ -218,10 +224,6 @@ def main():
     print(f"Loading URLs data from '{args.urls}'...")
     urls_data = load_json_file(args.urls)
 
-    # Load existing output file if it exists
-    print(f"Checking for existing output file '{args.output}'...")
-    output_data = load_existing_output(args.output)
-
     # Group URL records by species code (keeping metadata for
     # attribution; falls back to plain URLs for legacy scraped data)
     print("Processing URL data...")
@@ -231,14 +233,22 @@ def main():
     print("Processing taxonomy data and matching with audio URLs...")
     birds = process_taxonomy_data(taxonomy_data, url_groups)
 
-    # Update the output data for the specified region
     region_key = args.region.lower()
-    output_data[region_key] = birds
-
+    output_path = Path(args.output)
     print(f"Found {len(birds)} birds with audio URLs for region '{args.region}'")
 
-    # Save the updated data
-    save_json_file(output_data, args.output)
+    if output_path.suffix == ".json":
+        print(f"Checking for existing aggregate output '{args.output}'...")
+        output_data = load_existing_output(args.output)
+        output_data[region_key] = birds
+        save_json_file(output_data, args.output)
+    else:
+        output_path.mkdir(parents=True, exist_ok=True)
+        shard_path = output_path / f"{region_key}.json"
+        with shard_path.open("w", encoding="utf-8") as handle:
+            json.dump(birds, handle, indent=2, ensure_ascii=False)
+            handle.write("\n")
+        print(f"Successfully saved region shard to '{shard_path}'")
 
     print("Processing complete!")
 

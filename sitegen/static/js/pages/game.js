@@ -6,7 +6,7 @@ import {
 import { GAME_CONFIG } from "../core/constants.js";
 import { generateAnswerOptions } from "../core/answers.js";
 import { compareTaxonomy } from "../core/taxonomy.js";
-import { getBirdList, loadBirds, loadRegions } from "../core/data.js";
+import { loadRegionBirds, loadRegions } from "../core/data.js";
 import { getTodaysBird } from "../core/daily.js";
 import { getTodayString } from "../core/dates.js";
 import {
@@ -196,10 +196,7 @@ const init = async () => {
   view.setLoading(true);
 
   try {
-    const [regions, birds] = await Promise.all([
-      loadRegions(),
-      loadBirds(),
-    ]);
+    const regions = await loadRegions();
     const region = resolveRegion(regions);
     if (!region) {
       return;
@@ -209,7 +206,7 @@ const init = async () => {
     view.setBackLink(region.id);
     setLastPlayedMode(mode);
 
-    const regionBirds = getBirdList(region.id, regions, birds);
+    const regionBirds = await loadRegionBirds(region.id, regions);
     if (regionBirds.length === 0) {
       showFatalError("No birds are available for this region.");
       return;

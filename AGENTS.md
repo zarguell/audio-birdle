@@ -219,7 +219,7 @@ Critical scripts:
 - `scripts/generate-daily-birds.py` — deterministic daily answers, no repeats
   within `--days`, subregion-aware selection, history/daily JSON.
 - `scripts/generate-daily-region-data.py` — eBird observations per subregion.
-- `scripts/game-data-generator.py` — birds.json from taxonomy + audio metadata.
+- `scripts/game-data-generator.py` — per-region bird shards from taxonomy + audio metadata.
 - `scripts/enhance-bird-data.py`, `xc-audio-fetch.py`, and the `ebird-*`
   scripts — supporting acquisition tools.
 
@@ -283,16 +283,15 @@ After a country passes:
 1. Generate its optional subregions, year-round regular-species filter, and
    Xeno-canto URL records. A country-level pool is a single entry such as
    `{"code": "CA", "name": "Canada"}`; no provinces are required.
-2. Generate `birds.json` for the region.
+2. Generate `public/data/birds/<region>.json` for the region.
 3. Add its subregion file so the daily workflow fetches it.
 4. Generate its daily subregion lists through the filtered generator.
 5. Add the region to `public/data/regions.json`.
 6. Regenerate `public/data/manifest.json`.
 7. Add region-specific data-invariant tests.
 
-`birds.json` is currently one file for all regions. Before expanding beyond
-roughly four countries, split it into per-region shards and make the client
-load only the selected region.
+Bird data is sharded per region under `public/data/birds/`. The client loads
+only the selected region's shard; the manifest includes every shard.
 
 ## Testing
 

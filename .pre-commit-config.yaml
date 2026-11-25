@@ -29,14 +29,15 @@ repos:
         language: system
         stages: [pre-push]
         pass_filenames: false
+      - id: pylint
+        name: pylint
+        entry: pylint
+        language: system
+        args: ["--errors-only"]
+        files: ^(scripts|sitegen)/.*\.py$
+        types: [python]
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.4.0
     hooks:
       - id: end-of-file-fixer
       - id: trailing-whitespace
-  - repo: https://github.com/pylint-dev/pylint
-    rev: v4.1.4
-    hooks:
-      - id: pylint
-        args: ["--errors-only"]
-        verbose: false

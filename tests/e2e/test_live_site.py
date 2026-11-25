@@ -38,7 +38,7 @@ def test_live_home_and_manifest(page, live_url):
     manifest = response.json()
     assert manifest["schemaVersion"] == 1
     assert "daily.json" in manifest["files"]
-    assert "birds.json" in manifest["files"]
+    assert "birds/us.json" in manifest["files"]
 
     for name, entry in manifest["files"].items():
         file_response = page.request.get(f"{live_url}{entry['path']}")

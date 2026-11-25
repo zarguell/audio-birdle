@@ -3,6 +3,7 @@
 import pytest
 import json
 import os
+from pathlib import Path
 import subprocess
 import sys
 from datetime import datetime, timedelta
@@ -137,12 +138,14 @@ class TestGeneratedHashesValid:
         with open(daily_path) as f:
             daily_data = json.load(f)
 
-        # Load birds.json
-        birds_path = os.path.join(
-            os.path.dirname(__file__), "..", "public", "data", "birds.json"
+        # Load the per-region bird shards as one mapping.
+        birds_dir = os.path.join(
+            os.path.dirname(__file__), "..", "public", "data", "birds"
         )
-        with open(birds_path) as f:
-            birds_data = json.load(f)
+        birds_data = {}
+        for shard in Path(birds_dir).glob("*.json"):
+            with open(shard) as f:
+                birds_data[shard.stem] = json.load(f)
 
         # Check each entry
         for entry in daily_data:
@@ -1075,3 +1078,19 @@ class TestCrossProcessDeterminism:
             assert entry_a.get("subregion") == entry_b.get("subregion")
         # Subregion selection actually happened (guards against a trivial pass)
         assert any("subregion" in e for e in parsed_a)
+
+
+def test_load_birds_data_prefers_region_shards(tmp_path):
+    base = tmp_path
+    (base / "birds").mkdir()
+    (base / "birds" / "us.json").write_text(
+        json.dumps([{"id": "shard-bird", "name": "Shard Bird"}])
+    )
+    (base / "birds.json").write_text(
+        json.dumps({"us": [{"id": "legacy-bird", "name": "Legacy Bird"}]})
+    )
+    regions = [{"id": "us", "name": "United States"}]
+
+    birds = generate_daily_birds.load_birds_data(base, regions)
+
+    assert birds["us"][0]["id"] == "shard-bird"
