@@ -236,6 +236,33 @@ The daily workflow `.github/workflows/daily-update.yml`:
 
 Data files are generated; do not hand-edit `public/data/*.json`.
 
+## Region expansion
+
+Add countries one at a time, not as one giant dataset. Run the read-only audit
+first:
+
+```bash
+python scripts/region-audit.py --region CA --output region-audits/ca.json
+```
+
+The default pilot gate is **50% of species-level eBird species** and **at least
+300 playable species**; override with `--target-coverage` and
+`--min-playable-species`. Review missing-audio species, Xeno-canto errors, and
+subregion coverage before generating production data.
+
+After a country passes:
+
+1. Generate its taxonomy, subregions, and Xeno-canto URL records.
+2. Generate `birds.json` for the region.
+3. Add its subregion file so the daily workflow fetches it.
+4. Add the region to `public/data/regions.json`.
+5. Regenerate `public/data/manifest.json`.
+6. Add region-specific data-invariant tests.
+
+`birds.json` is currently one file for all regions. Before expanding beyond
+roughly four countries, split it into per-region shards and make the client
+load only the selected region.
+
 ## Testing
 
 Run the full suite:
