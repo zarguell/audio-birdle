@@ -1514,5 +1514,25 @@
       "name": "Olive-backed Oriole",
       "subregion": "Australia"
     }
+  ],
+  "ie": [
+    {
+      "date": "2026-11-24",
+      "id": "stonec4",
+      "name": "European Stonechat",
+      "subregion": "Ireland"
+    },
+    {
+      "date": "2026-11-25",
+      "id": "euroys1",
+      "name": "Eurasian Oystercatcher",
+      "subregion": "Ireland"
+    },
+    {
+      "date": "2026-11-26",
+      "id": "corplo",
+      "name": "Common Ringed Plover",
+      "subregion": "Ireland"
+    }
   ]
 }
