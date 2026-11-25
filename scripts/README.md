@@ -308,7 +308,30 @@ python3 build-regular-pool.py --region GB \
 
 It samples a short window in each of the last 12 months. The daily generator
 automatically reads `<region>-regular-species.json` from the same directory as
-the subregion file and keeps only its species.
+the subregion file and keeps only its species. An optional
+`<region>-daily-regular-species.json` takes priority for the current season
+when a country-level pool needs a stricter seasonal filter.
+
+A country-level pool uses one subregion entry, for example
+`{"code": "CA", "name": "Canada"}`; the daily fetch then uses the country code.
+
+### Region-scoped taxonomy
+
+Do not refresh the global taxonomy just to add a country. Fetch the current
+eBird taxonomy once and build a regional snapshot:
+
+```bash
+python3 ebird-taxonomy.py --fmt json --output /tmp/ebird-taxonomy-current.json
+python3 build-region-taxonomy.py --region CA \
+  --species-file data/regions/ca-regular-species.json \
+  --taxonomy-file /tmp/ebird-taxonomy-current.json \
+  --output data/regions/ca-taxonomy.json
+```
+
+Pass `ca-taxonomy.json` to `region-audit.py --taxonomy`, `xc-audio-fetch.py`,
+and `game-data-generator.py`. Existing region IDs stay pinned; a split such as
+Marsh Wren/Eastern Marsh Wren can exist as `marwre` in the US and `eamwre1` in
+Canada without a global migration.
 
 The country gate is **50% audio coverage of the regular pool** and **at least
 150 playable species**. Subregions are optional; their counts are advisory and

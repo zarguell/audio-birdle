@@ -261,7 +261,9 @@ It samples one short window in each of the last 12 months so summer migrants
 and winter visitors are retained. `generate-daily-region-data.py`
 automatically reads the sibling `<region>-regular-species.json` file and
 intersects the current eBird observations with it; no workflow change is
-needed, and regions without a filter file keep their old behavior.
+needed, and regions without a filter file keep their old behavior. An optional
+`<region>-daily-regular-species.json` takes priority for the current season
+when a country-level pool needs a stricter seasonal filter.
 
 The pilot gate is **50% audio coverage of the regular pool** and **at least 150
 playable species** for the country. Subregions are optional: their playable
@@ -273,8 +275,13 @@ the country level. Override the gate with `--target-coverage` and
 
 After a country passes:
 
-1. Generate its taxonomy, optional subregions, year-round regular-species
-   filter, and Xeno-canto URL records.
+0. Keep the existing US/GB taxonomy pinned. For the new country, fetch the
+   current eBird taxonomy and build a region-scoped snapshot with
+   `scripts/build-region-taxonomy.py`; pass it to the audit, audio fetcher, and
+   `game-data-generator.py`.
+1. Generate its optional subregions, year-round regular-species filter, and
+   Xeno-canto URL records. A country-level pool is a single entry such as
+   `{"code": "CA", "name": "Canada"}`; no provinces are required.
 2. Generate `birds.json` for the region.
 3. Add its subregion file so the daily workflow fetches it.
 4. Generate its daily subregion lists through the filtered generator.

@@ -107,7 +107,7 @@ def test_build_renders_every_page(built_site: tuple[Path, dict]) -> None:
     ):
         assert (output / page).is_file(), page
     assert len(summary["pages"]) == 9
-    assert summary["regions"] == 3
+    assert summary["regions"] == 4
 
 
 def test_build_uses_content_addressed_assets(built_site: tuple[Path, dict]) -> None:
@@ -154,9 +154,11 @@ def test_region_links_are_server_rendered(built_site: tuple[Path, dict]) -> None
     assert 'href="/play/?region=us"' in html
     assert 'href="/play/?region=us-lower48"' in html
     assert 'href="/play/?region=gb"' in html
+    assert 'href="/play/?region=ca"' in html
     assert "United States" in html
     assert "US Lower 48" in html
     assert "United Kingdom" in html
+    assert "Canada" in html
 
 
 def test_data_manifest_matches_copied_files(built_site: tuple[Path, dict]) -> None:

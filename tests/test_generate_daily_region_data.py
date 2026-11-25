@@ -302,6 +302,38 @@ class TestRegularSpeciesFilter:
 
     @patch("requests.get")
     @patch.dict(os.environ, {"EBIRD_API_KEY": "test-key"})
+    def test_daily_regular_file_takes_priority(self, mock_get, tmp_path):
+        subregions_file = tmp_path / "us-subregions.json"
+        annual_file = tmp_path / "us-regular-species.json"
+        daily_file = tmp_path / "us-daily-regular-species.json"
+        output_file = tmp_path / "output.json"
+        subregions_file.write_text(json.dumps([{"code": "US-NY", "name": "New York"}]))
+        annual_file.write_text(json.dumps({"New York": ["amerob", "barswa"]}))
+        daily_file.write_text(json.dumps({"New York": ["barswa"]}))
+
+        mock_response = MagicMock()
+        mock_response.status_code = 200
+        mock_response.json.return_value = [
+            {"speciesCode": "amerob"},
+            {"speciesCode": "barswa"},
+        ]
+        mock_get.return_value = mock_response
+
+        with patch(
+            "sys.argv",
+            [
+                "generate-daily-region-data.py",
+                str(subregions_file),
+                str(output_file),
+            ],
+        ):
+            generate_daily_region_data.main()
+
+        output_data = json.loads(output_file.read_text(encoding="utf-8"))
+        assert output_data["us"]["New York"] == [{"id": "barswa"}]
+
+    @patch("requests.get")
+    @patch.dict(os.environ, {"EBIRD_API_KEY": "test-key"})
     def test_missing_subregion_in_filter_warns_and_drops_species(
         self, mock_get, tmp_path, capsys
     ):

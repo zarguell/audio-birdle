@@ -1474,5 +1474,25 @@
       "name": "Eurasian Moorhen",
       "subregion": "Wales"
     }
+  ],
+  "ca": [
+    {
+      "date": "2026-11-24",
+      "id": "norgan",
+      "name": "Northern Gannet",
+      "subregion": "Canada"
+    },
+    {
+      "date": "2026-11-25",
+      "id": "horlar",
+      "name": "Horned Lark",
+      "subregion": "Canada"
+    },
+    {
+      "date": "2026-11-26",
+      "id": "wiltur",
+      "name": "Wild Turkey",
+      "subregion": "Canada"
+    }
   ]
 }

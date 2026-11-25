@@ -1541,6 +1541,13 @@
   },
   {
     "date": "2026-11-24",
+    "region": "ca",
+    "answerHash": "89323227",
+    "id": "norgan",
+    "subregion": "Canada"
+  },
+  {
+    "date": "2026-11-24",
     "region": "gb",
     "answerHash": "c4b2241c",
     "id": "eurrob1",
@@ -1562,6 +1569,13 @@
   },
   {
     "date": "2026-11-25",
+    "region": "ca",
+    "answerHash": "647952f8",
+    "id": "horlar",
+    "subregion": "Canada"
+  },
+  {
+    "date": "2026-11-25",
     "region": "gb",
     "answerHash": "3458b3af",
     "id": "eursis",
@@ -1580,6 +1594,13 @@
     "answerHash": "104c723e",
     "id": "amerob",
     "subregion": "North Dakota"
+  },
+  {
+    "date": "2026-11-26",
+    "region": "ca",
+    "answerHash": "99078313",
+    "id": "wiltur",
+    "subregion": "Canada"
   },
   {
     "date": "2026-11-26",
