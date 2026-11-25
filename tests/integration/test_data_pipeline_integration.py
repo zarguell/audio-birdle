@@ -345,6 +345,40 @@ class TestDataPipelineIntegration:
                 )
 
     @staticmethod
+    def test_ca_subregions_are_subset_of_playable_birds(
+        birds_json, daily_subregion_json
+    ):
+        """The country-level Canada pool must reference shipped CA birds."""
+        ca_ids = {bird["id"] for bird in birds_json["ca"]}
+        entries = daily_subregion_json["ca"]["Canada"]
+        refs = {entry["id"] for entry in entries}
+        assert refs <= ca_ids, "Canada pool references unplayable CA birds"
+        assert len(refs) >= 10
+
+    @staticmethod
+    def test_ca_daily_entries_come_from_seasonal_pool(daily_json):
+        """CA daily answers must be on the current seasonal filter."""
+        path = (
+            Path(__file__).parent.parent.parent
+            / "scripts"
+            / "data"
+            / "regions"
+            / "ca-daily-regular-species.json"
+        )
+        regular = json.loads(path.read_text(encoding="utf-8"))
+        for entry in (item for item in daily_json if item["region"] == "ca"):
+            assert entry["id"] in regular["Canada"], (
+                f"CA answer {entry['id']} is not in the seasonal pool"
+            )
+
+    @staticmethod
+    def test_ca_uses_current_taxonomy_split(birds_json):
+        """CA should use the current eBird split, not the US legacy code."""
+        ca_ids = {bird["id"] for bird in birds_json["ca"]}
+        assert "eamwre1" in ca_ids
+        assert "marwre" not in ca_ids
+
+    @staticmethod
     def test_birds_have_facts_and_learn_more(birds_json):
         """Offline enhancements must survive regeneration: every bird ships
         with a non-empty fact and learnMoreUrl (enhance-bird-data.py)."""

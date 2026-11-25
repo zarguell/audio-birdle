@@ -18,5 +18,10 @@
     "id": "gb",
     "name": "United Kingdom",
     "country": "GB"
+  },
+  {
+    "id": "ca",
+    "name": "Canada",
+    "country": "CA"
   }
 ]

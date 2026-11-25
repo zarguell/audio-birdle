@@ -16,7 +16,11 @@ def load_regular_species(subregions_file: str, region_key: str) -> dict[str, lis
     that the audit identified as regular, so a one-day vagrant cannot become
     the challenge answer.
     """
-    path = Path(subregions_file).with_name(f"{region_key}-regular-species.json")
+    base = Path(subregions_file).with_name(f"{region_key}-regular-species.json")
+    seasonal = Path(subregions_file).with_name(
+        f"{region_key}-daily-regular-species.json"
+    )
+    path = seasonal if seasonal.exists() else base
     if not path.exists():
         return {}
     with path.open(encoding="utf-8") as handle:

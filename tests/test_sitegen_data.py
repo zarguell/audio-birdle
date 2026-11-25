@@ -15,7 +15,7 @@ DATA = ROOT / "public" / "data"
 
 def test_real_data_is_valid() -> None:
     regions = validate_data(DATA)
-    assert {region["id"] for region in regions} == {"us", "us-lower48", "gb"}
+    assert {region["id"] for region in regions} == {"us", "us-lower48", "gb", "ca"}
 
 
 def test_missing_required_file_fails(tmp_path: Path) -> None:
