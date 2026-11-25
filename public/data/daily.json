@@ -1541,6 +1541,13 @@
   },
   {
     "date": "2026-11-24",
+    "region": "gb",
+    "answerHash": "c4b2241c",
+    "id": "eurrob1",
+    "subregion": "Wales"
+  },
+  {
+    "date": "2026-11-24",
     "region": "us",
     "answerHash": "25309582",
     "id": "rebwoo",
@@ -1555,6 +1562,13 @@
   },
   {
     "date": "2026-11-25",
+    "region": "gb",
+    "answerHash": "3458b3af",
+    "id": "eursis",
+    "subregion": "Wales"
+  },
+  {
+    "date": "2026-11-25",
     "region": "us",
     "answerHash": "73771c9e",
     "id": "buwtea",
@@ -1566,5 +1580,26 @@
     "answerHash": "104c723e",
     "id": "amerob",
     "subregion": "North Dakota"
+  },
+  {
+    "date": "2026-11-26",
+    "region": "gb",
+    "answerHash": "2ab6b943",
+    "id": "commoo3",
+    "subregion": "Wales"
+  },
+  {
+    "date": "2026-11-26",
+    "region": "us",
+    "answerHash": "47c8a158",
+    "id": "easmea",
+    "subregion": "Maryland"
+  },
+  {
+    "date": "2026-11-26",
+    "region": "us-lower48",
+    "answerHash": "712b3f50",
+    "id": "osprey",
+    "subregion": "Idaho"
   }
 ]

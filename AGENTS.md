@@ -244,10 +244,24 @@ python scripts/region-audit.py --region CA --output region-audits/ca.json
 
 By default the audit excludes rare vagrants before checking audio. It pulls the
 last 14 days of eBird observations for each subregion and keeps species with at
-least 5 valid observations on at least 5 distinct days. The JSON report exposes
-that filtered pool as `regular.by_subregion`; use it as the candidate list for
-the region's daily subregion data. Pass `--regular-days 0` to audit every eBird
-species instead.
+least 5 valid observations on at least 5 distinct days. That pool is a
+seasonal snapshot used for the audio readiness check; it is not the shipped
+year-round filter. Pass `--regular-days 0` to audit every eBird species.
+
+After the audio gate passes, build the year-round regular pool that the daily
+job will use:
+
+```bash
+python scripts/build-regular-pool.py --region GB \
+  --subregions-file scripts/data/regions/gb-subregions.json \
+  --output scripts/data/regions/gb-regular-species.json
+```
+
+It samples one short window in each of the last 12 months so summer migrants
+and winter visitors are retained. `generate-daily-region-data.py`
+automatically reads the sibling `<region>-regular-species.json` file and
+intersects the current eBird observations with it; no workflow change is
+needed, and regions without a filter file keep their old behavior.
 
 The pilot gate is **50% audio coverage of the regular pool** and **at least 150
 playable species**, with at least 10 playable regular species in every
@@ -259,12 +273,14 @@ neighbour or left out rather than shipped as its own daily pool.
 
 After a country passes:
 
-1. Generate its taxonomy, subregions, and Xeno-canto URL records.
+1. Generate its taxonomy, subregions, year-round regular-species filter, and
+   Xeno-canto URL records.
 2. Generate `birds.json` for the region.
 3. Add its subregion file so the daily workflow fetches it.
-4. Add the region to `public/data/regions.json`.
-5. Regenerate `public/data/manifest.json`.
-6. Add region-specific data-invariant tests.
+4. Generate its daily subregion lists through the filtered generator.
+5. Add the region to `public/data/regions.json`.
+6. Regenerate `public/data/manifest.json`.
+7. Add region-specific data-invariant tests.
 
 `birds.json` is currently one file for all regions. Before expanding beyond
 roughly four countries, split it into per-region shards and make the client

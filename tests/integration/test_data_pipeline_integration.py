@@ -316,6 +316,35 @@ class TestDataPipelineIntegration:
             )
 
     @staticmethod
+    def test_gb_subregions_are_subset_of_playable_birds(
+        birds_json, daily_subregion_json
+    ):
+        """Every GB subregion entry must be a GB bird with shipped audio."""
+        gb_ids = {bird["id"] for bird in birds_json["gb"]}
+        for name, entries in daily_subregion_json["gb"].items():
+            refs = {entry["id"] for entry in entries}
+            assert refs <= gb_ids, f"{name} references unplayable GB birds"
+            assert len(refs) >= 10, f"{name} has too few playable birds"
+
+    @staticmethod
+    def test_gb_daily_entries_come_from_regular_pool(daily_json):
+        """A GB daily answer must be on the year-round regular list."""
+        regular_path = (
+            Path(__file__).parent.parent.parent
+            / "scripts"
+            / "data"
+            / "regions"
+            / "gb-regular-species.json"
+        )
+        regular = json.loads(regular_path.read_text(encoding="utf-8"))
+        for entry in (item for item in daily_json if item["region"] == "gb"):
+            subregion = entry.get("subregion")
+            if subregion:
+                assert entry["id"] in regular.get(subregion, []), (
+                    f"GB answer {entry['id']} is not regular in {subregion}"
+                )
+
+    @staticmethod
     def test_birds_have_facts_and_learn_more(birds_json):
         """Offline enhancements must survive regeneration: every bird ships
         with a non-empty fact and learnMoreUrl (enhance-bird-data.py)."""

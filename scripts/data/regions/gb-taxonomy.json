@@ -1,0 +1,5211 @@
+[
+  {
+    "sciName": "Mareca americana",
+    "comName": "American Wigeon",
+    "speciesCode": "amewig",
+    "category": "species",
+    "taxonOrder": 497.0,
+    "bandingCodes": [
+      "AMWI"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "MAAM"
+    ],
+    "order": "Anseriformes",
+    "familyCode": "anatid1",
+    "familyComName": "Ducks, Geese, and Waterfowl",
+    "familySciName": "Anatidae"
+  },
+  {
+    "sciName": "Gavia arctica",
+    "comName": "Arctic Loon",
+    "speciesCode": "arcloo",
+    "category": "species",
+    "taxonOrder": 6849.0,
+    "bandingCodes": [
+      "ARLO"
+    ],
+    "comNameCodes": [
+      "BTDI",
+      "BTLO"
+    ],
+    "sciNameCodes": [
+      "GAAR"
+    ],
+    "order": "Gaviiformes",
+    "familyCode": "gaviid1",
+    "familyComName": "Loons",
+    "familySciName": "Gaviidae"
+  },
+  {
+    "sciName": "Sterna paradisaea",
+    "comName": "Arctic Tern",
+    "speciesCode": "arcter",
+    "category": "species",
+    "taxonOrder": 6659.0,
+    "bandingCodes": [
+      "ARTE"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "STPA"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "larida1",
+    "familyComName": "Gulls, Terns, and Skimmers",
+    "familySciName": "Laridae"
+  },
+  {
+    "sciName": "Fratercula arctica",
+    "comName": "Atlantic Puffin",
+    "speciesCode": "atlpuf",
+    "category": "species",
+    "taxonOrder": 6314.0,
+    "bandingCodes": [
+      "ATPU"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "FRAR"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "alcida1",
+    "familyComName": "Auks, Murres, and Puffins",
+    "familySciName": "Alcidae"
+  },
+  {
+    "sciName": "Puffinus mauretanicus",
+    "comName": "Balearic Shearwater",
+    "speciesCode": "balshe1",
+    "category": "species",
+    "taxonOrder": 7143.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "BASH"
+    ],
+    "sciNameCodes": [
+      "PUMA"
+    ],
+    "order": "Procellariiformes",
+    "familyCode": "procel3",
+    "familyComName": "Shearwaters and Petrels",
+    "familySciName": "Procellariidae"
+  },
+  {
+    "sciName": "Riparia riparia",
+    "comName": "Bank Swallow",
+    "speciesCode": "banswa",
+    "category": "species",
+    "taxonOrder": 23821.0,
+    "bandingCodes": [
+      "BANS"
+    ],
+    "comNameCodes": [
+      "SAMA",
+      "BASW",
+      "CSMA"
+    ],
+    "sciNameCodes": [
+      "RIRI"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "hirund2",
+    "familyComName": "Swallows",
+    "familySciName": "Hirundinidae"
+  },
+  {
+    "sciName": "Anser indicus",
+    "comName": "Bar-headed Goose",
+    "speciesCode": "bahgoo",
+    "category": "species",
+    "taxonOrder": 255.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "BHGO"
+    ],
+    "sciNameCodes": [
+      "ANIN"
+    ],
+    "order": "Anseriformes",
+    "familyCode": "anatid1",
+    "familyComName": "Ducks, Geese, and Waterfowl",
+    "familySciName": "Anatidae"
+  },
+  {
+    "sciName": "Limosa lapponica",
+    "comName": "Bar-tailed Godwit",
+    "speciesCode": "batgod",
+    "category": "species",
+    "taxonOrder": 5973.0,
+    "bandingCodes": [
+      "BTGO"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "LILA"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "scolop2",
+    "familyComName": "Sandpipers and Allies",
+    "familySciName": "Scolopacidae"
+  },
+  {
+    "sciName": "Hirundo rustica",
+    "comName": "Barn Swallow",
+    "speciesCode": "barswa",
+    "category": "species",
+    "taxonOrder": 23957.0,
+    "bandingCodes": [
+      "BARS"
+    ],
+    "comNameCodes": [
+      "BASW"
+    ],
+    "sciNameCodes": [
+      "HIRU"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "hirund2",
+    "familyComName": "Swallows",
+    "familySciName": "Hirundinidae"
+  },
+  {
+    "sciName": "Branta leucopsis",
+    "comName": "Barnacle Goose",
+    "speciesCode": "bargoo",
+    "category": "species",
+    "taxonOrder": 310.0,
+    "bandingCodes": [
+      "BARG"
+    ],
+    "comNameCodes": [
+      "BAGO"
+    ],
+    "sciNameCodes": [
+      "BRLE"
+    ],
+    "order": "Anseriformes",
+    "familyCode": "anatid1",
+    "familyComName": "Ducks, Geese, and Waterfowl",
+    "familySciName": "Anatidae"
+  },
+  {
+    "sciName": "Curruca nisoria",
+    "comName": "Barred Warbler",
+    "speciesCode": "barwar1",
+    "category": "species",
+    "taxonOrder": 25052.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "BAWA"
+    ],
+    "sciNameCodes": [
+      "CUNI"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "sylvii1",
+    "familyComName": "Sylviid Warblers and Allies",
+    "familySciName": "Sylviidae"
+  },
+  {
+    "sciName": "Panurus biarmicus",
+    "comName": "Bearded Reedling",
+    "speciesCode": "bearee1",
+    "category": "species",
+    "taxonOrder": 22612.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "BERE",
+      "BETI"
+    ],
+    "sciNameCodes": [
+      "PABI"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "panuri1",
+    "familyComName": "Bearded Reedling",
+    "familySciName": "Panuridae"
+  },
+  {
+    "sciName": "Cepphus grylle",
+    "comName": "Black Guillemot",
+    "speciesCode": "blkgui",
+    "category": "species",
+    "taxonOrder": 6331.0,
+    "bandingCodes": [
+      "BLGU"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "CEGR"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "alcida1",
+    "familyComName": "Auks, Murres, and Puffins",
+    "familySciName": "Alcidae"
+  },
+  {
+    "sciName": "Phoenicurus ochruros",
+    "comName": "Black Redstart",
+    "speciesCode": "blared1",
+    "category": "species",
+    "taxonOrder": 29348.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "BLRE"
+    ],
+    "sciNameCodes": [
+      "PHOC"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "muscic3",
+    "familyComName": "Old World Flycatchers",
+    "familySciName": "Muscicapidae"
+  },
+  {
+    "sciName": "Cygnus atratus",
+    "comName": "Black Swan",
+    "speciesCode": "blkswa",
+    "category": "species",
+    "taxonOrder": 367.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "BLSW"
+    ],
+    "sciNameCodes": [
+      "CYAT"
+    ],
+    "order": "Anseriformes",
+    "familyCode": "anatid1",
+    "familyComName": "Ducks, Geese, and Waterfowl",
+    "familySciName": "Anatidae"
+  },
+  {
+    "sciName": "Chlidonias niger",
+    "comName": "Black Tern",
+    "speciesCode": "blkter",
+    "category": "species",
+    "taxonOrder": 6651.0,
+    "bandingCodes": [
+      "BLTE"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "CHNI"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "larida1",
+    "familyComName": "Gulls, Terns, and Skimmers",
+    "familySciName": "Laridae"
+  },
+  {
+    "sciName": "Pluvialis squatarola",
+    "comName": "Black-bellied Plover",
+    "speciesCode": "bkbplo",
+    "category": "species",
+    "taxonOrder": 5754.0,
+    "bandingCodes": [
+      "BBPL"
+    ],
+    "comNameCodes": [
+      "GRPL"
+    ],
+    "sciNameCodes": [
+      "PLSQ"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "charad1",
+    "familyComName": "Plovers and Lapwings",
+    "familySciName": "Charadriidae"
+  },
+  {
+    "sciName": "Nycticorax nycticorax",
+    "comName": "Black-crowned Night Heron",
+    "speciesCode": "bcnher",
+    "category": "species",
+    "taxonOrder": 7513.0,
+    "bandingCodes": [
+      "BCNH"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "NYNY"
+    ],
+    "order": "Pelecaniformes",
+    "familyCode": "ardeid1",
+    "familyComName": "Herons, Egrets, and Bitterns",
+    "familySciName": "Ardeidae"
+  },
+  {
+    "sciName": "Chroicocephalus ridibundus",
+    "comName": "Black-headed Gull",
+    "speciesCode": "bkhgul",
+    "category": "species",
+    "taxonOrder": 6409.0,
+    "bandingCodes": [
+      "BHGU"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "CHRI"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "larida1",
+    "familyComName": "Gulls, Terns, and Skimmers",
+    "familySciName": "Laridae"
+  },
+  {
+    "sciName": "Rissa tridactyla",
+    "comName": "Black-legged Kittiwake",
+    "speciesCode": "bklkit",
+    "category": "species",
+    "taxonOrder": 6384.0,
+    "bandingCodes": [
+      "BLKI"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "RITR"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "larida1",
+    "familyComName": "Gulls, Terns, and Skimmers",
+    "familySciName": "Laridae"
+  },
+  {
+    "sciName": "Limosa limosa",
+    "comName": "Black-tailed Godwit",
+    "speciesCode": "bktgod",
+    "category": "species",
+    "taxonOrder": 5982.0,
+    "bandingCodes": [
+      "BLTG"
+    ],
+    "comNameCodes": [
+      "BTGO"
+    ],
+    "sciNameCodes": [
+      "LILI"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "scolop2",
+    "familyComName": "Sandpipers and Allies",
+    "familySciName": "Scolopacidae"
+  },
+  {
+    "sciName": "Elanus caeruleus",
+    "comName": "Black-winged Kite",
+    "speciesCode": "bkskit1",
+    "category": "species",
+    "taxonOrder": 7751.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "BWKI",
+      "ABSK"
+    ],
+    "sciNameCodes": [
+      "ELCA"
+    ],
+    "order": "Accipitriformes",
+    "familyCode": "accipi1",
+    "familyComName": "Hawks, Eagles, and Kites",
+    "familySciName": "Accipitridae"
+  },
+  {
+    "sciName": "Bombycilla garrulus",
+    "comName": "Bohemian Waxwing",
+    "speciesCode": "bohwax",
+    "category": "species",
+    "taxonOrder": 29614.0,
+    "bandingCodes": [
+      "BOWA"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "BOGA"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "bombyc1",
+    "familyComName": "Waxwings",
+    "familySciName": "Bombycillidae"
+  },
+  {
+    "sciName": "Chroicocephalus philadelphia",
+    "comName": "Bonaparte's Gull",
+    "speciesCode": "bongul",
+    "category": "species",
+    "taxonOrder": 6397.0,
+    "bandingCodes": [
+      "BOGU"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "CHPH"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "larida1",
+    "familyComName": "Gulls, Terns, and Skimmers",
+    "familySciName": "Laridae"
+  },
+  {
+    "sciName": "Fringilla montifringilla",
+    "comName": "Brambling",
+    "speciesCode": "brambl",
+    "category": "species",
+    "taxonOrder": 31696.0,
+    "bandingCodes": [
+      "BRAM"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "FRMO"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "fringi1",
+    "familyComName": "Finches, Euphonias, and Allies",
+    "familySciName": "Fringillidae"
+  },
+  {
+    "sciName": "Branta bernicla",
+    "comName": "Brant",
+    "speciesCode": "brant",
+    "category": "species",
+    "taxonOrder": 302.0,
+    "bandingCodes": [
+      "BRAN"
+    ],
+    "comNameCodes": [
+      "BRGO"
+    ],
+    "sciNameCodes": [
+      "BRBE"
+    ],
+    "order": "Anseriformes",
+    "familyCode": "anatid1",
+    "familyComName": "Ducks, Geese, and Waterfowl",
+    "familySciName": "Anatidae"
+  },
+  {
+    "sciName": "Calidris subruficollis",
+    "comName": "Buff-breasted Sandpiper",
+    "speciesCode": "bubsan",
+    "category": "species",
+    "taxonOrder": 6126.0,
+    "bandingCodes": [
+      "BBSA"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "CASU"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "scolop2",
+    "familyComName": "Sandpipers and Allies",
+    "familySciName": "Scolopacidae"
+  },
+  {
+    "sciName": "Bucephala albeola",
+    "comName": "Bufflehead",
+    "speciesCode": "buffle",
+    "category": "species",
+    "taxonOrder": 717.0,
+    "bandingCodes": [
+      "BUFF"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "BUAL"
+    ],
+    "order": "Anseriformes",
+    "familyCode": "anatid1",
+    "familyComName": "Ducks, Geese, and Waterfowl",
+    "familySciName": "Anatidae"
+  },
+  {
+    "sciName": "Branta canadensis",
+    "comName": "Canada Goose",
+    "speciesCode": "cangoo",
+    "category": "species",
+    "taxonOrder": 330.0,
+    "bandingCodes": [
+      "CANG"
+    ],
+    "comNameCodes": [
+      "CAGO"
+    ],
+    "sciNameCodes": [
+      "BRCA"
+    ],
+    "order": "Anseriformes",
+    "familyCode": "anatid1",
+    "familyComName": "Ducks, Geese, and Waterfowl",
+    "familySciName": "Anatidae"
+  },
+  {
+    "sciName": "Aythya valisineria",
+    "comName": "Canvasback",
+    "speciesCode": "canvas",
+    "category": "species",
+    "taxonOrder": 641.0,
+    "bandingCodes": [
+      "CANV"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "AYVA"
+    ],
+    "order": "Anseriformes",
+    "familyCode": "anatid1",
+    "familyComName": "Ducks, Geese, and Waterfowl",
+    "familySciName": "Anatidae"
+  },
+  {
+    "sciName": "Corvus corone",
+    "comName": "Carrion Crow",
+    "speciesCode": "carcro1",
+    "category": "species",
+    "taxonOrder": 21351.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "CACR"
+    ],
+    "sciNameCodes": [
+      "COCO"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "corvid1",
+    "familyComName": "Crows, Jays, and Magpies",
+    "familySciName": "Corvidae"
+  },
+  {
+    "sciName": "Larus cachinnans",
+    "comName": "Caspian Gull",
+    "speciesCode": "casgul2",
+    "category": "species",
+    "taxonOrder": 6465.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "CAGU"
+    ],
+    "sciNameCodes": [
+      "LACA"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "larida1",
+    "familyComName": "Gulls, Terns, and Skimmers",
+    "familySciName": "Laridae"
+  },
+  {
+    "sciName": "Cettia cetti",
+    "comName": "Cetti's Warbler",
+    "speciesCode": "cetwar1",
+    "category": "species",
+    "taxonOrder": 24873.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "CEWA"
+    ],
+    "sciNameCodes": [
+      "CECE"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "scotoc1",
+    "familyComName": "Bush Warblers and Allies",
+    "familySciName": "Scotocercidae"
+  },
+  {
+    "sciName": "Emberiza cirlus",
+    "comName": "Cirl Bunting",
+    "speciesCode": "cirbun1",
+    "category": "species",
+    "taxonOrder": 32449.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "CIBU"
+    ],
+    "sciNameCodes": [
+      "EMCI"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "emberi2",
+    "familyComName": "Old World Buntings",
+    "familySciName": "Emberizidae"
+  },
+  {
+    "sciName": "Periparus ater",
+    "comName": "Coal Tit",
+    "speciesCode": "coatit2",
+    "category": "species",
+    "taxonOrder": 21726.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "COTI"
+    ],
+    "sciNameCodes": [
+      "PEAT"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "parida1",
+    "familyComName": "Tits, Chickadees, and Titmice",
+    "familySciName": "Paridae"
+  },
+  {
+    "sciName": "Buteo buteo",
+    "comName": "Common Buzzard",
+    "speciesCode": "combuz1",
+    "category": "species",
+    "taxonOrder": 8447.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "COBU",
+      "EUBU"
+    ],
+    "sciNameCodes": [
+      "BUBU"
+    ],
+    "order": "Accipitriformes",
+    "familyCode": "accipi1",
+    "familyComName": "Hawks, Eagles, and Kites",
+    "familySciName": "Accipitridae"
+  },
+  {
+    "sciName": "Fringilla coelebs",
+    "comName": "Common Chaffinch",
+    "speciesCode": "comcha",
+    "category": "species",
+    "taxonOrder": 31670.0,
+    "bandingCodes": [
+      "CCHA"
+    ],
+    "comNameCodes": [
+      "EUCH",
+      "COCH"
+    ],
+    "sciNameCodes": [
+      "FRCO"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "fringi1",
+    "familyComName": "Finches, Euphonias, and Allies",
+    "familySciName": "Fringillidae"
+  },
+  {
+    "sciName": "Phylloscopus collybita",
+    "comName": "Common Chiffchaff",
+    "speciesCode": "comchi1",
+    "category": "species",
+    "taxonOrder": 24620.0,
+    "bandingCodes": [
+      "CCHI"
+    ],
+    "comNameCodes": [
+      "COCH"
+    ],
+    "sciNameCodes": [
+      "PHCO"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "phyllo4",
+    "familyComName": "Leaf Warblers",
+    "familySciName": "Phylloscopidae"
+  },
+  {
+    "sciName": "Cuculus canorus",
+    "comName": "Common Cuckoo",
+    "speciesCode": "comcuc",
+    "category": "species",
+    "taxonOrder": 3389.0,
+    "bandingCodes": [
+      "COCU"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "CUCA"
+    ],
+    "order": "Cuculiformes",
+    "familyCode": "cuculi1",
+    "familyComName": "Cuckoos",
+    "familySciName": "Cuculidae"
+  },
+  {
+    "sciName": "Somateria mollissima",
+    "comName": "Common Eider",
+    "speciesCode": "comeid",
+    "category": "species",
+    "taxonOrder": 690.0,
+    "bandingCodes": [
+      "COEI"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "SOMO"
+    ],
+    "order": "Anseriformes",
+    "familyCode": "anatid1",
+    "familyComName": "Ducks, Geese, and Waterfowl",
+    "familySciName": "Anatidae"
+  },
+  {
+    "sciName": "Regulus ignicapilla",
+    "comName": "Common Firecrest",
+    "speciesCode": "firecr1",
+    "category": "species",
+    "taxonOrder": 26626.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "COFI"
+    ],
+    "sciNameCodes": [
+      "REIG"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "reguli1",
+    "familyComName": "Kinglets",
+    "familySciName": "Regulidae"
+  },
+  {
+    "sciName": "Bucephala clangula",
+    "comName": "Common Goldeneye",
+    "speciesCode": "comgol",
+    "category": "species",
+    "taxonOrder": 718.0,
+    "bandingCodes": [
+      "COGO"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "BUCL"
+    ],
+    "order": "Anseriformes",
+    "familyCode": "anatid1",
+    "familyComName": "Ducks, Geese, and Waterfowl",
+    "familySciName": "Anatidae"
+  },
+  {
+    "sciName": "Locustella naevia",
+    "comName": "Common Grasshopper Warbler",
+    "speciesCode": "cogwar1",
+    "category": "species",
+    "taxonOrder": 23577.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "CGWA",
+      "COGW"
+    ],
+    "sciNameCodes": [
+      "LONA"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "locust5",
+    "familyComName": "Grassbirds and Allies",
+    "familySciName": "Locustellidae"
+  },
+  {
+    "sciName": "Tringa nebularia",
+    "comName": "Common Greenshank",
+    "speciesCode": "comgre",
+    "category": "species",
+    "taxonOrder": 6090.0,
+    "bandingCodes": [
+      "COMG"
+    ],
+    "comNameCodes": [
+      "COGR"
+    ],
+    "sciNameCodes": [
+      "TRNE"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "scolop2",
+    "familyComName": "Sandpipers and Allies",
+    "familySciName": "Scolopacidae"
+  },
+  {
+    "sciName": "Larus canus",
+    "comName": "Common Gull",
+    "speciesCode": "mewgul",
+    "category": "species",
+    "taxonOrder": 6447.0,
+    "bandingCodes": [
+      "COGU"
+    ],
+    "comNameCodes": [
+      "MEGU"
+    ],
+    "sciNameCodes": [
+      "LACA"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "larida1",
+    "familyComName": "Gulls, Terns, and Skimmers",
+    "familySciName": "Laridae"
+  },
+  {
+    "sciName": "Alcedo atthis",
+    "comName": "Common Kingfisher",
+    "speciesCode": "comkin1",
+    "category": "species",
+    "taxonOrder": 9809.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "COKI"
+    ],
+    "sciNameCodes": [
+      "ALAT"
+    ],
+    "order": "Coraciiformes",
+    "familyCode": "alcedi1",
+    "familyComName": "Kingfishers",
+    "familySciName": "Alcedinidae"
+  },
+  {
+    "sciName": "Gavia immer",
+    "comName": "Common Loon",
+    "speciesCode": "comloo",
+    "category": "species",
+    "taxonOrder": 6854.0,
+    "bandingCodes": [
+      "COLO"
+    ],
+    "comNameCodes": [
+      "GNDI"
+    ],
+    "sciNameCodes": [
+      "GAIM"
+    ],
+    "order": "Gaviiformes",
+    "familyCode": "gaviid1",
+    "familyComName": "Loons",
+    "familySciName": "Gaviidae"
+  },
+  {
+    "sciName": "Mergus merganser",
+    "comName": "Common Merganser",
+    "speciesCode": "commer",
+    "category": "species",
+    "taxonOrder": 737.0,
+    "bandingCodes": [
+      "COME"
+    ],
+    "comNameCodes": [
+      "GOOS"
+    ],
+    "sciNameCodes": [
+      "MEME"
+    ],
+    "order": "Anseriformes",
+    "familyCode": "anatid1",
+    "familyComName": "Ducks, Geese, and Waterfowl",
+    "familySciName": "Anatidae"
+  },
+  {
+    "sciName": "Uria aalge",
+    "comName": "Common Murre",
+    "speciesCode": "commur",
+    "category": "species",
+    "taxonOrder": 6359.0,
+    "bandingCodes": [
+      "COMU"
+    ],
+    "comNameCodes": [
+      "COGU"
+    ],
+    "sciNameCodes": [
+      "URAA"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "alcida1",
+    "familyComName": "Auks, Murres, and Puffins",
+    "familySciName": "Alcidae"
+  },
+  {
+    "sciName": "Luscinia megarhynchos",
+    "comName": "Common Nightingale",
+    "speciesCode": "comnig1",
+    "category": "species",
+    "taxonOrder": 29127.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "CONI"
+    ],
+    "sciNameCodes": [
+      "LUME"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "muscic3",
+    "familyComName": "Old World Flycatchers",
+    "familySciName": "Muscicapidae"
+  },
+  {
+    "sciName": "Aythya ferina",
+    "comName": "Common Pochard",
+    "speciesCode": "compoc",
+    "category": "species",
+    "taxonOrder": 645.0,
+    "bandingCodes": [
+      "COMP"
+    ],
+    "comNameCodes": [
+      "COPO"
+    ],
+    "sciNameCodes": [
+      "AYFE"
+    ],
+    "order": "Anseriformes",
+    "familyCode": "anatid1",
+    "familyComName": "Ducks, Geese, and Waterfowl",
+    "familySciName": "Anatidae"
+  },
+  {
+    "sciName": "Coturnix coturnix",
+    "comName": "Common Quail",
+    "speciesCode": "comqua1",
+    "category": "species",
+    "taxonOrder": 1702.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "COQU"
+    ],
+    "sciNameCodes": [
+      "COCO"
+    ],
+    "order": "Galliformes",
+    "familyCode": "phasia1",
+    "familyComName": "Pheasants, Grouse, and Allies",
+    "familySciName": "Phasianidae"
+  },
+  {
+    "sciName": "Corvus corax",
+    "comName": "Common Raven",
+    "speciesCode": "comrav",
+    "category": "species",
+    "taxonOrder": 21400.0,
+    "bandingCodes": [
+      "CORA"
+    ],
+    "comNameCodes": [
+      "NORA"
+    ],
+    "sciNameCodes": [
+      "COCO"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "corvid1",
+    "familyComName": "Crows, Jays, and Magpies",
+    "familySciName": "Corvidae"
+  },
+  {
+    "sciName": "Tringa totanus",
+    "comName": "Common Redshank",
+    "speciesCode": "comred1",
+    "category": "species",
+    "taxonOrder": 6076.0,
+    "bandingCodes": [
+      "CREH"
+    ],
+    "comNameCodes": [
+      "CORE"
+    ],
+    "sciNameCodes": [
+      "TRTO"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "scolop2",
+    "familyComName": "Sandpipers and Allies",
+    "familySciName": "Scolopacidae"
+  },
+  {
+    "sciName": "Phoenicurus phoenicurus",
+    "comName": "Common Redstart",
+    "speciesCode": "comred2",
+    "category": "species",
+    "taxonOrder": 29340.0,
+    "bandingCodes": [
+      "CRET"
+    ],
+    "comNameCodes": [
+      "CORE"
+    ],
+    "sciNameCodes": [
+      "PHPH"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "muscic3",
+    "familyComName": "Old World Flycatchers",
+    "familySciName": "Muscicapidae"
+  },
+  {
+    "sciName": "Acrocephalus scirpaceus",
+    "comName": "Common Reed Warbler",
+    "speciesCode": "eurwar1",
+    "category": "species",
+    "taxonOrder": 23448.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "CORW",
+      "CRWA"
+    ],
+    "sciNameCodes": [
+      "ACSC"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "acroce2",
+    "familyComName": "Reed Warblers and Allies",
+    "familySciName": "Acrocephalidae"
+  },
+  {
+    "sciName": "Charadrius hiaticula",
+    "comName": "Common Ringed Plover",
+    "speciesCode": "corplo",
+    "category": "species",
+    "taxonOrder": 5774.0,
+    "bandingCodes": [
+      "CRPL"
+    ],
+    "comNameCodes": [
+      "RIPL"
+    ],
+    "sciNameCodes": [
+      "CHHI"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "charad1",
+    "familyComName": "Plovers and Lapwings",
+    "familySciName": "Charadriidae"
+  },
+  {
+    "sciName": "Carpodacus erythrinus",
+    "comName": "Common Rosefinch",
+    "speciesCode": "comros",
+    "category": "species",
+    "taxonOrder": 31871.0,
+    "bandingCodes": [
+      "CORO"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "CAER"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "fringi1",
+    "familyComName": "Finches, Euphonias, and Allies",
+    "familySciName": "Fringillidae"
+  },
+  {
+    "sciName": "Actitis hypoleucos",
+    "comName": "Common Sandpiper",
+    "speciesCode": "comsan",
+    "category": "species",
+    "taxonOrder": 6063.0,
+    "bandingCodes": [
+      "COSA"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "ACHY"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "scolop2",
+    "familyComName": "Sandpipers and Allies",
+    "familySciName": "Scolopacidae"
+  },
+  {
+    "sciName": "Melanitta nigra",
+    "comName": "Common Scoter",
+    "speciesCode": "blksco1",
+    "category": "species",
+    "taxonOrder": 711.0,
+    "bandingCodes": [
+      "COSC"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "MENI"
+    ],
+    "order": "Anseriformes",
+    "familyCode": "anatid1",
+    "familyComName": "Ducks, Geese, and Waterfowl",
+    "familySciName": "Anatidae"
+  },
+  {
+    "sciName": "Tadorna tadorna",
+    "comName": "Common Shelduck",
+    "speciesCode": "comshe",
+    "category": "species",
+    "taxonOrder": 413.0,
+    "bandingCodes": [
+      "COMS"
+    ],
+    "comNameCodes": [
+      "COSH"
+    ],
+    "sciNameCodes": [
+      "TATA"
+    ],
+    "order": "Anseriformes",
+    "familyCode": "anatid1",
+    "familyComName": "Ducks, Geese, and Waterfowl",
+    "familySciName": "Anatidae"
+  },
+  {
+    "sciName": "Gallinago gallinago",
+    "comName": "Common Snipe",
+    "speciesCode": "comsni",
+    "category": "species",
+    "taxonOrder": 6037.0,
+    "bandingCodes": [
+      "COSN"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "GAGA"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "scolop2",
+    "familyComName": "Sandpipers and Allies",
+    "familySciName": "Scolopacidae"
+  },
+  {
+    "sciName": "Apus apus",
+    "comName": "Common Swift",
+    "speciesCode": "comswi",
+    "category": "species",
+    "taxonOrder": 4039.0,
+    "bandingCodes": [
+      "COSW"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "APAP"
+    ],
+    "order": "Apodiformes",
+    "familyCode": "apodid1",
+    "familyComName": "Swifts",
+    "familySciName": "Apodidae"
+  },
+  {
+    "sciName": "Sterna hirundo",
+    "comName": "Common Tern",
+    "speciesCode": "comter",
+    "category": "species",
+    "taxonOrder": 6674.0,
+    "bandingCodes": [
+      "COTE"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "STHI"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "larida1",
+    "familyComName": "Gulls, Terns, and Skimmers",
+    "familySciName": "Laridae"
+  },
+  {
+    "sciName": "Columba palumbus",
+    "comName": "Common Wood-Pigeon",
+    "speciesCode": "cowpig1",
+    "category": "species",
+    "taxonOrder": 1849.0,
+    "bandingCodes": [
+      "CWPI"
+    ],
+    "comNameCodes": [
+      "COWP",
+      "COWO"
+    ],
+    "sciNameCodes": [
+      "COPA"
+    ],
+    "order": "Columbiformes",
+    "familyCode": "columb2",
+    "familyComName": "Pigeons and Doves",
+    "familySciName": "Columbidae"
+  },
+  {
+    "sciName": "Emberiza calandra",
+    "comName": "Corn Bunting",
+    "speciesCode": "corbun1",
+    "category": "species",
+    "taxonOrder": 32420.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "COBU"
+    ],
+    "sciNameCodes": [
+      "EMCA"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "emberi2",
+    "familyComName": "Old World Buntings",
+    "familySciName": "Emberizidae"
+  },
+  {
+    "sciName": "Calonectris borealis",
+    "comName": "Cory's Shearwater",
+    "speciesCode": "corshe1",
+    "category": "species",
+    "taxonOrder": 7119.0,
+    "bandingCodes": [
+      "CORS"
+    ],
+    "comNameCodes": [
+      "COSH"
+    ],
+    "sciNameCodes": [
+      "CABO"
+    ],
+    "order": "Procellariiformes",
+    "familyCode": "procel3",
+    "familyComName": "Shearwaters and Petrels",
+    "familySciName": "Procellariidae"
+  },
+  {
+    "sciName": "Lophophanes cristatus",
+    "comName": "Crested Tit",
+    "speciesCode": "cretit2",
+    "category": "species",
+    "taxonOrder": 21772.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "CRTI"
+    ],
+    "sciNameCodes": [
+      "LOCR"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "parida1",
+    "familyComName": "Tits, Chickadees, and Titmice",
+    "familySciName": "Paridae"
+  },
+  {
+    "sciName": "Calidris ferruginea",
+    "comName": "Curlew Sandpiper",
+    "speciesCode": "cursan",
+    "category": "species",
+    "taxonOrder": 6120.0,
+    "bandingCodes": [
+      "CUSA"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "CAFE"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "scolop2",
+    "familyComName": "Sandpipers and Allies",
+    "familySciName": "Scolopacidae"
+  },
+  {
+    "sciName": "Oenanthe deserti",
+    "comName": "Desert Wheatear",
+    "speciesCode": "deswhe1",
+    "category": "species",
+    "taxonOrder": 29529.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "DEWH"
+    ],
+    "sciNameCodes": [
+      "OEDE"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "muscic3",
+    "familyComName": "Old World Flycatchers",
+    "familySciName": "Muscicapidae"
+  },
+  {
+    "sciName": "Calidris alpina",
+    "comName": "Dunlin",
+    "speciesCode": "dunlin",
+    "category": "species",
+    "taxonOrder": 6130.0,
+    "bandingCodes": [
+      "DUNL"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "CAAL"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "scolop2",
+    "familyComName": "Sandpipers and Allies",
+    "familySciName": "Scolopacidae"
+  },
+  {
+    "sciName": "Prunella modularis",
+    "comName": "Dunnock",
+    "speciesCode": "dunnoc1",
+    "category": "species",
+    "taxonOrder": 31241.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "DUNN"
+    ],
+    "sciNameCodes": [
+      "PRMO"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "prunel1",
+    "familyComName": "Accentors",
+    "familySciName": "Prunellidae"
+  },
+  {
+    "sciName": "Podiceps nigricollis",
+    "comName": "Eared Grebe",
+    "speciesCode": "eargre",
+    "category": "species",
+    "taxonOrder": 6797.0,
+    "bandingCodes": [
+      "EAGR"
+    ],
+    "comNameCodes": [
+      "BNGR"
+    ],
+    "sciNameCodes": [
+      "PONI"
+    ],
+    "order": "Podicipediformes",
+    "familyCode": "podici1",
+    "familyComName": "Grebes",
+    "familySciName": "Podicipedidae"
+  },
+  {
+    "sciName": "Alopochen aegyptiaca",
+    "comName": "Egyptian Goose",
+    "speciesCode": "egygoo",
+    "category": "species",
+    "taxonOrder": 405.0,
+    "bandingCodes": [
+      "EGGO"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "ALAE"
+    ],
+    "order": "Anseriformes",
+    "familyCode": "anatid1",
+    "familyComName": "Ducks, Geese, and Waterfowl",
+    "familySciName": "Anatidae"
+  },
+  {
+    "sciName": "Botaurus stellaris",
+    "comName": "Eurasian Bittern",
+    "speciesCode": "grebit1",
+    "category": "species",
+    "taxonOrder": 7469.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "EUBI",
+      "GRBI"
+    ],
+    "sciNameCodes": [
+      "BOST"
+    ],
+    "order": "Pelecaniformes",
+    "familyCode": "ardeid1",
+    "familyComName": "Herons, Egrets, and Bitterns",
+    "familySciName": "Ardeidae"
+  },
+  {
+    "sciName": "Turdus merula",
+    "comName": "Eurasian Blackbird",
+    "speciesCode": "eurbla",
+    "category": "species",
+    "taxonOrder": 28232.0,
+    "bandingCodes": [
+      "EUBB"
+    ],
+    "comNameCodes": [
+      "COBL",
+      "EUBL"
+    ],
+    "sciNameCodes": [
+      "TUME"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "turdid1",
+    "familyComName": "Thrushes and Allies",
+    "familySciName": "Turdidae"
+  },
+  {
+    "sciName": "Sylvia atricapilla",
+    "comName": "Eurasian Blackcap",
+    "speciesCode": "blackc1",
+    "category": "species",
+    "taxonOrder": 25032.0,
+    "bandingCodes": [
+      "EUBC"
+    ],
+    "comNameCodes": [
+      "EUBL",
+      "BLAC"
+    ],
+    "sciNameCodes": [
+      "SYAT"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "sylvii1",
+    "familyComName": "Sylviid Warblers and Allies",
+    "familySciName": "Sylviidae"
+  },
+  {
+    "sciName": "Cyanistes caeruleus",
+    "comName": "Eurasian Blue Tit",
+    "speciesCode": "blutit",
+    "category": "species",
+    "taxonOrder": 21890.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "EBTI"
+    ],
+    "sciNameCodes": [
+      "CYCA"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "parida1",
+    "familyComName": "Tits, Chickadees, and Titmice",
+    "familySciName": "Paridae"
+  },
+  {
+    "sciName": "Pyrrhula pyrrhula",
+    "comName": "Eurasian Bullfinch",
+    "speciesCode": "eurbul",
+    "category": "species",
+    "taxonOrder": 31975.0,
+    "bandingCodes": [
+      "EUBU"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "PYPY"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "fringi1",
+    "familyComName": "Finches, Euphonias, and Allies",
+    "familySciName": "Fringillidae"
+  },
+  {
+    "sciName": "Streptopelia decaocto",
+    "comName": "Eurasian Collared-Dove",
+    "speciesCode": "eucdov",
+    "category": "species",
+    "taxonOrder": 1994.0,
+    "bandingCodes": [
+      "EUCD"
+    ],
+    "comNameCodes": [
+      "CODO",
+      "ECDO"
+    ],
+    "sciNameCodes": [
+      "STDE"
+    ],
+    "order": "Columbiformes",
+    "familyCode": "columb2",
+    "familyComName": "Pigeons and Doves",
+    "familySciName": "Columbidae"
+  },
+  {
+    "sciName": "Fulica atra",
+    "comName": "Eurasian Coot",
+    "speciesCode": "eurcoo",
+    "category": "species",
+    "taxonOrder": 5430.0,
+    "bandingCodes": [
+      "EUCO"
+    ],
+    "comNameCodes": [
+      "COCO"
+    ],
+    "sciNameCodes": [
+      "FUAT"
+    ],
+    "order": "Gruiformes",
+    "familyCode": "rallid1",
+    "familyComName": "Rails, Gallinules, and Coots",
+    "familySciName": "Rallidae"
+  },
+  {
+    "sciName": "Numenius arquata",
+    "comName": "Eurasian Curlew",
+    "speciesCode": "eurcur",
+    "category": "species",
+    "taxonOrder": 5966.0,
+    "bandingCodes": [
+      "EUCU"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "NUAR"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "scolop2",
+    "familyComName": "Sandpipers and Allies",
+    "familySciName": "Scolopacidae"
+  },
+  {
+    "sciName": "Astur gentilis",
+    "comName": "Eurasian Goshawk",
+    "speciesCode": "norgos1",
+    "category": "species",
+    "taxonOrder": 8188.0,
+    "bandingCodes": [
+      "EGOS"
+    ],
+    "comNameCodes": [
+      "EUGO",
+      "NOGO"
+    ],
+    "sciNameCodes": [
+      "ASGE"
+    ],
+    "order": "Accipitriformes",
+    "familyCode": "accipi1",
+    "familyComName": "Hawks, Eagles, and Kites",
+    "familySciName": "Accipitridae"
+  },
+  {
+    "sciName": "Picus viridis",
+    "comName": "Eurasian Green Woodpecker",
+    "speciesCode": "eugwoo2",
+    "category": "species",
+    "taxonOrder": 11558.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "EGWO"
+    ],
+    "sciNameCodes": [
+      "PIVI"
+    ],
+    "order": "Piciformes",
+    "familyCode": "picida1",
+    "familyComName": "Woodpeckers",
+    "familySciName": "Picidae"
+  },
+  {
+    "sciName": "Falco subbuteo",
+    "comName": "Eurasian Hobby",
+    "speciesCode": "eurhob",
+    "category": "species",
+    "taxonOrder": 11958.0,
+    "bandingCodes": [
+      "EHOB"
+    ],
+    "comNameCodes": [
+      "EUHO"
+    ],
+    "sciNameCodes": [
+      "FASU"
+    ],
+    "order": "Falconiformes",
+    "familyCode": "falcon1",
+    "familyComName": "Falcons and Caracaras",
+    "familySciName": "Falconidae"
+  },
+  {
+    "sciName": "Coloeus monedula",
+    "comName": "Eurasian Jackdaw",
+    "speciesCode": "eurjac",
+    "category": "species",
+    "taxonOrder": 21290.0,
+    "bandingCodes": [
+      "EUJA"
+    ],
+    "comNameCodes": [
+      "WEJA"
+    ],
+    "sciNameCodes": [
+      "COMO"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "corvid1",
+    "familyComName": "Crows, Jays, and Magpies",
+    "familySciName": "Corvidae"
+  },
+  {
+    "sciName": "Garrulus glandarius",
+    "comName": "Eurasian Jay",
+    "speciesCode": "eurjay1",
+    "category": "species",
+    "taxonOrder": 21115.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "ECFJ",
+      "EUJA"
+    ],
+    "sciNameCodes": [
+      "GAGL"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "corvid1",
+    "familyComName": "Crows, Jays, and Magpies",
+    "familySciName": "Corvidae"
+  },
+  {
+    "sciName": "Falco tinnunculus",
+    "comName": "Eurasian Kestrel",
+    "speciesCode": "eurkes",
+    "category": "species",
+    "taxonOrder": 11878.0,
+    "bandingCodes": [
+      "EUKE"
+    ],
+    "comNameCodes": [
+      "COKE"
+    ],
+    "sciNameCodes": [
+      "FATI"
+    ],
+    "order": "Falconiformes",
+    "familyCode": "falcon1",
+    "familyComName": "Falcons and Caracaras",
+    "familySciName": "Falconidae"
+  },
+  {
+    "sciName": "Linaria cannabina",
+    "comName": "Eurasian Linnet",
+    "speciesCode": "eurlin1",
+    "category": "species",
+    "taxonOrder": 32194.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "EULI",
+      "COLI"
+    ],
+    "sciNameCodes": [
+      "LICA"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "fringi1",
+    "familyComName": "Finches, Euphonias, and Allies",
+    "familySciName": "Fringillidae"
+  },
+  {
+    "sciName": "Pica pica",
+    "comName": "Eurasian Magpie",
+    "speciesCode": "eurmag1",
+    "category": "species",
+    "taxonOrder": 21243.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "EUMA",
+      "COMA"
+    ],
+    "sciNameCodes": [
+      "PIPI"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "corvid1",
+    "familyComName": "Crows, Jays, and Magpies",
+    "familySciName": "Corvidae"
+  },
+  {
+    "sciName": "Gallinula chloropus",
+    "comName": "Eurasian Moorhen",
+    "speciesCode": "commoo3",
+    "category": "species",
+    "taxonOrder": 5405.0,
+    "bandingCodes": [
+      "COMO"
+    ],
+    "comNameCodes": [
+      "EUMO"
+    ],
+    "sciNameCodes": [
+      "GACH"
+    ],
+    "order": "Gruiformes",
+    "familyCode": "rallid1",
+    "familyComName": "Rails, Gallinules, and Coots",
+    "familySciName": "Rallidae"
+  },
+  {
+    "sciName": "Caprimulgus europaeus",
+    "comName": "Eurasian Nightjar",
+    "speciesCode": "eurnig1",
+    "category": "species",
+    "taxonOrder": 3586.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "EUNI"
+    ],
+    "sciNameCodes": [
+      "CAEU"
+    ],
+    "order": "Caprimulgiformes",
+    "familyCode": "caprim2",
+    "familyComName": "Nightjars and Allies",
+    "familySciName": "Caprimulgidae"
+  },
+  {
+    "sciName": "Sitta europaea",
+    "comName": "Eurasian Nuthatch",
+    "speciesCode": "eurnut2",
+    "category": "species",
+    "taxonOrder": 26717.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "EUNU"
+    ],
+    "sciNameCodes": [
+      "SIEU"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "sittid1",
+    "familyComName": "Nuthatches",
+    "familySciName": "Sittidae"
+  },
+  {
+    "sciName": "Haematopus ostralegus",
+    "comName": "Eurasian Oystercatcher",
+    "speciesCode": "euroys1",
+    "category": "species",
+    "taxonOrder": 5729.0,
+    "bandingCodes": [
+      "EUOY"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "HAOS"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "haemat1",
+    "familyComName": "Oystercatchers",
+    "familySciName": "Haematopodidae"
+  },
+  {
+    "sciName": "Remiz pendulinus",
+    "comName": "Eurasian Penduline-Tit",
+    "speciesCode": "euptit1",
+    "category": "species",
+    "taxonOrder": 22052.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "EPTI",
+      "EUPT"
+    ],
+    "sciNameCodes": [
+      "REPE"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "remizi1",
+    "familyComName": "Penduline-Tits",
+    "familySciName": "Remizidae"
+  },
+  {
+    "sciName": "Spinus spinus",
+    "comName": "Eurasian Siskin",
+    "speciesCode": "eursis",
+    "category": "species",
+    "taxonOrder": 32315.0,
+    "bandingCodes": [
+      "EUSI"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "SPSP"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "fringi1",
+    "familyComName": "Finches, Euphonias, and Allies",
+    "familySciName": "Fringillidae"
+  },
+  {
+    "sciName": "Alauda arvensis",
+    "comName": "Eurasian Skylark",
+    "speciesCode": "skylar",
+    "category": "species",
+    "taxonOrder": 22389.0,
+    "bandingCodes": [
+      "EUSK"
+    ],
+    "comNameCodes": [
+      "SKYL"
+    ],
+    "sciNameCodes": [
+      "ALAR"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "alaudi1",
+    "familyComName": "Larks",
+    "familySciName": "Alaudidae"
+  },
+  {
+    "sciName": "Accipiter nisus",
+    "comName": "Eurasian Sparrowhawk",
+    "speciesCode": "eurspa1",
+    "category": "species",
+    "taxonOrder": 8150.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "EUSP"
+    ],
+    "sciNameCodes": [
+      "ACNI"
+    ],
+    "order": "Accipitriformes",
+    "familyCode": "accipi1",
+    "familyComName": "Hawks, Eagles, and Kites",
+    "familySciName": "Accipitridae"
+  },
+  {
+    "sciName": "Platalea leucorodia",
+    "comName": "Eurasian Spoonbill",
+    "speciesCode": "eurspo1",
+    "category": "species",
+    "taxonOrder": 7437.0,
+    "bandingCodes": [
+      "EURS"
+    ],
+    "comNameCodes": [
+      "EUSP"
+    ],
+    "sciNameCodes": [
+      "PLLE"
+    ],
+    "order": "Pelecaniformes",
+    "familyCode": "thresk1",
+    "familyComName": "Ibises and Spoonbills",
+    "familySciName": "Threskiornithidae"
+  },
+  {
+    "sciName": "Passer montanus",
+    "comName": "Eurasian Tree Sparrow",
+    "speciesCode": "eutspa",
+    "category": "species",
+    "taxonOrder": 31329.0,
+    "bandingCodes": [
+      "ETSP"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "PAMO"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "passer4",
+    "familyComName": "Old World Sparrows",
+    "familySciName": "Passeridae"
+  },
+  {
+    "sciName": "Certhia familiaris",
+    "comName": "Eurasian Treecreeper",
+    "speciesCode": "eurtre1",
+    "category": "species",
+    "taxonOrder": 26761.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "EUTR"
+    ],
+    "sciNameCodes": [
+      "CEFA"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "certhi2",
+    "familyComName": "Treecreepers",
+    "familySciName": "Certhiidae"
+  },
+  {
+    "sciName": "Mareca penelope",
+    "comName": "Eurasian Wigeon",
+    "speciesCode": "eurwig",
+    "category": "species",
+    "taxonOrder": 494.0,
+    "bandingCodes": [
+      "EUWI"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "MAPE"
+    ],
+    "order": "Anseriformes",
+    "familyCode": "anatid1",
+    "familyComName": "Ducks, Geese, and Waterfowl",
+    "familySciName": "Anatidae"
+  },
+  {
+    "sciName": "Scolopax rusticola",
+    "comName": "Eurasian Woodcock",
+    "speciesCode": "eurwoo",
+    "category": "species",
+    "taxonOrder": 6005.0,
+    "bandingCodes": [
+      "EUWO"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "SCRU"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "scolop2",
+    "familyComName": "Sandpipers and Allies",
+    "familySciName": "Scolopacidae"
+  },
+  {
+    "sciName": "Troglodytes troglodytes",
+    "comName": "Eurasian Wren",
+    "speciesCode": "winwre4",
+    "category": "species",
+    "taxonOrder": 27008.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "NOWR",
+      "EUWR"
+    ],
+    "sciNameCodes": [
+      "TRTR"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "troglo1",
+    "familyComName": "Wrens",
+    "familySciName": "Troglodytidae"
+  },
+  {
+    "sciName": "Jynx torquilla",
+    "comName": "Eurasian Wryneck",
+    "speciesCode": "eurwry",
+    "category": "species",
+    "taxonOrder": 10894.0,
+    "bandingCodes": [
+      "EUWR"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "JYTO"
+    ],
+    "order": "Piciformes",
+    "familyCode": "picida1",
+    "familyComName": "Woodpeckers",
+    "familySciName": "Picidae"
+  },
+  {
+    "sciName": "Pluvialis apricaria",
+    "comName": "European Golden-Plover",
+    "speciesCode": "eugplo",
+    "category": "species",
+    "taxonOrder": 5755.0,
+    "bandingCodes": [
+      "EUGP"
+    ],
+    "comNameCodes": [
+      "EGPL"
+    ],
+    "sciNameCodes": [
+      "PLAP"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "charad1",
+    "familyComName": "Plovers and Lapwings",
+    "familySciName": "Charadriidae"
+  },
+  {
+    "sciName": "Carduelis carduelis",
+    "comName": "European Goldfinch",
+    "speciesCode": "eurgol",
+    "category": "species",
+    "taxonOrder": 32273.0,
+    "bandingCodes": [
+      "EGOL"
+    ],
+    "comNameCodes": [
+      "EUGO",
+      "WEGO"
+    ],
+    "sciNameCodes": [
+      "CACA"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "fringi1",
+    "familyComName": "Finches, Euphonias, and Allies",
+    "familySciName": "Fringillidae"
+  },
+  {
+    "sciName": "Chloris chloris",
+    "comName": "European Greenfinch",
+    "speciesCode": "eurgre1",
+    "category": "species",
+    "taxonOrder": 32060.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "EUGR"
+    ],
+    "sciNameCodes": [
+      "CHCH"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "fringi1",
+    "familyComName": "Finches, Euphonias, and Allies",
+    "familySciName": "Fringillidae"
+  },
+  {
+    "sciName": "Larus argentatus",
+    "comName": "European Herring Gull",
+    "speciesCode": "euhgul1",
+    "category": "species",
+    "taxonOrder": 6478.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "EHGU",
+      "HEGU"
+    ],
+    "sciNameCodes": [
+      "LAAR"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "larida1",
+    "familyComName": "Gulls, Terns, and Skimmers",
+    "familySciName": "Laridae"
+  },
+  {
+    "sciName": "Ficedula hypoleuca",
+    "comName": "European Pied Flycatcher",
+    "speciesCode": "eupfly1",
+    "category": "species",
+    "taxonOrder": 29289.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "EPFL",
+      "PIFL"
+    ],
+    "sciNameCodes": [
+      "FIHY"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "muscic3",
+    "familyComName": "Old World Flycatchers",
+    "familySciName": "Muscicapidae"
+  },
+  {
+    "sciName": "Erithacus rubecula",
+    "comName": "European Robin",
+    "speciesCode": "eurrob1",
+    "category": "species",
+    "taxonOrder": 28986.0,
+    "bandingCodes": [
+      "EURO"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "ERRU"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "muscic3",
+    "familyComName": "Old World Flycatchers",
+    "familySciName": "Muscicapidae"
+  },
+  {
+    "sciName": "Gulosus aristotelis",
+    "comName": "European Shag",
+    "speciesCode": "eursha1",
+    "category": "species",
+    "taxonOrder": 7336.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "EUSH"
+    ],
+    "sciNameCodes": [
+      "GUAR"
+    ],
+    "order": "Suliformes",
+    "familyCode": "phalac1",
+    "familyComName": "Cormorants and Shags",
+    "familySciName": "Phalacrocoracidae"
+  },
+  {
+    "sciName": "Sturnus vulgaris",
+    "comName": "European Starling",
+    "speciesCode": "eursta",
+    "category": "species",
+    "taxonOrder": 27571.0,
+    "bandingCodes": [
+      "EUST"
+    ],
+    "comNameCodes": [
+      "COST"
+    ],
+    "sciNameCodes": [
+      "STVU"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "sturni1",
+    "familyComName": "Starlings",
+    "familySciName": "Sturnidae"
+  },
+  {
+    "sciName": "Saxicola rubicola",
+    "comName": "European Stonechat",
+    "speciesCode": "stonec4",
+    "category": "species",
+    "taxonOrder": 29403.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "EUST",
+      "COST"
+    ],
+    "sciNameCodes": [
+      "SARU"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "muscic3",
+    "familyComName": "Old World Flycatchers",
+    "familySciName": "Muscicapidae"
+  },
+  {
+    "sciName": "Hydrobates pelagicus",
+    "comName": "European Storm-Petrel",
+    "speciesCode": "bripet",
+    "category": "species",
+    "taxonOrder": 6967.0,
+    "bandingCodes": [
+      "EUSP"
+    ],
+    "comNameCodes": [
+      "ESPE"
+    ],
+    "sciNameCodes": [
+      "HYPE"
+    ],
+    "order": "Procellariiformes",
+    "familyCode": "hydrob1",
+    "familyComName": "Northern Storm-Petrels",
+    "familySciName": "Hydrobatidae"
+  },
+  {
+    "sciName": "Streptopelia turtur",
+    "comName": "European Turtle-Dove",
+    "speciesCode": "eutdov",
+    "category": "species",
+    "taxonOrder": 1978.0,
+    "bandingCodes": [
+      "EUTD"
+    ],
+    "comNameCodes": [
+      "ETDO"
+    ],
+    "sciNameCodes": [
+      "STTU"
+    ],
+    "order": "Columbiformes",
+    "familyCode": "columb2",
+    "familyComName": "Pigeons and Doves",
+    "familySciName": "Columbidae"
+  },
+  {
+    "sciName": "Aythya nyroca",
+    "comName": "Ferruginous Duck",
+    "speciesCode": "ferduc",
+    "category": "species",
+    "taxonOrder": 652.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "FEDU"
+    ],
+    "sciNameCodes": [
+      "AYNY"
+    ],
+    "order": "Anseriformes",
+    "familyCode": "anatid1",
+    "familyComName": "Ducks, Geese, and Waterfowl",
+    "familySciName": "Anatidae"
+  },
+  {
+    "sciName": "Turdus pilaris",
+    "comName": "Fieldfare",
+    "speciesCode": "fieldf",
+    "category": "species",
+    "taxonOrder": 28501.0,
+    "bandingCodes": [
+      "FIEL"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "TUPI"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "turdid1",
+    "familyComName": "Thrushes and Allies",
+    "familySciName": "Turdidae"
+  },
+  {
+    "sciName": "Mareca strepera",
+    "comName": "Gadwall",
+    "speciesCode": "gadwal",
+    "category": "species",
+    "taxonOrder": 487.0,
+    "bandingCodes": [
+      "GADW"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "MAST"
+    ],
+    "order": "Anseriformes",
+    "familyCode": "anatid1",
+    "familyComName": "Ducks, Geese, and Waterfowl",
+    "familySciName": "Anatidae"
+  },
+  {
+    "sciName": "Sylvia borin",
+    "comName": "Garden Warbler",
+    "speciesCode": "garwar1",
+    "category": "species",
+    "taxonOrder": 25038.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "GAWA"
+    ],
+    "sciNameCodes": [
+      "SYBO"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "sylvii1",
+    "familyComName": "Sylviid Warblers and Allies",
+    "familySciName": "Sylviidae"
+  },
+  {
+    "sciName": "Spatula querquedula",
+    "comName": "Garganey",
+    "speciesCode": "gargan",
+    "category": "species",
+    "taxonOrder": 462.0,
+    "bandingCodes": [
+      "GARG"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "SPQU"
+    ],
+    "order": "Anseriformes",
+    "familyCode": "anatid1",
+    "familyComName": "Ducks, Geese, and Waterfowl",
+    "familySciName": "Anatidae"
+  },
+  {
+    "sciName": "Plegadis falcinellus",
+    "comName": "Glossy Ibis",
+    "speciesCode": "gloibi",
+    "category": "species",
+    "taxonOrder": 7382.0,
+    "bandingCodes": [
+      "GLIB"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "PLFA"
+    ],
+    "order": "Pelecaniformes",
+    "familyCode": "thresk1",
+    "familyComName": "Ibises and Spoonbills",
+    "familySciName": "Threskiornithidae"
+  },
+  {
+    "sciName": "Regulus regulus",
+    "comName": "Goldcrest",
+    "speciesCode": "goldcr1",
+    "category": "species",
+    "taxonOrder": 26607.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "GOLD"
+    ],
+    "sciNameCodes": [
+      "RERE"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "reguli1",
+    "familyComName": "Kinglets",
+    "familySciName": "Regulidae"
+  },
+  {
+    "sciName": "Ardea cinerea",
+    "comName": "Gray Heron",
+    "speciesCode": "graher1",
+    "category": "species",
+    "taxonOrder": 7651.0,
+    "bandingCodes": [
+      "GRAH"
+    ],
+    "comNameCodes": [
+      "GRHE"
+    ],
+    "sciNameCodes": [
+      "ARCI"
+    ],
+    "order": "Pelecaniformes",
+    "familyCode": "ardeid1",
+    "familyComName": "Herons, Egrets, and Bitterns",
+    "familySciName": "Ardeidae"
+  },
+  {
+    "sciName": "Perdix perdix",
+    "comName": "Gray Partridge",
+    "speciesCode": "grypar",
+    "category": "species",
+    "taxonOrder": 1417.0,
+    "bandingCodes": [
+      "GRAP"
+    ],
+    "comNameCodes": [
+      "GRPA"
+    ],
+    "sciNameCodes": [
+      "PEPE"
+    ],
+    "order": "Galliformes",
+    "familyCode": "phasia1",
+    "familyComName": "Pheasants, Grouse, and Allies",
+    "familySciName": "Phasianidae"
+  },
+  {
+    "sciName": "Motacilla cinerea",
+    "comName": "Gray Wagtail",
+    "speciesCode": "grywag",
+    "category": "species",
+    "taxonOrder": 31403.0,
+    "bandingCodes": [
+      "GRAW"
+    ],
+    "comNameCodes": [
+      "GRWA"
+    ],
+    "sciNameCodes": [
+      "MOCI"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "motaci1",
+    "familyComName": "Wagtails and Pipits",
+    "familySciName": "Motacillidae"
+  },
+  {
+    "sciName": "Anser anser",
+    "comName": "Graylag Goose",
+    "speciesCode": "gragoo",
+    "category": "species",
+    "taxonOrder": 264.0,
+    "bandingCodes": [
+      "GRGO"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "ANAN"
+    ],
+    "order": "Anseriformes",
+    "familyCode": "anatid1",
+    "familyComName": "Ducks, Geese, and Waterfowl",
+    "familySciName": "Anatidae"
+  },
+  {
+    "sciName": "Larus marinus",
+    "comName": "Great Black-backed Gull",
+    "speciesCode": "gbbgul",
+    "category": "species",
+    "taxonOrder": 6494.0,
+    "bandingCodes": [
+      "GBBG"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "LAMA"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "larida1",
+    "familyComName": "Gulls, Terns, and Skimmers",
+    "familySciName": "Laridae"
+  },
+  {
+    "sciName": "Phalacrocorax carbo",
+    "comName": "Great Cormorant",
+    "speciesCode": "grecor",
+    "category": "species",
+    "taxonOrder": 7313.0,
+    "bandingCodes": [
+      "GRCO"
+    ],
+    "comNameCodes": [
+      "BLSH",
+      "GBCO"
+    ],
+    "sciNameCodes": [
+      "PHCA"
+    ],
+    "order": "Suliformes",
+    "familyCode": "phalac1",
+    "familyComName": "Cormorants and Shags",
+    "familySciName": "Phalacrocoracidae"
+  },
+  {
+    "sciName": "Podiceps cristatus",
+    "comName": "Great Crested Grebe",
+    "speciesCode": "grcgre1",
+    "category": "species",
+    "taxonOrder": 6793.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "GCGR"
+    ],
+    "sciNameCodes": [
+      "POCR"
+    ],
+    "order": "Podicipediformes",
+    "familyCode": "podici1",
+    "familyComName": "Grebes",
+    "familySciName": "Podicipedidae"
+  },
+  {
+    "sciName": "Ardea alba",
+    "comName": "Great Egret",
+    "speciesCode": "greegr",
+    "category": "species",
+    "taxonOrder": 7635.0,
+    "bandingCodes": [
+      "GREG"
+    ],
+    "comNameCodes": [
+      "WHHE",
+      "GWEG"
+    ],
+    "sciNameCodes": [
+      "ARAL"
+    ],
+    "order": "Pelecaniformes",
+    "familyCode": "ardeid1",
+    "familyComName": "Herons, Egrets, and Bitterns",
+    "familySciName": "Ardeidae"
+  },
+  {
+    "sciName": "Lanius excubitor",
+    "comName": "Great Gray Shrike",
+    "speciesCode": "norshr1",
+    "category": "species",
+    "taxonOrder": 20881.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "GGSH"
+    ],
+    "sciNameCodes": [
+      "LAEX"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "laniid1",
+    "familyComName": "Shrikes",
+    "familySciName": "Laniidae"
+  },
+  {
+    "sciName": "Ardenna gravis",
+    "comName": "Great Shearwater",
+    "speciesCode": "greshe",
+    "category": "species",
+    "taxonOrder": 7126.0,
+    "bandingCodes": [
+      "GRSH"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "ARGR"
+    ],
+    "order": "Procellariiformes",
+    "familyCode": "procel3",
+    "familyComName": "Shearwaters and Petrels",
+    "familySciName": "Procellariidae"
+  },
+  {
+    "sciName": "Stercorarius skua",
+    "comName": "Great Skua",
+    "speciesCode": "gresku1",
+    "category": "species",
+    "taxonOrder": 6301.0,
+    "bandingCodes": [
+      "GRSK"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "STSK"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "sterco1",
+    "familyComName": "Skuas and Jaegers",
+    "familySciName": "Stercorariidae"
+  },
+  {
+    "sciName": "Dendrocopos major",
+    "comName": "Great Spotted Woodpecker",
+    "speciesCode": "grswoo",
+    "category": "species",
+    "taxonOrder": 11236.0,
+    "bandingCodes": [
+      "GSWO"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "DEMA"
+    ],
+    "order": "Piciformes",
+    "familyCode": "picida1",
+    "familyComName": "Woodpeckers",
+    "familySciName": "Picidae"
+  },
+  {
+    "sciName": "Parus major",
+    "comName": "Great Tit",
+    "speciesCode": "gretit1",
+    "category": "species",
+    "taxonOrder": 21951.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "GRTI",
+      "EGTI"
+    ],
+    "sciNameCodes": [
+      "PAMA"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "parida1",
+    "familyComName": "Tits, Chickadees, and Titmice",
+    "familySciName": "Paridae"
+  },
+  {
+    "sciName": "Phoenicopterus roseus",
+    "comName": "Greater Flamingo",
+    "speciesCode": "grefla3",
+    "category": "species",
+    "taxonOrder": 6734.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "GRFL"
+    ],
+    "sciNameCodes": [
+      "PHRO"
+    ],
+    "order": "Phoenicopteriformes",
+    "familyCode": "phoeni1",
+    "familyComName": "Flamingos",
+    "familySciName": "Phoenicopteridae"
+  },
+  {
+    "sciName": "Aythya marila",
+    "comName": "Greater Scaup",
+    "speciesCode": "gresca",
+    "category": "species",
+    "taxonOrder": 669.0,
+    "bandingCodes": [
+      "GRSC"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "AYMA"
+    ],
+    "order": "Anseriformes",
+    "familyCode": "anatid1",
+    "familyComName": "Ducks, Geese, and Waterfowl",
+    "familySciName": "Anatidae"
+  },
+  {
+    "sciName": "Anser albifrons",
+    "comName": "Greater White-fronted Goose",
+    "speciesCode": "gwfgoo",
+    "category": "species",
+    "taxonOrder": 276.0,
+    "bandingCodes": [
+      "GWFG"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "ANAL"
+    ],
+    "order": "Anseriformes",
+    "familyCode": "anatid1",
+    "familyComName": "Ducks, Geese, and Waterfowl",
+    "familySciName": "Anatidae"
+  },
+  {
+    "sciName": "Curruca communis",
+    "comName": "Greater Whitethroat",
+    "speciesCode": "grewhi1",
+    "category": "species",
+    "taxonOrder": 25127.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "GRWH",
+      "COWH"
+    ],
+    "sciNameCodes": [
+      "CUCO"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "sylvii1",
+    "familyComName": "Sylviid Warblers and Allies",
+    "familySciName": "Sylviidae"
+  },
+  {
+    "sciName": "Tringa ochropus",
+    "comName": "Green Sandpiper",
+    "speciesCode": "grnsan",
+    "category": "species",
+    "taxonOrder": 6066.0,
+    "bandingCodes": [
+      "GRSA"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "TROC"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "scolop2",
+    "familyComName": "Sandpipers and Allies",
+    "familySciName": "Scolopacidae"
+  },
+  {
+    "sciName": "Anas crecca",
+    "comName": "Green-winged Teal",
+    "speciesCode": "gnwtea",
+    "category": "species",
+    "taxonOrder": 588.0,
+    "bandingCodes": [
+      "GWTE"
+    ],
+    "comNameCodes": [
+      "EUTE",
+      "CWTE",
+      "EWTE"
+    ],
+    "sciNameCodes": [
+      "ANCR"
+    ],
+    "order": "Anseriformes",
+    "familyCode": "anatid1",
+    "familyComName": "Ducks, Geese, and Waterfowl",
+    "familySciName": "Anatidae"
+  },
+  {
+    "sciName": "Coccothraustes coccothraustes",
+    "comName": "Hawfinch",
+    "speciesCode": "hawfin",
+    "category": "species",
+    "taxonOrder": 31815.0,
+    "bandingCodes": [
+      "HAWF"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "COCO"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "fringi1",
+    "familyComName": "Finches, Euphonias, and Allies",
+    "familySciName": "Fringillidae"
+  },
+  {
+    "sciName": "Circus cyaneus",
+    "comName": "Hen Harrier",
+    "speciesCode": "norhar1",
+    "category": "species",
+    "taxonOrder": 8227.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "HEHA"
+    ],
+    "sciNameCodes": [
+      "CICY"
+    ],
+    "order": "Accipitriformes",
+    "familyCode": "accipi1",
+    "familyComName": "Hawks, Eagles, and Kites",
+    "familySciName": "Accipitridae"
+  },
+  {
+    "sciName": "Corvus cornix",
+    "comName": "Hooded Crow",
+    "speciesCode": "hoocro1",
+    "category": "species",
+    "taxonOrder": 21354.0,
+    "bandingCodes": [
+      "HCRW"
+    ],
+    "comNameCodes": [
+      "CACR",
+      "HOCR"
+    ],
+    "sciNameCodes": [
+      "COCO"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "corvid1",
+    "familyComName": "Crows, Jays, and Magpies",
+    "familySciName": "Corvidae"
+  },
+  {
+    "sciName": "Podiceps auritus",
+    "comName": "Horned Grebe",
+    "speciesCode": "horgre",
+    "category": "species",
+    "taxonOrder": 6787.0,
+    "bandingCodes": [
+      "HOGR"
+    ],
+    "comNameCodes": [
+      "SLGR"
+    ],
+    "sciNameCodes": [
+      "POAU"
+    ],
+    "order": "Podicipediformes",
+    "familyCode": "podici1",
+    "familyComName": "Grebes",
+    "familySciName": "Podicipedidae"
+  },
+  {
+    "sciName": "Eremophila alpestris",
+    "comName": "Horned Lark",
+    "speciesCode": "horlar",
+    "category": "species",
+    "taxonOrder": 22484.0,
+    "bandingCodes": [
+      "HOLA"
+    ],
+    "comNameCodes": [
+      "SHLA"
+    ],
+    "sciNameCodes": [
+      "ERAL"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "alaudi1",
+    "familyComName": "Larks",
+    "familySciName": "Alaudidae"
+  },
+  {
+    "sciName": "Passer domesticus",
+    "comName": "House Sparrow",
+    "speciesCode": "houspa",
+    "category": "species",
+    "taxonOrder": 31261.0,
+    "bandingCodes": [
+      "HOSP"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "PADO"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "passer4",
+    "familyComName": "Old World Sparrows",
+    "familySciName": "Passeridae"
+  },
+  {
+    "sciName": "Limosa haemastica",
+    "comName": "Hudsonian Godwit",
+    "speciesCode": "hudgod",
+    "category": "species",
+    "taxonOrder": 5988.0,
+    "bandingCodes": [
+      "HUGO"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "LIHA"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "scolop2",
+    "familyComName": "Sandpipers and Allies",
+    "familySciName": "Scolopacidae"
+  },
+  {
+    "sciName": "Phylloscopus humei",
+    "comName": "Hume's Warbler",
+    "speciesCode": "humwar1",
+    "category": "species",
+    "taxonOrder": 24572.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "HUWA",
+      "HULW",
+      "HLWA"
+    ],
+    "sciNameCodes": [
+      "PHHU"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "phyllo4",
+    "familyComName": "Leaf Warblers",
+    "familySciName": "Phylloscopidae"
+  },
+  {
+    "sciName": "Larus glaucoides",
+    "comName": "Iceland Gull",
+    "speciesCode": "y00478",
+    "category": "species",
+    "taxonOrder": 6536.0,
+    "bandingCodes": [
+      "ICGU"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "LAGL"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "larida1",
+    "familyComName": "Gulls, Terns, and Skimmers",
+    "familySciName": "Laridae"
+  },
+  {
+    "sciName": "Pavo cristatus",
+    "comName": "Indian Peafowl",
+    "speciesCode": "compea",
+    "category": "species",
+    "taxonOrder": 1539.0,
+    "bandingCodes": [
+      "INPE"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "PACR"
+    ],
+    "order": "Galliformes",
+    "familyCode": "phasia1",
+    "familyComName": "Pheasants, Grouse, and Allies",
+    "familySciName": "Phasianidae"
+  },
+  {
+    "sciName": "Lanius isabellinus",
+    "comName": "Isabelline Shrike",
+    "speciesCode": "isashr1",
+    "category": "species",
+    "taxonOrder": 20817.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "ISSH"
+    ],
+    "sciNameCodes": [
+      "LAIS"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "laniid1",
+    "familyComName": "Shrikes",
+    "familySciName": "Laniidae"
+  },
+  {
+    "sciName": "Lymnocryptes minimus",
+    "comName": "Jack Snipe",
+    "speciesCode": "jacsni",
+    "category": "species",
+    "taxonOrder": 6003.0,
+    "bandingCodes": [
+      "JASN"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "LYMI"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "scolop2",
+    "familyComName": "Sandpipers and Allies",
+    "familySciName": "Scolopacidae"
+  },
+  {
+    "sciName": "Somateria spectabilis",
+    "comName": "King Eider",
+    "speciesCode": "kineid",
+    "category": "species",
+    "taxonOrder": 688.0,
+    "bandingCodes": [
+      "KIEI"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "SOSP"
+    ],
+    "order": "Anseriformes",
+    "familyCode": "anatid1",
+    "familyComName": "Ducks, Geese, and Waterfowl",
+    "familySciName": "Anatidae"
+  },
+  {
+    "sciName": "Calcarius lapponicus",
+    "comName": "Lapland Longspur",
+    "speciesCode": "laplon",
+    "category": "species",
+    "taxonOrder": 32384.0,
+    "bandingCodes": [
+      "LALO"
+    ],
+    "comNameCodes": [
+      "LABU"
+    ],
+    "sciNameCodes": [
+      "CALA"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "calcar1",
+    "familyComName": "Longspurs and Snow Buntings",
+    "familySciName": "Calcariidae"
+  },
+  {
+    "sciName": "Hydrobates leucorhous",
+    "comName": "Leach's Storm-Petrel",
+    "speciesCode": "lcspet",
+    "category": "species",
+    "taxonOrder": 6974.0,
+    "bandingCodes": [
+      "LESP"
+    ],
+    "comNameCodes": [
+      "LSPE"
+    ],
+    "sciNameCodes": [
+      "HYLE"
+    ],
+    "order": "Procellariiformes",
+    "familyCode": "hydrob1",
+    "familyComName": "Northern Storm-Petrels",
+    "familySciName": "Hydrobatidae"
+  },
+  {
+    "sciName": "Larus fuscus",
+    "comName": "Lesser Black-backed Gull",
+    "speciesCode": "lbbgul",
+    "category": "species",
+    "taxonOrder": 6508.0,
+    "bandingCodes": [
+      "LBBG"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "LAFU"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "larida1",
+    "familyComName": "Gulls, Terns, and Skimmers",
+    "familySciName": "Laridae"
+  },
+  {
+    "sciName": "Aythya affinis",
+    "comName": "Lesser Scaup",
+    "speciesCode": "lessca",
+    "category": "species",
+    "taxonOrder": 675.0,
+    "bandingCodes": [
+      "LESC"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "AYAF"
+    ],
+    "order": "Anseriformes",
+    "familyCode": "anatid1",
+    "familyComName": "Ducks, Geese, and Waterfowl",
+    "familySciName": "Anatidae"
+  },
+  {
+    "sciName": "Curruca curruca",
+    "comName": "Lesser Whitethroat",
+    "speciesCode": "leswhi4",
+    "category": "species",
+    "taxonOrder": 25070.0,
+    "bandingCodes": [
+      "LEWH"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "CUCU"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "sylvii1",
+    "familyComName": "Sylviid Warblers and Allies",
+    "familySciName": "Sylviidae"
+  },
+  {
+    "sciName": "Tringa flavipes",
+    "comName": "Lesser Yellowlegs",
+    "speciesCode": "lesyel",
+    "category": "species",
+    "taxonOrder": 6083.0,
+    "bandingCodes": [
+      "LEYE"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "TRFL"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "scolop2",
+    "familyComName": "Sandpipers and Allies",
+    "familySciName": "Scolopacidae"
+  },
+  {
+    "sciName": "Egretta garzetta",
+    "comName": "Little Egret",
+    "speciesCode": "litegr",
+    "category": "species",
+    "taxonOrder": 7562.0,
+    "bandingCodes": [
+      "LIEG"
+    ],
+    "comNameCodes": [
+      "LEWR"
+    ],
+    "sciNameCodes": [
+      "EGGA"
+    ],
+    "order": "Pelecaniformes",
+    "familyCode": "ardeid1",
+    "familyComName": "Herons, Egrets, and Bitterns",
+    "familySciName": "Ardeidae"
+  },
+  {
+    "sciName": "Tachybaptus ruficollis",
+    "comName": "Little Grebe",
+    "speciesCode": "litgre1",
+    "category": "species",
+    "taxonOrder": 6749.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "DABC",
+      "LIGR"
+    ],
+    "sciNameCodes": [
+      "TARU"
+    ],
+    "order": "Podicipediformes",
+    "familyCode": "podici1",
+    "familyComName": "Grebes",
+    "familySciName": "Podicipedidae"
+  },
+  {
+    "sciName": "Hydrocoloeus minutus",
+    "comName": "Little Gull",
+    "speciesCode": "litgul",
+    "category": "species",
+    "taxonOrder": 6382.0,
+    "bandingCodes": [
+      "LIGU"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "HYMI"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "larida1",
+    "familyComName": "Gulls, Terns, and Skimmers",
+    "familySciName": "Laridae"
+  },
+  {
+    "sciName": "Athene noctua",
+    "comName": "Little Owl",
+    "speciesCode": "litowl1",
+    "category": "species",
+    "taxonOrder": 9006.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "LIOW"
+    ],
+    "sciNameCodes": [
+      "ATNO"
+    ],
+    "order": "Strigiformes",
+    "familyCode": "strigi1",
+    "familyComName": "Owls",
+    "familySciName": "Strigidae"
+  },
+  {
+    "sciName": "Thinornis dubius",
+    "comName": "Little Ringed Plover",
+    "speciesCode": "lirplo",
+    "category": "species",
+    "taxonOrder": 5787.0,
+    "bandingCodes": [
+      "LRPL"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "THDU"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "charad1",
+    "familyComName": "Plovers and Lapwings",
+    "familySciName": "Charadriidae"
+  },
+  {
+    "sciName": "Calidris minuta",
+    "comName": "Little Stint",
+    "speciesCode": "litsti",
+    "category": "species",
+    "taxonOrder": 6156.0,
+    "bandingCodes": [
+      "LIST"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "CAMI"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "scolop2",
+    "familyComName": "Sandpipers and Allies",
+    "familySciName": "Scolopacidae"
+  },
+  {
+    "sciName": "Sternula albifrons",
+    "comName": "Little Tern",
+    "speciesCode": "litter1",
+    "category": "species",
+    "taxonOrder": 6609.0,
+    "bandingCodes": [
+      "LITE"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "STAL"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "larida1",
+    "familyComName": "Gulls, Terns, and Skimmers",
+    "familySciName": "Laridae"
+  },
+  {
+    "sciName": "Clangula hyemalis",
+    "comName": "Long-tailed Duck",
+    "speciesCode": "lotduc",
+    "category": "species",
+    "taxonOrder": 716.0,
+    "bandingCodes": [
+      "LTDU"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "CLHY"
+    ],
+    "order": "Anseriformes",
+    "familyCode": "anatid1",
+    "familyComName": "Ducks, Geese, and Waterfowl",
+    "familySciName": "Anatidae"
+  },
+  {
+    "sciName": "Stercorarius longicaudus",
+    "comName": "Long-tailed Jaeger",
+    "speciesCode": "lotjae",
+    "category": "species",
+    "taxonOrder": 6293.0,
+    "bandingCodes": [
+      "LTJA"
+    ],
+    "comNameCodes": [
+      "LTSK"
+    ],
+    "sciNameCodes": [
+      "STLO"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "sterco1",
+    "familyComName": "Skuas and Jaegers",
+    "familySciName": "Stercorariidae"
+  },
+  {
+    "sciName": "Lanius schach",
+    "comName": "Long-tailed Shrike",
+    "speciesCode": "lotshr1",
+    "category": "species",
+    "taxonOrder": 20838.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "LTSH"
+    ],
+    "sciNameCodes": [
+      "LASC"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "laniid1",
+    "familyComName": "Shrikes",
+    "familySciName": "Laniidae"
+  },
+  {
+    "sciName": "Aegithalos caudatus",
+    "comName": "Long-tailed Tit",
+    "speciesCode": "lottit1",
+    "category": "species",
+    "taxonOrder": 24975.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "LTTI"
+    ],
+    "sciNameCodes": [
+      "AECA"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "aegith2",
+    "familyComName": "Long-tailed Tits",
+    "familySciName": "Aegithalidae"
+  },
+  {
+    "sciName": "Anas platyrhynchos",
+    "comName": "Mallard",
+    "speciesCode": "mallar3",
+    "category": "species",
+    "taxonOrder": 525.0,
+    "bandingCodes": [
+      "MALL"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "ANPL"
+    ],
+    "order": "Anseriformes",
+    "familyCode": "anatid1",
+    "familyComName": "Ducks, Geese, and Waterfowl",
+    "familySciName": "Anatidae"
+  },
+  {
+    "sciName": "Aix galericulata",
+    "comName": "Mandarin Duck",
+    "speciesCode": "manduc",
+    "category": "species",
+    "taxonOrder": 443.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "MADU"
+    ],
+    "sciNameCodes": [
+      "AIGA"
+    ],
+    "order": "Anseriformes",
+    "familyCode": "anatid1",
+    "familyComName": "Ducks, Geese, and Waterfowl",
+    "familySciName": "Anatidae"
+  },
+  {
+    "sciName": "Puffinus puffinus",
+    "comName": "Manx Shearwater",
+    "speciesCode": "manshe",
+    "category": "species",
+    "taxonOrder": 7139.0,
+    "bandingCodes": [
+      "MASH"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "PUPU"
+    ],
+    "order": "Procellariiformes",
+    "familyCode": "procel3",
+    "familyComName": "Shearwaters and Petrels",
+    "familySciName": "Procellariidae"
+  },
+  {
+    "sciName": "Poecile palustris",
+    "comName": "Marsh Tit",
+    "speciesCode": "martit2",
+    "category": "species",
+    "taxonOrder": 21806.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "MATI"
+    ],
+    "sciNameCodes": [
+      "POPA"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "parida1",
+    "familyComName": "Tits, Chickadees, and Titmice",
+    "familySciName": "Paridae"
+  },
+  {
+    "sciName": "Anthus pratensis",
+    "comName": "Meadow Pipit",
+    "speciesCode": "meapip1",
+    "category": "species",
+    "taxonOrder": 31575.0,
+    "bandingCodes": [
+      "MEPI"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "ANPR"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "motaci1",
+    "familyComName": "Wagtails and Pipits",
+    "familySciName": "Motacillidae"
+  },
+  {
+    "sciName": "Ichthyaetus melanocephalus",
+    "comName": "Mediterranean Gull",
+    "speciesCode": "medgul1",
+    "category": "species",
+    "taxonOrder": 6435.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "MEGU"
+    ],
+    "sciNameCodes": [
+      "ICME"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "larida1",
+    "familyComName": "Gulls, Terns, and Skimmers",
+    "familySciName": "Laridae"
+  },
+  {
+    "sciName": "Falco columbarius",
+    "comName": "Merlin",
+    "speciesCode": "merlin",
+    "category": "species",
+    "taxonOrder": 11947.0,
+    "bandingCodes": [
+      "MERL"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "FACO"
+    ],
+    "order": "Falconiformes",
+    "familyCode": "falcon1",
+    "familyComName": "Falcons and Caracaras",
+    "familySciName": "Falconidae"
+  },
+  {
+    "sciName": "Turdus viscivorus",
+    "comName": "Mistle Thrush",
+    "speciesCode": "misthr1",
+    "category": "species",
+    "taxonOrder": 28177.0,
+    "bandingCodes": [
+      "MITH"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "TUVI"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "turdid1",
+    "familyComName": "Thrushes and Allies",
+    "familySciName": "Turdidae"
+  },
+  {
+    "sciName": "Circus pygargus",
+    "comName": "Montagu's Harrier",
+    "speciesCode": "monhar1",
+    "category": "species",
+    "taxonOrder": 8233.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "MOHA"
+    ],
+    "sciNameCodes": [
+      "CIPY"
+    ],
+    "order": "Accipitriformes",
+    "familyCode": "accipi1",
+    "familyComName": "Hawks, Eagles, and Kites",
+    "familySciName": "Accipitridae"
+  },
+  {
+    "sciName": "Cairina moschata",
+    "comName": "Muscovy Duck",
+    "speciesCode": "musduc",
+    "category": "species",
+    "taxonOrder": 431.0,
+    "bandingCodes": [
+      "MUDU"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "CAMO"
+    ],
+    "order": "Anseriformes",
+    "familyCode": "anatid1",
+    "familyComName": "Ducks, Geese, and Waterfowl",
+    "familySciName": "Anatidae"
+  },
+  {
+    "sciName": "Cygnus olor",
+    "comName": "Mute Swan",
+    "speciesCode": "mutswa",
+    "category": "species",
+    "taxonOrder": 365.0,
+    "bandingCodes": [
+      "MUSW"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "CYOL"
+    ],
+    "order": "Anseriformes",
+    "familyCode": "anatid1",
+    "familyComName": "Ducks, Geese, and Waterfowl",
+    "familySciName": "Anatidae"
+  },
+  {
+    "sciName": "Fulmarus glacialis",
+    "comName": "Northern Fulmar",
+    "speciesCode": "norful",
+    "category": "species",
+    "taxonOrder": 7011.0,
+    "bandingCodes": [
+      "NOFU"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "FUGL"
+    ],
+    "order": "Procellariiformes",
+    "familyCode": "procel3",
+    "familyComName": "Shearwaters and Petrels",
+    "familySciName": "Procellariidae"
+  },
+  {
+    "sciName": "Morus bassanus",
+    "comName": "Northern Gannet",
+    "speciesCode": "norgan",
+    "category": "species",
+    "taxonOrder": 7251.0,
+    "bandingCodes": [
+      "NOGA"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "MOBA"
+    ],
+    "order": "Suliformes",
+    "familyCode": "sulida1",
+    "familyComName": "Boobies and Gannets",
+    "familySciName": "Sulidae"
+  },
+  {
+    "sciName": "Vanellus vanellus",
+    "comName": "Northern Lapwing",
+    "speciesCode": "norlap",
+    "category": "species",
+    "taxonOrder": 5795.0,
+    "bandingCodes": [
+      "NOLA"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "VAVA"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "charad1",
+    "familyComName": "Plovers and Lapwings",
+    "familySciName": "Charadriidae"
+  },
+  {
+    "sciName": "Anas acuta",
+    "comName": "Northern Pintail",
+    "speciesCode": "norpin",
+    "category": "species",
+    "taxonOrder": 571.0,
+    "bandingCodes": [
+      "NOPI"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "ANAC"
+    ],
+    "order": "Anseriformes",
+    "familyCode": "anatid1",
+    "familyComName": "Ducks, Geese, and Waterfowl",
+    "familySciName": "Anatidae"
+  },
+  {
+    "sciName": "Spatula clypeata",
+    "comName": "Northern Shoveler",
+    "speciesCode": "norsho",
+    "category": "species",
+    "taxonOrder": 483.0,
+    "bandingCodes": [
+      "NSHO"
+    ],
+    "comNameCodes": [
+      "NOSH"
+    ],
+    "sciNameCodes": [
+      "SPCL"
+    ],
+    "order": "Anseriformes",
+    "familyCode": "anatid1",
+    "familyComName": "Ducks, Geese, and Waterfowl",
+    "familySciName": "Anatidae"
+  },
+  {
+    "sciName": "Oenanthe oenanthe",
+    "comName": "Northern Wheatear",
+    "speciesCode": "norwhe",
+    "category": "species",
+    "taxonOrder": 29513.0,
+    "bandingCodes": [
+      "NOWH"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "OEOE"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "muscic3",
+    "familyComName": "Old World Flycatchers",
+    "familySciName": "Muscicapidae"
+  },
+  {
+    "sciName": "Anthus hodgsoni",
+    "comName": "Olive-backed Pipit",
+    "speciesCode": "olbpip",
+    "category": "species",
+    "taxonOrder": 31583.0,
+    "bandingCodes": [
+      "OBPI"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "ANHO"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "motaci1",
+    "familyComName": "Wagtails and Pipits",
+    "familySciName": "Motacillidae"
+  },
+  {
+    "sciName": "Pandion haliaetus",
+    "comName": "Osprey",
+    "speciesCode": "osprey",
+    "category": "species",
+    "taxonOrder": 7737.0,
+    "bandingCodes": [
+      "OSPR"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "PAHA"
+    ],
+    "order": "Accipitriformes",
+    "familyCode": "pandio1",
+    "familyComName": "Osprey",
+    "familySciName": "Pandionidae"
+  },
+  {
+    "sciName": "Circus macrourus",
+    "comName": "Pallid Harrier",
+    "speciesCode": "palhar1",
+    "category": "species",
+    "taxonOrder": 8230.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "PAHA"
+    ],
+    "sciNameCodes": [
+      "CIMA"
+    ],
+    "order": "Accipitriformes",
+    "familyCode": "accipi1",
+    "familyComName": "Hawks, Eagles, and Kites",
+    "familySciName": "Accipitridae"
+  },
+  {
+    "sciName": "Stercorarius parasiticus",
+    "comName": "Parasitic Jaeger",
+    "speciesCode": "parjae",
+    "category": "species",
+    "taxonOrder": 6296.0,
+    "bandingCodes": [
+      "PAJA"
+    ],
+    "comNameCodes": [
+      "ARJA",
+      "ARSK"
+    ],
+    "sciNameCodes": [
+      "STPA"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "sterco1",
+    "familyComName": "Skuas and Jaegers",
+    "familySciName": "Stercorariidae"
+  },
+  {
+    "sciName": "Calidris melanotos",
+    "comName": "Pectoral Sandpiper",
+    "speciesCode": "pecsan",
+    "category": "species",
+    "taxonOrder": 6163.0,
+    "bandingCodes": [
+      "PESA"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "CAME"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "scolop2",
+    "familyComName": "Sandpipers and Allies",
+    "familySciName": "Scolopacidae"
+  },
+  {
+    "sciName": "Falco peregrinus",
+    "comName": "Peregrine Falcon",
+    "speciesCode": "perfal",
+    "category": "species",
+    "taxonOrder": 11997.0,
+    "bandingCodes": [
+      "PEFA"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "FAPE"
+    ],
+    "order": "Falconiformes",
+    "familyCode": "falcon1",
+    "familyComName": "Falcons and Caracaras",
+    "familySciName": "Falconidae"
+  },
+  {
+    "sciName": "Recurvirostra avosetta",
+    "comName": "Pied Avocet",
+    "speciesCode": "pieavo1",
+    "category": "species",
+    "taxonOrder": 5720.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "PIAV"
+    ],
+    "sciNameCodes": [
+      "REAV"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "recurv1",
+    "familyComName": "Stilts and Avocets",
+    "familySciName": "Recurvirostridae"
+  },
+  {
+    "sciName": "Anser brachyrhynchus",
+    "comName": "Pink-footed Goose",
+    "speciesCode": "pifgoo",
+    "category": "species",
+    "taxonOrder": 299.0,
+    "bandingCodes": [
+      "PFGO"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "ANBR"
+    ],
+    "order": "Anseriformes",
+    "familyCode": "anatid1",
+    "familyComName": "Ducks, Geese, and Waterfowl",
+    "familySciName": "Anatidae"
+  },
+  {
+    "sciName": "Stercorarius pomarinus",
+    "comName": "Pomarine Jaeger",
+    "speciesCode": "pomjae",
+    "category": "species",
+    "taxonOrder": 6298.0,
+    "bandingCodes": [
+      "POJA"
+    ],
+    "comNameCodes": [
+      "POSK"
+    ],
+    "sciNameCodes": [
+      "STPO"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "sterco1",
+    "familyComName": "Skuas and Jaegers",
+    "familySciName": "Stercorariidae"
+  },
+  {
+    "sciName": "Ardea purpurea",
+    "comName": "Purple Heron",
+    "speciesCode": "purher1",
+    "category": "species",
+    "taxonOrder": 7671.0,
+    "bandingCodes": [
+      "PUHE"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "ARPU"
+    ],
+    "order": "Pelecaniformes",
+    "familyCode": "ardeid1",
+    "familyComName": "Herons, Egrets, and Bitterns",
+    "familySciName": "Ardeidae"
+  },
+  {
+    "sciName": "Calidris maritima",
+    "comName": "Purple Sandpiper",
+    "speciesCode": "pursan",
+    "category": "species",
+    "taxonOrder": 6145.0,
+    "bandingCodes": [
+      "PUSA"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "CAMA"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "scolop2",
+    "familyComName": "Sandpipers and Allies",
+    "familySciName": "Scolopacidae"
+  },
+  {
+    "sciName": "Alca torda",
+    "comName": "Razorbill",
+    "speciesCode": "razorb",
+    "category": "species",
+    "taxonOrder": 6347.0,
+    "bandingCodes": [
+      "RAZO"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "ALTO"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "alcida1",
+    "familyComName": "Auks, Murres, and Puffins",
+    "familySciName": "Alcidae"
+  },
+  {
+    "sciName": "Loxia curvirostra",
+    "comName": "Red Crossbill",
+    "speciesCode": "redcro",
+    "category": "species",
+    "taxonOrder": 32220.0,
+    "bandingCodes": [
+      "RECR"
+    ],
+    "comNameCodes": [
+      "COCR"
+    ],
+    "sciNameCodes": [
+      "LOCU"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "fringi1",
+    "familyComName": "Finches, Euphonias, and Allies",
+    "familySciName": "Fringillidae"
+  },
+  {
+    "sciName": "Milvus milvus",
+    "comName": "Red Kite",
+    "speciesCode": "redkit1",
+    "category": "species",
+    "taxonOrder": 8246.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "REKI"
+    ],
+    "sciNameCodes": [
+      "MIMI"
+    ],
+    "order": "Accipitriformes",
+    "familyCode": "accipi1",
+    "familyComName": "Hawks, Eagles, and Kites",
+    "familySciName": "Accipitridae"
+  },
+  {
+    "sciName": "Calidris canutus",
+    "comName": "Red Knot",
+    "speciesCode": "redkno",
+    "category": "species",
+    "taxonOrder": 6104.0,
+    "bandingCodes": [
+      "REKN"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "CACA"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "scolop2",
+    "familyComName": "Sandpipers and Allies",
+    "familySciName": "Scolopacidae"
+  },
+  {
+    "sciName": "Phalaropus fulicarius",
+    "comName": "Red Phalarope",
+    "speciesCode": "redpha1",
+    "category": "species",
+    "taxonOrder": 6058.0,
+    "bandingCodes": [
+      "REPH"
+    ],
+    "comNameCodes": [
+      "GRPH"
+    ],
+    "sciNameCodes": [
+      "PHFU"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "scolop2",
+    "familyComName": "Sandpipers and Allies",
+    "familySciName": "Scolopacidae"
+  },
+  {
+    "sciName": "Pyrrhocorax pyrrhocorax",
+    "comName": "Red-billed Chough",
+    "speciesCode": "rebcho1",
+    "category": "species",
+    "taxonOrder": 21274.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "RBCH"
+    ],
+    "sciNameCodes": [
+      "PYPY"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "corvid1",
+    "familyComName": "Crows, Jays, and Magpies",
+    "familySciName": "Corvidae"
+  },
+  {
+    "sciName": "Mergus serrator",
+    "comName": "Red-breasted Merganser",
+    "speciesCode": "rebmer",
+    "category": "species",
+    "taxonOrder": 745.0,
+    "bandingCodes": [
+      "RBME"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "MESE"
+    ],
+    "order": "Anseriformes",
+    "familyCode": "anatid1",
+    "familyComName": "Ducks, Geese, and Waterfowl",
+    "familySciName": "Anatidae"
+  },
+  {
+    "sciName": "Netta rufina",
+    "comName": "Red-crested Pochard",
+    "speciesCode": "recpoc",
+    "category": "species",
+    "taxonOrder": 635.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "RCPO"
+    ],
+    "sciNameCodes": [
+      "NERU"
+    ],
+    "order": "Anseriformes",
+    "familyCode": "anatid1",
+    "familyComName": "Ducks, Geese, and Waterfowl",
+    "familySciName": "Anatidae"
+  },
+  {
+    "sciName": "Tarsiger cyanurus",
+    "comName": "Red-flanked Bluetail",
+    "speciesCode": "refblu1",
+    "category": "species",
+    "taxonOrder": 29214.0,
+    "bandingCodes": [
+      "RFBL"
+    ],
+    "comNameCodes": [
+      "OFBR"
+    ],
+    "sciNameCodes": [
+      "TACY"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "muscic3",
+    "familyComName": "Old World Flycatchers",
+    "familySciName": "Muscicapidae"
+  },
+  {
+    "sciName": "Alectoris rufa",
+    "comName": "Red-legged Partridge",
+    "speciesCode": "relpar1",
+    "category": "species",
+    "taxonOrder": 1725.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "RLPA"
+    ],
+    "sciNameCodes": [
+      "ALRU"
+    ],
+    "order": "Galliformes",
+    "familyCode": "phasia1",
+    "familyComName": "Pheasants, Grouse, and Allies",
+    "familySciName": "Phasianidae"
+  },
+  {
+    "sciName": "Podiceps grisegena",
+    "comName": "Red-necked Grebe",
+    "speciesCode": "rengre",
+    "category": "species",
+    "taxonOrder": 6790.0,
+    "bandingCodes": [
+      "RNGR"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "POGR"
+    ],
+    "order": "Podicipediformes",
+    "familyCode": "podici1",
+    "familyComName": "Grebes",
+    "familySciName": "Podicipedidae"
+  },
+  {
+    "sciName": "Phalaropus lobatus",
+    "comName": "Red-necked Phalarope",
+    "speciesCode": "renpha",
+    "category": "species",
+    "taxonOrder": 6059.0,
+    "bandingCodes": [
+      "RNPH"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "PHLO"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "scolop2",
+    "familyComName": "Sandpipers and Allies",
+    "familySciName": "Scolopacidae"
+  },
+  {
+    "sciName": "Gavia stellata",
+    "comName": "Red-throated Loon",
+    "speciesCode": "retloo",
+    "category": "species",
+    "taxonOrder": 6848.0,
+    "bandingCodes": [
+      "RTLO"
+    ],
+    "comNameCodes": [
+      "RTDI"
+    ],
+    "sciNameCodes": [
+      "GAST"
+    ],
+    "order": "Gaviiformes",
+    "familyCode": "gaviid1",
+    "familyComName": "Loons",
+    "familySciName": "Gaviidae"
+  },
+  {
+    "sciName": "Acanthis flammea",
+    "comName": "Redpoll",
+    "speciesCode": "redpol1",
+    "category": "species",
+    "taxonOrder": 32205.0,
+    "bandingCodes": [
+      "UNRE"
+    ],
+    "comNameCodes": [
+      "REDP",
+      "RESP"
+    ],
+    "sciNameCodes": [
+      "ACFL"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "fringi1",
+    "familyComName": "Finches, Euphonias, and Allies",
+    "familySciName": "Fringillidae"
+  },
+  {
+    "sciName": "Turdus iliacus",
+    "comName": "Redwing",
+    "speciesCode": "redwin",
+    "category": "species",
+    "taxonOrder": 28211.0,
+    "bandingCodes": [
+      "REDW"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "TUIL"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "turdid1",
+    "familyComName": "Thrushes and Allies",
+    "familySciName": "Turdidae"
+  },
+  {
+    "sciName": "Emberiza schoeniclus",
+    "comName": "Reed Bunting",
+    "speciesCode": "reebun",
+    "category": "species",
+    "taxonOrder": 32524.0,
+    "bandingCodes": [
+      "REBU"
+    ],
+    "comNameCodes": [
+      "CRBU"
+    ],
+    "sciNameCodes": [
+      "EMSC"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "emberi2",
+    "familyComName": "Old World Buntings",
+    "familySciName": "Emberizidae"
+  },
+  {
+    "sciName": "Turdus torquatus",
+    "comName": "Ring Ouzel",
+    "speciesCode": "rinouz1",
+    "category": "species",
+    "taxonOrder": 28506.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "RIOU"
+    ],
+    "sciNameCodes": [
+      "TUTO"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "turdid1",
+    "familyComName": "Thrushes and Allies",
+    "familySciName": "Turdidae"
+  },
+  {
+    "sciName": "Aythya collaris",
+    "comName": "Ring-necked Duck",
+    "speciesCode": "rinduc",
+    "category": "species",
+    "taxonOrder": 648.0,
+    "bandingCodes": [
+      "RNDU"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "AYCO"
+    ],
+    "order": "Anseriformes",
+    "familyCode": "anatid1",
+    "familyComName": "Ducks, Geese, and Waterfowl",
+    "familySciName": "Anatidae"
+  },
+  {
+    "sciName": "Phasianus colchicus",
+    "comName": "Ring-necked Pheasant",
+    "speciesCode": "rinphe1",
+    "category": "species",
+    "taxonOrder": 1444.0,
+    "bandingCodes": [
+      "RNEP"
+    ],
+    "comNameCodes": [
+      "RNPH",
+      "COPH"
+    ],
+    "sciNameCodes": [
+      "PHCO"
+    ],
+    "order": "Galliformes",
+    "familyCode": "phasia1",
+    "familyComName": "Pheasants, Grouse, and Allies",
+    "familySciName": "Phasianidae"
+  },
+  {
+    "sciName": "Columba livia",
+    "comName": "Rock Pigeon",
+    "speciesCode": "rocpig",
+    "category": "species",
+    "taxonOrder": 1817.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "ROPI",
+      "RODO"
+    ],
+    "sciNameCodes": [
+      "COLI"
+    ],
+    "order": "Columbiformes",
+    "familyCode": "columb2",
+    "familyComName": "Pigeons and Doves",
+    "familySciName": "Columbidae"
+  },
+  {
+    "sciName": "Anthus petrosus",
+    "comName": "Rock Pipit",
+    "speciesCode": "rocpip1",
+    "category": "species",
+    "taxonOrder": 31598.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "ROPI",
+      "ERPI"
+    ],
+    "sciNameCodes": [
+      "ANPE"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "motaci1",
+    "familyComName": "Wagtails and Pipits",
+    "familySciName": "Motacillidae"
+  },
+  {
+    "sciName": "Lagopus muta",
+    "comName": "Rock Ptarmigan",
+    "speciesCode": "rocpta1",
+    "category": "species",
+    "taxonOrder": 1340.0,
+    "bandingCodes": [
+      "ROPT"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "LAMU"
+    ],
+    "order": "Galliformes",
+    "familyCode": "phasia1",
+    "familyComName": "Pheasants, Grouse, and Allies",
+    "familySciName": "Phasianidae"
+  },
+  {
+    "sciName": "Corvus frugilegus",
+    "comName": "Rook",
+    "speciesCode": "rook1",
+    "category": "species",
+    "taxonOrder": 21330.0,
+    "bandingCodes": [
+      "ROOK"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "COFR"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "corvid1",
+    "familyComName": "Crows, Jays, and Magpies",
+    "familySciName": "Corvidae"
+  },
+  {
+    "sciName": "Psittacula krameri",
+    "comName": "Rose-ringed Parakeet",
+    "speciesCode": "rorpar",
+    "category": "species",
+    "taxonOrder": 12232.0,
+    "bandingCodes": [
+      "RRPA"
+    ],
+    "comNameCodes": [
+      "RNPA"
+    ],
+    "sciNameCodes": [
+      "PSKR"
+    ],
+    "order": "Psittaciformes",
+    "familyCode": "psitta4",
+    "familyComName": "Old World Parrots",
+    "familySciName": "Psittaculidae"
+  },
+  {
+    "sciName": "Sterna dougallii",
+    "comName": "Roseate Tern",
+    "speciesCode": "roster",
+    "category": "species",
+    "taxonOrder": 6687.0,
+    "bandingCodes": [
+      "ROST"
+    ],
+    "comNameCodes": [
+      "ROTE"
+    ],
+    "sciNameCodes": [
+      "STDO"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "larida1",
+    "familyComName": "Gulls, Terns, and Skimmers",
+    "familySciName": "Laridae"
+  },
+  {
+    "sciName": "Anser rossii",
+    "comName": "Ross's Goose",
+    "speciesCode": "rosgoo",
+    "category": "species",
+    "taxonOrder": 261.0,
+    "bandingCodes": [
+      "ROGO"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "ANRO"
+    ],
+    "order": "Anseriformes",
+    "familyCode": "anatid1",
+    "familyComName": "Ducks, Geese, and Waterfowl",
+    "familySciName": "Anatidae"
+  },
+  {
+    "sciName": "Tadorna ferruginea",
+    "comName": "Ruddy Shelduck",
+    "speciesCode": "rudshe",
+    "category": "species",
+    "taxonOrder": 408.0,
+    "bandingCodes": [
+      "RUSH"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "TAFE"
+    ],
+    "order": "Anseriformes",
+    "familyCode": "anatid1",
+    "familyComName": "Ducks, Geese, and Waterfowl",
+    "familySciName": "Anatidae"
+  },
+  {
+    "sciName": "Arenaria interpres",
+    "comName": "Ruddy Turnstone",
+    "speciesCode": "rudtur",
+    "category": "species",
+    "taxonOrder": 6099.0,
+    "bandingCodes": [
+      "RUTU"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "ARIN"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "scolop2",
+    "familyComName": "Sandpipers and Allies",
+    "familySciName": "Scolopacidae"
+  },
+  {
+    "sciName": "Calidris pugnax",
+    "comName": "Ruff",
+    "speciesCode": "ruff",
+    "category": "species",
+    "taxonOrder": 6115.0,
+    "bandingCodes": [
+      "RUFF"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "CAPU"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "scolop2",
+    "familyComName": "Sandpipers and Allies",
+    "familySciName": "Scolopacidae"
+  },
+  {
+    "sciName": "Xema sabini",
+    "comName": "Sabine's Gull",
+    "speciesCode": "sabgul",
+    "category": "species",
+    "taxonOrder": 6390.0,
+    "bandingCodes": [
+      "SAGU"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "XESA"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "larida1",
+    "familyComName": "Gulls, Terns, and Skimmers",
+    "familySciName": "Laridae"
+  },
+  {
+    "sciName": "Calidris alba",
+    "comName": "Sanderling",
+    "speciesCode": "sander",
+    "category": "species",
+    "taxonOrder": 6127.0,
+    "bandingCodes": [
+      "SAND"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "CAAL"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "scolop2",
+    "familyComName": "Sandpipers and Allies",
+    "familySciName": "Scolopacidae"
+  },
+  {
+    "sciName": "Thalasseus sandvicensis",
+    "comName": "Sandwich Tern",
+    "speciesCode": "santer1",
+    "category": "species",
+    "taxonOrder": 6701.0,
+    "bandingCodes": [
+      "SATE"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "THSA"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "larida1",
+    "familyComName": "Gulls, Terns, and Skimmers",
+    "familySciName": "Laridae"
+  },
+  {
+    "sciName": "Acrocephalus schoenobaenus",
+    "comName": "Sedge Warbler",
+    "speciesCode": "sedwar1",
+    "category": "species",
+    "taxonOrder": 23433.0,
+    "bandingCodes": [
+      "SEWA"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "ACSC"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "acroce2",
+    "familyComName": "Reed Warblers and Allies",
+    "familySciName": "Acrocephalidae"
+  },
+  {
+    "sciName": "Asio flammeus",
+    "comName": "Short-eared Owl",
+    "speciesCode": "sheowl",
+    "category": "species",
+    "taxonOrder": 9174.0,
+    "bandingCodes": [
+      "SEOW"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "ASFL"
+    ],
+    "order": "Strigiformes",
+    "familyCode": "strigi1",
+    "familyComName": "Owls",
+    "familySciName": "Strigidae"
+  },
+  {
+    "sciName": "Mergellus albellus",
+    "comName": "Smew",
+    "speciesCode": "smew",
+    "category": "species",
+    "taxonOrder": 727.0,
+    "bandingCodes": [
+      "SMEW"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "MEAL"
+    ],
+    "order": "Anseriformes",
+    "familyCode": "anatid1",
+    "familyComName": "Ducks, Geese, and Waterfowl",
+    "familySciName": "Anatidae"
+  },
+  {
+    "sciName": "Plectrophenax nivalis",
+    "comName": "Snow Bunting",
+    "speciesCode": "snobun",
+    "category": "species",
+    "taxonOrder": 32392.0,
+    "bandingCodes": [
+      "SNBU"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "PLNI"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "calcar1",
+    "familyComName": "Longspurs and Snow Buntings",
+    "familySciName": "Calcariidae"
+  },
+  {
+    "sciName": "Anser caerulescens",
+    "comName": "Snow Goose",
+    "speciesCode": "snogoo",
+    "category": "species",
+    "taxonOrder": 257.0,
+    "bandingCodes": [
+      "SNGO"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "ANCA"
+    ],
+    "order": "Anseriformes",
+    "familyCode": "anatid1",
+    "familyComName": "Ducks, Geese, and Waterfowl",
+    "familySciName": "Anatidae"
+  },
+  {
+    "sciName": "Turdus philomelos",
+    "comName": "Song Thrush",
+    "speciesCode": "sonthr1",
+    "category": "species",
+    "taxonOrder": 28181.0,
+    "bandingCodes": [
+      "SOTH"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "TUPH"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "turdid1",
+    "familyComName": "Thrushes and Allies",
+    "familySciName": "Turdidae"
+  },
+  {
+    "sciName": "Ardenna grisea",
+    "comName": "Sooty Shearwater",
+    "speciesCode": "sooshe",
+    "category": "species",
+    "taxonOrder": 7132.0,
+    "bandingCodes": [
+      "SOSH"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "ARGR"
+    ],
+    "order": "Procellariiformes",
+    "familyCode": "procel3",
+    "familyComName": "Shearwaters and Petrels",
+    "familySciName": "Procellariidae"
+  },
+  {
+    "sciName": "Porzana carolina",
+    "comName": "Sora",
+    "speciesCode": "sora",
+    "category": "species",
+    "taxonOrder": 5398.0,
+    "bandingCodes": [
+      "SORA"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "POCA"
+    ],
+    "order": "Gruiformes",
+    "familyCode": "rallid1",
+    "familyComName": "Rails, Gallinules, and Coots",
+    "familySciName": "Rallidae"
+  },
+  {
+    "sciName": "Tringa erythropus",
+    "comName": "Spotted Redshank",
+    "speciesCode": "spored",
+    "category": "species",
+    "taxonOrder": 6088.0,
+    "bandingCodes": [
+      "SPRE"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "TRER"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "scolop2",
+    "familyComName": "Sandpipers and Allies",
+    "familySciName": "Scolopacidae"
+  },
+  {
+    "sciName": "Columba oenas",
+    "comName": "Stock Dove",
+    "speciesCode": "stodov1",
+    "category": "species",
+    "taxonOrder": 1844.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "STDO"
+    ],
+    "sciNameCodes": [
+      "COOE"
+    ],
+    "order": "Columbiformes",
+    "familyCode": "columb2",
+    "familyComName": "Pigeons and Doves",
+    "familySciName": "Columbidae"
+  },
+  {
+    "sciName": "Melanitta perspicillata",
+    "comName": "Surf Scoter",
+    "speciesCode": "sursco",
+    "category": "species",
+    "taxonOrder": 703.0,
+    "bandingCodes": [
+      "SUSC"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "MEPE"
+    ],
+    "order": "Anseriformes",
+    "familyCode": "anatid1",
+    "familyComName": "Ducks, Geese, and Waterfowl",
+    "familySciName": "Anatidae"
+  },
+  {
+    "sciName": "Anser fabalis",
+    "comName": "Taiga Bean-Goose",
+    "speciesCode": "taibeg1",
+    "category": "species",
+    "taxonOrder": 290.0,
+    "bandingCodes": [
+      "TABG"
+    ],
+    "comNameCodes": [
+      "BEGO",
+      "TBGO"
+    ],
+    "sciNameCodes": [
+      "ANFA"
+    ],
+    "order": "Anseriformes",
+    "familyCode": "anatid1",
+    "familyComName": "Ducks, Geese, and Waterfowl",
+    "familySciName": "Anatidae"
+  },
+  {
+    "sciName": "Strix aluco",
+    "comName": "Tawny Owl",
+    "speciesCode": "tawowl1",
+    "category": "species",
+    "taxonOrder": 9098.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "TAOW"
+    ],
+    "sciNameCodes": [
+      "STAL"
+    ],
+    "order": "Strigiformes",
+    "familyCode": "strigi1",
+    "familyComName": "Owls",
+    "familySciName": "Strigidae"
+  },
+  {
+    "sciName": "Calidris temminckii",
+    "comName": "Temminck's Stint",
+    "speciesCode": "temsti",
+    "category": "species",
+    "taxonOrder": 6122.0,
+    "bandingCodes": [
+      "TEST"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "CATE"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "scolop2",
+    "familyComName": "Sandpipers and Allies",
+    "familySciName": "Scolopacidae"
+  },
+  {
+    "sciName": "Anthus trivialis",
+    "comName": "Tree Pipit",
+    "speciesCode": "trepip",
+    "category": "species",
+    "taxonOrder": 31579.0,
+    "bandingCodes": [
+      "TRPI"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "ANTR"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "motaci1",
+    "familyComName": "Wagtails and Pipits",
+    "familySciName": "Motacillidae"
+  },
+  {
+    "sciName": "Aythya fuligula",
+    "comName": "Tufted Duck",
+    "speciesCode": "tufduc",
+    "category": "species",
+    "taxonOrder": 662.0,
+    "bandingCodes": [
+      "TUDU"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "AYFU"
+    ],
+    "order": "Anseriformes",
+    "familyCode": "anatid1",
+    "familyComName": "Ducks, Geese, and Waterfowl",
+    "familySciName": "Anatidae"
+  },
+  {
+    "sciName": "Anser serrirostris",
+    "comName": "Tundra Bean-Goose",
+    "speciesCode": "tunbeg1",
+    "category": "species",
+    "taxonOrder": 294.0,
+    "bandingCodes": [
+      "TUBG"
+    ],
+    "comNameCodes": [
+      "BEGO",
+      "TBGO"
+    ],
+    "sciNameCodes": [
+      "ANSE"
+    ],
+    "order": "Anseriformes",
+    "familyCode": "anatid1",
+    "familyComName": "Ducks, Geese, and Waterfowl",
+    "familySciName": "Anatidae"
+  },
+  {
+    "sciName": "Cygnus columbianus",
+    "comName": "Tundra Swan",
+    "speciesCode": "tunswa",
+    "category": "species",
+    "taxonOrder": 372.0,
+    "bandingCodes": [
+      "TUSW"
+    ],
+    "comNameCodes": [
+      "BESW"
+    ],
+    "sciNameCodes": [
+      "CYCO"
+    ],
+    "order": "Anseriformes",
+    "familyCode": "anatid1",
+    "familyComName": "Ducks, Geese, and Waterfowl",
+    "familySciName": "Anatidae"
+  },
+  {
+    "sciName": "Linaria flavirostris",
+    "comName": "Twite",
+    "speciesCode": "twite1",
+    "category": "species",
+    "taxonOrder": 32185.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "TWIT"
+    ],
+    "sciNameCodes": [
+      "LIFL"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "fringi1",
+    "familyComName": "Finches, Euphonias, and Allies",
+    "familySciName": "Fringillidae"
+  },
+  {
+    "sciName": "Melanitta fusca",
+    "comName": "Velvet Scoter",
+    "speciesCode": "whwsco3",
+    "category": "species",
+    "taxonOrder": 704.0,
+    "bandingCodes": [
+      "VESC"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "MEFU"
+    ],
+    "order": "Anseriformes",
+    "familyCode": "anatid1",
+    "familyComName": "Ducks, Geese, and Waterfowl",
+    "familySciName": "Anatidae"
+  },
+  {
+    "sciName": "Anthus spinoletta",
+    "comName": "Water Pipit",
+    "speciesCode": "watpip1",
+    "category": "species",
+    "taxonOrder": 31593.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "WAPI"
+    ],
+    "sciNameCodes": [
+      "ANSP"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "motaci1",
+    "familyComName": "Wagtails and Pipits",
+    "familySciName": "Motacillidae"
+  },
+  {
+    "sciName": "Rallus aquaticus",
+    "comName": "Water Rail",
+    "speciesCode": "watrai1",
+    "category": "species",
+    "taxonOrder": 5251.0,
+    "bandingCodes": [
+      "WEWR"
+    ],
+    "comNameCodes": [
+      "WARA",
+      "WWRA"
+    ],
+    "sciNameCodes": [
+      "RAAQ"
+    ],
+    "order": "Gruiformes",
+    "familyCode": "rallid1",
+    "familyComName": "Rails, Gallinules, and Coots",
+    "familySciName": "Rallidae"
+  },
+  {
+    "sciName": "Tyto alba",
+    "comName": "Western Barn Owl",
+    "speciesCode": "webowl1",
+    "category": "species",
+    "taxonOrder": 8516.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "CBOW",
+      "EBOW",
+      "WBOW"
+    ],
+    "sciNameCodes": [
+      "TYAL"
+    ],
+    "order": "Strigiformes",
+    "familyCode": "tytoni1",
+    "familyComName": "Barn-Owls",
+    "familySciName": "Tytonidae"
+  },
+  {
+    "sciName": "Ardea ibis",
+    "comName": "Western Cattle-Egret",
+    "speciesCode": "categr1",
+    "category": "species",
+    "taxonOrder": 7631.0,
+    "bandingCodes": [
+      "WECE"
+    ],
+    "comNameCodes": [
+      "WCEG",
+      "CAEG"
+    ],
+    "sciNameCodes": [
+      "ARIB"
+    ],
+    "order": "Pelecaniformes",
+    "familyCode": "ardeid1",
+    "familyComName": "Herons, Egrets, and Bitterns",
+    "familySciName": "Ardeidae"
+  },
+  {
+    "sciName": "Delichon urbicum",
+    "comName": "Western House-Martin",
+    "speciesCode": "comhom1",
+    "category": "species",
+    "taxonOrder": 23984.0,
+    "bandingCodes": [
+      "WEHM"
+    ],
+    "comNameCodes": [
+      "WHMA",
+      "NHMA"
+    ],
+    "sciNameCodes": [
+      "DEUR"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "hirund2",
+    "familyComName": "Swallows",
+    "familySciName": "Hirundinidae"
+  },
+  {
+    "sciName": "Circus aeruginosus",
+    "comName": "Western Marsh Harrier",
+    "speciesCode": "wemhar1",
+    "category": "species",
+    "taxonOrder": 8211.0,
+    "bandingCodes": [
+      "WMHA"
+    ],
+    "comNameCodes": [
+      "WEMH"
+    ],
+    "sciNameCodes": [
+      "CIAE"
+    ],
+    "order": "Accipitriformes",
+    "familyCode": "accipi1",
+    "familyComName": "Hawks, Eagles, and Kites",
+    "familySciName": "Accipitridae"
+  },
+  {
+    "sciName": "Motacilla flava",
+    "comName": "Western Yellow Wagtail",
+    "speciesCode": "eaywag1",
+    "category": "species",
+    "taxonOrder": 31407.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "WYWA"
+    ],
+    "sciNameCodes": [
+      "MOFL"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "motaci1",
+    "familyComName": "Wagtails and Pipits",
+    "familySciName": "Motacillidae"
+  },
+  {
+    "sciName": "Saxicola rubetra",
+    "comName": "Whinchat",
+    "speciesCode": "whinch1",
+    "category": "species",
+    "taxonOrder": 29396.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "WHIN"
+    ],
+    "sciNameCodes": [
+      "SARU"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "muscic3",
+    "familyComName": "Old World Flycatchers",
+    "familySciName": "Muscicapidae"
+  },
+  {
+    "sciName": "Ciconia ciconia",
+    "comName": "White Stork",
+    "speciesCode": "whisto1",
+    "category": "species",
+    "taxonOrder": 7209.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "WHST"
+    ],
+    "sciNameCodes": [
+      "CICI"
+    ],
+    "order": "Ciconiiformes",
+    "familyCode": "ciconi2",
+    "familyComName": "Storks",
+    "familySciName": "Ciconiidae"
+  },
+  {
+    "sciName": "Motacilla alba",
+    "comName": "White Wagtail",
+    "speciesCode": "whiwag",
+    "category": "species",
+    "taxonOrder": 31445.0,
+    "bandingCodes": [
+      "WHWA"
+    ],
+    "comNameCodes": [
+      "PWWA"
+    ],
+    "sciNameCodes": [
+      "MOAL"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "motaci1",
+    "familyComName": "Wagtails and Pipits",
+    "familySciName": "Motacillidae"
+  },
+  {
+    "sciName": "Calidris fuscicollis",
+    "comName": "White-rumped Sandpiper",
+    "speciesCode": "whrsan",
+    "category": "species",
+    "taxonOrder": 6158.0,
+    "bandingCodes": [
+      "WRSA"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "CAFU"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "scolop2",
+    "familyComName": "Sandpipers and Allies",
+    "familySciName": "Scolopacidae"
+  },
+  {
+    "sciName": "Haliaeetus albicilla",
+    "comName": "White-tailed Eagle",
+    "speciesCode": "whteag",
+    "category": "species",
+    "taxonOrder": 8268.0,
+    "bandingCodes": [
+      "WTEA"
+    ],
+    "comNameCodes": [
+      "WTSE"
+    ],
+    "sciNameCodes": [
+      "HAAL"
+    ],
+    "order": "Accipitriformes",
+    "familyCode": "accipi1",
+    "familyComName": "Hawks, Eagles, and Kites",
+    "familySciName": "Accipitridae"
+  },
+  {
+    "sciName": "Cinclus cinclus",
+    "comName": "White-throated Dipper",
+    "speciesCode": "whtdip1",
+    "category": "species",
+    "taxonOrder": 27409.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "WTDI"
+    ],
+    "sciNameCodes": [
+      "CICI"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "cincli1",
+    "familyComName": "Dippers",
+    "familySciName": "Cinclidae"
+  },
+  {
+    "sciName": "Chlidonias leucopterus",
+    "comName": "White-winged Tern",
+    "speciesCode": "whwter",
+    "category": "species",
+    "taxonOrder": 6654.0,
+    "bandingCodes": [
+      "WWTE"
+    ],
+    "comNameCodes": [
+      "WWBT"
+    ],
+    "sciNameCodes": [
+      "CHLE"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "larida1",
+    "familyComName": "Gulls, Terns, and Skimmers",
+    "familySciName": "Laridae"
+  },
+  {
+    "sciName": "Cygnus cygnus",
+    "comName": "Whooper Swan",
+    "speciesCode": "whoswa",
+    "category": "species",
+    "taxonOrder": 378.0,
+    "bandingCodes": [
+      "WHOS"
+    ],
+    "comNameCodes": [
+      "WHSW"
+    ],
+    "sciNameCodes": [
+      "CYCY"
+    ],
+    "order": "Anseriformes",
+    "familyCode": "anatid1",
+    "familyComName": "Ducks, Geese, and Waterfowl",
+    "familySciName": "Anatidae"
+  },
+  {
+    "sciName": "Poecile montanus",
+    "comName": "Willow Tit",
+    "speciesCode": "wiltit1",
+    "category": "species",
+    "taxonOrder": 21817.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "WITI"
+    ],
+    "sciNameCodes": [
+      "POMO"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "parida1",
+    "familyComName": "Tits, Chickadees, and Titmice",
+    "familySciName": "Paridae"
+  },
+  {
+    "sciName": "Phylloscopus trochilus",
+    "comName": "Willow Warbler",
+    "speciesCode": "wlwwar",
+    "category": "species",
+    "taxonOrder": 24610.0,
+    "bandingCodes": [
+      "WILW"
+    ],
+    "comNameCodes": [
+      "WIWA"
+    ],
+    "sciNameCodes": [
+      "PHTR"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "phyllo4",
+    "familyComName": "Leaf Warblers",
+    "familySciName": "Phylloscopidae"
+  },
+  {
+    "sciName": "Gallinago delicata",
+    "comName": "Wilson's Snipe",
+    "speciesCode": "wilsni1",
+    "category": "species",
+    "taxonOrder": 6042.0,
+    "bandingCodes": [
+      "WISN"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "GADE"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "scolop2",
+    "familyComName": "Sandpipers and Allies",
+    "familySciName": "Scolopacidae"
+  },
+  {
+    "sciName": "Oceanites oceanicus",
+    "comName": "Wilson's Storm-Petrel",
+    "speciesCode": "wispet",
+    "category": "species",
+    "taxonOrder": 6934.0,
+    "bandingCodes": [
+      "WISP"
+    ],
+    "comNameCodes": [
+      "WSPE"
+    ],
+    "sciNameCodes": [
+      "OCOC"
+    ],
+    "order": "Procellariiformes",
+    "familyCode": "oceani2",
+    "familyComName": "Southern Storm-Petrels",
+    "familySciName": "Oceanitidae"
+  },
+  {
+    "sciName": "Lullula arborea",
+    "comName": "Wood Lark",
+    "speciesCode": "woolar1",
+    "category": "species",
+    "taxonOrder": 22364.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "WOOD",
+      "WOLA"
+    ],
+    "sciNameCodes": [
+      "LUAR"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "alaudi1",
+    "familyComName": "Larks",
+    "familySciName": "Alaudidae"
+  },
+  {
+    "sciName": "Tringa glareola",
+    "comName": "Wood Sandpiper",
+    "speciesCode": "woosan",
+    "category": "species",
+    "taxonOrder": 6075.0,
+    "bandingCodes": [
+      "WOSA"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "TRGL"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "scolop2",
+    "familyComName": "Sandpipers and Allies",
+    "familySciName": "Scolopacidae"
+  },
+  {
+    "sciName": "Phylloscopus sibilatrix",
+    "comName": "Wood Warbler",
+    "speciesCode": "woowar",
+    "category": "species",
+    "taxonOrder": 24560.0,
+    "bandingCodes": [
+      "WOWA"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "PHSI"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "phyllo4",
+    "familyComName": "Leaf Warblers",
+    "familySciName": "Phylloscopidae"
+  },
+  {
+    "sciName": "Gavia adamsii",
+    "comName": "Yellow-billed Loon",
+    "speciesCode": "yebloo",
+    "category": "species",
+    "taxonOrder": 6855.0,
+    "bandingCodes": [
+      "YBLO"
+    ],
+    "comNameCodes": [
+      "WBDI"
+    ],
+    "sciNameCodes": [
+      "GAAD"
+    ],
+    "order": "Gaviiformes",
+    "familyCode": "gaviid1",
+    "familyComName": "Loons",
+    "familySciName": "Gaviidae"
+  },
+  {
+    "sciName": "Phylloscopus inornatus",
+    "comName": "Yellow-browed Warbler",
+    "speciesCode": "yebwar3",
+    "category": "species",
+    "taxonOrder": 24571.0,
+    "bandingCodes": [
+      "YBWA"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "PHIN"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "phyllo4",
+    "familyComName": "Leaf Warblers",
+    "familySciName": "Phylloscopidae"
+  },
+  {
+    "sciName": "Larus michahellis",
+    "comName": "Yellow-legged Gull",
+    "speciesCode": "yelgul1",
+    "category": "species",
+    "taxonOrder": 6485.0,
+    "bandingCodes": [
+      "YLGU"
+    ],
+    "comNameCodes": [],
+    "sciNameCodes": [
+      "LAMI"
+    ],
+    "order": "Charadriiformes",
+    "familyCode": "larida1",
+    "familyComName": "Gulls, Terns, and Skimmers",
+    "familySciName": "Laridae"
+  },
+  {
+    "sciName": "Emberiza citrinella",
+    "comName": "Yellowhammer",
+    "speciesCode": "yellow2",
+    "category": "species",
+    "taxonOrder": 32451.0,
+    "bandingCodes": [],
+    "comNameCodes": [
+      "YELL"
+    ],
+    "sciNameCodes": [
+      "EMCI"
+    ],
+    "order": "Passeriformes",
+    "familyCode": "emberi2",
+    "familyComName": "Old World Buntings",
+    "familySciName": "Emberizidae"
+  }
+]

@@ -1,9 +1,54 @@
 import os
 import json
 import argparse
+from pathlib import Path
+
 import requests
 
 import ebird_api_common
+
+
+def load_regular_species(subregions_file: str, region_key: str) -> dict[str, list[str]]:
+    """Load the optional sibling regular-species filter.
+
+    A region can ship ``<region>-regular-species.json`` next to its
+    ``<region>-subregions.json`` file. The daily fetch then keeps only species
+    that the audit identified as regular, so a one-day vagrant cannot become
+    the challenge answer.
+    """
+    path = Path(subregions_file).with_name(f"{region_key}-regular-species.json")
+    if not path.exists():
+        return {}
+    with path.open(encoding="utf-8") as handle:
+        data = json.load(handle)
+    if not isinstance(data, dict):
+        raise ValueError(f"Regular-species file must be an object: {path}")
+    for name, ids in data.items():
+        if not isinstance(name, str) or not isinstance(ids, list):
+            raise ValueError(f"Invalid regular-species entry for {name!r}: {path}")
+    return data
+
+
+def filter_regular_species(
+    unique_ids: list[str], regular_map: dict[str, list[str]], subregion_name: str
+) -> list[str]:
+    """Intersect an observed species list with the regular pool."""
+    if not regular_map:
+        return unique_ids
+    allowed = set(regular_map.get(subregion_name, []))
+    if not allowed:
+        print(f"  Warning: no regular-species entry for {subregion_name}")
+    return [species_id for species_id in unique_ids if species_id in allowed]
+
+
+def load_playable_ids(output_file: str, region_key: str) -> set[str] | None:
+    """Load the shipped bird IDs so filtered data never references no-audio birds."""
+    birds_path = Path(output_file).with_name("birds.json")
+    if not birds_path.exists():
+        return None
+    with birds_path.open(encoding="utf-8") as handle:
+        birds = json.load(handle)
+    return {bird["id"] for bird in birds.get(region_key, [])}
 
 
 def main():
@@ -30,6 +75,13 @@ def main():
 
     if not subregions:
         raise ValueError("Subregions list is empty.")
+
+    regular_map = load_regular_species(args.subregions_file, region_key)
+    playable_ids = (
+        load_playable_ids(args.output_file, region_key) if regular_map else None
+    )
+    if regular_map:
+        print(f"Using regular-species filter for {region_key}")
 
     # Load existing output file if it exists (to merge data, preserving other
     # regions/subregions already present)
@@ -62,8 +114,14 @@ def main():
                 f"Failed to fetch data from eBird API for {region_code}: {e}"
             ) from e
 
-        # Extract unique species codes
-        unique_ids = sorted({obs["speciesCode"] for obs in observations})
+        # Extract unique species codes, then keep only the regular pool when
+        # one is configured for this region.
+        observed_ids = sorted({obs["speciesCode"] for obs in observations})
+        unique_ids = filter_regular_species(observed_ids, regular_map, subregion_name)
+        if playable_ids is not None:
+            unique_ids = [
+                species_id for species_id in unique_ids if species_id in playable_ids
+            ]
 
         # Build new subregion data
         new_subregion_data = [{"id": species_id} for species_id in unique_ids]
@@ -71,7 +129,13 @@ def main():
         # Merge into existing data structure (upsert this subregion)
         existing_data[region_key][subregion_name] = new_subregion_data
 
-        print(f"  {subregion_name}: {len(new_subregion_data)} unique species")
+        if regular_map:
+            print(
+                f"  {subregion_name}: {len(new_subregion_data)} regular species "
+                f"(from {len(observed_ids)} observed)"
+            )
+        else:
+            print(f"  {subregion_name}: {len(new_subregion_data)} unique species")
 
     # Save merged output
     with open(args.output_file, "w") as out_f:

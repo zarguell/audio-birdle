@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-07-28",
-      "id": "yebmag",
-      "name": "Yellow-billed Magpie",
-      "subregion": "California"
-    },
-    {
       "date": "2026-07-29",
       "id": "blkter",
       "name": "Black Tern",
@@ -725,15 +719,15 @@
       "id": "buwtea",
       "name": "Blue-winged Teal",
       "subregion": "South Carolina"
+    },
+    {
+      "date": "2026-11-26",
+      "id": "easmea",
+      "name": "Eastern Meadowlark",
+      "subregion": "Maryland"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-07-28",
-      "id": "hooori",
-      "name": "Hooded Oriole",
-      "subregion": "California"
-    },
     {
       "date": "2026-07-29",
       "id": "comgra",
@@ -1453,6 +1447,32 @@
       "id": "amerob",
       "name": "American Robin",
       "subregion": "North Dakota"
+    },
+    {
+      "date": "2026-11-26",
+      "id": "osprey",
+      "name": "Osprey",
+      "subregion": "Idaho"
+    }
+  ],
+  "gb": [
+    {
+      "date": "2026-11-24",
+      "id": "eurrob1",
+      "name": "European Robin",
+      "subregion": "Wales"
+    },
+    {
+      "date": "2026-11-25",
+      "id": "eursis",
+      "name": "Eurasian Siskin",
+      "subregion": "Wales"
+    },
+    {
+      "date": "2026-11-26",
+      "id": "commoo3",
+      "name": "Eurasian Moorhen",
+      "subregion": "Wales"
     }
   ]
 }
