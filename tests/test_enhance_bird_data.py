@@ -390,9 +390,7 @@ class TestEndToEndMain:
         birds_dir = tmp_path / "birds"
         birds_dir.mkdir()
         (birds_dir / "us.json").write_text(json.dumps([make_bird()]))
-        (birds_dir / "ca.json").write_text(
-            json.dumps([make_bird(id="caamerob")])
-        )
+        (birds_dir / "ca.json").write_text(json.dumps([make_bird(id="caamerob")]))
         monkeypatch.setattr(
             sys,
             "argv",

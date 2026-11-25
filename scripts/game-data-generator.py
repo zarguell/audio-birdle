@@ -110,7 +110,9 @@ def build_audio_entry(url_entry):
     return {"url": url, "attribution": attribution}
 
 
-def group_entries_by_code(urls_data: List[Dict[str, Any]]) -> Dict[str, List[Dict[str, Any]]]:
+def group_entries_by_code(
+    urls_data: List[Dict[str, Any]],
+) -> Dict[str, List[Dict[str, Any]]]:
     """Group raw URL records (with metadata) by species code."""
     url_groups = defaultdict(list)
 
@@ -168,8 +170,7 @@ def process_taxonomy_data(
 
         # Get audio URLs for this species
         audio_urls = [
-            build_audio_entry(entry)
-            for entry in url_groups.get(species_code, [])
+            build_audio_entry(entry) for entry in url_groups.get(species_code, [])
         ]
 
         # Only include birds that have audio URLs

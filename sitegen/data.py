@@ -93,9 +93,7 @@ def _validate_birds_dir(
     birds_dir = Path(data_dir) / BIRDS_SUBDIR
     _require(birds_dir.is_dir(), f"Missing bird shard directory: {birds_dir}")
 
-    parent_ids = {
-        region.get("parentRegion") or region["id"] for region in regions
-    }
+    parent_ids = {region.get("parentRegion") or region["id"] for region in regions}
     loaded: dict[str, list[Any]] = {}
     for parent_id in sorted(parent_ids):
         path = birds_dir / f"{parent_id}.json"

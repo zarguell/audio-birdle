@@ -390,14 +390,10 @@ class TestProcessTaxonomyWithMetadata:
                 }
             ]
         }
-        birds = game_data_generator.process_taxonomy_data(
-            taxonomy_data, url_groups
-        )
+        birds = game_data_generator.process_taxonomy_data(taxonomy_data, url_groups)
         assert len(birds) == 1
         assert birds[0]["audioUrl"][0]["url"] == "http://a1.mp3"
-        assert birds[0]["audioUrl"][0]["attribution"]["recordist"] == (
-            "Jacobo Ramil"
-        )
+        assert birds[0]["audioUrl"][0]["attribution"]["recordist"] == ("Jacobo Ramil")
         assert birds[0]["audioUrl"][0]["attribution"]["quality"] == "A"
 
 

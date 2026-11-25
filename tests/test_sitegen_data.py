@@ -101,13 +101,22 @@ def test_duplicate_region_ids_fail(tmp_path: Path) -> None:
 
 
 def test_missing_bird_shard_fails(tmp_path: Path) -> None:
-    for name in ("regions.json", "daily.json", "history.json", "daily-subregion-birds.json"):
-        (tmp_path / name).write_text("[]" if name == "daily.json" else "{}", encoding="utf-8")
+    for name in (
+        "regions.json",
+        "daily.json",
+        "history.json",
+        "daily-subregion-birds.json",
+    ):
+        (tmp_path / name).write_text(
+            "[]" if name == "daily.json" else "{}", encoding="utf-8"
+        )
     (tmp_path / "regions.json").write_text(
-        json.dumps([
-            {"id": "us", "name": "United States"},
-            {"id": "ca", "name": "Canada"},
-        ]),
+        json.dumps(
+            [
+                {"id": "us", "name": "United States"},
+                {"id": "ca", "name": "Canada"},
+            ]
+        ),
         encoding="utf-8",
     )
     (tmp_path / "daily.json").write_text("[]", encoding="utf-8")

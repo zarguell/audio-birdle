@@ -308,12 +308,8 @@ class TestRegularSpeciesFilter:
         output_file = tmp_path / "output.json"
         shard_dir = tmp_path / "birds"
         shard_dir.mkdir()
-        subregions_file.write_text(
-            json.dumps([{"code": "US-NY", "name": "New York"}])
-        )
-        regular_file.write_text(
-            json.dumps({"New York": ["amerob", "barswa"]})
-        )
+        subregions_file.write_text(json.dumps([{"code": "US-NY", "name": "New York"}]))
+        regular_file.write_text(json.dumps({"New York": ["amerob", "barswa"]}))
         (shard_dir / "us.json").write_text(json.dumps([{"id": "amerob"}]))
 
         mock_response = MagicMock()
