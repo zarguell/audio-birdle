@@ -18,27 +18,39 @@ from __future__ import annotations
 
 import argparse
 import json
-import sys
 from pathlib import Path
 from typing import Any
 
 REQUIRED_FIELDS = ("speciesCode", "comName", "sciName", "category")
 
 
+def _codes_from_list(data: list[Any]) -> set[str]:
+    codes = set()
+    for item in data:
+        if isinstance(item, str):
+            codes.add(item)
+        elif isinstance(item, dict) and isinstance(item.get("id"), str):
+            codes.add(item["id"])
+    return codes
+
+
+def _codes_from_mapping(data: dict[str, Any]) -> set[str]:
+    codes: set[str] = set()
+    for value in data.values():
+        if isinstance(value, list):
+            codes.update(item for item in value if isinstance(item, str))
+    return codes
+
+
 def load_species_codes(path: Path) -> set[str]:
     """Accept a list of codes or a subregion -> list mapping."""
     data = json.loads(path.read_text(encoding="utf-8"))
-    codes: set[str] = set()
     if isinstance(data, list):
-        for item in data:
-            if isinstance(item, str):
-                codes.add(item)
-            elif isinstance(item, dict) and isinstance(item.get("id"), str):
-                codes.add(item["id"])
+        codes = _codes_from_list(data)
     elif isinstance(data, dict):
-        for value in data.values():
-            if isinstance(value, list):
-                codes.update(item for item in value if isinstance(item, str))
+        codes = _codes_from_mapping(data)
+    else:
+        codes = set()
     if not codes:
         raise ValueError(f"No species codes found in {path}")
     return codes
@@ -92,7 +104,7 @@ def main() -> int:
     try:
         codes = load_species_codes(args.species_file)
         taxonomy = json.loads(args.taxonomy_file.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError, ValueError) as error:
+    except (OSError, ValueError) as error:
         print(f"Could not load inputs: {error}")
         return 2
     if not isinstance(taxonomy, list):
