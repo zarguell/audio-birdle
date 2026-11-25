@@ -85,6 +85,8 @@ def run_audit(
     argv = [
         "--region",
         "CA",
+        "--regular-days",
+        "0",
         "--taxonomy",
         str(taxonomy),
         "--species-file",
@@ -97,6 +99,8 @@ def run_audit(
         "0",
         "--min-playable-species",
         "2",
+        "--min-playable-per-subregion",
+        "1",
         *(extra_args or []),
     ]
     code = region_audit.main(argv)
@@ -139,6 +143,8 @@ def test_audit_reports_missing_audio(
         [
             "--region",
             "CA",
+            "--regular-days",
+            "0",
             "--taxonomy",
             str(taxonomy),
             "--species-file",
@@ -201,6 +207,8 @@ def test_non_species_entries_are_excluded_but_not_reported_missing(
         [
             "--region",
             "CA",
+            "--regular-days",
+            "0",
             "--taxonomy",
             str(taxonomy),
             "--species-file",
@@ -233,6 +241,130 @@ def test_missing_taxonomy_code_blocks_ready(
     assert code == 0
     assert report["taxonomy"]["missing_species_codes"] == ["notintaxonomy"]
     assert "absent from the local taxonomy" in report["recommendation"]
+    assert report["ready"] is False
+
+
+def test_regular_filter_excludes_single_day_vagrant(
+    monkeypatch: pytest.MonkeyPatch, offline_files, tmp_path: Path
+) -> None:
+    taxonomy_path, species_path, subregions_path = offline_files
+    taxonomy = json.loads(taxonomy_path.read_text(encoding="utf-8"))
+    taxonomy.append(
+        {
+            "speciesCode": "vagrant",
+            "comName": "One-day Vagrant",
+            "sciName": "Vagrans unicus",
+            "category": "species",
+        }
+    )
+    taxonomy_path.write_text(json.dumps(taxonomy), encoding="utf-8")
+    species_path.write_text(
+        json.dumps(["amerob", "barswa", "vagrant"]), encoding="utf-8"
+    )
+
+    calls = {"count": 0}
+
+    def fake_get_json(*_args, **_kwargs):
+        calls["count"] += 1
+        observations = [
+            {"speciesCode": "amerob", "obsValid": True},
+            {"speciesCode": "barswa", "obsValid": True},
+        ]
+        if calls["count"] == 1:
+            observations.extend(
+                {"speciesCode": "vagrant", "obsValid": True} for _ in range(5)
+            )
+        return observations
+
+    monkeypatch.setattr(
+        region_audit.ebird_api_common, "load_api_key", lambda: "test-key"
+    )
+    monkeypatch.setattr(region_audit.ebird_api_common, "get_json", fake_get_json)
+    monkeypatch.setattr(region_audit.XC, "load_api_key", lambda: "test-key")
+    monkeypatch.setattr(
+        region_audit.XC,
+        "fetch_recordings",
+        lambda *args, **kwargs: [RECORDING],
+    )
+
+    code = region_audit.main(
+        [
+            "--region",
+            "CA",
+            "--taxonomy",
+            str(taxonomy_path),
+            "--species-file",
+            str(species_path),
+            "--subregions-file",
+            str(subregions_path),
+            "--regular-days",
+            "3",
+            "--regular-min-observations",
+            "3",
+            "--regular-min-days",
+            "3",
+            "--observation-delay",
+            "0",
+            "--delay",
+            "0",
+            "--min-playable-species",
+            "2",
+            "--min-playable-per-subregion",
+            "1",
+            "--output",
+            str(tmp_path / "report.json"),
+        ]
+    )
+    report = json.loads((tmp_path / "report.json").read_text(encoding="utf-8"))
+
+    assert code == 0
+    assert report["ebird"]["species_count"] == 3
+    assert report["ebird"]["regular_species_count"] == 2
+    assert report["regular"]["by_subregion"]["Ontario"] == ["amerob", "barswa"]
+    assert report["taxonomy"]["matched_species"] == 2
+    assert report["audio"]["species_checked"] == 2
+    assert report["audio"]["playable_ids"] == ["amerob", "barswa"]
+    assert report["ready"] is True
+
+
+def test_regular_filter_observation_error_blocks_ready(
+    monkeypatch: pytest.MonkeyPatch, offline_files, tmp_path: Path
+) -> None:
+    taxonomy_path, species_path, subregions_path = offline_files
+
+    def fail_get_json(*args, **kwargs):
+        raise region_audit.requests.RequestException("eBird unavailable")
+
+    monkeypatch.setattr(
+        region_audit.ebird_api_common, "load_api_key", lambda: "test-key"
+    )
+    monkeypatch.setattr(region_audit.ebird_api_common, "get_json", fail_get_json)
+
+    code = region_audit.main(
+        [
+            "--region",
+            "CA",
+            "--taxonomy",
+            str(taxonomy_path),
+            "--species-file",
+            str(species_path),
+            "--subregions-file",
+            str(subregions_path),
+            "--regular-days",
+            "3",
+            "--observation-delay",
+            "0",
+            "--skip-audio",
+            "--output",
+            str(tmp_path / "report.json"),
+        ]
+    )
+    report = json.loads((tmp_path / "report.json").read_text(encoding="utf-8"))
+
+    assert code == 0
+    assert report["regular"]["species_count"] == 0
+    assert len(report["regular"]["errors"]) == 1
+    assert "observation fetch failed" in report["recommendation"]
     assert report["ready"] is False
 
 

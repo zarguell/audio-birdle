@@ -2,12 +2,14 @@
 """Audit a candidate country before adding it to Audio-Birdle.
 
 This script is read-only with respect to production data. It fetches the
-country's eBird species and subregion lists, filters the local taxonomy, and
+country's eBird species and subregion lists, limits the pool to species seen
+regularly enough to be fair game answers, filters the local taxonomy, and
 checks Xeno-canto audio coverage using the same quality/length filters as the
 production audio pipeline.
 
 Example:
     python scripts/region-audit.py --region CA --output region-audits/ca.json
+    python scripts/region-audit.py --region CA --regular-days 0  # raw audit
 """
 
 from __future__ import annotations
@@ -17,8 +19,8 @@ import importlib.util
 import json
 import sys
 import time
-from collections import Counter
-from datetime import datetime, timezone
+from collections import Counter, defaultdict
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Sequence
 
@@ -115,6 +117,116 @@ def _normalize_subregions(payload: list[Any]) -> list[dict[str, str]]:
     return subregions
 
 
+def _fetch_observations_for_day(
+    code: str, date: Any, *, api_key: str
+) -> tuple[list[Any] | None, str | None]:
+    url = f"{EBIRD_BASE}/data/obs/{code}/historic/{date.year}/{date.month}/{date.day}"
+    try:
+        payload = ebird_api_common.get_json(url, api_key=api_key)
+    except (requests.RequestException, ValueError) as error:
+        return None, str(error)
+    if not isinstance(payload, list):
+        return None, "observation response was not an array"
+    return payload, None
+
+
+def _count_observations(
+    payload: Sequence[Any],
+    date: Any,
+    counts: Counter[str],
+    seen_days: defaultdict[str, set[Any]],
+) -> None:
+    for observation in payload:
+        if not isinstance(observation, dict):
+            continue
+        # eBird marks uncertain records with obsValid=false. They are exactly
+        # the kind of one-off rarity this filter should drop.
+        if observation.get("obsValid") is False:
+            continue
+        species = observation.get("speciesCode")
+        if isinstance(species, str):
+            counts[species] += 1
+            seen_days[species].add(date)
+
+
+def _count_regular_observations(
+    code: str,
+    dates: Sequence[Any],
+    *,
+    api_key: str,
+    delay: float,
+) -> tuple[Counter[str], defaultdict[str, set[Any]], str | None]:
+    """Count valid observations and distinct days for one subregion."""
+    counts: Counter[str] = Counter()
+    seen_days: defaultdict[str, set[Any]] = defaultdict(set)
+
+    for date in dates:
+        payload, error = _fetch_observations_for_day(code, date, api_key=api_key)
+        if error:
+            return counts, seen_days, error
+        _count_observations(payload or [], date, counts, seen_days)
+        if delay > 0:
+            time.sleep(delay)
+
+    return counts, seen_days, None
+
+
+def _regular_from_counts(
+    counts: Counter[str],
+    seen_days: defaultdict[str, set[Any]],
+    min_observations: int,
+    min_days: int,
+) -> list[str]:
+    return sorted(
+        species
+        for species, count in counts.items()
+        if count >= min_observations and len(seen_days[species]) >= min_days
+    )
+
+
+def load_regular_species(
+    region: str,
+    subregions: list[dict[str, str]],
+    *,
+    api_key: str,
+    days: int,
+    min_observations: int,
+    min_days: int,
+    delay: float,
+) -> tuple[set[str], dict[str, list[str]], list[dict[str, str]]]:
+    """Find species seen often enough to be fair daily-game answers.
+
+    Rare vagrants can be a single twitch: many observations on one day, or
+    one or two records across the whole window. Requiring both a minimum
+    observation count and observations on several distinct days keeps them
+    out of the candidate pool while retaining resident and regular migrants.
+    """
+    targets = [(sub["code"], sub["name"]) for sub in subregions]
+    if not targets:
+        targets = [(region.upper(), region.upper())]
+
+    end = datetime.now(timezone.utc).date()
+    dates = [end - timedelta(days=offset) for offset in range(1, days + 1)]
+    regular: set[str] = set()
+    by_subregion: dict[str, list[str]] = {}
+    errors: list[dict[str, str]] = []
+
+    for code, name in targets:
+        counts, seen_days, error = _count_regular_observations(
+            code, dates, api_key=api_key, delay=delay
+        )
+        if error:
+            errors.append({"region": code, "name": name, "error": error})
+            by_subregion[name] = []
+            continue
+
+        kept = _regular_from_counts(counts, seen_days, min_observations, min_days)
+        by_subregion[name] = kept
+        regular.update(kept)
+
+    return regular, by_subregion, errors
+
+
 def load_taxonomy(
     taxonomy_file: Path,
     species_codes: Sequence[str],
@@ -170,6 +282,7 @@ def audit_audio(
     license_counts: Counter[str] = Counter()
     missing_audio: list[dict[str, str]] = []
     errors: list[dict[str, str]] = []
+    playable_ids: list[str] = []
     species_with_audio = 0
     clips_selected = 0
 
@@ -207,6 +320,7 @@ def audit_audio(
 
         if selected:
             species_with_audio += 1
+            playable_ids.append(code)
             clips_selected += len(selected)
             for recording in selected:
                 quality_counts[str(recording.get("q", "?")).upper()] += 1
@@ -235,8 +349,97 @@ def audit_audio(
         "quality_counts": dict(sorted(quality_counts.items())),
         "license_counts": dict(sorted(license_counts.items())),
         "missing_audio": missing_audio,
+        "playable_ids": sorted(playable_ids),
         "errors": errors,
     }
+
+
+def _enrich_subregions(
+    subregions: list[dict[str, str]],
+    regular_by_subregion: dict[str, list[str]] | None,
+    audio: dict[str, Any] | None,
+    min_playable_per_subregion: int,
+) -> tuple[list[dict[str, Any]], list[str]]:
+    enriched = [dict(sub) for sub in subregions]
+    thin_subregions: list[str] = []
+    if regular_by_subregion is None:
+        return enriched, thin_subregions
+
+    playable_ids = set(audio.get("playable_ids", [])) if audio else set()
+    for subregion in enriched:
+        ids = set(regular_by_subregion.get(subregion["name"], []))
+        subregion_playable = len(ids & playable_ids)
+        subregion["regular_species_count"] = len(ids)
+        subregion["playable_species_count"] = subregion_playable if audio else None
+        if audio and subregion_playable < min_playable_per_subregion:
+            thin_subregions.append(subregion["name"])
+    return enriched, thin_subregions
+
+
+def _is_ready(
+    *,
+    audio: dict[str, Any] | None,
+    partial: bool,
+    target_coverage: float,
+    min_playable_species: int,
+    taxonomy_missing: list[str],
+    regular_errors: list[dict[str, str]],
+    regular_filter_used: bool,
+    regular_species_count: int | None,
+    thin_subregions: list[str],
+    subregion_error: str | None,
+) -> bool:
+    if not audio:
+        return False
+    coverage = audio["coverage_pct"]
+    return bool(
+        not partial
+        and coverage >= target_coverage
+        and audio["species_with_audio"] >= min_playable_species
+        and not audio["errors"]
+        and not taxonomy_missing
+        and not regular_errors
+        and not (regular_filter_used and regular_species_count == 0)
+        and not thin_subregions
+        and not subregion_error
+    )
+
+
+def _recommendation(
+    *,
+    audio: dict[str, Any] | None,
+    partial: bool,
+    regular_errors: list[dict[str, str]],
+    regular_filter_used: bool,
+    regular_species_count: int | None,
+    taxonomy_missing: list[str],
+    thin_subregions: list[str],
+    min_playable_per_subregion: int,
+    target_coverage: float,
+) -> str:
+    if regular_errors:
+        return "eBird observation fetch failed; rerun before deciding."
+    if audio is None:
+        return "Audio audit skipped; run without --skip-audio first."
+    if partial:
+        return "Partial audit only; rerun without --limit before deciding."
+    if regular_filter_used and regular_species_count == 0:
+        return (
+            "No species passed the regular-species filter; lower its thresholds "
+            "or use --regular-days 0."
+        )
+    if audio["errors"]:
+        return "Xeno-canto errors occurred; rerun before enabling the region."
+    if taxonomy_missing:
+        return "Some regular eBird species are absent from the local taxonomy."
+    if thin_subregions:
+        return (
+            f"{len(thin_subregions)} subregion(s) have fewer than "
+            f"{min_playable_per_subregion} playable regular species."
+        )
+    if audio["coverage_pct"] >= target_coverage:
+        return "Coverage meets the target. Review missing species and proceed."
+    return "Coverage is below target; improve audio coverage first."
 
 
 def build_report(
@@ -244,6 +447,9 @@ def build_report(
     region: str,
     country_name: str,
     species_codes: list[str],
+    regular_species_count: int | None,
+    regular_by_subregion: dict[str, list[str]] | None,
+    regular_errors: list[dict[str, str]],
     subregions: list[dict[str, str]],
     subregion_error: str | None,
     taxonomy: list[dict[str, Any]],
@@ -253,34 +459,36 @@ def build_report(
     params: dict[str, Any],
     target_coverage: float,
     min_playable_species: int,
+    min_playable_per_subregion: int,
     partial: bool,
 ) -> dict[str, Any]:
-    coverage = audio["coverage_pct"] if audio else None
-    playable = audio["species_with_audio"] if audio else 0
-    ready = bool(
-        audio
-        and not partial
-        and coverage is not None
-        and coverage >= target_coverage
-        and playable >= min_playable_species
-        and not audio["errors"]
-        and not taxonomy_missing
-        and not subregion_error
+    regular_filter_used = regular_species_count is not None
+    enriched_subregions, thin_subregions = _enrich_subregions(
+        subregions, regular_by_subregion, audio, min_playable_per_subregion
     )
-    if audio is None:
-        recommendation = "Audio audit skipped; run without --skip-audio first."
-    elif partial:
-        recommendation = "Partial audit only; rerun without --limit before deciding."
-    elif audio["errors"]:
-        recommendation = "Xeno-canto errors occurred; rerun before enabling the region."
-    elif taxonomy_missing:
-        recommendation = "Some eBird species are absent from the local taxonomy."
-    elif coverage >= target_coverage:
-        recommendation = (
-            "Coverage meets the target. Review missing species and proceed."
-        )
-    else:
-        recommendation = "Coverage is below target; improve audio coverage first."
+    ready = _is_ready(
+        audio=audio,
+        partial=partial,
+        target_coverage=target_coverage,
+        min_playable_species=min_playable_species,
+        taxonomy_missing=taxonomy_missing,
+        regular_errors=regular_errors,
+        regular_filter_used=regular_filter_used,
+        regular_species_count=regular_species_count,
+        thin_subregions=thin_subregions,
+        subregion_error=subregion_error,
+    )
+    recommendation = _recommendation(
+        audio=audio,
+        partial=partial,
+        regular_errors=regular_errors,
+        regular_filter_used=regular_filter_used,
+        regular_species_count=regular_species_count,
+        taxonomy_missing=taxonomy_missing,
+        thin_subregions=thin_subregions,
+        min_playable_per_subregion=min_playable_per_subregion,
+        target_coverage=target_coverage,
+    )
 
     return {
         "region": region.lower(),
@@ -288,14 +496,25 @@ def build_report(
         "generated_at": _utc_now(),
         "target_coverage_pct": target_coverage,
         "min_playable_species": min_playable_species,
+        "min_playable_per_subregion": min_playable_per_subregion,
         "ready": ready,
         "recommendation": recommendation,
         "parameters": params,
         "ebird": {
             "species_count": len(species_codes),
-            "subregion_count": len(subregions),
-            "subregions": subregions,
+            "regular_species_count": regular_species_count,
+            "subregion_count": len(enriched_subregions),
+            "subregions": enriched_subregions,
             "subregion_error": subregion_error,
+        },
+        "regular": {
+            "enabled": regular_filter_used,
+            "days": params.get("regular_days", 0),
+            "min_observations": params.get("regular_min_observations"),
+            "min_days": params.get("regular_min_days"),
+            "species_count": regular_species_count,
+            "by_subregion": regular_by_subregion or {},
+            "errors": regular_errors,
         },
         "taxonomy": {
             "matched_species": len(taxonomy),
@@ -308,13 +527,26 @@ def build_report(
 
 def format_summary(report: dict[str, Any]) -> str:
     audio = report["audio"]
+    ebird = report["ebird"]
+    regular = report.get("regular", {})
     lines = [
         f"Region: {report['region']} ({report['region_name']})",
-        f"eBird species: {report['ebird']['species_count']}",
-        f"Taxonomy matched: {report['taxonomy']['matched_species']}"
-        f" (missing {len(report['taxonomy']['missing_species_codes'])})",
-        f"Subregions: {report['ebird']['subregion_count']}",
+        f"eBird species: {ebird['species_count']}",
     ]
+    if ebird.get("regular_species_count") is not None:
+        lines.append(
+            f"Regular pool: {ebird['regular_species_count']}"
+            f" ({regular.get('days', 0)} days, min "
+            f"{regular.get('min_observations')} observations on "
+            f"{regular.get('min_days')} days)"
+        )
+    lines.extend(
+        [
+            f"Taxonomy matched: {report['taxonomy']['matched_species']}"
+            f" (missing {len(report['taxonomy']['missing_species_codes'])})",
+            f"Subregions: {ebird['subregion_count']}",
+        ]
+    )
     if audio is None:
         lines.append("Audio: skipped")
     else:
@@ -324,6 +556,8 @@ def format_summary(report: dict[str, Any]) -> str:
                 f"{audio['species_checked']} ({audio['coverage_pct']}%)"
                 f" target {report['target_coverage_pct']}%",
                 f"Playable species target: {report['min_playable_species']}",
+                f"Minimum playable per subregion: "
+                f"{report.get('min_playable_per_subregion', 0)}",
                 f"Clips selected: {audio['clips_selected']}",
                 f"Quality: {audio['quality_counts']}",
                 f"Licenses: {audio['license_counts']}",
@@ -331,6 +565,16 @@ def format_summary(report: dict[str, Any]) -> str:
                 f"Xeno-canto errors: {len(audio['errors'])}",
             ]
         )
+    if regular.get("errors"):
+        lines.append(f"eBird observation errors: {len(regular['errors'])}")
+    thin = [
+        sub["name"]
+        for sub in ebird.get("subregions", [])
+        if sub.get("playable_species_count") is not None
+        and sub["playable_species_count"] < report.get("min_playable_per_subregion", 0)
+    ]
+    if thin:
+        lines.append(f"Thin subregions: {len(thin)}")
     lines.append(f"Ready: {'yes' if report['ready'] else 'no'}")
     lines.append(f"Next: {report['recommendation']}")
     return "\n".join(lines)
@@ -377,6 +621,31 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument("--include-non-species", action="store_true")
     parser.add_argument("--tag", default="song", help="Preferred XC sound type")
     parser.add_argument(
+        "--regular-days",
+        type=int,
+        default=14,
+        help="Recent-observation window for the regular-species filter "
+        "(default: 14; use 0 to audit every eBird species)",
+    )
+    parser.add_argument(
+        "--regular-min-observations",
+        type=int,
+        default=5,
+        help="Minimum valid observations for a regular species (default: 5)",
+    )
+    parser.add_argument(
+        "--regular-min-days",
+        type=int,
+        default=5,
+        help="Minimum distinct observation days for a regular species (default: 5)",
+    )
+    parser.add_argument(
+        "--observation-delay",
+        type=float,
+        default=0.2,
+        help="Delay between eBird observation requests in seconds (default: 0.2)",
+    )
+    parser.add_argument(
         "--min-quality",
         choices=sorted(XC.QUALITY_RANK),
         default="C",
@@ -388,7 +657,18 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument("--delay", type=float, default=1.0)
     parser.add_argument("--limit", type=int, help="Audit only the first N species")
     parser.add_argument("--target-coverage", type=float, default=50.0)
-    parser.add_argument("--min-playable-species", type=int, default=300)
+    parser.add_argument(
+        "--min-playable-species",
+        type=int,
+        default=150,
+        help="Minimum playable regular species (default: 150)",
+    )
+    parser.add_argument(
+        "--min-playable-per-subregion",
+        type=int,
+        default=10,
+        help="Minimum playable regular species in every subregion (default: 10)",
+    )
     parser.add_argument("--output", type=Path, help="Write the full JSON report")
     parser.add_argument("--country-name", help="Override the XC country filter")
     parser.add_argument(
@@ -411,7 +691,15 @@ def main(argv: Sequence[str] | None = None) -> int:
         "any_type_fallback": args.any_type_fallback,
         "limit": args.limit,
         "skip_audio": args.skip_audio,
+        "regular_days": args.regular_days,
+        "regular_min_observations": args.regular_min_observations,
+        "regular_min_days": args.regular_min_days,
+        "min_playable_per_subregion": args.min_playable_per_subregion,
     }
+
+    regular_species_count = None
+    regular_by_subregion = None
+    regular_errors: list[dict[str, str]] = []
 
     try:
         species_codes = load_species_codes(region, args.species_file)
@@ -420,9 +708,23 @@ def main(argv: Sequence[str] | None = None) -> int:
             args.subregions_file,
             args.skip_subregions,
         )
+        selected_codes = species_codes
+        if args.regular_days > 0:
+            regular_codes, regular_by_subregion, regular_errors = load_regular_species(
+                region,
+                subregions,
+                api_key=ebird_api_common.load_api_key(),
+                days=args.regular_days,
+                min_observations=args.regular_min_observations,
+                min_days=args.regular_min_days,
+                delay=args.observation_delay,
+            )
+            selected_codes = sorted(set(species_codes) & regular_codes)
+            regular_species_count = len(selected_codes)
+
         taxonomy, taxonomy_missing, excluded_non_species = load_taxonomy(
             args.taxonomy,
-            species_codes,
+            selected_codes,
             args.include_non_species,
         )
         audio = None
@@ -449,6 +751,9 @@ def main(argv: Sequence[str] | None = None) -> int:
         region=region,
         country_name=country_name,
         species_codes=species_codes,
+        regular_species_count=regular_species_count,
+        regular_by_subregion=regular_by_subregion,
+        regular_errors=regular_errors,
         subregions=subregions,
         subregion_error=subregion_error,
         taxonomy=taxonomy,
@@ -458,6 +763,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         params=params,
         target_coverage=args.target_coverage,
         min_playable_species=args.min_playable_species,
+        min_playable_per_subregion=args.min_playable_per_subregion,
         partial=bool(args.limit),
     )
     if args.output:

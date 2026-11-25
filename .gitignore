@@ -38,6 +38,9 @@ venv/
 
 repomix-output.*
 
+# Local region-audit reports
+region-audits/
+
 __pycache__/
 *.pyc
 *.pyo

@@ -66,10 +66,7 @@ sitegen/
 public/
 ├── data/                    Generated game data + manifest.json
 ├── _headers                 CSP and Cloudflare cache rules
-├── favicon.ico              Browser favicon
-├── favicon-*.png            PNG favicon sizes
-├── apple-touch-icon.png     iOS home-screen bookmark icon
-└── site.webmanifest         Web app manifest
+└── audio-birdle.svg
 
 scripts/                     Data acquisition and generation pipeline
 tests/
@@ -245,10 +242,20 @@ first:
 python scripts/region-audit.py --region CA --output region-audits/ca.json
 ```
 
-The default pilot gate is **50% of species-level eBird species** and **at least
-300 playable species**; override with `--target-coverage` and
-`--min-playable-species`. Review missing-audio species, Xeno-canto errors, and
-subregion coverage before generating production data.
+By default the audit excludes rare vagrants before checking audio. It pulls the
+last 14 days of eBird observations for each subregion and keeps species with at
+least 5 valid observations on at least 5 distinct days. The JSON report exposes
+that filtered pool as `regular.by_subregion`; use it as the candidate list for
+the region's daily subregion data. Pass `--regular-days 0` to audit every eBird
+species instead.
+
+The pilot gate is **50% audio coverage of the regular pool** and **at least 150
+playable species**, with at least 10 playable regular species in every
+subregion. Override with `--target-coverage`, `--min-playable-species`, and
+`--min-playable-per-subregion`. Review missing-audio species, Xeno-canto errors,
+and per-subregion counts before generating production data; a subregion with a
+tiny regular pool (for example a northern territory) should be grouped with a
+neighbour or left out rather than shipped as its own daily pool.
 
 After a country passes:
 

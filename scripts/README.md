@@ -283,22 +283,31 @@ For detailed documentation, see [WORKFLOW_GUIDE.md](./WORKFLOW_GUIDE.md) and [QU
 ## Auditing a candidate country
 
 Before adding a country, run the read-only audit. It fetches the eBird species
-and subregion lists, filters the local taxonomy, and checks Xeno-canto audio
-coverage with the same quality/length rules as the production pipeline.
+and subregion lists, filters the local taxonomy, removes rare vagrants, and
+checks Xeno-canto audio coverage with the same quality/length rules as the
+production pipeline.
 
 ```bash
 python3 region-audit.py --region CA --output region-audits/ca.json
 ```
 
-The default gate is deliberately modest: **at least 50% of species-level eBird
-species** and **at least 300 playable species**. Override it for a stricter
-pilot:
+By default the candidate pool is limited to species reported in the last 14
+days with **at least 5 valid observations on at least 5 distinct days** in a
+subregion. This keeps one-day twitches and rare vagrants out of the challenge
+set. The filtered list is in `regular.by_subregion` in the JSON report. Use
+`--regular-days 0` to audit every eBird species instead, or tune
+`--regular-min-observations` / `--regular-min-days`.
+
+The default gate is **50% audio coverage of the regular pool**, **at least 150
+playable species**, and at least 10 playable regular species in every
+subregion. Override it for a stricter pilot:
 
 ```bash
 python3 region-audit.py --region GB \
   --min-quality B \
   --target-coverage 60 \
-  --min-playable-species 400 \
+  --min-playable-species 250 \
+  --min-playable-per-subregion 30 \
   --output region-audits/gb.json
 ```
 
@@ -310,7 +319,11 @@ python3 region-audit.py --region CA --skip-audio \
   --subregions-file path/to/ca-subregions.json
 ```
 
-The JSON report includes missing-audio species, quality/license counts,
-subregion counts, and a `ready` flag. It does not modify `public/data/`.
+The JSON report includes the regular pool by subregion, missing-audio species,
+quality/license counts, playable species per subregion, and a `ready` flag. It
+does not modify `public/data/`.
 
 Requires `EBIRD_API_KEY` and `XC_API_KEY` in `.env` for the full audio audit.
+The 14-day observation fetch is also used for the regular-species filter, so it
+needs `EBIRD_API_KEY` even when `--skip-audio` is set (unless
+`--regular-days 0` is used).
