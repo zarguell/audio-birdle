@@ -1,6 +1,12 @@
 import { STORAGE_KEYS } from "./core/constants.js";
 import { qsa } from "./core/dom.js";
-import { readString, removeKey, writeString } from "./core/storage.js";
+import {
+  readJSON,
+  readString,
+  removeKey,
+  writeJSON,
+  writeString,
+} from "./core/storage.js";
 
 let jellyInitialized = false;
 
@@ -36,6 +42,18 @@ export const setRegionLabel = (text) => {
   });
 };
 
+export const recordRecentRegion = ({ id }) => {
+  if (!id) {
+    return;
+  }
+  const recent = readJSON(STORAGE_KEYS.RECENT_REGIONS, []);
+  const ids = Array.isArray(recent) ? recent.filter((item) => typeof item === "string") : [];
+  writeJSON(
+    STORAGE_KEYS.RECENT_REGIONS,
+    [id, ...ids.filter((item) => item !== id)].slice(0, 4),
+  );
+};
+
 export const updateRegionChrome = ({ id, name }) => {
   const chip = document.querySelector("[data-region-chip]");
   if (!chip) {
@@ -46,7 +64,7 @@ export const updateRegionChrome = ({ id, name }) => {
     return;
   }
   chip.hidden = false;
-  chip.href = `/play/?region=${encodeURIComponent(id)}`;
+  chip.href = "/regions/";
   const nameElement = chip.querySelector("[data-region-name]");
   if (nameElement) {
     nameElement.textContent = name || id;
@@ -59,6 +77,7 @@ export const setRegion = (region) => {
   }
   writeString(STORAGE_KEYS.REGION, region.id);
   writeString(STORAGE_KEYS.REGION_NAME, region.name || region.id);
+  recordRecentRegion(region);
   updateRegionChrome(region);
 };
 
@@ -69,7 +88,7 @@ export const clearRegion = () => {
 };
 
 export const redirectHome = () => {
-  window.location.replace("/");
+  window.location.replace("/regions/");
 };
 
 export const resolveRegion = (regions, { redirect = true } = {}) => {

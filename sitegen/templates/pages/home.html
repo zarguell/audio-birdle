@@ -22,35 +22,25 @@
         <h2 id="continue-title" class="continue-card__title">Resume playing</h2>
         <p class="muted small">Current region: <span data-continue-name></span></p>
       </div>
-      <a class="button button--primary button--jelly"
-         data-continue-link
-         href="/play/">Open game</a>
+      <div class="continue-card__actions">
+        <a class="button button--primary button--jelly"
+           data-continue-link
+           href="/play/">Open game</a>
+        <a class="continue-card__change" href="/regions/">Change region</a>
+      </div>
     </section>
     <section class="paper-panel paper-panel--tape region-card"
              aria-labelledby="region-title">
       <div class="section-heading">
         <div>
-          <h2 id="region-title">Choose your region</h2>
+          <h2 id="region-title">Find your region</h2>
         </div>
         {{ icon('map-pin', 'section-heading__icon') }}
       </div>
-      <p class="muted">Bird lists and daily answers are tailored to your region. You can change this at any time.</p>
-      <div class="region-list">
-        {% for region in regions %}
-          <a class="region-option"
-             href="/play/?region={{ region.id }}"
-             data-region-link="{{ region.id }}">
-            <span class="region-option__body">
-              <span class="region-option__name">{{ region.name }}</span>
-              {% if region.parentRegion %}
-                <span class="region-option__hint">Virtual region · based on {{ region.parentRegion|upper }}</span>
-              {% endif %}
-            </span>
-            <span class="region-option__status" data-region-status="{{ region.id }}"></span>
-            {{ icon('chevron-right', 'region-option__chevron') }}
-          </a>
-        {% endfor %}
-      </div>
+      <p class="muted">Bird lists and daily answers are tailored to your region. Browse the field guide to find another.</p>
+      <a class="button button--secondary button--wide" href="/regions/">
+        Browse regions {{ icon("chevron-right") }}
+      </a>
     </section>
     <section class="paper-panel how-card" aria-labelledby="how-title">
       <div class="section-heading">

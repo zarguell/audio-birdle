@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 import shutil
 from dataclasses import dataclass
 from datetime import datetime, timezone
@@ -38,6 +39,7 @@ from .data_manifest import manifest_digest, write_manifest
 # (page key, output path, template name, extra context)
 PAGES = (
     ("home", "index.html", "home.html", {}),
+    ("regions", "regions/index.html", "regions.html", {}),
     ("play", "play/index.html", "play.html", {}),
     ("normal", "normal/index.html", "game.html", {"game_mode": "normal"}),
     ("hard", "hard/index.html", "game.html", {"game_mode": "hard"}),
@@ -50,6 +52,7 @@ PAGES = (
 
 SCRIPTS = {
     "home": "pages/home.js",
+    "regions": "pages/regions.js",
     "play": "pages/play.js",
     "normal": "pages/game.js",
     "hard": "pages/game.js",
@@ -133,6 +136,49 @@ def _write(path: Path, content: str) -> None:
     path.write_text(content, encoding="utf-8")
 
 
+CONTINENT_ORDER = (
+    "North America",
+    "Europe",
+    "Oceania",
+    "Asia",
+    "Africa",
+    "South America",
+)
+
+
+def _continent_id(name: str) -> str:
+    return re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-") or "other"
+
+
+def region_groups(regions: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Group regions for the directory, preserving continent display order."""
+    grouped: dict[str, list[dict[str, Any]]] = {}
+    order = {region.get("id"): index for index, region in enumerate(regions)}
+    for region in regions:
+        continent = region.get("continent") or "Other"
+        grouped.setdefault(continent, []).append(region)
+
+    names = [name for name in CONTINENT_ORDER if name in grouped]
+    names.extend(sorted(name for name in grouped if name not in CONTINENT_ORDER))
+
+    groups = []
+    for name in names:
+
+        def sort_key(region: dict[str, Any]) -> tuple[int, int, int]:
+            region_id = region.get("id")
+            parent_id = region.get("parentRegion")
+            base = order.get(parent_id, order.get(region_id, 0))
+            return (
+                base,
+                0 if not parent_id else 1,
+                order.get(region_id, 0),
+            )
+
+        entries = sorted(grouped[name], key=sort_key)
+        groups.append({"id": _continent_id(name), "name": name, "regions": entries})
+    return groups
+
+
 def _render_pages(
     output_dir: Path,
     regions: list[dict[str, Any]],
@@ -142,12 +188,14 @@ def _render_pages(
     env = _environment(f"/assets/{identity.asset_build_id}", templates_dir)
     rendered: list[str] = []
 
+    groups = region_groups(regions)
     for page, output_path, template_name, extra in PAGES:
         template = env.get_template(f"pages/{template_name}")
         context = {
             "page": page,
             "page_script": SCRIPTS[page],
             "regions": regions,
+            "region_groups": groups,
             "release_id": identity.release_id,
             "build_id": identity.asset_build_id,
             **extra,
@@ -165,6 +213,7 @@ def _write_support_files(output_dir: Path, identity: BuildIdentity) -> None:
     live_url = SITE["live_url"].rstrip("/")
     routes = (
         "/",
+        "/regions/",
         "/play/",
         "/normal/",
         "/hard/",

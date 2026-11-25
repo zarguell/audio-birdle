@@ -2,7 +2,9 @@
   {
     "id": "us",
     "name": "United States",
-    "country": "US"
+    "country": "US",
+    "continent": "North America",
+    "status": "live"
   },
   {
     "id": "us-lower48",
@@ -12,21 +14,30 @@
     "excludedSubregions": [
       "Alaska",
       "Hawaii"
-    ]
+    ],
+    "continent": "North America",
+    "status": "live",
+    "variantLabel": "Contiguous US"
   },
   {
     "id": "gb",
     "name": "United Kingdom",
-    "country": "GB"
+    "country": "GB",
+    "continent": "Europe",
+    "status": "live"
   },
   {
     "id": "ca",
     "name": "Canada",
-    "country": "CA"
+    "country": "CA",
+    "continent": "North America",
+    "status": "live"
   },
   {
     "id": "au",
     "name": "Australia",
-    "country": "AU"
+    "country": "AU",
+    "continent": "Oceania",
+    "status": "live"
   }
 ]

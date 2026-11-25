@@ -96,6 +96,7 @@ def test_build_renders_every_page(built_site: tuple[Path, dict]) -> None:
     output, summary = built_site
     for page in (
         "index.html",
+        "regions/index.html",
         "play/index.html",
         "normal/index.html",
         "hard/index.html",
@@ -106,7 +107,7 @@ def test_build_renders_every_page(built_site: tuple[Path, dict]) -> None:
         "404.html",
     ):
         assert (output / page).is_file(), page
-    assert len(summary["pages"]) == 9
+    assert len(summary["pages"]) == 10
     assert summary["regions"] == 5
 
 
@@ -117,6 +118,7 @@ def test_build_uses_content_addressed_assets(built_site: tuple[Path, dict]) -> N
     assets = output / "assets" / build_id
     assert (assets / "css" / "tokens.css").is_file()
     assert (assets / "js" / "pages" / "home.js").is_file()
+    assert (assets / "js" / "pages" / "regions.js").is_file()
     assert (assets / "js" / "pages" / "game.js").is_file()
     assert (assets / "fonts" / "vt323-latin.woff2").is_file()
     assert (assets / "img" / "forest-scene.svg").is_file()
@@ -148,19 +150,29 @@ def test_pages_reference_only_hashed_external_assets(
             assert local.is_file(), f"missing asset {asset} referenced by {html_path}"
 
 
-def test_region_links_are_server_rendered(built_site: tuple[Path, dict]) -> None:
+def test_region_directory_is_server_rendered(built_site: tuple[Path, dict]) -> None:
     output, _ = built_site
-    html = (output / "index.html").read_text(encoding="utf-8")
-    assert 'href="/play/?region=us"' in html
-    assert 'href="/play/?region=us-lower48"' in html
-    assert 'href="/play/?region=gb"' in html
-    assert 'href="/play/?region=ca"' in html
-    assert 'href="/play/?region=au"' in html
-    assert "United States" in html
-    assert "US Lower 48" in html
-    assert "United Kingdom" in html
-    assert "Canada" in html
-    assert "Australia" in html
+    home = (output / "index.html").read_text(encoding="utf-8")
+    directory = (output / "regions" / "index.html").read_text(encoding="utf-8")
+
+    assert 'href="/regions/"' in home
+    assert 'href="/play/?region=us"' not in home
+    assert 'href="/play/?region=us"' in directory
+    assert 'href="/play/?region=us-lower48"' in directory
+    assert 'href="/play/?region=gb"' in directory
+    assert 'href="/play/?region=ca"' in directory
+    assert 'href="/play/?region=au"' in directory
+    for label in (
+        "North America",
+        "Europe",
+        "Oceania",
+        "United States",
+        "US Lower 48",
+        "United Kingdom",
+        "Canada",
+        "Australia",
+    ):
+        assert label in directory
 
 
 def test_data_manifest_matches_copied_files(built_site: tuple[Path, dict]) -> None:

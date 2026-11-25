@@ -40,7 +40,7 @@ def test_reset_today_keeps_recorded_stats_then_reset_all_clears_them(
 
     page.goto(f"{base_url}/settings/", wait_until="networkidle")
     page.locator("[data-change-region]").click()
-    page.wait_for_url(f"{base_url}/")
-    assert page.evaluate("localStorage.getItem('audio-birdle-region')") is None
+    page.wait_for_url(f"{base_url}/regions/")
+    assert page.evaluate("localStorage.getItem('audio-birdle-region')") == "us"
 
     assert not console_errors

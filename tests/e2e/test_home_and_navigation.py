@@ -9,7 +9,8 @@ def test_home_lists_regions_and_primary_navigation(page, base_url, console_error
     assert page.title() == "Audio-Birdle"
     assert page.locator("h1").inner_text() == "Audio-Birdle"
     assert "Listen close" in page.locator(".home-tagline").text_content()
-    assert page.locator(".region-option").count() == 5
+    assert page.locator(".region-option").count() == 0
+    assert page.locator('a[href="/regions/"]').count() >= 1
     assert page.locator(".tabbar__link").count() == 5
     assert page.locator(".skip-link").count() == 1
     assert page.locator("[data-continue]").is_hidden()
@@ -25,9 +26,36 @@ def test_home_lists_regions_and_primary_navigation(page, base_url, console_error
     assert not console_errors
 
 
+def test_region_directory_search_filter_and_pin(page, base_url, console_errors):
+    page.goto(f"{base_url}/regions/", wait_until="networkidle")
+    assert page.locator("[data-region-row]").count() == 5
+
+    page.locator("[data-region-search]").fill("australia")
+    assert page.locator("[data-region-row]:visible").count() == 1
+    assert "1 region shown" in page.locator("[data-region-count]").inner_text().lower()
+
+    page.locator("[data-region-search]").fill("")
+    page.locator('[data-continent-filter="europe"]').click()
+    assert page.locator("[data-region-row]:visible").count() == 1
+    assert (
+        page.locator('[data-continent-filter="europe"]').get_attribute("aria-pressed")
+        == "true"
+    )
+
+    page.locator('[data-continent-filter="all"]').click()
+    page.locator('[data-region-favorite="gb"]').click()
+    assert page.locator("[data-region-favorites] [data-region-link='gb']").count() == 1
+    assert (
+        page.locator('[data-region-favorite="gb"]').get_attribute("aria-pressed")
+        == "true"
+    )
+
+    assert not console_errors
+
+
 def test_choosing_a_region_opens_the_mode_selector(page, base_url, console_errors):
-    page.goto(f"{base_url}/", wait_until="networkidle")
-    page.locator('[data-region-link="us"]').click()
+    page.goto(f"{base_url}/regions/", wait_until="networkidle")
+    page.locator('.region-option[data-region-link="us"]').click()
     page.wait_for_url(re.compile(r"/play/\?region=us$"))
 
     assert page.locator("[data-region-label]").first.inner_text() == "United States"
