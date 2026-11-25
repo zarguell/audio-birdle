@@ -71,6 +71,7 @@ def month_windows(today: date, months: int, window_days: int) -> list[list[date]
 def _fetch_one_day(
     code: str, day: date, *, api_key: str
 ) -> tuple[list[Any] | None, str | None]:
+    """Fetch one region-day, returning a payload or an error message."""
     url = f"{EBIRD_BASE}/data/obs/{code}/historic/{day.year}/{day.month}/{day.day}"
     try:
         payload = ebird_api_common.get_json(url, api_key=api_key, timeout=20)
@@ -87,6 +88,7 @@ def _record_observations(
     counts: Counter[str],
     seen_days: defaultdict[str, set[date]],
 ) -> None:
+    """Accumulate valid observations from one day."""
     for observation in payload:
         if not isinstance(observation, dict):
             continue
@@ -99,6 +101,7 @@ def _record_observations(
 
 
 def _should_stop(successful_days: set[date], errors: list[str]) -> bool:
+    """Stop a month early when every attempted day has failed."""
     return not successful_days and len(errors) >= 3
 
 
@@ -109,6 +112,7 @@ def fetch_observation_counts(
     api_key: str,
     delay: float,
 ) -> tuple[Counter[str], defaultdict[str, set[date]], set[date], list[str]]:
+    """Fetch and count observations for a subregion across several days."""
     counts: Counter[str] = Counter()
     seen_days: defaultdict[str, set[date]] = defaultdict(set)
     successful_days: set[date] = set()
@@ -140,6 +144,7 @@ def regular_from_counts(
     min_observations: int,
     min_days: int,
 ) -> list[str]:
+    """Select species that meet both observation thresholds."""
     return sorted(
         species
         for species, count in counts.items()
@@ -188,6 +193,7 @@ def build_pool(
 
 
 def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
+    """Parse CLI arguments."""
     parser = argparse.ArgumentParser(
         description="Build a year-round regular-species pool for one region."
     )
@@ -209,6 +215,7 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
 
 
 def load_subregions(path: Path) -> list[dict[str, str]] | None:
+    """Load and validate a subregion list file."""
     try:
         subregions = json.loads(path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError) as error:
@@ -221,6 +228,7 @@ def load_subregions(path: Path) -> list[dict[str, str]] | None:
 
 
 def write_pool(pool: dict[str, list[str]], output: Path, min_species: int) -> bool:
+    """Write the pool, rejecting regions that are too thin."""
     thin = [name for name, species in pool.items() if len(species) < min_species]
     if thin:
         print(f"Refusing to write: too few species in {', '.join(thin)}")
@@ -240,6 +248,7 @@ def write_pool(pool: dict[str, list[str]], output: Path, min_species: int) -> bo
 
 
 def run(args: argparse.Namespace) -> int:
+    """Build and write a pool from parsed arguments."""
     subregions = load_subregions(args.subregions_file)
     if subregions is None:
         return 2
@@ -271,6 +280,7 @@ def run(args: argparse.Namespace) -> int:
 
 
 def main(argv: Sequence[str] | None = None) -> int:
+    """CLI entry point."""
     return run(parse_args(argv))
 
 
