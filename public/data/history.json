@@ -1494,5 +1494,25 @@
       "name": "Wild Turkey",
       "subregion": "Canada"
     }
+  ],
+  "au": [
+    {
+      "date": "2026-11-24",
+      "id": "resfly1",
+      "name": "Restless Flycatcher",
+      "subregion": "Australia"
+    },
+    {
+      "date": "2026-11-25",
+      "id": "dobfin1",
+      "name": "Double-barred Finch",
+      "subregion": "Australia"
+    },
+    {
+      "date": "2026-11-26",
+      "id": "olbori1",
+      "name": "Olive-backed Oriole",
+      "subregion": "Australia"
+    }
   ]
 }

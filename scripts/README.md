@@ -306,6 +306,15 @@ python3 build-regular-pool.py --region GB \
   --output data/regions/gb-regular-species.json
 ```
 
+For a faster six-sample pass across a full year, use every other month:
+
+```bash
+python3 build-regular-pool.py --region AU \
+  --subregions-file data/regions/au-subregions.json \
+  --months 6 --month-step 2 \
+  --output data/regions/au-regular-species.json
+```
+
 It samples a short window in each of the last 12 months. The daily generator
 automatically reads `<region>-regular-species.json` from the same directory as
 the subregion file and keeps only its species. An optional

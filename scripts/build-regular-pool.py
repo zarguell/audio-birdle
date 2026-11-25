@@ -44,8 +44,14 @@ class PoolOptions:
     delay: float
 
 
-def month_windows(today: date, months: int, window_days: int) -> list[list[date]]:
-    """Return one short, past-only sampling window per month."""
+def month_windows(
+    today: date, months: int, window_days: int, step: int = 1
+) -> list[list[date]]:
+    """Return one short, past-only sampling window per sampled month.
+
+    ``step=2`` samples every other month, so ``months=6`` covers a full year
+    with six windows instead of six consecutive months.
+    """
     end = today - timedelta(days=1)
     year, month = end.year, end.month
     windows: list[list[date]] = []
@@ -60,9 +66,9 @@ def month_windows(today: date, months: int, window_days: int) -> list[list[date]
                 for offset in range((anchor - start).days + 1)
             ]
         )
-        month -= 1
-        if month == 0:
-            month = 12
+        month -= step
+        while month < 1:
+            month += 12
             year -= 1
 
     return windows
@@ -205,13 +211,24 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
         help="Subregion list (same shape as *-subregions.json)",
     )
     parser.add_argument("--months", type=int, default=12)
+    parser.add_argument(
+        "--month-step",
+        type=int,
+        default=1,
+        help="Months between samples; use 2 with --months 6 for a full year",
+    )
     parser.add_argument("--window-days", type=int, default=7)
     parser.add_argument("--min-observations", type=int, default=5)
     parser.add_argument("--min-days", type=int, default=3)
     parser.add_argument("--delay", type=float, default=0.2)
     parser.add_argument("--min-species", type=int, default=1)
     parser.add_argument("--output", type=Path, required=True)
-    return parser.parse_args(argv)
+    args = parser.parse_args(argv)
+    if args.months < 1:
+        parser.error("--months must be at least 1")
+    if args.month_step < 1:
+        parser.error("--month-step must be at least 1")
+    return args
 
 
 def load_subregions(path: Path) -> list[dict[str, str]] | None:
@@ -254,7 +271,10 @@ def run(args: argparse.Namespace) -> int:
         return 2
 
     windows = month_windows(
-        datetime.now(timezone.utc).date(), args.months, args.window_days
+        datetime.now(timezone.utc).date(),
+        args.months,
+        args.window_days,
+        args.month_step,
     )
     print(
         f"Sampling {len(windows)} monthly windows for "

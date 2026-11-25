@@ -258,7 +258,8 @@ python scripts/build-regular-pool.py --region GB \
 ```
 
 It samples one short window in each of the last 12 months so summer migrants
-and winter visitors are retained. `generate-daily-region-data.py`
+and winter visitors are retained. For a faster six-sample pass across a full
+year, use `--months 6 --month-step 2`. `generate-daily-region-data.py`
 automatically reads the sibling `<region>-regular-species.json` file and
 intersects the current eBird observations with it; no workflow change is
 needed, and regions without a filter file keep their old behavior. An optional

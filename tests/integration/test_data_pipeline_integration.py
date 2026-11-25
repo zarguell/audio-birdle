@@ -300,6 +300,46 @@ class TestDataPipelineIntegration:
             )
 
     @staticmethod
+    def test_au_subregions_are_subset_of_playable_birds(
+        birds_json, daily_subregion_json
+    ):
+        """The country-level Australia pool must reference shipped AU birds."""
+        au_ids = {bird["id"] for bird in birds_json["au"]}
+        entries = daily_subregion_json["au"]["Australia"]
+        refs = {entry["id"] for entry in entries}
+        assert refs <= au_ids, "Australia pool references unplayable AU birds"
+        assert len(refs) >= 10
+
+    @staticmethod
+    def test_au_daily_entries_come_from_regular_pool(daily_json):
+        """AU daily answers must come from the year-round regular pool.
+
+        AU deliberately ships no ``au-daily-regular-species.json``: that
+        sibling file replaces the year-round pool for *every* season (no
+        month key, no expiry, nothing regenerates it), which would retire a
+        large share of the playable species from the daily rotation for good.
+        Seasonality is handled by intersecting with today's eBird
+        observations, so the annual pool is the correct filter.
+        """
+        regions_dir = Path(__file__).parent.parent.parent / "scripts" / "data"
+        assert not (regions_dir / "regions" / "au-daily-regular-species.json").exists()
+        regular = json.loads(
+            (regions_dir / "regions" / "au-regular-species.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        for entry in (item for item in daily_json if item["region"] == "au"):
+            assert entry["id"] in regular["Australia"], (
+                f"AU answer {entry['id']} is not in the regular pool"
+            )
+
+    @staticmethod
+    def test_au_uses_current_taxonomy_split(birds_json):
+        """AU should use the current eBird split code, not a legacy entry."""
+        au_ids = {bird["id"] for bird in birds_json["au"]}
+        assert "litshr31" in au_ids
+
+    @staticmethod
     def test_birds_have_facts_and_learn_more(birds_json):
         """Offline enhancements must survive regeneration: every bird ships
         with a non-empty fact and learnMoreUrl (enhance-bird-data.py)."""

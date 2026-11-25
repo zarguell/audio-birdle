@@ -23,5 +23,10 @@
     "id": "ca",
     "name": "Canada",
     "country": "CA"
+  },
+  {
+    "id": "au",
+    "name": "Australia",
+    "country": "AU"
   }
 ]
