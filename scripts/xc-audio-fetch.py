@@ -163,8 +163,12 @@ def build_query(sci_name, country=None, sound_type=None):
 
 
 def fetch_recordings(
-    sci_name, country=None, sound_type=None, api_key=None,
-    max_pages=2, per_page=100,
+    sci_name,
+    country=None,
+    sound_type=None,
+    api_key=None,
+    max_pages=2,
+    per_page=100,
 ):
     """Fetch recordings for one species from the XC API.
 
@@ -185,8 +189,7 @@ def fetch_recordings(
     while page <= max_pages:
         payload = get_json(
             API_URL,
-            {"query": query, "key": api_key, "page": page,
-             "per_page": per_page},
+            {"query": query, "key": api_key, "page": page, "per_page": per_page},
             api_key,
         )
         batch = payload.get("recordings", [])
@@ -233,8 +236,12 @@ def length_score(seconds):
 
 
 def select_recordings(
-    recordings, sound_type=None, min_quality="C",
-    min_length_sec=5, max_length_sec=360, max_urls=10,
+    recordings,
+    sound_type=None,
+    min_quality="C",
+    min_length_sec=5,
+    max_length_sec=360,
+    max_urls=10,
 ):
     """Filter and rank recordings for inclusion in the game data.
 
@@ -445,11 +452,12 @@ def main():
 
         if selected:
             species_with_audio += 1
-            print(f"   ✅ {len(selected)} clips "
-                  f"(best quality {selected[0].get('q', '?')})")
+            print(
+                f"   ✅ {len(selected)} clips "
+                f"(best quality {selected[0].get('q', '?')})"
+            )
             output_records.extend(
-                to_output_record(species_code, recording)
-                for recording in selected
+                to_output_record(species_code, recording) for recording in selected
             )
         else:
             print("   ⚠️  No usable recordings found")
