@@ -217,7 +217,13 @@ vectors, `daily.json`, and `history.json`.
 Critical scripts:
 
 - `scripts/generate-daily-birds.py` — deterministic daily answers, no repeats
-  within `--days`, subregion-aware selection, history/daily JSON.
+  within `--days`, subregion-aware selection, history/daily JSON. It
+  pre-generates yesterday through `PRE_GENERATION_DAYS` (7) days ahead and
+  only fills missing dates, so a stretch of failed or GitHub-delayed
+  scheduled runs cannot leave a date without an answer.
+- `scripts/verify-daily-coverage.py` — fails the daily workflow unless
+  `daily.json` covers today and tomorrow for every region (a missing date
+  silently replays the previous bird in the browser).
 - `scripts/generate-daily-region-data.py` — eBird observations per subregion.
 - `scripts/game-data-generator.py` — per-region bird shards from taxonomy + audio metadata.
 - `scripts/enhance-bird-data.py`, `xc-audio-fetch.py`, and the `ebird-*`
@@ -227,9 +233,11 @@ The daily workflow `.github/workflows/daily-update.yml`:
 
 1. Fetches observations for every subregion.
 2. Generates daily birds.
-3. Regenerates `public/data/manifest.json`.
-4. Runs generator tests against real data.
-5. Commits and pushes. Cloudflare rebuilds from `main`.
+3. Verifies today and tomorrow exist for every region
+   (`scripts/verify-daily-coverage.py`).
+4. Regenerates `public/data/manifest.json`.
+5. Runs generator tests against real data.
+6. Commits and pushes. Cloudflare rebuilds from `main`.
 
 Data files are generated; do not hand-edit `public/data/*.json`.
 

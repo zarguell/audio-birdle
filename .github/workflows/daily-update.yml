@@ -87,10 +87,16 @@ jobs:
 
       - name: Run daily challenge script to generate the bird(s) of the day
         run: |
-          # Eastern date, matching the cron gate: the challenge rolls over at
-          # 00:00 America/New_York, not at UTC midnight.
+          # Eastern date: the challenge rolls over at 00:00 America/New_York,
+          # not at UTC midnight.
           current_date=$(TZ=America/New_York date +%F)
           python ./scripts/generate-daily-birds.py --days 60 --date "$current_date" --subregions public/data/daily-subregion-birds.json
+
+      - name: Verify today's and tomorrow's puzzle exist for every region
+        # A missing date does not error in the browser: pickDailyEntry() serves
+        # the previous day's bird under the new date key. Fail before the commit
+        # so a gap surfaces here instead of as a repeated puzzle for players.
+        run: python ./scripts/verify-daily-coverage.py --data-dir public/data
 
       - name: Regenerate the data manifest
         # The browser loads every data file through a SHA-256 manifest so a
