@@ -19,5 +19,5 @@ const showContinueCard = () => {
   card.hidden = false;
 };
 
-initPage();
+await initPage();
 showContinueCard();

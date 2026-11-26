@@ -1,3 +1,4 @@
+import { whenActivityReady } from "./core/activity.js";
 import { getAnalyticsToken, initAnalytics } from "./core/analytics.js";
 import { STORAGE_KEYS } from "./core/constants.js";
 import { qsa } from "./core/dom.js";
@@ -120,7 +121,8 @@ export const setLastPlayedMode = (mode) => {
 export const getLastPlayedMode = () =>
   readString(STORAGE_KEYS.LAST_PLAYED_MODE, null);
 
-export function initPage() {
+export async function initPage() {
+  await whenActivityReady();
   initJellyButtons();
   ensureBirdDirector();
   initAnalytics({

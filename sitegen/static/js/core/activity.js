@@ -86,6 +86,8 @@ async function exchangeCode(code, redirectUri, fetchImpl) {
 }
 
 let activityReady = null;
+let activityTimedOut = false;
+const ACTIVITY_READY_TIMEOUT_MS = 8000;
 
 async function bootstrapActivity(options) {
   const fetchImpl = options?.fetchImpl ?? globalThis.fetch;
@@ -126,6 +128,9 @@ async function bootstrapActivity(options) {
       throw new Error("Discord authentication returned no user");
     }
 
+    if (activityTimedOut) {
+      return null;
+    }
     document.documentElement.classList.add("is-activity");
     setStorageNamespace(`discord-${user.id}`);
     return { user };
@@ -133,6 +138,18 @@ async function bootstrapActivity(options) {
     console.warn("Discord Activity initialisation failed:", error);
     return null;
   }
+}
+
+function withTimeout(promise, ms) {
+  let timer = null;
+  const timeout = new Promise((resolve) => {
+    timer = setTimeout(() => {
+      activityTimedOut = true;
+      console.warn("Discord Activity handshake timed out");
+      resolve(null);
+    }, ms);
+  });
+  return Promise.race([promise, timeout]).finally(() => clearTimeout(timer));
 }
 
 /**
@@ -144,7 +161,10 @@ export function initActivity(options = {}) {
     return Promise.resolve(null);
   }
   if (activityReady === null) {
-    activityReady = bootstrapActivity(options);
+    activityReady = withTimeout(
+      bootstrapActivity(options),
+      ACTIVITY_READY_TIMEOUT_MS,
+    );
   }
   return activityReady;
 }

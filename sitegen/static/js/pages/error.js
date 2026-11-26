@@ -1,3 +1,3 @@
 import { initPage } from "../app.js";
 
-initPage();
+await initPage();

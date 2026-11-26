@@ -61,7 +61,7 @@ const bindModeCard = (card, region, completed) => {
 };
 
 const init = async () => {
-  initPage();
+  await initPage();
   const today = getTodayString();
 
   try {

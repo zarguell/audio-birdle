@@ -192,7 +192,7 @@ const startDaily = async (region, regionBirds) => {
 };
 
 const init = async () => {
-  initPage();
+  await initPage();
   view.setLoading(true);
 
   try {

@@ -77,7 +77,7 @@ const initAnalyticsSettings = () => {
 };
 
 const init = async () => {
-  initPage();
+  await initPage();
   initAnalyticsSettings();
 
   let region = null;
