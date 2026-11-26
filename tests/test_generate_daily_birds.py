@@ -810,12 +810,13 @@ class TestMainEndToEnd:
         daily = json.loads((tmp_path / "public/data/daily.json").read_text())
         history = json.loads((tmp_path / "public/data/history.json").read_text())
 
-        # Both regions get entries for the rolling window [D-1, D, D+1]
+        # Both regions get entries for the pre-generation window
+        # [D-1, D+PRE_GENERATION_DAYS]: a week of slack so delayed or missed
+        # scheduled runs cannot leave a date without an answer.
         assert {e["region"] for e in daily} == {"us", "us-lower48"}
         assert {e["date"] for e in daily} == {
-            "2026-08-05",
-            "2026-08-06",
-            "2026-08-07",
+            (datetime(2026, 8, 6) + timedelta(days=offset)).strftime("%Y-%m-%d")
+            for offset in range(-1, 8)
         }
         # Entries carry the additive id and an 8-char hash
         for entry in daily:
@@ -861,25 +862,17 @@ class TestMainEndToEnd:
         generate_daily_birds.main()
 
         daily = json.loads((tmp_path / "public/data/daily.json").read_text())
+        window = [
+            (datetime(2026, 8, 6) + timedelta(days=offset)).strftime("%Y-%m-%d")
+            for offset in range(-1, 8)
+        ]
         # Prior entry survives (us 08-05 is skipped, not regenerated),
         # missing window entries are added, no duplicates.
         assert {(e["region"], e["date"]) for e in daily} == {
-            ("us", "2026-08-05"),
-            ("us-lower48", "2026-08-05"),
-            ("us", "2026-08-06"),
-            ("us-lower48", "2026-08-06"),
-            ("us", "2026-08-07"),
-            ("us-lower48", "2026-08-07"),
+            (region, day) for region in ("us", "us-lower48") for day in window
         }
         # Canonical (date, region) ordering for stable output
-        assert [e["date"] for e in daily] == [
-            "2026-08-05",
-            "2026-08-05",
-            "2026-08-06",
-            "2026-08-06",
-            "2026-08-07",
-            "2026-08-07",
-        ]
+        assert [e["date"] for e in daily] == [day for day in window for _ in range(2)]
 
     def test_main_rerun_same_date_does_not_duplicate(self, tmp_path, monkeypatch):
         """Test that re-running main() for the same date upserts, never duplicates"""
@@ -931,13 +924,11 @@ class TestMainEndToEnd:
 
         generate_daily_birds.main()
 
-        today_str = datetime.now().strftime("%Y-%m-%d")
         daily = json.loads((tmp_path / "public/data/daily.json").read_text())
-        # Rolling window centered on today
+        # Window starts yesterday and reaches a week past today
         assert {e["date"] for e in daily} == {
-            (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d"),
-            today_str,
-            (datetime.now() + timedelta(days=1)).strftime("%Y-%m-%d"),
+            (datetime.now() + timedelta(days=offset)).strftime("%Y-%m-%d")
+            for offset in range(-1, 8)
         }
 
     def test_main_missing_subregions_file_warns(self, tmp_path, monkeypatch, capsys):

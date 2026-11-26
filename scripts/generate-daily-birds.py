@@ -33,6 +33,13 @@ import sys
 # Salt for hashing (must match JavaScript implementation)
 SECRET_SALT = "birdle-salt-2025"
 
+# Days of answers to pre-generate beyond the target date. A local day N starts
+# as early as 10:00 UTC of day N-1 (UTC+14), while scheduled runs are published
+# at ~05:00 UTC and GitHub delivers them hours late. Pre-generating a week
+# ahead means the puzzle for a date exists long before any player's local
+# midnight, and that several failed or delayed runs cannot open a gap.
+PRE_GENERATION_DAYS = 7
+
 
 def hash_bird_id(bird_id):
     """
@@ -471,15 +478,19 @@ def main():
         daily_by_key[(entry.get("region"), entry.get("date"))] = entry
 
     # A local day N anywhere on Earth starts as early as 10:00 UTC of day N-1
-    # (UTC+14), while entries are published at ~04:00 UTC. Generating a
-    # rolling window of [D-1, D, D+1] guarantees entry N already exists at
-    # every user's local midnight, so the frontend's "latest entry <= local
-    # today" lookup serves exactly the local date's puzzle everywhere. Only
-    # MISSING dates are generated (skip-existing): re-runs are idempotent,
-    # and a missed run is healed by the next run's D-1 backfill. Selection is
-    # deterministic per (region, date), so a healed entry is identical to
-    # what the missed run would have produced.
-    generation_dates = [target_date + timedelta(days=offset) for offset in (-1, 0, 1)]
+    # (UTC+14), while entries are published at ~05:00 UTC. Pre-generating
+    # [D-1, D+PRE_GENERATION_DAYS] guarantees entry N already exists at every
+    # user's local midnight, so the frontend's "latest entry <= local today"
+    # lookup serves exactly the local date's puzzle everywhere, and a week of
+    # missed or delayed scheduled runs cannot leave a date without an answer.
+    # Only MISSING dates are generated (skip-existing): re-runs are idempotent,
+    # and a date that failed earlier is healed by any later run while it is
+    # still inside the window. Selection is deterministic per (region, date),
+    # so a healed entry is identical to what the missed run would have produced.
+    generation_dates = [
+        target_date + timedelta(days=offset)
+        for offset in range(-1, PRE_GENERATION_DAYS + 1)
+    ]
 
     for region in regions:
         region_id = region["id"]
