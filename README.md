@@ -19,7 +19,7 @@ I created this game after being inspired by Mitch's [Birdle](https://github.com/
 - **Normal mode:** four choices, four guesses.
 - **Hard mode:** free-text search, six guesses, progressive taxonomic hints (order → family → genus).
 - **Practice mode:** unlimited rounds with normal or hard mechanics; nothing is saved to stats.
-- **Regional play:** US, US Lower 48, Ireland, France, the United Kingdom, South Africa, Costa Rica, Japan, Canada, and Australia, with a searchable region directory and pinned/recent regions. See the [region roadmap](docs/regions-roadmap.md).
+- **Regional play:** US, US Lower 48, Ireland, France, the United Kingdom, South Africa, Costa Rica, Japan, New Zealand, Canada, and Australia, with a searchable region directory and pinned/recent regions. See the [region roadmap](docs/regions-roadmap.md).
 - **Audio:** multiple recordings per bird where available.
 - **Stats and archive:** streaks, win rate, regional breakdown, and a replayable history of past challenges.
 - **Share results:** Wordle-style emoji result grid.

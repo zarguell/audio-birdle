@@ -1632,6 +1632,13 @@
   },
   {
     "date": "2026-11-25",
+    "region": "nz",
+    "answerHash": "6fc07d53",
+    "id": "sposha1",
+    "subregion": "New Zealand"
+  },
+  {
+    "date": "2026-11-25",
     "region": "us",
     "answerHash": "73771c9e",
     "id": "buwtea",
@@ -1702,6 +1709,13 @@
   },
   {
     "date": "2026-11-26",
+    "region": "nz",
+    "answerHash": "687d158d",
+    "id": "sooshe",
+    "subregion": "New Zealand"
+  },
+  {
+    "date": "2026-11-26",
     "region": "us",
     "answerHash": "47c8a158",
     "id": "easmea",
@@ -1769,6 +1783,13 @@
     "answerHash": "1f16a85c",
     "id": "mallar3",
     "subregion": "Japan"
+  },
+  {
+    "date": "2026-11-27",
+    "region": "nz",
+    "answerHash": "cfd80129",
+    "id": "commyn",
+    "subregion": "New Zealand"
   },
   {
     "date": "2026-11-27",
