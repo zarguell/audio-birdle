@@ -265,6 +265,11 @@ async function deferCommand(interaction, env, ctx, work, fetchImpl) {
     }
     if (!appId || !interactionToken) return;
 
+    console.info(
+      "deferred",
+      typeof data?.content === "string" ? data.content : "embed",
+    );
+
     const rest = { ...data };
     delete rest.flags;
     const impl = fetchImpl ?? fetch;
