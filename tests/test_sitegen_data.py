@@ -25,6 +25,7 @@ def test_real_data_is_valid() -> None:
         "za",
         "cr",
         "fr",
+        "jp",
     }
 
 

@@ -67,5 +67,12 @@
     "country": "CR",
     "continent": "North America",
     "status": "live"
+  },
+  {
+    "id": "jp",
+    "name": "Japan",
+    "country": "JP",
+    "continent": "Asia",
+    "status": "live"
   }
 ]
