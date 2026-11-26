@@ -9,6 +9,7 @@ import {
   startBoardSession,
   whenActivityReady,
 } from "../../sitegen/static/js/core/activity.js";
+import { mapActivityMediaUrl } from "../../sitegen/static/js/core/audio.js";
 import {
   getStorageNamespace,
   readJSON,
@@ -308,4 +309,30 @@ test("postBoardResult resolves null outside an Activity", async () => {
   } finally {
     globalThis.fetch = originalFetch;
   }
+});
+
+test("Activity media mapping rewrites only the known audio hosts", () => {
+  assert.equal(
+    mapActivityMediaUrl("https://xeno-canto.org/321256/download", {
+      inActivity: true,
+    }),
+    "/xc/321256/download",
+  );
+  assert.equal(
+    mapActivityMediaUrl(
+      "https://cdn.download.ams.birds.cornell.edu/api/v2/asset/1/mp3",
+      { inActivity: true },
+    ),
+    "/cornell/api/v2/asset/1/mp3",
+  );
+  assert.equal(
+    mapActivityMediaUrl("https://xeno-canto.org/321256/download", {
+      inActivity: false,
+    }),
+    "https://xeno-canto.org/321256/download",
+  );
+  assert.equal(
+    mapActivityMediaUrl("https://example.com/a.mp3", { inActivity: true }),
+    "https://example.com/a.mp3",
+  );
 });
