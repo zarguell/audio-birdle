@@ -17,6 +17,7 @@ invariants live in `docs/security-architecture.md`; data handling lives in
 | Activity URL mapping | `<staging>/` |
 | Audio mapping `/xc` | `xeno-canto.org` |
 | Audio mapping `/cornell` | `cdn.download.ams.birds.cornell.edu` |
+| Sticker mapping `/stickers` | `cdn.jsdelivr.net` |
 
 Production uses the production Worker `audio-birdle` and its own Discord app;
 create that app only at release.
@@ -124,7 +125,7 @@ interactions endpoint or the Activity URL mapping.
    Discord PINGs it on save; success proves `DISCORD_PUBLIC_KEY` and Ed25519.
 2. **Activities → URL mapping**: `<staging>/`. Without it, the type 12 launch has
    nowhere to go.
-   Add `/xc` → `xeno-canto.org` and `/cornell` →
+   Add `/xc` → `xeno-canto.org`, `/stickers` → `cdn.jsdelivr.net` and `/cornell` →
    `cdn.download.ams.birds.cornell.edu`; the Activity rewrites audio to those
    prefixes because the proxy blocks direct external media.
 3. **OAuth2 → Redirects**: add `https://127.0.0.1`. The Embedded App SDK's

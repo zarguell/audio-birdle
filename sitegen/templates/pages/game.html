@@ -156,6 +156,15 @@
           <p class="result__text" data-result-text></p>
         </div>
         <article class="bird-card">
+          <div class="bird-card__sticker" data-sticker-wrap hidden>
+            {# Deliberately not lazy: the wrapper starts hidden and is only
+               revealed by this image's load event, so a lazy image would never
+               fetch and the sticker would never appear. #}
+            <img class="bird-card__sticker-image" data-sticker alt="" decoding="async">
+            <p class="bird-card__sticker-note" data-sticker-note hidden>
+              Sticker art by Huashu (CC BY 4.0)
+            </p>
+          </div>
           <div class="bird-card__media" data-image-carousel hidden>
             <img class="bird-card__image" data-bird-image alt="" loading="lazy">
             <button class="bird-card__nav bird-card__nav--prev"

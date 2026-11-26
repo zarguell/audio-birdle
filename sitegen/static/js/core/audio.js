@@ -6,12 +6,18 @@ import { readJSON, writeJSON } from "./storage.js";
 const ACTIVITY_MEDIA_MAPPINGS = [
   ["cdn.download.ams.birds.cornell.edu", "/cornell"],
   ["xeno-canto.org", "/xc"],
+  ["cdn.jsdelivr.net", "/stickers"],
 ];
 
 /**
  * Discord Activities are sandboxed: external media is blocked unless it is
  * requested through a URL mapping on the app's proxy origin. Rewrite the two
- * audio hosts to their mapped prefixes; everything else is unchanged.
+ * audio hosts and the sticker CDN to their mapped prefixes; everything else is
+ * unchanged.
+ *
+ * `/stickers` maps to the whole jsDelivr host, because Discord appends the
+ * remainder of the path rather than serving a single file. The game only ever
+ * requests one repository's sticker paths through it.
  */
 export const mapActivityMediaUrl = (url, { inActivity = isActivity() } = {}) => {
   if (!inActivity || typeof url !== "string" || url.length === 0) {

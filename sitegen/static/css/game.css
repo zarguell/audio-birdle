@@ -549,6 +549,38 @@
   box-shadow: 3px 3px 0 var(--color-border);
 }
 
+/* The sticker reveal. Element-based art from the huashu set, shown instead of
+   the photo carousel when the species has one. Transparent background, so it
+   sits straight on the card surface. */
+.bird-card__sticker {
+  position: relative;
+  display: grid;
+  place-items: center;
+  gap: var(--space-1);
+  padding: var(--space-3);
+  background: var(--color-surface);
+  border: 2px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+}
+
+.bird-card__sticker-image {
+  width: 100%;
+  height: 12rem;
+  object-fit: contain;
+
+  /* Origin at the feet: a sticker that pivots about its middle reads as
+     spinning, one that pivots low reads as hopping in place. */
+  transform-origin: 50% 92%;
+}
+
+.bird-card__sticker-note {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 0.65rem;
+  letter-spacing: 0.02em;
+  text-align: center;
+}
+
 .bird-card__media {
   position: relative;
   overflow: hidden;

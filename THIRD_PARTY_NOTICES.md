@@ -25,6 +25,21 @@ All auto-replay loops, idle animations, and theme broadcast hooks were removed.
 The adapted CSS lives in lintable files under `sitegen/static/css/`; no upstream
 HTML or inline scripts are shipped.
 
+## huashu-bird-sticker art
+
+The species reveal can show a sticker illustration from
+[huashu-bird-sticker](https://github.com/alchaincyf/huashu-bird-sticker) by
+Huashu, licensed under
+[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+
+The art is **not vendored**: `sitegen/static/js/core/sticker.js` builds a URL to
+the upstream jsDelivr copy at runtime, so nothing of it is redistributed in this
+repository or in the built site. Attribution is displayed on the card next to
+the sticker, and the credit line must stay with the image.
+
+The set does not cover every species — extinct and very rare birds are missing,
+and a few files answer 403 — so a failed load falls back to the photo carousel.
+
 ## Discord Embedded App SDK
 
 The Discord Activity handshake uses

@@ -71,6 +71,39 @@
   }
 }
 
+/* The reveal dance: a short hop and wobble when the species sticker appears.
+   Three beats, not a loop — this is a celebration, not an idle state, and an
+   endless shake would cheapen the card and fight the reader's attention. */
+@keyframes sticker-dance {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+
+  15% {
+    transform: translateY(-0.5rem) rotate(-7deg) scale(1.04);
+  }
+
+  30% {
+    transform: translateY(0) rotate(6deg) scale(1.02);
+  }
+
+  45% {
+    transform: translateY(-0.35rem) rotate(-5deg) scale(1.03);
+  }
+
+  60% {
+    transform: translateY(0) rotate(4deg) scale(1.01);
+  }
+
+  75% {
+    transform: translateY(-0.15rem) rotate(-2deg) scale(1.01);
+  }
+
+  100% {
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+}
+
 @keyframes bird-idle {
   0%,
   100% {
@@ -636,8 +669,20 @@ html.is-page-hidden .audio-panel__bird {
   }
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  /* `data-dance` is set from JS after the image loads, so the animation starts
+     when the sticker does rather than while the slot is still empty. */
+  .bird-card__sticker[data-dance="on"] .bird-card__sticker-image {
+    animation: sticker-dance 900ms ease-in-out;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .equalizer.is-playing .equalizer__bar {
+    animation: none;
+  }
+
+  .bird-card__sticker[data-dance="on"] .bird-card__sticker-image {
     animation: none;
   }
 

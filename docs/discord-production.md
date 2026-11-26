@@ -57,6 +57,7 @@ https://discord.com/oauth2/authorize?client_id=1575568221715697744&scope=bot%20a
 | Discord → Worker | `https://audio-birdle.sechostlab.com/api/interactions` | portal → General Information → Interactions Endpoint URL |
 | Activity page | `/` → `https://audio-birdle.sechostlab.com/` | portal → Activities → URL Mappings |
 | Audio proxy | `/xc` → `xeno-canto.org`; `/cornell` → `cdn.download.ams.birds.cornell.edu` | portal → Activities → URL Mappings |
+| Sticker proxy | `/stickers` → `cdn.jsdelivr.net` | portal → Activities → URL Mappings |
 
 ## 3. Enable Activities
 
@@ -69,6 +70,7 @@ https://discord.com/oauth2/authorize?client_id=1575568221715697744&scope=bot%20a
 | `/` | `https://audio-birdle.sechostlab.com/` |
 | `/xc` | `xeno-canto.org` |
 | `/cornell` | `cdn.download.ams.birds.cornell.edu` |
+| `/stickers` | `cdn.jsdelivr.net` |
 
 - [ ] Do **not** create a normal chat command named `audiobirdle`. The launch
       command must be `PRIMARY_ENTRY_POINT` with `handler: 1`; a chat command
@@ -163,8 +165,10 @@ DISCORD_CLIENT_ID=<prod app id> DISCORD_BOT_TOKEN=<bot token> \
   page has no guild/channel and no board is posted.
 - `authorize` needs `guilds` as well as `identify`; `identify` alone fails
   `authenticate`.
-- External audio is blocked by the proxy; the client rewrites it to `/xc` and
-  `/cornell`, which must exist as URL mappings.
+- External audio and sticker art are blocked by the proxy; the client rewrites
+  them to `/xc`, `/cornell` and `/stickers`, which must exist as URL mappings.
+  Without `/stickers` the reveal card falls back to the photo, so the game still
+  plays but no sticker ever appears.
 - Admin commands must acknowledge within 3 seconds; they defer and finish via
   the interaction webhook.
 - Never run bare `wrangler deploy` from the `discord` worktree — it targets the

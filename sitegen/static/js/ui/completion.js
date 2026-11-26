@@ -1,6 +1,7 @@
 import { isHttpsUrl } from "../core/data.js";
-import { getAudioAttribution } from "../core/audio.js";
+import { getAudioAttribution, mapActivityMediaUrl } from "../core/audio.js";
 import { qs, setAttr, setText, show } from "../core/dom.js";
+import { stickerUrl } from "../core/sticker.js";
 
 export function createCompletionView(rootElement) {
   const elements = {
@@ -21,6 +22,9 @@ export function createCompletionView(rootElement) {
     share: qs("[data-share]", rootElement),
     learnMore: qs("[data-learn-more]", rootElement),
     attribution: qs("[data-attribution]", rootElement),
+    stickerWrap: qs("[data-sticker-wrap]", rootElement),
+    sticker: qs("[data-sticker]", rootElement),
+    stickerNote: qs("[data-sticker-note]", rootElement),
     practiceActions: qs("[data-practice-actions]", rootElement),
     retry: qs("[data-practice-retry]", rootElement),
     nextRound: qs("[data-practice-next]", rootElement),
@@ -31,6 +35,7 @@ export function createCompletionView(rootElement) {
   let imageIndex = 0;
   let audioIndex = 0;
   let shareHandler = null;
+  let stickerRequest = 0;
 
   const updateImage = () => {
     const image = images[imageIndex];
@@ -94,6 +99,52 @@ export function createCompletionView(rootElement) {
     updateImage();
     updateAttribution();
   });
+
+  /**
+   * Show the species sticker, if the set has one, and hide the photo carousel
+   * behind it. The CDN answers 404 for extinct and very rare species, so a
+   * failure falls back to the photo rather than leaving a broken tile.
+   *
+   * The request counter guards against a slow load from a previous round
+   * landing on the current card: practice mode can finish two birds quickly.
+   */
+  const updateSticker = (nextBird) => {
+    const request = (stickerRequest += 1);
+    // Inside Discord the CDN is unreachable; the mapper rewrites it to the
+    // app's `/stickers` URL mapping, which must exist on the app.
+    const url = mapActivityMediaUrl(stickerUrl(nextBird));
+    show(elements.stickerWrap, false);
+    show(elements.stickerNote, false);
+    elements.sticker.removeAttribute("src");
+    if (!url) {
+      return;
+    }
+
+    elements.sticker.onload = () => {
+      if (request !== stickerRequest) {
+        return;
+      }
+      elements.sticker.alt = `${nextBird.name} sticker`;
+      show(elements.stickerWrap, true);
+      show(elements.stickerNote, true);
+      elements.stickerWrap.dataset.dance = "";
+      // Restart the dance even when the class was already there from a
+      // previous round, or the second win in a row would stand still.
+      void elements.stickerWrap.offsetWidth;
+      elements.stickerWrap.dataset.dance = "on";
+      // The photo carousel is the fallback; the sticker is the nicer reveal.
+      show(elements.media, false);
+    };
+    elements.sticker.onerror = () => {
+      if (request !== stickerRequest) {
+        return;
+      }
+      show(elements.stickerWrap, false);
+      show(elements.stickerNote, false);
+      // Nothing to fall back to on a shared list; the card renders without art.
+    };
+    elements.sticker.src = url;
+  };
 
   return {
     render({
@@ -166,6 +217,7 @@ export function createCompletionView(rootElement) {
 
       updateImage();
       updateAttribution();
+      updateSticker(bird);
       show(rootElement, true);
     },
 
