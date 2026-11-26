@@ -46,5 +46,12 @@
     "country": "AU",
     "continent": "Oceania",
     "status": "live"
+  },
+  {
+    "id": "za",
+    "name": "South Africa",
+    "country": "ZA",
+    "continent": "Africa",
+    "status": "live"
   }
 ]

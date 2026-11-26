@@ -369,6 +369,37 @@ class TestDataPipelineIntegration:
             )
 
     @staticmethod
+    def test_all_daily_subregions_are_playable(birds_json, daily_subregion_json):
+        """Filtered regions must only reference shipped bird entries."""
+        regions_dir = (
+            Path(__file__).parent.parent.parent / "scripts" / "data" / "regions"
+        )
+        for region, groups in daily_subregion_json.items():
+            if region not in birds_json:
+                continue
+            if not (regions_dir / f"{region}-regular-species.json").exists():
+                continue
+            ids = {bird["id"] for bird in birds_json[region]}
+            for name, entries in groups.items():
+                refs = {entry["id"] for entry in entries}
+                assert refs <= ids, f"{region}/{name} references unplayable birds"
+
+    @staticmethod
+    def test_all_daily_entries_are_in_seasonal_filters(daily_json):
+        """Regions with a daily seasonal filter must obey it."""
+        regions_dir = (
+            Path(__file__).parent.parent.parent / "scripts" / "data" / "regions"
+        )
+        for path in regions_dir.glob("*-daily-regular-species.json"):
+            region = path.name.removesuffix("-daily-regular-species.json")
+            mapping = json.loads(path.read_text(encoding="utf-8"))
+            allowed = set().union(*(set(ids) for ids in mapping.values()))
+            for entry in (item for item in daily_json if item["region"] == region):
+                assert entry["id"] in allowed, (
+                    f"{region} answer {entry['id']} is not in the seasonal pool"
+                )
+
+    @staticmethod
     def test_birds_have_facts_and_learn_more(birds_json):
         """Offline enhancements must survive regeneration: every bird ships
         with a non-empty fact and learnMoreUrl (enhance-bird-data.py)."""
