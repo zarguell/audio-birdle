@@ -21,6 +21,7 @@ Tracking issue: [#676](https://github.com/zarguell/audio-birdle/issues/676).
 | Japan | 166 | Country-level pool; 116 in the current daily filter |
 | New Zealand | 123 | Country-level pool; 118 in the current daily filter |
 | Germany | 207 | Country-level pool; 155 in the current daily filter |
+| Spain | 312 | Country-level pool; 262 in the current daily filter |
 | Canada | 344 | Country-level pool |
 | Australia | 525 | Country-level pool |
 
@@ -45,7 +46,7 @@ regularity, quality, length, and licensing.
 | Japan | 693 | 254 | 37% | **Live** — 166 playable |
 | New Zealand | 410 | 173 | 42% | **Live** — 123 playable |
 | Germany | 669 | 342 | 51% | **Live** — 207 playable |
-| Spain | 876 | 392 | 45% | Backlog |
+| Spain | 876 | 392 | 45% | **Live** — 312 playable |
 | Italy | 607 | 358 | 59% | Backlog |
 | Netherlands | 637 | 384 | 60% | Backlog |
 | Portugal | 709 | 330 | 47% | Backlog |
@@ -81,7 +82,8 @@ One country is onboarded at a time, even when a wave lists several.
 
 ### Backlog wave
 7. **Germany** — complete.
-8. **Spain** — next.
+8. **Spain** — complete.
+9. **Italy** — next.
 
 ### Backlog
 Germany, Spain, Italy, Netherlands, Portugal, Mexico, Argentina, Thailand,

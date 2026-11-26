@@ -1678,5 +1678,25 @@
       "name": "Bohemian Waxwing",
       "subregion": "Germany"
     }
+  ],
+  "es": [
+    {
+      "date": "2026-11-25",
+      "id": "watpip1",
+      "name": "Water Pipit",
+      "subregion": "Spain"
+    },
+    {
+      "date": "2026-11-26",
+      "id": "litbus1",
+      "name": "Little Bustard",
+      "subregion": "Spain"
+    },
+    {
+      "date": "2026-11-27",
+      "id": "spaeag1",
+      "name": "Spanish Imperial Eagle",
+      "subregion": "Spain"
+    }
   ]
 }
