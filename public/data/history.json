@@ -1718,5 +1718,25 @@
       "name": "Eurasian Sparrowhawk",
       "subregion": "Italy"
     }
+  ],
+  "nl": [
+    {
+      "date": "2026-11-25",
+      "id": "norgan",
+      "name": "Northern Gannet",
+      "subregion": "Netherlands"
+    },
+    {
+      "date": "2026-11-26",
+      "id": "eurkes",
+      "name": "Eurasian Kestrel",
+      "subregion": "Netherlands"
+    },
+    {
+      "date": "2026-11-27",
+      "id": "eurnut2",
+      "name": "Eurasian Nuthatch",
+      "subregion": "Netherlands"
+    }
   ]
 }
