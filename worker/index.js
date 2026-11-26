@@ -4,14 +4,23 @@
 
 import { verifyDiscordRequest } from "./lib/verify.js";
 import { createMessage, editMessage, getChannel, getMe } from "./lib/discord.js";
+import { computeStreak, previousDate } from "./lib/streaks.js";
 
 const INTERACTION_PING = 1;
 const INTERACTION_APPLICATION_COMMAND = 2;
 
 const RESPONSE_PONG = 1;
+const RESPONSE_CHANNEL_MESSAGE = 4;
 const RESPONSE_LAUNCH_ACTIVITY = 12;
 
+const EPHEMERAL_FLAG = 64;
+const SUBCOMMAND_OPTION = 1;
+const CHANNEL_OPTION = 7;
+const PERMISSION_MANAGE_GUILD = 0x20n;
+
 const ACTIVITY_COMMAND_NAME = "audiobirdle";
+
+const SUMMARY_GUILD_LIMIT = 40;
 
 const JSON_HEADERS = { "content-type": "application/json; charset=utf-8" };
 
@@ -24,6 +33,38 @@ const SESSION_SELECT_SQL =
   "SELECT message_id FROM boards WHERE guild_id = ? AND channel_id = ? AND discord_id = ? AND date = ?";
 const SESSION_INSERT_SQL =
   "INSERT INTO boards (guild_id, channel_id, discord_id, date, message_id) VALUES (?, ?, ?, ?, ?)";
+
+const PLAYER_UPSERT_SQL =
+  "INSERT INTO players (discord_id, username, avatar, region, created_at) VALUES (?, ?, ?, ?, ?) " +
+  "ON CONFLICT(discord_id) DO UPDATE SET username = excluded.username, avatar = excluded.avatar, region = excluded.region";
+const RESULT_UPSERT_SQL =
+  "INSERT INTO results (guild_id, channel_id, discord_id, date, mode, region, won, guess_count, created_at) " +
+  "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) " +
+  "ON CONFLICT(guild_id, date, mode, discord_id) DO UPDATE SET won = excluded.won, guess_count = excluded.guess_count, region = excluded.region, created_at = excluded.created_at";
+
+const GUILD_UPSERT_SQL =
+  "INSERT INTO guilds (guild_id, summary_channel_id, created_at) VALUES (?, ?, ?) " +
+  "ON CONFLICT(guild_id) DO UPDATE SET summary_channel_id = excluded.summary_channel_id";
+
+const DELETE_PLAYER_SQL = "DELETE FROM players WHERE discord_id = ?";
+const DELETE_BOARDS_SQL = "DELETE FROM boards WHERE discord_id = ?";
+const DELETE_RESULTS_SQL = "DELETE FROM results WHERE discord_id = ?";
+
+const STATS_SELECT_SQL =
+  "SELECT COUNT(*) AS played, COALESCE(SUM(won), 0) AS wins, " +
+  "MIN(CASE WHEN won = 1 THEN guess_count END) AS best FROM results WHERE discord_id = ?";
+const RESULT_DATES_SQL =
+  "SELECT date FROM results WHERE discord_id = ? ORDER BY date DESC LIMIT 400";
+
+const SUMMARY_GUILDS_SQL =
+  "SELECT guild_id, summary_channel_id FROM guilds WHERE summary_channel_id IS NOT NULL " +
+  "AND summary_channel_id != '' LIMIT ?";
+const SUMMARY_RESULTS_SQL =
+  "SELECT p.username AS username, r.won AS won, r.guess_count AS guess_count, r.mode AS mode " +
+  "FROM results r JOIN players p ON p.discord_id = r.discord_id " +
+  "WHERE r.guild_id = ? AND r.date = ? ORDER BY r.won DESC, r.guess_count ASC";
+const SUMMARY_DATES_SQL =
+  "SELECT DISTINCT date FROM results WHERE guild_id = ? ORDER BY date DESC LIMIT 400";
 
 /** @param {unknown} body @param {number} [status] */
 function json(body, status = 200) {
@@ -38,6 +79,197 @@ function notFound() {
 /** @param {string} error */
 function badRequest(error = "invalid_request") {
   return json({ error }, 400);
+}
+
+function nowIso() {
+  return new Date().toISOString();
+}
+
+/**
+ * Ephemeral interaction reply in Discord's callback shape. allowed_mentions is
+ * always empty so a stored username can never ping a role or @everyone.
+ * @param {Record<string, unknown>} payload
+ */
+function ephemeral(payload) {
+  return json({
+    type: RESPONSE_CHANNEL_MESSAGE,
+    data: {
+      ...payload,
+      flags: EPHEMERAL_FLAG,
+      allowed_mentions: { parse: [] },
+    },
+  });
+}
+
+/** @param {any} member */
+function hasManageGuild(member) {
+  const raw = member?.permissions;
+  if (typeof raw !== "string" || !/^\d+$/.test(raw)) return false;
+  try {
+    return (BigInt(raw) & PERMISSION_MANAGE_GUILD) === PERMISSION_MANAGE_GUILD;
+  } catch {
+    return false;
+  }
+}
+
+/** @param {any} interaction @returns {string | null} */
+function interactionUserId(interaction) {
+  const id = interaction?.member?.user?.id ?? interaction?.user?.id;
+  return typeof id === "string" && SNOWFLAKE_PATTERN.test(id) ? id : null;
+}
+
+/** @param {any} subcommand @param {string} name @param {number} type */
+function findOptionValue(subcommand, name, type) {
+  const options = Array.isArray(subcommand?.options) ? subcommand.options : [];
+  const option = options.find((entry) => entry?.name === name && entry?.type === type);
+  return typeof option?.value === "string" ? option.value : null;
+}
+
+/** @param {any} value */
+function asNumber(value) {
+  const number = Number(value);
+  return Number.isFinite(number) ? number : 0;
+}
+
+const STORAGE_ERROR = "Could not save right now. Try again later.";
+
+/**
+ * @param {any} interaction
+ * @param {{ DB?: any }} env
+ * @param {any} subcommand
+ */
+async function handleSetup(interaction, env, subcommand) {
+  if (!hasManageGuild(interaction.member)) {
+    return ephemeral({ content: "You need Manage Server to use this." });
+  }
+
+  const guildId = interaction.guild_id;
+  const channelId = findOptionValue(subcommand, "channel", CHANNEL_OPTION);
+  if (
+    typeof guildId !== "string" ||
+    !SNOWFLAKE_PATTERN.test(guildId) ||
+    channelId === null ||
+    !SNOWFLAKE_PATTERN.test(channelId)
+  ) {
+    return badRequest("invalid_channel");
+  }
+
+  const db = env?.DB;
+  if (!db) return json({ error: "not_configured" }, 501);
+
+  try {
+    await db.prepare(GUILD_UPSERT_SQL).bind(guildId, channelId, nowIso()).run();
+  } catch {
+    return ephemeral({ content: STORAGE_ERROR });
+  }
+
+  return ephemeral({ content: `Daily summaries will post in <#${channelId}>.` });
+}
+
+/**
+ * @param {any} interaction
+ * @param {{ DB?: any }} env
+ */
+async function handleForget(interaction, env) {
+  const discordId = interactionUserId(interaction);
+  if (!discordId) return badRequest();
+
+  const db = env?.DB;
+  if (!db) return json({ error: "not_configured" }, 501);
+
+  try {
+    for (const sql of [DELETE_PLAYER_SQL, DELETE_BOARDS_SQL, DELETE_RESULTS_SQL]) {
+      await db.prepare(sql).bind(discordId).run();
+    }
+  } catch {
+    return ephemeral({ content: STORAGE_ERROR });
+  }
+
+  return ephemeral({
+    content:
+      "Your stored Audio-Birdle data was deleted. Pseudonymous analytics rows " +
+      "carry no identity and expire within 48 hours.",
+  });
+}
+
+/**
+ * @param {any} interaction
+ * @param {{ DB?: any }} env
+ */
+async function handleStats(interaction, env) {
+  const discordId = interactionUserId(interaction);
+  if (!discordId) return badRequest();
+
+  const db = env?.DB;
+  if (!db) return json({ error: "not_configured" }, 501);
+
+  let summary;
+  let dateRows;
+  try {
+    summary = await db.prepare(STATS_SELECT_SQL).bind(discordId).first();
+    dateRows = await db.prepare(RESULT_DATES_SQL).bind(discordId).all();
+  } catch {
+    return ephemeral({ content: STORAGE_ERROR });
+  }
+
+  const played = asNumber(summary?.played);
+  if (played === 0) {
+    return ephemeral({
+      embeds: [
+        {
+          title: "Audio-Birdle — your stats",
+          description: "No results yet. Play a daily challenge to start your streak.",
+        },
+      ],
+    });
+  }
+
+  const wins = asNumber(summary?.wins);
+  const best = summary?.best === null || summary?.best === undefined ? null : asNumber(summary.best);
+  const dates = Array.isArray(dateRows?.results)
+    ? dateRows.results.map((row) => String(row?.date))
+    : [];
+
+  const today = new Date().toISOString().slice(0, 10);
+  let streak = computeStreak(dates, today);
+  if (streak === 0) {
+    const yesterday = previousDate(today);
+    if (yesterday) streak = computeStreak(dates, yesterday);
+  }
+
+  const lines = [
+    `Played: ${played}`,
+    `Wins: ${wins}`,
+    `Best win: ${best === null ? "—" : `${best} guess${best === 1 ? "" : "es"}`}`,
+    `Current streak: ${streak} day${streak === 1 ? "" : "s"}`,
+  ];
+
+  return ephemeral({
+    embeds: [{ title: "Audio-Birdle — your stats", description: lines.join("\n") }],
+  });
+}
+
+/**
+ * Dispatch a slash-command subcommand. Unknown subcommands are rejected.
+ * @param {any} interaction
+ * @param {{ DB?: any }} env
+ */
+async function handleSubcommand(interaction, env) {
+  const subcommand = interaction.data?.options?.[0];
+  if (!subcommand || subcommand.type !== SUBCOMMAND_OPTION) {
+    return badRequest("unsupported_interaction");
+  }
+
+  switch (subcommand.name) {
+    case "setup":
+      return handleSetup(interaction, env, subcommand);
+    case "forget":
+      return handleForget(interaction, env);
+    case "stats":
+      return handleStats(interaction, env);
+    default:
+      return badRequest("unknown_subcommand");
+  }
 }
 
 /**
@@ -71,6 +303,10 @@ async function handleInteractions(request, env) {
   if (interaction.type === INTERACTION_APPLICATION_COMMAND) {
     const name = interaction.data?.name;
     if (name === ACTIVITY_COMMAND_NAME) {
+      const options = interaction.data?.options;
+      if (Array.isArray(options) && options.length > 0) {
+        return handleSubcommand(interaction, env);
+      }
       return json({ type: RESPONSE_LAUNCH_ACTIVITY });
     }
   }
@@ -345,6 +581,30 @@ export async function handleResult(request, env, { fetchImpl } = {}) {
     return json({ error: "board_not_found" }, 409);
   }
 
+  const createdAt = nowIso();
+  try {
+    await db
+      .prepare(PLAYER_UPSERT_SQL)
+      .bind(user.id, user.username, user.avatar, input.region, createdAt)
+      .run();
+    await db
+      .prepare(RESULT_UPSERT_SQL)
+      .bind(
+        input.guildId,
+        input.channelId,
+        user.id,
+        input.date,
+        input.mode,
+        input.region,
+        won ? 1 : 0,
+        guesses.length,
+        createdAt,
+      )
+      .run();
+  } catch {
+    return json({ error: "storage_unavailable" }, 500);
+  }
+
   const grid = guesses.map((guess) => guessCell(guess, input.mode)).join("");
   const score = won ? `${guesses.length}/${maxGuesses}` : `X/${maxGuesses}`;
 
@@ -364,6 +624,103 @@ export async function handleResult(request, env, { fetchImpl } = {}) {
   }
 
   return json({ ok: true });
+}
+
+/**
+ * Format an instant as an ISO date in the given IANA time zone.
+ * @param {Date} date
+ * @param {string} timeZone
+ */
+function isoDateInTimeZone(date, timeZone) {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).formatToParts(date);
+  const value = (type) => parts.find((part) => part.type === type)?.value;
+  return `${value("year")}-${value("month")}-${value("day")}`;
+}
+
+/**
+ * Post one guild's summary. Returns without posting when nobody played.
+ * @param {{ db: any, botToken: string, fetchImpl?: typeof fetch, guildId: string, channelId: string, date: string }} options
+ */
+async function postGuildSummary({ db, botToken, fetchImpl, guildId, channelId, date }) {
+  const resultRows = await db.prepare(SUMMARY_RESULTS_SQL).bind(guildId, date).all();
+  const results = Array.isArray(resultRows?.results) ? resultRows.results : [];
+  if (results.length === 0) return;
+
+  const dateRows = await db.prepare(SUMMARY_DATES_SQL).bind(guildId).all();
+  const dates = Array.isArray(dateRows?.results)
+    ? dateRows.results.map((row) => String(row?.date))
+    : [];
+  const streak = computeStreak(dates, date);
+
+  const lines = results.map((row) => {
+    const maxGuesses = MODE_MAX_GUESSES[row.mode] ?? 4;
+    const score =
+      Number(row.won) === 1
+        ? `${asNumber(row.guess_count)}/${maxGuesses}`
+        : `X/${maxGuesses}`;
+    return `${String(row.username ?? "Player")} — ${score}`;
+  });
+
+  const description = [`Group streak: ${streak} day(s)`, "", ...lines].join("\n");
+
+  await createMessage(fetchImpl, botToken, channelId, {
+    embeds: [{ title: `Audio-Birdle — ${date}`, description }],
+    allowed_mentions: { parse: [] },
+  });
+}
+
+/**
+ * Daily summary cron. Runs at 00:10 America/New_York and reports the previous
+ * day; failures are logged by guild id only, never usernames or tokens.
+ *
+ * @param {{ scheduledTime?: number }} controller
+ * @param {{ DB?: any, DISCORD_BOT_TOKEN?: string }} env
+ * @param {any} ctx
+ * @param {{ fetchImpl?: typeof fetch, now?: Date }} [options]
+ */
+export async function scheduled(controller, env, ctx, { fetchImpl, now = new Date() } = {}) {
+  const db = env?.DB;
+  const botToken = env?.DISCORD_BOT_TOKEN;
+  if (!db || !botToken) return;
+
+  const date = previousDate(isoDateInTimeZone(now, "America/New_York"));
+  if (!date) return;
+
+  let guildRows;
+  try {
+    guildRows = await db.prepare(SUMMARY_GUILDS_SQL).bind(SUMMARY_GUILD_LIMIT).all();
+  } catch {
+    console.error("daily summary: guild query failed");
+    return;
+  }
+
+  const guilds = (Array.isArray(guildRows?.results) ? guildRows.results : []).slice(
+    0,
+    SUMMARY_GUILD_LIMIT,
+  );
+
+  const tasks = guilds.map((guild) =>
+    postGuildSummary({
+      db,
+      botToken,
+      fetchImpl,
+      guildId: String(guild.guild_id),
+      channelId: String(guild.summary_channel_id),
+      date,
+    }),
+  );
+
+  const settled = await Promise.allSettled(tasks);
+  settled.forEach((result, index) => {
+    if (result.status === "rejected") {
+      console.error(`daily summary failed for guild ${guilds[index].guild_id}`);
+    }
+  });
 }
 
 /**
@@ -404,4 +761,6 @@ export default {
 
     return notFound();
   },
+
+  scheduled,
 };
