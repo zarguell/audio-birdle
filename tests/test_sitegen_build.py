@@ -106,10 +106,11 @@ def test_build_renders_every_page(built_site: tuple[Path, dict]) -> None:
         "settings/index.html",
         "privacy/index.html",
         "terms/index.html",
+        "discord/index.html",
         "404.html",
     ):
         assert (output / page).is_file(), page
-    assert len(summary["pages"]) == 12
+    assert len(summary["pages"]) == 13
     assert summary["regions"] == 19
 
 

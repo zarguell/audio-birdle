@@ -38,7 +38,8 @@ Audio Birdle runs as a Discord Activity, with a bot that posts boards and daily
 summaries in the channel.
 
 1. [Add Audio-Birdle to a server](https://discord.com/oauth2/authorize?client_id=1575568221715697744&scope=bot%20applications.commands&permissions=54272)
-   (Manage Server required).
+   (Manage Server required). The same install link and walkthrough are on
+   <https://audio-birdle.sechostlab.com/discord/>.
 2. Open the **App Launcher** — desktop: the button at the right of the message
    bar; mobile: the button at the left — and choose **Audio-Birdle**. The entry
    point is not shown in `/` autocomplete.

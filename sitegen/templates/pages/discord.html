@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% from "macros.html" import back_link, icon %}
+{% block title %}Play in Discord — Audio-Birdle{% endblock %}
+{% block description %}Play Audio-Birdle with friends inside Discord: daily boards, a Play now button, per-channel streaks, and region-aware summaries.{% endblock %}
+{% block content %}
+  <div class="page-shell privacy-page">
+    {{ back_link('/', 'Back to home') }}
+    <header class="page-heading">
+      <p class="eyebrow">Discord</p>
+      <h1>Play in Discord</h1>
+      <p class="privacy-meta">The same daily bird, inside a server, with friends.</p>
+    </header>
+    <section class="card privacy-section" aria-labelledby="discord-install-title">
+      <h2 id="discord-install-title" class="section-title">Add it to your server</h2>
+      <p>Installing needs the <strong>Manage Server</strong> permission. The bot asks for View Channel, Send Messages, Embed Links, and Attach Files — nothing else.</p>
+      <p>
+        <a class="button button--primary button--jelly"
+           href="https://discord.com/oauth2/authorize?client_id=1575568221715697744&amp;scope=bot%20applications.commands&amp;permissions=54272"
+           target="_blank"
+           rel="noopener">Add Audio-Birdle to Discord</a>
+      </p>
+      <p class="muted small">The bot appears offline in the member list. That is normal: it uses HTTP interactions only, with no Gateway connection.</p>
+    </section>
+    <section class="card privacy-section" aria-labelledby="discord-play-title">
+      <h2 id="discord-play-title" class="section-title">How to play</h2>
+      <ol class="privacy-list">
+        <li>Open the <strong>App Launcher</strong> — desktop: the button at the right of the message bar; mobile: the button at the left — and choose <strong>Audio-Birdle</strong>. The entry point is not in the <code>/</code> command list.</li>
+        <li>Listen to the bird call and pick the species. A public “<code>&lt;name&gt;</code> is playing” card is posted in the channel and updated with your result.</li>
+        <li>Friends can join from the card's <strong>Play now!</strong> button.</li>
+        <li>Run <code>/audiobirdle-setup</code> in a channel to get that channel's daily summary.</li>
+      </ol>
+    </section>
+    <section class="card privacy-section" aria-labelledby="discord-commands-title">
+      <h2 id="discord-commands-title" class="section-title">Commands</h2>
+      <div class="privacy-table-wrap">
+        <table class="privacy-table">
+          <thead>
+            <tr>
+              <th scope="col">Command</th>
+              <th scope="col">What it does</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>/audiobirdle-setup</code></td>
+              <td>Post daily summaries in the current channel (Manage Server)</td>
+            </tr>
+            <tr>
+              <td><code>/audiobirdle-stats</code></td>
+              <td>Your record and current streak</td>
+            </tr>
+            <tr>
+              <td><code>/audiobirdle-forget</code></td>
+              <td>Delete your stored Discord data</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="muted small">Groups are per channel. Summaries are sectioned by region and mode, and scores are never compared across regions — different regions are different daily puzzles.</p>
+    </section>
+    <section class="card privacy-section" aria-labelledby="discord-privacy-title">
+      <h2 id="discord-privacy-title" class="section-title">Data and privacy</h2>
+      <p>Playing in Discord requires a Discord identity, so that part is not anonymous. The bot stores your Discord id, username, avatar, and daily results so it can show boards and streaks. See the <a href="/privacy/">privacy policy</a> for retention and deletion, and the <a href="/terms/">terms of service</a>.</p>
+      <p class="muted small">Audio-Birdle is an independent project and is not affiliated with Discord.</p>
+    </section>
+  </div>
+{% endblock %}

@@ -52,6 +52,7 @@ PAGES = (
     ("settings", "settings/index.html", "settings.html", {}),
     ("privacy", "privacy/index.html", "privacy.html", {}),
     ("terms", "terms/index.html", "terms.html", {}),
+    ("discord", "discord/index.html", "discord.html", {}),
     ("error", "404.html", "error.html", {}),
 )
 
@@ -67,6 +68,7 @@ SCRIPTS = {
     "settings": "pages/settings.js",
     "privacy": "pages/privacy.js",
     "terms": "pages/terms.js",
+    "discord": "pages/discord.js",
     "error": "pages/error.js",
 }
 
