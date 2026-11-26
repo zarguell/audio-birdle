@@ -20,11 +20,13 @@ const RESPONSE_CHANNEL_MESSAGE = 4;
 const RESPONSE_LAUNCH_ACTIVITY = 12;
 
 const EPHEMERAL_FLAG = 64;
-const SUBCOMMAND_OPTION = 1;
 const CHANNEL_OPTION = 7;
 const PERMISSION_MANAGE_GUILD = 0x20n;
 
 const ACTIVITY_COMMAND_NAME = "audiobirdle";
+const SETUP_COMMAND_NAME = "audiobirdle-setup";
+const STATS_COMMAND_NAME = "audiobirdle-stats";
+const FORGET_COMMAND_NAME = "audiobirdle-forget";
 
 const SUMMARY_GUILD_LIMIT = 40;
 
@@ -393,36 +395,12 @@ async function handleStats(interaction, env) {
 }
 
 /**
- * Dispatch a slash-command subcommand. Unknown subcommands are rejected.
- * @param {any} interaction
- * @param {{ DB?: any }} env
- * @param {{ now?: number, fetchImpl?: typeof fetch }} [options]
- */
-async function handleSubcommand(interaction, env, options = {}) {
-  const subcommand = interaction.data?.options?.[0];
-  if (!subcommand || subcommand.type !== SUBCOMMAND_OPTION) {
-    return badRequest("unsupported_interaction");
-  }
-
-  switch (subcommand.name) {
-    case "setup":
-      return handleSetup(interaction, env, subcommand, options);
-    case "forget":
-      return handleForget(interaction, env);
-    case "stats":
-      return handleStats(interaction, env);
-    default:
-      return badRequest("unknown_subcommand");
-  }
-}
-
-/**
  * Verify the Discord signature and dispatch the interaction.
  * @param {Request} request
  * @param {{ DISCORD_PUBLIC_KEY?: string, DB?: any, DISCORD_BOT_TOKEN?: string, ACTIVITY_DISABLED?: string }} env
  * @param {{ now?: number, fetchImpl?: typeof fetch }} [options]
  */
-async function handleInteractions(request, env, { now = Date.now(), fetchImpl } = {}) {
+async function handleInteractions(request, env, { now = Date.now(), fetchImpl, ctx } = {}) {
   const publicKeyHex = env?.DISCORD_PUBLIC_KEY;
   if (!publicKeyHex) return json({ error: "not_configured" }, 501);
 
@@ -463,22 +441,37 @@ async function handleInteractions(request, env, { now = Date.now(), fetchImpl } 
     }
 
     const name = interaction.data?.name;
-    if (name === ACTIVITY_COMMAND_NAME) {
-      const options = interaction.data?.options;
-      if (Array.isArray(options) && options.length > 0) {
-        return handleSubcommand(interaction, env, { now, fetchImpl });
-      }
+    console.info("interaction", interaction.type, name ?? "");
 
+    if (name === ACTIVITY_COMMAND_NAME) {
       const db = env?.DB;
       if (db) {
-        try {
-          await recordLaunch(db, interaction, now);
-        } catch {
-          return ephemeral({ content: STORAGE_ERROR });
+        const work = recordLaunch(db, interaction, now);
+        if (ctx?.waitUntil) {
+          ctx.waitUntil(
+            work.catch((error) => console.error("launch: record failed", error?.message)),
+          );
+        } else {
+          try {
+            await work;
+          } catch {
+            return ephemeral({ content: STORAGE_ERROR });
+          }
         }
       }
       return json({ type: RESPONSE_LAUNCH_ACTIVITY });
     }
+
+    if (name === SETUP_COMMAND_NAME) {
+      return handleSetup(interaction, env, interaction.data, { fetchImpl });
+    }
+    if (name === STATS_COMMAND_NAME) {
+      return handleStats(interaction, env);
+    }
+    if (name === FORGET_COMMAND_NAME) {
+      return handleForget(interaction, env);
+    }
+    return badRequest("unknown_command");
   }
 
   return badRequest("unsupported_interaction");
@@ -993,7 +986,7 @@ async function pruneExpiredRows(db, now) {
  * @param {Record<string, unknown>} env
  */
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     const { pathname } = new URL(request.url);
 
     // Defensive: the assets layer is expected to keep non-/api traffic out.
@@ -1006,7 +999,7 @@ export default {
 
     if (pathname === "/api/interactions") {
       if (request.method !== "POST") return json({ error: "method_not_allowed" }, 405);
-      return handleInteractions(request, env);
+      return handleInteractions(request, env, { ctx });
     }
 
     if (pathname === "/api/token") {

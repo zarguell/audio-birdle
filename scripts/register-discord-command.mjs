@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Register the global /audiobirdle command for the Discord app.
+// Register the global Audio-Birdle commands for the Discord app.
 //
 // Usage:
 //   DISCORD_CLIENT_ID=<app id> DISCORD_BOT_TOKEN=<bot token> \
@@ -17,39 +17,44 @@ if (!appId || !token) {
   process.exit(1);
 }
 
-const command = {
-  name: "audiobirdle",
-  description: "Play Audio-Birdle with friends",
+const base = {
   type: 1,
   integration_types: [0],
   contexts: [0],
-  options: [
-    {
-      type: 1,
-      name: "setup",
-      description: "Choose the channel for the daily summary",
-      options: [
-        {
-          type: 7,
-          name: "channel",
-          description: "Channel where daily summaries are posted",
-          required: true,
-          channel_types: [0],
-        },
-      ],
-    },
-    {
-      type: 1,
-      name: "forget",
-      description: "Delete your stored Audio-Birdle data",
-    },
-    {
-      type: 1,
-      name: "stats",
-      description: "Show your Audio-Birdle stats",
-    },
-  ],
 };
+
+const commands = [
+  {
+    ...base,
+    name: "audiobirdle",
+    description: "Play Audio-Birdle with friends",
+  },
+  {
+    ...base,
+    name: "audiobirdle-setup",
+    description: "Post daily Audio-Birdle summaries in a channel",
+    default_member_permissions: "32",
+    options: [
+      {
+        type: 7,
+        name: "channel",
+        description: "Channel where daily summaries are posted",
+        required: true,
+        channel_types: [0],
+      },
+    ],
+  },
+  {
+    ...base,
+    name: "audiobirdle-stats",
+    description: "Show your Audio-Birdle record",
+  },
+  {
+    ...base,
+    name: "audiobirdle-forget",
+    description: "Delete your stored Audio-Birdle data",
+  },
+];
 
 const response = await fetch(
   `https://discord.com/api/v10/applications/${appId}/commands`,
@@ -59,7 +64,7 @@ const response = await fetch(
       authorization: `Bot ${token}`,
       "content-type": "application/json",
     },
-    body: JSON.stringify([command]),
+    body: JSON.stringify(commands),
   },
 );
 

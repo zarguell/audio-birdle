@@ -53,7 +53,7 @@ test("unknown command is rejected with 400", async () => {
   const request = await signedRequest({ type: 2, data: { name: "not-audiobirdle" } });
   const response = await worker.fetch(request, env, {});
   assert.equal(response.status, 400);
-  assert.deepEqual(await response.json(), { error: "unsupported_interaction" });
+  assert.deepEqual(await response.json(), { error: "unknown_command" });
 });
 
 test("health endpoint reports ok", async () => {

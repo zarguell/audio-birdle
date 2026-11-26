@@ -68,8 +68,8 @@ function commandPayload({ subcommand = null, options = [] } = {}) {
     channel_id: CHANNEL_ID,
     member: { user: { id: USER_ID }, permissions: String(0x20) },
     data: {
-      name: "audiobirdle",
-      options: subcommand ? [{ type: 1, name: subcommand, options }] : undefined,
+      name: subcommand ? `audiobirdle-${subcommand}` : "audiobirdle",
+      options: subcommand ? options : undefined,
     },
   };
 }

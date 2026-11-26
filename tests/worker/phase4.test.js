@@ -67,8 +67,8 @@ function commandPayload(subcommand, options = [], { permissions = MANAGE_GUILD }
     channel_id: CHANNEL_ID,
     member: { user: { id: USER_ID }, permissions },
     data: {
-      name: "audiobirdle",
-      options: subcommand ? [{ type: 1, name: subcommand, options }] : undefined,
+      name: subcommand ? `audiobirdle-${subcommand}` : "audiobirdle",
+      options: subcommand ? options : undefined,
     },
   };
 }
@@ -358,7 +358,7 @@ test("bare /audiobirdle still launches the activity", async () => {
   assert.deepEqual(await response.json(), { type: 12 });
 });
 
-test("unknown subcommand is rejected with 400", async () => {
+test("unknown command is rejected with 400", async () => {
   const response = await worker.fetch(
     await signedRequest(commandPayload("nope")),
     { DISCORD_PUBLIC_KEY: publicKeyHex, DB: makeDb() },
