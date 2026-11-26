@@ -39,7 +39,8 @@ def test_region_directory_search_filter_and_pin(page, base_url, console_errors):
     page.locator("[data-region-search]").fill("")
     page.locator('[data-continent-filter="europe"]').click()
     europe = [
-        region for region in load_json("regions.json")
+        region
+        for region in load_json("regions.json")
         if region.get("continent") == "Europe"
     ]
     assert page.locator("[data-region-row]:visible").count() == len(europe)
