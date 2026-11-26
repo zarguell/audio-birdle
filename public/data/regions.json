@@ -53,5 +53,12 @@
     "country": "ZA",
     "continent": "Africa",
     "status": "live"
+  },
+  {
+    "id": "cr",
+    "name": "Costa Rica",
+    "country": "CR",
+    "continent": "North America",
+    "status": "live"
   }
 ]
