@@ -54,6 +54,8 @@ const entryPayload = {
   name: "audiobirdle",
   description: "Play Audio-Birdle with friends",
   handler: 1,
+  integration_types: [0, 1],
+  contexts: [0, 1, 2],
 };
 
 if (entryPoint) {
