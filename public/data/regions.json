@@ -116,5 +116,12 @@
     "country": "NZ",
     "continent": "Oceania",
     "status": "live"
+  },
+  {
+    "id": "mx",
+    "name": "Mexico",
+    "country": "MX",
+    "continent": "North America",
+    "status": "live"
   }
 ]
