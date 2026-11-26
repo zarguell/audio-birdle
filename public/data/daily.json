@@ -1611,6 +1611,13 @@
   },
   {
     "date": "2026-11-25",
+    "region": "es",
+    "answerHash": "764e1346",
+    "id": "watpip1",
+    "subregion": "Spain"
+  },
+  {
+    "date": "2026-11-25",
     "region": "fr",
     "answerHash": "6f0a69c3",
     "id": "litgul",
@@ -1695,6 +1702,13 @@
   },
   {
     "date": "2026-11-26",
+    "region": "es",
+    "answerHash": "88017e62",
+    "id": "litbus1",
+    "subregion": "Spain"
+  },
+  {
+    "date": "2026-11-26",
     "region": "fr",
     "answerHash": "d9435b91",
     "id": "comgre",
@@ -1776,6 +1790,13 @@
     "answerHash": "b8b5a737",
     "id": "bohwax",
     "subregion": "Germany"
+  },
+  {
+    "date": "2026-11-27",
+    "region": "es",
+    "answerHash": "e0a44980",
+    "id": "spaeag1",
+    "subregion": "Spain"
   },
   {
     "date": "2026-11-27",
