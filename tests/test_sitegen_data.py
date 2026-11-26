@@ -34,6 +34,7 @@ def test_real_data_is_valid() -> None:
         "pt",
         "mx",
         "ar",
+        "th",
     }
 
 

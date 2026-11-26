@@ -1688,6 +1688,13 @@
   },
   {
     "date": "2026-11-25",
+    "region": "th",
+    "answerHash": "1e923a40",
+    "id": "gyrtre1",
+    "subregion": "Thailand"
+  },
+  {
+    "date": "2026-11-25",
     "region": "us",
     "answerHash": "73771c9e",
     "id": "buwtea",
@@ -1814,6 +1821,13 @@
   },
   {
     "date": "2026-11-26",
+    "region": "th",
+    "answerHash": "4556086d",
+    "id": "larnil1",
+    "subregion": "Thailand"
+  },
+  {
+    "date": "2026-11-26",
     "region": "us",
     "answerHash": "47c8a158",
     "id": "easmea",
@@ -1937,6 +1951,13 @@
     "answerHash": "4ceba208",
     "id": "comkin1",
     "subregion": "Portugal"
+  },
+  {
+    "date": "2026-11-27",
+    "region": "th",
+    "answerHash": "d964a3f1",
+    "id": "stonec7",
+    "subregion": "Thailand"
   },
   {
     "date": "2026-11-27",

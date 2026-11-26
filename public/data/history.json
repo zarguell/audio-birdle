@@ -1798,5 +1798,25 @@
       "name": "Rufous-banded Miner",
       "subregion": "Argentina"
     }
+  ],
+  "th": [
+    {
+      "date": "2026-11-25",
+      "id": "gyrtre1",
+      "name": "Gray-rumped Treeswift",
+      "subregion": "Thailand"
+    },
+    {
+      "date": "2026-11-26",
+      "id": "larnil1",
+      "name": "Large Niltava",
+      "subregion": "Thailand"
+    },
+    {
+      "date": "2026-11-27",
+      "id": "stonec7",
+      "name": "Amur Stonechat",
+      "subregion": "Thailand"
+    }
   ]
 }
