@@ -12,6 +12,7 @@ import { createAutocomplete } from "./autocomplete.js";
 import { createCompletionView } from "./completion.js";
 import { startCountdown } from "./countdown.js";
 import { renderGuessList } from "./guessList.js";
+import { ensureBirdDirector } from "./birdDirector.js";
 import { notify } from "./toast.js";
 
 async function shareGame(game, mode) {
@@ -32,6 +33,14 @@ export class GameView {
     this.handlers = {};
     this.currentBirdId = null;
     this.countdownStarted = false;
+    this.bird = ensureBirdDirector();
+    this.lastGuessCount = null;
+    this.lastCompleted = null;
+    this.lastHintLevel = null;
+    this.lastPracticeIndex = null;
+    this.lastHardMode = null;
+    this.hintTimer = null;
+    this.resultTimer = null;
 
     this.elements = {
       alert: qs("[data-alert]", root),
@@ -77,6 +86,7 @@ export class GameView {
       pickerEl: qs("[data-recording-picker]", root),
       errorEl: this.elements.audioError,
       onRecordingChange: (index) => this.completion.setAudioIndex(index),
+      onPlayStateChange: (playing) => this.bird?.setAudioPlaying(playing),
     });
 
     this.autocomplete = createAutocomplete({
@@ -242,6 +252,26 @@ export class GameView {
     show(this.elements.guessesSection, guesses.length > 0);
 
     const completed = Boolean(game.completed);
+    const hintTimings = GAME_CONFIG.HARD_MODE_HINT_TIMING;
+    const hintLevel =
+      isHardMode && !completed
+        ? [hintTimings.ORDER, hintTimings.FAMILY, hintTimings.GENUS].filter(
+            (threshold) => guesses.length >= threshold,
+          ).length
+        : 0;
+    const previous = {
+      guesses: this.lastGuessCount,
+      completed: this.lastCompleted,
+      hintLevel: this.lastHintLevel,
+      practiceIndex: this.lastPracticeIndex,
+      hardMode: this.lastHardMode,
+    };
+    this.lastGuessCount = guesses.length;
+    this.lastCompleted = completed;
+    this.lastHintLevel = hintLevel;
+    this.lastPracticeIndex = practiceIndex;
+    this.lastHardMode = isHardMode;
+
     const remaining = game.maxGuesses - guesses.length;
 
     if (isHardMode && !completed) {
@@ -313,6 +343,139 @@ export class GameView {
       });
     } else {
       this.completion.hide();
+    }
+
+    this.applyBirdReactions({
+      previous,
+      guesses,
+      completed,
+      won: Boolean(game.won),
+      isHardMode,
+      hintLevel,
+      practiceIndex,
+    });
+  }
+
+  clearBirdTimers() {
+    if (this.hintTimer) {
+      window.clearTimeout(this.hintTimer);
+      this.hintTimer = null;
+    }
+    if (this.resultTimer) {
+      window.clearTimeout(this.resultTimer);
+      this.resultTimer = null;
+    }
+  }
+
+  resultTarget(won) {
+    const icon = this.elements.completion?.querySelector(
+      won ? "[data-result-win]" : "[data-result-lose]",
+    );
+    if (icon && icon.getClientRects().length > 0) {
+      return icon;
+    }
+    const image = this.elements.completion?.querySelector("[data-bird-image]");
+    if (image && image.getClientRects().length > 0) {
+      return image;
+    }
+    return (
+      this.elements.completion?.querySelector("[data-result-title]") ||
+      this.completionRoot()
+    );
+  }
+
+  scrollResultIntoView(won) {
+    const target = this.resultTarget(won);
+    if (!target) {
+      return;
+    }
+    const rect = target.getBoundingClientRect();
+    const margin = 96;
+    if (rect.top >= margin && rect.bottom <= window.innerHeight - margin) {
+      return;
+    }
+    target.scrollIntoView({ behavior: "auto", block: "center" });
+  }
+
+  applyBirdReactions({
+    previous,
+    guesses,
+    completed,
+    won,
+    isHardMode,
+    hintLevel,
+    practiceIndex,
+  }) {
+    this.clearBirdTimers();
+    if (!this.bird || previous.guesses === null) {
+      return;
+    }
+
+    const latestGuess = guesses[guesses.length - 1];
+    const newGuess = guesses.length > previous.guesses;
+    const justCompleted = !previous.completed && completed;
+    const hintIncreased =
+      previous.hintLevel !== null && hintLevel > previous.hintLevel;
+    const roundChanged =
+      (previous.practiceIndex !== null &&
+        practiceIndex !== previous.practiceIndex) ||
+      (previous.completed === true && !completed);
+    const modeChanged =
+      previous.hardMode !== null && isHardMode !== previous.hardMode;
+
+    if (justCompleted) {
+      this.bird.react(won ? "win" : "lose");
+      this.scrollResultIntoView(won);
+      this.resultTimer = window.setTimeout(
+        () => {
+          const target = this.resultTarget(won);
+          if (target) {
+            let offsetX = 0;
+            if (target.hasAttribute("data-result-title")) {
+              offsetX = 64;
+            } else if (
+              target.hasAttribute("data-result-win") ||
+              target.hasAttribute("data-result-lose")
+            ) {
+              offsetX = 48;
+            }
+            this.bird?.flyTo(target, {
+              featherDrop: won,
+              hold: 1400,
+              offsetX,
+            });
+          }
+        },
+        won ? 450 : 350,
+      );
+      return;
+    }
+
+    if (newGuess) {
+      this.bird.react(latestGuess?.correct ? "correct" : "wrong");
+      if (hintIncreased && !completed) {
+        this.hintTimer = window.setTimeout(
+          () => this.bird?.react("hint"),
+          880,
+        );
+      }
+      return;
+    }
+
+    if (roundChanged) {
+      this.bird.returnToPerch();
+      this.bird.react("round");
+      return;
+    }
+
+    if (modeChanged) {
+      this.bird.returnToPerch();
+      this.bird.react("mode");
+      return;
+    }
+
+    if (hintIncreased) {
+      this.bird.react("hint");
     }
   }
 }

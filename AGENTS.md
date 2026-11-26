@@ -32,8 +32,8 @@ browser. There is no React, no bundler, and no client-side build step.
 - Warm parchment panels on a pixel-art dawn chorus scene.
 - Wood-framed HUD controls, hard offset shadows, square corners.
 - Vendored **VT323** display font (`sitegen/static/fonts/`) plus system mono UI.
-- Original SVG scene art: `sitegen/static/img/forest-scene.svg` and
-  `bird-mark.svg`.
+- Original SVG scene art: `sitegen/templates/partials/forest-scene.html` and
+  `sitegen/static/img/bird-mark.svg`.
 - Fonts and Forever components are SHA/commit pinned in `sitegen/vendor/` and
   documented in `THIRD_PARTY_NOTICES.md`.
 

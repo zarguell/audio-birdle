@@ -19,9 +19,8 @@
       {% endif %}
     </div>
     <div class="game-banner" aria-hidden="true">
-      <img class="game-banner__art"
-           src="{{ asset_base }}/img/forest-scene.svg"
-           alt="">
+      {% include "partials/forest-scene.html" %}
+      {% include "partials/scene-bird.html" %}
     </div>
     <section id="game"
              class="card game-card"
@@ -47,7 +46,8 @@
         <img class="audio-panel__bird"
              src="{{ asset_base }}/img/bird-mark.svg"
              alt=""
-             aria-hidden="true">
+             aria-hidden="true"
+             data-audio-bird>
         <div class="equalizer equalizer--player" data-equalizer aria-hidden="true">
           <span class="equalizer__bar"></span>
           <span class="equalizer__bar"></span>

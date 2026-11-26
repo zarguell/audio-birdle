@@ -101,6 +101,26 @@
     {%- endif -%}
   </svg>
 {%- endmacro %}
+{# djlint:off #}
+{% macro bird_art() -%}
+  <g class="bird-art">
+    <rect x="710" y="424" width="34" height="30" fill="#2f6b8f"/>
+    <rect x="704" y="432" width="42" height="18" fill="#3f86a8"/>
+    <rect x="740" y="414" width="18" height="18" fill="#2f6b8f"/>
+    <rect x="752" y="410" width="8" height="8" fill="#2f6b8f"/>
+    <rect x="760" y="416" width="10" height="6" fill="#e4b44c"/>
+    <rect x="742" y="422" width="6" height="6" fill="#1b1b18"/>
+    <rect x="708" y="454" width="8" height="10" fill="#2a2a26"/>
+    <rect x="734" y="454" width="8" height="10" fill="#2a2a26"/>
+    <rect x="716" y="438" width="14" height="6" fill="#b8474f"/>
+    <rect x="760" y="430" width="12" height="6" fill="#2f6b8f"/>
+    <g class="bird-wing" data-bird-wing>
+      <rect x="708" y="428" width="20" height="8" fill="#5aa0c0"/>
+      <rect x="714" y="434" width="10" height="4" fill="#2f6b8f"/>
+    </g>
+  </g>
+{%- endmacro %}
+{# djlint:on #}
 {% macro nav_item(href, label, name, active, page) -%}
   <a class="tabbar__link{% if page in active %}
               is-active{% endif %}"

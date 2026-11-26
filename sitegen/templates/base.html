@@ -1,4 +1,4 @@
-{% from "macros.html" import icon, nav_item %}
+{% from "macros.html" import bird_art, icon, nav_item %}
 <!DOCTYPE html>
 <html lang="en" data-release="{{ release_id }}">
   <head>
@@ -70,6 +70,17 @@
                 type="button"
                 aria-label="Dismiss notification"
                 data-toast-close>{{ icon('x', 'toast__close-icon') }}</button>
+      </div>
+    </template>
+    <template id="tpl-bird-actor">
+      <div class="bird-actor" data-bird-actor aria-hidden="true">
+        <svg class="bird-actor__art"
+             viewBox="696 402 84 66"
+             preserveAspectRatio="xMidYMid meet"
+             focusable="false">
+          {{ bird_art() }}
+        </svg>
+        <span class="bird-actor__feather" data-bird-feather aria-hidden="true"></span>
       </div>
     </template>
     {% block templates %}{% endblock %}

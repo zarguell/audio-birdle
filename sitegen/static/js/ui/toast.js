@@ -31,6 +31,9 @@ export function notify(message, { type = "info", duration = 4200 } = {}) {
   while (region.children.length > MAX_TOASTS) {
     region.firstElementChild.remove();
   }
+  document.dispatchEvent(
+    new CustomEvent("birdle:toast", { detail: { toast } }),
+  );
 
   let timer = window.setTimeout(() => dismiss(toast), duration);
   toast.addEventListener("mouseenter", () => window.clearTimeout(timer));

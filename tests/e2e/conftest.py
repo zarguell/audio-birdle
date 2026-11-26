@@ -108,10 +108,15 @@ def built_site(tmp_path_factory: pytest.TempPathFactory) -> Path:
     return output
 
 
+class TestServer(http.server.ThreadingHTTPServer):
+    daemon_threads = True
+    request_queue_size = 128
+
+
 @pytest.fixture(scope="session")
 def base_url(built_site: Path) -> Iterator[str]:
     rules = parse_headers(built_site / "_headers")
-    server = http.server.ThreadingHTTPServer(
+    server = TestServer(
         ("127.0.0.1", 0),
         make_handler(built_site, rules),
     )

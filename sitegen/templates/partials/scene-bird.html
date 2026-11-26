@@ -1,0 +1,16 @@
+{% from "macros.html" import bird_art %}
+{# djlint:off #}
+<svg class="scene-bird-layer"
+     viewBox="0 0 1200 700"
+     preserveAspectRatio="xMidYMax slice"
+     aria-hidden="true"
+     focusable="false">
+  <g transform="translate(0 100)">
+    <g class="scene-bird" data-scene-bird data-state="perched">
+      <g class="scene-bird__motion" data-bird-motion>
+        <g class="scene-bird__body">{{ bird_art() }}</g>
+      </g>
+    </g>
+  </g>
+</svg>
+{# djlint:on #}
