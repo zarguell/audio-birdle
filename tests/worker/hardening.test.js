@@ -64,6 +64,8 @@ async function signedRequest(
 function commandPayload({ subcommand = null, options = [] } = {}) {
   return {
     type: 2,
+    application_id: CLIENT_ID,
+    token: "interaction-token",
     guild_id: GUILD_ID,
     channel_id: CHANNEL_ID,
     member: { user: { id: USER_ID }, permissions: String(0x20) },
@@ -404,4 +406,40 @@ test("cron retention deletes expired rows with the documented cutoffs", async ()
   assert.equal(byTable.launches, nowMs - 60 * 60 * 1000);
   assert.equal(byTable.rate_limits, nowMs - 86400000);
   assert.equal(byTable.analytics_daily, new Date(nowMs - 2 * 86400000).toISOString());
+});
+
+test("admin commands are acknowledged before slow work", async () => {
+  const original = globalThis.fetch;
+  const fetchImpl = makeFetch();
+  globalThis.fetch = fetchImpl;
+  try {
+    let job = null;
+    const ctx = {
+      waitUntil(promise) {
+        job = promise;
+      },
+    };
+    const response = await worker.fetch(
+      await signedRequest(
+        commandPayload({
+          subcommand: "setup",
+          options: [{ type: 7, name: "channel", value: CHANNEL_ID }],
+        }),
+      ),
+      { ...makeEnv(), DISCORD_PUBLIC_KEY: publicKeyHex },
+      ctx,
+    );
+
+    assert.deepEqual(await response.json(), { type: 5, data: { flags: 64 } });
+    assert.ok(job);
+    await job;
+
+    const patch = fetchImpl.calls.find(
+      (call) => call.method === "PATCH" && call.pathname.endsWith("/messages/@original"),
+    );
+    assert.ok(patch);
+    assert.deepEqual(patch.body.allowed_mentions, { parse: [] });
+  } finally {
+    globalThis.fetch = original;
+  }
 });

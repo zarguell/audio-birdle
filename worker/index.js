@@ -17,6 +17,7 @@ const INTERACTION_APPLICATION_COMMAND = 2;
 
 const RESPONSE_PONG = 1;
 const RESPONSE_CHANNEL_MESSAGE = 4;
+const RESPONSE_DEFERRED = 5;
 const RESPONSE_LAUNCH_ACTIVITY = 12;
 
 const EPHEMERAL_FLAG = 64;
@@ -232,6 +233,57 @@ function ephemeral(payload) {
       allowed_mentions: { parse: [] },
     },
   });
+}
+
+/** Acknowledge an admin command before doing slow work. */
+function deferred() {
+  return json({ type: RESPONSE_DEFERRED, data: { flags: EPHEMERAL_FLAG } });
+}
+
+/**
+ * Answer an admin command within Discord's three-second window, run the work
+ * in the background, and edit the deferred ephemeral response.
+ *
+ * Without an execution context (unit tests) the work runs inline and its
+ * response is returned directly.
+ */
+async function deferCommand(interaction, env, ctx, work, fetchImpl) {
+  if (!ctx?.waitUntil) {
+    return work();
+  }
+
+  const appId = interaction.application_id || env?.DISCORD_CLIENT_ID;
+  const interactionToken = interaction.token;
+  const job = (async () => {
+    let data;
+    try {
+      const response = await work();
+      const payload = await response.json();
+      data = payload?.data ?? { content: STORAGE_ERROR };
+    } catch {
+      data = { content: STORAGE_ERROR };
+    }
+    if (!appId || !interactionToken) return;
+
+    const rest = { ...data };
+    delete rest.flags;
+    const impl = fetchImpl ?? fetch;
+    try {
+      await impl(
+        `https://discord.com/api/v10/webhooks/${appId}/${interactionToken}/messages/@original`,
+        {
+          method: "PATCH",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ ...rest, allowed_mentions: { parse: [] } }),
+        },
+      );
+    } catch {
+      console.error("interaction: deferred update failed");
+    }
+  })();
+
+  ctx.waitUntil(job);
+  return deferred();
 }
 
 /** @param {any} member */
@@ -463,13 +515,13 @@ async function handleInteractions(request, env, { now = Date.now(), fetchImpl, c
     }
 
     if (name === SETUP_COMMAND_NAME) {
-      return handleSetup(interaction, env, interaction.data, { fetchImpl });
+      return deferCommand(interaction, env, ctx, () => handleSetup(interaction, env, interaction.data, { fetchImpl }), fetchImpl);
     }
     if (name === STATS_COMMAND_NAME) {
-      return handleStats(interaction, env);
+      return deferCommand(interaction, env, ctx, () => handleStats(interaction, env), fetchImpl);
     }
     if (name === FORGET_COMMAND_NAME) {
-      return handleForget(interaction, env);
+      return deferCommand(interaction, env, ctx, () => handleForget(interaction, env), fetchImpl);
     }
     return badRequest("unknown_command");
   }
