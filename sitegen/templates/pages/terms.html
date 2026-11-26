@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% from "macros.html" import back_link %}
+{% block title %}Terms of Service — Audio-Birdle{% endblock %}
+{% block description %}The terms for playing Audio-Birdle on the web and in the Discord Activity.{% endblock %}
+{% block content %}
+  <div class="page-shell privacy-page">
+    {{ back_link('/settings/', 'Back to settings') }}
+    <header class="page-heading">
+      <p class="eyebrow">Terms</p>
+      <h1>Terms of Service</h1>
+      <p class="privacy-meta">Effective 26 November 2026 · Version 2026-11-26</p>
+    </header>
+    <section class="card privacy-section" aria-labelledby="terms-summary-title">
+      <h2 id="terms-summary-title" class="section-title">In short</h2>
+      <ul class="privacy-list">
+        <li>Audio-Birdle is a free bird-identification game, on the web and as a Discord Activity.</li>
+        <li>Play fairly; do not attack, scrape, or disrupt the service.</li>
+        <li>The game is in alpha and provided as-is. Results are social, not authoritative.</li>
+        <li>Your data handling is described in the <a href="/privacy/">privacy policy</a>.</li>
+      </ul>
+    </section>
+    <section class="card privacy-section" aria-labelledby="terms-use-title">
+      <h2 id="terms-use-title" class="section-title">Using Audio-Birdle</h2>
+      <p>You may play the game for personal, non-commercial enjoyment and share your results. You do not need an account to use the website. Using the Discord bot or Activity requires a Discord account and the app installed in a server or to your account.</p>
+      <p>You agree not to:</p>
+      <ul class="privacy-list">
+        <li>attack, overload, probe, or attempt to bypass the service, its rate limits, or its security controls;</li>
+        <li>scrape or bulk-download the site, its data, or its recordings;</li>
+        <li>impersonate another player or the bot, or post content that is unlawful, harassing, or abusive;</li>
+        <li>use the service to send spam or unsolicited messages.</li>
+      </ul>
+      <p>Scores and streaks are social features. They are not a competition record, and we do not guarantee their accuracy.</p>
+    </section>
+    <section class="card privacy-section" aria-labelledby="terms-discord-title">
+      <h2 id="terms-discord-title" class="section-title">Discord</h2>
+      <p>The Discord Activity and bot run inside Discord and are also subject to Discord's own Terms of Service and policies. Audio-Birdle is an independent project and is not affiliated with, endorsed by, or sponsored by Discord.</p>
+      <p>When you use the Discord integration, Discord shares your user id, username, and avatar with the app so it can show boards and results. See the <a href="/privacy/">privacy policy</a> for retention and deletion, including <code>/audiobirdle forget</code>.</p>
+    </section>
+    <section class="card privacy-section" aria-labelledby="terms-media-title">
+      <h2 id="terms-media-title" class="section-title">Audio, data, and third parties</h2>
+      <p>Bird recordings are provided by the Macaulay Library at the Cornell Lab of Ornithology and by xeno-canto, under their respective terms and licenses. Bird names, facts, images, and external links come from those sources and eBird. Those services are not operated by us and have their own terms.</p>
+      <p>The site's source code is available under the MIT license in the project repository. The recordings, photographs, and third-party data are not covered by that license.</p>
+    </section>
+    <section class="card privacy-section"
+             aria-labelledby="terms-availability-title">
+      <h2 id="terms-availability-title" class="section-title">Availability and changes</h2>
+      <p>The game is in alpha. Features, daily puzzles, regions, and the Discord integration may change or be unavailable at any time. The service is provided “as is” and “as available”, without warranties of any kind to the extent permitted by law.</p>
+    </section>
+    <section class="card privacy-section" aria-labelledby="terms-liability-title">
+      <h2 id="terms-liability-title" class="section-title">Limits</h2>
+      <p>To the extent permitted by law, we are not liable for indirect, incidental, or consequential damages arising from your use of the service, or for any loss of data, streaks, or results. Nothing here limits rights that cannot be limited by law.</p>
+      <p>We may restrict or end access for behaviour that breaks these terms or harms the service or other players.</p>
+    </section>
+    <section class="card privacy-section" aria-labelledby="terms-changes-title">
+      <h2 id="terms-changes-title" class="section-title">Changes to these terms</h2>
+      <p>We may update these terms. The effective date and version at the top of this page change when we do. Continuing to use the service after a change means you accept the updated terms.</p>
+    </section>
+    <section class="card privacy-section" aria-labelledby="terms-contact-title">
+      <h2 id="terms-contact-title" class="section-title">Contact</h2>
+      <p>Security reports: use the project's <a href="https://github.com/zarguell/audio-birdle/security/advisories/new">private security advisory</a>. Everything else: open an issue in the <a href="https://github.com/zarguell/audio-birdle/issues">project repository</a>.</p>
+    </section>
+  </div>
+{% endblock %}

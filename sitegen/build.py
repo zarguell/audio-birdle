@@ -51,6 +51,7 @@ PAGES = (
     ("archive", "archive/index.html", "archive.html", {}),
     ("settings", "settings/index.html", "settings.html", {}),
     ("privacy", "privacy/index.html", "privacy.html", {}),
+    ("terms", "terms/index.html", "terms.html", {}),
     ("error", "404.html", "error.html", {}),
 )
 
@@ -65,6 +66,7 @@ SCRIPTS = {
     "archive": "pages/archive.js",
     "settings": "pages/settings.js",
     "privacy": "pages/privacy.js",
+    "terms": "pages/terms.js",
     "error": "pages/error.js",
 }
 

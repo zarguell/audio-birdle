@@ -25,6 +25,15 @@ Checklist for taking the `discord` branch live at
       private channel also needs a per-channel overwrite for the bot.
 - [ ] Install the app into the production server.
 
+## Verification URLs
+
+Discord app verification / App Directory asks for these public pages:
+
+- **Terms of Service**: https://audio-birdle.sechostlab.com/terms/
+- **Privacy Policy**: https://audio-birdle.sechostlab.com/privacy/
+
+Both are static pages; they need no login.
+
 ## 2. Install the app on a server
 
 Open this logged in as the server owner (or a member with Manage Server):

@@ -132,7 +132,7 @@ interactions endpoint or the Activity URL mapping.
 4. **Installation**: scopes `bot` + `applications.commands`; permissions View
    Channel, Send Messages, Embed Links, Attach Files. No Administrator, no Manage Messages, no
    privileged intents.
-5. **Privacy URL**: `<staging>/privacy/`.
+5. **Privacy URL / Terms URL**: `<staging>/privacy/` and `<staging>/terms/`.
 
 Runtime note: `DISCORD_CLIENT_ID` is both a build-time variable (meta tag) and a
 Worker secret (`/api/token`). The `authorize` scope includes `identify` and
