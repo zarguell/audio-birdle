@@ -317,6 +317,96 @@ class TestFacts:
         assert "4 of 4 UK nations" in fact
 
     @staticmethod
+    def test_is_generated_fact_recognizes_both_templates():
+        # Only generated text may be replaced; a hand-written fact must survive.
+        assert enhance_bird_data.is_generated_fact(
+            "A member of the thrush family (Turdidae)."
+        )
+        assert enhance_bird_data.is_generated_fact(
+            "Recorded in 25 of 51 US states/provinces \u2014 "
+            "a member of the family Anatidae (Ducks, Geese)."
+        )
+        assert not enhance_bird_data.is_generated_fact(
+            "American Robins can run on the ground at 20 mph."
+        )
+        assert not enhance_bird_data.is_generated_fact(None)
+        assert enhance_bird_data.is_generated_fact("")
+
+    @staticmethod
+    def test_backfill_facts_replaces_generated_template_with_trait():
+        bird = make_bird(facts="A member of the thrush family (Turdidae).")
+        traits = {"amerob": {"mass": 77.0}}
+        # A realistic reference set so the bird is not accidentally an extreme.
+        masses = list(range(1, 101)) + [77.0]
+        assert (
+            enhance_bird_data.backfill_facts(
+                bird, 0, 0, traits=traits, all_masses=masses
+            )
+            is True
+        )
+        assert bird["facts"] == "American Robin weighs about 77 g."
+
+    @staticmethod
+    def test_backfill_facts_never_overwrites_hand_written():
+        bird = make_bird(facts="Robins can run on the ground at 20 mph.")
+        traits = {"amerob": {"mass": 77.0}}
+        assert (
+            enhance_bird_data.backfill_facts(
+                bird, 0, 0, traits=traits, all_masses=[77.0]
+            )
+            is False
+        )
+        assert bird["facts"] == "Robins can run on the ground at 20 mph."
+
+    @staticmethod
+    def test_trait_fact_puts_conservation_status_first():
+        # A threatened swan must not be described only as heavy.
+        bird = make_bird(name="Whooper Swan", id="whoswa")
+        traits = {"whoswa": {"mass": 9300.0, "iucn": "EN"}}
+        fact = enhance_bird_data.build_trait_fact(bird, traits, [9300.0])
+        assert fact.startswith("Whooper Swan is listed as Endangered")
+        assert "9.3 kg" in fact
+        assert "heaviest" not in fact
+
+    @staticmethod
+    def test_trait_fact_marks_mass_extremes():
+        heavy = make_bird(name="Mute Swan", id="mutswa")
+        light = make_bird(name="Bumblebee Hummingbird", id="bumhum")
+        masses = [10.0] * 100 + [2.0, 11000.0]
+        heavy_fact = enhance_bird_data.build_trait_fact(
+            heavy, {"mutswa": {"mass": 11000.0}}, masses
+        )
+        light_fact = enhance_bird_data.build_trait_fact(
+            light, {"bumhum": {"mass": 2.0}}, masses
+        )
+        assert "one of the heaviest birds here" in heavy_fact
+        assert "one of the lightest birds here" in light_fact
+        # The light one reads as a small-number claim, not a rounding error.
+        assert light_fact.startswith("At just 2.0 g")
+
+    @staticmethod
+    def test_trait_fact_skips_unremarkable_birds_from_superlatives():
+        bird = make_bird(name="Song Thrush", id="sonthr")
+        # A mid-pack bird: heavier than half the roster, not a superlative.
+        masses = list(range(1, 101)) + [70.0]
+        fact = enhance_bird_data.build_trait_fact(
+            bird, {"sonthr": {"mass": 70.0}}, masses
+        )
+        assert fact == "Song Thrush weighs about 70 g."
+        assert "heaviest" not in fact and "lightest" not in fact
+
+    @staticmethod
+    def test_trait_fact_empty_without_traits():
+        bird = make_bird()
+        assert enhance_bird_data.build_trait_fact(bird, {}, [1.0]) == ""
+
+    @staticmethod
+    def test_format_mass_scales_units():
+        assert enhance_bird_data.format_mass(2.2) == "2.2 g"
+        assert enhance_bird_data.format_mass(77) == "77 g"
+        assert enhance_bird_data.format_mass(9300) == "9.3 kg"
+
+    @staticmethod
     def test_backfill_facts_respects_existing():
         bird = make_bird(family="Turdidae (Thrushes)", facts="Custom fact.")
         assert enhance_bird_data.backfill_facts(bird, 5, 51) is False
@@ -484,6 +574,7 @@ class TestEndToEndMain:
                 str(birds_file),
                 "--subregions",
                 str(subs_file),
+                "--no-traits",
             ],
         )
         enhance_bird_data.main()

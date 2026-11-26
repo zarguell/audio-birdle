@@ -17,6 +17,10 @@ dropped. Three enhancements:
    each species, newest-last, deduplicated by URL and capped per
    species. XC clips carry real attribution (recordist, license,
    quality, ...). Species with few clips gain variety first.
+4. Generate each species' ``facts`` from real traits: body mass and IUCN
+   Red List status (``scripts/data/species-traits.json``, from Everybird's
+   species dataset), plus subregion prevalence when ``--subregions`` is
+   given. Generated text is replaced; a hand-written fact is left alone.
 
 The daily-challenge system is untouched: daily.json answer hashes are
 based on species codes, no species are removed, and clip ordering keeps
@@ -51,6 +55,28 @@ game_data_generator = importlib.util.module_from_spec(_gen_spec)
 _gen_spec.loader.exec_module(game_data_generator)
 
 ML_CDN_HOST = "cdn.download.ams.birds.cornell.edu"
+
+# Per-species traits (body mass, IUCN status) keyed by eBird species code.
+# Sourced from Everybird's public species dataset, which in turn cites AVONET
+# and BIRDBASE for mass (both CC BY 4.0). Cached next to the script so a rerun
+# does not re-download and CI never needs the network.
+TRAITS_URL = (
+    "https://raw.githubusercontent.com/yusuftaleb/everybird/main/"
+    "public/data/species.v1.json"
+)
+TRAITS_CACHE = Path(__file__).parent / "data" / "species-traits.json"
+
+# IUCN Red List categories, in the order the site presents them.
+IUCN_LABELS = {
+    "LC": "Least Concern",
+    "NT": "Near Threatened",
+    "VU": "Vulnerable",
+    "EN": "Endangered",
+    "CR": "Critically Endangered",
+    "EW": "Extinct in the Wild",
+    "EX": "Extinct",
+    "DD": "Data Deficient",
+}
 EBIRD_SPECIES_URL = "https://ebird.org/species/{code}"
 SUBREGION_LABEL = "US states/provinces"
 
@@ -192,15 +218,171 @@ def build_fact(
     return " \u2014 ".join(parts) + "."
 
 
-def backfill_facts(bird, prevalence, total_subregions, subregion_label=SUBREGION_LABEL):
-    """Set bird.facts when empty, using local prevalence + taxonomy.
+def load_traits(path=TRAITS_CACHE, url=TRAITS_URL):
+    """Load per-species traits keyed by eBird species code.
+
+    The cache is committed, so normal runs never touch the network. Pass
+    ``url=None`` to require the cache, or ``path=None`` to always fetch.
+
+    Returns:
+        dict: code -> {"mass": float, "iucn": str}, tolerating missing rows.
+    """
+    if path is not None and Path(path).exists():
+        try:
+            with open(path, "r", encoding="utf-8") as file:
+                return json.load(file)
+        except (OSError, json.JSONDecodeError):
+            pass
+    if not url:
+        return {}
+    import urllib.request
+
+    request = urllib.request.Request(
+        url, headers={"User-Agent": "audio-birdle data pipeline"}
+    )
+    with urllib.request.urlopen(request, timeout=120) as response:
+        payload = json.load(response)
+    traits = {}
+    for row in payload.get("species", []):
+        code = row.get("code")
+        if not code:
+            continue
+        entry = {}
+        grams = row.get("g")
+        if isinstance(grams, (int, float)) and not isinstance(grams, bool) and grams > 0:
+            entry["mass"] = float(grams)
+        status = row.get("iu")
+        if isinstance(status, str) and status in IUCN_LABELS:
+            entry["iucn"] = status
+        if entry:
+            traits[code] = entry
+    if path is not None:
+        Path(path).parent.mkdir(parents=True, exist_ok=True)
+        with open(path, "w", encoding="utf-8") as file:
+            json.dump(traits, file, separators=(",", ":"), sort_keys=True)
+    return traits
+
+
+def format_mass(grams):
+    """Human mass: grams under 1 kg, kilograms above, both to one decimal."""
+    if grams >= 1000:
+        return f"{grams / 1000:.1f} kg"
+    if grams >= 10:
+        return f"{grams:.0f} g"
+    return f"{grams:.1f} g"
+
+
+def mass_percentile(grams, all_masses):
+    """Share of species this bird outweighs, 0-100."""
+    if not all_masses:
+        return None
+    below = sum(1 for other in all_masses if other < grams)
+    return below / len(all_masses) * 100
+
+
+def extreme_label(percentile):
+    """Phrase a percentile as a superlative, or None when it is unremarkable.
+
+    Only the tails get a superlative: calling a median-weight bird "heavier
+    than 51%" is true but is not a fun fact, and 3,500 of those would read as
+    padding. The wording avoids claiming a rank we do not compute.
+    """
+    if percentile is None:
+        return None
+    if percentile >= 99:
+        return "one of the heaviest birds here"
+    if percentile >= 95:
+        return "heavier than 95% of the birds here"
+    if percentile <= 1:
+        return "one of the lightest birds here"
+    if percentile <= 5:
+        return "lighter than 95% of the birds here"
+    return None
+
+
+def build_trait_fact(bird, traits, all_masses):
+    """A fact built from real per-species traits, or "" when none apply.
+
+    Prefers a superlative mass claim, then IUCN status, then a plain weight
+    with its percentile. Every branch is arithmetic over the cited dataset, so
+    the sentence is checkable rather than remembered.
+    """
+    entry = traits.get(bird.get("id")) if bird.get("id") else None
+    if not entry:
+        return ""
+    name = bird.get("name") or "This bird"
+
+    grams = entry.get("mass")
+    status = entry.get("iucn")
+    label = IUCN_LABELS.get(status) if status and status != "LC" else None
+
+    # Conservation status leads when it is not Least Concern: it is the more
+    # important sentence, and a threatened swan would otherwise be described
+    # only as heavy.
+    if label:
+        sentence = f"{name} is listed as {label} on the IUCN Red List"
+        if grams:
+            sentence += f" and weighs about {format_mass(grams)}"
+        return sentence + "."
+
+    if grams:
+        percentile = mass_percentile(grams, all_masses)
+        extreme = extreme_label(percentile)
+        if extreme:
+            prefix = "At just" if percentile is not None and percentile <= 5 else "At"
+            return f"{prefix} {format_mass(grams)}, {name} is {extreme}."
+        return f"{name} weighs about {format_mass(grams)}."
+    return ""
+
+
+def is_generated_fact(fact):
+    """True when a fact came from this script, so it may be regenerated.
+
+    Two shapes exist upstream: the taxonomy template ("A member of the thrush
+    family (Turdidae).") and the prevalence variant ("Recorded in 25 of 51 US
+    states/provinces - a member of ..."). Anything else is treated as
+    hand-written and never overwritten.
+    """
+    if not isinstance(fact, str):
+        return False
+    text = fact.strip()
+    if not text:
+        return True
+    if text.startswith("A member of the ") and text.endswith(")."):
+        return True
+    if text.startswith("Recorded in ") and "a member of the " in text:
+        return True
+    return False
+
+
+def backfill_facts(
+    bird,
+    prevalence,
+    total_subregions,
+    subregion_label=SUBREGION_LABEL,
+    traits=None,
+    all_masses=None,
+):
+    """Set bird.facts from real traits, else local prevalence + taxonomy.
+
+    Traits come first: body mass and IUCN status are per-species and cited,
+    where the taxonomy template can only say "a member of the thrush family"
+    and is shared by every thrush on the roster.
 
     Returns:
         bool: True when a fact was added.
     """
-    if bird.get("facts") or not bird.get("id"):
+    if not bird.get("id"):
         return False
-    fact = build_fact(bird, prevalence, total_subregions, subregion_label)
+    # Every shipped bird already carries a generated template fact, so "empty"
+    # is not the condition: a generated one must be replaced by a trait fact.
+    # Anything else is treated as hand-written and left alone.
+    current = bird.get("facts") or ""
+    if current and not is_generated_fact(current):
+        return False
+    fact = build_trait_fact(bird, traits or {}, all_masses or [])
+    if not fact:
+        fact = build_fact(bird, prevalence, total_subregions, subregion_label)
     if not fact:
         return False
     bird["facts"] = fact
@@ -290,13 +472,17 @@ def enhance_region(
     total_subregions=0,
     facts=True,
     subregion_label=SUBREGION_LABEL,
+    traits=None,
+    all_masses=None,
 ):
     """Apply all enhancements to one region's bird list in place.
 
     Args:
         prevalence: Optional Counter of species -> subregion count.
         total_subregions: Total subregions behind ``prevalence``.
-        facts: Whether to backfill empty ``facts`` fields.
+        facts: Whether to fill ``facts`` fields.
+        traits: Optional per-species traits keyed by eBird code.
+        all_masses: Masses across every species, for percentile framing.
 
     Returns:
         dict: summary statistics.
@@ -315,6 +501,8 @@ def enhance_region(
             prevalence.get(bird.get("id")),
             total_subregions,
             subregion_label,
+            traits=traits,
+            all_masses=all_masses,
         ):
             stats["facts_added"] += 1
 
@@ -384,6 +572,16 @@ def main():
         help="Skip fact backfill (facts are generated when --subregions is provided)",
     )
     parser.add_argument(
+        "--no-traits",
+        action="store_true",
+        help="Skip per-species trait facts (mass, IUCN) and use taxonomy only",
+    )
+    parser.add_argument(
+        "--refresh-traits",
+        action="store_true",
+        help="Re-download the trait cache before generating facts",
+    )
+    parser.add_argument(
         "--dry-run",
         action="store_true",
         help="Print the summary without writing the file",
@@ -429,6 +627,20 @@ def main():
         except (OSError, json.JSONDecodeError, StopIteration) as error:
             print(f"❌ Error loading {args.subregions}: {error}")
             sys.exit(1)
+    traits, all_masses = {}, []
+    if not args.no_traits:
+        try:
+            traits = load_traits(url=TRAITS_URL if args.refresh_traits else None)
+        except Exception as error:  # noqa: BLE001 - network/cache both degrade
+            print(f"⚠️  Traits unavailable, using taxonomy facts: {error}")
+            traits = {}
+        # Percentiles must compare like with like, so the reference set is
+        # every species this script could ship, not just one region's roster.
+        all_masses = sorted(
+            entry["mass"] for entry in traits.values() if entry.get("mass")
+        )
+        print(f"🧬 Traits: {len(traits)} species ({len(all_masses)} with mass)")
+
     matched_codes = set()
 
     total_stats = Counter()
@@ -446,6 +658,8 @@ def main():
             total_subregions=total_subregions,
             facts=not args.no_facts,
             subregion_label=args.subregion_label,
+            traits=traits,
+            all_masses=all_masses,
         )
         matched_codes.update(b.get("id") for b in birds if b.get("id") in xc_by_code)
         print(f"🌍 Region '{region}':")

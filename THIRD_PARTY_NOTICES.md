@@ -25,6 +25,20 @@ All auto-replay loops, idle animations, and theme broadcast hooks were removed.
 The adapted CSS lives in lintable files under `sitegen/static/css/`; no upstream
 HTML or inline scripts are shipped.
 
+## Species traits (body mass, IUCN status)
+
+The reveal card's facts are generated from per-species traits in
+[Everybird](https://github.com/yusuftaleb/everybird)'s public species dataset
+(MIT code), cached at `scripts/data/species-traits.json`.
+
+Everybird sources body mass from [AVONET](https://doi.org/10.1111/ele.13898)
+(CC BY 4.0) and [BIRDBASE](https://doi.org/10.1038/s41597-025-05615-3)
+(CC BY 4.0). IUCN Red List categories are the published assessments.
+
+Nothing here is hand-written prose: every fact is arithmetic over these values
+(weight, percentile within the game's roster, conservation status), so a claim
+can be checked against the dataset rather than taken on trust.
+
 ## huashu-bird-sticker art
 
 The species reveal can show a sticker illustration from
