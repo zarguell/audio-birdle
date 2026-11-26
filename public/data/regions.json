@@ -41,6 +41,13 @@
     "status": "live"
   },
   {
+    "id": "it",
+    "name": "Italy",
+    "country": "IT",
+    "continent": "Europe",
+    "status": "live"
+  },
+  {
     "id": "fr",
     "name": "France",
     "country": "FR",

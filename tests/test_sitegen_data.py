@@ -29,6 +29,7 @@ def test_real_data_is_valid() -> None:
         "nz",
         "de",
         "es",
+        "it",
     }
 
 
