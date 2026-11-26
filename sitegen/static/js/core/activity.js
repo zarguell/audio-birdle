@@ -14,7 +14,7 @@ const SDK_URL = "../../vendor/embedded-app-sdk.js";
 const TOKEN_URL = "/api/token";
 const SESSION_URL = "/api/session";
 const RESULT_URL = "/api/result";
-const AUTHORIZE_SCOPE = ["identify"];
+const AUTHORIZE_SCOPE = ["identify", "guilds"];
 const PLACEHOLDER_ORIGIN = "https://activity.invalid";
 
 /**
@@ -226,6 +226,9 @@ async function bootstrapActivity(options) {
     return { user };
   } catch (error) {
     console.warn("Discord Activity initialisation failed:", error);
+    reportClientState("activity-error", {
+      detail: String(error?.message ?? error).slice(0, 120),
+    });
     // The proxy origin still shares this storage. If the handshake failed the
     // user is not authenticated, so never read or write the web game keys.
     setStorageNamespace("activity-unauthenticated");

@@ -456,6 +456,36 @@ async function handleStats(interaction, env) {
   });
 }
 
+async function handleDebug(request, env) {
+  const db = env?.DB;
+  const ip = request.headers.get("cf-connecting-ip") || "unknown";
+  if (db && (await overRateLimit(db, Date.now(), `debug:${ip}`, 20))) {
+    return rateLimited();
+  }
+  const limited = await readLimitedText(request, 1024);
+  if (limited.tooLarge) return payloadTooLarge();
+  let body;
+  try {
+    body = JSON.parse(limited.text);
+  } catch {
+    return badRequest();
+  }
+  const event =
+    typeof body?.event === "string" ? body.event.slice(0, 32) : "unknown";
+  const detail =
+    typeof body?.detail === "string" ? body.detail.slice(0, 120) : "";
+  console.info(
+    "client",
+    event,
+    Boolean(body?.guild),
+    Boolean(body?.channel),
+    Boolean(body?.hasContext),
+    Boolean(body?.hasBoard),
+    detail,
+  );
+  return json({ ok: true });
+}
+
 /**
  * Verify the Discord signature and dispatch the interaction.
  * @param {Request} request
@@ -1067,6 +1097,11 @@ export default {
     if (pathname === "/api/interactions") {
       if (request.method !== "POST") return json({ error: "method_not_allowed" }, 405);
       return handleInteractions(request, env, { ctx });
+    }
+
+    if (pathname === "/api/debug") {
+      if (request.method !== "POST") return json({ error: "method_not_allowed" }, 405);
+      return handleDebug(request, env);
     }
 
     if (pathname === "/api/token") {
