@@ -82,6 +82,9 @@ def test_choosing_a_region_opens_the_mode_selector(page, base_url, console_error
 
     page.locator('[data-mode-card="normal"]').click()
     page.wait_for_url(re.compile(r"/normal/\?region=us$"))
+    page.wait_for_function(
+        "() => document.querySelector('[data-region-label]')?.textContent.trim() !== 'Loading region…'"
+    )
     page.wait_for_selector(".answer-option")
 
     assert page.locator(".answer-option").count() == 4
@@ -279,6 +282,19 @@ def test_mx_country_pool_opens_normal_game(page, base_url, console_errors):
 
     page.locator('[data-mode-card="normal"]').click()
     page.wait_for_url(re.compile(r"/normal/\?region=mx$"))
+    page.wait_for_selector(".answer-option")
+
+    assert page.locator(".answer-option").count() == 4
+    assert page.locator("[data-audio]").get_attribute("src").startswith("https://")
+    assert not console_errors
+
+
+def test_ar_country_pool_opens_normal_game(page, base_url, console_errors):
+    page.goto(f"{base_url}/play/?region=ar", wait_until="networkidle")
+    assert page.locator("[data-region-label]").first.inner_text() == "Argentina"
+
+    page.locator('[data-mode-card="normal"]').click()
+    page.wait_for_url(re.compile(r"/normal/\?region=ar$"))
     page.wait_for_selector(".answer-option")
 
     assert page.locator(".answer-option").count() == 4
