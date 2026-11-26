@@ -57,6 +57,30 @@ npx wrangler d1 execute audio-birdle --remote --command "SELECT COUNT(*) AS n FR
 
 Local: `npx wrangler d1 migrations apply audio-birdle --local`.
 
+## Hardening controls
+
+Ships with `worker/migrations/0003_hardening.sql` and `worker/index.js`:
+
+- **Launch binding** — a board needs a `/audiobirdle` launch interaction from the
+  same user, guild, and channel within 15 minutes; `/api/session` also checks
+  guild membership with the bot token.
+- **Rate limits** — 30 requests/minute per user on `/api/session` and
+  `/api/result`; 20/minute per IP on `/api/token`.
+- **Kill switch** — set `ACTIVITY_DISABLED=1` on the Worker to return 503 from
+  `/api/token`, `/api/session`, and `/api/result`. PING and static pages keep
+  working; remove it to re-enable.
+- **Retention** — the 05:10 UTC cron deletes results older than 90 days, boards
+  older than 30 days, launches older than 1 hour, rate-limit windows older than
+  1 day, and analytics rows older than 2 days.
+- **Boards are per mode** — normal and hard get separate messages.
+- **User tokens** use `Authorization: Bearer`; `/oauth2/@me` must report this
+  app's id.
+- All API responses are `Cache-Control: no-store`; bodies are capped at 8 KiB
+  (32 KiB for interactions).
+
+Apply every migration (`0002`, `0003`) before deploying the Worker that needs
+them.
+
 ## Command registration
 
 Discord does not show `/audiobirdle` until it is registered via the API. Re-run
