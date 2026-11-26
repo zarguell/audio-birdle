@@ -371,7 +371,9 @@ class TestDataPipelineIntegration:
     @staticmethod
     def test_all_daily_subregions_are_playable(birds_json, daily_subregion_json):
         """Filtered regions must only reference shipped bird entries."""
-        regions_dir = Path(__file__).parent.parent.parent / "scripts" / "data" / "regions"
+        regions_dir = (
+            Path(__file__).parent.parent.parent / "scripts" / "data" / "regions"
+        )
         for region, groups in daily_subregion_json.items():
             if region not in birds_json:
                 continue
@@ -385,7 +387,9 @@ class TestDataPipelineIntegration:
     @staticmethod
     def test_all_daily_entries_are_in_seasonal_filters(daily_json):
         """Regions with a daily seasonal filter must obey it."""
-        regions_dir = Path(__file__).parent.parent.parent / "scripts" / "data" / "regions"
+        regions_dir = (
+            Path(__file__).parent.parent.parent / "scripts" / "data" / "regions"
+        )
         for path in regions_dir.glob("*-daily-regular-species.json"):
             region = path.name.removesuffix("-daily-regular-species.json")
             mapping = json.loads(path.read_text(encoding="utf-8"))
