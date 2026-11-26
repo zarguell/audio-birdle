@@ -25,7 +25,31 @@ Checklist for taking the `discord` branch live at
       private channel also needs a per-channel overwrite for the bot.
 - [ ] Install the app into the production server.
 
-## 2. Enable Activities
+## 2. Install the app on a server
+
+Open this logged in as the server owner (or a member with Manage Server):
+
+```
+https://discord.com/oauth2/authorize?client_id=1575568221715697744&scope=bot%20applications.commands&permissions=54272
+```
+
+- `bot` installs the bot user; `applications.commands` installs `/audiobirdle*`.
+- `54272` = View Channel (1024) + Send Messages (2048) + Embed Links (16384)
+  + Attach Files (32768).
+- The bot appears **offline**: this app is HTTP-interactions only, with no Gateway
+  connection. That is expected.
+- A private channel still needs an explicit View Channel overwrite for the bot.
+
+### The three URLs are not interchangeable
+
+| Purpose | Value | Where it goes |
+|---|---|---|
+| Install on a server | `https://discord.com/oauth2/authorize?client_id=<app id>&scope=bot%20applications.commands&permissions=54272` | browser |
+| Discord → Worker | `https://audio-birdle.sechostlab.com/api/interactions` | portal → General Information → Interactions Endpoint URL |
+| Activity page | `/` → `https://audio-birdle.sechostlab.com/` | portal → Activities → URL Mappings |
+| Audio proxy | `/xc` → `xeno-canto.org`; `/cornell` → `cdn.download.ams.birds.cornell.edu` | portal → Activities → URL Mappings |
+
+## 3. Enable Activities
 
 - [ ] **Activities → Settings → Enable Activities** (the checkbox). Without it
       the entry point/Launch button does not appear.
@@ -43,7 +67,7 @@ Checklist for taking the `discord` branch live at
 - [ ] Do not add subcommands to `/audiobirdle`; once a command has subcommands
       Discord requires choosing one and the bare launch is unreachable.
 
-## 3. Worker secrets (production `audio-birdle`)
+## 4. Worker secrets (production `audio-birdle`)
 
 Set these **before** saving the interactions endpoint; Discord PINGs it
 immediately.
@@ -61,7 +85,7 @@ npx wrangler secret put DISCORD_CLIENT_SECRET --name audio-birdle
 npx wrangler secret put DISCORD_BOT_TOKEN   --name audio-birdle
 ```
 
-## 4. Workers Builds
+## 5. Workers Builds
 
 - [ ] Build command: `bash scripts/build-site.sh`; output directory `dist`.
 - [ ] Environment variable `DISCORD_CLIENT_ID=<app id>` so the rendered HTML
@@ -72,7 +96,7 @@ npx wrangler secret put DISCORD_BOT_TOKEN   --name audio-birdle
 - [ ] Apply D1 migrations before the Worker that needs them:
       `npx wrangler d1 migrations apply audio-birdle --remote -y`.
 
-## 5. Interactions endpoint
+## 6. Interactions endpoint
 
 - [ ] **General Information → Interactions Endpoint URL**:
       `https://audio-birdle.sechostlab.com/api/interactions`.
@@ -80,7 +104,7 @@ npx wrangler secret put DISCORD_BOT_TOKEN   --name audio-birdle
       public key, endpoint, or Worker route is wrong. Do not continue until it
       saves.
 
-## 6. Register commands
+## 7. Register commands
 
 - [ ] Run the registration script against the production app id:
 
@@ -97,7 +121,7 @@ DISCORD_CLIENT_ID=<prod app id> DISCORD_BOT_TOKEN=<bot token> \
       let Discord recreate it, then re-run.
 - [ ] Global commands can take minutes to propagate; refresh the client.
 
-## 7. Deploy the site
+## 8. Deploy the site
 
 - [ ] Merge `discord` into `main`; Workers Builds deploys.
 - [ ] Confirm the build used `DISCORD_CLIENT_ID` (view source: the meta tag is
@@ -105,7 +129,7 @@ DISCORD_CLIENT_ID=<prod app id> DISCORD_BOT_TOKEN=<bot token> \
 - [ ] Verify: `/api/health` 200, `/api/session` 401, `/api/interactions` 401
       unsigned, `/privacy/` 200.
 
-## 8. In Discord
+## 9. In Discord
 
 - [ ] `/audiobirdle-setup` **in each channel** that should get summaries (no
       argument; Manage Server required). Summaries are per channel.
@@ -118,7 +142,7 @@ DISCORD_CLIENT_ID=<prod app id> DISCORD_BOT_TOKEN=<bot token> \
 - [ ] The summary posts at 05:10 UTC (00:10 ET) for channels with results the
       previous day, sectioned by region and mode.
 
-## 9. Quirks that cost time (read before debugging)
+## 10. Quirks that cost time (read before debugging)
 
 - `wrangler tail` prints `Ok` for completed requests, **not** HTTP 2xx. Confirm
   statuses with `curl` or logs.
@@ -141,7 +165,7 @@ DISCORD_CLIENT_ID=<prod app id> DISCORD_BOT_TOKEN=<bot token> \
   alone may not cover an existing private channel.
 - Entry points are visible in the **App Launcher**, not `/` autocomplete.
 
-## 10. Rollback
+## 11. Rollback
 
 ```bash
 npx wrangler delete --name audio-birdle-discord   # staging only

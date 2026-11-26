@@ -108,6 +108,16 @@ DISCORD_CLIENT_ID=1575529908820516916 DISCORD_BOT_TOKEN=<token> \
 
 Global commands can take a few minutes to appear.
 
+## Install on a server
+
+```
+https://discord.com/oauth2/authorize?client_id=<app id>&scope=bot%20applications.commands&permissions=54272
+```
+
+`54272` = View Channel + Send Messages + Embed Links + Attach Files. The bot
+shows offline by design (HTTP interactions only, no Gateway). This is not the
+interactions endpoint or the Activity URL mapping.
+
 ## Portal settings
 
 1. **General Information → Interactions Endpoint URL**: `<staging>/api/interactions`.
