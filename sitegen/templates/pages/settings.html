@@ -33,6 +33,30 @@
               type="button"
               data-reset-all>{{ icon("trash") }}<span>Reset all games and stats</span></button>
     </section>
+    <section class="card settings-group" aria-labelledby="privacy-settings-title">
+      <h2 id="privacy-settings-title" class="section-title">Privacy</h2>
+      <div class="settings-toggle">
+        <label class="settings-toggle__label" for="analytics-consent">
+          <input id="analytics-consent"
+                 type="checkbox"
+                 data-analytics-consent
+                 aria-describedby="analytics-consent-help analytics-consent-note">
+          <span>Anonymous usage analytics</span>
+        </label>
+        <p id="analytics-consent-help" class="muted small">
+          Off by default. If you turn it on, Cloudflare Web Analytics records the page path, referrer, country, browser and operating system, and Core Web Vitals. It sets no cookies and stores no identifiers. You can turn it off again at any time.
+        </p>
+        <p id="analytics-consent-note"
+           class="muted small"
+           data-analytics-consent-note
+           aria-live="polite">
+          Nothing is sent unless you enable this option.
+        </p>
+        <p class="settings-toggle__link">
+          <a href="/privacy/">Read the privacy policy</a>
+        </p>
+      </div>
+    </section>
     <section class="card settings-group" aria-labelledby="cache-settings-title">
       <h2 id="cache-settings-title" class="section-title">Game data</h2>
       <p class="muted small">Data is versioned with content hashes, so a refresh is rarely needed. Use this if a new daily bird does not appear.</p>

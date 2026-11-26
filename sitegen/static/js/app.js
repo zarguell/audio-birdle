@@ -1,3 +1,4 @@
+import { getAnalyticsToken, initAnalytics } from "./core/analytics.js";
 import { STORAGE_KEYS } from "./core/constants.js";
 import { qsa } from "./core/dom.js";
 import { ensureBirdDirector } from "./ui/birdDirector.js";
@@ -122,6 +123,11 @@ export const getLastPlayedMode = () =>
 export function initPage() {
   initJellyButtons();
   ensureBirdDirector();
+  initAnalytics({
+    documentImpl: document,
+    windowImpl: window,
+    token: getAnalyticsToken(document),
+  });
 
   const storedId = getStoredRegionId();
   const storedName = readString(STORAGE_KEYS.REGION_NAME, null);

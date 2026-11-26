@@ -19,6 +19,7 @@ export const STORAGE_KEYS = Object.freeze({
   RECENT_REGIONS: "audio-birdle-recent-regions",
   FAVORITE_REGIONS: "audio-birdle-favorite-regions",
   SUGGESTION_DISMISSED: "audio-birdle-suggestion-dismissed",
+  ANALYTICS_CONSENT: "audio-birdle-analytics-consent",
   LEGACY_GAME_STATE: "audio-birdle-game-state",
   LEGACY_NORMAL_GAME: "audio-birdle-normal-game",
   LEGACY_HARD_MODE: "audio-birdle-hard-mode",
