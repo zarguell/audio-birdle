@@ -503,7 +503,12 @@ async function handleInteractions(request, env, { now = Date.now(), fetchImpl, c
     }
 
     const name = interaction.data?.name;
-    console.info("interaction", interaction.type, name ?? "");
+    console.info(
+      "interaction",
+      interaction.type,
+      name ?? "",
+      interaction.data?.type ?? "",
+    );
 
     if (name === ACTIVITY_COMMAND_NAME) {
       const db = env?.DB;
