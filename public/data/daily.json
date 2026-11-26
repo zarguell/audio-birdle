@@ -1653,6 +1653,13 @@
   },
   {
     "date": "2026-11-25",
+    "region": "mx",
+    "answerHash": "8ebce65b",
+    "id": "redcro",
+    "subregion": "Mexico"
+  },
+  {
+    "date": "2026-11-25",
     "region": "nl",
     "answerHash": "89323227",
     "id": "norgan",
@@ -1765,6 +1772,13 @@
   },
   {
     "date": "2026-11-26",
+    "region": "mx",
+    "answerHash": "6a7d7f6e",
+    "id": "indbun",
+    "subregion": "Mexico"
+  },
+  {
+    "date": "2026-11-26",
     "region": "nl",
     "answerHash": "c0a079b3",
     "id": "eurkes",
@@ -1874,6 +1888,13 @@
     "answerHash": "1f16a85c",
     "id": "mallar3",
     "subregion": "Japan"
+  },
+  {
+    "date": "2026-11-27",
+    "region": "mx",
+    "answerHash": "94261df4",
+    "id": "belvir",
+    "subregion": "Mexico"
   },
   {
     "date": "2026-11-27",

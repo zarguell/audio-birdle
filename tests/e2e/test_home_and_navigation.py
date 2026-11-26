@@ -273,6 +273,19 @@ def test_pt_country_pool_opens_normal_game(page, base_url, console_errors):
     assert not console_errors
 
 
+def test_mx_country_pool_opens_normal_game(page, base_url, console_errors):
+    page.goto(f"{base_url}/play/?region=mx", wait_until="networkidle")
+    assert page.locator("[data-region-label]").first.inner_text() == "Mexico"
+
+    page.locator('[data-mode-card="normal"]').click()
+    page.wait_for_url(re.compile(r"/normal/\?region=mx$"))
+    page.wait_for_selector(".answer-option")
+
+    assert page.locator(".answer-option").count() == 4
+    assert page.locator("[data-audio]").get_attribute("src").startswith("https://")
+    assert not console_errors
+
+
 def test_unknown_page_uses_the_static_404(page, base_url):
     page.goto(f"{base_url}/does-not-exist/", wait_until="networkidle")
     assert "We couldn't find that bird" in page.locator("h1").inner_text()

@@ -1758,5 +1758,25 @@
       "name": "Common Kingfisher",
       "subregion": "Portugal"
     }
+  ],
+  "mx": [
+    {
+      "date": "2026-11-25",
+      "id": "redcro",
+      "name": "Red Crossbill",
+      "subregion": "Mexico"
+    },
+    {
+      "date": "2026-11-26",
+      "id": "indbun",
+      "name": "Indigo Bunting",
+      "subregion": "Mexico"
+    },
+    {
+      "date": "2026-11-27",
+      "id": "belvir",
+      "name": "Bell's Vireo",
+      "subregion": "Mexico"
+    }
   ]
 }
