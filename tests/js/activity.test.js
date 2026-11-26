@@ -2,6 +2,7 @@ import { afterEach, beforeEach, test } from "node:test";
 import assert from "node:assert/strict";
 
 import {
+  authorizeRequest,
   buildResultBody,
   buildSessionBody,
   isActivity,
@@ -373,4 +374,15 @@ test("activity auth cache round-trips and rejects stale records", () => {
   } finally {
     globalThis.sessionStorage = original;
   }
+});
+
+test("authorize asks Discord not to re-prompt for consent", () => {
+  // Without prompt: "none" the consent modal appears on every launch, so a
+  // returning player is asked to re-approve the same scopes each time.
+  const request = authorizeRequest("123456789");
+
+  assert.equal(request.prompt, "none");
+  assert.equal(request.client_id, "123456789");
+  assert.equal(request.response_type, "code");
+  assert.deepEqual(request.scope, ["identify", "guilds"]);
 });

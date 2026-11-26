@@ -146,6 +146,25 @@ export function writeActivityCache(context) {
   }
 }
 
+/**
+ * The arguments for `commands.authorize`.
+ *
+ * `prompt: "none"` is what stops the OAuth consent modal appearing on every
+ * launch: without it Discord treats each authorize as a fresh request and asks
+ * a returning player to re-approve scopes they already granted. `response_type`
+ * and `state` are part of the documented flow; `state` is empty because this is
+ * an in-client postMessage exchange, not a browser redirect.
+ */
+export function authorizeRequest(clientId) {
+  return {
+    client_id: clientId,
+    response_type: "code",
+    state: "",
+    prompt: "none",
+    scope: AUTHORIZE_SCOPE,
+  };
+}
+
 async function bootstrapActivity(options) {
   const fetchImpl = options?.fetchImpl ?? globalThis.fetch;
 
@@ -159,10 +178,9 @@ async function bootstrapActivity(options) {
     const sdk = new DiscordSDK(clientId);
     await sdk.ready();
 
-    const authorizeResult = await sdk.commands.authorize({
-      client_id: clientId,
-      scope: AUTHORIZE_SCOPE,
-    });
+    const authorizeResult = await sdk.commands.authorize(
+      authorizeRequest(clientId),
+    );
     const code = authorizeResult?.code;
     if (typeof code !== "string" || !code) {
       throw new Error("Discord authorization returned no code");
