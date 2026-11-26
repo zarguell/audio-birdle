@@ -1658,5 +1658,25 @@
       "name": "Common Myna",
       "subregion": "New Zealand"
     }
+  ],
+  "de": [
+    {
+      "date": "2026-11-25",
+      "id": "comchi1",
+      "name": "Common Chiffchaff",
+      "subregion": "Germany"
+    },
+    {
+      "date": "2026-11-26",
+      "id": "coatit2",
+      "name": "Coal Tit",
+      "subregion": "Germany"
+    },
+    {
+      "date": "2026-11-27",
+      "id": "bohwax",
+      "name": "Bohemian Waxwing",
+      "subregion": "Germany"
+    }
   ]
 }

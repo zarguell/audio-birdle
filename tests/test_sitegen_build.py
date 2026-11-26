@@ -108,7 +108,7 @@ def test_build_renders_every_page(built_site: tuple[Path, dict]) -> None:
     ):
         assert (output / page).is_file(), page
     assert len(summary["pages"]) == 10
-    assert summary["regions"] == 11
+    assert summary["regions"] == 12
 
 
 def test_build_uses_content_addressed_assets(built_site: tuple[Path, dict]) -> None:
@@ -171,6 +171,7 @@ def test_region_directory_is_server_rendered(built_site: tuple[Path, dict]) -> N
         "United Kingdom",
         "Ireland",
         "France",
+        "Germany",
         "Japan",
         "New Zealand",
         "Costa Rica",
@@ -193,7 +194,7 @@ def test_data_manifest_matches_copied_files(built_site: tuple[Path, dict]) -> No
         assert entry["sha256"] == hashlib.sha256(data).hexdigest()
         assert entry["bytes"] == len(data)
         assert entry["path"] == f"/data/{name}"
-    assert summary["data_files"] == len(manifest["files"]) == 14
+    assert summary["data_files"] == len(manifest["files"]) == 15
 
 
 def test_cloudflare_headers_pin_cache_behaviour(built_site: tuple[Path, dict]) -> None:
