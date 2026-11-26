@@ -94,6 +94,12 @@ portal's default "Launch" entry point and recreates it if it was deleted.
 ordinary chat commands. Discord does not show any of them until they are
 registered via the API; re-run the script after any command change.
 
+`/audiobirdle-setup` takes **no options** and opts the **current channel** in
+(Manage Server required). Daily summaries post in that channel only when it had
+results yesterday. Groups are per channel, sectioned by region and mode; streaks
+are per `(channel, region)` and leaderboards per `(channel, region, mode)`.
+Scores are never compared across regions.
+
 ```bash
 DISCORD_CLIENT_ID=1575529908820516916 DISCORD_BOT_TOKEN=<token> \
   node scripts/register-discord-command.mjs
