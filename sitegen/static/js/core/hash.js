@@ -15,7 +15,12 @@ export function hashString(value) {
 }
 
 export function createSeededRandom(seed) {
-  let state = seed >>> 0;
+  // Callers pass either a number or the 8-character hex string from
+  // hashString(). `"1a2b3c4d" >>> 0` is 0, which would make every shuffle
+  // identical, so parse hex strings explicitly.
+  const numericSeed =
+    typeof seed === "string" ? Number.parseInt(seed, 16) : Number(seed);
+  let state = (Number.isFinite(numericSeed) ? numericSeed : 0) >>> 0;
   return () => {
     state = (state * 1664525 + 1013904223) >>> 0;
     return (state % 2147483647) / 2147483647;

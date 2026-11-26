@@ -31,3 +31,15 @@ test("randomShuffle keeps every element", () => {
   const values = ["a", "b", "c", "d"];
   assert.deepEqual([...randomShuffle(values)].sort(), values);
 });
+
+test("deterministicShuffle varies with hex-string seeds", () => {
+  const items = ["a", "b", "c", "d"];
+  const first = deterministicShuffle(items, "deadbeef");
+  const second = deterministicShuffle(items, "00000000");
+  assert.notDeepEqual(first, second);
+  assert.deepEqual(
+    deterministicShuffle(items, "deadbeef"),
+    first,
+    "same seed is stable",
+  );
+});

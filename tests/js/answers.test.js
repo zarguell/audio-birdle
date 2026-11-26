@@ -52,3 +52,23 @@ test("hash fallback is stable and selects from the pool", () => {
   assert.ok(birds.some((bird) => bird.id === first.id));
   assert.equal(getDailyBirdFallback("us", [], "2026-11-24"), null);
 });
+
+test("the correct option is not positionally biased across dates", () => {
+  const correct = birds[0];
+  const counts = [0, 0, 0, 0];
+  for (let day = 1; day <= 28; day += 1) {
+    for (let month = 1; month <= 12; month += 1) {
+      const date = `2026-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+      const options = generateAnswerOptions("us", birds, date, correct, 4);
+      counts[options.findIndex((bird) => bird.id === correct.id)] += 1;
+    }
+  }
+  assert.equal(
+    counts.reduce((sum, count) => sum + count, 0),
+    336,
+    "every date produced an option list",
+  );
+  for (const count of counts) {
+    assert.ok(count > 40, `position counts: ${counts.join(",")}`);
+  }
+});
