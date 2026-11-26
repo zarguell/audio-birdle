@@ -4,6 +4,7 @@ import {
   setLastPlayedMode,
 } from "../app.js";
 import { GAME_CONFIG } from "../core/constants.js";
+import { postBoardResult, startBoardSession } from "../core/activity.js";
 import { generateAnswerOptions } from "../core/answers.js";
 import { compareTaxonomy } from "../core/taxonomy.js";
 import { loadRegionBirds, loadRegions } from "../core/data.js";
@@ -118,6 +119,7 @@ const startDaily = async (region, regionBirds) => {
   }
 
   let game = ensureDailyGame(region.id, today, mode);
+  startBoardSession({ date: today, mode, region: region.id });
   const answerOptions =
     mode === "normal"
       ? generateAnswerOptions(
@@ -154,6 +156,9 @@ const startDaily = async (region, regionBirds) => {
         timestamp: Date.now(),
       });
       game = getDailyGame(key);
+      if (game?.completed) {
+        void postBoardResult(game);
+      }
       render();
     },
     onHardGuess: (bird) => {
@@ -168,6 +173,9 @@ const startDaily = async (region, regionBirds) => {
         timestamp: Date.now(),
       });
       game = getDailyGame(key);
+      if (game?.completed) {
+        void postBoardResult(game);
+      }
       render();
     },
   };
