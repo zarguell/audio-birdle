@@ -1,6 +1,7 @@
 # Discord integration runbook
 
-Operational steps for the staging and production Discord app. Security
+Operational steps for the staging and production Discord app. The production
+checklist is in `docs/discord-production.md`. Security
 invariants live in `docs/security-architecture.md`; data handling lives in
 `docs/privacy.md`. This file is the "how", not the "why".
 
