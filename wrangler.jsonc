@@ -1,9 +1,24 @@
 {
   "name": "audio-birdle",
-  "compatibility_date": "2025-04-01",
+  "main": "worker/index.js",
+  "compatibility_date": "2026-11-26",
   "assets": {
     "directory": "./dist/",
+    "binding": "ASSETS",
     "html_handling": "auto-trailing-slash",
-    "not_found_handling": "404-page"
-  }
+    "not_found_handling": "404-page",
+    "run_worker_first": ["/api/*"]
+  },
+  "observability": {
+    "enabled": true
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "audio-birdle",
+      // Placeholder: replace with the id printed by `wrangler d1 create audio-birdle`.
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "migrations_dir": "worker/migrations"
+    }
+  ]
 }

@@ -1,5 +1,5 @@
 # Developer commands. The deployed site is built by Python only.
-.PHONY: build serve lint hooks check check-all test test-js test-python test-e2e test-live manifest audit-region
+.PHONY: build serve dev lint hooks check check-all test test-js test-python test-e2e test-live manifest audit-region
 
 PYTHON ?= python3
 
@@ -9,6 +9,10 @@ build:
 serve:
 	bash scripts/build-site.sh
 	$(PYTHON) -m sitegen serve --no-build
+
+dev:
+	bash scripts/build-site.sh
+	npx wrangler dev
 
 manifest:
 	$(PYTHON) -m sitegen manifest --data-dir public/data
