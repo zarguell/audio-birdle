@@ -123,17 +123,20 @@ interactions endpoint or the Activity URL mapping.
 
 1. **General Information → Interactions Endpoint URL**: `<staging>/api/interactions`.
    Discord PINGs it on save; success proves `DISCORD_PUBLIC_KEY` and Ed25519.
-2. **Activities → URL mapping**: `<staging>/`. Without it, the type 12 launch has
+2. **Activities → Settings → Supported Platforms**: tick Web, iOS and Android.
+   Only Web is on by default; without the other two a phone is refused with
+   "this activity is unsupported on this OS".
+3. **Activities → URL mapping**: `<staging>/`. Without it, the type 12 launch has
    nowhere to go.
    Add `/xc` → `xeno-canto.org`, `/stickers` → `cdn.jsdelivr.net` and `/cornell` →
    `cdn.download.ams.birds.cornell.edu`; the Activity rewrites audio to those
    prefixes because the proxy blocks direct external media.
-3. **OAuth2 → Redirects**: add `https://127.0.0.1`. The Embedded App SDK's
+4. **OAuth2 → Redirects**: add `https://127.0.0.1`. The Embedded App SDK's
    `authorize` flow requires a configured redirect URI.
-4. **Installation**: scopes `bot` + `applications.commands`; permissions View
+5. **Installation**: scopes `bot` + `applications.commands`; permissions View
    Channel, Send Messages, Embed Links, Attach Files. No Administrator, no Manage Messages, no
    privileged intents.
-5. **Privacy URL / Terms URL**: `<staging>/privacy/` and `<staging>/terms/`.
+6. **Privacy URL / Terms URL**: `<staging>/privacy/` and `<staging>/terms/`.
 
 Runtime note: `DISCORD_CLIENT_ID` is both a build-time variable (meta tag) and a
 Worker secret (`/api/token`). The `authorize` scope includes `identify` and

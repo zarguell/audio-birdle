@@ -63,6 +63,11 @@ https://discord.com/oauth2/authorize?client_id=1575568221715697744&scope=bot%20a
 
 - [ ] **Activities → Settings → Enable Activities** (the checkbox). Without it
       the entry point/Launch button does not appear.
+- [ ] **Activities → Settings → Supported Platforms**: tick **Web** *and*
+      **iOS** *and* **Android**. Only Web is on by default, so a phone, or a
+      desktop client that reports itself as outside the web platform, is refused
+      with "this activity is unsupported on this OS" and never loads the iframe.
+      This is Discord's message, not ours: our code never runs.
 - [ ] **Activities → URL Mappings**:
 
 | Prefix | Target |
