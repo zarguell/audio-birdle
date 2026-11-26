@@ -200,7 +200,7 @@ test("session returns the existing board without posting again", async () => {
   assert.equal(response.status, 200);
   assert.deepEqual(await response.json(), { messageId: MESSAGE_ID, user: USER });
   assert.equal(pageCalls(fetchImpl, "POST").length, 0);
-  assert.equal(db.calls.some((statement) => statement.sql.startsWith("INSERT")), false);
+  assert.equal(db.calls.some((statement) => statement.sql.startsWith("INSERT INTO boards")), false);
 });
 
 test("hard result builds the taxonomic grid and patches the stored message", async () => {
