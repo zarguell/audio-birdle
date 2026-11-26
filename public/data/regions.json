@@ -48,6 +48,13 @@
     "status": "live"
   },
   {
+    "id": "nl",
+    "name": "Netherlands",
+    "country": "NL",
+    "continent": "Europe",
+    "status": "live"
+  },
+  {
     "id": "fr",
     "name": "France",
     "country": "FR",
