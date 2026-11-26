@@ -130,5 +130,12 @@
     "country": "AR",
     "continent": "South America",
     "status": "live"
+  },
+  {
+    "id": "th",
+    "name": "Thailand",
+    "country": "TH",
+    "continent": "Asia",
+    "status": "live"
   }
 ]
