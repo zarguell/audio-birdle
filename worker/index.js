@@ -22,7 +22,6 @@ const RESPONSE_DEFERRED = 5;
 const RESPONSE_LAUNCH_ACTIVITY = 12;
 
 const EPHEMERAL_FLAG = 64;
-const CHANNEL_OPTION = 7;
 const PERMISSION_MANAGE_GUILD = 0x20n;
 
 const ACTIVITY_COMMAND_NAME = "audiobirdle";
@@ -31,7 +30,7 @@ const SETUP_COMMAND_NAME = "audiobirdle-setup";
 const STATS_COMMAND_NAME = "audiobirdle-stats";
 const FORGET_COMMAND_NAME = "audiobirdle-forget";
 
-const SUMMARY_GUILD_LIMIT = 40;
+const SUMMARY_CHANNEL_LIMIT = 40;
 
 const JSON_HEADERS = {
   "content-type": "application/json; charset=utf-8",
@@ -87,9 +86,9 @@ const RESULT_UPSERT_SQL =
   "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) " +
   "ON CONFLICT(guild_id, date, mode, discord_id) DO UPDATE SET won = excluded.won, guess_count = excluded.guess_count, region = excluded.region, created_at = excluded.created_at";
 
-const GUILD_UPSERT_SQL =
-  "INSERT INTO guilds (guild_id, summary_channel_id, created_at) VALUES (?, ?, ?) " +
-  "ON CONFLICT(guild_id) DO UPDATE SET summary_channel_id = excluded.summary_channel_id";
+const CHANNEL_UPSERT_SQL =
+  "INSERT INTO channels (channel_id, guild_id, enabled, created_at) VALUES (?, ?, 1, ?) " +
+  "ON CONFLICT(channel_id) DO UPDATE SET guild_id = excluded.guild_id, enabled = 1";
 
 const DELETE_PLAYER_SQL = "DELETE FROM players WHERE discord_id = ?";
 const DELETE_BOARDS_SQL = "DELETE FROM boards WHERE discord_id = ?";
@@ -101,19 +100,19 @@ const STATS_SELECT_SQL =
 const RESULT_DATES_SQL =
   "SELECT date FROM results WHERE discord_id = ? ORDER BY date DESC LIMIT 400";
 
-const SUMMARY_GUILDS_SQL =
-  "SELECT guild_id, summary_channel_id FROM guilds WHERE summary_channel_id IS NOT NULL " +
-  "AND summary_channel_id != '' LIMIT ?";
+const SUMMARY_CHANNELS_SQL =
+  "SELECT channel_id, guild_id FROM channels WHERE enabled = 1 LIMIT ?";
 const SUMMARY_RESULTS_SQL =
-  "SELECT p.username AS username, r.won AS won, r.guess_count AS guess_count, r.mode AS mode " +
-  "FROM results r JOIN players p ON p.discord_id = r.discord_id " +
-  "WHERE r.guild_id = ? AND r.date = ? ORDER BY r.won DESC, r.guess_count ASC";
-const SUMMARY_LEADERBOARD_SQL =
-  "SELECT p.username AS username, COUNT(*) AS games, SUM(r.won) AS wins " +
+  "SELECT r.region, r.mode, r.discord_id, r.won, r.guess_count, p.username " +
   "FROM results r LEFT JOIN players p ON p.discord_id = r.discord_id " +
-  "WHERE r.guild_id = ? GROUP BY r.discord_id ORDER BY wins DESC, games ASC LIMIT 5";
-const SUMMARY_DATES_SQL =
-  "SELECT DISTINCT date FROM results WHERE guild_id = ? ORDER BY date DESC LIMIT 400";
+  "WHERE r.channel_id = ? AND r.date = ?";
+const SUMMARY_LEADERBOARD_SQL =
+  "SELECT p.username, COUNT(*) AS games, SUM(r.won) AS wins " +
+  "FROM results r LEFT JOIN players p ON p.discord_id = r.discord_id " +
+  "WHERE r.channel_id = ? AND r.region = ? AND r.mode = ? " +
+  "GROUP BY r.discord_id ORDER BY wins DESC, games ASC LIMIT 5";
+const SUMMARY_REGION_DATES_SQL =
+  "SELECT DISTINCT date FROM results WHERE channel_id = ? AND region = ?";
 
 /** @param {unknown} body @param {number} [status] @param {Record<string, string>} [extraHeaders] */
 function json(body, status = 200, extraHeaders = {}) {
@@ -314,13 +313,6 @@ function interactionUserId(interaction) {
   return typeof id === "string" && SNOWFLAKE_PATTERN.test(id) ? id : null;
 }
 
-/** @param {any} subcommand @param {string} name @param {number} type */
-function findOptionValue(subcommand, name, type) {
-  const options = Array.isArray(subcommand?.options) ? subcommand.options : [];
-  const option = options.find((entry) => entry?.name === name && entry?.type === type);
-  return typeof option?.value === "string" ? option.value : null;
-}
-
 /** @param {any} value */
 function asNumber(value) {
   const number = Number(value);
@@ -330,53 +322,40 @@ function asNumber(value) {
 const STORAGE_ERROR = "Could not save right now. Try again later.";
 
 /**
+ * Opt the current channel into daily summaries. The channel is the group, so
+ * no channel option and no bot-token lookup are needed: Discord already tells
+ * us which channel the command ran in.
  * @param {any} interaction
- * @param {{ DB?: any, DISCORD_BOT_TOKEN?: string }} env
- * @param {any} subcommand
- * @param {{ fetchImpl?: typeof fetch }} [options]
+ * @param {{ DB?: any }} env
  */
-async function handleSetup(interaction, env, subcommand, { fetchImpl } = {}) {
+async function handleSetup(interaction, env) {
   if (!hasManageGuild(interaction.member)) {
     return ephemeral({ content: "You need Manage Server to use this." });
   }
 
   const guildId = interaction.guild_id;
-  const channelId = findOptionValue(subcommand, "channel", CHANNEL_OPTION);
+  const channelId = interaction.channel_id;
   if (
     typeof guildId !== "string" ||
     !SNOWFLAKE_PATTERN.test(guildId) ||
-    channelId === null ||
+    typeof channelId !== "string" ||
     !SNOWFLAKE_PATTERN.test(channelId)
   ) {
-    return ephemeral({ content: "Pick a text channel in this server." });
+    return ephemeral({ content: "Run this inside a server text channel." });
   }
 
   const db = env?.DB;
-  const botToken = env?.DISCORD_BOT_TOKEN;
-  if (!db || !botToken) {
+  if (!db) {
     return ephemeral({ content: "Summaries are not configured on this deployment." });
   }
 
-  let channel;
   try {
-    channel = await getChannel(fetchImpl, botToken, channelId);
-  } catch {
-    return ephemeral({
-      content:
-        "I can't read that channel. Give me View Channel, or pick a public channel.",
-    });
-  }
-  if (!channel || String(channel.guild_id) !== guildId) {
-    return ephemeral({ content: "That channel is not in this server." });
-  }
-
-  try {
-    await db.prepare(GUILD_UPSERT_SQL).bind(guildId, channelId, nowIso()).run();
+    await db.prepare(CHANNEL_UPSERT_SQL).bind(channelId, guildId, nowIso()).run();
   } catch {
     return ephemeral({ content: STORAGE_ERROR });
   }
 
-  return ephemeral({ content: `Daily summaries will post in <#${channelId}>.` });
+  return ephemeral({ content: "Daily summaries will post in this channel." });
 }
 
 /**
@@ -562,7 +541,7 @@ async function handleInteractions(request, env, { now = Date.now(), fetchImpl, c
     }
 
     if (name === SETUP_COMMAND_NAME) {
-      return deferCommand(interaction, env, ctx, () => handleSetup(interaction, env, interaction.data, { fetchImpl }), fetchImpl);
+      return deferCommand(interaction, env, ctx, () => handleSetup(interaction, env), fetchImpl);
     }
     if (name === STATS_COMMAND_NAME) {
       return deferCommand(interaction, env, ctx, () => handleStats(interaction, env), fetchImpl);
@@ -998,53 +977,103 @@ function isoDateInTimeZone(date, timeZone) {
   return `${value("year")}-${value("month")}-${value("day")}`;
 }
 
+/** Order modes consistently: normal before hard, unknown last. @param {string} mode */
+function modeSortKey(mode) {
+  return mode === "normal" ? 0 : mode === "hard" ? 1 : 2;
+}
+
 /**
- * Post one guild's summary. Returns without posting when nobody played.
- * @param {{ db: any, botToken: string, fetchImpl?: typeof fetch, guildId: string, channelId: string, date: string }} options
+ * Group yesterday's rows by region, then by mode, keeping the first-seen order
+ * stable but deterministic (regions sorted, normal before hard).
+ * @param {{ region?: unknown, mode?: unknown }[]} rows
+ * @returns {Map<string, Map<string, typeof rows>>}
  */
-async function postGuildSummary({ db, botToken, fetchImpl, guildId, channelId, date }) {
-  const resultRows = await db.prepare(SUMMARY_RESULTS_SQL).bind(guildId, date).all();
+function groupRowsByRegionAndMode(rows) {
+  /** @type {Map<string, Map<string, typeof rows>>} */
+  const byRegion = new Map();
+  for (const row of rows) {
+    const region = String(row?.region ?? "");
+    const mode = String(row?.mode ?? "");
+    if (region === "" || mode === "") continue;
+    if (!byRegion.has(region)) byRegion.set(region, new Map());
+    const byMode = byRegion.get(region);
+    if (!byMode.has(mode)) byMode.set(mode, []);
+    byMode.get(mode).push(row);
+  }
+  return new Map(
+    [...byRegion.entries()].sort(([a], [b]) => a.localeCompare(b)),
+  );
+}
+
+/**
+ * Post one channel's summary. Returns without posting when nobody played that
+ * day. Every comparison is scoped to one channel and one region: the streak is
+ * per channel+region, the leaderboard per channel+region+mode.
+ *
+ * @param {{ db: any, botToken: string, fetchImpl?: typeof fetch, channelId: string, date: string }} options
+ */
+async function postChannelSummary({ db, botToken, fetchImpl, channelId, date }) {
+  const resultRows = await db.prepare(SUMMARY_RESULTS_SQL).bind(channelId, date).all();
   const results = Array.isArray(resultRows?.results) ? resultRows.results : [];
   if (results.length === 0) return;
 
-  const dateRows = await db.prepare(SUMMARY_DATES_SQL).bind(guildId).all();
-  const dates = Array.isArray(dateRows?.results)
-    ? dateRows.results.map((row) => String(row?.date))
-    : [];
-  const streak = computeStreak(dates, date);
+  const byRegion = groupRowsByRegionAndMode(results);
+  const sections = [];
 
-  const lines = results.map((row) => {
-    const maxGuesses = MODE_MAX_GUESSES[row.mode] ?? 4;
-    const score =
-      Number(row.won) === 1
-        ? `${asNumber(row.guess_count)}/${maxGuesses}`
-        : `X/${maxGuesses}`;
-    return `${String(row.username ?? "Player")} — ${score}`;
-  });
+  for (const [region, byMode] of byRegion) {
+    const dateRows = await db.prepare(SUMMARY_REGION_DATES_SQL).bind(channelId, region).all();
+    const dates = Array.isArray(dateRows?.results)
+      ? dateRows.results.map((row) => String(row?.date))
+      : [];
+    const streak = computeStreak(dates, date);
 
-  const description = [`Group streak: ${streak} day(s)`, "", ...lines].join("\n");
+    for (const [mode, modeRows] of [...byMode.entries()].sort(
+      ([a], [b]) => modeSortKey(a) - modeSortKey(b) || a.localeCompare(b),
+    )) {
+      sections.push(`**${region.toUpperCase()} · ${modeLabel(mode)} — group streak ${streak} day(s)**`);
 
-  let leaderboardRows;
-  try {
-    leaderboardRows = await db.prepare(SUMMARY_LEADERBOARD_SQL).bind(guildId).all();
-  } catch {
-    leaderboardRows = null;
+      for (const row of modeRows) {
+        const maxGuesses = MODE_MAX_GUESSES[mode] ?? 4;
+        const score =
+          Number(row.won) === 1
+            ? `${asNumber(row.guess_count)}/${maxGuesses}`
+            : `X/${maxGuesses}`;
+        sections.push(`${String(row.username ?? "Player")} — ${score}`);
+      }
+
+      let leaderboardRows;
+      try {
+        leaderboardRows = await db
+          .prepare(SUMMARY_LEADERBOARD_SQL)
+          .bind(channelId, region, mode)
+          .all();
+      } catch {
+        leaderboardRows = null;
+      }
+      const leaderboard = Array.isArray(leaderboardRows?.results)
+        ? leaderboardRows.results.filter((row) => row && row.username).slice(0, 5)
+        : [];
+      if (leaderboard.length > 0) {
+        sections.push(
+          `Leaderboard: ${leaderboard
+            .map(
+              (row, index) =>
+                `${index + 1}. ${String(row.username)} — ${asNumber(row.wins)}W/${asNumber(row.games)}G`,
+            )
+            .join(", ")}`,
+        );
+      }
+      sections.push("");
+    }
   }
-  const leaderboard = Array.isArray(leaderboardRows?.results)
-    ? leaderboardRows.results.filter((row) => row && row.username)
-    : [];
-  const leaderboardLine =
-    leaderboard.length === 0
-      ? null
-      : `Leaderboard: ${leaderboard
-          .map((row, index) => `${index + 1}. ${String(row.username)} — ${asNumber(row.wins)}W/${asNumber(row.games)}G`)
-          .join(", ")}`;
+
+  while (sections.length > 0 && sections[sections.length - 1] === "") sections.pop();
 
   await createMessage(fetchImpl, botToken, channelId, {
     embeds: [
       {
         title: `Audio-Birdle — ${date}`,
-        description: leaderboardLine ? `${description}\n\n${leaderboardLine}` : description,
+        description: sections.join("\n"),
       },
     ],
     allowed_mentions: { parse: [] },
@@ -1053,7 +1082,8 @@ async function postGuildSummary({ db, botToken, fetchImpl, guildId, channelId, d
 
 /**
  * Daily summary cron. Runs at 00:10 America/New_York and reports the previous
- * day; failures are logged by guild id only, never usernames or tokens.
+ * day, one message per opted-in channel; failures are logged by channel id
+ * only, never usernames or tokens.
  *
  * @param {{ scheduledTime?: number }} controller
  * @param {{ DB?: any, DISCORD_BOT_TOKEN?: string }} env
@@ -1068,26 +1098,25 @@ export async function scheduled(controller, env, ctx, { fetchImpl, now = new Dat
   const date = previousDate(isoDateInTimeZone(now, "America/New_York"));
   if (!date) return;
 
-  let guildRows;
+  let channelRows;
   try {
-    guildRows = await db.prepare(SUMMARY_GUILDS_SQL).bind(SUMMARY_GUILD_LIMIT).all();
+    channelRows = await db.prepare(SUMMARY_CHANNELS_SQL).bind(SUMMARY_CHANNEL_LIMIT).all();
   } catch {
-    console.error("daily summary: guild query failed");
+    console.error("daily summary: channel query failed");
     return;
   }
 
-  const guilds = (Array.isArray(guildRows?.results) ? guildRows.results : []).slice(
+  const channels = (Array.isArray(channelRows?.results) ? channelRows.results : []).slice(
     0,
-    SUMMARY_GUILD_LIMIT,
+    SUMMARY_CHANNEL_LIMIT,
   );
 
-  const tasks = guilds.map((guild) =>
-    postGuildSummary({
+  const tasks = channels.map((channel) =>
+    postChannelSummary({
       db,
       botToken,
       fetchImpl,
-      guildId: String(guild.guild_id),
-      channelId: String(guild.summary_channel_id),
+      channelId: String(channel.channel_id),
       date,
     }),
   );
@@ -1095,7 +1124,7 @@ export async function scheduled(controller, env, ctx, { fetchImpl, now = new Dat
   const settled = await Promise.allSettled(tasks);
   settled.forEach((result, index) => {
     if (result.status === "rejected") {
-      console.error(`daily summary failed for guild ${guilds[index].guild_id}`);
+      console.error(`daily summary failed for channel ${channels[index].channel_id}`);
     }
   });
 

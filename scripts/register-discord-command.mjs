@@ -86,17 +86,8 @@ const adminCommands = [
   {
     ...base,
     name: "audiobirdle-setup",
-    description: "Post daily Audio-Birdle summaries in a channel",
+    description: "Post daily Audio-Birdle summaries in this channel",
     default_member_permissions: "32",
-    options: [
-      {
-        type: 7,
-        name: "channel",
-        description: "Channel where daily summaries are posted",
-        required: true,
-        channel_types: [0],
-      },
-    ],
   },
   {
     ...base,

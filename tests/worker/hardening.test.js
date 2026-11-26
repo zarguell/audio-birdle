@@ -9,7 +9,6 @@ const encoder = new TextEncoder();
 const ORIGIN = "https://audio-birdle.example";
 
 const GUILD_ID = "123456789012345678";
-const OTHER_GUILD_ID = "456789012345678901";
 const CHANNEL_ID = "234567890123456789";
 const MESSAGE_ID = "345678901234567890";
 const USER_ID = "567890123456789012";
@@ -76,7 +75,7 @@ function commandPayload({ subcommand = null, options = [] } = {}) {
   };
 }
 
-function makeDb({ launch = { created_at: NOW }, rateCount = 1, board = null, guilds = [] } = {}) {
+function makeDb({ launch = { created_at: NOW }, rateCount = 1, board = null } = {}) {
   const calls = [];
   return {
     calls,
@@ -95,7 +94,6 @@ function makeDb({ launch = { created_at: NOW }, rateCount = 1, board = null, gui
           return null;
         },
         async all() {
-          if (sql.includes("FROM guilds")) return { results: guilds };
           return { results: [] };
         },
         async run() {
@@ -232,29 +230,27 @@ test("session maps a missing guild member to 403", async () => {
   assert.equal(postedMessages(fetchImpl).length, 0);
 });
 
-test("setup rejects a channel from another guild", async () => {
+test("setup opts the invoking channel in without a Discord lookup", async () => {
   const original = globalThis.fetch;
-  globalThis.fetch = makeFetch({ channelGuild: OTHER_GUILD_ID });
+  globalThis.fetch = async () => {
+    throw new Error("setup must not call Discord");
+  };
   try {
     const db = makeDb();
     const response = await worker.fetch(
-      await signedRequest(
-        commandPayload({
-          subcommand: "setup",
-          options: [{ type: 7, name: "channel", value: CHANNEL_ID }],
-        }),
-      ),
-      { DISCORD_PUBLIC_KEY: publicKeyHex, DISCORD_BOT_TOKEN: BOT_TOKEN, DB: db },
+      await signedRequest(commandPayload({ subcommand: "setup" })),
+      { DISCORD_PUBLIC_KEY: publicKeyHex, DB: db },
       {},
     );
 
     const body = await response.json();
     assert.equal(body.data.flags, 64);
-    assert.match(body.data.content, /not in this server/);
-    assert.equal(
-      db.calls.some((statement) => statement.sql.startsWith("INSERT INTO guilds")),
-      false,
+    assert.equal(body.data.content, "Daily summaries will post in this channel.");
+    const upsert = db.calls.find((statement) =>
+      statement.sql.startsWith("INSERT INTO channels"),
     );
+    assert.ok(upsert);
+    assert.deepEqual(upsert.args.slice(0, 2), [CHANNEL_ID, GUILD_ID]);
   } finally {
     globalThis.fetch = original;
   }
@@ -421,10 +417,7 @@ test("admin commands are acknowledged before slow work", async () => {
     };
     const response = await worker.fetch(
       await signedRequest(
-        commandPayload({
-          subcommand: "setup",
-          options: [{ type: 7, name: "channel", value: CHANNEL_ID }],
-        }),
+        commandPayload({ subcommand: "setup" }),
       ),
       { ...makeEnv(), DISCORD_PUBLIC_KEY: publicKeyHex },
       ctx,

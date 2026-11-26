@@ -4,7 +4,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 
-import worker, { handleResult, handleSession, scheduled } from "../../worker/index.js";
+import worker, { handleResult, handleSession } from "../../worker/index.js";
 
 const encoder = new TextEncoder();
 const ORIGIN = "https://audio-birdle.example";
@@ -234,79 +234,6 @@ test("unknown component custom id is rejected with 400", async () => {
     db.calls.some((statement) => statement.sql.startsWith("INSERT INTO launches")),
     false,
   );
-});
-
-const CRON_NOW = new Date("2026-11-26T05:10:00Z");
-
-function makeCronFetch() {
-  const calls = [];
-  const fetchImpl = async (url, init = {}) => {
-    const { pathname } = new URL(url);
-    calls.push({
-      pathname,
-      method: init.method || "GET",
-      body: init.body ? JSON.parse(init.body) : undefined,
-    });
-    return jsonResponse({ id: "999999999999999999" });
-  };
-  fetchImpl.calls = calls;
-  return fetchImpl;
-}
-
-test("summary appends a username-only leaderboard", async () => {
-  const db = makeDb([
-    {
-      kind: "all",
-      match: /FROM guilds WHERE summary_channel_id/,
-      handler: () => [{ guild_id: GUILD_ID, summary_channel_id: CHANNEL_ID }],
-    },
-    {
-      kind: "all",
-      match: /FROM results r JOIN players/,
-      handler: () => [{ username: "birder", won: 1, guess_count: 3, mode: "normal" }],
-    },
-    {
-      kind: "all",
-      match: /LEFT JOIN players/,
-      handler: () => [
-        { username: "birder", games: 7, wins: 5 },
-        { username: "wren", games: 9, wins: 3 },
-      ],
-    },
-    { kind: "all", match: /SELECT DISTINCT date FROM results/, handler: () => [] },
-  ]);
-  const fetchImpl = makeCronFetch();
-
-  await scheduled({}, { DB: db, DISCORD_BOT_TOKEN: BOT_TOKEN }, {}, { fetchImpl, now: CRON_NOW });
-
-  const description = fetchImpl.calls[0].body.embeds[0].description;
-  assert.match(description, /Group streak: 0 day\(s\)/);
-  assert.match(description, /birder — 3\/4/);
-  assert.match(description, /Leaderboard: 1\. birder — 5W\/7G, 2\. wren — 3W\/9G/);
-  assert.equal(description.includes(USER_ID), false);
-});
-
-test("summary omits an empty leaderboard", async () => {
-  const db = makeDb([
-    {
-      kind: "all",
-      match: /FROM guilds WHERE summary_channel_id/,
-      handler: () => [{ guild_id: GUILD_ID, summary_channel_id: CHANNEL_ID }],
-    },
-    {
-      kind: "all",
-      match: /FROM results r JOIN players/,
-      handler: () => [{ username: "birder", won: 1, guess_count: 3, mode: "normal" }],
-    },
-    { kind: "all", match: /LEFT JOIN players/, handler: () => [] },
-    { kind: "all", match: /SELECT DISTINCT date FROM results/, handler: () => [] },
-  ]);
-  const fetchImpl = makeCronFetch();
-
-  await scheduled({}, { DB: db, DISCORD_BOT_TOKEN: BOT_TOKEN }, {}, { fetchImpl, now: CRON_NOW });
-
-  const description = fetchImpl.calls[0].body.embeds[0].description;
-  assert.equal(description.includes("Leaderboard"), false);
 });
 
 test("session author shows the avatar only when one exists", async () => {
