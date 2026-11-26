@@ -221,7 +221,9 @@ test("hard result builds the taxonomic grid and patches the stored message", asy
   assert.deepEqual(patch.body.allowed_mentions, { parse: [] });
   assert.match(patch.body.embeds[0].description, /🟩🟨🟧🟥$/u);
   assert.match(patch.body.embeds[0].description, /X\/6/u);
-  assert.equal(db.calls.some((statement) => statement.sql.startsWith("INSERT")), false);
+  const inserts = db.calls.map((statement) => statement.sql);
+  assert.ok(inserts.some((sql) => sql.startsWith("INSERT INTO players")));
+  assert.ok(inserts.some((sql) => sql.startsWith("INSERT INTO results")));
 });
 
 test("normal result uses green/red cells only", async () => {
