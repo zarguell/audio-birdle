@@ -1578,5 +1578,25 @@
       "name": "Chestnut-vented Warbler",
       "subregion": "South Africa"
     }
+  ],
+  "cr": [
+    {
+      "date": "2026-11-25",
+      "id": "sctlea1",
+      "name": "Scaly-throated Leaftosser",
+      "subregion": "Costa Rica"
+    },
+    {
+      "date": "2026-11-26",
+      "id": "colred1",
+      "name": "Collared Whitestart",
+      "subregion": "Costa Rica"
+    },
+    {
+      "date": "2026-11-27",
+      "id": "cobtan1",
+      "name": "Common Chlorospingus",
+      "subregion": "Costa Rica"
+    }
   ]
 }

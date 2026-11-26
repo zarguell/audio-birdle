@@ -1597,6 +1597,13 @@
   },
   {
     "date": "2026-11-25",
+    "region": "cr",
+    "answerHash": "3cc4207d",
+    "id": "sctlea1",
+    "subregion": "Costa Rica"
+  },
+  {
+    "date": "2026-11-25",
     "region": "gb",
     "answerHash": "3458b3af",
     "id": "eursis",
@@ -1646,6 +1653,13 @@
   },
   {
     "date": "2026-11-26",
+    "region": "cr",
+    "answerHash": "776572ea",
+    "id": "colred1",
+    "subregion": "Costa Rica"
+  },
+  {
+    "date": "2026-11-26",
     "region": "gb",
     "answerHash": "2ab6b943",
     "id": "commoo3",
@@ -1692,6 +1706,13 @@
     "answerHash": "bdfd2ace",
     "id": "amtspa",
     "subregion": "Canada"
+  },
+  {
+    "date": "2026-11-27",
+    "region": "cr",
+    "answerHash": "b97e8bc4",
+    "id": "cobtan1",
+    "subregion": "Costa Rica"
   },
   {
     "date": "2026-11-27",
