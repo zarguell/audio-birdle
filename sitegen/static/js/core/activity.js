@@ -99,6 +99,53 @@ let activityReady = null;
 let activityTimedOut = false;
 const ACTIVITY_READY_TIMEOUT_MS = 8000;
 
+const AUTH_CACHE_KEY = "audio-birdle-activity-auth";
+const AUTH_CACHE_TTL_MS = 60 * 60 * 1000;
+
+/**
+ * The Activity is a multi-page site, so a full navigation would otherwise
+ * repeat the SDK handshake on every page. Cache the authenticated context for
+ * this tab (sessionStorage, never localStorage); the access token stays out of
+ * the web origin and disappears when the Activity tab closes.
+ */
+export function readActivityCache() {
+  try {
+    const raw = globalThis.sessionStorage?.getItem(AUTH_CACHE_KEY);
+    if (!raw) {
+      return null;
+    }
+    const parsed = JSON.parse(raw);
+    if (
+      !parsed ||
+      typeof parsed.accessToken !== "string" ||
+      typeof parsed.user?.id !== "string" ||
+      typeof parsed.at !== "number" ||
+      Date.now() - parsed.at > AUTH_CACHE_TTL_MS
+    ) {
+      return null;
+    }
+    return {
+      user: parsed.user,
+      accessToken: parsed.accessToken,
+      guildId: typeof parsed.guildId === "string" ? parsed.guildId : null,
+      channelId: typeof parsed.channelId === "string" ? parsed.channelId : null,
+    };
+  } catch {
+    return null;
+  }
+}
+
+export function writeActivityCache(context) {
+  try {
+    globalThis.sessionStorage?.setItem(
+      AUTH_CACHE_KEY,
+      JSON.stringify({ ...context, at: Date.now() }),
+    );
+  } catch {
+    // Cache is an optimization; in-memory context still works for this page.
+  }
+}
+
 async function bootstrapActivity(options) {
   const fetchImpl = options?.fetchImpl ?? globalThis.fetch;
 
@@ -153,6 +200,7 @@ async function bootstrapActivity(options) {
       guild: Boolean(activityContext.guildId),
       channel: Boolean(activityContext.channelId),
     });
+    writeActivityCache(activityContext);
     return { user };
   } catch (error) {
     console.warn("Discord Activity initialisation failed:", error);
@@ -185,10 +233,22 @@ export function initActivity(options = {}) {
     return Promise.resolve(null);
   }
   if (activityReady === null) {
-    activityReady = withTimeout(
-      bootstrapActivity(options),
-      ACTIVITY_READY_TIMEOUT_MS,
-    );
+    const cached = readActivityCache();
+    if (cached) {
+      activityContext = cached;
+      setStorageNamespace(`discord-${cached.user.id}`);
+      document?.documentElement?.classList.add("is-activity");
+      console.info("activity: restored", {
+        guild: Boolean(cached.guildId),
+        channel: Boolean(cached.channelId),
+      });
+      activityReady = Promise.resolve(cached);
+    } else {
+      activityReady = withTimeout(
+        bootstrapActivity(options),
+        ACTIVITY_READY_TIMEOUT_MS,
+      );
+    }
   }
   return activityReady;
 }

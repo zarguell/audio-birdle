@@ -7,7 +7,9 @@ import {
   isActivity,
   postBoardResult,
   startBoardSession,
+  readActivityCache,
   whenActivityReady,
+  writeActivityCache,
 } from "../../sitegen/static/js/core/activity.js";
 import { mapActivityMediaUrl } from "../../sitegen/static/js/core/audio.js";
 import {
@@ -335,4 +337,40 @@ test("Activity media mapping rewrites only the known audio hosts", () => {
     mapActivityMediaUrl("https://example.com/a.mp3", { inActivity: true }),
     "https://example.com/a.mp3",
   );
+});
+
+test("activity auth cache round-trips and rejects stale records", () => {
+  const store = new Map();
+  const original = globalThis.sessionStorage;
+  globalThis.sessionStorage = {
+    getItem: (key) => store.get(key) ?? null,
+    setItem: (key, value) => store.set(key, value),
+    removeItem: (key) => store.delete(key),
+  };
+  try {
+    writeActivityCache({
+      user: { id: "1", username: "birder" },
+      accessToken: "token",
+      guildId: "g",
+      channelId: "c",
+    });
+    const cached = readActivityCache();
+    assert.equal(cached.user.id, "1");
+    assert.equal(cached.accessToken, "token");
+    assert.equal(cached.guildId, "g");
+
+    store.set(
+      "audio-birdle-activity-auth",
+      JSON.stringify({
+        user: { id: "1" },
+        accessToken: "token",
+        guildId: "g",
+        channelId: "c",
+        at: 0,
+      }),
+    );
+    assert.equal(readActivityCache(), null);
+  } finally {
+    globalThis.sessionStorage = original;
+  }
 });
