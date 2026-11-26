@@ -152,6 +152,9 @@ async function bootstrapActivity(options) {
     return { user };
   } catch (error) {
     console.warn("Discord Activity initialisation failed:", error);
+    // The proxy origin still shares this storage. If the handshake failed the
+    // user is not authenticated, so never read or write the web game keys.
+    setStorageNamespace("activity-unauthenticated");
     return null;
   }
 }
@@ -162,6 +165,7 @@ function withTimeout(promise, ms) {
     timer = setTimeout(() => {
       activityTimedOut = true;
       console.warn("Discord Activity handshake timed out");
+      setStorageNamespace("activity-unauthenticated");
       resolve(null);
     }, ms);
   });

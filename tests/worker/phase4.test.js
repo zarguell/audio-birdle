@@ -16,6 +16,7 @@ const MESSAGE_ID = "345678901234567890";
 const USER_ID = "567890123456789012";
 const USER_TOKEN = "user-oauth-token";
 const BOT_TOKEN = "bot-token";
+const CLIENT_ID = "111222333444555666";
 const USER = { id: USER_ID, username: "birder", avatar: "abc123" };
 
 const MANAGE_GUILD = String(0x20);
@@ -40,7 +41,7 @@ const publicKeyHex = toHex(
 );
 
 async function signedRequest(payload) {
-  const timestamp = "1700000000";
+  const timestamp = String(Math.floor(Date.now() / 1000));
   const body = JSON.stringify(payload);
   const signature = await globalThis.crypto.subtle.sign(
     { name: "Ed25519" },
@@ -63,6 +64,7 @@ function commandPayload(subcommand, options = [], { permissions = MANAGE_GUILD }
   return {
     type: 2,
     guild_id: GUILD_ID,
+    channel_id: CHANNEL_ID,
     member: { user: { id: USER_ID }, permissions },
     data: {
       name: "audiobirdle",
@@ -90,7 +92,10 @@ function makeDb(handlers = []) {
         },
         async first() {
           const handler = findHandler(sql, "first");
-          return handler ? handler(this.args) : null;
+          if (handler) return handler(this.args);
+          if (sql.includes("FROM launches")) return { created_at: Date.now() };
+          if (sql.startsWith("INSERT INTO rate_limits")) return { count: 1 };
+          return null;
         },
         async all() {
           const handler = findHandler(sql, "all");
@@ -121,7 +126,12 @@ function makeBoardFetch() {
     };
     calls.push(call);
 
-    if (pathname === "/api/v10/users/@me") return jsonResponse(USER);
+    if (pathname === "/api/v10/oauth2/@me") {
+      return jsonResponse({ application: { id: CLIENT_ID }, user: USER });
+    }
+    if (pathname === `/api/v10/guilds/${GUILD_ID}/members/${USER_ID}`) {
+      return jsonResponse({ user: { id: USER_ID } });
+    }
     if (pathname === `/api/v10/channels/${CHANNEL_ID}`) {
       return jsonResponse({ id: CHANNEL_ID, guild_id: GUILD_ID });
     }
@@ -151,6 +161,26 @@ function makeCronFetch() {
   return fetchImpl;
 }
 
+function makeSetupFetch(guildId = GUILD_ID) {
+  return async (url) => {
+    const { pathname } = new URL(url);
+    if (pathname === `/api/v10/channels/${CHANNEL_ID}`) {
+      return jsonResponse({ id: CHANNEL_ID, guild_id: guildId });
+    }
+    return jsonResponse({ error: "not_found" }, 404);
+  };
+}
+
+async function withGlobalFetch(fetchImpl, fn) {
+  const original = globalThis.fetch;
+  globalThis.fetch = fetchImpl;
+  try {
+    return await fn();
+  } finally {
+    globalThis.fetch = original;
+  }
+}
+
 function resultRequest() {
   const body = {
     guildId: GUILD_ID,
@@ -177,7 +207,7 @@ test("result persists the player and outcome without guesses", async () => {
 
   const response = await handleResult(
     resultRequest(),
-    { DISCORD_BOT_TOKEN: BOT_TOKEN, DB: db },
+    { DISCORD_BOT_TOKEN: BOT_TOKEN, DISCORD_CLIENT_ID: CLIENT_ID, DB: db },
     { fetchImpl },
   );
 
@@ -230,12 +260,14 @@ test("setup without MANAGE_GUILD is ephemeral and writes nothing", async () => {
 
 test("setup with MANAGE_GUILD stores the summary channel", async () => {
   const db = makeDb();
-  const response = await worker.fetch(
-    await signedRequest(
-      commandPayload("setup", [{ type: 7, name: "channel", value: CHANNEL_ID }]),
+  const response = await withGlobalFetch(makeSetupFetch(), async () =>
+    worker.fetch(
+      await signedRequest(
+        commandPayload("setup", [{ type: 7, name: "channel", value: CHANNEL_ID }]),
+      ),
+      { DISCORD_PUBLIC_KEY: publicKeyHex, DISCORD_BOT_TOKEN: BOT_TOKEN, DB: db },
+      {},
     ),
-    { DISCORD_PUBLIC_KEY: publicKeyHex, DB: db },
-    {},
   );
 
   const body = await response.json();

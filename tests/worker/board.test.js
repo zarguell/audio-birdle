@@ -12,6 +12,7 @@ const MESSAGE_ID = "345678901234567890";
 const OTHER_GUILD_ID = "456789012345678901";
 const USER_TOKEN = "user-oauth-token";
 const BOT_TOKEN = "bot-token";
+const CLIENT_ID = "111222333444555666";
 
 const USER = { id: "567890123456789012", username: "birder", avatar: "abc123" };
 
@@ -35,7 +36,12 @@ function makeFetch({ guildId = GUILD_ID, messageId = MESSAGE_ID } = {}) {
     };
     calls.push(call);
 
-    if (pathname === "/api/v10/users/@me") return jsonResponse(USER);
+    if (pathname === "/api/v10/oauth2/@me") {
+      return jsonResponse({ application: { id: CLIENT_ID }, user: USER });
+    }
+    if (pathname === `/api/v10/guilds/${GUILD_ID}/members/${USER.id}`) {
+      return jsonResponse({ user: { id: USER.id } });
+    }
     if (pathname === `/api/v10/channels/${CHANNEL_ID}`) {
       return jsonResponse({ id: CHANNEL_ID, guild_id: guildId });
     }
@@ -54,7 +60,7 @@ function makeFetch({ guildId = GUILD_ID, messageId = MESSAGE_ID } = {}) {
   return fetchImpl;
 }
 
-function makeDb({ existing = null } = {}) {
+function makeDb({ existing = null, launch = { created_at: Date.now() } } = {}) {
   const calls = [];
   return {
     calls,
@@ -67,6 +73,8 @@ function makeDb({ existing = null } = {}) {
           return this;
         },
         async first() {
+          if (sql.includes("FROM launches")) return launch;
+          if (sql.startsWith("INSERT INTO rate_limits")) return { count: 1 };
           return existing;
         },
         async run() {
@@ -77,6 +85,10 @@ function makeDb({ existing = null } = {}) {
       return statement;
     },
   };
+}
+
+function makeEnv(db = makeDb()) {
+  return { DISCORD_BOT_TOKEN: BOT_TOKEN, DISCORD_CLIENT_ID: CLIENT_ID, DB: db };
 }
 
 function boardRequest(path, body, { token = USER_TOKEN } = {}) {
@@ -117,7 +129,7 @@ test("session without a bearer token returns 401 and makes no Discord call", asy
   const fetchImpl = makeFetch();
   const response = await handleSession(
     boardRequest("/api/session", SESSION_BODY, { token: null }),
-    { DISCORD_BOT_TOKEN: BOT_TOKEN, DB: makeDb() },
+    makeEnv(),
     { fetchImpl },
   );
 
@@ -129,7 +141,7 @@ test("session with an invalid body returns 400", async () => {
   const fetchImpl = makeFetch();
   const response = await handleSession(
     boardRequest("/api/session", { ...SESSION_BODY, date: "26-11-2026" }),
-    { DISCORD_BOT_TOKEN: BOT_TOKEN, DB: makeDb() },
+    makeEnv(),
     { fetchImpl },
   );
 
@@ -141,7 +153,7 @@ test("session rejects a channel outside the claimed guild with 403", async () =>
   const fetchImpl = makeFetch({ guildId: OTHER_GUILD_ID });
   const response = await handleSession(
     boardRequest("/api/session", SESSION_BODY),
-    { DISCORD_BOT_TOKEN: BOT_TOKEN, DB: makeDb() },
+    makeEnv(),
     { fetchImpl },
   );
 
@@ -154,7 +166,7 @@ test("session posts once with allowed_mentions and stores the message id", async
   const db = makeDb();
   const response = await handleSession(
     boardRequest("/api/session", SESSION_BODY),
-    { DISCORD_BOT_TOKEN: BOT_TOKEN, DB: db },
+    makeEnv(db),
     { fetchImpl },
   );
 
@@ -162,7 +174,7 @@ test("session posts once with allowed_mentions and stores the message id", async
   assert.deepEqual(await response.json(), { messageId: MESSAGE_ID, user: USER });
 
   const [me] = fetchImpl.calls;
-  assert.equal(me.headers.authorization, USER_TOKEN, "user calls use the OAuth token");
+  assert.equal(me.headers.authorization, `Bearer ${USER_TOKEN}`, "user calls use a bearer token");
 
   const [post] = pageCalls(fetchImpl, "POST");
   assert.equal(post.headers.authorization, `Bot ${BOT_TOKEN}`);
@@ -173,7 +185,7 @@ test("session posts once with allowed_mentions and stores the message id", async
   assert.equal(post.body.embeds[0].description, "Region: US · Normal");
 
   const insert = db.calls.find((statement) => statement.sql.startsWith("INSERT INTO boards"));
-  assert.deepEqual(insert.args, [GUILD_ID, CHANNEL_ID, USER.id, "2026-11-26", MESSAGE_ID]);
+  assert.deepEqual(insert.args, [GUILD_ID, CHANNEL_ID, USER.id, "2026-11-26", "normal", MESSAGE_ID]);
 });
 
 test("session returns the existing board without posting again", async () => {
@@ -181,7 +193,7 @@ test("session returns the existing board without posting again", async () => {
   const db = makeDb({ existing: { message_id: MESSAGE_ID } });
   const response = await handleSession(
     boardRequest("/api/session", SESSION_BODY),
-    { DISCORD_BOT_TOKEN: BOT_TOKEN, DB: db },
+    makeEnv(db),
     { fetchImpl },
   );
 
@@ -209,7 +221,7 @@ test("hard result builds the taxonomic grid and patches the stored message", asy
         ],
       }),
     ),
-    { DISCORD_BOT_TOKEN: BOT_TOKEN, DB: db },
+    makeEnv(db),
     { fetchImpl },
   );
 
@@ -233,7 +245,7 @@ test("normal result uses green/red cells only", async () => {
       "/api/result",
       resultBody({ won: false, guesses: [{ correct: false }, { correct: true }] }),
     ),
-    { DISCORD_BOT_TOKEN: BOT_TOKEN, DB: makeDb({ existing: { message_id: MESSAGE_ID } }) },
+    makeEnv(makeDb({ existing: { message_id: MESSAGE_ID } })),
     { fetchImpl },
   );
 
@@ -246,7 +258,7 @@ test("result without a board row returns 409 and does not patch", async () => {
   const fetchImpl = makeFetch();
   const response = await handleResult(
     boardRequest("/api/result", resultBody()),
-    { DISCORD_BOT_TOKEN: BOT_TOKEN, DB: makeDb() },
+    makeEnv(),
     { fetchImpl },
   );
 
