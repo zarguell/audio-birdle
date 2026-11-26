@@ -266,8 +266,9 @@ needed, and regions without a filter file keep their old behavior. An optional
 `<region>-daily-regular-species.json` takes priority for the current season
 when a country-level pool needs a stricter seasonal filter.
 
-The pilot gate is **50% audio coverage of the regular pool** and **at least 150
-playable species** for the country. Subregions are optional: their playable
+The pilot gate is **50% audio coverage of the regular pool** and **at least 100
+playable species** for the country (150 preferred). Each gameplay shard must
+stay at or below **200 KB gzip**; the build fails above that budget. Subregions are optional: their playable
 counts are advisory, and `--min-playable-per-subregion` only controls a warning
 — it never blocks a country. A subregion with no playable species should be
 excluded or grouped, but a country with one thin territory is still playable at

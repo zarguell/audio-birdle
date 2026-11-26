@@ -13,6 +13,7 @@ involved.
 
 from __future__ import annotations
 
+import gzip
 import hashlib
 import json
 import re
@@ -25,6 +26,7 @@ from typing import Any
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 from .config import (
+    BIRD_SHARD_GZIP_BUDGET,
     DATA_SUBDIR,
     DEFAULT_OUTPUT_DIR,
     PUBLIC_DIR,
@@ -281,6 +283,19 @@ def _copy_assets(paths: BuildPaths, output_dir: Path, build_id: str) -> None:
     )
 
 
+def _bird_shard_stats(output_dir: Path) -> dict[str, dict[str, int]]:
+    """Return raw and gzip sizes for every gameplay shard."""
+    stats: dict[str, dict[str, int]] = {}
+    shard_dir = output_dir / DATA_SUBDIR / "birds"
+    for path in sorted(shard_dir.glob("*.json")):
+        raw = path.read_bytes()
+        stats[path.stem] = {
+            "bytes": len(raw),
+            "gzip_bytes": len(gzip.compress(raw, 9)),
+        }
+    return stats
+
+
 def _write_data_manifest(output_dir: Path) -> dict[str, Any]:
     manifest_path = write_manifest(output_dir / DATA_SUBDIR)
     return json.loads(manifest_path.read_text(encoding="utf-8"))
@@ -329,6 +344,17 @@ def build_site(
         paths.templates_dir,
     )
     manifest = _write_data_manifest(output_dir)
+    bird_shards = _bird_shard_stats(output_dir)
+    oversized = {
+        region: size
+        for region, size in bird_shards.items()
+        if size["gzip_bytes"] > BIRD_SHARD_GZIP_BUDGET
+    }
+    if oversized:
+        raise BuildError(
+            "Bird shard gzip budget exceeded "
+            f"({BIRD_SHARD_GZIP_BUDGET} bytes): {oversized}"
+        )
     _write_support_files(output_dir, identity)
     _write_version(output_dir, manifest)
 
@@ -340,6 +366,11 @@ def build_site(
         "regions": len(regions),
         "data_files": len(manifest["files"]),
         "data_manifest_digest": manifest_digest(manifest),
+        "bird_shard_gzip_budget_bytes": BIRD_SHARD_GZIP_BUDGET,
+        "bird_shard_max_gzip_bytes": max(
+            (entry["gzip_bytes"] for entry in bird_shards.values()), default=0
+        ),
+        "bird_shards": bird_shards,
     }
     _write_build_summary(output_dir, summary)
     return summary

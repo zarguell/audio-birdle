@@ -1,7 +1,8 @@
 # Region roadmap
 
-Audio-Birdle is expanding one country at a time. The goal is **12–15
-well-covered regions**, not global completeness. Each region must be playable
+Audio-Birdle is expanding one country at a time. The current cap is **25
+selectable regions** (including the US Lower 48 virtual region); the goal is
+good coverage, not global completeness. Each region must be playable
 with its own daily challenge, audio, and regular-species filter.
 
 Tracking issue: [#676](https://github.com/zarguell/audio-birdle/issues/676).
@@ -32,6 +33,10 @@ Tracking issue: [#676](https://github.com/zarguell/audio-birdle/issues/676).
 Bird data is sharded per region under `public/data/birds/`. The client loads
 only the selected region's shard; the manifest includes every shard. This keeps
 the game payload roughly constant as the region count grows.
+
+**Payload budget:** every gameplay shard must be at most **200 KB gzip**. The
+build fails if a shard exceeds that budget. Current largest shard is Australia
+at ~184 KB gzip.
 
 ## Candidate data
 
@@ -87,8 +92,16 @@ One country is onboarded at a time, even when a wave lists several.
 8. **Spain** — complete.
 9. **Italy** — complete.
 10. **Netherlands** — complete.
+11. **Portugal** — next.
+12. **Mexico**
+13. **Argentina**
+14. **Thailand**
+15. **Malaysia**
+16. **Kenya**
+17. **Taiwan**
+18. **Singapore**
 
-The 15-region cap is reached. Remaining backlog candidates are deferred until the cap is raised or a region is retired.
+The cap is raised to 25 selectable regions. Remaining backlog is active.
 
 ### Backlog
 Germany, Spain, Italy, Netherlands, Portugal, Mexico, Argentina, Thailand,

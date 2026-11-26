@@ -261,3 +261,12 @@ def test_templates_and_static_tree_are_the_source(
 
 def is_non_empty_dir(path: Path) -> bool:
     return path.is_dir() and any(path.iterdir())
+
+
+def test_bird_shard_payload_stays_within_budget(built_site: tuple[Path, dict]) -> None:
+    _, summary = built_site
+    shards = summary["bird_shards"]
+    assert shards
+    assert (
+        summary["bird_shard_max_gzip_bytes"] <= summary["bird_shard_gzip_budget_bytes"]
+    )
