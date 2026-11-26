@@ -149,6 +149,10 @@ async function bootstrapActivity(options) {
       guildId: typeof sdk.guildId === "string" ? sdk.guildId : null,
       channelId: typeof sdk.channelId === "string" ? sdk.channelId : null,
     };
+    console.info("activity: ready", {
+      guild: Boolean(activityContext.guildId),
+      channel: Boolean(activityContext.channelId),
+    });
     return { user };
   } catch (error) {
     console.warn("Discord Activity initialisation failed:", error);
@@ -257,6 +261,13 @@ function postJson(url, body, accessToken) {
  */
 export async function startBoardSession({ date, mode, region } = {}) {
   const context = activityContext;
+  console.info("board: start", {
+    date,
+    mode,
+    region,
+    guild: Boolean(context?.guildId),
+    channel: Boolean(context?.channelId),
+  });
   if (!context?.guildId || !context?.channelId) {
     return null;
   }
@@ -280,6 +291,7 @@ export async function startBoardSession({ date, mode, region } = {}) {
     if (typeof payload?.messageId === "string" && payload.messageId) {
       boardMessageId = payload.messageId;
     }
+    console.info("board: session ok", payload?.messageId ?? "");
     return payload;
   } catch (error) {
     console.warn("Discord board session failed:", error);
