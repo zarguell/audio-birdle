@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-07-29",
-      "id": "blkter",
-      "name": "Black Tern",
-      "subregion": "Maine"
-    },
-    {
       "date": "2026-07-30",
       "id": "norfli",
       "name": "Northern Flicker",
@@ -725,15 +719,15 @@
       "id": "easmea",
       "name": "Eastern Meadowlark",
       "subregion": "Maryland"
+    },
+    {
+      "date": "2026-11-27",
+      "id": "fiscro",
+      "name": "Fish Crow",
+      "subregion": "Rhode Island"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-07-29",
-      "id": "comgra",
-      "name": "Common Grackle",
-      "subregion": "Mississippi"
-    },
     {
       "date": "2026-07-30",
       "id": "robgro",
@@ -1453,6 +1447,12 @@
       "id": "osprey",
       "name": "Osprey",
       "subregion": "Idaho"
+    },
+    {
+      "date": "2026-11-27",
+      "id": "retloo",
+      "name": "Red-throated Loon",
+      "subregion": "Minnesota"
     }
   ],
   "gb": [
@@ -1473,6 +1473,12 @@
       "id": "commoo3",
       "name": "Eurasian Moorhen",
       "subregion": "Wales"
+    },
+    {
+      "date": "2026-11-27",
+      "id": "norsho",
+      "name": "Northern Shoveler",
+      "subregion": "Scotland"
     }
   ],
   "ca": [
@@ -1492,6 +1498,12 @@
       "date": "2026-11-26",
       "id": "wiltur",
       "name": "Wild Turkey",
+      "subregion": "Canada"
+    },
+    {
+      "date": "2026-11-27",
+      "id": "amtspa",
+      "name": "American Tree Sparrow",
       "subregion": "Canada"
     }
   ],
@@ -1513,6 +1525,12 @@
       "id": "olbori1",
       "name": "Olive-backed Oriole",
       "subregion": "Australia"
+    },
+    {
+      "date": "2026-11-27",
+      "id": "maslap1",
+      "name": "Masked Lapwing",
+      "subregion": "Australia"
     }
   ],
   "ie": [
@@ -1533,6 +1551,32 @@
       "id": "corplo",
       "name": "Common Ringed Plover",
       "subregion": "Ireland"
+    },
+    {
+      "date": "2026-11-27",
+      "id": "norgan",
+      "name": "Northern Gannet",
+      "subregion": "Ireland"
+    }
+  ],
+  "za": [
+    {
+      "date": "2026-11-25",
+      "id": "serthr1",
+      "name": "Sentinel Rock-Thrush",
+      "subregion": "South Africa"
+    },
+    {
+      "date": "2026-11-26",
+      "id": "rebshr1",
+      "name": "Red-backed Shrike",
+      "subregion": "South Africa"
+    },
+    {
+      "date": "2026-11-27",
+      "id": "ruvwar2",
+      "name": "Chestnut-vented Warbler",
+      "subregion": "South Africa"
     }
   ]
 }

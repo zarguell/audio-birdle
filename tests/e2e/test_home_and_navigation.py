@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import re
 
+from .helpers import load_json
+
 
 def test_home_lists_regions_and_primary_navigation(page, base_url, console_errors):
     page.goto(f"{base_url}/", wait_until="networkidle")
@@ -28,7 +30,7 @@ def test_home_lists_regions_and_primary_navigation(page, base_url, console_error
 
 def test_region_directory_search_filter_and_pin(page, base_url, console_errors):
     page.goto(f"{base_url}/regions/", wait_until="networkidle")
-    assert page.locator("[data-region-row]").count() == 6
+    assert page.locator("[data-region-row]").count() == len(load_json("regions.json"))
 
     page.locator("[data-region-search]").fill("australia")
     assert page.locator("[data-region-row]:visible").count() == 1
@@ -129,6 +131,19 @@ def test_ie_country_pool_opens_normal_game(page, base_url, console_errors):
 
     page.locator('[data-mode-card="normal"]').click()
     page.wait_for_url(re.compile(r"/normal/\?region=ie$"))
+    page.wait_for_selector(".answer-option")
+
+    assert page.locator(".answer-option").count() == 4
+    assert page.locator("[data-audio]").get_attribute("src").startswith("https://")
+    assert not console_errors
+
+
+def test_za_country_pool_opens_normal_game(page, base_url, console_errors):
+    page.goto(f"{base_url}/play/?region=za", wait_until="networkidle")
+    assert page.locator("[data-region-label]").first.inner_text() == "South Africa"
+
+    page.locator('[data-mode-card="normal"]').click()
+    page.wait_for_url(re.compile(r"/normal/\?region=za$"))
     page.wait_for_selector(".answer-option")
 
     assert page.locator(".answer-option").count() == 4

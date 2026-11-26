@@ -1624,6 +1624,13 @@
     "subregion": "North Dakota"
   },
   {
+    "date": "2026-11-25",
+    "region": "za",
+    "answerHash": "88198ab7",
+    "id": "serthr1",
+    "subregion": "South Africa"
+  },
+  {
     "date": "2026-11-26",
     "region": "au",
     "answerHash": "c96afa7a",
@@ -1664,5 +1671,61 @@
     "answerHash": "712b3f50",
     "id": "osprey",
     "subregion": "Idaho"
+  },
+  {
+    "date": "2026-11-26",
+    "region": "za",
+    "answerHash": "17235c67",
+    "id": "rebshr1",
+    "subregion": "South Africa"
+  },
+  {
+    "date": "2026-11-27",
+    "region": "au",
+    "answerHash": "a8463af5",
+    "id": "maslap1",
+    "subregion": "Australia"
+  },
+  {
+    "date": "2026-11-27",
+    "region": "ca",
+    "answerHash": "bdfd2ace",
+    "id": "amtspa",
+    "subregion": "Canada"
+  },
+  {
+    "date": "2026-11-27",
+    "region": "gb",
+    "answerHash": "c902cd01",
+    "id": "norsho",
+    "subregion": "Scotland"
+  },
+  {
+    "date": "2026-11-27",
+    "region": "ie",
+    "answerHash": "89323227",
+    "id": "norgan",
+    "subregion": "Ireland"
+  },
+  {
+    "date": "2026-11-27",
+    "region": "us",
+    "answerHash": "eb77045a",
+    "id": "fiscro",
+    "subregion": "Rhode Island"
+  },
+  {
+    "date": "2026-11-27",
+    "region": "us-lower48",
+    "answerHash": "13fda27f",
+    "id": "retloo",
+    "subregion": "Minnesota"
+  },
+  {
+    "date": "2026-11-27",
+    "region": "za",
+    "answerHash": "de38606d",
+    "id": "ruvwar2",
+    "subregion": "South Africa"
   }
 ]

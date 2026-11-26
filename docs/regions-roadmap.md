@@ -15,6 +15,7 @@ Tracking issue: [#676](https://github.com/zarguell/audio-birdle/issues/676).
 | United States | 704 | Includes the `us-lower48` virtual region |
 | United Kingdom | 235 | England, Northern Ireland, Scotland, Wales |
 | Ireland | 139 | Country-level pool; 106 in the current daily filter |
+| South Africa | 489 | Country-level pool; 478 in the current daily filter |
 | Canada | 344 | Country-level pool |
 | Australia | 525 | Country-level pool |
 
@@ -33,7 +34,7 @@ regularity, quality, length, and licensing.
 | Country | eBird species | XC species | XC/eBird | Status |
 |---|---:|---:|---:|---|
 | Ireland | 505 | 264 | 52% | **Live** — 139 playable |
-| South Africa | 903 | 619 | 69% | Next — [#671](https://github.com/zarguell/audio-birdle/issues/671) |
+| South Africa | 903 | 619 | 69% | **Live** — 489 playable |
 | Costa Rica | 973 | 657 | 68% | Audit — [#672](https://github.com/zarguell/audio-birdle/issues/672) |
 | France | 722 | 631 | 87% | Audit — [#673](https://github.com/zarguell/audio-birdle/issues/673) |
 | Japan | 693 | 254 | 37% | Audit — [#674](https://github.com/zarguell/audio-birdle/issues/674) |
@@ -63,10 +64,10 @@ One country is onboarded at a time, even when a wave lists several.
 
 ### Wave 1 — high-confidence, low-risk
 1. **Ireland** — complete.
-2. **South Africa** — next; high coverage and a distinct avifauna.
+2. **South Africa** — complete.
 
 ### Wave 2 — flagship coverage
-3. **Costa Rica** — strong Neotropical coverage.
+3. **Costa Rica** — next; strong Neotropical coverage.
 4. **France** — highest XC coverage among the large European candidates.
 
 ### Wave 3 — unique/large
