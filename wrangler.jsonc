@@ -16,8 +16,7 @@
     {
       "binding": "DB",
       "database_name": "audio-birdle",
-      // Placeholder: replace with the id printed by `wrangler d1 create audio-birdle`.
-      "database_id": "00000000-0000-0000-0000-000000000000",
+      "database_id": "eecd53d4-8f92-47c9-ba60-eea5e963c7a3",
       "migrations_dir": "worker/migrations"
     }
   ]
