@@ -31,7 +31,8 @@ async function signedRequest(payload, { timestamp = "1700000000", tamperBody = f
       "x-signature-ed25519": toHex(new Uint8Array(signature)),
       "x-signature-timestamp": timestamp,
     },
-    body: tamperBody ? body.replace("audiobirdle", "audiobirdl3") : body,
+    // Mutate the payload after signing so the transmitted body never matches the signature.
+    body: tamperBody ? `${body} ` : body,
   });
 }
 
