@@ -7,7 +7,7 @@
   "scripts": {
     "build": "bash scripts/build-site.sh",
     "lint": "npm run lint:js && npm run lint:css",
-    "lint:js": "eslint sitegen/static/js tests/js",
+    "lint:js": "eslint sitegen/static/js worker tests",
     "lint:css": "stylelint \"sitegen/static/css/**/*.css\"",
     "test:js": "node --test tests/js/*.test.js"
   },

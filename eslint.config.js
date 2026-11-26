@@ -13,7 +13,7 @@ export default [
     ],
   },
   {
-    files: ["sitegen/static/js/**/*.js"],
+    files: ["sitegen/static/js/**/*.js", "worker/**/*.js"],
     languageOptions: {
       ecmaVersion: 2022,
       sourceType: "module",
@@ -30,7 +30,7 @@ export default [
     },
   },
   {
-    files: ["tests/js/**/*.js"],
+    files: ["tests/js/**/*.js", "tests/worker/**/*.js"],
     languageOptions: {
       ecmaVersion: 2022,
       sourceType: "module",
