@@ -71,6 +71,174 @@
   }
 }
 
+@keyframes bird-idle {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes bird-correct {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  20% {
+    transform: translate(calc(-20px * var(--bird-flight-scale, 1)),
+        calc(-28px * var(--bird-flight-scale, 1)));
+  }
+
+  50% {
+    transform: translate(calc(38px * var(--bird-flight-scale, 1)),
+        calc(-42px * var(--bird-flight-scale, 1)));
+  }
+
+  75% {
+    transform: translate(calc(64px * var(--bird-flight-scale, 1)),
+        calc(-24px * var(--bird-flight-scale, 1)));
+  }
+}
+
+@keyframes bird-wrong {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  25% {
+    transform: translate(calc(-14px * var(--bird-flight-scale, 1)),
+        calc(-9px * var(--bird-flight-scale, 1)));
+  }
+
+  50% {
+    transform: translate(calc(12px * var(--bird-flight-scale, 1)),
+        calc(-9px * var(--bird-flight-scale, 1)));
+  }
+
+  75% {
+    transform: translate(calc(-8px * var(--bird-flight-scale, 1)),
+        calc(-4px * var(--bird-flight-scale, 1)));
+  }
+}
+
+@keyframes bird-win {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  25% {
+    transform: translate(calc(-70px * var(--bird-flight-scale, 1)),
+        calc(-30px * var(--bird-flight-scale, 1)));
+  }
+
+  45% {
+    transform: translate(calc(-150px * var(--bird-flight-scale, 1)),
+        calc(-55px * var(--bird-flight-scale, 1)));
+  }
+
+  65% {
+    transform: translate(calc(-240px * var(--bird-flight-scale, 1)),
+        calc(-20px * var(--bird-flight-scale, 1)));
+  }
+
+  80% {
+    transform: translate(calc(-150px * var(--bird-flight-scale, 1)),
+        calc(-55px * var(--bird-flight-scale, 1)));
+  }
+}
+
+@keyframes bird-lose {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  40% {
+    transform: translate(0, calc(8px * var(--bird-flight-scale, 1)));
+  }
+
+  70% {
+    transform: translate(calc(-10px * var(--bird-flight-scale, 1)),
+        calc(12px * var(--bird-flight-scale, 1)));
+  }
+}
+
+@keyframes bird-play {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  25% {
+    transform: translate(calc(-70px * var(--bird-flight-scale, 1)),
+        calc(-45px * var(--bird-flight-scale, 1)));
+  }
+
+  55% {
+    transform: translate(calc(-140px * var(--bird-flight-scale, 1)),
+        calc(-25px * var(--bird-flight-scale, 1)));
+  }
+
+  80% {
+    transform: translate(calc(-60px * var(--bird-flight-scale, 1)),
+        calc(-55px * var(--bird-flight-scale, 1)));
+  }
+}
+
+.scene-bird {
+  pointer-events: visiblePainted;
+  cursor: pointer;
+}
+
+.scene-bird__motion {
+  transform-box: view-box;
+  transform-origin: 0 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .scene-bird__body {
+    transform-box: fill-box;
+    transform-origin: 50% 100%;
+    animation: bird-idle 3.6s steps(2, end) infinite;
+  }
+
+  .scene-bird[data-state="flying"] .scene-bird__body,
+  .scene-bird[data-state="startled"] .scene-bird__body,
+  .scene-bird[data-state="celebrating"] .scene-bird__body {
+    animation-play-state: paused;
+  }
+
+  .scene-bird.is-animating[data-animation="correct"] .scene-bird__motion {
+    animation: bird-correct 820ms ease-in-out;
+  }
+
+  .scene-bird.is-animating[data-animation="wrong"] .scene-bird__motion {
+    animation: bird-wrong 360ms ease-in-out;
+  }
+
+  .scene-bird.is-animating[data-animation="win"] .scene-bird__motion {
+    animation: bird-win 1250ms ease-in-out;
+  }
+
+  .scene-bird.is-animating[data-animation="lose"] .scene-bird__motion {
+    animation: bird-lose 700ms ease-in-out;
+  }
+
+  .scene-bird.is-animating[data-animation="play"] .scene-bird__motion {
+    animation: bird-play 900ms ease-in-out;
+  }
+}
+
+.game-banner .scene-bird {
+  --bird-flight-scale: 0.55;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .equalizer.is-playing .equalizer__bar {
     animation: none;

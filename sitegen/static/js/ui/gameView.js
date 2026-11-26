@@ -12,6 +12,7 @@ import { createAutocomplete } from "./autocomplete.js";
 import { createCompletionView } from "./completion.js";
 import { startCountdown } from "./countdown.js";
 import { renderGuessList } from "./guessList.js";
+import { ensureSceneBird } from "./sceneBird.js";
 import { notify } from "./toast.js";
 
 async function shareGame(game, mode) {
@@ -32,6 +33,9 @@ export class GameView {
     this.handlers = {};
     this.currentBirdId = null;
     this.countdownStarted = false;
+    this.sceneBird = ensureSceneBird();
+    this.lastGuessCount = null;
+    this.lastCompleted = null;
 
     this.elements = {
       alert: qs("[data-alert]", root),
@@ -242,6 +246,20 @@ export class GameView {
     show(this.elements.guessesSection, guesses.length > 0);
 
     const completed = Boolean(game.completed);
+    const previousGuessCount = this.lastGuessCount;
+    const previousCompleted = this.lastCompleted;
+    this.lastGuessCount = guesses.length;
+    this.lastCompleted = completed;
+
+    if (previousGuessCount !== null) {
+      if (!previousCompleted && completed) {
+        this.sceneBird?.react(game.won ? "win" : "lose");
+      } else if (guesses.length > previousGuessCount) {
+        const latestGuess = guesses[guesses.length - 1];
+        this.sceneBird?.react(latestGuess?.correct ? "correct" : "wrong");
+      }
+    }
+
     const remaining = game.maxGuesses - guesses.length;
 
     if (isHardMode && !completed) {

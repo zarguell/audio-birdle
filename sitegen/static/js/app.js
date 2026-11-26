@@ -1,5 +1,6 @@
 import { STORAGE_KEYS } from "./core/constants.js";
 import { qsa } from "./core/dom.js";
+import { ensureSceneBird } from "./ui/sceneBird.js";
 import {
   readJSON,
   readString,
@@ -120,6 +121,7 @@ export const getLastPlayedMode = () =>
 
 export function initPage() {
   initJellyButtons();
+  ensureSceneBird();
 
   const storedId = getStoredRegionId();
   const storedName = readString(STORAGE_KEYS.REGION_NAME, null);

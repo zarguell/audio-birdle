@@ -108,22 +108,12 @@
       <path d="M1160 540 L1190 456 L1220 540 Z" fill="#2b5238"/>
     </g>
 
-    <!-- branch and pixel bird -->
+    <!-- branch; the bird is rendered as an animated overlay -->
     <g transform="translate(0 100)">
-      <rect x="824" y="454" width="132" height="10" fill="#4e3220"/>
-      <rect x="846" y="464" width="18" height="8" fill="#4e3220"/>
-      <rect x="884" y="464" width="14" height="8" fill="#4e3220"/>
-      <rect x="920" y="464" width="10" height="8" fill="#4e3220"/>
-      <rect x="860" y="424" width="34" height="30" fill="#2f6b8f"/>
-      <rect x="854" y="432" width="42" height="18" fill="#3f86a8"/>
-      <rect x="890" y="414" width="18" height="18" fill="#2f6b8f"/>
-      <rect x="902" y="410" width="8" height="8" fill="#2f6b8f"/>
-      <rect x="910" y="416" width="10" height="6" fill="#e4b44c"/>
-      <rect x="892" y="422" width="6" height="6" fill="#1b1b18"/>
-      <rect x="858" y="454" width="8" height="10" fill="#2a2a26"/>
-      <rect x="884" y="454" width="8" height="10" fill="#2a2a26"/>
-      <rect x="866" y="438" width="14" height="6" fill="#b8474f"/>
-      <rect x="910" y="430" width="12" height="6" fill="#2f6b8f"/>
+      <rect x="674" y="454" width="132" height="10" fill="#4e3220"/>
+      <rect x="696" y="464" width="18" height="8" fill="#4e3220"/>
+      <rect x="734" y="464" width="14" height="8" fill="#4e3220"/>
+      <rect x="770" y="464" width="10" height="8" fill="#4e3220"/>
     </g>
 
     <!-- flowers and grass tufts -->
