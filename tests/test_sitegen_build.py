@@ -267,4 +267,6 @@ def test_bird_shard_payload_stays_within_budget(built_site: tuple[Path, dict]) -
     _, summary = built_site
     shards = summary["bird_shards"]
     assert shards
-    assert summary["bird_shard_max_gzip_bytes"] <= summary["bird_shard_gzip_budget_bytes"]
+    assert (
+        summary["bird_shard_max_gzip_bytes"] <= summary["bird_shard_gzip_budget_bytes"]
+    )
