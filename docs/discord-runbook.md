@@ -83,8 +83,10 @@ them.
 
 ## Command registration
 
-Discord does not show `/audiobirdle` until it is registered via the API. Re-run
-after any command or subcommand change; `PUT` replaces the global command set.
+Four global commands: `/audiobirdle` (launch), `/audiobirdle-setup`,
+`/audiobirdle-stats`, and `/audiobirdle-forget`. Discord does not show them
+until they are registered via the API. Re-run after any command change; `PUT`
+replaces the global command set.
 
 ```bash
 DISCORD_CLIENT_ID=1575529908820516916 DISCORD_BOT_TOKEN=<token> \
