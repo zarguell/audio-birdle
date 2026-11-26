@@ -146,6 +146,23 @@ export function writeActivityCache(context) {
   }
 }
 
+function reportClientState(event, extra = {}) {
+  if (!isActivity()) {
+    return;
+  }
+  try {
+    globalThis
+      .fetch?.("/api/debug", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ event, ...extra }),
+      })
+      .catch(() => {});
+  } catch {
+    // Diagnostics must never affect gameplay.
+  }
+}
+
 async function bootstrapActivity(options) {
   const fetchImpl = options?.fetchImpl ?? globalThis.fetch;
 
@@ -201,6 +218,11 @@ async function bootstrapActivity(options) {
       channel: Boolean(activityContext.channelId),
     });
     writeActivityCache(activityContext);
+    reportClientState("activity-ready", {
+      guild: Boolean(activityContext.guildId),
+      channel: Boolean(activityContext.channelId),
+      hasContext: true,
+    });
     return { user };
   } catch (error) {
     console.warn("Discord Activity initialisation failed:", error);
@@ -241,6 +263,11 @@ export function initActivity(options = {}) {
       console.info("activity: restored", {
         guild: Boolean(cached.guildId),
         channel: Boolean(cached.channelId),
+      });
+      reportClientState("activity-restored", {
+        guild: Boolean(cached.guildId),
+        channel: Boolean(cached.channelId),
+        hasContext: true,
       });
       activityReady = Promise.resolve(cached);
     } else {
@@ -328,6 +355,11 @@ export async function startBoardSession({ date, mode, region } = {}) {
     guild: Boolean(context?.guildId),
     channel: Boolean(context?.channelId),
   });
+  reportClientState("board-start", {
+    guild: Boolean(context?.guildId),
+    channel: Boolean(context?.channelId),
+    hasContext: Boolean(context),
+  });
   if (!context?.guildId || !context?.channelId) {
     return null;
   }
@@ -366,6 +398,12 @@ export async function startBoardSession({ date, mode, region } = {}) {
  */
 export async function postBoardResult(game) {
   const context = activityContext;
+  reportClientState("board-result", {
+    guild: Boolean(context?.guildId),
+    channel: Boolean(context?.channelId),
+    hasContext: Boolean(context),
+    hasBoard: Boolean(boardMessageId),
+  });
   if (!context?.guildId || !context?.channelId || !boardMessageId) {
     return null;
   }
