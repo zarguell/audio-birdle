@@ -1625,6 +1625,13 @@
   },
   {
     "date": "2026-11-25",
+    "region": "jp",
+    "answerHash": "43d7e0fb",
+    "id": "pelcor",
+    "subregion": "Japan"
+  },
+  {
+    "date": "2026-11-25",
     "region": "us",
     "answerHash": "73771c9e",
     "id": "buwtea",
@@ -1688,6 +1695,13 @@
   },
   {
     "date": "2026-11-26",
+    "region": "jp",
+    "answerHash": "d64e6c31",
+    "id": "vartit1",
+    "subregion": "Japan"
+  },
+  {
+    "date": "2026-11-26",
     "region": "us",
     "answerHash": "47c8a158",
     "id": "easmea",
@@ -1748,6 +1762,13 @@
     "answerHash": "89323227",
     "id": "norgan",
     "subregion": "Ireland"
+  },
+  {
+    "date": "2026-11-27",
+    "region": "jp",
+    "answerHash": "1f16a85c",
+    "id": "mallar3",
+    "subregion": "Japan"
   },
   {
     "date": "2026-11-27",

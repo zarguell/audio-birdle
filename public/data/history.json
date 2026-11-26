@@ -1618,5 +1618,25 @@
       "name": "Rock Bunting",
       "subregion": "France"
     }
+  ],
+  "jp": [
+    {
+      "date": "2026-11-25",
+      "id": "pelcor",
+      "name": "Pelagic Cormorant",
+      "subregion": "Japan"
+    },
+    {
+      "date": "2026-11-26",
+      "id": "vartit1",
+      "name": "Varied Tit",
+      "subregion": "Japan"
+    },
+    {
+      "date": "2026-11-27",
+      "id": "mallar3",
+      "name": "Mallard",
+      "subregion": "Japan"
+    }
   ]
 }
