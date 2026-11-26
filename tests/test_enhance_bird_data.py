@@ -3,6 +3,7 @@
 import json
 import os
 import sys
+from pathlib import Path
 
 import pytest
 
@@ -333,6 +334,50 @@ class TestFacts:
         assert enhance_bird_data.is_generated_fact("")
 
     @staticmethod
+    def test_is_generated_fact_recognizes_every_emitted_shape():
+        # A shape this misses would be frozen as "hand-written" forever, so
+        # every builder output must be recognized by construction.
+        bird = make_bird(name="American Robin", id="amerob")
+        traits = {"amerob": {"mass": 77.0, "iucn": "NT"}}
+        ecology = {
+            "amerob": {
+                "habitat": "Forest",
+                "niche": "Invertivore",
+                "lifestyle": "Terrestrial",
+                "migration": "1",
+                "hwi": 55.0,
+                "range": 16_000_000.0,
+                "minlat": 16.0,
+                "maxlat": 71.0,
+            }
+        }
+        sentences = [
+            enhance_bird_data.build_iucn_fact("X", "NT", 77.0),
+            enhance_bird_data.build_mass_fact("X", 77.0, list(range(1, 200))),
+            enhance_bird_data.build_habitat_fact("X", ecology["amerob"]),
+            enhance_bird_data.build_diet_fact("X", ecology["amerob"]),
+            enhance_bird_data.build_lifestyle_fact("X", ecology["amerob"]),
+            enhance_bird_data.build_latitude_fact("X", ecology["amerob"]),
+            enhance_bird_data.build_wing_fact("X", ecology["amerob"]),
+            enhance_bird_data.build_range_fact(
+                "X", ecology["amerob"], list(range(1, 200))
+            ),
+        ]
+        emitted = [s for s in sentences if s]
+        assert len(emitted) == len(sentences), sentences
+        for sentence in emitted:
+            assert enhance_bird_data.is_generated_fact(sentence), sentence
+        # And the selector output is recognized too.
+        for fact in enhance_bird_data.build_trait_facts(
+            bird,
+            traits,
+            list(range(1, 200)),
+            ecology=ecology,
+            all_ranges=list(range(1, 200)),
+        ):
+            assert enhance_bird_data.is_generated_fact(fact), fact
+
+    @staticmethod
     def test_backfill_facts_replaces_generated_template_with_trait():
         bird = make_bird(facts="A member of the thrush family (Turdidae).")
         traits = {"amerob": {"mass": 77.0}}
@@ -345,6 +390,7 @@ class TestFacts:
             is True
         )
         assert bird["facts"] == "American Robin weighs about 77 g."
+        assert enhance_bird_data.is_generated_fact(bird["facts"])
 
     @staticmethod
     def test_backfill_facts_never_overwrites_hand_written():
@@ -419,6 +465,134 @@ class TestFacts:
         assert bird["facts"].startswith("Recorded in 31 of 51")
 
 
+class TestFactVariety:
+    """The card showed weight for 9 of every 10 species; these pin the fix."""
+
+    @staticmethod
+    def _ecology(**overrides):
+        base = {
+            "habitat": "Forest",
+            "niche": "Invertivore",
+            "lifestyle": "Terrestrial",
+            "migration": "2",
+            "hwi": 25.0,
+            "range": 500_000.0,
+            "minlat": 20.0,
+            "maxlat": 45.0,
+        }
+        base.update(overrides)
+        return base
+
+    @staticmethod
+    def test_axes_produce_more_than_weight():
+        # A roster of identically-described birds must still read differently,
+        # because weight is now one axis of several rather than the default.
+        facts = set()
+        ranges = [500_000.0, 10_000_000.0, 2_000_000.0]
+        for index in range(40):
+            bird = make_bird(id=f"sp{index}", name=f"Species {index}")
+            ecology = {"sp%d" % index: TestFactVariety._ecology()}
+            traits = {"sp%d" % index: {"mass": 40.0 + index}}
+            sentences = enhance_bird_data.build_trait_facts(
+                bird,
+                traits,
+                [40.0 + i for i in range(40)],
+                ecology=ecology,
+                all_ranges=ranges,
+            )
+            facts.update(sentences)
+        shapes = {
+            sentence.split(" ", 2)[1] if sentence.startswith("Species") else sentence
+            for sentence in facts
+        }
+        assert len(shapes) >= 3, facts
+
+    @staticmethod
+    def test_unremarkable_wing_and_range_stay_silent():
+        # A median number is padding; those axes drop out instead.
+        assert (
+            enhance_bird_data.build_wing_fact("X", TestFactVariety._ecology(hwi=25.0))
+            == ""
+        )
+        # Put the bird in the middle of the reference set, not past its end.
+        middling = [float(v) * 100_000 for v in range(1, 200)]
+        assert (
+            enhance_bird_data.build_range_fact(
+                "X", TestFactVariety._ecology(range=10_000_000.0), middling
+            )
+            == ""
+        )
+
+    @staticmethod
+    def test_no_authority_generalist_phrase():
+        # "no primary lifestyle" says nothing about the bird.
+        assert (
+            enhance_bird_data.build_lifestyle_fact(
+                "X", TestFactVariety._ecology(lifestyle="Generalist")
+            )
+            == ""
+        )
+
+    @staticmethod
+    def test_lifestyle_does_not_claim_foraging():
+        # AVONET codes a kingfisher "Insessorial" because it perches; the
+        # sentence must not say it forages there.
+        fact = enhance_bird_data.build_lifestyle_fact(
+            "Common Kingfisher", TestFactVariety._ecology(lifestyle="Insessorial")
+        )
+        assert "forage" not in fact
+        assert fact == (
+            "Common Kingfisher spends much of its time perched above the ground."
+        )
+
+    @staticmethod
+    def test_conservation_status_wins_and_stops():
+        # A threatened species says the important thing once, not twice.
+        facts = enhance_bird_data.build_trait_facts(
+            make_bird(id="whoswa", name="Whooper Swan"),
+            {"whoswa": {"mass": 9300.0, "iucn": "EN"}},
+            [9300.0, 10.0],
+            ecology={"whoswa": TestFactVariety._ecology()},
+            all_ranges=[1.0, 2.0],
+        )
+        assert len(facts) == 1
+        assert facts[0].startswith("Whooper Swan is listed as Endangered")
+        assert "9.3 kg" in facts[0]
+
+    @staticmethod
+    def test_selection_is_stable_per_species():
+        bird = make_bird(id="amerob", name="American Robin")
+        traits = {"amerob": {"mass": 77.0}}
+        ecology = {"amerob": TestFactVariety._ecology()}
+        ranges = [500_000.0, 10_000_000.0]
+        first = enhance_bird_data.build_trait_facts(
+            bird, traits, [70.0, 77.0], ecology=ecology, all_ranges=ranges
+        )
+        second = enhance_bird_data.build_trait_facts(
+            bird, traits, [70.0, 77.0], ecology=ecology, all_ranges=ranges
+        )
+        assert first == second
+
+    @staticmethod
+    def test_latitude_fact_never_claims_a_migration_code():
+        # AVONET codes the American robin "fully migratory" although most of
+        # the population is resident, so the fact states the sourced range.
+        fact = enhance_bird_data.build_latitude_fact(
+            "American Robin",
+            TestFactVariety._ecology(migration="3", minlat=16.0, maxlat=71.0),
+        )
+        assert "16\u00b0N" in fact and "71\u00b0N" in fact
+        assert "migratory" not in fact
+
+    @staticmethod
+    def test_ecology_absent_falls_back_to_mass():
+        bird = make_bird(id="amerob", name="American Robin")
+        facts = enhance_bird_data.build_trait_facts(
+            bird, {"amerob": {"mass": 77.0}}, list(range(1, 101)) + [77.0]
+        )
+        assert facts == ["American Robin weighs about 77 g."]
+
+
 class TestComputePrevalence:
     """Test subregion prevalence counting"""
 
@@ -439,6 +613,83 @@ class TestComputePrevalence:
         prevalence, total = enhance_bird_data.compute_prevalence(data)
         assert total == 2
         assert prevalence["amerob"] == 1
+
+
+class TestFetchAvonetTraits:
+    """The AVONET join decides whose range a fact describes."""
+
+    @staticmethod
+    def _load():
+        import importlib.util
+
+        path = Path(__file__).parent.parent / "scripts" / "fetch-avonet-traits.py"
+        spec = importlib.util.spec_from_file_location("fetch_avonet_traits", path)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        return module
+
+    @staticmethod
+    def test_rename_needs_the_same_family():
+        # Willet (Tringa semipalmata) must not inherit Magpie Goose's range
+        # just because the epithet matches.
+        module = TestFetchAvonetTraits._load()
+        index = {
+            ("Scolopacidae", "semipalmata"): ["Tringa semipalmata"],
+            ("Anseranatidae", "semipalmata"): ["Anseranas semipalmata"],
+        }
+        assert (
+            module.renamed_species("Anarhynchus semipalmata", "Scolopacidae", index)
+            == "Tringa semipalmata"
+        )
+        assert (
+            module.renamed_species("Anarhynchus semipalmata", "Laridae", index) is None
+        )
+
+    @staticmethod
+    def test_rename_rejects_ambiguous_matches():
+        # Two candidates means the epithet is shared by a split; refuse it
+        # rather than pick one at random.
+        module = TestFetchAvonetTraits._load()
+        index = {
+            ("Columbidae", "chinensis"): [
+                "Streptopelia chinensis",
+                "Stigmatopelia chinensis",
+            ]
+        }
+        assert (
+            module.renamed_species("Spilopelia chinensis", "Columbidae", index) is None
+        )
+        # One surviving candidate is a rename, not an ambiguity.
+        assert (
+            module.renamed_species(
+                "Spilopelia chinensis",
+                "Columbidae",
+                {("Columbidae", "chinensis"): ["Streptopelia chinensis"]},
+            )
+            == "Streptopelia chinensis"
+        )
+
+    @staticmethod
+    def test_rename_absent_without_family_or_epithet():
+        module = TestFetchAvonetTraits._load()
+        index = {("Scolopacidae", "semipalmata"): ["Tringa semipalmata"]}
+        assert module.renamed_species("Anarhynchus semipalmata", "", index) is None
+        assert module.renamed_species("Willet", "Scolopacidae", index) is None
+
+    @staticmethod
+    def test_cache_is_keyed_by_ebird_code_with_expected_fields():
+        cache_path = (
+            Path(__file__).parent.parent / "scripts" / "data" / "species-ecology.json"
+        )
+        if not cache_path.exists():
+            pytest.skip("ecology cache not built")
+        cache = json.loads(cache_path.read_text(encoding="utf-8"))
+        assert len(cache) > 3000
+        amerob = cache["amerob"]
+        # The crosswalk bug gave this species a tropical 23-degree range.
+        assert amerob["minlat"] < 30 < amerob["maxlat"]
+        for key in ("habitat", "niche", "lifestyle", "minlat", "maxlat"):
+            assert key in amerob, key
 
 
 class TestEndToEndMain:

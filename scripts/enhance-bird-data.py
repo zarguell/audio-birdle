@@ -17,10 +17,15 @@ dropped. Three enhancements:
    each species, newest-last, deduplicated by URL and capped per
    species. XC clips carry real attribution (recordist, license,
    quality, ...). Species with few clips gain variety first.
-4. Generate each species' ``facts`` from real traits: body mass and IUCN
-   Red List status (``scripts/data/species-traits.json``, from Everybird's
-   species dataset), plus subregion prevalence when ``--subregions`` is
-   given. Generated text is replaced; a hand-written fact is left alone.
+4. Generate each species' ``facts`` from real traits and ecology, plus
+   subregion prevalence when ``--subregions`` is given:
+   - ``scripts/data/species-traits.json`` (mass, IUCN status) from
+     Everybird's species dataset;
+   - ``scripts/data/species-ecology.json`` (habitat, diet, lifestyle,
+     wing shape, range) from AVONET, built by fetch-avonet-traits.py.
+   One sentence per species is chosen deterministically across those axes,
+   so the card does not describe every bird by its weight. Generated text is
+   replaced; a hand-written fact is left alone.
 
 The daily-challenge system is untouched: daily.json answer hashes are
 based on species codes, no species are removed, and clip ordering keeps
@@ -39,6 +44,7 @@ Usage:
 """
 
 import argparse
+import hashlib
 import importlib.util
 import json
 import re
@@ -65,6 +71,12 @@ TRAITS_URL = (
     "public/data/species.v1.json"
 )
 TRAITS_CACHE = Path(__file__).parent / "data" / "species-traits.json"
+
+# Per-species ecology from AVONET 1.0 (habitat, migration, diet, lifestyle,
+# wing shape, range size), keyed by eBird code. Derived from the published
+# workbook by scripts/fetch-avonet-traits.py and committed, so this script and
+# CI never need the 21 MB download.
+ECOLOGY_CACHE = Path(__file__).parent / "data" / "species-ecology.json"
 
 # IUCN Red List categories, in the order the site presents them.
 IUCN_LABELS = {
@@ -272,12 +284,40 @@ def format_mass(grams):
     return f"{grams:.1f} g"
 
 
+def load_ecology(path=ECOLOGY_CACHE):
+    """Load the AVONET ecology cache keyed by eBird species code.
+
+    The cache is derived from the AVONET workbook by
+    ``scripts/fetch-avonet-traits.py`` and committed, so fact generation
+    stays offline. A missing cache is not fatal: facts fall back to mass and
+    taxonomy exactly as before.
+
+    Returns:
+        dict: code -> {habitat, migration, niche, lifestyle, hwi, range, ...}
+    """
+    if path is None or not Path(path).exists():
+        return {}
+    try:
+        with open(path, "r", encoding="utf-8") as file:
+            return json.load(file)
+    except (OSError, json.JSONDecodeError):
+        return {}
+
+
 def mass_percentile(grams, all_masses):
     """Share of species this bird outweighs, 0-100."""
     if not all_masses:
         return None
     below = sum(1 for other in all_masses if other < grams)
     return below / len(all_masses) * 100
+
+
+def percentile_of(value, all_values):
+    """Share of ``all_values`` strictly below ``value``, 0-100."""
+    if not all_values or value is None:
+        return None
+    below = sum(1 for other in all_values if other is not None and other < value)
+    return below / len(all_values) * 100
 
 
 def extreme_label(percentile):
@@ -300,59 +340,328 @@ def extreme_label(percentile):
     return None
 
 
-def build_trait_fact(bird, traits, all_masses):
-    """A fact built from real per-species traits, or "" when none apply.
+MIGRATION_LABELS = {
+    "1": "sedentary",
+    "2": "partially migratory",
+    "3": "fully migratory",
+}
 
-    Prefers a superlative mass claim, then IUCN status, then a plain weight
-    with its percentile. Every branch is arithmetic over the cited dataset, so
-    the sentence is checkable rather than remembered.
+HABITAT_PHRASES = {
+    "Forest": "forests",
+    "Woodland": "woodlands",
+    "Shrubland": "shrubland",
+    "Grassland": "grassland",
+    "Wetland": "wetlands",
+    "Riverine": "rivers and streams",
+    "Coastal": "coastlines",
+    "Marine": "open ocean",
+    "Desert": "desert",
+    "Rock": "rocky terrain",
+    "Human Modified": "human-modified landscapes",
+}
+
+NICHE_PHRASES = {
+    "Invertivore": "insects and other invertebrates",
+    "Omnivore": "a mixed diet",
+    "Aquatic predator": "fish and other aquatic animals",
+    "Granivore": "seeds",
+    "Frugivore": "fruit",
+    "Nectarivore": "nectar",
+    "Vertivore": "vertebrates",
+    "Herbivore aquatic": "aquatic plants",
+    "Herbivore terrestrial": "plants",
+    "Scavenger": "carrion",
+}
+
+# AVONET's Primary.Lifestyle is about where a bird spends its time, not what
+# it eats - a kingfisher is coded "Insessorial" because it perches, though it
+# dives for fish. The wording must not claim foraging.
+LIFESTYLE_PHRASES = {
+    "Aerial": "spends much of its time on the wing",
+    "Terrestrial": "spends most of its time on the ground",
+    "Insessorial": "spends much of its time perched above the ground",
+    "Aquatic": "spends much of its time sitting on the water",
+}
+
+
+def fact_seed(code, salt):
+    """Deterministic 0-99 value from a species code and a salt.
+
+    Facts are chosen per species, not per render, so a bird always reads the
+    same way in a share image and in the card. Iterating over axes with
+    different salts spreads species across kinds without shuffling data.
     """
-    entry = traits.get(bird.get("id")) if bird.get("id") else None
-    if not entry:
-        return ""
-    name = bird.get("name") or "This bird"
+    digest = hashlib.sha256(f"{salt}:{code}".encode("utf-8")).hexdigest()
+    return int(digest[:8], 16) % 100
 
-    grams = entry.get("mass")
-    status = entry.get("iucn")
+
+def build_iucn_fact(name, status, grams):
+    """Conservation status, with weight where known."""
     label = IUCN_LABELS.get(status) if status and status != "LC" else None
-
-    # Conservation status leads when it is not Least Concern: it is the more
-    # important sentence, and a threatened swan would otherwise be described
-    # only as heavy.
-    if label:
-        sentence = f"{name} is listed as {label} on the IUCN Red List"
-        if grams:
-            sentence += f" and weighs about {format_mass(grams)}"
-        return sentence + "."
-
+    if not label:
+        return ""
+    sentence = f"{name} is listed as {label} on the IUCN Red List"
     if grams:
-        percentile = mass_percentile(grams, all_masses)
-        extreme = extreme_label(percentile)
-        if extreme:
-            prefix = "At just" if percentile is not None and percentile <= 5 else "At"
-            return f"{prefix} {format_mass(grams)}, {name} is {extreme}."
-        return f"{name} weighs about {format_mass(grams)}."
+        sentence += f" and weighs about {format_mass(grams)}"
+    return sentence + "."
+
+
+def build_mass_fact(name, grams, all_masses):
+    """Weight, framed as a superlative only at the tails."""
+    if not grams:
+        return ""
+    percentile = mass_percentile(grams, all_masses)
+    extreme = extreme_label(percentile)
+    if extreme:
+        prefix = "At just" if percentile is not None and percentile <= 5 else "At"
+        return f"{prefix} {format_mass(grams)}, {name} is {extreme}."
+    return f"{name} weighs about {format_mass(grams)}."
+
+
+def build_habitat_fact(name, ecology):
+    """Where the species lives, per AVONET's primary habitat."""
+    habitat = (ecology or {}).get("habitat")
+    phrase = HABITAT_PHRASES.get(habitat)
+    if not phrase:
+        return ""
+    return f"{name} is primarily found in {phrase}."
+
+
+def build_diet_fact(name, ecology):
+    """What it eats, per AVONET's trophic niche."""
+    niche = (ecology or {}).get("niche")
+    phrase = NICHE_PHRASES.get(niche)
+    if not phrase:
+        return ""
+    if niche == "Omnivore":
+        return f"{name} is an omnivore, eating {phrase}."
+    return f"{name} feeds mainly on {phrase}."
+
+
+def format_latitude(value, north="N", south="S"):
+    """A latitude as 34.5\u00b0N, using N/S rather than a signed number."""
+    hemisphere = north if value >= 0 else south
+    return f"{abs(value):.0f}\u00b0{hemisphere}"
+
+
+def build_latitude_fact(name, ecology):
+    """Where the species' range sits on the globe, per BirdLife range limits.
+
+    This deliberately does not assert AVONET's migration code for mobile
+    species. That field is coarse - it codes the American robin "fully
+    migratory" even though most of the population is resident - so claiming it
+    would put a contested statement on the card. The latitudinal extent is a
+    direct reading of the published range and is true as stated. "Sedentary"
+    is kept because it is the one code that is reliable, and it explains why
+    the range does not move at all.
+    """
+    ecology = ecology or {}
+    low, high = ecology.get("minlat"), ecology.get("maxlat")
+    if not isinstance(low, (int, float)) or not isinstance(high, (int, float)):
+        return ""
+    sedentary = str(ecology.get("migration") or "").strip() == "1"
+    if high - low < 8:
+        if sedentary:
+            return f"{name} is sedentary, staying in one area year-round."
+        return ""
+    span = f"from {format_latitude(low)} to {format_latitude(high)}"
+    if sedentary:
+        return (
+            f"{name} is sedentary, and its range runs {span} "
+            "without migrating."
+        )
+    return f"{name}'s breeding and resident range runs {span}."
+
+
+def build_lifestyle_fact(name, ecology):
+    """Where it spends its time, per AVONET's primary lifestyle."""
+    lifestyle = (ecology or {}).get("lifestyle")
+    phrase = LIFESTYLE_PHRASES.get(lifestyle)
+    if not phrase:
+        return ""
+    return f"{name} {phrase}."
+
+
+def build_wing_fact(name, ecology):
+    """Wing shape, using the hand-wing index AVONET publishes.
+
+    Only the tails speak: a mid-range index ("the hand-wing index is 26.4") is
+    a bare number, which is the padding problem this change exists to fix. A
+    species with an unremarkable wing simply drops out of the candidate list.
+    """
+    hwi = (ecology or {}).get("hwi")
+    if not isinstance(hwi, (int, float)) or isinstance(hwi, bool):
+        return ""
+    if hwi >= 40:
+        return (
+            f"{name} has a high hand-wing index ({hwi:.1f}), "
+            "the pointed-wing shape of a strong long-distance flier."
+        )
+    if hwi <= 12:
+        return (
+            f"{name} has a low hand-wing index ({hwi:.1f}), "
+            "the rounded-wing shape of a bird that does not travel far."
+        )
     return ""
+
+
+def build_range_fact(name, ecology, all_ranges):
+    """Breeding range size, compared with the roster."""
+    area = (ecology or {}).get("range")
+    if not isinstance(area, (int, float)) or isinstance(area, bool):
+        return ""
+    percentile = percentile_of(area, all_ranges)
+    if percentile is None:
+        return ""
+    # Same rule as wing: a middling range is a number, not a fact.
+    if percentile >= 95:
+        return (
+            f"{name} has one of the largest ranges here, "
+            f"about {area / 1_000_000:.1f} million km\u00b2."
+        )
+    if percentile <= 5:
+        return f"{name} has one of the smallest ranges here, about {area:,.0f} km\u00b2."
+    return ""
+
+
+# Fact axes, each a builder taking (name, traits, ecology) plus shared
+# reference sets. Order matters: the IUCN sentence wins outright because it is
+# the most important thing to say about a threatened species.
+def _axis_iucn(name, entry, ecology, ctx):
+    return build_iucn_fact(name, entry.get("iucn"), entry.get("mass"))
+
+
+def _axis_mass(name, entry, ecology, ctx):
+    return build_mass_fact(name, entry.get("mass"), ctx["masses"])
+
+
+def _axis_habitat(name, entry, ecology, ctx):
+    return build_habitat_fact(name, ecology)
+
+
+def _axis_diet(name, entry, ecology, ctx):
+    return build_diet_fact(name, ecology)
+
+
+def _axis_lifestyle(name, entry, ecology, ctx):
+    return build_lifestyle_fact(name, ecology)
+
+
+def _axis_latitude(name, entry, ecology, ctx):
+    return build_latitude_fact(name, ecology)
+
+
+def _axis_wing(name, entry, ecology, ctx):
+    return build_wing_fact(name, ecology)
+
+
+def _axis_range(name, entry, ecology, ctx):
+    return build_range_fact(name, ecology, ctx["ranges"])
+
+
+SECONDARY_AXES = (
+    _axis_habitat,
+    _axis_diet,
+    _axis_lifestyle,
+    _axis_latitude,
+    _axis_wing,
+    _axis_range,
+    _axis_mass,
+)
+
+
+def build_trait_facts(bird, traits, all_masses, ecology=None, all_ranges=None):
+    """All checkable facts for one species, most-telling first.
+
+    The reveal card shows one sentence, so the point of returning several is
+    that the caller can pick by species without every bird reading the same
+    way. Conservation status always leads when the species is threatened;
+    otherwise the sentence is chosen deterministically across the remaining
+    axes so weight stops being the default.
+
+    Returns:
+        list[str]: fact sentences, possibly empty.
+    """
+    code = bird.get("id") or ""
+    entry = traits.get(code) or (traits or {}).get(bird.get("scientificName"))
+    ecology = (ecology or {}).get(code)
+    if not entry and not ecology:
+        return []
+    name = bird.get("name") or "This bird"
+    ctx = {"masses": all_masses or [], "ranges": all_ranges or []}
+
+    facts = []
+    iucn_fact = _axis_iucn(name, entry or {}, ecology, ctx)
+    if iucn_fact:
+        facts.append(iucn_fact)
+
+    # A threatened species has already said the important thing, and a
+    # second sentence in the same card would bury it.
+    if iucn_fact:
+        return facts
+
+    candidates = []
+    for index, axis in enumerate(SECONDARY_AXES):
+        sentence = axis(name, entry or {}, ecology or {}, ctx)
+        if sentence:
+            candidates.append(sentence)
+    if not candidates:
+        return facts
+    # Stable per species, so the same bird always shows the same fact.
+    pick = fact_seed(code, "primary") % len(candidates)
+    facts.append(candidates[pick])
+    return facts
+
+
+def build_trait_fact(bird, traits, all_masses, ecology=None, all_ranges=None):
+    """The single sentence shown on the card (first of build_trait_facts)."""
+    facts = build_trait_facts(bird, traits, all_masses, ecology, all_ranges)
+    return facts[0] if facts else ""
+
+
+GENERATED_FACT_PATTERNS = (
+    # Taxonomy template and its prevalence variant (the original shapes).
+    re.compile(r"^A member of the .*\)\.$"),
+    re.compile(r"^Recorded in .*a member of the .*\)\.$"),
+    re.compile(r"^Recorded in .*\.$"),
+    # Trait and ecology shapes this script writes.
+    re.compile(r"^.+ is listed as .* on the IUCN Red List"),
+    re.compile(r"^.+ weighs about "),
+    re.compile(r"^At .* is (one of the heaviest|one of the lightest) birds here\.$"),
+    re.compile(r"^At .* is (heavier|lighter) than 95% of the birds here\.$"),
+    re.compile(r"^.+ is primarily found in .*\.$"),
+    re.compile(r"^.+ feeds mainly on .*\.$"),
+    re.compile(r"^.+ is an omnivore, eating .*\.$"),
+    re.compile(r"^.+ is sedentary, staying in one area year-round\.$"),
+    re.compile(r"^.+ is sedentary, and its range runs "),
+    re.compile(r"^.+'s breeding and resident range runs from "),
+    re.compile(r"^.+ is (partially migratory|fully migratory)\.$"),
+    re.compile(r"^.+ (spends much of its time on the wing|spends most of its time on the ground|spends much of its time perched above the ground|spends much of its time sitting on the water)\.$"),
+    # Superseded wording from the first multi-axis pass. Kept in the
+    # recognized set so existing text gets rewritten rather than frozen as
+    # "hand-written" - the failure this list exists to prevent.
+    re.compile(r"^.+ forages (mostly on the wing|mostly on the ground|in trees and shrubs|on the water)\.$"),
+    re.compile(r"^.+ has a hand-wing index of [\d.]+\.$"),
+    re.compile(r"^.+ has a (high|low) hand-wing index \([\d.]+\), "),
+    re.compile(r"^.+ has one of the (largest|smallest) ranges here, "),
+    re.compile(r"^.+'s range covers about .*\.$"),
+)
 
 
 def is_generated_fact(fact):
     """True when a fact came from this script, so it may be regenerated.
 
-    Two shapes exist upstream: the taxonomy template ("A member of the thrush
-    family (Turdidae).") and the prevalence variant ("Recorded in 25 of 51 US
-    states/provinces - a member of ..."). Anything else is treated as
-    hand-written and never overwritten.
+    Covers the taxonomy template, the prevalence variant, and every sentence
+    shape the trait and ecology builders emit. Anything else is treated as
+    hand-written and never overwritten - which is the failure mode to avoid,
+    since a shape this misses would freeze in place forever.
     """
     if not isinstance(fact, str):
         return False
     text = fact.strip()
     if not text:
         return True
-    if text.startswith("A member of the ") and text.endswith(")."):
-        return True
-    if text.startswith("Recorded in ") and "a member of the " in text:
-        return True
-    return False
+    return any(pattern.match(text) for pattern in GENERATED_FACT_PATTERNS)
 
 
 def backfill_facts(
@@ -362,12 +671,14 @@ def backfill_facts(
     subregion_label=SUBREGION_LABEL,
     traits=None,
     all_masses=None,
+    ecology=None,
+    all_ranges=None,
 ):
     """Set bird.facts from real traits, else local prevalence + taxonomy.
 
-    Traits come first: body mass and IUCN status are per-species and cited,
-    where the taxonomy template can only say "a member of the thrush family"
-    and is shared by every thrush on the roster.
+    Traits come first: per-species measurements and AVONET ecology are cited
+    and specific, where the taxonomy template can only say "a member of the
+    thrush family" and is shared by every thrush on the roster.
 
     Returns:
         bool: True when a fact was added.
@@ -380,7 +691,13 @@ def backfill_facts(
     current = bird.get("facts") or ""
     if current and not is_generated_fact(current):
         return False
-    fact = build_trait_fact(bird, traits or {}, all_masses or [])
+    fact = build_trait_fact(
+        bird,
+        traits or {},
+        all_masses or [],
+        ecology=ecology,
+        all_ranges=all_ranges,
+    )
     if not fact:
         fact = build_fact(bird, prevalence, total_subregions, subregion_label)
     if not fact:
@@ -474,6 +791,8 @@ def enhance_region(
     subregion_label=SUBREGION_LABEL,
     traits=None,
     all_masses=None,
+    ecology=None,
+    all_ranges=None,
 ):
     """Apply all enhancements to one region's bird list in place.
 
@@ -483,6 +802,8 @@ def enhance_region(
         facts: Whether to fill ``facts`` fields.
         traits: Optional per-species traits keyed by eBird code.
         all_masses: Masses across every species, for percentile framing.
+        ecology: Optional AVONET ecology keyed by eBird code.
+        all_ranges: Range sizes across every species, for comparison.
 
     Returns:
         dict: summary statistics.
@@ -503,6 +824,8 @@ def enhance_region(
             subregion_label,
             traits=traits,
             all_masses=all_masses,
+            ecology=ecology,
+            all_ranges=all_ranges,
         ):
             stats["facts_added"] += 1
 
@@ -641,6 +964,16 @@ def main():
         )
         print(f"🧬 Traits: {len(traits)} species ({len(all_masses)} with mass)")
 
+    ecology, all_ranges = {}, []
+    if not args.no_traits:
+        ecology = load_ecology()
+        # Range comparisons are against the whole roster, like mass.
+        all_ranges = sorted(
+            entry["range"] for entry in ecology.values() if entry.get("range")
+        )
+        if ecology:
+            print(f"🌿 Ecology: {len(ecology)} species from AVONET")
+
     matched_codes = set()
 
     total_stats = Counter()
@@ -660,6 +993,8 @@ def main():
             subregion_label=args.subregion_label,
             traits=traits,
             all_masses=all_masses,
+            ecology=ecology,
+            all_ranges=all_ranges,
         )
         matched_codes.update(b.get("id") for b in birds if b.get("id") in xc_by_code)
         print(f"🌍 Region '{region}':")

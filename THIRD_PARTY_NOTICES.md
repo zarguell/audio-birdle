@@ -39,6 +39,29 @@ Nothing here is hand-written prose: every fact is arithmetic over these values
 (weight, percentile within the game's roster, conservation status), so a claim
 can be checked against the dataset rather than taken on trust.
 
+## Species ecology (habitat, diet, range)
+
+The reveal card draws most of its facts from
+[AVONET](https://doi.org/10.1111/ele.13898) (Tobias et al. 2022, Ecology
+Letters), licensed CC BY 4.0. The 21 MB workbook is not committed; the derived
+cache at `scripts/data/species-ecology.json` is, and is rebuilt with
+`scripts/fetch-avonet-traits.py`.
+
+Fields used, all taken as published rather than interpreted:
+
+- `AVONET2_eBird`: Habitat, Trophic.Niche, Primary.Lifestyle, Hand-Wing.Index.
+- `AVONET1_BirdLife`: Range.Size and the breeding/resident latitudinal limits,
+  joined through the workbook's own BirdLife-eBird crosswalk.
+
+Two AVONET fields are deliberately not asserted as facts. `Migration` is coarse
+- it codes the American robin "fully migratory" although most of the population
+is resident - so mobile species get their sourced latitudinal range instead,
+and only "sedentary" is stated directly. `Primary.Lifestyle` describes where a
+bird spends its time, not what it eats, so the sentence never says "forages"
+(for a kingfisher it is coded "Insessorial", despite the diving).
+
+Wording follows the field definitions in AVONET's own Metadata sheet.
+
 ## huashu-bird-sticker art
 
 The species reveal can show a sticker illustration from
