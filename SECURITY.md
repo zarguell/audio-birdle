@@ -31,3 +31,9 @@ Remote URLs are restricted to `https:` before they reach `<audio>`, `<img>`, or
 
 Being able to determine today's answer from the client is not considered a
 vulnerability: the game is entirely client-side by design.
+
+## Security architecture
+
+The scope above describes the static-only deployment. When dynamic components
+ship (Workers with `main`, Discord Activity, D1), `docs/security-architecture.md`
+is the threat model of record and its ground rules are release-blocking.
