@@ -83,10 +83,14 @@ them.
 
 ## Command registration
 
-Four global commands: `/audiobirdle` (launch), `/audiobirdle-setup`,
-`/audiobirdle-stats`, and `/audiobirdle-forget`. Discord does not show them
-until they are registered via the API. Re-run after any command change; `PUT`
-replaces the global command set.
+`/audiobirdle` is the app's **PRIMARY_ENTRY_POINT** command with `handler: 1`
+(APP_HANDLER). Only an entry point interaction may answer with
+`LAUNCH_ACTIVITY` (type 12); a plain chat command cannot. The script renames the
+portal's default "Launch" entry point and recreates it if it was deleted.
+
+`/audiobirdle-setup`, `/audiobirdle-stats`, and `/audiobirdle-forget` are
+ordinary chat commands. Discord does not show any of them until they are
+registered via the API; re-run the script after any command change.
 
 ```bash
 DISCORD_CLIENT_ID=1575529908820516916 DISCORD_BOT_TOKEN=<token> \
