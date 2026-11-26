@@ -206,9 +206,17 @@ def test_data_manifest_matches_copied_files(built_site: tuple[Path, dict]) -> No
 def test_cloudflare_headers_pin_cache_behaviour(built_site: tuple[Path, dict]) -> None:
     output, _ = built_site
     headers = (output / "_headers").read_text(encoding="utf-8")
-    assert "Content-Security-Policy:" in headers
-    assert "script-src 'self'" in headers
-    assert "style-src 'self'" in headers
+    assert (
+        "Content-Security-Policy: default-src 'self'; "
+        "script-src 'self' https://static.cloudflareinsights.com; "
+        "style-src 'self'; img-src 'self' https: data:; "
+        "media-src 'self' https:; "
+        "connect-src 'self' https://cloudflareinsights.com; "
+        "font-src 'self' data:; object-src 'none'; "
+        "frame-ancestors https://discord.com https://*.discordsays.com; "
+        "base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
+    ) in headers
+    assert "X-Frame-Options" not in headers
     assert "/assets/*" in headers
     assert "immutable" in headers
     assert "/data/manifest.json" in headers
