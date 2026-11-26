@@ -105,8 +105,7 @@ def test_audio_play_flaps_the_scene_bird(page, base_url, console_errors):
     audio = page.locator("[data-audio]")
     audio.evaluate("element => element.dispatchEvent(new Event('play'))")
     assert (
-        page.locator("[data-scene-bird]").get_attribute("data-bird-audio")
-        == "playing"
+        page.locator("[data-scene-bird]").get_attribute("data-bird-audio") == "playing"
     )
     assert (
         page.locator("[data-scene-bird] .bird-wing").evaluate(
@@ -122,9 +121,7 @@ def test_audio_play_flaps_the_scene_bird(page, base_url, console_errors):
     )
 
     audio.evaluate("element => element.dispatchEvent(new Event('pause'))")
-    assert (
-        page.locator("[data-scene-bird]").get_attribute("data-bird-audio") == "idle"
-    )
+    assert page.locator("[data-scene-bird]").get_attribute("data-bird-audio") == "idle"
     assert (
         page.locator("[data-audio-bird]").evaluate(
             "element => getComputedStyle(element).animationName"
@@ -156,9 +153,7 @@ def test_winning_flies_the_bird_to_the_result(page, base_url, console_errors):
     assert "is-dropping" in (
         page.locator("[data-bird-actor]").get_attribute("class") or ""
     )
-    assert "is-away" in (
-        page.locator("[data-scene-bird]").get_attribute("class") or ""
-    )
+    assert "is-away" in (page.locator("[data-scene-bird]").get_attribute("class") or "")
 
     page.wait_for_selector(
         "[data-bird-actor]:not(.is-visible)",
@@ -229,8 +224,7 @@ def test_reduced_motion_keeps_the_bird_still(browser, base_url):
         click_bird(page)
         page.wait_for_timeout(250)
         assert (
-            page.locator("[data-scene-bird]").get_attribute("data-state")
-            == "perched"
+            page.locator("[data-scene-bird]").get_attribute("data-state") == "perched"
         )
         assert page.locator("[data-bird-actor]").count() == 0
     finally:
