@@ -4,7 +4,13 @@ on:
   repository_dispatch:
   workflow_dispatch:
   schedule:
-    - cron: '0 4 * * *'
+    # GitHub cron is UTC-only and has no DST. 05:00 UTC is 00:00 EST in winter
+    # and 01:00 EDT in summer, so the run always lands on the current Eastern
+    # date (04:00 UTC would be 23:00 EST and target the previous date). GitHub
+    # does not guarantee delivery time: this schedule is routinely delivered
+    # hours late, and the generator pre-creates -1/0/+1 days, so a late run
+    # still serves the right puzzle.
+    - cron: '0 5 * * *'
 
 # Only one daily update at a time: if a new run starts (e.g. a manual
 # re-trigger while the scheduled run is still going), cancel the in-flight one
@@ -81,7 +87,9 @@ jobs:
 
       - name: Run daily challenge script to generate the bird(s) of the day
         run: |
-          current_date=$(date -u +%F)
+          # Eastern date, matching the cron gate: the challenge rolls over at
+          # 00:00 America/New_York, not at UTC midnight.
+          current_date=$(TZ=America/New_York date +%F)
           python ./scripts/generate-daily-birds.py --days 60 --date "$current_date" --subregions public/data/daily-subregion-birds.json
 
       - name: Regenerate the data manifest
