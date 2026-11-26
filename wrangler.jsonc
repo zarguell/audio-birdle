@@ -1,9 +1,26 @@
 {
   "name": "audio-birdle",
-  "compatibility_date": "2025-04-01",
+  "main": "worker/index.js",
+  "compatibility_date": "2026-11-26",
   "assets": {
     "directory": "./dist/",
+    "binding": "ASSETS",
     "html_handling": "auto-trailing-slash",
-    "not_found_handling": "404-page"
-  }
+    "not_found_handling": "404-page",
+    "run_worker_first": ["/api/*"]
+  },
+  "observability": {
+    "enabled": true
+  },
+  "triggers": {
+    "crons": ["10 5 * * *"]
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "audio-birdle",
+      "database_id": "eecd53d4-8f92-47c9-ba60-eea5e963c7a3",
+      "migrations_dir": "worker/migrations"
+    }
+  ]
 }

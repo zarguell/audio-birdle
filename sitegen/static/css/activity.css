@@ -1,0 +1,89 @@
+/* --------------------------------------------------------------------------
+   Discord Activity chrome.
+
+   The Activity iframe sits under Discord's title bar and, on phones, inside a
+   notch-safe area. Everything here is scoped to `html.is-activity`, which
+   `core/activity.js` adds only after the handshake succeeds, so the web layout
+   is byte-for-byte unchanged.
+   -------------------------------------------------------------------------- */
+
+.is-activity .app-header {
+  min-height: 0;
+  padding-top: calc(var(--space-1) + env(safe-area-inset-top));
+  padding-bottom: 0;
+}
+
+.is-activity .brand {
+  padding: 0.2rem 0.45rem 0.2rem 0.3rem;
+  font-size: 1.25rem;
+}
+
+.is-activity .brand__mark {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.is-activity .app-main {
+  padding-top: calc(var(--space-2) + env(safe-area-inset-top));
+  padding-bottom: calc(var(--tabbar-height) + var(--space-4) + env(safe-area-inset-bottom));
+}
+
+.is-activity .page--home .app-main {
+  padding-top: 0;
+  padding-bottom: calc(var(--tabbar-height) + var(--space-4) + env(safe-area-inset-bottom));
+}
+
+/* Home: keep the dawn scene as a banner, not a full-height landing page. */
+.is-activity .home-scene {
+  min-height: clamp(15rem, 44vh, 26rem);
+}
+
+.is-activity .home-scene__content {
+  padding-top: calc(var(--space-6) + env(safe-area-inset-top));
+  padding-bottom: var(--space-6);
+}
+
+.is-activity .home-journal {
+  margin-top: -1.75rem;
+}
+
+.is-activity .app-footer {
+  padding-top: var(--space-4);
+  text-align: center;
+}
+
+/* Short Activity windows (split view, mobile landscape): shrink the tab bar
+   before it can cover game controls. */
+@media (max-height: 40rem) {
+  .is-activity .tabbar {
+    bottom: calc(0.3rem + env(safe-area-inset-bottom));
+    gap: 0.15rem;
+    padding: 0.25rem;
+  }
+
+  .is-activity .tabbar__link {
+    gap: 0.1rem;
+    min-height: 2.6rem;
+    padding: 0.15rem 0.1rem;
+    font-size: 0.6rem;
+  }
+
+  .is-activity .tabbar__icon {
+    width: 1rem;
+    height: 1rem;
+  }
+}
+
+@media (max-height: 30rem) {
+  .is-activity .brand__name {
+    display: none;
+  }
+
+  .is-activity .tabbar__link {
+    min-height: 2.25rem;
+  }
+
+  .is-activity .tabbar__icon {
+    display: none;
+  }
+}

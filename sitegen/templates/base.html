@@ -8,6 +8,10 @@
     <meta name="theme-color" content="{{ site.theme_color }}">
     <meta name="description"
           content="{% block description %}{{ site.description }}{% endblock %}">
+    <meta name="discord-client-id"
+          content="{{ discord_client_id|default('') }}">
+    <meta name="cf-analytics-token"
+          content="{{ cf_analytics_token|default('') }}">
     <title>{% block title %}{{ site.name }}{% endblock %}</title>
     <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -25,6 +29,7 @@
     <link rel="stylesheet" href="{{ asset_base }}/css/game.css">
     <link rel="stylesheet" href="{{ asset_base }}/css/pages.css">
     <link rel="stylesheet" href="{{ asset_base }}/css/animations.css">
+    <link rel="stylesheet" href="{{ asset_base }}/css/activity.css">
     <script type="module" src="{{ asset_base }}/js/{{ page_script }}"></script>
   </head>
   <body class="page page--{% if game_mode %}game{% else %}{{ page }}{% endif %}{% if game_mode %}
@@ -50,6 +55,9 @@
     </header>
     <main id="main" class="app-main" tabindex="-1">
       {% block content %}{% endblock %}
+      <footer class="app-footer small muted">
+        <a href="/privacy/">Privacy</a>
+      </footer>
     </main>
     <nav class="tabbar" aria-label="Primary navigation">
       {{ nav_item("/", "Home", "home", ["home"], page) }}

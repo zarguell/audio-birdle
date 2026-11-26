@@ -189,7 +189,7 @@ const loadData = async ({ force = false } = {}) => {
   }
 };
 
-initPage();
+await initPage();
 stopPlayback();
 
 qs("[data-archive-more]")?.addEventListener("click", () => {

@@ -23,7 +23,7 @@ const renderRegionStat = (container, regionStat) => {
 };
 
 const init = async () => {
-  initPage();
+  await initPage();
   const stats = getStats();
   const totalGames = stats.totalGamesPlayed || 0;
   const totalWins = stats.totalGamesWon || 0;

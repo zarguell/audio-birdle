@@ -259,8 +259,8 @@ const showSuggestion = () => {
   );
 };
 
-const init = () => {
-  initPage();
+const init = async () => {
+  await initPage();
   const favorites = readFavorites();
   updateRowStates();
   bindFavorites(favorites);

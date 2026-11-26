@@ -33,6 +33,12 @@ venv/
 .venv/
 .build-deps/
 
+# Wrangler local dev secrets (keep the example)
+.dev.vars
+.dev.vars.*
+!.dev.vars.example
+.wrangler/
+
 # Playwright MCP debug artifacts
 .playwright-mcp/
 

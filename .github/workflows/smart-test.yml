@@ -2,9 +2,9 @@ name: Test Suite
 
 on:
   push:
-    branches: [main, dev, develop]
+    branches: [main, dev, develop, discord]
   pull_request:
-    branches: [main, dev, develop]
+    branches: [main, dev, develop, discord]
   workflow_dispatch:
 
 permissions:

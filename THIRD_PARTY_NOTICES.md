@@ -25,6 +25,39 @@ All auto-replay loops, idle animations, and theme broadcast hooks were removed.
 The adapted CSS lives in lintable files under `sitegen/static/css/`; no upstream
 HTML or inline scripts are shipped.
 
+## Discord Embedded App SDK
+
+The Discord Activity handshake uses
+[`@discord/embedded-app-sdk`](https://github.com/discord/embedded-app-sdk)
+2.5.0, licensed under the MIT License. The ESM entry point is bundled into the
+committed artifact `sitegen/static/vendor/embedded-app-sdk.js`; the exact
+version, npm tarball, integrity hash, build command, and output SHA-256 are
+recorded in
+[`sitegen/vendor/embedded-app-sdk.json`](sitegen/vendor/embedded-app-sdk.json).
+It is not a `package.json` dependency and is never loaded from a CDN.
+
+MIT License
+
+Copyright (c) 2024 Discord Inc.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
 ## Bird data and recordings
 
 Bird observations are provided by [eBird](https://ebird.org). Audio recordings
