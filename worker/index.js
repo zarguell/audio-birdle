@@ -337,18 +337,23 @@ async function handleSetup(interaction, env, subcommand, { fetchImpl } = {}) {
     channelId === null ||
     !SNOWFLAKE_PATTERN.test(channelId)
   ) {
-    return badRequest("invalid_channel");
+    return ephemeral({ content: "Pick a text channel in this server." });
   }
 
   const db = env?.DB;
   const botToken = env?.DISCORD_BOT_TOKEN;
-  if (!db || !botToken) return json({ error: "not_configured" }, 501);
+  if (!db || !botToken) {
+    return ephemeral({ content: "Summaries are not configured on this deployment." });
+  }
 
   let channel;
   try {
     channel = await getChannel(fetchImpl, botToken, channelId);
   } catch {
-    return json({ error: "discord_unavailable" }, 502);
+    return ephemeral({
+      content:
+        "I can't read that channel. Give me View Channel, or pick a public channel.",
+    });
   }
   if (!channel || String(channel.guild_id) !== guildId) {
     return ephemeral({ content: "That channel is not in this server." });
