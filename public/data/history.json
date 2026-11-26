@@ -1598,5 +1598,25 @@
       "name": "Common Chlorospingus",
       "subregion": "Costa Rica"
     }
+  ],
+  "fr": [
+    {
+      "date": "2026-11-25",
+      "id": "litgul",
+      "name": "Little Gull",
+      "subregion": "France"
+    },
+    {
+      "date": "2026-11-26",
+      "id": "comgre",
+      "name": "Common Greenshank",
+      "subregion": "France"
+    },
+    {
+      "date": "2026-11-27",
+      "id": "rocbun1",
+      "name": "Rock Bunting",
+      "subregion": "France"
+    }
   ]
 }

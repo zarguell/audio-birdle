@@ -27,6 +27,13 @@
     "status": "live"
   },
   {
+    "id": "fr",
+    "name": "France",
+    "country": "FR",
+    "continent": "Europe",
+    "status": "live"
+  },
+  {
     "id": "gb",
     "name": "United Kingdom",
     "country": "GB",

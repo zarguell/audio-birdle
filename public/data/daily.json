@@ -1604,6 +1604,13 @@
   },
   {
     "date": "2026-11-25",
+    "region": "fr",
+    "answerHash": "6f0a69c3",
+    "id": "litgul",
+    "subregion": "France"
+  },
+  {
+    "date": "2026-11-25",
     "region": "gb",
     "answerHash": "3458b3af",
     "id": "eursis",
@@ -1660,6 +1667,13 @@
   },
   {
     "date": "2026-11-26",
+    "region": "fr",
+    "answerHash": "d9435b91",
+    "id": "comgre",
+    "subregion": "France"
+  },
+  {
+    "date": "2026-11-26",
     "region": "gb",
     "answerHash": "2ab6b943",
     "id": "commoo3",
@@ -1713,6 +1727,13 @@
     "answerHash": "b97e8bc4",
     "id": "cobtan1",
     "subregion": "Costa Rica"
+  },
+  {
+    "date": "2026-11-27",
+    "region": "fr",
+    "answerHash": "39ff21ce",
+    "id": "rocbun1",
+    "subregion": "France"
   },
   {
     "date": "2026-11-27",

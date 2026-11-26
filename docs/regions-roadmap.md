@@ -17,6 +17,7 @@ Tracking issue: [#676](https://github.com/zarguell/audio-birdle/issues/676).
 | Ireland | 139 | Country-level pool; 106 in the current daily filter |
 | South Africa | 489 | Country-level pool; 478 in the current daily filter |
 | Costa Rica | 528 | Country-level pool; 507 in the current daily filter |
+| France | 268 | Country-level pool; 179 in the current daily filter |
 | Canada | 344 | Country-level pool |
 | Australia | 525 | Country-level pool |
 
@@ -37,7 +38,7 @@ regularity, quality, length, and licensing.
 | Ireland | 505 | 264 | 52% | **Live** — 139 playable |
 | South Africa | 903 | 619 | 69% | **Live** — 489 playable |
 | Costa Rica | 973 | 657 | 68% | **Live** — 528 playable |
-| France | 722 | 631 | 87% | Audit — [#673](https://github.com/zarguell/audio-birdle/issues/673) |
+| France | 722 | 631 | 87% | **Live** — 268 playable |
 | Japan | 693 | 254 | 37% | Audit — [#674](https://github.com/zarguell/audio-birdle/issues/674) |
 | New Zealand | 410 | 173 | 42% | Audit — [#675](https://github.com/zarguell/audio-birdle/issues/675) |
 | Germany | 669 | 342 | 51% | Backlog |
@@ -69,10 +70,10 @@ One country is onboarded at a time, even when a wave lists several.
 
 ### Wave 2 — flagship coverage
 3. **Costa Rica** — complete.
-4. **France** — next; highest XC coverage among the large European candidates.
+4. **France** — complete.
 
 ### Wave 3 — unique/large
-5. **Japan** — distinct East Asian avifauna; audit first.
+5. **Japan** — next; distinct East Asian avifauna; audit first.
 6. **New Zealand** — small and unique; audit first.
 
 ### Backlog
