@@ -1667,6 +1667,13 @@
   },
   {
     "date": "2026-11-25",
+    "region": "pt",
+    "answerHash": "b7158064",
+    "id": "lesyel",
+    "subregion": "Portugal"
+  },
+  {
+    "date": "2026-11-25",
     "region": "us",
     "answerHash": "73771c9e",
     "id": "buwtea",
@@ -1772,6 +1779,13 @@
   },
   {
     "date": "2026-11-26",
+    "region": "pt",
+    "answerHash": "a7d253df",
+    "id": "redwin",
+    "subregion": "Portugal"
+  },
+  {
+    "date": "2026-11-26",
     "region": "us",
     "answerHash": "47c8a158",
     "id": "easmea",
@@ -1874,6 +1888,13 @@
     "answerHash": "cfd80129",
     "id": "commyn",
     "subregion": "New Zealand"
+  },
+  {
+    "date": "2026-11-27",
+    "region": "pt",
+    "answerHash": "4ceba208",
+    "id": "comkin1",
+    "subregion": "Portugal"
   },
   {
     "date": "2026-11-27",

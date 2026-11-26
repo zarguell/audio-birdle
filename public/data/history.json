@@ -1738,5 +1738,25 @@
       "name": "Eurasian Nuthatch",
       "subregion": "Netherlands"
     }
+  ],
+  "pt": [
+    {
+      "date": "2026-11-25",
+      "id": "lesyel",
+      "name": "Lesser Yellowlegs",
+      "subregion": "Portugal"
+    },
+    {
+      "date": "2026-11-26",
+      "id": "redwin",
+      "name": "Redwing",
+      "subregion": "Portugal"
+    },
+    {
+      "date": "2026-11-27",
+      "id": "comkin1",
+      "name": "Common Kingfisher",
+      "subregion": "Portugal"
+    }
   ]
 }
