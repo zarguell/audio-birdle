@@ -81,3 +81,18 @@ def other_bird(bird_id: str, region: str = "us") -> dict:
     if not result:
         raise AssertionError(f"No alternative bird found in {region}")
     return result
+
+
+def finish_normal_round(page) -> None:
+    """Guess until the round ends, whatever the answer turns out to be.
+
+    The daily answer is random per run, so a test cannot know the correct
+    option; four guesses exhaust a normal round either way.
+    """
+    page.wait_for_selector(".answer-option")
+    for _ in range(4):
+        if page.locator("[data-completion]:not([hidden])").count():
+            break
+        page.locator(".answer-option").first.click()
+        page.wait_for_timeout(100)
+    page.wait_for_selector("[data-completion]:not([hidden])")

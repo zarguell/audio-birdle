@@ -155,6 +155,27 @@ def page(browser: Browser) -> Iterator[Page]:
         context.close()
 
 
+# Third-party media the game loads by design: sticker art from the jsDelivr CDN
+# and bird audio from xeno-canto and the Cornell Macaulay library. The suite runs
+# with no network, so a request to any of these fails every time and the browser
+# logs "Failed to load resource". That is the sandbox, not our code, so those
+# lines are filtered; page errors and our own console errors still fail the test.
+_REMOTE_MEDIA_HOSTS = (
+    "cdn.jsdelivr.net",
+    "xeno-canto.org",
+    "cdn.download.ams.birds.cornell.edu",
+)
+
+
+def _is_remote_media_failure(message) -> bool:  # noqa: ANN001
+    if message.type != "error":
+        return False
+    if not message.text.startswith("Failed to load resource"):
+        return False
+    url = (message.location or {}).get("url", "")
+    return any(host in url for host in _REMOTE_MEDIA_HOSTS)
+
+
 @pytest.fixture
 def console_errors(page: Page) -> list[str]:
     errors: list[str] = []
@@ -163,7 +184,7 @@ def console_errors(page: Page) -> list[str]:
         errors.append(f"pageerror: {error}")
 
     def on_console(message) -> None:  # noqa: ANN001
-        if message.type == "error":
+        if message.type == "error" and not _is_remote_media_failure(message):
             errors.append(f"console: {message.text}")
 
     page.on("pageerror", on_page_error)

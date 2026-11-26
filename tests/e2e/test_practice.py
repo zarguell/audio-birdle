@@ -1,14 +1,6 @@
 from __future__ import annotations
 
-
-def finish_normal_round(page) -> None:
-    page.wait_for_selector(".answer-option")
-    for _ in range(4):
-        if page.locator("[data-completion]:not([hidden])").count():
-            break
-        page.locator(".answer-option").first.click()
-        page.wait_for_timeout(100)
-    page.wait_for_selector("[data-completion]:not([hidden])")
+from .helpers import finish_normal_round
 
 
 def test_practice_rounds_do_not_touch_stats(page, base_url, console_errors):
