@@ -4,7 +4,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 
-import worker, { handleResult, scheduled } from "../../worker/index.js";
+import worker, { handleResult } from "../../worker/index.js";
 import { computeStreak, previousDate } from "../../worker/lib/streaks.js";
 
 const encoder = new TextEncoder();
@@ -144,43 +144,6 @@ function makeBoardFetch() {
   return fetchImpl;
 }
 
-function makeCronFetch() {
-  const calls = [];
-  const fetchImpl = async (url, init = {}) => {
-    const { pathname } = new URL(url);
-    calls.push({
-      url,
-      pathname,
-      method: init.method || "GET",
-      headers: init.headers || {},
-      body: init.body ? JSON.parse(init.body) : undefined,
-    });
-    return jsonResponse({ id: "999999999999999999" });
-  };
-  fetchImpl.calls = calls;
-  return fetchImpl;
-}
-
-function makeSetupFetch(guildId = GUILD_ID) {
-  return async (url) => {
-    const { pathname } = new URL(url);
-    if (pathname === `/api/v10/channels/${CHANNEL_ID}`) {
-      return jsonResponse({ id: CHANNEL_ID, guild_id: guildId });
-    }
-    return jsonResponse({ error: "not_found" }, 404);
-  };
-}
-
-async function withGlobalFetch(fetchImpl, fn) {
-  const original = globalThis.fetch;
-  globalThis.fetch = fetchImpl;
-  try {
-    return await fn();
-  } finally {
-    globalThis.fetch = original;
-  }
-}
-
 function resultRequest() {
   const body = {
     guildId: GUILD_ID,
@@ -241,9 +204,7 @@ test("setup without MANAGE_GUILD is ephemeral and writes nothing", async () => {
   const db = makeDb();
   const response = await worker.fetch(
     await signedRequest(
-      commandPayload("setup", [{ type: 7, name: "channel", value: CHANNEL_ID }], {
-        permissions: "0",
-      }),
+      commandPayload("setup", [], { permissions: "0" }),
     ),
     { DISCORD_PUBLIC_KEY: publicKeyHex, DB: db },
     {},
@@ -258,26 +219,22 @@ test("setup without MANAGE_GUILD is ephemeral and writes nothing", async () => {
   assert.equal(db.calls.length, 0);
 });
 
-test("setup with MANAGE_GUILD stores the summary channel", async () => {
+test("setup with MANAGE_GUILD opts the current channel in", async () => {
   const db = makeDb();
-  const response = await withGlobalFetch(makeSetupFetch(), async () =>
-    worker.fetch(
-      await signedRequest(
-        commandPayload("setup", [{ type: 7, name: "channel", value: CHANNEL_ID }]),
-      ),
-      { DISCORD_PUBLIC_KEY: publicKeyHex, DISCORD_BOT_TOKEN: BOT_TOKEN, DB: db },
-      {},
-    ),
+  const response = await worker.fetch(
+    await signedRequest(commandPayload("setup")),
+    { DISCORD_PUBLIC_KEY: publicKeyHex, DB: db },
+    {},
   );
 
   const body = await response.json();
   assert.equal(body.type, 4);
   assert.equal(body.data.flags, 64);
-  assert.equal(body.data.content.includes(`<#${CHANNEL_ID}>`), true);
+  assert.equal(body.data.content, "Daily summaries will post in this channel.");
 
-  const upsert = db.calls.find((statement) => statement.sql.startsWith("INSERT INTO guilds"));
-  assert.ok(upsert, "guild upsert runs");
-  assert.deepEqual(upsert.args.slice(0, 2), [GUILD_ID, CHANNEL_ID]);
+  const upsert = db.calls.find((statement) => statement.sql.startsWith("INSERT INTO channels"));
+  assert.ok(upsert, "channel upsert runs");
+  assert.deepEqual(upsert.args.slice(0, 2), [CHANNEL_ID, GUILD_ID]);
   assert.equal(typeof upsert.args[2], "string");
 });
 
@@ -365,92 +322,6 @@ test("unknown command is rejected with 400", async () => {
     {},
   );
   assert.equal(response.status, 400);
-});
-
-// 05:10 UTC is 00:10 EST on 2026-11-26, so the cron reports 2026-11-25.
-const CRON_NOW = new Date("2026-11-26T05:10:00Z");
-
-test("cron posts a summary for an opted-in guild with an empty mention parse", async () => {
-  const db = makeDb([
-    {
-      kind: "all",
-      match: /FROM guilds WHERE summary_channel_id/,
-      handler: () => [{ guild_id: GUILD_ID, summary_channel_id: CHANNEL_ID }],
-    },
-    {
-      kind: "all",
-      match: /FROM results r JOIN players/,
-      handler: () => [{ username: "birder", won: 1, guess_count: 3, mode: "normal" }],
-    },
-    {
-      kind: "all",
-      match: /SELECT DISTINCT date FROM results/,
-      handler: () => [{ date: "2026-11-25" }],
-    },
-  ]);
-  const fetchImpl = makeCronFetch();
-
-  await scheduled({}, { DB: db, DISCORD_BOT_TOKEN: BOT_TOKEN }, {}, { fetchImpl, now: CRON_NOW });
-
-  assert.equal(fetchImpl.calls.length, 1);
-  const [post] = fetchImpl.calls;
-  assert.equal(post.method, "POST");
-  assert.equal(post.pathname, `/api/v10/channels/${CHANNEL_ID}/messages`);
-  assert.deepEqual(post.body.allowed_mentions, { parse: [] });
-  assert.equal(post.body.embeds[0].title, "Audio-Birdle — 2026-11-25");
-  assert.match(post.body.embeds[0].description, /Group streak: 1 day\(s\)/);
-  assert.match(post.body.embeds[0].description, /birder — 3\/4/);
-});
-
-test("cron skips a guild with no results", async () => {
-  const EMPTY_GUILD = "987654321098765432";
-  const EMPTY_CHANNEL = "876543210987654321";
-  const db = makeDb([
-    {
-      kind: "all",
-      match: /FROM guilds WHERE summary_channel_id/,
-      handler: () => [
-        { guild_id: GUILD_ID, summary_channel_id: CHANNEL_ID },
-        { guild_id: EMPTY_GUILD, summary_channel_id: EMPTY_CHANNEL },
-      ],
-    },
-    {
-      kind: "all",
-      match: /FROM results r JOIN players/,
-      handler: (args) =>
-        args[0] === EMPTY_GUILD
-          ? []
-          : [{ username: "birder", won: 0, guess_count: 4, mode: "normal" }],
-    },
-    { kind: "all", match: /SELECT DISTINCT date FROM results/, handler: () => [] },
-  ]);
-  const fetchImpl = makeCronFetch();
-
-  await scheduled({}, { DB: db, DISCORD_BOT_TOKEN: BOT_TOKEN }, {}, { fetchImpl });
-
-  assert.equal(fetchImpl.calls.length, 1);
-  assert.equal(fetchImpl.calls[0].pathname, `/api/v10/channels/${CHANNEL_ID}/messages`);
-});
-
-test("cron caps the run at 40 guilds", async () => {
-  const guilds = Array.from({ length: 45 }, (_, index) => ({
-    guild_id: String(100000000000000000n + BigInt(index)),
-    summary_channel_id: String(200000000000000000n + BigInt(index)),
-  }));
-  const db = makeDb([
-    { kind: "all", match: /FROM guilds WHERE summary_channel_id/, handler: () => guilds },
-    {
-      kind: "all",
-      match: /FROM results r JOIN players/,
-      handler: () => [{ username: "birder", won: 1, guess_count: 3, mode: "normal" }],
-    },
-    { kind: "all", match: /SELECT DISTINCT date FROM results/, handler: () => [] },
-  ]);
-  const fetchImpl = makeCronFetch();
-
-  await scheduled({}, { DB: db, DISCORD_BOT_TOKEN: BOT_TOKEN }, {}, { fetchImpl });
-
-  assert.equal(fetchImpl.calls.length, 40);
 });
 
 test("previousDate handles month, year, and leap-day boundaries", () => {
