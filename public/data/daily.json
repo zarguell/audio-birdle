@@ -1583,6 +1583,13 @@
   },
   {
     "date": "2026-11-25",
+    "region": "ar",
+    "answerHash": "571c455e",
+    "id": "shbmin1",
+    "subregion": "Argentina"
+  },
+  {
+    "date": "2026-11-25",
     "region": "au",
     "answerHash": "4231608d",
     "id": "dobfin1",
@@ -1702,6 +1709,13 @@
   },
   {
     "date": "2026-11-26",
+    "region": "ar",
+    "answerHash": "9ec6c262",
+    "id": "spfgal1",
+    "subregion": "Argentina"
+  },
+  {
+    "date": "2026-11-26",
     "region": "au",
     "answerHash": "c96afa7a",
     "id": "olbori1",
@@ -1818,6 +1832,13 @@
     "answerHash": "17235c67",
     "id": "rebshr1",
     "subregion": "South Africa"
+  },
+  {
+    "date": "2026-11-27",
+    "region": "ar",
+    "answerHash": "1f9f7ecc",
+    "id": "rubmin1",
+    "subregion": "Argentina"
   },
   {
     "date": "2026-11-27",

@@ -33,6 +33,7 @@ def test_real_data_is_valid() -> None:
         "nl",
         "pt",
         "mx",
+        "ar",
     }
 
 

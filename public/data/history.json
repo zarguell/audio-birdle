@@ -1778,5 +1778,25 @@
       "name": "Bell's Vireo",
       "subregion": "Mexico"
     }
+  ],
+  "ar": [
+    {
+      "date": "2026-11-25",
+      "id": "shbmin1",
+      "name": "Short-billed Miner",
+      "subregion": "Argentina"
+    },
+    {
+      "date": "2026-11-26",
+      "id": "spfgal1",
+      "name": "Spot-flanked Gallinule",
+      "subregion": "Argentina"
+    },
+    {
+      "date": "2026-11-27",
+      "id": "rubmin1",
+      "name": "Rufous-banded Miner",
+      "subregion": "Argentina"
+    }
   ]
 }
