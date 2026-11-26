@@ -55,6 +55,13 @@
     "status": "live"
   },
   {
+    "id": "pt",
+    "name": "Portugal",
+    "country": "PT",
+    "continent": "Europe",
+    "status": "live"
+  },
+  {
     "id": "fr",
     "name": "France",
     "country": "FR",

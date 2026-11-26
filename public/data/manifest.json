@@ -60,6 +60,11 @@
       "path": "/data/birds/nz.json",
       "sha256": "6f0be4a98db28f4121b9c73ab2a58bef1a8489c0445733d18ff1027a0b4e2381"
     },
+    "birds/pt.json": {
+      "bytes": 947438,
+      "path": "/data/birds/pt.json",
+      "sha256": "400ca2e94cfcbb19fb4ec203c7130de500a53b8ea9bd25132e8f3c253f342527"
+    },
     "birds/us.json": {
       "bytes": 1265408,
       "path": "/data/birds/us.json",
@@ -71,26 +76,26 @@
       "sha256": "c85dac2d21acf43154f70ec970be5f011d4dfece2e59d78cf500909fad8e93d5"
     },
     "daily-subregion-birds.json": {
-      "bytes": 564185,
+      "bytes": 571119,
       "path": "/data/daily-subregion-birds.json",
-      "sha256": "fdb57301cd330f98fcc71ffe739425c49db2b38b4f12e141a36d251175907e92"
+      "sha256": "9b223670b4d2ce6649438e7490e9ef0dc176510961913db393126f840ebeb1b0"
     },
     "daily.json": {
-      "bytes": 37181,
+      "bytes": 37581,
       "path": "/data/daily.json",
-      "sha256": "37f6ce5ac95b1449b050b7c13c858a6211891eba9fa52d11c53304e26c467dea"
+      "sha256": "95150532d93c189b961fc92d2634e971bd8c79f109f96994efd17afd1380de7d"
     },
     "history.json": {
-      "bytes": 36632,
+      "bytes": 37021,
       "path": "/data/history.json",
-      "sha256": "35cf31ba884b32dcd45fb7ab5de80addf0a871e4bbd51e6ca558c80fc7981dee"
+      "sha256": "fc657d07c92e798421af43b7c5342b17230abe621b05e2864ee079a6acc3bc1c"
     },
     "regions.json": {
-      "bytes": 1950,
+      "bytes": 2068,
       "path": "/data/regions.json",
-      "sha256": "d436e9c7b75c6dde0cb99b7b0d2f4f648219251073fafaeb242091142b3862f7"
+      "sha256": "ccec56b225bd9e7afbb6b5ec0176071ae01732d9ad9028bb1fc7c8cc39264956"
     }
   },
-  "generatedAt": "2026-11-26T04:26:15Z",
+  "generatedAt": "2026-11-26T05:02:57Z",
   "schemaVersion": 1
 }
