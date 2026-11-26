@@ -14,6 +14,7 @@ import { computeStreak, previousDate } from "./lib/streaks.js";
 
 const INTERACTION_PING = 1;
 const INTERACTION_APPLICATION_COMMAND = 2;
+const INTERACTION_MESSAGE_COMPONENT = 3;
 
 const RESPONSE_PONG = 1;
 const RESPONSE_CHANNEL_MESSAGE = 4;
@@ -25,6 +26,7 @@ const CHANNEL_OPTION = 7;
 const PERMISSION_MANAGE_GUILD = 0x20n;
 
 const ACTIVITY_COMMAND_NAME = "audiobirdle";
+const PLAY_BUTTON_CUSTOM_ID = "audiobirdle:play";
 const SETUP_COMMAND_NAME = "audiobirdle-setup";
 const STATS_COMMAND_NAME = "audiobirdle-stats";
 const FORGET_COMMAND_NAME = "audiobirdle-forget";
@@ -106,6 +108,10 @@ const SUMMARY_RESULTS_SQL =
   "SELECT p.username AS username, r.won AS won, r.guess_count AS guess_count, r.mode AS mode " +
   "FROM results r JOIN players p ON p.discord_id = r.discord_id " +
   "WHERE r.guild_id = ? AND r.date = ? ORDER BY r.won DESC, r.guess_count ASC";
+const SUMMARY_LEADERBOARD_SQL =
+  "SELECT p.username AS username, COUNT(*) AS games, SUM(r.won) AS wins " +
+  "FROM results r LEFT JOIN players p ON p.discord_id = r.discord_id " +
+  "WHERE r.guild_id = ? GROUP BY r.discord_id ORDER BY wins DESC, games ASC LIMIT 5";
 const SUMMARY_DATES_SQL =
   "SELECT DISTINCT date FROM results WHERE guild_id = ? ORDER BY date DESC LIMIT 400";
 
@@ -497,6 +503,32 @@ async function handleInteractions(request, env, { now = Date.now(), fetchImpl, c
     return json({ type: RESPONSE_PONG });
   }
 
+  if (interaction.type === INTERACTION_MESSAGE_COMPONENT) {
+    if (interaction.data?.custom_id !== PLAY_BUTTON_CUSTOM_ID) {
+      return badRequest("unknown_component");
+    }
+    if (env?.ACTIVITY_DISABLED === "1") {
+      return ephemeral({ content: "Audio-Birdle is temporarily unavailable." });
+    }
+
+    const db = env?.DB;
+    if (db) {
+      const work = recordLaunch(db, interaction, now);
+      if (ctx?.waitUntil) {
+        ctx.waitUntil(
+          work.catch((error) => console.error("launch: record failed", error?.message)),
+        );
+      } else {
+        try {
+          await work;
+        } catch {
+          return ephemeral({ content: STORAGE_ERROR });
+        }
+      }
+    }
+    return json({ type: RESPONSE_LAUNCH_ACTIVITY });
+  }
+
   if (interaction.type === INTERACTION_APPLICATION_COMMAND) {
     if (env?.ACTIVITY_DISABLED === "1") {
       return ephemeral({ content: "Audio-Birdle is temporarily unavailable." });
@@ -659,6 +691,29 @@ function validateBoardRequest(body, nowMs) {
   return { guildId, channelId, date, mode, region };
 }
 
+const PLAY_BUTTON_COMPONENTS = [
+  {
+    type: 1,
+    components: [{ type: 2, style: 1, label: "Play now!", custom_id: PLAY_BUTTON_CUSTOM_ID }],
+  },
+];
+
+/**
+ * Embed author for a player card. The avatar CDN URL exists only when Discord
+ * returned an avatar hash; the default avatar URL needs a discriminator.
+ * @param {{ id?: unknown, username?: unknown, avatar?: unknown }} user
+ */
+function playerAuthor(user) {
+  const name = typeof user?.username === "string" ? user.username : "Player";
+  const id = typeof user?.id === "string" ? user.id : "";
+  const avatar = typeof user?.avatar === "string" ? user.avatar : null;
+  if (avatar === null || id === "") return { name };
+  return {
+    name,
+    icon_url: `https://cdn.discordapp.com/avatars/${id}/${avatar}.png?size=64`,
+  };
+}
+
 /** @param {string} mode */
 function modeLabel(mode) {
   return mode === "hard" ? "Hard" : "Normal";
@@ -778,10 +833,12 @@ export async function handleSession(request, env, { fetchImpl, now = Date.now() 
       content: `${user.username} is playing`,
       embeds: [
         {
+          author: playerAuthor(user),
           title: `Audio-Birdle ${input.date}`,
           description: `Region: ${input.region.toUpperCase()} · ${modeLabel(input.mode)}`,
         },
       ],
+      components: PLAY_BUTTON_COMPONENTS,
       allowed_mentions: { parse: [] },
     });
   } catch {
@@ -910,10 +967,12 @@ export async function handleResult(request, env, { fetchImpl, now = Date.now() }
       content: `${user.username} finished`,
       embeds: [
         {
+          author: playerAuthor(user),
           title: `Audio-Birdle ${input.date}`,
           description: `Region: ${input.region.toUpperCase()} · ${modeLabel(input.mode)}\n${score}\n\n${grid}`,
         },
       ],
+      components: PLAY_BUTTON_COMPONENTS,
       allowed_mentions: { parse: [] },
     });
   } catch {
@@ -965,8 +1024,29 @@ async function postGuildSummary({ db, botToken, fetchImpl, guildId, channelId, d
 
   const description = [`Group streak: ${streak} day(s)`, "", ...lines].join("\n");
 
+  let leaderboardRows;
+  try {
+    leaderboardRows = await db.prepare(SUMMARY_LEADERBOARD_SQL).bind(guildId).all();
+  } catch {
+    leaderboardRows = null;
+  }
+  const leaderboard = Array.isArray(leaderboardRows?.results)
+    ? leaderboardRows.results.filter((row) => row && row.username)
+    : [];
+  const leaderboardLine =
+    leaderboard.length === 0
+      ? null
+      : `Leaderboard: ${leaderboard
+          .map((row, index) => `${index + 1}. ${String(row.username)} — ${asNumber(row.wins)}W/${asNumber(row.games)}G`)
+          .join(", ")}`;
+
   await createMessage(fetchImpl, botToken, channelId, {
-    embeds: [{ title: `Audio-Birdle — ${date}`, description }],
+    embeds: [
+      {
+        title: `Audio-Birdle — ${date}`,
+        description: leaderboardLine ? `${description}\n\n${leaderboardLine}` : description,
+      },
+    ],
     allowed_mentions: { parse: [] },
   });
 }
