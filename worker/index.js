@@ -3,7 +3,13 @@
 // directly by the assets binding unless /api/* is requested.
 
 import { verifyDiscordRequest } from "./lib/verify.js";
-import { createMessage, editMessage, getChannel, getMe } from "./lib/discord.js";
+import {
+  createMessage,
+  editMessage,
+  getChannel,
+  getGuildMember,
+  getOauthUser,
+} from "./lib/discord.js";
 import { computeStreak, previousDate } from "./lib/streaks.js";
 
 const INTERACTION_PING = 1;
@@ -22,7 +28,25 @@ const ACTIVITY_COMMAND_NAME = "audiobirdle";
 
 const SUMMARY_GUILD_LIMIT = 40;
 
-const JSON_HEADERS = { "content-type": "application/json; charset=utf-8" };
+const JSON_HEADERS = {
+  "content-type": "application/json; charset=utf-8",
+  "cache-control": "no-store",
+};
+
+const MAX_JSON_BODY_BYTES = 8 * 1024;
+const MAX_INTERACTION_BYTES = 32 * 1024;
+const MAX_TIMESTAMP_SKEW_SECONDS = 300;
+const LAUNCH_WINDOW_MS = 15 * 60 * 1000;
+const RATE_LIMIT_WINDOW_MS = 60 * 1000;
+const USER_RATE_LIMIT = 30;
+const TOKEN_RATE_LIMIT = 20;
+
+const DAY_MS = 24 * 60 * 60 * 1000;
+const RESULTS_RETENTION_DAYS = 90;
+const BOARDS_RETENTION_DAYS = 30;
+const LAUNCH_RETENTION_MS = 60 * 60 * 1000;
+const RATE_LIMIT_RETENTION_MS = DAY_MS;
+const ANALYTICS_RETENTION_DAYS = 2;
 
 const SNOWFLAKE_PATTERN = /^\d{17,20}$/;
 const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
@@ -30,9 +54,25 @@ const REGION_PATTERN = /^[a-z0-9-]{2,16}$/;
 const MODE_MAX_GUESSES = { normal: 4, hard: 6 };
 
 const SESSION_SELECT_SQL =
-  "SELECT message_id FROM boards WHERE guild_id = ? AND channel_id = ? AND discord_id = ? AND date = ?";
+  "SELECT message_id FROM boards WHERE guild_id = ? AND channel_id = ? AND discord_id = ? AND date = ? AND mode = ?";
 const SESSION_INSERT_SQL =
-  "INSERT INTO boards (guild_id, channel_id, discord_id, date, message_id) VALUES (?, ?, ?, ?, ?)";
+  "INSERT INTO boards (guild_id, channel_id, discord_id, date, mode, message_id) VALUES (?, ?, ?, ?, ?, ?)";
+
+const LAUNCH_SELECT_SQL =
+  "SELECT created_at FROM launches WHERE discord_id = ? AND guild_id = ? AND channel_id = ?";
+const LAUNCH_UPSERT_SQL =
+  "INSERT INTO launches (discord_id, guild_id, channel_id, created_at) VALUES (?, ?, ?, ?) " +
+  "ON CONFLICT(discord_id, guild_id, channel_id) DO UPDATE SET created_at = excluded.created_at";
+
+const RATE_LIMIT_SQL =
+  "INSERT INTO rate_limits (subject, window_start, count) VALUES (?, ?, 1) " +
+  "ON CONFLICT(subject, window_start) DO UPDATE SET count = count + 1 RETURNING count";
+
+const CLEANUP_RESULTS_SQL = "DELETE FROM results WHERE created_at < ?";
+const CLEANUP_BOARDS_SQL = "DELETE FROM boards WHERE updated_at < ?";
+const CLEANUP_LAUNCHES_SQL = "DELETE FROM launches WHERE created_at < ?";
+const CLEANUP_RATE_LIMITS_SQL = "DELETE FROM rate_limits WHERE window_start < ?";
+const CLEANUP_ANALYTICS_SQL = "DELETE FROM analytics_daily WHERE created_at < ?";
 
 const PLAYER_UPSERT_SQL =
   "INSERT INTO players (discord_id, username, avatar, region, created_at) VALUES (?, ?, ?, ?, ?) " +
@@ -66,9 +106,12 @@ const SUMMARY_RESULTS_SQL =
 const SUMMARY_DATES_SQL =
   "SELECT DISTINCT date FROM results WHERE guild_id = ? ORDER BY date DESC LIMIT 400";
 
-/** @param {unknown} body @param {number} [status] */
-function json(body, status = 200) {
-  return new Response(JSON.stringify(body), { status, headers: JSON_HEADERS });
+/** @param {unknown} body @param {number} [status] @param {Record<string, string>} [extraHeaders] */
+function json(body, status = 200, extraHeaders = {}) {
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: { ...JSON_HEADERS, ...extraHeaders },
+  });
 }
 
 /** @param {string} name */
@@ -79,6 +122,94 @@ function notFound() {
 /** @param {string} error */
 function badRequest(error = "invalid_request") {
   return json({ error }, 400);
+}
+
+function payloadTooLarge() {
+  return json({ error: "payload_too_large" }, 413);
+}
+
+function rateLimited() {
+  return json({ error: "rate_limited" }, 429, { "retry-after": "60" });
+}
+
+function unavailable() {
+  return json({ error: "unavailable" }, 503);
+}
+
+/**
+ * Read a request body with a hard byte cap. The declared content length is
+ * checked first so an oversized body never reaches the parser; the decoded
+ * length is checked again because the header can lie.
+ * @param {Request} request
+ * @param {number} maxBytes
+ * @returns {Promise<{ text: string | null, tooLarge: boolean }>}
+ */
+async function readLimitedText(request, maxBytes) {
+  const declared = Number(request.headers.get("content-length"));
+  if (Number.isFinite(declared) && declared > maxBytes) {
+    return { text: null, tooLarge: true };
+  }
+
+  let text;
+  try {
+    text = await request.text();
+  } catch {
+    return { text: null, tooLarge: false };
+  }
+  if (new TextEncoder().encode(text).length > maxBytes) {
+    return { text: null, tooLarge: true };
+  }
+  return { text, tooLarge: false };
+}
+
+/** @param {string} date @param {number} nowMs */
+function dateWithinOneDay(date, nowMs) {
+  const [year, month, day] = date.split("-").map(Number);
+  const dayNumber = Math.floor(Date.UTC(year, month - 1, day) / DAY_MS);
+  const todayNumber = Math.floor(nowMs / DAY_MS);
+  return Math.abs(dayNumber - todayNumber) <= 1;
+}
+
+/** @param {number} nowMs @param {string} subject @param {number} limit */
+async function overRateLimit(db, nowMs, subject, limit) {
+  const windowStart = Math.floor(nowMs / RATE_LIMIT_WINDOW_MS) * RATE_LIMIT_WINDOW_MS;
+  try {
+    const row = await db.prepare(RATE_LIMIT_SQL).bind(subject, windowStart).first();
+    return Number(row?.count ?? 0) > limit;
+  } catch {
+    return false;
+  }
+}
+
+/** @param {any} interaction @param {number} nowMs */
+async function recordLaunch(db, interaction, nowMs) {
+  const discordId = interactionUserId(interaction);
+  const guildId = interaction.guild_id;
+  const channelId = interaction.channel_id;
+  if (
+    !discordId ||
+    typeof guildId !== "string" ||
+    !SNOWFLAKE_PATTERN.test(guildId) ||
+    typeof channelId !== "string" ||
+    !SNOWFLAKE_PATTERN.test(channelId)
+  ) {
+    return false;
+  }
+  await db
+    .prepare(LAUNCH_UPSERT_SQL)
+    .bind(discordId, guildId, channelId, nowMs)
+    .run();
+  return true;
+}
+
+/** @param {any} db @param {string} discordId @param {string} guildId @param {string} channelId @param {number} nowMs */
+async function hasRecentLaunch(db, discordId, guildId, channelId, nowMs) {
+  const row = await db
+    .prepare(LAUNCH_SELECT_SQL)
+    .bind(discordId, guildId, channelId)
+    .first();
+  const createdAt = Number(row?.created_at);
+  return Number.isFinite(createdAt) && createdAt > nowMs - LAUNCH_WINDOW_MS;
 }
 
 function nowIso() {
@@ -135,10 +266,11 @@ const STORAGE_ERROR = "Could not save right now. Try again later.";
 
 /**
  * @param {any} interaction
- * @param {{ DB?: any }} env
+ * @param {{ DB?: any, DISCORD_BOT_TOKEN?: string }} env
  * @param {any} subcommand
+ * @param {{ fetchImpl?: typeof fetch }} [options]
  */
-async function handleSetup(interaction, env, subcommand) {
+async function handleSetup(interaction, env, subcommand, { fetchImpl } = {}) {
   if (!hasManageGuild(interaction.member)) {
     return ephemeral({ content: "You need Manage Server to use this." });
   }
@@ -155,7 +287,18 @@ async function handleSetup(interaction, env, subcommand) {
   }
 
   const db = env?.DB;
-  if (!db) return json({ error: "not_configured" }, 501);
+  const botToken = env?.DISCORD_BOT_TOKEN;
+  if (!db || !botToken) return json({ error: "not_configured" }, 501);
+
+  let channel;
+  try {
+    channel = await getChannel(fetchImpl, botToken, channelId);
+  } catch {
+    return json({ error: "discord_unavailable" }, 502);
+  }
+  if (!channel || String(channel.guild_id) !== guildId) {
+    return ephemeral({ content: "That channel is not in this server." });
+  }
 
   try {
     await db.prepare(GUILD_UPSERT_SQL).bind(guildId, channelId, nowIso()).run();
@@ -253,8 +396,9 @@ async function handleStats(interaction, env) {
  * Dispatch a slash-command subcommand. Unknown subcommands are rejected.
  * @param {any} interaction
  * @param {{ DB?: any }} env
+ * @param {{ now?: number, fetchImpl?: typeof fetch }} [options]
  */
-async function handleSubcommand(interaction, env) {
+async function handleSubcommand(interaction, env, options = {}) {
   const subcommand = interaction.data?.options?.[0];
   if (!subcommand || subcommand.type !== SUBCOMMAND_OPTION) {
     return badRequest("unsupported_interaction");
@@ -262,7 +406,7 @@ async function handleSubcommand(interaction, env) {
 
   switch (subcommand.name) {
     case "setup":
-      return handleSetup(interaction, env, subcommand);
+      return handleSetup(interaction, env, subcommand, options);
     case "forget":
       return handleForget(interaction, env);
     case "stats":
@@ -275,15 +419,28 @@ async function handleSubcommand(interaction, env) {
 /**
  * Verify the Discord signature and dispatch the interaction.
  * @param {Request} request
- * @param {{ DISCORD_PUBLIC_KEY?: string }} env
+ * @param {{ DISCORD_PUBLIC_KEY?: string, DB?: any, DISCORD_BOT_TOKEN?: string, ACTIVITY_DISABLED?: string }} env
+ * @param {{ now?: number, fetchImpl?: typeof fetch }} [options]
  */
-async function handleInteractions(request, env) {
+async function handleInteractions(request, env, { now = Date.now(), fetchImpl } = {}) {
   const publicKeyHex = env?.DISCORD_PUBLIC_KEY;
   if (!publicKeyHex) return json({ error: "not_configured" }, 501);
 
+  const limited = await readLimitedText(request, MAX_INTERACTION_BYTES);
+  if (limited.tooLarge) return payloadTooLarge();
+  const body = limited.text;
+  if (typeof body !== "string") return badRequest();
+
   const signatureHex = request.headers.get("x-signature-ed25519");
   const timestamp = request.headers.get("x-signature-timestamp");
-  const body = await request.text();
+
+  const timestampSeconds = Number(timestamp);
+  if (
+    !Number.isFinite(timestampSeconds) ||
+    Math.abs(Math.floor(now / 1000) - timestampSeconds) > MAX_TIMESTAMP_SKEW_SECONDS
+  ) {
+    return json({ error: "invalid_signature" }, 401);
+  }
 
   const valid = await verifyDiscordRequest({ publicKeyHex, signatureHex, timestamp, body });
   if (!valid) return json({ error: "invalid_signature" }, 401);
@@ -301,11 +458,24 @@ async function handleInteractions(request, env) {
   }
 
   if (interaction.type === INTERACTION_APPLICATION_COMMAND) {
+    if (env?.ACTIVITY_DISABLED === "1") {
+      return ephemeral({ content: "Audio-Birdle is temporarily unavailable." });
+    }
+
     const name = interaction.data?.name;
     if (name === ACTIVITY_COMMAND_NAME) {
       const options = interaction.data?.options;
       if (Array.isArray(options) && options.length > 0) {
-        return handleSubcommand(interaction, env);
+        return handleSubcommand(interaction, env, { now, fetchImpl });
+      }
+
+      const db = env?.DB;
+      if (db) {
+        try {
+          await recordLaunch(db, interaction, now);
+        } catch {
+          return ephemeral({ content: STORAGE_ERROR });
+        }
       }
       return json({ type: RESPONSE_LAUNCH_ACTIVITY });
     }
@@ -317,20 +487,29 @@ async function handleInteractions(request, env) {
 /**
  * Exchange an OAuth2 authorization code for an access token.
  * @param {Request} request
- * @param {{ DISCORD_CLIENT_ID?: string, DISCORD_CLIENT_SECRET?: string }} env
+ * @param {{ DISCORD_CLIENT_ID?: string, DISCORD_CLIENT_SECRET?: string, DB?: any, ACTIVITY_DISABLED?: string }} env
+ * @param {{ now?: number }} [options]
  */
-async function handleToken(request, env) {
+async function handleToken(request, env, { now = Date.now() } = {}) {
+  if (env?.ACTIVITY_DISABLED === "1") return unavailable();
+
+  const limited = await readLimitedText(request, MAX_JSON_BODY_BYTES);
+  if (limited.tooLarge) return payloadTooLarge();
+  if (typeof limited.text !== "string") return badRequest();
+
   const clientId = env?.DISCORD_CLIENT_ID;
   const clientSecret = env?.DISCORD_CLIENT_SECRET;
   if (!clientId || !clientSecret) return json({ error: "not_configured" }, 501);
 
-  let form;
-  try {
-    form = await request.formData();
-  } catch {
-    return badRequest();
+  const db = env?.DB;
+  if (db) {
+    const ip = request.headers.get("cf-connecting-ip") || "unknown";
+    if (await overRateLimit(db, now, `token:${ip}`, TOKEN_RATE_LIMIT)) {
+      return rateLimited();
+    }
   }
 
+  const form = new URLSearchParams(limited.text);
   const code = form.get("code");
   if (typeof code !== "string" || code.length === 0) return badRequest();
 
@@ -380,28 +559,41 @@ function bearerToken(request) {
   return match ? match[1] : null;
 }
 
-/** @param {Request} request @returns {Promise<Record<string, unknown> | null>} */
+/**
+ * Read a JSON object body under the 8 KiB cap.
+ * @param {Request} request
+ * @returns {Promise<{ body: Record<string, unknown> | null, tooLarge: boolean }>}
+ */
 async function readJsonObject(request) {
+  const limited = await readLimitedText(request, MAX_JSON_BODY_BYTES);
+  if (limited.tooLarge) return { body: null, tooLarge: true };
+  if (typeof limited.text !== "string") return { body: null, tooLarge: false };
+
   let value;
   try {
-    value = await request.json();
+    value = JSON.parse(limited.text);
   } catch {
-    return null;
+    return { body: null, tooLarge: false };
   }
-  if (!value || typeof value !== "object" || Array.isArray(value)) return null;
-  return /** @type {Record<string, unknown>} */ (value);
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    return { body: null, tooLarge: false };
+  }
+  return { body: /** @type {Record<string, unknown>} */ (value), tooLarge: false };
 }
 
 /**
- * Validate the fields shared by /api/session and /api/result.
+ * Validate the fields shared by /api/session and /api/result. Unknown fields
+ * are ignored; only the values returned here reach Discord or D1.
  * @param {Record<string, unknown> | null} body
+ * @param {number} nowMs
  */
-function validateBoardRequest(body) {
+function validateBoardRequest(body, nowMs) {
   if (!body) return null;
   const { guildId, channelId, date, mode, region } = body;
   if (typeof guildId !== "string" || !SNOWFLAKE_PATTERN.test(guildId)) return null;
   if (typeof channelId !== "string" || !SNOWFLAKE_PATTERN.test(channelId)) return null;
   if (typeof date !== "string" || !DATE_PATTERN.test(date)) return null;
+  if (!dateWithinOneDay(date, nowMs)) return null;
   if (mode !== "normal" && mode !== "hard") return null;
   if (typeof region !== "string" || !REGION_PATTERN.test(region)) return null;
   return { guildId, channelId, date, mode, region };
@@ -414,10 +606,9 @@ function modeLabel(mode) {
 
 /**
  * @param {unknown} guesses
- * @param {"normal" | "hard"} mode
+ * @param {number} maxGuesses
  */
-function validateGuesses(guesses, mode) {
-  const maxGuesses = MODE_MAX_GUESSES[mode];
+function validateGuesses(guesses, maxGuesses) {
   if (!Array.isArray(guesses) || guesses.length < 1 || guesses.length > maxGuesses) return false;
 
   return guesses.every((guess) => {
@@ -449,25 +640,43 @@ function guessCell(guess, mode) {
 
 /**
  * @param {Request} request
- * @param {{ DISCORD_BOT_TOKEN?: string, DB?: any }} env
- * @param {{ fetchImpl?: typeof fetch }} [options]
+ * @param {{ DISCORD_BOT_TOKEN?: string, DISCORD_CLIENT_ID?: string, DB?: any, ACTIVITY_DISABLED?: string }} env
+ * @param {{ fetchImpl?: typeof fetch, now?: number }} [options]
  */
-export async function handleSession(request, env, { fetchImpl } = {}) {
+export async function handleSession(request, env, { fetchImpl, now = Date.now() } = {}) {
+  if (env?.ACTIVITY_DISABLED === "1") return unavailable();
+
   const token = bearerToken(request);
   if (!token) return json({ error: "unauthorized" }, 401);
 
-  const input = validateBoardRequest(await readJsonObject(request));
+  const parsed = await readJsonObject(request);
+  if (parsed.tooLarge) return payloadTooLarge();
+  const input = validateBoardRequest(parsed.body, now);
   if (!input) return badRequest();
 
   const botToken = env?.DISCORD_BOT_TOKEN;
+  const clientId = env?.DISCORD_CLIENT_ID;
   const db = env?.DB;
-  if (!botToken || !db) return json({ error: "not_configured" }, 501);
+  if (!botToken || !clientId || !db) return json({ error: "not_configured" }, 501);
 
   let user;
   try {
-    user = await getMe(fetchImpl, token);
+    user = await getOauthUser(fetchImpl, token, clientId);
   } catch {
     return json({ error: "unauthorized" }, 401);
+  }
+
+  if (await overRateLimit(db, now, `user:${user.id}`, USER_RATE_LIMIT)) {
+    return rateLimited();
+  }
+
+  try {
+    await getGuildMember(fetchImpl, botToken, input.guildId, user.id);
+  } catch (error) {
+    if (error?.status === 404 || error?.status === 403) {
+      return json({ error: "forbidden" }, 403);
+    }
+    return json({ error: "discord_unavailable" }, 502);
   }
 
   let channel;
@@ -480,11 +689,21 @@ export async function handleSession(request, env, { fetchImpl } = {}) {
     return json({ error: "forbidden" }, 403);
   }
 
+  let launched;
+  try {
+    launched = await hasRecentLaunch(db, user.id, input.guildId, input.channelId, now);
+  } catch {
+    return json({ error: "storage_unavailable" }, 500);
+  }
+  if (!launched) {
+    return json({ error: "forbidden" }, 403);
+  }
+
   let existing;
   try {
     existing = await db
       .prepare(SESSION_SELECT_SQL)
-      .bind(input.guildId, input.channelId, user.id, input.date)
+      .bind(input.guildId, input.channelId, user.id, input.date, input.mode)
       .first();
   } catch {
     return json({ error: "storage_unavailable" }, 500);
@@ -516,7 +735,7 @@ export async function handleSession(request, env, { fetchImpl } = {}) {
   try {
     await db
       .prepare(SESSION_INSERT_SQL)
-      .bind(input.guildId, input.channelId, user.id, input.date, message.id)
+      .bind(input.guildId, input.channelId, user.id, input.date, input.mode, message.id)
       .run();
   } catch {
     return json({ error: "storage_unavailable" }, 500);
@@ -527,35 +746,53 @@ export async function handleSession(request, env, { fetchImpl } = {}) {
 
 /**
  * @param {Request} request
- * @param {{ DISCORD_BOT_TOKEN?: string, DB?: any }} env
- * @param {{ fetchImpl?: typeof fetch }} [options]
+ * @param {{ DISCORD_BOT_TOKEN?: string, DISCORD_CLIENT_ID?: string, DB?: any, ACTIVITY_DISABLED?: string }} env
+ * @param {{ fetchImpl?: typeof fetch, now?: number }} [options]
  */
-export async function handleResult(request, env, { fetchImpl } = {}) {
+export async function handleResult(request, env, { fetchImpl, now = Date.now() } = {}) {
+  if (env?.ACTIVITY_DISABLED === "1") return unavailable();
+
   const token = bearerToken(request);
   if (!token) return json({ error: "unauthorized" }, 401);
 
-  const body = await readJsonObject(request);
-  const input = validateBoardRequest(body);
+  const parsed = await readJsonObject(request);
+  if (parsed.tooLarge) return payloadTooLarge();
+  const body = parsed.body;
+  const input = validateBoardRequest(body, now);
   if (!input) return badRequest();
 
   const { won, maxGuesses, guesses } = /** @type {any} */ (body);
   if (
     typeof won !== "boolean" ||
+    !Number.isInteger(maxGuesses) ||
+    (maxGuesses !== 4 && maxGuesses !== 6) ||
     maxGuesses !== MODE_MAX_GUESSES[input.mode] ||
-    !validateGuesses(guesses, input.mode)
+    !validateGuesses(guesses, maxGuesses)
   ) {
     return badRequest();
   }
 
   const botToken = env?.DISCORD_BOT_TOKEN;
+  const clientId = env?.DISCORD_CLIENT_ID;
   const db = env?.DB;
-  if (!botToken || !db) return json({ error: "not_configured" }, 501);
+  if (!botToken || !clientId || !db) return json({ error: "not_configured" }, 501);
 
   let user;
   try {
-    user = await getMe(fetchImpl, token);
+    user = await getOauthUser(fetchImpl, token, clientId);
   } catch {
     return json({ error: "unauthorized" }, 401);
+  }
+
+  if (await overRateLimit(db, now, `user:${user.id}`, USER_RATE_LIMIT)) {
+    return rateLimited();
+  }
+
+  try {
+    const launched = await hasRecentLaunch(db, user.id, input.guildId, input.channelId, now);
+    if (!launched) return json({ error: "forbidden" }, 403);
+  } catch {
+    return json({ error: "storage_unavailable" }, 500);
   }
 
   let channel;
@@ -572,7 +809,7 @@ export async function handleResult(request, env, { fetchImpl } = {}) {
   try {
     existing = await db
       .prepare(SESSION_SELECT_SQL)
-      .bind(input.guildId, input.channelId, user.id, input.date)
+      .bind(input.guildId, input.channelId, user.id, input.date, input.mode)
       .first();
   } catch {
     return json({ error: "storage_unavailable" }, 500);
@@ -721,6 +958,34 @@ export async function scheduled(controller, env, ctx, { fetchImpl, now = new Dat
       console.error(`daily summary failed for guild ${guilds[index].guild_id}`);
     }
   });
+
+  await pruneExpiredRows(db, now);
+}
+
+/**
+ * Enforce the documented retention windows. Stored formats differ: results,
+ * boards, and analytics use ISO strings; launches and rate_limits use epoch ms.
+ * Cleanup failures are logged without payloads and never fail the cron.
+ * @param {any} db
+ * @param {Date} now
+ */
+async function pruneExpiredRows(db, now) {
+  const nowMs = now.getTime();
+  const isoCutoff = (days) => new Date(nowMs - days * DAY_MS).toISOString();
+
+  const statements = [
+    [CLEANUP_RESULTS_SQL, isoCutoff(RESULTS_RETENTION_DAYS)],
+    [CLEANUP_BOARDS_SQL, isoCutoff(BOARDS_RETENTION_DAYS)],
+    [CLEANUP_LAUNCHES_SQL, nowMs - LAUNCH_RETENTION_MS],
+    [CLEANUP_RATE_LIMITS_SQL, nowMs - RATE_LIMIT_RETENTION_MS],
+    [CLEANUP_ANALYTICS_SQL, isoCutoff(ANALYTICS_RETENTION_DAYS)],
+  ];
+
+  try {
+    await Promise.all(statements.map(([sql, cutoff]) => db.prepare(sql).bind(cutoff).run()));
+  } catch {
+    console.error("retention: cleanup failed");
+  }
 }
 
 /**

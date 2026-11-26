@@ -16,7 +16,7 @@ const keyPair = await globalThis.crypto.subtle.generateKey({ name: "Ed25519" }, 
 const publicKeyHex = toHex(new Uint8Array(await globalThis.crypto.subtle.exportKey("raw", keyPair.publicKey)));
 const env = { DISCORD_PUBLIC_KEY: publicKeyHex };
 
-async function signedRequest(payload, { timestamp = "1700000000", tamperBody = false } = {}) {
+async function signedRequest(payload, { timestamp = String(Math.floor(Date.now() / 1000)), tamperBody = false } = {}) {
   const body = JSON.stringify(payload);
   const signature = await globalThis.crypto.subtle.sign(
     { name: "Ed25519" },
