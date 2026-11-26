@@ -65,7 +65,9 @@ def test_live_cache_and_security_headers(page, live_url):
     csp = page_response.headers.get("content-security-policy", "")
     assert "script-src 'self'" in csp
     assert "style-src 'self'" in csp
-    assert "frame-ancestors 'none'" in csp
+    assert (
+        "frame-ancestors https://discord.com https://*.discordsays.com" in csp
+    )
 
 
 def test_live_normal_game_boots(page, live_url):
