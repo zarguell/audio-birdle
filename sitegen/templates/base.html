@@ -8,8 +8,10 @@
     <meta name="theme-color" content="{{ site.theme_color }}">
     <meta name="description"
           content="{% block description %}{{ site.description }}{% endblock %}">
-    <meta name="discord-client-id" content="{{ discord_client_id|default('') }}">
-    <meta name="cf-analytics-token" content="{{ cf_analytics_token|default('') }}">
+    <meta name="discord-client-id"
+          content="{{ discord_client_id|default('') }}">
+    <meta name="cf-analytics-token"
+          content="{{ cf_analytics_token|default('') }}">
     <title>{% block title %}{{ site.name }}{% endblock %}</title>
     <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">

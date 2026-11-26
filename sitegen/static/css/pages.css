@@ -729,6 +729,11 @@
   font-weight: 700;
 }
 
+.app-footer {
+  margin-top: var(--space-4);
+  text-align: center;
+}
+
 .page-shell.privacy-page {
   gap: var(--space-4);
 }

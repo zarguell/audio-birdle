@@ -64,7 +64,7 @@ export const readPrivacySignals = (windowImpl) => ({
 export const shouldTrack = ({
   doNotTrack = false,
   globalPrivacyControl = false,
-} = {}) => !Boolean(doNotTrack) && !Boolean(globalPrivacyControl);
+} = {}) => !doNotTrack && !globalPrivacyControl;
 
 /** Read the optional build-time token from a meta element. */
 export const getAnalyticsToken = (documentImpl) => {

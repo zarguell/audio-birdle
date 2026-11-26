@@ -10,7 +10,6 @@
       <h1>Privacy policy</h1>
       <p class="privacy-meta">Effective 26 November 2026 · Policy version 2026-11-26</p>
     </header>
-
     <section class="card privacy-section" aria-labelledby="privacy-summary-title">
       <h2 id="privacy-summary-title" class="section-title">In short</h2>
       <ul class="privacy-list">
@@ -20,14 +19,13 @@
         <li>Bird recordings are loaded from the Macaulay Library and xeno-canto, which see your IP address and browser.</li>
       </ul>
     </section>
-
     <section class="card privacy-section" aria-labelledby="privacy-local-title">
       <h2 id="privacy-local-title" class="section-title">What stays on your device</h2>
       <p>Audio-Birdle keeps your daily games, stats, region, last-played mode, and dismissed suggestions in this browser's <code>localStorage</code> under the <code>audio-birdle-</code> keys. This data is not uploaded to us.</p>
       <p>Clearing site data in your browser erases all of it. Settings also offers “Reset today's games” and “Reset all games and stats”, which delete stored game data but keep your analytics choice.</p>
     </section>
-
-    <section class="card privacy-section" aria-labelledby="privacy-analytics-title">
+    <section class="card privacy-section"
+             aria-labelledby="privacy-analytics-title">
       <h2 id="privacy-analytics-title" class="section-title">Anonymous usage analytics (opt-in)</h2>
       <p>Cloudflare Web Analytics is disabled by default. The beacon script is not part of the page HTML; it is added only after you tick <strong>Anonymous usage analytics</strong> in Settings. Declining, or never choosing, means zero analytics requests.</p>
       <div class="privacy-table-wrap">
@@ -67,7 +65,6 @@
       <p>You can withdraw consent at any time with the same Settings checkbox. Withdrawal removes the beacon immediately, stops future requests, and records your choice with a timestamp in <code>audio-birdle-analytics-consent</code>. That consent record lives outside the game data envelope.</p>
       <p>Do Not Track and Global Privacy Control force analytics off: the toggle is disabled and no beacon is loaded even if consent was previously granted.</p>
     </section>
-
     <section class="card privacy-section" aria-labelledby="privacy-discord-title">
       <h2 id="privacy-discord-title" class="section-title">Discord Activity</h2>
       <p>Playing through the Discord bot or Activity requires a Discord identity, so that experience is <strong>not anonymous</strong>. If you never use Discord, none of this applies to you.</p>
@@ -113,8 +110,8 @@
       <p>We do not read or store message content. The bot uses no privileged message intents. Analytics writes in the Activity follow the same consent choice; declining means no counters row for that session.</p>
       <p>Run <code>/audiobirdle forget</code> to delete your Discord identity row and every per-user row. Aggregate counters that no longer link to an identity may remain until their retention window ends.</p>
     </section>
-
-    <section class="card privacy-section" aria-labelledby="privacy-third-parties-title">
+    <section class="card privacy-section"
+             aria-labelledby="privacy-third-parties-title">
       <h2 id="privacy-third-parties-title" class="section-title">Third parties</h2>
       <div class="privacy-table-wrap">
         <table class="privacy-table">
@@ -152,7 +149,6 @@
       </div>
       <p>Audio files are hotlinked from Cornell's Macaulay Library and xeno-canto. Your browser requests them directly, which discloses your IP address and user agent to those services; that happens whether or not you enable analytics. We do not sell data and use no advertising or third-party analytics beyond Cloudflare Web Analytics.</p>
     </section>
-
     <section class="card privacy-section" aria-labelledby="privacy-deletion-title">
       <h2 id="privacy-deletion-title" class="section-title">Deletion and your choices</h2>
       <div class="privacy-table-wrap">
@@ -186,14 +182,13 @@
       </div>
       <p>There are no web accounts and no server-side profile to delete. If you used the Discord Activity and cannot run the command, use the contact below and we will remove the rows we can identify.</p>
     </section>
-
     <section class="card privacy-section" aria-labelledby="privacy-contact-title">
       <h2 id="privacy-contact-title" class="section-title">Contact</h2>
       <p>For privacy questions, deletion help, or a security report, use the GitHub private security advisory for this repository. Do not open a public issue for a sensitive report.</p>
       <p><a class="privacy-contact-link"
-   href="https://docs.github.com/en/code-security/security-advisories/guidance-on-reporting-and-writing-information-about-vulnerabilities/privately-reporting-a-security-vulnerability"
-   target="_blank"
-   rel="noopener noreferrer">Report privately through GitHub</a></p>
+            href="https://docs.github.com/en/code-security/security-advisories/guidance-on-reporting-and-writing-information-about-vulnerabilities/privately-reporting-a-security-vulnerability"
+            target="_blank"
+            rel="noopener noreferrer">Report privately through GitHub</a></p>
       <p class="privacy-meta">This page is maintained with the site. Material changes bump the policy version above and require a new analytics choice.</p>
     </section>
   </div>
