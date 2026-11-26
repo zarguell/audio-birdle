@@ -105,11 +105,11 @@ flowchart TB
 
 | ID | Threat | Control | Residual |
 |---|---|---|---|
-| S1 | **Forged identity** — body claims another `discord_id`/username | Worker derives identity from the OAuth token (`GET /users/@me`), never from the body. Session is signed/opaque, HttpOnly, `Secure`, `SameSite=Lax`, ≤60 min, bound to user + guild + channel (+ date) | Discord account takeover is out of scope |
-| S2 | **Cross-guild posting** — client supplies a channel the bot can reach | Guild/channel come from the launch record (interaction or Activity instance), verified against bot membership. Never post to a client-supplied channel without a server check | If Discord exposes no instance→channel binding, store it at launch in D1 |
-| S3 | **CSRF from the web origin** — attacker page posts with victim cookies | Activity endpoints accept only `Origin: https://<app-id>.discordsays.com`; JSON content type (non-simple); no wildcard CORS; `SameSite=Lax`; per-session CSRF token for state changes | None known |
-| S4 | **Clickjacking/phishing** — page framed elsewhere now that XFO is gone | `frame-ancestors https://discord.com https://*.discordsays.com` only (verify exact origins); no `*`; `default-src 'self'`; `object-src 'none'`; `base-uri 'self'`; `form-action 'self'`; keep `upgrade-insecure-requests` | Any Discord-origin iframe may frame the site — accepted |
-| S5 | **XSS → session theft** | CSP `script-src 'self'` (no inline, no eval), `textContent` only, no `innerHTML`; session in HttpOnly cookie, not `localStorage`; never in URLs or logs. Optional: `require-trusted-types-for 'script'` | Browser 0-days |
+| S1 | **Forged identity** — body claims another `discord_id`/username | Worker derives identity from the Discord OAuth access token (`GET /oauth2/@me`), never from the body, and requires the token's `application.id` to match the app. The token lives in Activity memory only and is sent as `Authorization: Bearer`; every board call also needs a launch record for that user, guild, and channel ≤15 min old | Discord account takeover is out of scope |
+| S2 | **Cross-guild posting** — client supplies a channel the bot can reach | The type-2 launch interaction is persisted as `launches(user, guild, channel, created_at)`; `/api/session` and `/api/result` reject requests without a matching row ≤15 min old, and `/api/session` verifies guild membership with the bot token. `setup` resolves the channel and requires its `guild_id` to match the interaction guild | None known |
+| S3 | **CSRF from the web origin** — attacker page drives the API | Bearer tokens, not cookies, so classic CSRF does not apply; unauthenticated or foreign-app tokens are rejected, bodies are capped, and every JSON response is `Cache-Control: no-store`. No wildcard CORS | Bearer token theft via XSS (S5) |
+| S4 | **Clickjacking/phishing** — page framed elsewhere now that XFO is gone | `frame-ancestors https://discord.com https://*.discordsays.com` only (verified against the live proxy); no `*`; `default-src 'self'`; `object-src 'none'`; `base-uri 'self'`; `form-action 'self'`; keep `upgrade-insecure-requests` | Any Discord-origin iframe may frame the site — accepted |
+| S5 | **XSS → token theft** | CSP `script-src 'self'` (no inline, no eval), `textContent` only, no `innerHTML`; the OAuth token lives in iframe memory only, never in `localStorage`, URLs, or logs. Optional: `require-trusted-types-for 'script'` | Browser 0-days |
 | S6 | **Interaction forgery/replay** | Ed25519 verify (`X-Signature-Ed25519`, `X-Signature-Timestamp`) over `timestamp + raw body` *before* JSON parse; reject wrong `application_id`/unknown `type` with 401; PING→PONG only; timestamp skew check | Replay of a captured valid interaction within skew — idempotency limits the impact |
 | S7 | **Mention/format abuse** — username injected into message content pings `@everyone` or a role | Every bot message sets `allowed_mentions: { parse: [] }`; never echo user-supplied text beyond the display name; cap content length | None known |
 | S8 | **Spam / board flooding** | Per-user and per-channel rate limits; edits only to bot-owned messages; debounce board updates; no DM sending; guild-level opt-in for summaries | Free-plan rate-limiting availability is uncertain — see open questions |
@@ -131,15 +131,15 @@ flowchart TB
 | G2 | No secrets in repo/client; Worker secrets only | gitleaks, review, `dist` grep test |
 | G3 | Identity server-derived; client JSON is data only | Auth matrix tests |
 | G4 | OAuth `identify` only; bot perms Send Messages + Embed Links + Attach Files; no privileged intents | App config review (manual, documented) |
-| G5 | Session: HttpOnly, Secure, SameSite=Lax, ≤60 min, bound to user+guild+channel | Session tests |
-| G6 | Mutating endpoints: POST + JSON + Origin allowlist + session + CSRF token + rate limit + size cap | Route tests |
+| G5 | Activity auth: Discord OAuth token in memory only, `Authorization: Bearer`, audience checked via `/oauth2/@me`, launch binding ≤15 min. No cookie session today; revisit if the proxy forwards `Set-Cookie` | Auth/launch tests |
+| G6 | Mutating endpoints: POST + JSON + bearer auth + launch binding + rate limit + size cap + `Cache-Control: no-store` | Route tests |
 | G7 | `allowed_mentions: { parse: [] }` on every bot message | Payload unit test |
 | G8 | `frame-ancestors` Discord-only; no wildcard CORS; no `unsafe-*` | `tests/test_sitegen_build.py`, `tests/e2e/test_live_site.py` |
 | G9 | Minimise, retain, delete: `/privacy` + `docs/privacy.md`, analytics default-off, `/audiobirdle forget` before public launch | Release checklist |
 | G10 | D1 prepared statements only; enum allowlists | Code review + tests |
 | G11 | Third-party runtime code vendored, pinned, hashed, reviewed | provenance JSON + review |
 | G12 | Fail closed on auth, fail open on audio | Route tests + audio fallback test |
-| G13 | Quota alerts + kill switch before enabling the Activity for anyone | Ops checklist |
+| G13 | Rate limits (30/min user on board calls, 20/min IP on token) + `ACTIVITY_DISABLED` kill switch; quota alerts remain an ops task | Hardening tests + ops checklist |
 | G14 | No secrets/PII in logs; 3-day retention acknowledged | Review + log fixtures |
 | G15 | Two-person review for `public/_headers`, `wrangler.jsonc`, `worker/`, `.github/workflows/` | Branch protection |
 
