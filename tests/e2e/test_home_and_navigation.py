@@ -82,6 +82,9 @@ def test_choosing_a_region_opens_the_mode_selector(page, base_url, console_error
 
     page.locator('[data-mode-card="normal"]').click()
     page.wait_for_url(re.compile(r"/normal/\?region=us$"))
+    page.wait_for_function(
+        "() => document.querySelector('[data-region-label]')?.textContent.trim() !== 'Loading region…'"
+    )
     page.wait_for_selector(".answer-option")
 
     assert page.locator(".answer-option").count() == 4
