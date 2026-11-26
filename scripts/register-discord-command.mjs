@@ -23,6 +23,32 @@ const command = {
   type: 1,
   integration_types: [0],
   contexts: [0],
+  options: [
+    {
+      type: 1,
+      name: "setup",
+      description: "Choose the channel for the daily summary",
+      options: [
+        {
+          type: 7,
+          name: "channel",
+          description: "Channel where daily summaries are posted",
+          required: true,
+          channel_types: [0],
+        },
+      ],
+    },
+    {
+      type: 1,
+      name: "forget",
+      description: "Delete your stored Audio-Birdle data",
+    },
+    {
+      type: 1,
+      name: "stats",
+      description: "Show your Audio-Birdle stats",
+    },
+  ],
 };
 
 const response = await fetch(
