@@ -38,7 +38,12 @@ def test_region_directory_search_filter_and_pin(page, base_url, console_errors):
 
     page.locator("[data-region-search]").fill("")
     page.locator('[data-continent-filter="europe"]').click()
-    assert page.locator("[data-region-row]:visible").count() == 2
+    europe = [
+        region
+        for region in load_json("regions.json")
+        if region.get("continent") == "Europe"
+    ]
+    assert page.locator("[data-region-row]:visible").count() == len(europe)
     assert (
         page.locator('[data-continent-filter="europe"]').get_attribute("aria-pressed")
         == "true"
@@ -157,6 +162,19 @@ def test_cr_country_pool_opens_normal_game(page, base_url, console_errors):
 
     page.locator('[data-mode-card="normal"]').click()
     page.wait_for_url(re.compile(r"/normal/\?region=cr$"))
+    page.wait_for_selector(".answer-option")
+
+    assert page.locator(".answer-option").count() == 4
+    assert page.locator("[data-audio]").get_attribute("src").startswith("https://")
+    assert not console_errors
+
+
+def test_fr_country_pool_opens_normal_game(page, base_url, console_errors):
+    page.goto(f"{base_url}/play/?region=fr", wait_until="networkidle")
+    assert page.locator("[data-region-label]").first.inner_text() == "France"
+
+    page.locator('[data-mode-card="normal"]').click()
+    page.wait_for_url(re.compile(r"/normal/\?region=fr$"))
     page.wait_for_selector(".answer-option")
 
     assert page.locator(".answer-option").count() == 4
