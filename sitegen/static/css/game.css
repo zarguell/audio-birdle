@@ -16,14 +16,6 @@
   box-shadow: var(--shadow-card);
 }
 
-.game-banner__art {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center bottom;
-  image-rendering: pixelated;
-}
-
 .game-topbar {
   display: flex;
   align-items: center;

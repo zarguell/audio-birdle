@@ -85,6 +85,11 @@ def _run_manifest(args: argparse.Namespace) -> int:
     return 0
 
 
+class _ThreadingServer(http.server.ThreadingHTTPServer):
+    daemon_threads = True
+    request_queue_size = 128
+
+
 def _run_serve(args: argparse.Namespace) -> int:
     if not args.no_build:
         from .build import build_site
@@ -93,7 +98,7 @@ def _run_serve(args: argparse.Namespace) -> int:
         print(f"Built {len(summary['pages'])} pages in {summary['output_dir']}")
 
     handler = _no_cache_handler(str(args.output))
-    server = http.server.ThreadingHTTPServer((args.host, args.port), handler)
+    server = _ThreadingServer((args.host, args.port), handler)
     print(f"Serving {args.output} at http://{args.host}:{args.port}/ (Ctrl+C to stop)")
     try:
         server.serve_forever()

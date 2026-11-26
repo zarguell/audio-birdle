@@ -62,10 +62,12 @@ export function createAudioPlayer({
   errorEl,
   optionTemplateId = "tpl-recording-option",
   onRecordingChange = null,
+  onPlayStateChange = null,
 }) {
   let recordings = [];
   let selectedIndex = 0;
   let wasPlaying = false;
+  let lastPlaying = null;
   let failedThisAttempt = new Set();
 
   const currentUrl = (index = selectedIndex) => getAudioSrc(recordings, index);
@@ -87,6 +89,10 @@ export function createAudioPlayer({
       "aria-label",
       playing ? "Pause bird call" : "Play bird call",
     );
+    if (playing !== lastPlaying) {
+      lastPlaying = playing;
+      onPlayStateChange?.(playing);
+    }
   };
 
   const syncSelect = () => {

@@ -121,7 +121,6 @@ def test_build_uses_content_addressed_assets(built_site: tuple[Path, dict]) -> N
     assert (assets / "js" / "pages" / "regions.js").is_file()
     assert (assets / "js" / "pages" / "game.js").is_file()
     assert (assets / "fonts" / "vt323-latin.woff2").is_file()
-    assert (assets / "img" / "forest-scene.svg").is_file()
     assert (assets / "img" / "bird-mark.svg").is_file()
     assert not (output / "assets" / "css").exists()
 

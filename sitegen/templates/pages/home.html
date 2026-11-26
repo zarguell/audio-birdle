@@ -3,10 +3,7 @@
 {% block title %}Audio-Birdle{% endblock %}
 {% block content %}
   <section class="home-scene">
-    <img class="home-scene__art"
-         src="{{ asset_base }}/img/forest-scene.svg"
-         alt=""
-         aria-hidden="true">
+    {% include "partials/forest-scene.html" %}
     {% include "partials/scene-bird.html" %}
     <div class="home-scene__content">
       <h1 class="home-title">Audio-Birdle</h1>
