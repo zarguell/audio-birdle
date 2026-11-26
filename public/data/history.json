@@ -1698,5 +1698,25 @@
       "name": "Spanish Imperial Eagle",
       "subregion": "Spain"
     }
+  ],
+  "it": [
+    {
+      "date": "2026-11-25",
+      "id": "commer",
+      "name": "Common Merganser",
+      "subregion": "Italy"
+    },
+    {
+      "date": "2026-11-26",
+      "id": "whtdip1",
+      "name": "White-throated Dipper",
+      "subregion": "Italy"
+    },
+    {
+      "date": "2026-11-27",
+      "id": "eurspa1",
+      "name": "Eurasian Sparrowhawk",
+      "subregion": "Italy"
+    }
   ]
 }

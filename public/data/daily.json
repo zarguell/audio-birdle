@@ -1639,6 +1639,13 @@
   },
   {
     "date": "2026-11-25",
+    "region": "it",
+    "answerHash": "d0cfe691",
+    "id": "commer",
+    "subregion": "Italy"
+  },
+  {
+    "date": "2026-11-25",
     "region": "jp",
     "answerHash": "43d7e0fb",
     "id": "pelcor",
@@ -1730,6 +1737,13 @@
   },
   {
     "date": "2026-11-26",
+    "region": "it",
+    "answerHash": "e67dc201",
+    "id": "whtdip1",
+    "subregion": "Italy"
+  },
+  {
+    "date": "2026-11-26",
     "region": "jp",
     "answerHash": "d64e6c31",
     "id": "vartit1",
@@ -1818,6 +1832,13 @@
     "answerHash": "89323227",
     "id": "norgan",
     "subregion": "Ireland"
+  },
+  {
+    "date": "2026-11-27",
+    "region": "it",
+    "answerHash": "eb428e3b",
+    "id": "eurspa1",
+    "subregion": "Italy"
   },
   {
     "date": "2026-11-27",
