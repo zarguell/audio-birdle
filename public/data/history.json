@@ -1638,5 +1638,25 @@
       "name": "Mallard",
       "subregion": "Japan"
     }
+  ],
+  "nz": [
+    {
+      "date": "2026-11-25",
+      "id": "sposha1",
+      "name": "Spotted Shag",
+      "subregion": "New Zealand"
+    },
+    {
+      "date": "2026-11-26",
+      "id": "sooshe",
+      "name": "Sooty Shearwater",
+      "subregion": "New Zealand"
+    },
+    {
+      "date": "2026-11-27",
+      "id": "commyn",
+      "name": "Common Myna",
+      "subregion": "New Zealand"
+    }
   ]
 }

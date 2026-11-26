@@ -74,5 +74,12 @@
     "country": "JP",
     "continent": "Asia",
     "status": "live"
+  },
+  {
+    "id": "nz",
+    "name": "New Zealand",
+    "country": "NZ",
+    "continent": "Oceania",
+    "status": "live"
   }
 ]
