@@ -16,6 +16,7 @@ from __future__ import annotations
 import gzip
 import hashlib
 import json
+import os
 import re
 import shutil
 from dataclasses import dataclass
@@ -49,6 +50,7 @@ PAGES = (
     ("stats", "stats/index.html", "stats.html", {}),
     ("archive", "archive/index.html", "archive.html", {}),
     ("settings", "settings/index.html", "settings.html", {}),
+    ("privacy", "privacy/index.html", "privacy.html", {}),
     ("error", "404.html", "error.html", {}),
 )
 
@@ -62,6 +64,7 @@ SCRIPTS = {
     "stats": "pages/stats.js",
     "archive": "pages/archive.js",
     "settings": "pages/settings.js",
+    "privacy": "pages/privacy.js",
     "error": "pages/error.js",
 }
 
@@ -128,6 +131,8 @@ def _environment(asset_base: str, templates_dir: Path) -> Environment:
             "asset_base": asset_base,
             "site": SITE,
             "year": datetime.now(timezone.utc).year,
+            "discord_client_id": os.environ.get("DISCORD_CLIENT_ID", ""),
+            "cf_analytics_token": os.environ.get("CF_ANALYTICS_TOKEN", ""),
         }
     )
     return env

@@ -685,6 +685,125 @@
   background: var(--color-danger-soft);
 }
 
+.settings-toggle {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  background: var(--color-surface-raised);
+  border: 2px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  box-shadow: 2px 2px 0 var(--color-border);
+}
+
+.settings-toggle__label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: var(--tap-target);
+  font-size: var(--text-sm);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.settings-toggle__label input {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin: 0;
+  accent-color: var(--color-primary);
+  cursor: pointer;
+}
+
+.settings-toggle__label input:focus-visible {
+  outline: 3px solid var(--color-wood-dark);
+  outline-offset: 2px;
+}
+
+.settings-toggle__label input:disabled {
+  cursor: not-allowed;
+}
+
+.settings-toggle__link {
+  margin: 0;
+  font-size: var(--text-sm);
+  font-weight: 700;
+}
+
+.page-shell.privacy-page {
+  gap: var(--space-4);
+}
+
+.privacy-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.privacy-section p {
+  margin: 0;
+}
+
+.privacy-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+.privacy-table-wrap {
+  overflow-x: auto;
+}
+
+.privacy-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+}
+
+.privacy-table__caption {
+  padding-bottom: var(--space-2);
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+  text-align: left;
+}
+
+.privacy-table th,
+.privacy-table td {
+  padding: var(--space-2);
+  border: 1px solid var(--color-border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.privacy-table th {
+  background: var(--color-surface-soft);
+  color: var(--color-ink);
+  font-size: var(--text-xs);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.privacy-section code {
+  overflow-wrap: anywhere;
+}
+
+.privacy-meta {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+}
+
+.privacy-contact-link {
+  font-weight: 800;
+}
+
+@media (max-width: 30rem) {
+  .privacy-table {
+    font-size: var(--text-xs);
+  }
+}
+
 .about a {
   font-weight: 700;
 }
