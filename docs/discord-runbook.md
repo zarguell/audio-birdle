@@ -14,6 +14,8 @@ invariants live in `docs/security-architecture.md`; data handling lives in
 | D1 database | `audio-birdle` · `eecd53d4-8f92-47c9-ba60-eea5e963c7a3` |
 | Interactions endpoint | `<staging>/api/interactions` |
 | Activity URL mapping | `<staging>/` |
+| Audio mapping `/xc` | `xeno-canto.org` |
+| Audio mapping `/cornell` | `cdn.download.ams.birds.cornell.edu` |
 
 Production uses the production Worker `audio-birdle` and its own Discord app;
 create that app only at release.
@@ -105,10 +107,19 @@ Global commands can take a few minutes to appear.
    Discord PINGs it on save; success proves `DISCORD_PUBLIC_KEY` and Ed25519.
 2. **Activities → URL mapping**: `<staging>/`. Without it, the type 12 launch has
    nowhere to go.
-3. **Installation**: scopes `bot` + `applications.commands`; permissions Send
-   Messages, Embed Links, Attach Files. No Administrator, no Manage Messages, no
+   Add `/xc` → `xeno-canto.org` and `/cornell` →
+   `cdn.download.ams.birds.cornell.edu`; the Activity rewrites audio to those
+   prefixes because the proxy blocks direct external media.
+3. **OAuth2 → Redirects**: add `https://127.0.0.1`. The Embedded App SDK's
+   `authorize` flow requires a configured redirect URI.
+4. **Installation**: scopes `bot` + `applications.commands`; permissions View
+   Channel, Send Messages, Embed Links, Attach Files. No Administrator, no Manage Messages, no
    privileged intents.
-4. **Privacy URL**: `<staging>/privacy/`.
+5. **Privacy URL**: `<staging>/privacy/`.
+
+Runtime note: `DISCORD_CLIENT_ID` is both a build-time variable (meta tag) and a
+Worker secret (`/api/token`). The `authorize` scope includes `identify` and
+`guilds`; `identify` alone fails `authenticate`.
 
 ## Verification
 
