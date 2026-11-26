@@ -1,0 +1,13 @@
+{
+  "name": "@discord/embedded-app-sdk",
+  "version": "2.5.0",
+  "commit": "14264eccbf9e68d5d58c1aadbc7579e003e0dce6",
+  "source": "https://registry.npmjs.org/@discord/embedded-app-sdk/-/embedded-app-sdk-2.5.0.tgz",
+  "sourceIntegrity": "sha512-FNoe5PbSkoKEbqPubaBmq6tlEMOftMjR3gu55YrdrrKmBfKKM4i9P/Z+Zxl0RZdJcKviBwVcTyYMMPM/aGex/w==",
+  "license": "MIT",
+  "licenseUrl": "https://github.com/discord/embedded-app-sdk/blob/v2.5.0/LICENSE.md",
+  "file": "sitegen/static/vendor/embedded-app-sdk.js",
+  "sha256": "72a78cd678dada982e7109aa31488f1c7cd85ad76e933e0d080a0bd9cf6ac6c7",
+  "build": "npx esbuild@0.27.1 package/output/index.mjs --bundle --format=esm --platform=browser --target=es2020 --minify --legal-comments=none",
+  "date": "2026-11-26"
+}
