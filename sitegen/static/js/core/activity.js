@@ -12,8 +12,18 @@ import { setStorageNamespace } from "./storage.js";
 const DISCORD_HOST_SUFFIX = ".discordsays.com";
 const SDK_URL = "../../vendor/embedded-app-sdk.js";
 const TOKEN_URL = "/api/token";
+const SESSION_URL = "/api/session";
+const RESULT_URL = "/api/result";
 const AUTHORIZE_SCOPE = ["identify"];
 const PLACEHOLDER_ORIGIN = "https://activity.invalid";
+
+/**
+ * Authenticated Activity state. Deliberately module memory only: the access
+ * token, guild/channel ids, and the board message id never touch
+ * localStorage or sessionStorage.
+ */
+let activityContext = null;
+let boardMessageId = null;
 
 function normalizeLocation(locationLike) {
   if (typeof locationLike === "string") {
@@ -133,6 +143,12 @@ async function bootstrapActivity(options) {
     }
     document.documentElement.classList.add("is-activity");
     setStorageNamespace(`discord-${user.id}`);
+    activityContext = {
+      user,
+      accessToken,
+      guildId: typeof sdk.guildId === "string" ? sdk.guildId : null,
+      channelId: typeof sdk.channelId === "string" ? sdk.channelId : null,
+    };
     return { user };
   } catch (error) {
     console.warn("Discord Activity initialisation failed:", error);
@@ -179,4 +195,120 @@ export function whenActivityReady() {
     return Promise.resolve(null);
   }
   return initActivity().catch(() => null);
+}
+
+/**
+ * The authenticated Activity context, or `null` on the web / before the
+ * handshake completes. Contains the OAuth token, so it stays in memory.
+ */
+export function getActivityContext() {
+  return activityContext;
+}
+
+export function buildSessionBody({ guildId, channelId, date, mode, region }) {
+  return { guildId, channelId, date, mode, region };
+}
+
+export function buildResultBody(game, { guildId, channelId } = {}) {
+  return {
+    guildId,
+    channelId,
+    date: game?.date,
+    mode: game?.mode,
+    region: game?.region,
+    won: Boolean(game?.won),
+    maxGuesses: game?.maxGuesses,
+    guesses: Array.isArray(game?.guesses)
+      ? game.guesses.map((guess) => ({
+          correct: Boolean(guess?.correct),
+          taxonomicScore: {
+            order: Boolean(guess?.taxonomicScore?.order),
+            family: Boolean(guess?.taxonomicScore?.family),
+            genus: Boolean(guess?.taxonomicScore?.genus),
+          },
+        }))
+      : [],
+  };
+}
+
+function postJson(url, body, accessToken) {
+  const fetchImpl = globalThis.fetch;
+  if (typeof fetchImpl !== "function") {
+    throw new Error("fetch is unavailable");
+  }
+  return fetchImpl(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: JSON.stringify(body),
+  });
+}
+
+/**
+ * Tell the Worker to open (or reuse) the public board for this daily game.
+ * A no-op on the web and before Discord supplies a guild and channel.
+ * Resolves the server payload on success and `null` otherwise; never throws.
+ */
+export async function startBoardSession({ date, mode, region } = {}) {
+  const context = activityContext;
+  if (!context?.guildId || !context?.channelId) {
+    return null;
+  }
+
+  try {
+    const response = await postJson(
+      SESSION_URL,
+      buildSessionBody({
+        guildId: context.guildId,
+        channelId: context.channelId,
+        date,
+        mode,
+        region,
+      }),
+      context.accessToken,
+    );
+    if (!response || response.ok === false) {
+      throw new Error(`Session request failed with status ${response?.status ?? "unknown"}`);
+    }
+    const payload = await response.json();
+    if (typeof payload?.messageId === "string" && payload.messageId) {
+      boardMessageId = payload.messageId;
+    }
+    return payload;
+  } catch (error) {
+    console.warn("Discord board session failed:", error);
+    return null;
+  }
+}
+
+/**
+ * Post the finished daily result to the board opened by `startBoardSession`.
+ * A no-op on the web or when no board message exists for this page; never
+ * throws. Only the grid inputs are sent: no text input, no bird ids.
+ */
+export async function postBoardResult(game) {
+  const context = activityContext;
+  if (!context?.guildId || !context?.channelId || !boardMessageId) {
+    return null;
+  }
+
+  try {
+    const response = await postJson(
+      RESULT_URL,
+      buildResultBody(game, {
+        guildId: context.guildId,
+        channelId: context.channelId,
+      }),
+      context.accessToken,
+    );
+    if (!response || response.ok === false) {
+      throw new Error(`Result request failed with status ${response?.status ?? "unknown"}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.warn("Discord board result failed:", error);
+    return null;
+  }
 }

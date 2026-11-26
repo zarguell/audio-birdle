@@ -2,7 +2,11 @@ import { afterEach, beforeEach, test } from "node:test";
 import assert from "node:assert/strict";
 
 import {
+  buildResultBody,
+  buildSessionBody,
   isActivity,
+  postBoardResult,
+  startBoardSession,
   whenActivityReady,
 } from "../../sitegen/static/js/core/activity.js";
 import {
@@ -153,5 +157,155 @@ test("whenActivityReady resolves null when initialisation fails", async () => {
     } else {
       delete globalThis.document;
     }
+  }
+});
+
+test("buildSessionBody matches the session contract", () => {
+  assert.deepEqual(
+    buildSessionBody({
+      guildId: "guild-1",
+      channelId: "channel-1",
+      date: "2026-11-26",
+      mode: "hard",
+      region: "us",
+    }),
+    {
+      guildId: "guild-1",
+      channelId: "channel-1",
+      date: "2026-11-26",
+      mode: "hard",
+      region: "us",
+    },
+  );
+});
+
+test("buildResultBody sends only grid inputs", () => {
+  const body = buildResultBody(
+    {
+      date: "2026-11-26",
+      mode: "hard",
+      region: "us",
+      won: true,
+      maxGuesses: 6,
+      guesses: [
+        {
+          birdId: "amerob",
+          textInput: "American Robin",
+          correct: false,
+          taxonomicScore: {
+            order: true,
+            family: false,
+            genus: true,
+            species: false,
+          },
+          timestamp: 1700000000000,
+        },
+        {
+          birdId: "norcar",
+          textInput: "Northern Cardinal",
+          correct: true,
+          taxonomicScore: {
+            order: true,
+            family: true,
+            genus: true,
+            species: true,
+          },
+        },
+      ],
+    },
+    { guildId: "guild-1", channelId: "channel-1" },
+  );
+
+  assert.deepEqual(body, {
+    guildId: "guild-1",
+    channelId: "channel-1",
+    date: "2026-11-26",
+    mode: "hard",
+    region: "us",
+    won: true,
+    maxGuesses: 6,
+    guesses: [
+      {
+        correct: false,
+        taxonomicScore: { order: true, family: false, genus: true },
+      },
+      {
+        correct: true,
+        taxonomicScore: { order: true, family: true, genus: true },
+      },
+    ],
+  });
+
+  const serialized = JSON.stringify(body);
+  assert.equal(serialized.includes("textInput"), false);
+  assert.equal(serialized.includes("birdId"), false);
+  assert.equal(serialized.includes("amerob"), false);
+  assert.equal(serialized.includes("species"), false);
+  assert.equal(serialized.includes("timestamp"), false);
+});
+
+test("buildResultBody tolerates a missing game and empty guesses", () => {
+  const body = buildResultBody(undefined, {
+    guildId: "guild-1",
+    channelId: "channel-1",
+  });
+  assert.deepEqual(body.guesses, []);
+  assert.equal(body.won, false);
+  assert.equal(body.date, undefined);
+});
+
+test("startBoardSession resolves null outside an Activity", async () => {
+  const originalFetch = globalThis.fetch;
+  let called = false;
+  globalThis.fetch = () => {
+    called = true;
+    throw new Error("network must not be touched");
+  };
+
+  try {
+    assert.equal(
+      await startBoardSession({
+        date: "2026-11-26",
+        mode: "normal",
+        region: "us",
+      }),
+      null,
+    );
+    assert.equal(called, false);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test("postBoardResult resolves null outside an Activity", async () => {
+  const originalFetch = globalThis.fetch;
+  let called = false;
+  globalThis.fetch = () => {
+    called = true;
+    throw new Error("network must not be touched");
+  };
+
+  try {
+    assert.equal(
+      await postBoardResult({
+        date: "2026-11-26",
+        mode: "normal",
+        region: "us",
+        won: false,
+        maxGuesses: 4,
+        guesses: [
+          {
+            birdId: "amerob",
+            textInput: "American Robin",
+            correct: false,
+            taxonomicScore: { order: true, family: false, genus: false },
+          },
+        ],
+      }),
+      null,
+    );
+    assert.equal(called, false);
+  } finally {
+    globalThis.fetch = originalFetch;
   }
 });
