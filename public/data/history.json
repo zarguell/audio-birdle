@@ -1,12 +1,6 @@
 {
   "us": [
     {
-      "date": "2026-07-30",
-      "id": "norfli",
-      "name": "Northern Flicker",
-      "subregion": "California"
-    },
-    {
       "date": "2026-07-31",
       "id": "normoc",
       "name": "Northern Mockingbird",
@@ -725,15 +719,51 @@
       "id": "fiscro",
       "name": "Fish Crow",
       "subregion": "Rhode Island"
+    },
+    {
+      "date": "2026-11-28",
+      "id": "virrai",
+      "name": "Virginia Rail",
+      "subregion": "Massachusetts"
+    },
+    {
+      "date": "2026-11-29",
+      "id": "rebnut",
+      "name": "Red-breasted Nuthatch",
+      "subregion": "Pennsylvania"
+    },
+    {
+      "date": "2026-11-30",
+      "id": "rebmer",
+      "name": "Red-breasted Merganser",
+      "subregion": "Kansas"
+    },
+    {
+      "date": "2026-12-01",
+      "id": "buffle",
+      "name": "Bufflehead",
+      "subregion": "Georgia"
+    },
+    {
+      "date": "2026-12-02",
+      "id": "yebsap",
+      "name": "Yellow-bellied Sapsucker",
+      "subregion": "Iowa"
+    },
+    {
+      "date": "2026-12-03",
+      "id": "anhing",
+      "name": "Anhinga",
+      "subregion": "Virginia"
+    },
+    {
+      "date": "2026-12-04",
+      "id": "sonspa",
+      "name": "Song Sparrow",
+      "subregion": "Texas"
     }
   ],
   "us-lower48": [
-    {
-      "date": "2026-07-30",
-      "id": "robgro",
-      "name": "Rose-breasted Grosbeak",
-      "subregion": "California"
-    },
     {
       "date": "2026-07-31",
       "id": "grawar",
@@ -1453,6 +1483,48 @@
       "id": "retloo",
       "name": "Red-throated Loon",
       "subregion": "Minnesota"
+    },
+    {
+      "date": "2026-11-28",
+      "id": "wooduc",
+      "name": "Wood Duck",
+      "subregion": "New Hampshire"
+    },
+    {
+      "date": "2026-11-29",
+      "id": "larbun",
+      "name": "Lark Bunting",
+      "subregion": "New Mexico"
+    },
+    {
+      "date": "2026-11-30",
+      "id": "pecsan",
+      "name": "Pectoral Sandpiper",
+      "subregion": "Michigan"
+    },
+    {
+      "date": "2026-12-01",
+      "id": "rinphe1",
+      "name": "Ring-necked Pheasant",
+      "subregion": "Kansas"
+    },
+    {
+      "date": "2026-12-02",
+      "id": "blujay",
+      "name": "Blue Jay",
+      "subregion": "Rhode Island"
+    },
+    {
+      "date": "2026-12-03",
+      "id": "yebsap",
+      "name": "Yellow-bellied Sapsucker",
+      "subregion": "Pennsylvania"
+    },
+    {
+      "date": "2026-12-04",
+      "id": "comrav",
+      "name": "Common Raven",
+      "subregion": "Ohio"
     }
   ],
   "gb": [
@@ -1479,6 +1551,48 @@
       "id": "norsho",
       "name": "Northern Shoveler",
       "subregion": "Scotland"
+    },
+    {
+      "date": "2026-11-28",
+      "id": "whiwag",
+      "name": "White Wagtail",
+      "subregion": "Scotland"
+    },
+    {
+      "date": "2026-11-29",
+      "id": "comgol",
+      "name": "Common Goldeneye",
+      "subregion": "Scotland"
+    },
+    {
+      "date": "2026-11-30",
+      "id": "santer1",
+      "name": "Sandwich Tern",
+      "subregion": "Scotland"
+    },
+    {
+      "date": "2026-12-01",
+      "id": "stonec4",
+      "name": "European Stonechat",
+      "subregion": "England"
+    },
+    {
+      "date": "2026-12-02",
+      "id": "bkhgul",
+      "name": "Black-headed Gull",
+      "subregion": "Scotland"
+    },
+    {
+      "date": "2026-12-03",
+      "id": "brant",
+      "name": "Brant",
+      "subregion": "Wales"
+    },
+    {
+      "date": "2026-12-04",
+      "id": "norlap",
+      "name": "Northern Lapwing",
+      "subregion": "England"
     }
   ],
   "ca": [
@@ -1504,6 +1618,48 @@
       "date": "2026-11-27",
       "id": "amtspa",
       "name": "American Tree Sparrow",
+      "subregion": "Canada"
+    },
+    {
+      "date": "2026-11-28",
+      "id": "bkbmag1",
+      "name": "Black-billed Magpie",
+      "subregion": "Canada"
+    },
+    {
+      "date": "2026-11-29",
+      "id": "shshaw",
+      "name": "Sharp-shinned Hawk",
+      "subregion": "Canada"
+    },
+    {
+      "date": "2026-11-30",
+      "id": "brant",
+      "name": "Brant",
+      "subregion": "Canada"
+    },
+    {
+      "date": "2026-12-01",
+      "id": "sursco",
+      "name": "Surf Scoter",
+      "subregion": "Canada"
+    },
+    {
+      "date": "2026-12-02",
+      "id": "blksco2",
+      "name": "Black Scoter",
+      "subregion": "Canada"
+    },
+    {
+      "date": "2026-12-03",
+      "id": "eurwig",
+      "name": "Eurasian Wigeon",
+      "subregion": "Canada"
+    },
+    {
+      "date": "2026-12-04",
+      "id": "comgra",
+      "name": "Common Grackle",
       "subregion": "Canada"
     }
   ],
@@ -1531,6 +1687,48 @@
       "id": "maslap1",
       "name": "Masked Lapwing",
       "subregion": "Australia"
+    },
+    {
+      "date": "2026-11-28",
+      "id": "dusrob1",
+      "name": "Dusky Robin",
+      "subregion": "Australia"
+    },
+    {
+      "date": "2026-11-29",
+      "id": "libcor1",
+      "name": "Little Black Cormorant",
+      "subregion": "Australia"
+    },
+    {
+      "date": "2026-11-30",
+      "id": "whikit1",
+      "name": "Whistling Kite",
+      "subregion": "Australia"
+    },
+    {
+      "date": "2026-12-01",
+      "id": "rebkin2",
+      "name": "Red-backed Kingfisher",
+      "subregion": "Australia"
+    },
+    {
+      "date": "2026-12-02",
+      "id": "lovfai1",
+      "name": "Lovely Fairywren",
+      "subregion": "Australia"
+    },
+    {
+      "date": "2026-12-03",
+      "id": "yeltho1",
+      "name": "Yellow Thornbill",
+      "subregion": "Australia"
+    },
+    {
+      "date": "2026-12-04",
+      "id": "burtho1",
+      "name": "Buff-rumped Thornbill",
+      "subregion": "Australia"
     }
   ],
   "ie": [
@@ -1557,6 +1755,48 @@
       "id": "norgan",
       "name": "Northern Gannet",
       "subregion": "Ireland"
+    },
+    {
+      "date": "2026-11-28",
+      "id": "coatit2",
+      "name": "Coal Tit",
+      "subregion": "Ireland"
+    },
+    {
+      "date": "2026-11-29",
+      "id": "commoo3",
+      "name": "Eurasian Moorhen",
+      "subregion": "Ireland"
+    },
+    {
+      "date": "2026-11-30",
+      "id": "rudtur",
+      "name": "Ruddy Turnstone",
+      "subregion": "Ireland"
+    },
+    {
+      "date": "2026-12-01",
+      "id": "gretit1",
+      "name": "Great Tit",
+      "subregion": "Ireland"
+    },
+    {
+      "date": "2026-12-02",
+      "id": "dunnoc1",
+      "name": "Dunnock",
+      "subregion": "Ireland"
+    },
+    {
+      "date": "2026-12-03",
+      "id": "retloo",
+      "name": "Red-throated Loon",
+      "subregion": "Ireland"
+    },
+    {
+      "date": "2026-12-04",
+      "id": "cowpig1",
+      "name": "Common Wood-Pigeon",
+      "subregion": "Ireland"
     }
   ],
   "za": [
@@ -1576,6 +1816,48 @@
       "date": "2026-11-27",
       "id": "ruvwar2",
       "name": "Chestnut-vented Warbler",
+      "subregion": "South Africa"
+    },
+    {
+      "date": "2026-11-28",
+      "id": "rocmar5",
+      "name": "Southern Crag-Martin",
+      "subregion": "South Africa"
+    },
+    {
+      "date": "2026-11-29",
+      "id": "eapwhy1",
+      "name": "Eastern Paradise-Whydah",
+      "subregion": "South Africa"
+    },
+    {
+      "date": "2026-11-30",
+      "id": "yerere1",
+      "name": "Karoo Eremomela",
+      "subregion": "South Africa"
+    },
+    {
+      "date": "2026-12-01",
+      "id": "eugori2",
+      "name": "Eurasian Golden Oriole",
+      "subregion": "South Africa"
+    },
+    {
+      "date": "2026-12-02",
+      "id": "soubou1",
+      "name": "Southern Boubou",
+      "subregion": "South Africa"
+    },
+    {
+      "date": "2026-12-03",
+      "id": "plbpip1",
+      "name": "Plain-backed Pipit",
+      "subregion": "South Africa"
+    },
+    {
+      "date": "2026-12-04",
+      "id": "karpri1",
+      "name": "Karoo Prinia",
       "subregion": "South Africa"
     }
   ],
@@ -1597,6 +1879,48 @@
       "id": "cobtan1",
       "name": "Common Chlorospingus",
       "subregion": "Costa Rica"
+    },
+    {
+      "date": "2026-11-28",
+      "id": "plawre1",
+      "name": "Cabanis's Wren",
+      "subregion": "Costa Rica"
+    },
+    {
+      "date": "2026-11-29",
+      "id": "oltpar1",
+      "name": "Olive-throated Parakeet",
+      "subregion": "Costa Rica"
+    },
+    {
+      "date": "2026-11-30",
+      "id": "crfpar",
+      "name": "Crimson-fronted Parakeet",
+      "subregion": "Costa Rica"
+    },
+    {
+      "date": "2026-12-01",
+      "id": "recman1",
+      "name": "Red-capped Manakin",
+      "subregion": "Costa Rica"
+    },
+    {
+      "date": "2026-12-02",
+      "id": "lesgol",
+      "name": "Lesser Goldfinch",
+      "subregion": "Costa Rica"
+    },
+    {
+      "date": "2026-12-03",
+      "id": "legcuc1",
+      "name": "Lesser Ground-Cuckoo",
+      "subregion": "Costa Rica"
+    },
+    {
+      "date": "2026-12-04",
+      "id": "maghum2",
+      "name": "Talamanca Hummingbird",
+      "subregion": "Costa Rica"
     }
   ],
   "fr": [
@@ -1616,6 +1940,48 @@
       "date": "2026-11-27",
       "id": "rocbun1",
       "name": "Rock Bunting",
+      "subregion": "France"
+    },
+    {
+      "date": "2026-11-28",
+      "id": "egygoo",
+      "name": "Egyptian Goose",
+      "subregion": "France"
+    },
+    {
+      "date": "2026-11-29",
+      "id": "gretit1",
+      "name": "Great Tit",
+      "subregion": "France"
+    },
+    {
+      "date": "2026-11-30",
+      "id": "houspa",
+      "name": "House Sparrow",
+      "subregion": "France"
+    },
+    {
+      "date": "2026-12-01",
+      "id": "redcro",
+      "name": "Red Crossbill",
+      "subregion": "France"
+    },
+    {
+      "date": "2026-12-02",
+      "id": "eurwig",
+      "name": "Eurasian Wigeon",
+      "subregion": "France"
+    },
+    {
+      "date": "2026-12-03",
+      "id": "greegr",
+      "name": "Great Egret",
+      "subregion": "France"
+    },
+    {
+      "date": "2026-12-04",
+      "id": "gadwal",
+      "name": "Gadwall",
       "subregion": "France"
     }
   ],
@@ -1637,6 +2003,48 @@
       "id": "mallar3",
       "name": "Mallard",
       "subregion": "Japan"
+    },
+    {
+      "date": "2026-11-28",
+      "id": "wiltit1",
+      "name": "Willow Tit",
+      "subregion": "Japan"
+    },
+    {
+      "date": "2026-11-29",
+      "id": "bkhgul",
+      "name": "Black-headed Gull",
+      "subregion": "Japan"
+    },
+    {
+      "date": "2026-11-30",
+      "id": "martit2",
+      "name": "Marsh Tit",
+      "subregion": "Japan"
+    },
+    {
+      "date": "2026-12-01",
+      "id": "slbgul",
+      "name": "Slaty-backed Gull",
+      "subregion": "Japan"
+    },
+    {
+      "date": "2026-12-02",
+      "id": "eurtre1",
+      "name": "Eurasian Treecreeper",
+      "subregion": "Japan"
+    },
+    {
+      "date": "2026-12-03",
+      "id": "bkwsti",
+      "name": "Black-winged Stilt",
+      "subregion": "Japan"
+    },
+    {
+      "date": "2026-12-04",
+      "id": "bncrai1",
+      "name": "Brown-cheeked Rail",
+      "subregion": "Japan"
     }
   ],
   "nz": [
@@ -1656,6 +2064,48 @@
       "date": "2026-11-27",
       "id": "commyn",
       "name": "Common Myna",
+      "subregion": "New Zealand"
+    },
+    {
+      "date": "2026-11-28",
+      "id": "redpol1",
+      "name": "Redpoll",
+      "subregion": "New Zealand"
+    },
+    {
+      "date": "2026-11-29",
+      "id": "refpar4",
+      "name": "Red-crowned Kakariki",
+      "subregion": "New Zealand"
+    },
+    {
+      "date": "2026-11-30",
+      "id": "royalb3",
+      "name": "Northern Royal Albatross",
+      "subregion": "New Zealand"
+    },
+    {
+      "date": "2026-12-01",
+      "id": "eurcoo",
+      "name": "Eurasian Coot",
+      "subregion": "New Zealand"
+    },
+    {
+      "date": "2026-12-02",
+      "id": "gryger1",
+      "name": "Gray Gerygone",
+      "subregion": "New Zealand"
+    },
+    {
+      "date": "2026-12-03",
+      "id": "coopet",
+      "name": "Cook's Petrel",
+      "subregion": "New Zealand"
+    },
+    {
+      "date": "2026-12-04",
+      "id": "flushe1",
+      "name": "Fluttering Shearwater",
       "subregion": "New Zealand"
     }
   ],
@@ -1677,6 +2127,48 @@
       "id": "bohwax",
       "name": "Bohemian Waxwing",
       "subregion": "Germany"
+    },
+    {
+      "date": "2026-11-28",
+      "id": "wemhar1",
+      "name": "Western Marsh Harrier",
+      "subregion": "Germany"
+    },
+    {
+      "date": "2026-11-29",
+      "id": "eurlin1",
+      "name": "Eurasian Linnet",
+      "subregion": "Germany"
+    },
+    {
+      "date": "2026-11-30",
+      "id": "gretit1",
+      "name": "Great Tit",
+      "subregion": "Germany"
+    },
+    {
+      "date": "2026-12-01",
+      "id": "whtdip1",
+      "name": "White-throated Dipper",
+      "subregion": "Germany"
+    },
+    {
+      "date": "2026-12-02",
+      "id": "dunnoc1",
+      "name": "Dunnock",
+      "subregion": "Germany"
+    },
+    {
+      "date": "2026-12-03",
+      "id": "blackc1",
+      "name": "Eurasian Blackcap",
+      "subregion": "Germany"
+    },
+    {
+      "date": "2026-12-04",
+      "id": "cowpig1",
+      "name": "Common Wood-Pigeon",
+      "subregion": "Germany"
     }
   ],
   "es": [
@@ -1696,6 +2188,48 @@
       "date": "2026-11-27",
       "id": "spaeag1",
       "name": "Spanish Imperial Eagle",
+      "subregion": "Spain"
+    },
+    {
+      "date": "2026-11-28",
+      "id": "hoopoe",
+      "name": "Common Hoopoe",
+      "subregion": "Spain"
+    },
+    {
+      "date": "2026-11-29",
+      "id": "eucdov",
+      "name": "Eurasian Collared-Dove",
+      "subregion": "Spain"
+    },
+    {
+      "date": "2026-11-30",
+      "id": "spofly2",
+      "name": "Spotted Flycatcher",
+      "subregion": "Spain"
+    },
+    {
+      "date": "2026-12-01",
+      "id": "laplon",
+      "name": "Lapland Longspur",
+      "subregion": "Spain"
+    },
+    {
+      "date": "2026-12-02",
+      "id": "graher1",
+      "name": "Gray Heron",
+      "subregion": "Spain"
+    },
+    {
+      "date": "2026-12-03",
+      "id": "rinouz1",
+      "name": "Ring Ouzel",
+      "subregion": "Spain"
+    },
+    {
+      "date": "2026-12-04",
+      "id": "crelar1",
+      "name": "Crested Lark",
       "subregion": "Spain"
     }
   ],
@@ -1717,6 +2251,48 @@
       "id": "eurspa1",
       "name": "Eurasian Sparrowhawk",
       "subregion": "Italy"
+    },
+    {
+      "date": "2026-11-28",
+      "id": "grecor",
+      "name": "Great Cormorant",
+      "subregion": "Italy"
+    },
+    {
+      "date": "2026-11-29",
+      "id": "comshe",
+      "name": "Common Shelduck",
+      "subregion": "Italy"
+    },
+    {
+      "date": "2026-11-30",
+      "id": "hawfin",
+      "name": "Hawfinch",
+      "subregion": "Italy"
+    },
+    {
+      "date": "2026-12-01",
+      "id": "comkin1",
+      "name": "Common Kingfisher",
+      "subregion": "Italy"
+    },
+    {
+      "date": "2026-12-02",
+      "id": "watrai1",
+      "name": "Water Rail",
+      "subregion": "Italy"
+    },
+    {
+      "date": "2026-12-03",
+      "id": "corbun1",
+      "name": "Corn Bunting",
+      "subregion": "Italy"
+    },
+    {
+      "date": "2026-12-04",
+      "id": "eurwig",
+      "name": "Eurasian Wigeon",
+      "subregion": "Italy"
     }
   ],
   "nl": [
@@ -1736,6 +2312,48 @@
       "date": "2026-11-27",
       "id": "eurnut2",
       "name": "Eurasian Nuthatch",
+      "subregion": "Netherlands"
+    },
+    {
+      "date": "2026-11-28",
+      "id": "houspa",
+      "name": "House Sparrow",
+      "subregion": "Netherlands"
+    },
+    {
+      "date": "2026-11-29",
+      "id": "commer",
+      "name": "Common Merganser",
+      "subregion": "Netherlands"
+    },
+    {
+      "date": "2026-11-30",
+      "id": "norhar1",
+      "name": "Hen Harrier",
+      "subregion": "Netherlands"
+    },
+    {
+      "date": "2026-12-01",
+      "id": "gwfgoo",
+      "name": "Greater White-fronted Goose",
+      "subregion": "Netherlands"
+    },
+    {
+      "date": "2026-12-02",
+      "id": "litgre1",
+      "name": "Little Grebe",
+      "subregion": "Netherlands"
+    },
+    {
+      "date": "2026-12-03",
+      "id": "mutswa",
+      "name": "Mute Swan",
+      "subregion": "Netherlands"
+    },
+    {
+      "date": "2026-12-04",
+      "id": "rinphe1",
+      "name": "Ring-necked Pheasant",
       "subregion": "Netherlands"
     }
   ],
@@ -1757,6 +2375,48 @@
       "id": "comkin1",
       "name": "Common Kingfisher",
       "subregion": "Portugal"
+    },
+    {
+      "date": "2026-11-28",
+      "id": "bkhgul",
+      "name": "Black-headed Gull",
+      "subregion": "Portugal"
+    },
+    {
+      "date": "2026-11-29",
+      "id": "wemhar1",
+      "name": "Western Marsh Harrier",
+      "subregion": "Portugal"
+    },
+    {
+      "date": "2026-11-30",
+      "id": "firecr1",
+      "name": "Common Firecrest",
+      "subregion": "Portugal"
+    },
+    {
+      "date": "2026-12-01",
+      "id": "eurwig",
+      "name": "Eurasian Wigeon",
+      "subregion": "Portugal"
+    },
+    {
+      "date": "2026-12-02",
+      "id": "firecr3",
+      "name": "Madeira Firecrest",
+      "subregion": "Portugal"
+    },
+    {
+      "date": "2026-12-03",
+      "id": "eurjac",
+      "name": "Eurasian Jackdaw",
+      "subregion": "Portugal"
+    },
+    {
+      "date": "2026-12-04",
+      "id": "euroys1",
+      "name": "Eurasian Oystercatcher",
+      "subregion": "Portugal"
     }
   ],
   "mx": [
@@ -1776,6 +2436,48 @@
       "date": "2026-11-27",
       "id": "belvir",
       "name": "Bell's Vireo",
+      "subregion": "Mexico"
+    },
+    {
+      "date": "2026-11-28",
+      "id": "greegr",
+      "name": "Great Egret",
+      "subregion": "Mexico"
+    },
+    {
+      "date": "2026-11-29",
+      "id": "motowl",
+      "name": "Mottled Owl",
+      "subregion": "Mexico"
+    },
+    {
+      "date": "2026-11-30",
+      "id": "brnboo",
+      "name": "Brown Booby",
+      "subregion": "Mexico"
+    },
+    {
+      "date": "2026-12-01",
+      "id": "yefgul",
+      "name": "Yellow-footed Gull",
+      "subregion": "Mexico"
+    },
+    {
+      "date": "2026-12-02",
+      "id": "kinrai2",
+      "name": "Aztec Rail",
+      "subregion": "Mexico"
+    },
+    {
+      "date": "2026-12-03",
+      "id": "burowl",
+      "name": "Burrowing Owl",
+      "subregion": "Mexico"
+    },
+    {
+      "date": "2026-12-04",
+      "id": "shshaw",
+      "name": "Sharp-shinned Hawk",
       "subregion": "Mexico"
     }
   ],
@@ -1797,6 +2499,48 @@
       "id": "rubmin1",
       "name": "Rufous-banded Miner",
       "subregion": "Argentina"
+    },
+    {
+      "date": "2026-11-28",
+      "id": "batear1",
+      "name": "Band-tailed Earthcreeper",
+      "subregion": "Argentina"
+    },
+    {
+      "date": "2026-11-29",
+      "id": "houspa",
+      "name": "House Sparrow",
+      "subregion": "Argentina"
+    },
+    {
+      "date": "2026-11-30",
+      "id": "latant1",
+      "name": "Large-tailed Antshrike",
+      "subregion": "Argentina"
+    },
+    {
+      "date": "2026-12-01",
+      "id": "datsee1",
+      "name": "Dark-throated Seedeater",
+      "subregion": "Argentina"
+    },
+    {
+      "date": "2026-12-02",
+      "id": "toctou1",
+      "name": "Toco Toucan",
+      "subregion": "Argentina"
+    },
+    {
+      "date": "2026-12-03",
+      "id": "whswoo2",
+      "name": "White-spotted Woodpecker",
+      "subregion": "Argentina"
+    },
+    {
+      "date": "2026-12-04",
+      "id": "brotin1",
+      "name": "Brown Tinamou",
+      "subregion": "Argentina"
     }
   ],
   "th": [
@@ -1816,6 +2560,48 @@
       "date": "2026-11-27",
       "id": "stonec7",
       "name": "Amur Stonechat",
+      "subregion": "Thailand"
+    },
+    {
+      "date": "2026-11-28",
+      "id": "blnmon1",
+      "name": "Black-naped Monarch",
+      "subregion": "Thailand"
+    },
+    {
+      "date": "2026-11-29",
+      "id": "grefla1",
+      "name": "Greater Flameback",
+      "subregion": "Thailand"
+    },
+    {
+      "date": "2026-11-30",
+      "id": "snbfly1",
+      "name": "Snowy-browed Flycatcher",
+      "subregion": "Thailand"
+    },
+    {
+      "date": "2026-12-01",
+      "id": "bubwar1",
+      "name": "Buff-barred Warbler",
+      "subregion": "Thailand"
+    },
+    {
+      "date": "2026-12-02",
+      "id": "baybro1",
+      "name": "Black-and-yellow Broadbill",
+      "subregion": "Thailand"
+    },
+    {
+      "date": "2026-12-03",
+      "id": "fibflo1",
+      "name": "Fire-breasted Flowerpecker",
+      "subregion": "Thailand"
+    },
+    {
+      "date": "2026-12-04",
+      "id": "grtsun1",
+      "name": "Green-tailed Sunbird",
       "subregion": "Thailand"
     }
   ]

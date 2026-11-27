@@ -91,19 +91,19 @@
       "sha256": "7cab2ea4064e762f8e67130511321ba0cd9db2b23cfcb2aea2574ce4d842d920"
     },
     "daily-subregion-birds.json": {
-      "bytes": 632953,
+      "bytes": 631218,
       "path": "/data/daily-subregion-birds.json",
-      "sha256": "c99f45c379c2bb25b59e678d3049c3bb1cab290e577430df2a124aec26ac7955"
+      "sha256": "eeb8f9d10acefe9d7f7b86f8ec4be589738173ec4f1b4a311f7205d9e879f4db"
     },
     "daily.json": {
-      "bytes": 38780,
+      "bytes": 56579,
       "path": "/data/daily.json",
-      "sha256": "6b72b43a1252dd77bc27d2a1bd9c6d013c958653a6e3e85406c5ab9c7347f3f8"
+      "sha256": "a41cfc912d7de3d9635581a8981e0493260dfb0b04bc34f1aed1a23299e84fd6"
     },
     "history.json": {
-      "bytes": 38210,
+      "bytes": 54846,
       "path": "/data/history.json",
-      "sha256": "4b6c591c32264d0db5bb2535c0a2e707224a9f7c852f4a7475bd7a987ed02765"
+      "sha256": "332b99fb2a290afdff9a79c2b3c8d54d2734939d7ff01ceb2c53ca82e2f0a0aa"
     },
     "regions.json": {
       "bytes": 2433,
@@ -111,6 +111,6 @@
       "sha256": "9eb843f6c85bbe389e4d21382de43fd473a898454023dc5fe031b39bbeeb7879"
     }
   },
-  "generatedAt": "2026-11-26T23:17:59Z",
+  "generatedAt": "2026-11-27T14:31:27Z",
   "schemaVersion": 1
 }

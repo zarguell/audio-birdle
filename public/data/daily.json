@@ -1979,5 +1979,936 @@
     "answerHash": "de38606d",
     "id": "ruvwar2",
     "subregion": "South Africa"
+  },
+  {
+    "date": "2026-11-28",
+    "region": "ar",
+    "answerHash": "9de0defa",
+    "id": "batear1",
+    "subregion": "Argentina"
+  },
+  {
+    "date": "2026-11-28",
+    "region": "au",
+    "answerHash": "4f364fdc",
+    "id": "dusrob1",
+    "subregion": "Australia"
+  },
+  {
+    "date": "2026-11-28",
+    "region": "ca",
+    "answerHash": "9cdf3513",
+    "id": "bkbmag1",
+    "subregion": "Canada"
+  },
+  {
+    "date": "2026-11-28",
+    "region": "cr",
+    "answerHash": "6d04f3be",
+    "id": "plawre1",
+    "subregion": "Costa Rica"
+  },
+  {
+    "date": "2026-11-28",
+    "region": "de",
+    "answerHash": "eaeac273",
+    "id": "wemhar1",
+    "subregion": "Germany"
+  },
+  {
+    "date": "2026-11-28",
+    "region": "es",
+    "answerHash": "211ea8ec",
+    "id": "hoopoe",
+    "subregion": "Spain"
+  },
+  {
+    "date": "2026-11-28",
+    "region": "fr",
+    "answerHash": "1557eb1a",
+    "id": "egygoo",
+    "subregion": "France"
+  },
+  {
+    "date": "2026-11-28",
+    "region": "gb",
+    "answerHash": "200810a5",
+    "id": "whiwag",
+    "subregion": "Scotland"
+  },
+  {
+    "date": "2026-11-28",
+    "region": "ie",
+    "answerHash": "0697b0c2",
+    "id": "coatit2",
+    "subregion": "Ireland"
+  },
+  {
+    "date": "2026-11-28",
+    "region": "it",
+    "answerHash": "24b5413e",
+    "id": "grecor",
+    "subregion": "Italy"
+  },
+  {
+    "date": "2026-11-28",
+    "region": "jp",
+    "answerHash": "fcba655e",
+    "id": "wiltit1",
+    "subregion": "Japan"
+  },
+  {
+    "date": "2026-11-28",
+    "region": "mx",
+    "answerHash": "86a5dff4",
+    "id": "greegr",
+    "subregion": "Mexico"
+  },
+  {
+    "date": "2026-11-28",
+    "region": "nl",
+    "answerHash": "defcc654",
+    "id": "houspa",
+    "subregion": "Netherlands"
+  },
+  {
+    "date": "2026-11-28",
+    "region": "nz",
+    "answerHash": "81d28335",
+    "id": "redpol1",
+    "subregion": "New Zealand"
+  },
+  {
+    "date": "2026-11-28",
+    "region": "pt",
+    "answerHash": "fefa606b",
+    "id": "bkhgul",
+    "subregion": "Portugal"
+  },
+  {
+    "date": "2026-11-28",
+    "region": "th",
+    "answerHash": "7fd7f341",
+    "id": "blnmon1",
+    "subregion": "Thailand"
+  },
+  {
+    "date": "2026-11-28",
+    "region": "us",
+    "answerHash": "d0b767ef",
+    "id": "virrai",
+    "subregion": "Massachusetts"
+  },
+  {
+    "date": "2026-11-28",
+    "region": "us-lower48",
+    "answerHash": "e74b1d8f",
+    "id": "wooduc",
+    "subregion": "New Hampshire"
+  },
+  {
+    "date": "2026-11-28",
+    "region": "za",
+    "answerHash": "f4ddfe6d",
+    "id": "rocmar5",
+    "subregion": "South Africa"
+  },
+  {
+    "date": "2026-11-29",
+    "region": "ar",
+    "answerHash": "defcc654",
+    "id": "houspa",
+    "subregion": "Argentina"
+  },
+  {
+    "date": "2026-11-29",
+    "region": "au",
+    "answerHash": "e3bdecba",
+    "id": "libcor1",
+    "subregion": "Australia"
+  },
+  {
+    "date": "2026-11-29",
+    "region": "ca",
+    "answerHash": "2bddd50a",
+    "id": "shshaw",
+    "subregion": "Canada"
+  },
+  {
+    "date": "2026-11-29",
+    "region": "cr",
+    "answerHash": "24a942a3",
+    "id": "oltpar1",
+    "subregion": "Costa Rica"
+  },
+  {
+    "date": "2026-11-29",
+    "region": "de",
+    "answerHash": "af4df1e8",
+    "id": "eurlin1",
+    "subregion": "Germany"
+  },
+  {
+    "date": "2026-11-29",
+    "region": "es",
+    "answerHash": "049ab272",
+    "id": "eucdov",
+    "subregion": "Spain"
+  },
+  {
+    "date": "2026-11-29",
+    "region": "fr",
+    "answerHash": "2ab7c05e",
+    "id": "gretit1",
+    "subregion": "France"
+  },
+  {
+    "date": "2026-11-29",
+    "region": "gb",
+    "answerHash": "d0416527",
+    "id": "comgol",
+    "subregion": "Scotland"
+  },
+  {
+    "date": "2026-11-29",
+    "region": "ie",
+    "answerHash": "2ab6b943",
+    "id": "commoo3",
+    "subregion": "Ireland"
+  },
+  {
+    "date": "2026-11-29",
+    "region": "it",
+    "answerHash": "ac31967b",
+    "id": "comshe",
+    "subregion": "Italy"
+  },
+  {
+    "date": "2026-11-29",
+    "region": "jp",
+    "answerHash": "fefa606b",
+    "id": "bkhgul",
+    "subregion": "Japan"
+  },
+  {
+    "date": "2026-11-29",
+    "region": "mx",
+    "answerHash": "b8c1d938",
+    "id": "motowl",
+    "subregion": "Mexico"
+  },
+  {
+    "date": "2026-11-29",
+    "region": "nl",
+    "answerHash": "d0cfe691",
+    "id": "commer",
+    "subregion": "Netherlands"
+  },
+  {
+    "date": "2026-11-29",
+    "region": "nz",
+    "answerHash": "03b83024",
+    "id": "refpar4",
+    "subregion": "New Zealand"
+  },
+  {
+    "date": "2026-11-29",
+    "region": "pt",
+    "answerHash": "eaeac273",
+    "id": "wemhar1",
+    "subregion": "Portugal"
+  },
+  {
+    "date": "2026-11-29",
+    "region": "th",
+    "answerHash": "ed9a951a",
+    "id": "grefla1",
+    "subregion": "Thailand"
+  },
+  {
+    "date": "2026-11-29",
+    "region": "us",
+    "answerHash": "a957c14c",
+    "id": "rebnut",
+    "subregion": "Pennsylvania"
+  },
+  {
+    "date": "2026-11-29",
+    "region": "us-lower48",
+    "answerHash": "24a53e2c",
+    "id": "larbun",
+    "subregion": "New Mexico"
+  },
+  {
+    "date": "2026-11-29",
+    "region": "za",
+    "answerHash": "4fa56d0d",
+    "id": "eapwhy1",
+    "subregion": "South Africa"
+  },
+  {
+    "date": "2026-11-30",
+    "region": "ar",
+    "answerHash": "a2194401",
+    "id": "latant1",
+    "subregion": "Argentina"
+  },
+  {
+    "date": "2026-11-30",
+    "region": "au",
+    "answerHash": "ad96fab7",
+    "id": "whikit1",
+    "subregion": "Australia"
+  },
+  {
+    "date": "2026-11-30",
+    "region": "ca",
+    "answerHash": "725f1b73",
+    "id": "brant",
+    "subregion": "Canada"
+  },
+  {
+    "date": "2026-11-30",
+    "region": "cr",
+    "answerHash": "8c6e5c00",
+    "id": "crfpar",
+    "subregion": "Costa Rica"
+  },
+  {
+    "date": "2026-11-30",
+    "region": "de",
+    "answerHash": "2ab7c05e",
+    "id": "gretit1",
+    "subregion": "Germany"
+  },
+  {
+    "date": "2026-11-30",
+    "region": "es",
+    "answerHash": "770e6b79",
+    "id": "spofly2",
+    "subregion": "Spain"
+  },
+  {
+    "date": "2026-11-30",
+    "region": "fr",
+    "answerHash": "defcc654",
+    "id": "houspa",
+    "subregion": "France"
+  },
+  {
+    "date": "2026-11-30",
+    "region": "gb",
+    "answerHash": "8e56b81a",
+    "id": "santer1",
+    "subregion": "Scotland"
+  },
+  {
+    "date": "2026-11-30",
+    "region": "ie",
+    "answerHash": "0f8c983a",
+    "id": "rudtur",
+    "subregion": "Ireland"
+  },
+  {
+    "date": "2026-11-30",
+    "region": "it",
+    "answerHash": "3566691d",
+    "id": "hawfin",
+    "subregion": "Italy"
+  },
+  {
+    "date": "2026-11-30",
+    "region": "jp",
+    "answerHash": "bed24879",
+    "id": "martit2",
+    "subregion": "Japan"
+  },
+  {
+    "date": "2026-11-30",
+    "region": "mx",
+    "answerHash": "edc667c6",
+    "id": "brnboo",
+    "subregion": "Mexico"
+  },
+  {
+    "date": "2026-11-30",
+    "region": "nl",
+    "answerHash": "95695e41",
+    "id": "norhar1",
+    "subregion": "Netherlands"
+  },
+  {
+    "date": "2026-11-30",
+    "region": "nz",
+    "answerHash": "7d5adbd2",
+    "id": "royalb3",
+    "subregion": "New Zealand"
+  },
+  {
+    "date": "2026-11-30",
+    "region": "pt",
+    "answerHash": "a1ac1bfe",
+    "id": "firecr1",
+    "subregion": "Portugal"
+  },
+  {
+    "date": "2026-11-30",
+    "region": "th",
+    "answerHash": "494edcc5",
+    "id": "snbfly1",
+    "subregion": "Thailand"
+  },
+  {
+    "date": "2026-11-30",
+    "region": "us",
+    "answerHash": "5dec0a9f",
+    "id": "rebmer",
+    "subregion": "Kansas"
+  },
+  {
+    "date": "2026-11-30",
+    "region": "us-lower48",
+    "answerHash": "fafbc458",
+    "id": "pecsan",
+    "subregion": "Michigan"
+  },
+  {
+    "date": "2026-11-30",
+    "region": "za",
+    "answerHash": "4dd7ea4b",
+    "id": "yerere1",
+    "subregion": "South Africa"
+  },
+  {
+    "date": "2026-12-01",
+    "region": "ar",
+    "answerHash": "7321cc75",
+    "id": "datsee1",
+    "subregion": "Argentina"
+  },
+  {
+    "date": "2026-12-01",
+    "region": "au",
+    "answerHash": "27e5e1d9",
+    "id": "rebkin2",
+    "subregion": "Australia"
+  },
+  {
+    "date": "2026-12-01",
+    "region": "ca",
+    "answerHash": "5ec9423b",
+    "id": "sursco",
+    "subregion": "Canada"
+  },
+  {
+    "date": "2026-12-01",
+    "region": "cr",
+    "answerHash": "c5fcf263",
+    "id": "recman1",
+    "subregion": "Costa Rica"
+  },
+  {
+    "date": "2026-12-01",
+    "region": "de",
+    "answerHash": "e67dc201",
+    "id": "whtdip1",
+    "subregion": "Germany"
+  },
+  {
+    "date": "2026-12-01",
+    "region": "es",
+    "answerHash": "45c7685a",
+    "id": "laplon",
+    "subregion": "Spain"
+  },
+  {
+    "date": "2026-12-01",
+    "region": "fr",
+    "answerHash": "8ebce65b",
+    "id": "redcro",
+    "subregion": "France"
+  },
+  {
+    "date": "2026-12-01",
+    "region": "gb",
+    "answerHash": "8baefd94",
+    "id": "stonec4",
+    "subregion": "England"
+  },
+  {
+    "date": "2026-12-01",
+    "region": "ie",
+    "answerHash": "2ab7c05e",
+    "id": "gretit1",
+    "subregion": "Ireland"
+  },
+  {
+    "date": "2026-12-01",
+    "region": "it",
+    "answerHash": "4ceba208",
+    "id": "comkin1",
+    "subregion": "Italy"
+  },
+  {
+    "date": "2026-12-01",
+    "region": "jp",
+    "answerHash": "27358755",
+    "id": "slbgul",
+    "subregion": "Japan"
+  },
+  {
+    "date": "2026-12-01",
+    "region": "mx",
+    "answerHash": "691ada86",
+    "id": "yefgul",
+    "subregion": "Mexico"
+  },
+  {
+    "date": "2026-12-01",
+    "region": "nl",
+    "answerHash": "22bc8ef9",
+    "id": "gwfgoo",
+    "subregion": "Netherlands"
+  },
+  {
+    "date": "2026-12-01",
+    "region": "nz",
+    "answerHash": "79f20fc9",
+    "id": "eurcoo",
+    "subregion": "New Zealand"
+  },
+  {
+    "date": "2026-12-01",
+    "region": "pt",
+    "answerHash": "9c0973b7",
+    "id": "eurwig",
+    "subregion": "Portugal"
+  },
+  {
+    "date": "2026-12-01",
+    "region": "th",
+    "answerHash": "d71afbf2",
+    "id": "bubwar1",
+    "subregion": "Thailand"
+  },
+  {
+    "date": "2026-12-01",
+    "region": "us",
+    "answerHash": "a4654a9e",
+    "id": "buffle",
+    "subregion": "Georgia"
+  },
+  {
+    "date": "2026-12-01",
+    "region": "us-lower48",
+    "answerHash": "f6bca98f",
+    "id": "rinphe1",
+    "subregion": "Kansas"
+  },
+  {
+    "date": "2026-12-01",
+    "region": "za",
+    "answerHash": "f2485047",
+    "id": "eugori2",
+    "subregion": "South Africa"
+  },
+  {
+    "date": "2026-12-02",
+    "region": "ar",
+    "answerHash": "46a128ab",
+    "id": "toctou1",
+    "subregion": "Argentina"
+  },
+  {
+    "date": "2026-12-02",
+    "region": "au",
+    "answerHash": "634dd034",
+    "id": "lovfai1",
+    "subregion": "Australia"
+  },
+  {
+    "date": "2026-12-02",
+    "region": "ca",
+    "answerHash": "ee82bbd6",
+    "id": "blksco2",
+    "subregion": "Canada"
+  },
+  {
+    "date": "2026-12-02",
+    "region": "cr",
+    "answerHash": "765c3f40",
+    "id": "lesgol",
+    "subregion": "Costa Rica"
+  },
+  {
+    "date": "2026-12-02",
+    "region": "de",
+    "answerHash": "49e0367e",
+    "id": "dunnoc1",
+    "subregion": "Germany"
+  },
+  {
+    "date": "2026-12-02",
+    "region": "es",
+    "answerHash": "3f9936d8",
+    "id": "graher1",
+    "subregion": "Spain"
+  },
+  {
+    "date": "2026-12-02",
+    "region": "fr",
+    "answerHash": "9c0973b7",
+    "id": "eurwig",
+    "subregion": "France"
+  },
+  {
+    "date": "2026-12-02",
+    "region": "gb",
+    "answerHash": "fefa606b",
+    "id": "bkhgul",
+    "subregion": "Scotland"
+  },
+  {
+    "date": "2026-12-02",
+    "region": "ie",
+    "answerHash": "49e0367e",
+    "id": "dunnoc1",
+    "subregion": "Ireland"
+  },
+  {
+    "date": "2026-12-02",
+    "region": "it",
+    "answerHash": "b2c89f09",
+    "id": "watrai1",
+    "subregion": "Italy"
+  },
+  {
+    "date": "2026-12-02",
+    "region": "jp",
+    "answerHash": "fdc8b77e",
+    "id": "eurtre1",
+    "subregion": "Japan"
+  },
+  {
+    "date": "2026-12-02",
+    "region": "mx",
+    "answerHash": "d1b23902",
+    "id": "kinrai2",
+    "subregion": "Mexico"
+  },
+  {
+    "date": "2026-12-02",
+    "region": "nl",
+    "answerHash": "d0c76e3c",
+    "id": "litgre1",
+    "subregion": "Netherlands"
+  },
+  {
+    "date": "2026-12-02",
+    "region": "nz",
+    "answerHash": "cf89c03f",
+    "id": "gryger1",
+    "subregion": "New Zealand"
+  },
+  {
+    "date": "2026-12-02",
+    "region": "pt",
+    "answerHash": "2acfe03c",
+    "id": "firecr3",
+    "subregion": "Portugal"
+  },
+  {
+    "date": "2026-12-02",
+    "region": "th",
+    "answerHash": "1172ba9e",
+    "id": "baybro1",
+    "subregion": "Thailand"
+  },
+  {
+    "date": "2026-12-02",
+    "region": "us",
+    "answerHash": "1344f65e",
+    "id": "yebsap",
+    "subregion": "Iowa"
+  },
+  {
+    "date": "2026-12-02",
+    "region": "us-lower48",
+    "answerHash": "ca42ee33",
+    "id": "blujay",
+    "subregion": "Rhode Island"
+  },
+  {
+    "date": "2026-12-02",
+    "region": "za",
+    "answerHash": "dd4575e8",
+    "id": "soubou1",
+    "subregion": "South Africa"
+  },
+  {
+    "date": "2026-12-03",
+    "region": "ar",
+    "answerHash": "b404c68d",
+    "id": "whswoo2",
+    "subregion": "Argentina"
+  },
+  {
+    "date": "2026-12-03",
+    "region": "au",
+    "answerHash": "e0015ef4",
+    "id": "yeltho1",
+    "subregion": "Australia"
+  },
+  {
+    "date": "2026-12-03",
+    "region": "ca",
+    "answerHash": "9c0973b7",
+    "id": "eurwig",
+    "subregion": "Canada"
+  },
+  {
+    "date": "2026-12-03",
+    "region": "cr",
+    "answerHash": "bc6378bc",
+    "id": "legcuc1",
+    "subregion": "Costa Rica"
+  },
+  {
+    "date": "2026-12-03",
+    "region": "de",
+    "answerHash": "b83a555d",
+    "id": "blackc1",
+    "subregion": "Germany"
+  },
+  {
+    "date": "2026-12-03",
+    "region": "es",
+    "answerHash": "8c559bb6",
+    "id": "rinouz1",
+    "subregion": "Spain"
+  },
+  {
+    "date": "2026-12-03",
+    "region": "fr",
+    "answerHash": "86a5dff4",
+    "id": "greegr",
+    "subregion": "France"
+  },
+  {
+    "date": "2026-12-03",
+    "region": "gb",
+    "answerHash": "725f1b73",
+    "id": "brant",
+    "subregion": "Wales"
+  },
+  {
+    "date": "2026-12-03",
+    "region": "ie",
+    "answerHash": "13fda27f",
+    "id": "retloo",
+    "subregion": "Ireland"
+  },
+  {
+    "date": "2026-12-03",
+    "region": "it",
+    "answerHash": "57bdb20e",
+    "id": "corbun1",
+    "subregion": "Italy"
+  },
+  {
+    "date": "2026-12-03",
+    "region": "jp",
+    "answerHash": "7c26c750",
+    "id": "bkwsti",
+    "subregion": "Japan"
+  },
+  {
+    "date": "2026-12-03",
+    "region": "mx",
+    "answerHash": "9690b825",
+    "id": "burowl",
+    "subregion": "Mexico"
+  },
+  {
+    "date": "2026-12-03",
+    "region": "nl",
+    "answerHash": "0c26db19",
+    "id": "mutswa",
+    "subregion": "Netherlands"
+  },
+  {
+    "date": "2026-12-03",
+    "region": "nz",
+    "answerHash": "2a0b18ee",
+    "id": "coopet",
+    "subregion": "New Zealand"
+  },
+  {
+    "date": "2026-12-03",
+    "region": "pt",
+    "answerHash": "5936fa60",
+    "id": "eurjac",
+    "subregion": "Portugal"
+  },
+  {
+    "date": "2026-12-03",
+    "region": "th",
+    "answerHash": "019acba3",
+    "id": "fibflo1",
+    "subregion": "Thailand"
+  },
+  {
+    "date": "2026-12-03",
+    "region": "us",
+    "answerHash": "a11b8ce3",
+    "id": "anhing",
+    "subregion": "Virginia"
+  },
+  {
+    "date": "2026-12-03",
+    "region": "us-lower48",
+    "answerHash": "1344f65e",
+    "id": "yebsap",
+    "subregion": "Pennsylvania"
+  },
+  {
+    "date": "2026-12-03",
+    "region": "za",
+    "answerHash": "4cfda1ca",
+    "id": "plbpip1",
+    "subregion": "South Africa"
+  },
+  {
+    "date": "2026-12-04",
+    "region": "ar",
+    "answerHash": "adeaf5b3",
+    "id": "brotin1",
+    "subregion": "Argentina"
+  },
+  {
+    "date": "2026-12-04",
+    "region": "au",
+    "answerHash": "06197cb5",
+    "id": "burtho1",
+    "subregion": "Australia"
+  },
+  {
+    "date": "2026-12-04",
+    "region": "ca",
+    "answerHash": "c6fbd315",
+    "id": "comgra",
+    "subregion": "Canada"
+  },
+  {
+    "date": "2026-12-04",
+    "region": "cr",
+    "answerHash": "9bd521c5",
+    "id": "maghum2",
+    "subregion": "Costa Rica"
+  },
+  {
+    "date": "2026-12-04",
+    "region": "de",
+    "answerHash": "2d790b7c",
+    "id": "cowpig1",
+    "subregion": "Germany"
+  },
+  {
+    "date": "2026-12-04",
+    "region": "es",
+    "answerHash": "fd866260",
+    "id": "crelar1",
+    "subregion": "Spain"
+  },
+  {
+    "date": "2026-12-04",
+    "region": "fr",
+    "answerHash": "67230152",
+    "id": "gadwal",
+    "subregion": "France"
+  },
+  {
+    "date": "2026-12-04",
+    "region": "gb",
+    "answerHash": "987f2640",
+    "id": "norlap",
+    "subregion": "England"
+  },
+  {
+    "date": "2026-12-04",
+    "region": "ie",
+    "answerHash": "2d790b7c",
+    "id": "cowpig1",
+    "subregion": "Ireland"
+  },
+  {
+    "date": "2026-12-04",
+    "region": "it",
+    "answerHash": "9c0973b7",
+    "id": "eurwig",
+    "subregion": "Italy"
+  },
+  {
+    "date": "2026-12-04",
+    "region": "jp",
+    "answerHash": "dc4b4a7c",
+    "id": "bncrai1",
+    "subregion": "Japan"
+  },
+  {
+    "date": "2026-12-04",
+    "region": "mx",
+    "answerHash": "2bddd50a",
+    "id": "shshaw",
+    "subregion": "Mexico"
+  },
+  {
+    "date": "2026-12-04",
+    "region": "nl",
+    "answerHash": "f6bca98f",
+    "id": "rinphe1",
+    "subregion": "Netherlands"
+  },
+  {
+    "date": "2026-12-04",
+    "region": "nz",
+    "answerHash": "d8b1bdba",
+    "id": "flushe1",
+    "subregion": "New Zealand"
+  },
+  {
+    "date": "2026-12-04",
+    "region": "pt",
+    "answerHash": "538a2120",
+    "id": "euroys1",
+    "subregion": "Portugal"
+  },
+  {
+    "date": "2026-12-04",
+    "region": "th",
+    "answerHash": "098c7c1c",
+    "id": "grtsun1",
+    "subregion": "Thailand"
+  },
+  {
+    "date": "2026-12-04",
+    "region": "us",
+    "answerHash": "b6efa598",
+    "id": "sonspa",
+    "subregion": "Texas"
+  },
+  {
+    "date": "2026-12-04",
+    "region": "us-lower48",
+    "answerHash": "329717e4",
+    "id": "comrav",
+    "subregion": "Ohio"
+  },
+  {
+    "date": "2026-12-04",
+    "region": "za",
+    "answerHash": "1e37c8a4",
+    "id": "karpri1",
+    "subregion": "South Africa"
   }
 ]
