@@ -1015,7 +1015,10 @@ function groupRowsByRegionAndMode(rows) {
 async function postChannelSummary({ db, botToken, fetchImpl, channelId, date }) {
   const resultRows = await db.prepare(SUMMARY_RESULTS_SQL).bind(channelId, date).all();
   const results = Array.isArray(resultRows?.results) ? resultRows.results : [];
-  if (results.length === 0) return;
+  if (results.length === 0) {
+    console.info("cron: skip", channelId, date);
+    return;
+  }
 
   const byRegion = groupRowsByRegionAndMode(results);
   const sections = [];
@@ -1078,6 +1081,7 @@ async function postChannelSummary({ db, botToken, fetchImpl, channelId, date }) 
     ],
     allowed_mentions: { parse: [] },
   });
+  console.info("cron: posted", channelId, date, results.length);
 }
 
 /**
@@ -1093,10 +1097,16 @@ async function postChannelSummary({ db, botToken, fetchImpl, channelId, date }) 
 export async function scheduled(controller, env, ctx, { fetchImpl, now = new Date() } = {}) {
   const db = env?.DB;
   const botToken = env?.DISCORD_BOT_TOKEN;
-  if (!db || !botToken) return;
+  if (!db || !botToken) {
+    console.warn("cron: not configured");
+    return;
+  }
 
   const date = previousDate(isoDateInTimeZone(now, "America/New_York"));
-  if (!date) return;
+  if (!date) {
+    console.warn("cron: invalid report date");
+    return;
+  }
 
   let channelRows;
   try {
@@ -1110,6 +1120,7 @@ export async function scheduled(controller, env, ctx, { fetchImpl, now = new Dat
     0,
     SUMMARY_CHANNEL_LIMIT,
   );
+  console.info("cron: report", date, "channels", channels.length);
 
   const tasks = channels.map((channel) =>
     postChannelSummary({

@@ -85,6 +85,56 @@ Ships with `worker/migrations/0003_hardening.sql` and `worker/index.js`:
 Apply every migration (`0002`, `0003`) before deploying the Worker that needs
 them.
 
+### Edge rate limiting (Cloudflare)
+
+The D1 counters only run after an invocation, so the zone also carries one
+Cloudflare rate-limiting rule. It blocks before the Worker is invoked, which
+protects the daily request quota and D1 writes.
+
+| Field | Value |
+|---|---|
+| Zone | `sechostlab.com` (`674bb9536ba16c9f0c826ae0747f788d`) |
+| Ruleset | `audio-birdle api guard` (`2065e75a71004af699a27c6709f7c681`) |
+| Rule | `35eb1904370444209cbc76ad0aa127e6` |
+| Expression | `(starts_with(http.request.uri.path, "/api/token") or starts_with(http.request.uri.path, "/api/interactions"))` |
+| Limit | 120 requests / 10 s per IP per colo; block for 10 s |
+
+The Free plan allows exactly one rate-limiting rule: IP+colo counting, a 10 s
+period and mitigation, and path-only expressions. `/api/session` and
+`/api/result` are not edge-limited; they reject a missing bearer token before
+doing work and enforce per-user limits in D1. The threshold is generous because
+interactions arrive from Discord's egress IPs; lower `requests_per_period` only
+if interaction availability can be traded for a tighter single-source cap.
+
+Inspect or replace it with the Cloudflare CLI (`cf auth login` needs zone WAF
+access; wrangler's OAuth token cannot read rulesets):
+
+```bash
+cf rulesets entrypoint get http_ratelimit -z sechostlab.com
+```
+
+```bash
+cf rulesets entrypoint update http_ratelimit -z sechostlab.com --body '{
+  "name": "audio-birdle api guard",
+  "description": "Edge guard for anonymous and Discord-signed dynamic endpoints",
+  "rules": [{
+    "description": "Cap single-source floods on token exchange and interactions",
+    "expression": "(starts_with(http.request.uri.path, \"/api/token\") or starts_with(http.request.uri.path, \"/api/interactions\"))",
+    "action": "block",
+    "enabled": true,
+    "ratelimit": {
+      "characteristics": ["cf.colo.id", "ip.src"],
+      "period": 10,
+      "requests_per_period": 120,
+      "mitigation_timeout": 10
+    }
+  }]
+}'
+```
+
+The rule covers the custom domain only. The staging `workers.dev` URL is not
+behind the zone and keeps only the Worker-side limits.
+
 ## Command registration
 
 `/audiobirdle` is the app's **PRIMARY_ENTRY_POINT** command with `handler: 1`
@@ -141,6 +191,19 @@ interactions endpoint or the Activity URL mapping.
 Runtime note: `DISCORD_CLIENT_ID` is both a build-time variable (meta tag) and a
 Worker secret (`/api/token`). The `authorize` scope includes `identify` and
 `guilds`; `identify` alone fails `authenticate`.
+
+## Troubleshooting the daily summary
+
+The cron reports the **previous day** in `America/New_York`, one message per
+opted-in channel. A summary is skipped when that channel has no results for the
+reported date.
+
+- Confirm the opt-in: `SELECT * FROM channels;`
+- Compare the result's channel: `SELECT channel_id, date FROM results;`
+- Watch the run: `npx wrangler tail audio-birdle --format pretty` at 05:10 UTC;
+  the handler logs `cron: report`, then `cron: posted` or `cron: skip`.
+- The dashboard's Cron Triggers section also offers **Run now** for a manual
+  invocation (it still reports the previous day).
 
 ## Verification
 
